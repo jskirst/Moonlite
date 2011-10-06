@@ -1,0 +1,1 @@
+Sample app to understand automated testing.
