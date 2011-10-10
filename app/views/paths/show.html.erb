@@ -1,0 +1,30 @@
+<section class="path">
+	<h1><%= @path.name %></h1>
+	<h2><%= @path.description %></h2>
+	<% if !current_user.enrolled?(@path) %>
+		<%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
+		<%= f.hidden_field :path_id %>
+		<div class="actions">
+			<%= f.submit "Take Path" %>
+		</div>
+		<% end %>
+	<% else %>
+		<%= form_for current_user.enrollments.find_by_path_id(@path.id),
+				:html => { :method => :delete } do |f| %>
+		<%= f.hidden_field :path_id %>
+		<div class="actions">
+			<%= f.submit "Leave Path" %>
+		</div>
+		<% end %>
+		<p>You have <%= @path.remaining_tasks(current_user) %> questions remaining.</p>
+		<p><%= link_to "Continue Path", continue_path_path %></p>
+	<% end %>
+	<p><%= link_to "Add a question", {:controller => "tasks", :action => "new", :path => @path }%></p>
+</section>
+<% unless @tasks.empty? %>
+<section class="path-tasks">
+	<ol>
+		<%= render @tasks %>
+	</ol>
+</section>
+<% end %>

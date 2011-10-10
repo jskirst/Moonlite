@@ -1,0 +1,16 @@
+<% if @task.nil? %>
+	<p>Congratulations! You completed this path.</p>
+<% else %>
+	<section class="path-question">
+		<p><%= @task.question %></p>
+	</section>
+	<%= form_for current_user.completed_tasks.build(:task_id => @task.id) do |f| %>
+		<%= f.hidden_field :task_id %>
+		<div class="field">
+			<%= f.label "Answer" %><br/>
+			<textarea id="completed_task_answer" name="completed_task[answer]"></textarea>
+		<div class="actions">
+			<%= f.submit "Next" %>
+		</div>
+	<% end %>
+<% end %>
