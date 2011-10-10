@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :only => [:edit, :update, :index, :destroy]
 	before_filter :correct_user, :only => [:edit, :update]
-	before_filter :admin_user, :only => :destroy
+	before_filter :admin_user, :only => [:destroy, :index]
 	
 	def new
 		@user = User.new
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   
 	def show
 		@user = User.find(params[:id])
-		@microposts = @user.microposts.paginate(:page => params[:page])
+		@paths = @user.paths.paginate(:page => params[:page])
 		@title = @user.name
 	end
 	
@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 	end
 	
 	def edit
-		@title = "Edit user"
+		@title = "Settings"
 	end
 	
 	def update
@@ -41,7 +41,7 @@ class UsersController < ApplicationController
 			flash[:success] = "Profile successfully updated."
 			redirect_to @user
 		else
-			@title = "Edit user"
+			@title = "Settings"
 			render 'edit'
 		end
 	end

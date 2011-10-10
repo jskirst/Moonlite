@@ -167,3 +167,11 @@ h1.micropost {
 	height: 4em;
 	margin-bottom: 0;
 }
+
+/* Paths */
+.path h2 {
+	font-size: 18px;
+	font-weight: normal;
+	line-height: 20px;
+	margin-bottom: 0px;
+}

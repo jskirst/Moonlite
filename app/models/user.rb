@@ -1,32 +1,28 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 class User < ActiveRecord::Base
 	attr_accessor :password
 	attr_accessible :name, :email, :password, :password_confirmation
 	
-	has_many :microposts, :dependent => :destroy
+	has_many :paths, :dependent => :destroy
+	has_many :enrollments, :dependent => :destroy
+	has_many :enrolled_paths, :through => :enrollments, :source => :path
+	has_many :completed_tasks, :dependent => :destroy
+	has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	
-	validates :name, 		:presence 	=> true,
-							:length		=> { :maximum => 50 }
+	validates :name, 		
+		:presence 	=> true,
+		:length		=> { :maximum => 50 }
 	
-	validates :email,		:presence 	=> true,
-							:format		=> { :with => email_regex },
-							:uniqueness => { :case_sensitive => false }
+	validates :email,		
+		:presence 	=> true,
+		:format		=> { :with => email_regex },
+		:uniqueness => { :case_sensitive => false }
 	
-	validates :password, 	:presence	=> true,
-							:confirmation => true,
-							:length		=> { :within => 6..40 }
+	validates :password, 	
+		:presence	=> true,
+		:confirmation => true,
+		:length		=> { :within => 6..40 }
 	
 	before_save :encrypt_password
 	
@@ -45,8 +41,24 @@ class User < ActiveRecord::Base
 		(user && user.salt == cookie_salt) ? user : nil
 	end
 	
-	def feed
-		Micropost.where("user_id = ?", id)
+	def enrolled?(path)
+		enrollments.find_by_path_id(path.id)
+	end
+	
+	def enroll!(path)
+		enrollments.create!(:path_id => path.id)
+	end
+	
+	def unenroll!(path)
+		enrollments.find_by_path_id(path.id).destroy
+	end
+
+	def completed?(task)
+		completed_tasks.find_by_task_id(task.id)
+	end
+
+	def complete!(task)
+		completed_tasks.create!(:task_id => task.id)
 	end
 	
 	private

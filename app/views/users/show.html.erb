@@ -5,17 +5,11 @@
 				<%= gravatar_for @user %>
 				<%= @user.name %>
 			</h1>
-			<% unless @user.microposts.empty? %>
-			<table class="microposts" summary="Users microposts">
-				<%= render @microposts %>
-			</table>
-			<%= will_paginate @microposts %>
-			<% end %>
 		</td>
 		<td>
 			<strong>Name:</strong><%= @user.name %><br/>
 			<strong>URL:</strong><%= link_to user_path(@user), @user %>
-			<strong>Microposts:</strong><%= @user.microposts.count %>
+			<strong>Paths:</strong><%= @user.paths.count %>
 		</td>
 	</tr>
 </table>

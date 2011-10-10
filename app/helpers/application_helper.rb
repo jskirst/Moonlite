@@ -1,6 +1,6 @@
 module ApplicationHelper
 	def title
-		base_title = "Sample App"
+		base_title = "Project Moonlite"
 		if @title.nil?
 			base_title
 		else
@@ -9,6 +9,6 @@ module ApplicationHelper
 	end
 	
 	def logo
-		image_tag("http://railstutorial.org/images/sample_app/logo.png", :alt => "Sample App", :class => "round")
+		image_tag("logo.png", :alt => "Project Moonlite", :class => "round", :size => "50x50")
 	end
 end

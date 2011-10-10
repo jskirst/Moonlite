@@ -3,13 +3,18 @@ class PagesController < ApplicationController
 	def home
 		@title = "Home"
 		if signed_in?
-			@micropost = Micropost.new
-			@feed_items = current_user.feed.paginate(:page => params[:page]) 
+			@paths = current_user.enrolled_paths
+		else
+			@paths = []
 		end
 	end
 
 	def contact
 		@title = "Contact"
+	end
+	
+	def news
+		@title = "News"
 	end
   
 	def about
@@ -18,6 +23,11 @@ class PagesController < ApplicationController
 	
 	def help
 		@title = "Help"
+	end
+	
+	def all_paths
+		@title = "All Paths"
+		@paths = Path.paginate(:page => params[:page])
 	end
 
 end

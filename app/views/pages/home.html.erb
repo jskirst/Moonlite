@@ -1,18 +1,31 @@
 <% if signed_in? %>
-	<table class="front" summary="For signed in users">
-		<tr>
-			<td class="main">
-				<h1 class="micropost">What's up?</h1>
-				<%= render "shared/micropost_form" %>
-				<%= render "shared/feed" %>
-			</td>
-			<td class="sidebar round">
-				<%= render "shared/user_info" %>
-			</td>
-		</tr>
-	</table>
+<script>
+$(document).ready(function() {
+	$(".progressbar").each(function(){
+		var details = $(this).attr("alt").split("/");
+		var completed = details[0];
+		var total = details[1];
+		if(total != 0){
+			var pb_value = 100 * (completed/total);
+			$(this).progressbar({ value: pb_value });
+		}
+	});
+});
+</script>
+<h1>My Paths</h1>
+<table class='profile' summary='Profile Information'>
+	<tr>
+		<td class='Main'>
+			<% unless @paths.empty? %>
+			<table class="paths" summary="Users paths">
+				<%= render @paths %>
+			</table>
+			<% end %>
+		</td>
+	</tr>
+</table>
 <% else %>
-	<h1>Sample App</h1>
+	<h1>Project Moonlite</h1>
 	<p>This is the home page for the
 	<a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
 	sample application.</p>

@@ -33,13 +33,13 @@ describe UsersController do
 			response.should have_selector("h1>img", :class => "gravatar")
 		end
 		
-		it "should show the user's microposts" do
-			mp1 = Factory(:micropost, :user => @user, :content => "Content1")
-			mp2 = Factory(:micropost, :user => @user, :content => "Content2")
-			get :show, :id => @user
-			response.should have_selector("span", :content => mp1.content)
-			response.should have_selector("span", :content => mp2.content)
-		end
+		# it "should show the user's paths" do
+			# path1 = Factory(:path, :user => @user, :name => "Name1", :description => "Content1")
+			# path2 = Factory(:path, :user => @user, :name => "Name2", :description => "Content2")
+			# get :show, :id => @user
+			# response.should have_selector("span", :content => path1.description)
+			# response.should have_selector("span", :content => path2.description)
+		# end
 	end
 	
 	describe "GET 'new'" do
@@ -118,7 +118,7 @@ describe UsersController do
 
 		it "should have right title" do
 			get :edit, :id => @user
-			response.should have_selector("title", :content => "Edit")
+			response.should have_selector("title", :content => "Settings")
 		end
 		
 		it "should have have a link to change the gravatar" do
@@ -151,10 +151,10 @@ describe UsersController do
 			
 			it "should have the right title" do
 				put :edit, :id => @user,  :user => @attr
-				response.should have_selector("title", :content => "Edit")
+				response.should have_selector("title", :content => "Settings")
 			end
 			
-			# it "should have an error message" do
+			#it "should have an error message"
 				# put :edit, :id => @user, :user => @attr
 				# flash[:error].should =~ "Invalid"
 			# end
@@ -244,28 +244,44 @@ describe UsersController do
 				end
 			end
 			
-			it "should be successful" do
-				get :index
-				response.should be_success
-			end
-			
-			it "should have the right title" do
-				get :index
-				response.should have_selector("title", :content => "All users")
-			end
-			
-			it "should display all users" do
-				get :index
-				@users[0..2].each do |u|
-					response.should have_selector("li", :content => u.name)
+			describe "as a non-admin user" do
+				it "should protect the page" do
+					get :index
+					response.should redirect_to(root_path)
 				end
 			end
 			
-			it "should paginate users" do
-				get :index
-				response.should have_selector("div.pagination")
-				response.should have_selector("span.disabled", :content => "Previous")
-				response.should have_selector("a", :href => "/users?page=2", :content => "2")
+			describe "as an admin user" do
+				before(:each) do
+					admin = Factory(:user, 
+						:email => "admin@testing.com", 
+						:admin => true)
+					test_sign_in(admin)
+				end
+				
+				it "should be successful" do
+					get :index
+					response.should be_success
+				end
+				
+				it "should have the right title" do
+					get :index
+					response.should have_selector("title", :content => "All users")
+				end
+				
+				it "should display all users" do
+					get :index
+					@users[0..2].each do |u|
+						response.should have_selector("li", :content => u.name)
+					end
+				end
+				
+				it "should paginate users" do
+					get :index
+					response.should have_selector("div.pagination")
+					response.should have_selector("span.disabled", :content => "Previous")
+					response.should have_selector("a", :href => "/users?page=2", :content => "2")
+				end
 			end
 		end
 	end

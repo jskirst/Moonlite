@@ -1,18 +1,6 @@
-# == Schema Information
-#
-# Table name: users
-#
-#  id         :integer         not null, primary key
-#  name       :string(255)
-#  email      :string(255)
-#  created_at :datetime
-#  updated_at :datetime
-#
-
 require 'spec_helper'
 
 describe "Users" do
-  
 	before(:each) do
 		@attr = { 
 			:name => "Example User", 
@@ -26,7 +14,7 @@ describe "Users" do
 		User.create!(@attr)
 	end
 	
-	describe "Name validations" do
+	describe "name validations" do
 		it "should require a name" do
 			user = User.new(@attr.merge(:name => ""))
 			user.should_not be_valid
@@ -39,7 +27,7 @@ describe "Users" do
 		end
 	end
 	
-	describe "Email validations" do	
+	describe "email validations" do	
 		it "should require an email" do
 			user = User.new(@attr.merge(:email => ""))
 			user.should_not be_valid
@@ -69,7 +57,7 @@ describe "Users" do
 		end
 	end
 	
-	describe "Password validations" do
+	describe "password validations" do
 		it "should require a password and confirmation" do
 			pw = ""
 			pw_conf = ""
@@ -98,7 +86,7 @@ describe "Users" do
 		end
 	end
 	
-	describe "Password encryption" do
+	describe "password encryption" do
 		before(:each) do
 			@user = User.create!(@attr)
 		end
@@ -112,7 +100,7 @@ describe "Users" do
 		end
 	end
 	
-	describe "User authentication" do
+	describe "user authentication" do
 		it "should reject a bad password" do
 			user = User.authenticate(@attr[:email], "badpassword")
 			user.should be_nil
@@ -148,43 +136,106 @@ describe "Users" do
 		end
 	end
 	
-	describe "Microposts association" do
+	describe "paths" do
 		before(:each) do
-			@user = User.create(@attr)
-			@mp1 = Factory(:micropost, :user => @user, :created_at => 1.day.ago)
-			@mp2 = Factory(:micropost, :user => @user, :created_at => 1.hour.ago)
+			@user = User.create!(@attr)
+			@path1 = Factory(:path, :user => @user, :created_at => 1.day.ago)
+			@path2 = Factory(:path, :user => @user, :created_at => 1.hour.ago)
 		end
 		
-		it "should have a microposts attribute" do
-			@user.should respond_to(:microposts)
+		it "should have a paths attribute" do
+			@user.should respond_to(:paths)
 		end
 		
-		it "should have the right microposts in the right order" do
-			@user.microposts.should == [@mp2, @mp1]
+		it "should have the right paths in the right order" do
+			@user.paths.should == [@path2, @path1]
 		end
 		
-		it "should destroy associated microposts" do
+		it "should destroy associated paths" do
 			@user.destroy
-			[@mp1, @mp2].each do |mp|
-				Micropost.find_by_id(mp.id).should be_nil
+			[@path1, @path2].each do |p|
+				Path.find_by_id(p.id).should be_nil
 			end
 		end
+	end
+	
+	describe "enrollments" do
+		before(:each) do
+			@user = User.create!(@attr)
+			@path = Factory(:path, :user => @user)
+		end
 		
-		describe "status feed" do
-			it "should respond" do
-				@user.should respond_to(:feed)
-			end
-			
-			it "should show the users microposts" do
-				@user.feed.include?(@mp1).should be_true
-				@user.feed.include?(@mp2).should be_true
-			end
-			
-			it "should contain only the users microposts" do
-				@mp3 = Factory(:micropost, 
-					:user => Factory(:user, :email => "not@t.com"))
-				@user.feed.include?(@mp3).should be_false
-			end
+		it "should have a paths attribute" do
+			@user.should respond_to(:enrollments)
+		end
+		
+		it "should respond to enrolled? method" do
+			@user.should respond_to(:enrolled?)
+		end
+		
+		it "should respond to enroll! method" do
+			@user.should respond_to(:enroll!)
+		end
+		
+		it "should in enroll in a path" do
+			@user.enroll!(@path)
+			@user.should be_enrolled(@path)
+		end
+		
+		it "should not say enrolled if it isn't" 
+		# do
+			# @user.should_not be_enrolled(@path)
+		# end
+		
+		it "should respond to unenroll!" do
+			@user.should respond_to(:unenroll!)
+		end
+		
+		it "should unenroll from a path" do
+			@user.enroll!(@path)
+			@user.unenroll!(@path)
+			@user.should_not be_enrolled(@path)
+		end
+	end
+	
+	describe "enrolled paths" do
+		before(:each) do
+			@user = User.create!(@attr)
+			@path = Factory(:path, :user => @user)
+		end
+		
+		it "should have a paths attribute" do
+			@user.should respond_to(:enrolled_paths)
+		end
+	end
+	
+	describe "completed tasks" do
+		before(:each) do
+			@user = User.create!(@attr)
+			@path = Factory(:path, :user => @user)
+			@task1 = Factory(:task, :path => @path, :rank => 1)
+			@task2 = Factory(:task, :path => @path, :rank => 2)
+		end
+		
+		it "should have a completed tasks attribute" do
+			@user.should respond_to(:completed_tasks)
+		end
+		
+		it "should respond to completed? method" do
+			@user.should respond_to(:completed?)
+		end
+		
+		it "should respond to complete! method" do
+			@user.should respond_to(:complete!)
+		end
+		
+		it "should in compelete a task" do
+			@user.complete!(@task1)
+			@user.should be_completed(@task1)
+		end
+		
+		it "should not say enrolled if it isn't" do
+			@user.should_not be_completed(@task2)
 		end
 	end
 end
