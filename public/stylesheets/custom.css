@@ -175,3 +175,13 @@ h1.micropost {
 	line-height: 20px;
 	margin-bottom: 0px;
 }
+
+/* Pages */
+article {
+	padding: 10px;
+} article h2 {
+	font-size: 20px;
+} article p.datetime {
+	font-size: 14px;
+	font-style: italic;
+}

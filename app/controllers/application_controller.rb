@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   include SessionsHelper
-  before_filter :reroute_to_landing, :except => :landing
+  before_filter :reroute_to_landing, :except => [:landing, :about, :news, :contact]
   
   private
 	def reroute_to_landing
