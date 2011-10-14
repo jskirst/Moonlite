@@ -10,8 +10,7 @@ class Path < ActiveRecord::Base
 		:length		=> { :within => 2..80 }
 	
 	validates :description, 
-		:presence => true,
-		:length		=> { :within => 1..255 }
+		:presence => true
 	
 	validates :user_id, :presence => true
 	

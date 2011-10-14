@@ -1,0 +1,7 @@
+<%= form_for current_user.enrollments.find_by_path_id(@path.id),
+		:html => { :method => :delete } do |f| %>
+	<%= f.hidden_field :path_id %>
+	<div class="actions">
+		<%= f.submit "Leave Path" %>
+	</div>
+<% end %>

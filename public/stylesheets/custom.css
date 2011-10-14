@@ -135,11 +135,44 @@ u.users {
 }
 
 /* Paths */
-.path h2 {
+.path {
+	margin: 5px 5px 50px 5px;
+	padding: 5px;
+	font-size: 16px;
+} .path section {
+	padding: 10px;
+} .path h2 {
+	font-size: 24px;
+} .path h3 {
 	font-size: 18px;
+} .path #description {
+	padding: 5px;
+	font-size: 16px;
+} .path #enrollment {
+	float: right;
+} .path #action {
+	margin-bottom: 20px;
+} .path #progress {
+	margin-top: 5px;
+	font-size: 15px;
+} .path #progress img{
+	margin-right: 5px;
+} .path #action {
+	margin-top: 0px;
+	padding-top: 0px;
+} .path #action .left {
+	float: left;
+	margin-left: 100px;
+} .path #action .right {
+	float: right;
+	margin-right: 100px;
+} .path .signup_button {
+	height: 65px;
+	width: 140px;
+	padding: 10px;
+	font-size: 22px;
+	background-color: #058BB2;
 	font-weight: normal;
-	line-height: 20px;
-	margin-bottom: 0px;
 }
 
 /* Pages */

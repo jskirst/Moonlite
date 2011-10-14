@@ -1,30 +1,24 @@
 <section class="path">
-	<h1><%= @path.name %></h1>
-	<h2><%= @path.description %></h2>
-	<% if !current_user.enrolled?(@path) %>
-		<%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
-		<%= f.hidden_field :path_id %>
-		<div class="actions">
-			<%= f.submit "Take Path" %>
-		</div>
-		<% end %>
+	<section id="enrollment">
+	<% if current_user.enrolled?(@path) %>
+		<%= render "unenroll" %>
 	<% else %>
-		<%= form_for current_user.enrollments.find_by_path_id(@path.id),
-				:html => { :method => :delete } do |f| %>
-		<%= f.hidden_field :path_id %>
-		<div class="actions">
-			<%= f.submit "Leave Path" %>
-		</div>
-		<% end %>
-		<p>You have <%= @path.remaining_tasks(current_user) %> questions remaining.</p>
-		<p><%= link_to "Continue Path", continue_path_path %></p>
+		<%= render "enroll" %>
 	<% end %>
-	<p><%= link_to "Add a question", {:controller => "tasks", :action => "new", :path => @path }%></p>
+	</section>
+	<section id="description">
+		<h1><%= @path.name %></h1>
+		<p><%= @path.description %></p>
+	</section>
+	<% if current_user.enrolled?(@path) %>
+	<section id="progress">
+		<h2><%= gravatar_for current_user, :size => "20" %>Chatterati rank - 2</h2>
+		<h3>You need 50 more points before you reach rank 3!</h3>
+		<p>You can earn points by solving problems or by posting achievements related to this path. Fellow Moonliters will vote on your achievements to decide how many points to award you. Post something really impressive and you could get enough points to jump muliple ranks!</p>
+	</section>
+	<section id="action">
+		<%= link_to "Solve Problems", continue_path_path, :class => "signup_button round left" %>
+		<%= link_to "Post Achievement", "/achievements/6", :class => "signup_button round right" %>
+	</section>
+	<% end %>
 </section>
-<% unless @tasks.empty? %>
-<section class="path-tasks">
-	<ol>
-		<%= render @tasks %>
-	</ol>
-</section>
-<% end %>
