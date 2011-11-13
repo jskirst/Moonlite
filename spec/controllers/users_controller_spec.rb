@@ -3,9 +3,137 @@ require 'spec_helper'
 describe UsersController do
 	render_views
 
+	before(:each) do
+		@company = Factory(:company)
+		@company_user = Factory(:company_user, :company => @company)
+	end
+	
+	describe "GET 'new'" do
+		it "should be successful" do
+			get :new
+			response.should be_success
+		end
+
+		it "should have right title" do
+			get :new
+			response.should have_selector("title", :content => "Sign up")
+		end
+	end
+	
+	describe "GET 'accept'" do
+		describe "with invalid token" do
+			it "should redirect to root" do
+				get :accept, :id => "XYZ"
+				response.should redirect_to root_path
+			end
+		end
+		
+		describe "with valid token" do
+			it "should be successful" do
+				get :accept, :id => @company_user.token1
+				response.should be_success
+			end
+			
+			it "should render new" do
+				get :accept, :id => @company_user.token1
+				response.should render_template("new")
+			end
+
+			it "should have right title" do
+				get :accept, :id => @company_user.token1
+				response.should have_selector("title", :content => @company.name)
+			end
+		end
+	end
+	
+	describe "POST 'create'" do
+		describe "failure" do
+			before(:each) do
+				@attr = {:name => "", :email => "", :password => "", :password_confirmation => ""}
+			end
+			
+			describe "because of invalid token" do
+				it "should should not create a user" do
+					lambda do
+						post :create, :user => @attr.merge(:token1 => "XYZ")
+					end.should_not change(User, :count)
+				end
+				
+				it "should should redirect to root" do
+					post :create, :user => @attr.merge(:token1 => "XYZ")
+					response.should redirect_to root_path
+				end
+			end
+			
+			it "should not create a user" do
+				lambda do
+					post :create, :user => @attr
+				end.should_not change(User, :count)
+			end
+			
+			it "should have the right title" do
+				post :create, :user => @attr
+				response.should have_selector("title", :content => "Sign up")
+			end
+			
+			it "should render the new page" do
+				post :create, :user => @attr
+				response.should render_template('new')
+			end
+		end
+		
+		describe "success" do
+			before(:each) do
+				@attr = {:name => "Test", :email => "test@testing.com", :password => "testing", :password_confirmation => "testing"}
+			end
+			
+			it "Should save new user successfully" do
+				lambda do
+					post :create, :user => @attr
+				end.should change(User, :count).by(1)
+			end
+			
+			it "Should redirect to profile page" do
+				post :create, :user => @attr
+				response.should redirect_to(user_path(assigns(:user)))
+			end
+			
+			it "Should have a welcome message" do
+				post :create, :user => @attr
+				flash[:success].should =~ /welcome to the sample app/i
+			end
+			
+			it "Should sign the user in" do
+				post :create, :user => @attr
+				controller.should be_signed_in
+			end
+			
+			describe "with a valid token" do
+				it "Should save new user successfully" do
+					lambda do
+						post :create, :user => @attr.merge(:token1 => @company_user.token1)
+					end.should change(User, :count).by(1)
+				end
+				
+				it "Should redirect to profile page" do
+					post :create, :user => @attr.merge(:token1 => @company_user.token1)
+					response.should redirect_to(user_path(assigns(:user)))
+				end
+			
+				it "should add user_id to company_user" do
+					lambda do
+						post :create, :user => @attr.merge(:token1 => @company_user.token1)
+						@company_user.reload
+					end.should change(@company_user, :user_id)
+				end
+			end
+		end
+	end
+	
 	describe "Get 'show'" do
 		before(:each) do
 			@user = Factory(:user)
+			@other_user = Factory(:user, :email => "other_user@email.com")
 		end
 		
 		it "should be successful" do
@@ -33,74 +161,46 @@ describe UsersController do
 			response.should have_selector("h1>img", :class => "gravatar")
 		end
 		
-		# it "should show the user's paths" do
-			# path1 = Factory(:path, :user => @user, :name => "Name1", :description => "Content1")
-			# path2 = Factory(:path, :user => @user, :name => "Name2", :description => "Content2")
-			# get :show, :id => @user
-			# response.should have_selector("span", :content => path1.description)
-			# response.should have_selector("span", :content => path2.description)
-		# end
-	end
-	
-	describe "GET 'new'" do
-		it "should be successful" do
-			get :new
-			response.should be_success
-		end
-
-		it "should have right title" do
-			get :new
-			response.should have_selector("title", :content => "Sign up")
-		end
-	end
-	
-	describe "POST 'create'" do
-		describe "Failure" do
+		describe "achievement details" do
 			before(:each) do
-				@attr = {:name => "", :email => "", :password => "", :password_confirmation => ""}
+				@path1 = Factory(:path, :user => @other_user, :name => "Name1")
+				@path2 = Factory(:path, :user => @other_user, :name => "Name2")
+				
+				@enrollment1 = Factory(:enrollment, :path => @path1, :user => @user)
+				@enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
+				
+				@task1_path1 = Factory(:task, :path => @path1, :points => 2)
+				@task2_path1 = Factory(:task, :path => @path1, :points => 2)
+				@task3_path1 = Factory(:task, :path => @path1, :points => 2)
+				
+				@task1_path2 = Factory(:task, :path => @path2, :points => 7)
+				@task2_path2 = Factory(:task, :path => @path2, :points => 7)
+				@task3_path2 = Factory(:task, :path => @path2, :points => 7)
+				
+				@completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
+				@completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
+				@completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
+				@completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
 			end
 			
-			it "should not create a user" do
-				lambda do
-					post :create, :user => @attr
-				end.should_not change(User, :count)
+			it "should show the user's paths" do
+				get :show, :id => @user
+				response.should have_selector("li", :content => @path1.name)
+				response.should have_selector("li", :content => @path2.name)
 			end
 			
-			it "should have the right title" do
-				post :create, :user => @attr
-				response.should have_selector("title", :content => "Sign up")
+			it "should show the users total earned points" do
+				total_earned_points = @task1_path1.points + @task2_path1.points + @task1_path2.points + @task1_path2.points
+				get :show, :id => @user
+				response.should have_selector("p", :content => "#{total_earned_points}")
 			end
 			
-			it "should render the new page" do
-				post :create, :user => @attr
-				response.should render_template('new')
-			end
-		end
-		
-		describe "Success" do
-			before(:each) do
-				@attr = {:name => "Test", :email => "test@testing.com", :password => "testing", :password_confirmation => "testing"}
-			end
-			
-			it "Should save new user successfully" do
-				lambda do
-					post :create, :user => @attr
-				end.should change(User, :count).by(1)
-			end
-			
-			it "Should redirect to profile page" do
-				post :create, :user => @attr
-				response.should redirect_to(user_path(assigns(:user)))
-			end
-			
-			it "Should have a welcome message" do
-				post :create, :user => @attr
-				flash[:success].should =~ /welcome to the sample app/i
-			end
-			
-			it "Should sign the user in" do
-				post :create, :user => @attr
-				controller.should be_signed_in
+			it "should show the users point total for each path" do
+				path1_earned_points = @task1_path1.points + @task2_path1.points
+				path1_earned_points = @task1_path2.points + @task2_path2.points
+				get :show, :id => @user
+				response.should have_selector("p", :content => "#{@path1_earned_points}")
+				response.should have_selector("p", :content => "#{@path2_earned_points}")
 			end
 		end
 	end
@@ -145,19 +245,19 @@ describe UsersController do
 			end
 			
 			it "should render the edit page" do
-				put :edit, :id => @user,  :user => @attr
+				put :update, :id => @user,  :user => @attr
 				response.should render_template('edit')
 			end
 			
 			it "should have the right title" do
-				put :edit, :id => @user,  :user => @attr
+				put :update, :id => @user,  :user => @attr
 				response.should have_selector("title", :content => "Settings")
 			end
 			
-			#it "should have an error message"
-				# put :edit, :id => @user, :user => @attr
-				# flash[:error].should =~ "Invalid"
-			# end
+			it "should have an error message" do
+				put :update, :id => @user, :user => @attr
+				response.should have_selector("div", :id => "error_explanation")
+			end
 		end
 		
 		describe "Success" do

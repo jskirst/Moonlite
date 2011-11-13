@@ -42,15 +42,15 @@ describe "Paths" do
 	describe "tasks" do
 		before(:each) do
 			@path = Factory(:path, :user => @user)
-			@task1 = Factory(:task, :path => @path, :rank => 1)
-			@task2 = Factory(:task, :path => @path, :rank => 2)
+			@task1 = Factory(:task, :path => @path, :points => 1)
+			@task2 = Factory(:task, :path => @path, :points => 2)
 		end
 		
 		it "should have a paths attribute" do
 			@path.should respond_to(:tasks)
 		end
 		
-		it "should have the right paths in the right order (lowest rank first)" do
+		it "should have the right paths in the right order (lowest points first)" do
 			@path.tasks.should == [@task1, @task2]
 		end
 		

@@ -3,6 +3,25 @@ require 'spec_helper'
 describe TasksController do
 	render_views
 	
+	before(:each) do
+		@good_attr = {
+			:question => "Replacement question", 
+			:answer1 => "Replacement answer", 
+			:resource => "fake", 
+			:points => 5,
+			:correct_answer => 1,
+			:path_id => 1
+		}
+		@empty_attr = { 
+			:question => "",
+			:answer1 => "",
+			:resource => "",
+			:points => nil,
+			:path_id => 1,
+			:correct_answer => nil
+		}
+	end
+	
 	describe "access controller" do
 		it "should deny access to 'show'" do
 			get :show, :id => 1
@@ -50,7 +69,7 @@ describe TasksController do
 		
 		it "should display the answer" do
 			get :show, :id => @task
-			response.should have_selector("p", :content => @task.answer)
+			response.should have_selector("p", :content => @task.answer1)
 		end
 	end
 	
@@ -81,11 +100,7 @@ describe TasksController do
 		
 		describe "failure" do
 			before(:each) do
-				@attr = { :question => "",
-					:answer => "",
-					:resource => "",
-					:rank => nil,
-					:path_id => @path.id}
+				@attr = @empty_attr
 			end
 		
 			it "should not create a task" do
@@ -96,17 +111,13 @@ describe TasksController do
 			
 			it "should take you back to the new task page" do
 				post :create, :task => @attr
-				response.should render_template('tasks/new')
+				response.should render_template("tasks/task_form")
 			end
 		end
 		
 		describe "success" do
 			before(:each) do
-				@attr = { :question => "This is a question",
-					:answer => "This is an answer.",
-					:resource => "http://www.wikipedia.com",
-					:rank => 1,
-					:path_id => 1}
+				@attr = @good_attr
 			end
 			
 			it "should create a task" do
@@ -188,15 +199,12 @@ describe TasksController do
 		
 		describe "Failure" do
 			before(:each) do
-				@attr = {:question => "", 
-				:answer => "", 
-				:resource => "", 
-				:rank => ""}
+				@attr = @empty_attr
 			end
 			
 			it "should render the edit page" do
 				put :update, :id => @task, :task => @attr
-				response.should render_template('edit')
+				response.should render_template("tasks/task_form")
 			end
 			
 			it "should have the right title" do
@@ -212,19 +220,16 @@ describe TasksController do
 		
 		describe "Success" do
 			before(:each) do
-				@attr = {:question => "Replacement question", 
-				:answer => "Replacement answer", 
-				:resource => "fake", 
-				:rank => 1}
+				@attr = @good_attr
 			end
 			
 			it "Should change task successfully" do
 				put :update, :id => @task, :task => @attr
 				@task.reload
 				@task.question.should == @attr[:question]
-				@task.answer.should == @attr[:answer]
+				@task.answer1.should == @attr[:answer1]
 				@task.resource.should == @attr[:resource]
-				@task.rank.should == @attr[:rank]
+				@task.points.should == @attr[:points]
 			end
 			
 			it "Should redirect to task page" do

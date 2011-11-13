@@ -1,0 +1,11 @@
+<h1>Edit Company</h1>
+<%= form_for(@company) do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<div class="field">
+		<%= f.label :name %><br/>
+		<%= f.text_field :name %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save" %>
+	</div>
+<% end %>

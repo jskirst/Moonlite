@@ -9,16 +9,30 @@
 	<section id="description">
 		<h1><%= @path.name %></h1>
 		<p><%= @path.description %></p>
+		<% if @path.user_id == current_user.id %>
+			<p><%= link_to "Add a question", {:controller => "tasks", :action => "new", :path => @path } %></p>
+			<p><%= link_to "Upload a list of questions", {:controller => "paths", :action => "file", :id => @path.id }%></p>
+		<% end %>
 	</section>
 	<% if current_user.enrolled?(@path) %>
 	<section id="progress">
-		<h2><%= gravatar_for current_user, :size => "20" %>Chatterati rank - 2</h2>
-		<h3>You need 50 more points before you reach rank 3!</h3>
+		<h2><%= gravatar_for current_user, :size => "20" %>Chatterati rank - <span class="current-rank"><%= @current_rank %></span></h2>
+		<% if @remaining_tasks > 0 %>
+		<h3>You need to answer <%= pluralize(@remaining_tasks, "question") %> before you reach rank <span class="next-rank"><%= @next_rank %></span>!</h3>
+		<% else %>
+		<h3>Congratulations, you have completed this path!</h3> 
+		<% end %>
 		<p>You can earn points by solving problems or by posting achievements related to this path. Fellow Moonliters will vote on your achievements to decide how many points to award you. Post something really impressive and you could get enough points to jump muliple ranks!</p>
 	</section>
-	<section id="action">
-		<%= link_to "Solve Problems", continue_path_path, :class => "signup_button round left" %>
-		<%= link_to "Post Achievement", "/achievements/6", :class => "signup_button round right" %>
-	</section>
+		<% if @remaining_tasks > 0 %>
+		<section id="action">
+			<%= link_to "Solve Problems", continue_path_path, :class => "signup_button round left" %>
+			<%= link_to "Post Achievement", "/achievements/6", :class => "signup_button round right" %>
+		</section>
+		<% else %>
+		<section id="action">
+			<%= link_to "Post Achievement", "/achievements/6", :class => "signup_button round" %>
+		</section>
+		<% end %>
 	<% end %>
 </section>

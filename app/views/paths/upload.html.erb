@@ -1,0 +1,13 @@
+<ol>
+<% @parsed_file.each do |row| %>
+	<li>
+		<dl>
+			<dt>Question:</dt>
+			<dd><%= row[0] %></dd>
+			<dt>Answer:</dt>
+			<dd><%= row[1] %></dd>
+		</dl>
+	</li>
+<% end %>
+</ol>
+<%= link_to "Go back", @path %>

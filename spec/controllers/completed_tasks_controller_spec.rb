@@ -3,14 +3,13 @@ require 'spec_helper'
 describe CompletedTasksController do
 	render_views
 	
+	before(:each) do
+		@quiz_session = DateTime.now
+	end
+	
 	describe "access controller" do	
 		it "should deny access to 'create'" do
 			post :create
-			response.should redirect_to(signin_path)
-		end
-		
-		it "should deny access to 'delete'" do
-			delete :destroy, :id => 1
 			response.should redirect_to(signin_path)
 		end
 	end
@@ -20,80 +19,73 @@ describe CompletedTasksController do
 			@user = Factory(:user)
 			@path = Factory(:path, :user => @user)
 			@task = Factory(:task, :path => @path)
-			@user.enroll!(@path)			
 			test_sign_in(@user)
+			@attr = { :user_id => @user.id, :task_id => @task.id, :answer => @task.correct_answer, :quiz_session => @quiz_session }
 		end
 		
-		describe "failure" do
-			before(:each) do
-				@attr = { :user_id => "", :task_id => "", :answer => "" }
-			end
-		
-			it "should not create an completed task" do
-				lambda do
-					post :create, :completed_task => @attr  
-				end.should_not change(CompletedTask, :count)
-			end
-			
-			it "should take you back to the root path" do
-				post :create, :completed_task => @attr
-				response.should redirect_to root_path
-			end
-		end
-		
-		describe "success" do
-			before(:each) do
-				@attr = { :user_id => @user.id, :task_id => @task.id, :answer => @task.answer }
-			end
-			
-			it "should create a completed task" do
-				lambda do
-					post :create, :completed_task => @attr
-				end.should change(CompletedTask, :count).by(1)		
-			end
-			
-			it "should go back to the continue path page" do
-				post :create, :completed_task => @attr
-				response.should redirect_to continue_path_path :id => @path
-			end
-			
-			it "should have a flash message" do
-				post :create, :completed_task => @attr
-				flash[:success].should =~ /correct/i
-			end
-		end
-	end
-	
-	describe "DELETE 'destroy'" do
-		before(:each) do
-			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
-			@task = Factory(:task, :path => @path)
-			@user.enroll!(@path)			
-			@completed_task = Factory(:completed_task, :user => @user, :task => @task)
-		end
-		
-		describe "as an unauthorized user" do
-			before(:each) do
-				@other_user = Factory(:user, :email => "o@o.com")
-				test_sign_in(@other_user)
-			end
-			
+		describe "as an unenrolled user" do
 			it "should deny access" do
-				delete :destroy, :id => @completed_task
+				post :create, :completed_task => @attr
 				response.should redirect_to(root_path)
 			end
 		end
 		
-		describe "as an authorized user" do
+		describe "as an enrolled user" do
 			before(:each) do
-				test_sign_in(@user)
+				@user.enroll!(@path)
 			end
 			
-			it "should destroy the completed task" do
-				lambda do
-					delete :destroy, :id => @completed_task
-				end.should change(CompletedTask, :count).by(-1)
+			describe "with an incorrect answer" do
+				before(:each) do
+					@attr = @attr.merge(:answer => 0)
+				end
+			
+				it "should create a completed task with status 0" do
+					lambda do
+						post :create, :completed_task => @attr  
+					end.should change(CompletedTask, :count).by(1)
+					cp = CompletedTask.find(:first, :conditions => ["task_id=? AND user_id=? AND status_id=0", @task.id, @user.id])
+					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)
+				end
+				
+				it "should take you to the next question" do
+					post :create, :completed_task => @attr
+					flash[:error].should =~ /incorrect/i
+				end
+			end
+			
+			describe "with a correct answer" do
+				it "should create a completed task with status 1" do
+					lambda do
+						post :create, :completed_task => @attr
+					end.should change(CompletedTask, :count).by(1)
+					cp = CompletedTask.find(:first, :conditions => ["task_id=? AND user_id=? AND status_id=1", @task.id, @user.id])
+					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)
+				end
+				
+				it "should take you to the next question" do
+					post :create, :completed_task => @attr
+					flash[:success].should =~ /correct/i
+				end
+			end
+			
+			describe "with a skipped answer" do
+				before(:each) do
+					@attr = @attr.merge(:answer => nil)
+				end
+				
+				it "should create a completed task with status 2 and quiz = " do
+					lambda do
+						post :create, :completed_task => @attr
+					end.should change(CompletedTask, :count).by(1)
+					cp = CompletedTask.find(:first, :conditions => ["task_id=? AND user_id=? AND status_id=2", @task.id, @user.id])
+					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)
+				end
+				
+				it "should take you to the next question" do
+					post :create, :completed_task => @attr
+					flash[:notice].should =~ /skipped/i
+				end
 			end
 		end
 	end

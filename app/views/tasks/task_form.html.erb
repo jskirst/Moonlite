@@ -1,0 +1,45 @@
+<h1><%= @form_title %></h1>
+<%= form_for @task do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :path_id, :value => @path_id %><br/>
+	<div class="field">
+		<%= f.label :question %><br/>
+		<%= f.text_area :question %>
+	</div>
+	<div class="field">
+		<%= f.label :answer1 %><br/>
+		<%= f.text_area :answer1 %>
+	</div>
+	<div class="field">
+		<%= f.label :answer2 %><br/>
+		<%= f.text_area :answer2 %>
+	</div>
+	<div class="field">
+		<%= f.label :answer3 %><br/>
+		<%= f.text_area :answer3 %>
+	</div>
+		<div class="field">
+		<%= f.label :answer4 %><br/>
+		<%= f.text_area :answer4 %>
+	</div>
+	<div class="field">
+		<%= f.label :resource %><br/>
+		<%= f.text_field :resource %>
+	</div>
+	<div class="field">
+		<%= f.label :correct_answer %><br/>
+		<select name="completed_task[correct_answer]">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="3">3</option>
+			<option value="4">4</option>
+		</select>
+	</div>
+	<div class="field">
+		<%= f.label :points %><br/>
+		<%= f.text_field :points %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save" %>
+	</div>
+<% end %>

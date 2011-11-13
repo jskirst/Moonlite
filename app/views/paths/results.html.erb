@@ -1,0 +1,21 @@
+<% answer_status = ["Wrong", "Correct", "Skipped"] %>
+<p>Congratulations! You completed this path.</p>
+<% if !@answers.empty? %>
+	<p>Your score was <%= @correct_answers.to_s + "/" + @total_answers.to_s %></p>
+	<p>Your provided the following answers:</p>
+	<ol>
+	<% @answers.each do |answer| %>
+		<li>
+			<dl>
+				<dt>Question:</dt>
+				<dd><%= answer.task.question %></dd>
+				<dt>Answer:</dt>
+				<dd><%= answer.task.describe_correct_answer %></dd>
+				<dt>Your answer:</dt>
+				<dd><%= answer_status[answer.status_id] %></dd>
+			</dl>
+		</li>
+	<% end %>
+<% end %>
+</ol>
+<%= link_to "Go back", @path %>

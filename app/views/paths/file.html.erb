@@ -1,0 +1,5 @@
+<h1>Upload File</h1>
+<%= form_for @path, :url=>{:controller => "paths", :action => "upload"}, :html => { :method => "post", :multipart => true } do |f| %>
+	<%= f.file_field :file %>
+	<%= f.submit "Submit" %>
+<% end %>

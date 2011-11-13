@@ -1,20 +1,32 @@
 SampleApp::Application.routes.draw do
 
-	resources :users
 	resources :sessions, :only => [:new, :create, :destroy]
+	resources :users do
+		member do
+			get :accept
+			put :join
+		end
+	end
+	resources :companies
+	resources :company_users do
+		member do
+			get :verify
+		end
+	end
     resources :paths do
 		member do
 			get :continue
+			get :file
+			post :upload
 		end
 	end
-	resources :tasks
 	resources :enrollments
+	resources :tasks
 	resources :completed_tasks
 	
 	root 				:to => "pages#home"
 	
 	match '/signup',	:to => 'users#new'
-	
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
 	
@@ -23,7 +35,7 @@ SampleApp::Application.routes.draw do
 	match '/help',		:to => 'pages#help'
 	match '/all_paths',	:to => 'pages#all_paths'
 	match '/news',		:to => 'pages#news'
-	match '/landing',		:to => 'pages#landing'
+	match '/landing',	:to => 'pages#landing'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

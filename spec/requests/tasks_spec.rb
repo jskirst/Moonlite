@@ -26,10 +26,10 @@ describe "Tasks" do
 					click_link @path_name
 					click_link "Add a question"
 					fill_in :task_question, :with => ""
-					fill_in :task_answer, :with => ""
-					fill_in :task_rank, :with => ""
+					fill_in :task_answer1, :with => ""
+					fill_in :task_points, :with => ""
 					click_button
-					response.should render_template('tasks/new')
+					response.should render_template("tasks/task_form")
 					response.should have_selector("div#error_explanation")
 				end.should_not change(Task, :count)
 			end
@@ -42,8 +42,8 @@ describe "Tasks" do
 					click_link @path_name
 					click_link "Add a question"
 					fill_in :task_question, :with => "Test question"
-					fill_in :task_answer, :with => "Test answer"
-					fill_in :task_rank, :with => "1"
+					fill_in :task_answer1, :with => "Test answer"
+					fill_in :task_points, :with => "1"
 					click_button
 					response.should render_template('paths/show')
 					response.should have_selector("div.success")
@@ -58,12 +58,12 @@ describe "Tasks" do
 					click_link @path_name
 					click_link "Add a question"
 					fill_in :task_question, :with => ""
-					fill_in :task_answer, :with => ""
-					fill_in :task_rank, :with => ""
+					fill_in :task_answer1, :with => ""
+					fill_in :task_points, :with => ""
 					click_button
 					fill_in :task_question, :with => "Test question"
-					fill_in :task_answer, :with => "Test answer"
-					fill_in :task_rank, :with => "1"
+					fill_in :task_answer1, :with => "Test answer"
+					fill_in :task_points, :with => "1"
 					click_button
 					response.should render_template('paths/show')
 					response.should have_selector("div.success")

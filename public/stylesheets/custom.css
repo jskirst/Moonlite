@@ -193,3 +193,13 @@ article {
 	font-size: 16px;
 	font-weight: bold;
 }
+
+/* User Profile */
+.user_profile h2 {
+	font-size: 22px;
+}.user_profile section {
+	margin-top: 0px;
+}.user_profile p {
+	font-size: 18px;
+	margin-bottom: 0px;
+}

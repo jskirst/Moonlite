@@ -1,6 +1,7 @@
+require 'csv'
 class PathsController < ApplicationController
-	before_filter :authenticate, :only => [:new, :create, :destroy, :show, :continue]
-	before_filter :authorized_user, :only => :destroy
+	before_filter :authenticate
+	before_filter :authorized_user, :only => [:destroy, :file, :upload]
 	
 	def new
 		@path = Path.new
@@ -21,16 +22,69 @@ class PathsController < ApplicationController
 	def show
 		@path = Path.find(params[:id])
 		@title = @path.name
-		@tasks = @path.tasks
+		@remaining_tasks = @path.tasks_until_next_rank(current_user)
+		@current_rank = @path.get_user_rank(current_user)
+		@next_rank = @path.get_user_rank(current_user) + 1
 	end
 	
 	def continue
 		@path = Path.find(params[:id])
 		if current_user.enrolled?(@path)
-			@title = @path.name
-			@task = @path.next_task(current_user)
+			@count = Integer(params[:count] || 0)
+			@max = Integer(params[:max] || 5)
+			@quiz_session = params[:quiz_session] || DateTime.now
+			@quiz_session = Time.parse(@quiz_session.to_s)
+			remaining_tasks = @path.remaining_tasks(current_user)
+			
+			if @max > remaining_tasks
+				@max = remaining_tasks
+			end
+			
+			if @count >= @max
+				@title = "Results"
+				@answers = CompletedTask.find(:all, :conditions => ["user_id=? AND quiz_session=?", current_user.id, @quiz_session])
+				if !@answers.empty?
+					@correct_answers = 0
+					@total_answers = 0
+					@answers.each do |a|
+						if a.status_id < 2
+							@total_answers += 1
+						end
+						if a.status_id == 1
+							@correct_answers += 1
+						end
+					end
+				end
+				render "results"
+			else
+				@title = @path.name
+				@task = @path.next_task(current_user)
+			end
 		else
 			redirect_to @path
+		end
+	end
+	
+	def file
+		@title = "File"
+	end
+	
+	def upload
+		if !params[:path][:file].nil?
+			@parsed_file = CSV.parse(params[:path][:file])
+			if @parsed_file.length <= 1
+				flash.now[:error] = "There was an error processing your file. You must have at least two rows in your file."
+				render 'file'
+			else
+				@row_count = 0
+				@parsed_file.each  do |row|
+					@row_count += 1
+				end
+				flash.now[:message] = "CSV Import Successful, #{@row_count} lines found."
+			end
+		else
+			flash.now[:error] = "Please provide a file for import."
+			render 'file'
 		end
 	end
 	

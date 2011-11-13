@@ -1,16 +1,22 @@
-<% if @task.nil? %>
-	<p>Congratulations! You completed this path.</p>
-<% else %>
-	<section class="path-question">
-		<p><%= @task.question %></p>
-	</section>
-	<%= form_for current_user.completed_tasks.build(:task_id => @task.id) do |f| %>
-		<%= f.hidden_field :task_id %>
-		<div class="field">
-			<%= f.label "Answer" %><br/>
-			<textarea id="completed_task_answer" name="completed_task[answer]"></textarea>
-		<div class="actions">
-			<%= f.submit "Next" %>
-		</div>
-	<% end %>
+<section class="path-question">
+	<p>Questions left: <%= @max %></p>
+	<p><%= @task.question %></p>
+</section>
+<%= form_for current_user.completed_tasks.build(:task_id => @task.id) do |f| %>
+	<%= f.hidden_field :task_id %>
+	<%= f.hidden_field :max, :value => @max %>
+	<%= f.hidden_field :count, :value => @count %>
+	<%= f.hidden_field :quiz_session, :value => @quiz_session %>
+	<div class="field">
+		<%= f.label "Answer" %><br/>
+		<ol>
+			<li><input id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1"><%= @task.answer1 %></input></li>
+			<li><input id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2"><%= @task.answer2 %></input></li>
+			<li><input id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3"><%= @task.answer3 %></input></li>
+			<li><input id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4"><%= @task.answer4 %></input></li>
+		</ol>
+	</div>
+	<div class="actions">
+		<%= f.submit "Next" %>
+	</div>
 <% end %>

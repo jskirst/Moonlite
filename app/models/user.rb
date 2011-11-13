@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 	has_many :enrolled_paths, :through => :enrollments, :source => :path
 	has_many :completed_tasks, :dependent => :destroy
 	has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
+	#has_many :company, :through => :company_users, :source => :company_users
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	
@@ -56,9 +57,20 @@ class User < ActiveRecord::Base
 	def completed?(task)
 		completed_tasks.find_by_task_id(task.id)
 	end
-
-	def complete!(task)
-		completed_tasks.create!(:task_id => task.id)
+	
+	def admin?
+		return self.admin
+	end
+	
+	def total_earned_points(path = nil)
+		total_earned_points = 0
+		cp = completed_tasks.find_all_by_status_id(1)
+		cp.each do |t|
+			if path.nil? || t.task.path_id == path.id
+				total_earned_points += t.task.points
+			end
+		end
+		return total_earned_points
 	end
 	
 	private

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Users" do
+describe "User" do
 	before(:each) do
 		@attr = { 
 			:name => "Example User", 
@@ -41,7 +41,7 @@ describe "Users" do
 			end
 		end
 		
-		it "should reject valid emails" do
+		it "should reject invalid emails" do
 			emails = %w[user@example,com THE_USER_AT.foo.bar.org first.last@foo.]
 			emails.each do |email|
 				user = User.new(@attr.merge(:email => email))
@@ -130,9 +130,23 @@ describe "Users" do
 			@user.should_not be_admin
 		end
 		
-		it "should be convertible to an admin" do
+		it "should be convertible to true" do
 			@user.toggle!(:admin)
 			@user.should be_admin
+		end
+		
+		it "should not change the password when toggled" do
+			lambda do
+				@user.toggle!(:admin)
+				@user.reload
+			end.should_not change(@user, :encrypted_password)
+		end
+		
+		it "should not change the salt when toggled" do
+			current_salt = @user.salt
+			@user.toggle!(:admin)
+			@user.reload
+			@user.salt.should == current_salt
 		end
 	end
 	
@@ -213,8 +227,8 @@ describe "Users" do
 		before(:each) do
 			@user = User.create!(@attr)
 			@path = Factory(:path, :user => @user)
-			@task1 = Factory(:task, :path => @path, :rank => 1)
-			@task2 = Factory(:task, :path => @path, :rank => 2)
+			@task1 = Factory(:task, :path => @path, :points => 1)
+			@task2 = Factory(:task, :path => @path, :points => 2)
 		end
 		
 		it "should have a completed tasks attribute" do
@@ -225,14 +239,16 @@ describe "Users" do
 			@user.should respond_to(:completed?)
 		end
 		
-		it "should respond to complete! method" do
-			@user.should respond_to(:complete!)
-		end
+		#TODO: REMOVE
+		# it "should respond to complete! method" do
+			# @user.should respond_to(:complete!)
+		# end
 		
-		it "should in compelete a task" do
-			@user.complete!(@task1)
-			@user.should be_completed(@task1)
-		end
+		#TODO: REMOVE
+		# it "should compelete a task" do
+			# @user.complete!(@task1)
+			# @user.should be_completed(@task1)
+		# end
 		
 		it "should not say enrolled if it isn't" do
 			@user.should_not be_completed(@task2)

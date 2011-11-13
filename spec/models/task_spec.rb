@@ -5,13 +5,50 @@ describe "Tasks" do
 		@user = Factory(:user)
 		@path = Factory(:path, :user => @user)
 		@attr = { :question => "This is a question",
-			:answer => "This is an answer.",
+			:answer1 => "This is an answer.",
+			:answer2 => nil,
+			:answer3 => nil,
+			:answer4 => nil,
 			:resource => "http://www.wikipedia.com",
-			:rank => 1 }
+			:points => 1 }
 	end
 	
 	it "should create a new instance given valid attributes" do
 		@path.tasks.create!(@attr)
+	end
+	
+	describe "attributes" do
+		before(:each) do
+			@task = @path.tasks.create(@attr)
+		end
+		
+		it "should include a question" do
+			@task.should respond_to(:question)
+		end		
+		
+		it "should include a points" do
+			@task.should respond_to(:points)
+		end
+		
+		it "should include an answer1" do
+			@task.should respond_to(:answer1)
+		end		
+		
+		it "should include an answer2" do
+			@task.should respond_to(:answer2)
+		end
+		
+		it "should include an answer3" do
+			@task.should respond_to(:answer3)
+		end
+		
+		it "should include an answer4" do
+			@task.should respond_to(:answer4)
+		end
+		
+		it "should include a correct_answer" do
+			@task.should respond_to(:correct_answer)
+		end
 	end
 	
 	describe "path associations" do
@@ -35,16 +72,36 @@ describe "Tasks" do
 			Task.new(@attr).should_not be_valid
 		end
 		
-		it "should require non-blank question, rank and answer" do
-			@user.paths.build(:question => "", :answer => "", :rank => nil).should_not be_valid
+		it "should require non-blank question" do
+			@user.paths.build(@attr.merge(:question => "")).should_not be_valid
 		end
 		
-		it "should reject long questions and answers" do
-			@user.paths.build(:question => "a"*256, :answer => "a"*256, :rank => 1).should_not be_valid
+		it "should require non-blank answer1" do
+			@user.paths.build(@attr.merge(:answer1 => "")).should_not be_valid
 		end
 		
-		it "should a reject rank thats too high" do
-			@user.paths.build(:question => @attr[:question], :answer => @attr[:answer], :rank => 51).should_not be_valid
+		it "should require non-nil points" do
+			@user.paths.build(@attr.merge(:points => nil)).should_not be_valid
+		end		
+		
+		it "should require non-nil correct_answer" do
+			@user.paths.build(@attr.merge(:correct_answer => nil)).should_not be_valid
+		end
+		
+		it "should reject long questions" do
+			@user.paths.build(@attr.merge(:question => "a"*256)).should_not be_valid
+		end
+		
+		it "should reject long answers" do
+			@user.paths.build(@attr.merge(:answer1 => "a"*256)).should_not be_valid
+		end
+		
+		it "should a reject points value thats too high" do
+			@user.paths.build(@attr.merge(:points => 51)).should_not be_valid
+		end
+		
+		it "should a reject out of range correct answers" do
+			@user.paths.build(@attr.merge(:correct_answer => 5)).should_not be_valid
 		end
 	end
 end

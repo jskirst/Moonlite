@@ -6,6 +6,8 @@ class TasksController < ApplicationController
 		@task = Task.new
 		@title = "New Task"
 		@path_id = params[:path]
+		@form_title = "New"
+		render "tasks/task_form"
 	end
 	
 	def create
@@ -15,8 +17,10 @@ class TasksController < ApplicationController
 			flash[:success] = "Task created."
 			redirect_to @path
 		else
+			@title = "Edit"
+			@form_title = @title
 			@path_id = @path.id
-			render 'new'
+			render "tasks/task_form"
 		end
 	end
 	
@@ -27,7 +31,10 @@ class TasksController < ApplicationController
 	
 	def edit
 		@title = "Edit"
+		@form_title = "New"
 		@task = Task.find(params[:id])
+		@path_id = @task.path_id
+		render "task_form"
 	end
 	
 	def update
@@ -37,7 +44,8 @@ class TasksController < ApplicationController
 			redirect_to @task
 		else
 			@title = "Edit"
-			render 'edit'
+			@form_title = @title
+			render "tasks/task_form"
 		end
 	end
 	

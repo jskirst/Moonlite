@@ -10,16 +10,32 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111009221820) do
+ActiveRecord::Schema.define(:version => 20111108030225) do
+
+  create_table "companies", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "company_users", :force => true do |t|
+    t.string   "email"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.string   "token1"
+    t.string   "token2"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "completed_tasks", :force => true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "status_id",    :default => 0
+    t.datetime "quiz_session"
   end
-
-  add_index "completed_tasks", ["user_id", "task_id"], :name => "index_completed_tasks_on_user_id_and_task_id"
 
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
@@ -44,12 +60,16 @@ ActiveRecord::Schema.define(:version => 20111009221820) do
 
   create_table "tasks", :force => true do |t|
     t.string   "question"
-    t.string   "answer"
+    t.string   "answer1"
     t.string   "resource"
-    t.integer  "rank"
+    t.integer  "points"
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "answer2"
+    t.string   "answer3"
+    t.string   "answer4"
+    t.integer  "correct_answer", :default => 1
   end
 
   add_index "tasks", ["path_id"], :name => "index_tasks_on_path_id"

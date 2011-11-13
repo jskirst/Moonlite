@@ -1,0 +1,10 @@
+<h1>All companies</h1>
+<p><%= link_to "Add a new company", new_company_path %></p>
+
+<%= will_paginate %>
+
+<ul class='companies'>
+	<%= render @companies %>
+</ul>
+
+<%= will_paginate %>

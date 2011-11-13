@@ -2,16 +2,38 @@ class UsersController < ApplicationController
 	before_filter :authenticate, :only => [:edit, :update, :index, :destroy]
 	before_filter :correct_user, :only => [:edit, :update]
 	before_filter :admin_user, :only => [:destroy, :index]
+	before_filter :admin_user_rights, :only => [:create, :update]
 	
 	def new
 		@user = User.new
 		@title = "Sign up"
 	end
+	
+	def accept
+		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", params[:id]])
+		if @company_user.nil?
+			redirect_to root_path
+		else
+			@company = Company.find_by_id(@company_user.company_id)
+			@title = @company.name
+			@user = User.new
+			render 'new'
+		end
+	end
   
 	def show
 		@user = User.find(params[:id])
-		@paths = @user.paths.paginate(:page => params[:page])
-		@title = @user.name
+		if @user.nil?
+			redirect_to root_path
+		else
+			@enrolled_paths = @user.enrolled_paths.paginate(:page => params[:page])
+			
+			@company_user = CompanyUser.find_by_user_id(@user.id)
+			if !@company_user.nil?
+				@company = @company_user.company
+			end
+			@title = @user.name
+		end
 	end
 	
 	def index
@@ -20,15 +42,37 @@ class UsersController < ApplicationController
 	end
 		
 	def create
+		token1 = params[:user][:token1]
+		if !token1.nil?
+			@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", token1])
+			if @company_user.nil?
+				redirect_to root_path and return
+			end
+		end
+		
 		@user = User.new(params[:user])
 		if @user.save
+			@user.reload
 			sign_in @user
-			flash[:success] = "Welcome to the sample app!"
-			redirect_to @user
+			if @company_user.nil?
+				flash[:success] = "Welcome to the sample app!"
+				redirect_to @user
+			else
+				@company_user.user_id = @user.id
+				@company_user.save!
+				#@company_user.send_verification_email
+				flash[:success] = "Welcome to the sample app!"
+				redirect_to @user
+			end
 		else
 			@title = "Sign up"
 			render 'new'
 		end
+	end
+	
+	def verify
+		@company_user = CompanyUser.find(:first, :conditions => ["token2 = ?", params[:id]])
+		@title = "User Verification"
 	end
 	
 	def edit
@@ -60,5 +104,12 @@ class UsersController < ApplicationController
 		
 		def admin_user
 			redirect_to(root_path) unless current_user.admin?
+		end
+		
+		def admin_user_rights
+			if params[:user][:admin] == true && !@current_user.admin?
+				redirect_to root_path
+				flash[:error] = "Only administrators can make other users administrators."
+			end
 		end
 end

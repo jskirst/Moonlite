@@ -1,44 +1,47 @@
 class CompletedTasksController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user, :only => :destroy
-	before_filter :correct_answer?, :only => :create
+	before_filter :enrolled_user?
 	
-	def create	
-		@completed_task = current_user.completed_tasks.build(params[:completed_task])
+	#TODO: Eliminate redirect, move entirely to path controller
+	def create
+		resp = params[:completed_task]
+		resp[:quiz_session] = resp[:quiz_session] || DateTime.now
+		answer = resp[:answer]
+		
+		if answer.nil? || answer == ""
+			status_id = 2
+		elsif Integer(answer) == Integer(@task.correct_answer)
+			status_id = 1
+		else
+			status_id = 0
+		end
+		
+		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))		
 		if @completed_task.save
-			flash[:success] = "Correct!"
-			redirect_to continue_path_path :id => @completed_task.task.path
+			set_flash_message(status_id, answer, @task.correct_answer)
+			redirect_to continue_path_path :id => @completed_task.task.path, :max => resp[:max], :count => resp[:count], :quiz_session => resp[:quiz_session]
 		else
 			redirect_to root_path
 		end
 	end
 	
-	def destroy
-		@completed_task = CompletedTask.find_by_id(params[:id])
-		@path = @completed_task.task.path
-		@completed_task.destroy
-		redirect_to @path
-	end
-	
 	private
-		def authorized_user
-			@completed_task = CompletedTask.find(params[:id])
-			redirect_to root_path unless current_user?(@completed_task.user)
-		end
-		
-		#TEST
-		def correct_answer?
-			task_id = params[:completed_task][:task_id]
-			if task_id.nil?
-				redirect_to root_path and return
-			end
-			
+		def enrolled_user?
 			@task = Task.find_by_id(params[:completed_task][:task_id])
 			if @task.nil?
-				redirect_to root_path  and return
-			elsif @task.answer != params[:completed_task][:answer]
-				flash[:error] = "Incorrect answer"
-				redirect_to continue_path_path :id => @task.path
+				redirect_to root_path
+			else
+				redirect_to root_path unless current_user.enrolled?(@task.path)
+			end
+		end
+		
+		def set_flash_message(status_id, user_answer, correct_answer)
+			if status_id == 0
+				flash[:error] = "Incorrect. You answered #{user_answer}. The correct answer was #{correct_answer}."
+			elsif status_id == 1
+				flash[:success] = "Correct!"
+			else
+				flash[:notice] = "Question skipped."
 			end
 		end
 end

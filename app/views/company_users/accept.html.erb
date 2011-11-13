@@ -1,0 +1,25 @@
+<h1>Join your company on Moonlite!</h1>
+<p>Your login email is: <%= @company_user.email %></p>
+<%= form_for @company_user do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :token1, {:value => @company_user.token1} %>
+	<div class="field">
+		<%= f.label :first_name %><br/>
+		<%= f.text_field :first_name %>
+	</div>
+	<div class="field">
+		<%= f.label :last_name %><br/>
+		<%= f.text_field :last_name %>
+	</div>
+	<div class="field">
+		<%= f.label :password %><br/>
+		<%= f.password_field :password %>
+	</div>
+	<div class="field">
+		<%= f.label :password_confirmation, "Confirm Password" %><br/>
+		<%= f.password_field :password_confirmation %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Submit" %>
+	</div>
+<% end %>

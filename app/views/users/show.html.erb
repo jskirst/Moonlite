@@ -1,15 +1,22 @@
-<table class='profile' summary='Profile Information'>
-	<tr>
-		<td class='Main'>
-			<h1>
-				<%= gravatar_for @user %>
-				<%= @user.name %>
-			</h1>
-		</td>
-		<td>
-			<strong>Name:</strong><%= @user.name %><br/>
-			<strong>URL:</strong><%= link_to user_path(@user), @user %>
-			<strong>Paths:</strong><%= @user.paths.count %>
-		</td>
-	</tr>
-</table>
+<section class="user_profile">
+	<h1>
+		<%= gravatar_for @user %>
+		<%= @user.name %>
+	</h1>
+	<section>
+		<% if !@company.nil? %>
+		<p>Company: <%= link_to @company.name, @company %></p>
+		<% end %>
+		<p><%= @user.name %> has earned <strong><%= @user.total_earned_points %></strong> total points.</p>
+	</section>
+	<section>
+		<h2>Enrolled Paths</h2>
+		<ul>
+			<% @enrolled_paths.each do |p| %>
+			<li>
+				<p><%= link_to p.name, p %> - <strong><%= @user.total_earned_points(p) %></strong> Points Earned</p>
+			</li>
+			<% end %>
+		</ul>
+	</section>
+</section>

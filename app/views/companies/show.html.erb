@@ -1,0 +1,7 @@
+<h1><%= @company.name %></h1>
+<ol>
+	<% @company_users.each do |cu| %>
+	<li><%= cu.user.name %></li>
+	<% end %>
+</ol>
+<%= link_to "Add user", {:controller => "company_users", :action => "new", :company => @company } %>
