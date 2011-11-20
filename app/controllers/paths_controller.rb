@@ -7,7 +7,7 @@ class PathsController < ApplicationController
 		@path = Path.new
 		@title = "New Path"
 	end
-	
+
 	def create
 		@path = current_user.paths.build(params[:path])
 		if @path.save
