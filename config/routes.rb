@@ -23,6 +23,7 @@ SampleApp::Application.routes.draw do
 	resources :enrollments
 	resources :tasks
 	resources :completed_tasks
+	resources :info_resources
 	
 	root 				:to => "pages#home"
 	

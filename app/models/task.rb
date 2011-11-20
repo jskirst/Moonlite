@@ -22,7 +22,7 @@ class Task < ActiveRecord::Base
 
 	validates :correct_answer, 
 		:presence 		=> true,
-		:numericality	=> { :less_than => 51 }
+		:numericality	=> { :less_than => 5 }
 	
 	validates :points, 
 		:presence 		=> true,

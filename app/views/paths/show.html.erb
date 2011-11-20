@@ -12,7 +12,16 @@
 		<% if @path.user_id == current_user.id %>
 			<p><%= link_to "Add a question", {:controller => "tasks", :action => "new", :path => @path } %></p>
 			<p><%= link_to "Upload a list of questions", {:controller => "paths", :action => "file", :id => @path.id }%></p>
+			<p><%= link_to "Add a resource", {:controller => "info_resources", :action => "new", :path => @path } %></p>
 		<% end %>
+		<ol>
+		<% @info_resources.each do |resource| %>
+			<li>
+				<p><%= resource.description %></p>
+				<p><%= resource.link %></p>
+			</li>
+		<% end %>
+		</ol>
 	</section>
 	<% if current_user.enrolled?(@path) %>
 	<section id="progress">

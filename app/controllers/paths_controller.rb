@@ -25,6 +25,7 @@ class PathsController < ApplicationController
 		@remaining_tasks = @path.tasks_until_next_rank(current_user)
 		@current_rank = @path.get_user_rank(current_user)
 		@next_rank = @path.get_user_rank(current_user) + 1
+		@info_resources = @path.info_resources
 	end
 	
 	def continue

@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-	before_filter :authenticate, :only => [:create, :destroy, :show]
+	before_filter :authenticate
 	before_filter :authorized_user, :only => :destroy
 	
 	def new

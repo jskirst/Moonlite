@@ -28,6 +28,12 @@ Factory.define :enrollment do |enrollment|
 	enrollment.association :user
 end
 
+Factory.define :info_resource do |info_resource|
+	info_resource.association :path
+	info_resource.description "This is a description of the resource."
+	info_resource.link "http://www.testlink.com"
+end
+
 Factory.define :company_user do |company_user|
 	company_user.email "test@test.com"
 	company_user.user_id nil

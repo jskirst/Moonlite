@@ -160,22 +160,19 @@ describe PathsController do
 			response.should have_selector("p", :content => @path.description)
 		end
 		
-		it "should show the users correct points" 
-		# do
-			# t1 = Factory(:task, :path => @path, :question => "Q1", :answer => "A1", :points => 1)
-			# t2 = Factory(:task, :path => @path, :question => "Q2", :answer => "A2", :points => 2)
-			# t2 = Factory(:task, :path => @path, :question => "Q3", :answer => "A3", :points => 3)
-		# end
-		
-		it "should have a link to show the paths tasks"
-			# t1 = Factory(:task, :path => @path, :question => "Question1", :answer => "Ehhh.", :points => 1)
-			# t2 = Factory(:task, :path => @path, :question => "Question2", :answer => "Ehhh.", :points => 1)
-			# get :show, :id => @path
-			# response.should have_selector("span", :content => t1.question)
-			# response.should have_selector("span", :content => t1.answer)
-			# response.should have_selector("span", :content => t2.question)
-			# response.should have_selector("span", :content => t2.answer)
-		# end
+		it "should show all the resources for the path" do
+			t1 = Factory(:info_resource, :path => @path, :description => "Q1", :link => "http://www.youtube.com")
+			t2 = Factory(:info_resource, :path => @path, :description => "Q2", :link => "http://www.google.com")
+			t3 = Factory(:info_resource, :path => @path, :description => "Q3", :link => "http://www.facebook.com")
+			
+			get :show, :id => @path
+			response.should have_selector("p", :content => t1.description)
+			response.should have_selector("p", :content => t1.link)
+			response.should have_selector("p", :content => t2.description)
+			response.should have_selector("p", :content => t2.link)			
+			response.should have_selector("p", :content => t3.description)
+			response.should have_selector("p", :content => t3.link)
+		end
 	end
 
 	describe "GET 'continue'" do

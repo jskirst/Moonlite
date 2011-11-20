@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108030225) do
+ActiveRecord::Schema.define(:version => 20111119234157) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -47,6 +47,16 @@ ActiveRecord::Schema.define(:version => 20111108030225) do
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "info_resources", :force => true do |t|
+    t.string   "description"
+    t.string   "link"
+    t.integer  "path_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "info_resources", ["path_id"], :name => "index_info_resources_on_path_id"
 
   create_table "paths", :force => true do |t|
     t.string   "name"

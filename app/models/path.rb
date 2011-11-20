@@ -4,6 +4,7 @@ class Path < ActiveRecord::Base
 	belongs_to :user
 	has_many :tasks, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
+	has_many :info_resources, :dependent => :destroy
 	
 	validates :name, 
 		:presence => true,
@@ -16,10 +17,6 @@ class Path < ActiveRecord::Base
 	
 	default_scope :order => 'paths.created_at DESC'
 	
-	#should return the lowest pointsing task belonging 
-	#to the path that is not found among the completed tasks 
-	#for the current user
-	# TEST
 	def next_task(user, previous_question = nil)
 		tasks.each do |t|
 			if !user.completed?(t)
