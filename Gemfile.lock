@@ -115,14 +115,6 @@ GEM
       rack (>= 1.0)
       rack-test (>= 0.5.3)
     will_paginate (3.0.2)
-    win32-api (1.4.8-x86-mingw32)
-    win32-process (0.6.5)
-      windows-pr (>= 1.1.2)
-    windows-api (0.4.0)
-      win32-api (>= 1.4.5)
-    windows-pr (1.2.1)
-      win32-api (>= 1.4.5)
-      windows-api (>= 0.3.0)
 
 PLATFORMS
   x86-mingw32
@@ -139,4 +131,3 @@ DEPENDENCIES
   sqlite3-ruby
   webrat
   will_paginate
-  win32-process

@@ -4,7 +4,6 @@ gem 'rails'
 gem 'sqlite3-ruby', :require => 'sqlite3'
 gem 'gravatar_image_tag'
 gem 'will_paginate'
-gem 'spork'
 gem 'jquery-rails', '>= 1.0.12'
 
 group :development do
@@ -14,6 +13,7 @@ group :development do
 end
 
 group :test do
+	gem 'spork'
 	gem 'webrat'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
