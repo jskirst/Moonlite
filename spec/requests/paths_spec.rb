@@ -15,8 +15,8 @@ describe "Paths" do
 				lambda do
 					visit all_paths_path
 					click_link "Create new Path"
-					fill_in :path_name, :with => ""
-					fill_in :path_description, :with => ""
+					fill_in "Name", :with => ""
+					fill_in "Description", :with => ""
 					click_button
 					response.should render_template('paths/new')
 					response.should have_selector("div#error_explanation")
@@ -31,8 +31,8 @@ describe "Paths" do
 					description = "DESCRIPTION"
 					visit all_paths_path
 					click_link "Create new Path"
-					fill_in :path_name, :with => name
-					fill_in :path_description, :with => description
+					fill_in "Name", :with => name
+					fill_in "Description", :with => description
 					click_button
 					# TODO
 					# response.should render_template('pages/home')

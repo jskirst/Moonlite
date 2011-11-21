@@ -9,10 +9,9 @@ describe "Users" do
 					fill_in "Name",				:with => ""
 					fill_in "Email",			:with => ""
 					fill_in "Password",			:with => ""
-					fill_in "Confirm Password",	:with => ""
-					click_button
-					response.should render_template('users/new')
-					response.should have_selector("div#error_explanation")
+					fill_in "Confirm password",	:with => ""
+					click_button "Sign up"
+					response.should have_selector("div#error_explanation", :content => "Name can't be blank")
 				end.should_not change(User, :count)
 			end
 		end
@@ -22,13 +21,11 @@ describe "Users" do
 				lambda do
 					visit signup_path
 					fill_in "Name",				:with => "Eddard Stark"
-					fill_in "Email",			:with => "ned@stark.com"
+					fill_in "Email",			:with => "random@stark.com"
 					fill_in "Password",			:with => "winteriscoming"
-					fill_in "Confirm Password",	:with => "winteriscoming"
-					click_button
-					response.should render_template('users/show')
-					response.should have_selector("div.flash.success",
-													:content => "Welcome")
+					fill_in "Confirm password",	:with => "winteriscoming"
+					click_button "Sign up"
+					response.should have_selector("div.flash.success",:content => "Welcome")
 				end.should change(User, :count).by(1)
 			end
 		end
