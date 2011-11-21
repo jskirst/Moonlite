@@ -133,6 +133,7 @@ describe UsersController do
 	describe "Get 'show'" do
 		before(:each) do
 			@user = Factory(:user)
+			test_sign_in(@user)
 			@other_user = Factory(:user, :email => "other_user@email.com")
 		end
 		

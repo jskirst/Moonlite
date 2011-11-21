@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-	before_filter :authenticate, :only => [:edit, :update, :index, :destroy]
-	before_filter :correct_user, :only => [:edit, :update]
-	before_filter :admin_user, :only => [:destroy, :index]
-	before_filter :admin_user_rights, :only => [:create, :update]
+	before_filter :check_environment, :except => [:accept, :show, :index, :create, :verify, :edit, :update, :destroy]
+	before_filter :authenticate, :except => [:new, :create, :accept, :verify]
+	before_filter :correct_user, :except => [:new, :accept, :create, :verify, :show, :index, :destroy]
+	before_filter :admin_user, :except => [:new, :accept, :verify, :create, :show, :edit, :update]
 	
 	def new
 		@user = User.new
@@ -97,6 +97,13 @@ class UsersController < ApplicationController
 	end
 	
 	private
+		def check_environment
+			if Rails.env.production?
+				flash[:notice] = "We are not currently taking signups right now. Check back soon!"
+				redirect_to landing_path
+			end
+		end
+	
 		def correct_user
 			@user = User.find(params[:id])
 			redirect_to root_path unless current_user?(@user)
@@ -104,12 +111,5 @@ class UsersController < ApplicationController
 		
 		def admin_user
 			redirect_to(root_path) unless current_user.admin?
-		end
-		
-		def admin_user_rights
-			if params[:user][:admin] == true && !@current_user.admin?
-				redirect_to root_path
-				flash[:error] = "Only administrators can make other users administrators."
-			end
 		end
 end
