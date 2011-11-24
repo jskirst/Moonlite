@@ -14,6 +14,11 @@ describe PathsController do
 			response.should redirect_to(signin_path)
 		end
 		
+		it "should deny access to 'edit'" do
+			get :new
+			response.should redirect_to(signin_path)
+		end
+		
 		it "should deny access to 'delete'" do
 			delete :destroy, :id => 1
 			response.should redirect_to(signin_path)
@@ -52,34 +57,100 @@ describe PathsController do
 		end
 	end
 	
+	describe "GET 'edit'" do
+		before(:each) do
+			@user = Factory(:user, :email => "our_user@t.com")
+			test_sign_in(@user)
+		end
+		
+		describe "not as path creator" do
+			before(:each) do
+				@other_user = Factory(:user, :email => "other_user@t.com")
+				@path = Factory(:path, :user => @other_user)
+			end
+			
+			it "should not be successful" do
+				get :edit, :id => @path
+				response.should_not be_success
+			end
+			
+			it "should redirect to root_path" do
+				get :edit, :id => @path
+				response.should redirect_to root_path
+			end
+		end
+		
+		describe "as path creator" do
+			before(:each) do
+				@path = Factory(:path, :user => @user)
+			end
+			
+			it "should be successful" do
+				get :edit, :id => @path
+				response.should be_success
+			end
+
+			it "should have right title" do
+				get :edit, :id => @path
+				response.should have_selector("title", :content => "Edit")
+			end
+		end
+	end
+	
 	describe "POST 'create'" do
 		before(:each) do
 			@user = Factory(:user)
 			test_sign_in(@user)
+			@attr = { :name => "Path Name", :description => "Path Description this is" }
 		end
-		
+
 		describe "failure" do
-			before(:each) do
-				@attr = { :name => "", :description => "" }
-			end
-		
-			it "should not create a path" do
-				lambda do
-					post :create, :path => @attr  
-				end.should_not change(Path, :count)
+			describe "with empty values" do
+				before(:each) do
+					@attr = @attr.merge(:name => "", :description => "")
+				end
+			
+				it "should not create a path" do
+					lambda do
+						post :create, :path => @attr  
+					end.should_not change(Path, :count)
+				end
+				
+				it "should send you back to the new page" do
+					post :create, :path => @attr
+					response.should render_template("paths/new")
+				end
+				
+				it "should display an error message" do
+					post :create, :path => @attr
+					response.should have_selector("div#error_explanation")
+				end
 			end
 			
-			it "should send you back to the new page" do
-				post :create, :path => @attr
-				response.should render_template("paths/new")
+			describe "with values that are too long" do
+				before(:each) do
+					@attr = @attr.merge(:name => "a"*81, :description => "a"*501)
+				end
+			
+				it "should not create a path" do
+					lambda do
+						post :create, :path => @attr  
+					end.should_not change(Path, :count)
+				end
+				
+				it "should send you back to the new page" do
+					post :create, :path => @attr
+					response.should render_template("paths/new")
+				end
+				
+				it "should display an error message" do
+					post :create, :path => @attr
+					response.should have_selector("div#error_explanation")
+				end
 			end
 		end
 		
 		describe "success" do
-			before(:each) do
-				@attr =@attr = { :name => "Test path", :description => "This is a test." }
-			end
-			
 			it "should create a path" do
 				lambda do
 					post :create, :path => @attr
@@ -94,6 +165,107 @@ describe PathsController do
 			it "should have a flash message" do
 				post :create, :path => @attr
 				flash[:success].should =~ /path created/i
+			end
+		end
+	end
+	
+	describe "PUT 'update'" do
+		before(:each) do
+			@user = Factory(:user)
+			test_sign_in(@user)
+			@attr = { :name => "New Path Name", :description => "New Path Description this is" }
+		end
+
+		describe "not as path creator" do
+			before(:each) do
+				@other_user = Factory(:user, :email => "other_user@t.com")
+				@path = Factory(:path, :user => @other_user)
+			end
+			
+			it "should not be successful" do
+				put :update, :id => @path, :path => @attr
+				response.should_not be_success
+			end
+			
+			it "should redirect to root_path" do
+				put :update, :id => @path, :path => @attr
+				response.should redirect_to root_path
+			end
+			
+			it "should have a flash error message" do
+				put :update, :id => @path, :path => @attr
+				flash[:error].should =~ /do not have the ability/i
+			end
+		end
+		
+		describe "as path creator" do
+			before(:each) do
+				@path = Factory(:path, :user => @user)
+			end
+			
+			describe "failure" do
+				describe "with empty values" do
+					before(:each) do
+						@attr = @attr.merge(:name => "", :description => "")
+					end
+				
+					it "should not create a path" do
+						lambda do
+							put :update, :id => @path, :path => @attr  
+						end.should_not change(Path, :count)
+					end
+					
+					it "should send you back to the edit page" do
+						put :update, :id => @path, :path => @attr  
+						response.should render_template("paths/edit")
+					end
+					
+					it "should have an error message" do
+						put :update, :id => @path, :path => @attr
+						response.should have_selector("div#error_explanation")
+					end
+				end
+				
+				describe "with values that are too long" do
+					before(:each) do
+						@attr = @attr.merge(:name => "a"*81, :description => "a"*501)
+					end
+				
+					it "should not change the path" do
+						lambda do
+							put :update, :id => @path, :path => @attr
+						end.should_not change(Path, :name)
+					end
+					
+					it "should send you back to the edit page" do
+						put :update, :id => @path, :path => @attr
+						response.should render_template("paths/edit")
+					end
+					
+					it "should display an error message" do
+						put :update, :id => @path, :path => @attr
+						response.should have_selector("div#error_explanation")
+					end
+				end
+			end
+			
+			describe "success" do
+				it "should change a path" do
+					lambda do
+						put :update, :id => @path, :path => @attr
+						@path.reload
+					end.should change(@path, :name).to(@attr[:name])	
+				end
+				
+				it "should redirect to the path page" do
+					put :update, :id => @path, :path => @attr
+					response.should redirect_to @path
+				end
+				
+				it "should have a flash message" do
+					put :update, :id => @path, :path => @attr
+					flash[:success].should =~ /changes saved/i
+				end
 			end
 		end
 	end

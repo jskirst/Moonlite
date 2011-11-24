@@ -10,6 +10,28 @@ describe "Paths" do
 		@user.paths.create!(@attr)
 	end
 	
+	describe "validations" do
+		it "should require a user id" do
+			Path.new(@attr).should_not be_valid
+		end
+		
+		it "should require non-blank name" do
+			@user.paths.build(:name => "").should_not be_valid
+		end
+		
+		it "should require non-blank description" do
+			@user.paths.build(:description => "").should_not be_valid
+		end
+		
+		it "should reject long name" do
+			@user.paths.build(:name => "a"*81).should_not be_valid
+		end
+		
+		it "should reject long description" do
+			@user.paths.build(:description => "a"*501).should_not be_valid
+		end
+	end
+	
 	describe "user associations" do
 		before(:each) do
 			@path = @user.paths.create(@attr)
@@ -25,21 +47,35 @@ describe "Paths" do
 		end
 	end
 	
-	describe "validations" do
-		it "should require a user id" do
-			Path.new(@attr).should_not be_valid
+	describe "company association" do
+		before(:each) do
+			@path = @user.paths.build(@attr)
+			@company = Factory(:company)
+			@company_user = Factory(:company_user, :company => @company, :user => @user)
+			@other_company = Factory(:company, :name => "Other Company")
 		end
 		
-		it "should require non-blank content" do
-			@user.paths.build(:content => "").should_not be_valid
+		it "should have a company attribute" do
+			@path.should respond_to(:company)
 		end
 		
-		it "should reject long content" do
-			@user.paths.build(:content => "a"*141).should_not be_valid
+		it "should not require a company" do
+			@path.company = nil
+			@path.should be_valid			
+		end
+		
+		it "should reject a company the user doesn't belong to" do
+			@path.company = @other_company
+			@path.should_not be_valid
+		end
+		
+		it "should accept a company the user belongs to" do
+			@path.company = @company
+			@path.should be_valid
 		end
 	end
 	
-	describe "tasks" do
+	describe "task associations" do
 		before(:each) do
 			@path = Factory(:path, :user => @user)
 			@task1 = Factory(:task, :path => @path, :points => 1)

@@ -163,45 +163,54 @@ describe UsersController do
 		end
 		
 		describe "achievement details" do
-			before(:each) do
-				@path1 = Factory(:path, :user => @other_user, :name => "Name1")
-				@path2 = Factory(:path, :user => @other_user, :name => "Name2")
-				
-				@enrollment1 = Factory(:enrollment, :path => @path1, :user => @user)
-				@enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
-				
-				@task1_path1 = Factory(:task, :path => @path1, :points => 2)
-				@task2_path1 = Factory(:task, :path => @path1, :points => 2)
-				@task3_path1 = Factory(:task, :path => @path1, :points => 2)
-				
-				@task1_path2 = Factory(:task, :path => @path2, :points => 7)
-				@task2_path2 = Factory(:task, :path => @path2, :points => 7)
-				@task3_path2 = Factory(:task, :path => @path2, :points => 7)
-				
-				@completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
-				@completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
-				@completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
-				@completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
+			describe "when they do not exist" do
+				it "should be replaced by a message saying they have none" do
+					get :show, :id => @user
+					response.should have_selector("p", :content => "not currently enrolled")
+				end
 			end
-			
-			it "should show the user's paths" do
-				get :show, :id => @user
-				response.should have_selector("li", :content => @path1.name)
-				response.should have_selector("li", :content => @path2.name)
-			end
-			
-			it "should show the users total earned points" do
-				total_earned_points = @task1_path1.points + @task2_path1.points + @task1_path2.points + @task1_path2.points
-				get :show, :id => @user
-				response.should have_selector("p", :content => "#{total_earned_points}")
-			end
-			
-			it "should show the users point total for each path" do
-				path1_earned_points = @task1_path1.points + @task2_path1.points
-				path1_earned_points = @task1_path2.points + @task2_path2.points
-				get :show, :id => @user
-				response.should have_selector("p", :content => "#{@path1_earned_points}")
-				response.should have_selector("p", :content => "#{@path2_earned_points}")
+		
+			describe "when they exist" do
+				before(:each) do
+					@path1 = Factory(:path, :user => @other_user, :name => "Name1")
+					@path2 = Factory(:path, :user => @other_user, :name => "Name2")
+					
+					@enrollment1 = Factory(:enrollment, :path => @path1, :user => @user)
+					@enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
+					
+					@task1_path1 = Factory(:task, :path => @path1, :points => 2)
+					@task2_path1 = Factory(:task, :path => @path1, :points => 2)
+					@task3_path1 = Factory(:task, :path => @path1, :points => 2)
+					
+					@task1_path2 = Factory(:task, :path => @path2, :points => 7)
+					@task2_path2 = Factory(:task, :path => @path2, :points => 7)
+					@task3_path2 = Factory(:task, :path => @path2, :points => 7)
+					
+					@completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
+					@completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
+					@completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
+					@completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
+				end
+				
+				it "should show the user's paths" do
+					get :show, :id => @user
+					response.should have_selector("li", :content => @path1.name)
+					response.should have_selector("li", :content => @path2.name)
+				end
+				
+				it "should show the users total earned points" do
+					total_earned_points = @task1_path1.points + @task2_path1.points + @task1_path2.points + @task1_path2.points
+					get :show, :id => @user
+					response.should have_selector("p", :content => "#{total_earned_points}")
+				end
+				
+				it "should show the users point total for each path" do
+					path1_earned_points = @task1_path1.points + @task2_path1.points
+					path1_earned_points = @task1_path2.points + @task2_path2.points
+					get :show, :id => @user
+					response.should have_selector("p", :content => "#{@path1_earned_points}")
+					response.should have_selector("p", :content => "#{@path2_earned_points}")
+				end
 			end
 		end
 	end

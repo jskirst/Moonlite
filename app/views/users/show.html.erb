@@ -11,6 +11,9 @@
 	</section>
 	<section>
 		<h2>Enrolled Paths</h2>
+		<% if @enrolled_paths.empty? %>
+		<p><%= @user.name %> is not currently enrolled in any paths.</p>
+		<% else %>
 		<ul>
 			<% @enrolled_paths.each do |p| %>
 			<li>
@@ -18,5 +21,6 @@
 			</li>
 			<% end %>
 		</ul>
+		<% end %>
 	</section>
 </section>

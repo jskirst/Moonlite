@@ -4,31 +4,31 @@
 	<%= f.hidden_field :path_id, :value => @path_id %><br/>
 	<div class="field">
 		<%= f.label :question %><br/>
-		<%= f.text_area :question %>
+		<%= f.text_field :question, :maxlength => 255, :size => 75 %>
 	</div>
 	<div class="field">
 		<%= f.label :answer1 %><br/>
-		<%= f.text_area :answer1 %>
+		<%= f.text_field :answer1, :maxlength => 255, :size => 75 %>
 	</div>
 	<div class="field">
 		<%= f.label :answer2 %><br/>
-		<%= f.text_area :answer2 %>
+		<%= f.text_field :answer2, :maxlength => 255, :size => 75 %>
 	</div>
 	<div class="field">
 		<%= f.label :answer3 %><br/>
-		<%= f.text_area :answer3 %>
+		<%= f.text_field :answer3, :maxlength => 255, :size => 75 %>
 	</div>
 		<div class="field">
 		<%= f.label :answer4 %><br/>
-		<%= f.text_area :answer4 %>
+		<%= f.text_field :answer4, :maxlength => 255, :size => 75 %>
 	</div>
 	<div class="field">
 		<%= f.label :resource %><br/>
-		<%= f.text_field :resource %>
+		<%= f.text_field :resource, :maxlength => 255, :size => 75 %>
 	</div>
 	<div class="field">
 		<%= f.label :correct_answer %><br/>
-		<select name="completed_task[correct_answer]">
+		<select id="task_correct_answer" name="task[correct_answer]">
 			<option value="1">1</option>
 			<option value="2">2</option>
 			<option value="3">3</option>
@@ -37,7 +37,13 @@
 	</div>
 	<div class="field">
 		<%= f.label :points %><br/>
-		<%= f.text_field :points %>
+		<select id="task_points" name="task[points]">
+			<option value="5">5</option>
+			<option value="10">10</option>
+			<option value="15">15</option>
+			<option value="20">20</option>
+			<option value="25">25</option>
+		</select>
 	</div>
 	<div class="actions">
 		<%= f.submit "Save" %>

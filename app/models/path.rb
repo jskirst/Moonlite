@@ -1,7 +1,8 @@
 class Path < ActiveRecord::Base
-	attr_accessible :name, :description
+	attr_accessible :name, :description, :company_id
 	
 	belongs_to :user
+	belongs_to :company
 	has_many :tasks, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
 	has_many :info_resources, :dependent => :destroy
@@ -11,9 +12,12 @@ class Path < ActiveRecord::Base
 		:length		=> { :within => 2..80 }
 	
 	validates :description, 
-		:presence => true
+		:presence => true,
+		:length		=> { :within => 2..500 }
 	
 	validates :user_id, :presence => true
+	
+	validate :company_id, :if => :user_belongs_to_company, :allow_nil => true
 	
 	default_scope :order => 'paths.created_at DESC'
 	
@@ -56,5 +60,13 @@ class Path < ActiveRecord::Base
 			end
 		end
 		return 5-(completed_task_count.remainder(5))
+	end
+	
+	def user_belongs_to_company
+		if company != nil
+			if user.company != company
+				errors[:base] << "User does not belong to this company."
+			end
+		end
 	end
 end

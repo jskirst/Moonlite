@@ -4,9 +4,9 @@ class TasksController < ApplicationController
 	
 	def new
 		@task = Task.new
-		@title = "New Task"
+		@title = "New Question"
 		@path_id = params[:path]
-		@form_title = "New"
+		@form_title = "New Question"
 		render "tasks/task_form"
 	end
 	
@@ -30,8 +30,8 @@ class TasksController < ApplicationController
 	end
 	
 	def edit
-		@title = "Edit"
-		@form_title = "New"
+		@title = "Edit Question"
+		@form_title = "Edit Question"
 		@task = Task.find(params[:id])
 		@path_id = @task.path_id
 		render "task_form"

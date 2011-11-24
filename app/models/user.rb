@@ -2,12 +2,14 @@ class User < ActiveRecord::Base
 	attr_accessor :password
 	attr_accessible :name, :email, :password, :password_confirmation
 	
+	has_one :company_user
+	has_one :company, :through => :company_user
 	has_many :paths, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
 	has_many :enrolled_paths, :through => :enrollments, :source => :path
 	has_many :completed_tasks, :dependent => :destroy
 	has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
-	#has_many :company, :through => :company_users, :source => :company_users
+	
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 	

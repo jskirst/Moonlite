@@ -63,7 +63,8 @@ describe "Tasks" do
 					click_button
 					fill_in :task_question, :with => "Test question"
 					fill_in :task_answer1, :with => "Test answer"
-					fill_in :task_points, :with => "1"
+					select "1", :from => "Correct answer"
+					select "5", :from => "Points"
 					click_button
 					response.should render_template('paths/show')
 					response.should have_selector("div.success")

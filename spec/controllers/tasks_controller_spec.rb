@@ -87,7 +87,7 @@ describe TasksController do
 
 		it "should have right title" do
 			get :new, :path => @path
-			response.should have_selector("title", :content => "New Task")
+			response.should have_selector("title", :content => "New")
 		end
 	end
 	

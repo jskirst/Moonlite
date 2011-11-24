@@ -16,7 +16,9 @@ $(document).ready(function() {
 <table class='profile' summary='Profile Information'>
 	<tr>
 		<td class='Main'>
-			<% unless @paths.empty? %>
+			<% if @paths.empty? %>
+				<p>You are not currently enrolled in any paths. <%= link_to "Get started!", all_paths_path %></p>
+			<% else %>
 			<table class="paths" summary="Users paths">
 				<%= render @paths %>
 			</table>
@@ -26,8 +28,6 @@ $(document).ready(function() {
 </table>
 <% else %>
 	<h1>Project Moonlite</h1>
-	<p>This is the home page for the
-	<a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-	sample application.</p>
+	<p>This is the home page for the Project Moonlite.</p>
 	<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
 <% end %>

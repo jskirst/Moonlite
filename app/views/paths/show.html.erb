@@ -10,6 +10,7 @@
 		<h1><%= @path.name %></h1>
 		<p><%= @path.description %></p>
 		<% if @path.user_id == current_user.id %>
+			<p><%= link_to "Edit path", {:controller => "paths", :action => "edit", :id => @path.id } %></p>
 			<p><%= link_to "Add a question", {:controller => "tasks", :action => "new", :path => @path } %></p>
 			<p><%= link_to "Upload a list of questions", {:controller => "paths", :action => "file", :id => @path.id }%></p>
 			<p><%= link_to "Add a resource", {:controller => "info_resources", :action => "new", :path => @path } %></p>

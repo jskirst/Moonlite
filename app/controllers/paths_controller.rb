@@ -1,11 +1,15 @@
 require 'csv'
 class PathsController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user, :only => [:destroy, :file, :upload]
+	before_filter :authorized_user, :only => [:edit, :update, :destroy, :file, :upload]
 	
 	def new
 		@path = Path.new
 		@title = "New Path"
+	end
+	
+	def edit
+		@title = "Edit"
 	end
 
 	def create
@@ -16,6 +20,16 @@ class PathsController < ApplicationController
 		else
 			@title = "New Path"
 			render 'new'
+		end
+	end
+	
+	def update
+		if @path.update_attributes(params[:path])
+			flash[:success] = "Changes saved."
+			redirect_to @path
+		else
+			@title = "Edit Path"
+			render 'edit'
 		end
 	end
 	
@@ -97,6 +111,9 @@ class PathsController < ApplicationController
 	private
 		def authorized_user
 			@path = Path.find(params[:id])
-			redirect_to root_path unless current_user?(@path.user)
+			if !current_user?(@path.user)
+				redirect_to root_path
+				flash[:error] = "You do not have the ability to change this path."
+			end
 		end
 end

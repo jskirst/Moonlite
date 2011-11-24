@@ -120,22 +120,42 @@ describe CompaniesController do
 		end
 		
 		describe "associated users" do
-			before(:each) do
-				@other_user1 = Factory(:user, :email => "other_user1@testing.com", :name => "Other user1")
-				@other_user2 = Factory(:user, :email => "other_user2@testing.com", :name => "Other user2")
-				@other_user3 = Factory(:user, :email => "other_user3@testing.com", :name => "Other user3")
-			
-				@company_user1 = Factory(:company_user, :email => @other_user1.email, :company => @company, :user_id => @other_user1.id)
-				@company_user1 = Factory(:company_user, :email => @other_user2.email, :company => @company, :user_id => @other_user2.id)
-				@company_user1 = Factory(:company_user, :email => @other_user3.email, :company => @company, :user_id => @other_user3.id)
+			describe "when they don't exist" do
+				it "should display a message saying no registered users exist" do
+					get :show, :id => @company
+					response.should have_selector("p", :content => "not have any users")
+				end
 				
-				@users = [@other_user1, @other_user2, @other_user3]
+				it "should display a message saying no unregistered users exist" do
+					get :show, :id => @company
+					response.should have_selector("p", :content => "no outstanding user invitations")
+				end
 			end
 			
-			it "should be listed" do
-				get :show, :id => @company
-				@users[0..2].each do |u|
-					response.should have_selector("li", :content => u.name)
+			describe "when they exist" do
+				before(:each) do
+					@other_user1 = Factory(:user, :email => "other_user1@testing.com", :name => "Other user1")
+					@other_user2 = Factory(:user, :email => "other_user2@testing.com", :name => "Other user2")
+					@other_user3 = Factory(:user, :email => "other_user3@testing.com", :name => "Other user3")
+				
+					@unreg_company_user = Factory(:company_user, :email => "unreg@t.com", :company => @company, :user_id => nil)
+					@company_user1 = Factory(:company_user, :email => @other_user1.email, :company => @company, :user_id => @other_user1.id)
+					@company_user1 = Factory(:company_user, :email => @other_user2.email, :company => @company, :user_id => @other_user2.id)
+					@company_user1 = Factory(:company_user, :email => @other_user3.email, :company => @company, :user_id => @other_user3.id)
+					
+					@users = [@other_user1, @other_user2, @other_user3]
+				end
+				
+				it "should list unregistered users" do
+					get :show, :id => @company
+					response.should have_selector("li", :content => @unreg_company_user.email)
+				end
+				
+				it "should list registered users" do
+					get :show, :id => @company
+					@users[0..2].each do |u|
+						response.should have_selector("li", :content => u.name)
+					end
 				end
 			end
 		end
