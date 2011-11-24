@@ -4,7 +4,7 @@ describe CompanyUser do
 	before(:each) do
 		@user = Factory(:user)
 		@company = Factory(:company)
-		@attr = { :company_id => @company, :email => "test@test.com" }
+		@attr = { :company_id => @company, :email => "test@test.com", :is_admin => true }
 		@company_user = @company.company_users.build(@attr)
 	end
 	
@@ -43,6 +43,10 @@ describe CompanyUser do
 		
 		it "should have a token2 attribute" do
 			@company_user.should respond_to(:token2)
+		end
+		
+		it "should have an is_admin attribute" do
+			@company_user.should respond_to(:is_admin)
 		end
 	end
 	
@@ -117,8 +121,22 @@ describe CompanyUser do
 			end
 			
 			it "should create new unique tokens" do
-				other_company_user = @company.company_users.build(:company_id => @company, :email => "new_email@t.com")
+				other_company_user = @company.company_users.build(@attr.merge(:email => "new_email@t.com"))
 				other_company_user.save!
+				other_company_user.token1.should_not == @company_user.token1
+				other_company_user.token2.should_not == @company_user.token2
+			end
+		end
+		
+		describe "is admin" do
+			it "should not be blank" do
+				company_user = CompanyUser.new(@attr.merge(:is_admin => ""))
+				company_user.should_not be_valid
+			end
+			
+			it "should not be nil" do
+				company_user = CompanyUser.new(@attr.merge(:is_admin => nil))
+				company_user.should_not be_valid
 			end
 		end
 	end

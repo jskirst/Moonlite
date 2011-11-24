@@ -3,7 +3,8 @@ class CompanyUser < ActiveRecord::Base
 		:company_id, 
 		:email, 
 		:token1, 
-		:token2
+		:token2,
+		:is_admin
 	
 	belongs_to :user
 	belongs_to :company
@@ -21,6 +22,8 @@ class CompanyUser < ActiveRecord::Base
 	validates :user_id,
 		:allow_nil => true,
 		:uniqueness => true
+	validates :is_admin,
+		:presence => true
 	
 	def send_invitation_email
 		email_details = { :email => self.email, :token1 => self.token1 }
@@ -34,8 +37,10 @@ class CompanyUser < ActiveRecord::Base
 	
 	private
 		def set_tokens
-			self.token1 = random_alphanumeric
-			self.token2 = random_alphanumeric
+			if(self.token1 == nil)
+				self.token1 = random_alphanumeric
+				self.token2 = random_alphanumeric
+			end
 		end
 		
 		def random_alphanumeric(size=15)

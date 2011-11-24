@@ -5,11 +5,8 @@ describe CompanyUsersController do
 	
 	before(:each) do
 		@user = Factory(:user)
-		@new_user = Factory(:user, :email => "new_user@test.com")
 		@company = Factory(:company)
-		@company_user = Factory(:company_user, :company => @company, :email => @new_user.email)
-		@token1 = @company_user.token1
-		@token2= @company_user.token2
+		@attr = { :company_id => @company.id, :email => "testXYZ@testing.com", :is_admin => true }
 	end
 	
 	describe "access controller" do
@@ -38,6 +35,11 @@ describe CompanyUsersController do
 			get :new, :company => @company
 			response.should have_selector("title", :content => @company.name)
 		end
+		
+		it "should render the new page" do
+			get :new, :company => @company
+			response.should render_template("company_users/new")
+		end
 	end
 	
 	describe "POST 'create'" do
@@ -47,7 +49,7 @@ describe CompanyUsersController do
 		
 		describe "failure" do
 			before(:each) do
-				@attr = { :company_id => "", :email => ""}
+				@attr = @attr.merge(:company_id => "", :email => "")
 			end
 		
 			it "should not create an company_user" do
@@ -63,10 +65,6 @@ describe CompanyUsersController do
 		end
 		
 		describe "success" do
-			before(:each) do
-				@attr = { :company_id => @company.id, :email => "testXYZ@testing.com" }
-			end
-			
 			it "should create an company_user" do
 				lambda do
 					post :create, :company_user => @attr

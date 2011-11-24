@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111123044211) do
+ActiveRecord::Schema.define(:version => 20111124205743) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20111123044211) do
     t.string   "token2"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_admin"
   end
 
   create_table "completed_tasks", :force => true do |t|

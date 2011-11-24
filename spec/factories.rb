@@ -38,6 +38,7 @@ Factory.define :company_user do |company_user|
 	company_user.email "test@test.com"
 	company_user.user_id nil
 	company_user.association :company
+	company_user.is_admin false
 end
 
 Factory.define :completed_task do |completed_task|
