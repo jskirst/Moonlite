@@ -23,7 +23,7 @@ class CompanyUser < ActiveRecord::Base
 		:allow_nil => true,
 		:uniqueness => true
 	validates :is_admin,
-		:presence => true
+		:inclusion => { :in => [true, false] }
 	
 	def send_invitation_email
 		email_details = { :email => self.email, :token1 => self.token1 }
