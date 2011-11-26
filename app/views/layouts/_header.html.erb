@@ -4,10 +4,13 @@
 		<ul>
 			<% if signed_in? %>
 			<li><%= link_to "Home", root_path %></li>
-				<% if current_user.admin? %>
-					<li><%= link_to "Companies", companies_path %></li>
-					<li><%= link_to "Users", users_path %></li>
-				<% end %>
+			<% if current_user.admin? %>
+				<li><%= link_to "Companies", companies_path %></li>
+				<li><%= link_to "Users", users_path %></li>
+			<% end %>
+			<% if current_user.company_admin? %>
+				<li><%= link_to "My Company", current_user.company %></li>
+			<% end %>
 			<li><%= link_to "Profile", current_user %></li>
 			<li><%= link_to "Paths", all_paths_path %></li>
 			<li><%= link_to "Settings", edit_user_path(current_user) %></li>

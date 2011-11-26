@@ -4,30 +4,121 @@ describe CompaniesController do
 	render_views
 	
 	describe "access controller" do
-		it "should deny access to 'new'" do
-			get :new
-			response.should redirect_to(signin_path)
+		before(:each) do
+			@user = Factory(:user)
+			@company = Factory(:company)
 		end
 	
-		it "should deny access to 'create'" do
-			post :create
-			response.should redirect_to(signin_path)
+		describe "when not signed in" do
+			it "should deny access to 'new'" do
+				get :new
+				response.should redirect_to(signin_path)
+			end
+		
+			it "should deny access to 'create'" do
+				post :create
+				response.should redirect_to(signin_path)
+			end
+			
+			it "should deny access to 'show'" do
+				get :show, :id => @company
+				response.should redirect_to(signin_path)
+			end
+			
+			it "should deny access to 'edit'" do
+				get :edit, :id => @company
+				response.should redirect_to(signin_path)
+			end			
 		end
 		
-		it "should deny access to 'show'" do
-			post :create
-			response.should redirect_to(signin_path)
+		describe "when signed in as a regular user" do
+			before(:each) do
+				@company_user = Factory(:company_user, :company => @company, :user => @user)
+				test_sign_in(@user)
+			end
+			
+			it "should deny access to 'new'" do
+				get :new
+				response.should redirect_to root_path
+			end
+		
+			it "should deny access to 'create'" do
+				post :create
+				response.should redirect_to root_path
+			end
+			
+			it "should deny access to 'show'" do
+				get :show, :id => @company
+				response.should redirect_to root_path
+			end
+			
+			it "should deny access to 'edit'" do
+				get :edit, :id => @company
+				response.should redirect_to root_path
+			end
 		end
 		
-		it "should deny access to 'edit'" do
-			post :create
-			response.should redirect_to(signin_path)
+		describe "when signed in as admin" do
+			before(:each) do
+				@user.toggle!(:admin)
+				@attr = {:name => "Changed"}
+				test_sign_in(@user)
+			end
+			
+			it "should allow access to 'new'" do
+				get :new
+				response.should be_success
+			end
+		
+			it "should allow access to 'create'" do
+				post :create, :company => @attr
+				response.should be_success
+			end
+			
+			it "should allow access to 'show'" do
+				get :show, :id => 1
+				response.should be_success
+			end
+			
+			it "should allow access to 'edit'" do
+				get :edit, :id => 1
+				response.should be_success
+			end
+		end
+		
+		describe "when signed in as company admin" do
+			before(:each) do
+				@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+				@attr = {:name => "Changed"}
+				test_sign_in(@user)
+			end
+			
+			it "should deny access to 'new'" do
+				get :new
+				response.should redirect_to root_path
+			end
+		
+			it "should deny access to 'create'" do
+				post :create
+				response.should redirect_to root_path
+			end
+			
+			it "should allow access to 'show'" do
+				get :show, :id => 1
+				response.should be_success
+			end
+			
+			it "should allow access to 'edit'" do
+				get :edit, :id => 1
+				response.should be_success
+			end
 		end
 	end
 
 	describe "GET 'new'" do
 		before(:each) do
 			@user = Factory(:user)
+			@user.toggle!(:admin)
 			test_sign_in(@user)
 		end
 	
@@ -45,6 +136,7 @@ describe CompaniesController do
 	describe "POST 'create'" do
 		before(:each) do
 			@user = Factory(:user)
+			@user.toggle!(:admin)
 			test_sign_in(@user)
 		end
 		
@@ -97,6 +189,7 @@ describe CompaniesController do
 		before(:each) do
 			@user = test_sign_in(Factory(:user))
 			@company = Factory(:company)
+			@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
 		end
 		
 		it "should be successful" do
@@ -165,6 +258,7 @@ describe CompaniesController do
 		before(:each) do
 			@user = test_sign_in(Factory(:user))
 			@company = Factory(:company)
+			@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
 		end
 		
 		it "should be successful" do
@@ -180,7 +274,7 @@ describe CompaniesController do
 	
 	describe "GET 'index'" do
 		before(:each) do
-			@user = test_sign_in(Factory(:user))
+			@user = Factory(:user)
 			company1 = Factory(:company, :name => "Company1")
 			company2 = Factory(:company, :name => "Company2")
 			company3 = Factory(:company, :name => "Company3")
@@ -193,6 +287,7 @@ describe CompaniesController do
 		
 		describe "as a non-admin user" do
 			it "should protect the page" do
+				test_sign_in(@user)
 				get :index
 				response.should redirect_to(root_path)
 			end
@@ -200,10 +295,8 @@ describe CompaniesController do
 		
 		describe "as an admin user" do
 			before(:each) do
-				admin = Factory(:user, 
-					:email => "admin@testing.com", 
-					:admin => true)
-				test_sign_in(admin)
+				@user.toggle!(:admin)
+				test_sign_in(@user)
 			end
 			
 			it "should be successful" do
@@ -231,132 +324,4 @@ describe CompaniesController do
 			end
 		end
 	end
-	
-	# describe "PUT 'update'" do
-		# before(:each) do
-			# @user = Factory(:user)
-			# test_sign_in(@user)
-		# end
-		
-		# describe "Failure" do
-			# before(:each) do
-				# @attr = {:name => "", 
-				# :email => "", 
-				# :password => "", 
-				# :password_confirmation => ""}
-			# end
-			
-			# it "should render the edit page" do
-				# put :edit, :id => @user,  :user => @attr
-				# response.should render_template('edit')
-			# end
-			
-			# it "should have the right title" do
-				# put :edit, :id => @user,  :user => @attr
-				# response.should have_selector("title", :content => "Settings")
-			# end
-		# end
-		
-		# describe "Success" do
-			# before(:each) do
-				# @attr = {:name => "EditTest", 
-				# :email => "edittest@testing.com", 
-				# :password => "edittesting", 
-				# :password_confirmation => "edittesting"}
-			# end
-			
-			# it "Should change user successfully" do
-				# put :update, :id => @user, :user => @attr
-				# @user.reload
-				# @user.name.should == @attr[:name]
-				# @user.email.should == @attr[:email]
-			# end
-			
-			# it "Should redirect to profile page" do
-				# put :update, :id => @user, :user => @attr
-				# response.should redirect_to(user_path(assigns(:user)))
-			# end
-			
-			# it "Should have a success message" do
-				# put :update, :id => @user, :user => @attr
-				# flash[:success].should =~ /updated/i
-			# end
-		# end
-	# end
-	
-	# describe "authentication of edit/update pages" do
-		# before(:each) do
-			# @user = Factory(:user)
-		# end
-		
-		# describe "for non-signed-in users" do
-			# it "should deny access to 'edit'" do
-				# get :edit, :id => @user, :user => {}
-				# response.should redirect_to(signin_path)
-			# end
-			
-			# it "should deny access to 'update'" do
-				# put :update, :id => @user, :user => {}
-				# response.should redirect_to(signin_path)
-			# end
-		# end
-		
-		# describe "for signed-in users" do
-			# before(:each) do
-				# wrong_user = Factory(:user, :email => "wronguser@testing.com")
-				# test_sign_in(wrong_user)
-			# end
-		
-			# it "should require matching user to 'edit'" do
-				# put :update, :id => @user, :user => {}
-				# response.should redirect_to(root_path)
-			# end
-			
-			# it "should require matching user to 'update'" do
-				# put :update, :id => @user, :user => {}
-				# response.should redirect_to(root_path)
-			# end
-		# end
-	# end
-	
-	# describe "DELETE 'destroy'" do
-		# before(:each) do
-			# @user = Factory(:user)
-		# end
-		
-		# describe "as a non-signed-in user" do
-			# it "should redirect to root" do
-				# delete :destroy, :id => @user
-				# response.should redirect_to(signin_path)
-			# end
-		# end
-		
-		# describe "as a non-admin user" do
-			# it "should protect the page" do
-				# test_sign_in(@user)
-				# delete :destroy, :id => @user
-				# response.should redirect_to(root_path)
-			# end
-		# end
-		
-		# describe "as an admin user" do
-			# before(:each) do
-				# admin = Factory(:user, 
-					# :email => "admin@testing.com", 
-					# :admin => true)
-				# test_sign_in(admin)
-			# end
-			
-			# it "should destroy the user" do
-				# lambda do
-					# delete :destroy, :id => @user
-				# end.should change(User, :count).by(-1)
-			# end
-			
-			# it "should redirect to users page" do
-				# delete :destroy, :id => @user
-				# response.should redirect_to(users_path)
-			# end
-		# end
-	# end
 end

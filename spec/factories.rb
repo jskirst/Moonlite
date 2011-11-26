@@ -1,17 +1,17 @@
 Factory.define :user do |user|
-	user.name					"Test User"
+	user.name					"Jonathan Dudearino"
 	user.email					"test@testing.com"
 	user.password				"testpassword"
 	user.password_confirmation	"testpassword"
 end
 
 Factory.define :company do |company|
-	company.name					"Test Company"
+	company.name					"Solyndra"
 end
 
 Factory.define :path do |path|
-	path.name "Path name"
-	path.description "Path description"
+	path.name "Solar Power"
+	path.description "This is what you would say here, something like this."
 	path.association :user
 end
 

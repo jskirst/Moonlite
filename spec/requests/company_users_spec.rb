@@ -78,7 +78,7 @@ describe "CompanyUsers" do
 				fill_in :email, :with => @admin_user.email
 				fill_in :password, :with => @admin_user.password
 				click_button
-				click_link "Company"
+				click_link "My Company"
 				response.should have_selector("h1", :content => @company.name)
 				response.should have_selector("li", :content => @admin_user.name)
 				response.should have_selector("li", :content => @non_admin_user.name)
@@ -91,6 +91,7 @@ describe "CompanyUsers" do
 				fill_in :email, :with => @non_admin_user.email
 				fill_in :password, :with => @non_admin_user.password
 				click_button
+				response.should_not have_selector("a", "My Company")
 				visit companies_path
 				response.should redirect_to root_path
 			end

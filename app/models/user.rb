@@ -64,6 +64,14 @@ class User < ActiveRecord::Base
 		return self.admin
 	end
 	
+	def company_admin?
+		if company_user.nil?
+			return false
+		else
+			return company_user.is_admin
+		end
+	end
+	
 	def total_earned_points(path = nil)
 		total_earned_points = 0
 		cp = completed_tasks.find_all_by_status_id(1)

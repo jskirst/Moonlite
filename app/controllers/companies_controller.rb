@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
 	before_filter :authenticate
-	# before_filter :correct_user, :only => [:edit, :update]
-	before_filter :admin_user, :only => [:index]
+	before_filter :admin_only, :only => [:new, :create]
+	before_filter :admin_or_company_admin, :only => [:show, :edit, :index]
 	
 	def new
 		@company = Company.new
@@ -36,30 +36,12 @@ class CompaniesController < ApplicationController
 		@title = "All companies"
 	end
 	
-	# def update
-		# @user = User.find(params[:id])
-		# if @user.update_attributes(params[:user])
-			# flash[:success] = "Profile successfully updated."
-			# redirect_to @user
-		# else
-			# @title = "Settings"
-			# render 'edit'
-		# end
-	# end
-	
-	# def destroy
-		# User.find_by_id(params[:id]).destroy
-		# flash[:success] = "User destroyed"
-		# redirect_to users_path
-	# end
-	
 	private
-		# def correct_user
-			# @user = User.find(params[:id])
-			# redirect_to root_path unless current_user?(@user)
-		# end
-		
-		def admin_user
-			redirect_to(root_path) unless current_user.admin?
+		def admin_only
+			redirect_to(root_path) unless (current_user.admin?)
+		end
+	
+		def admin_or_company_admin
+			redirect_to(root_path) unless (current_user.admin? || current_user.company_admin?)
 		end
 end
