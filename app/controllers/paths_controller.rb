@@ -85,21 +85,18 @@ class PathsController < ApplicationController
 	end
 	
 	def upload
-		if !params[:path][:file].nil?
-			@parsed_file = CSV.parse(params[:path][:file].read)
-			if @parsed_file.length <= 1
-				flash.now[:error] = "There was an error processing your file. You must have at least two rows in your file."
-				render 'file'
-			else
-				@row_count = 0
-				@parsed_file.each  do |row|
-					@row_count += 1
-				end
-				flash.now[:message] = "CSV Import Successful, #{@row_count} lines found."
-			end
-		else
+		uploaded_file = params[:path][:file]
+		if uploaded_file.nil?
 			flash.now[:error] = "Please provide a file for import."
 			render 'file'
+		else
+			if @new_tasks = parse_file(uploaded_file)
+				flash.now[:success] = "CSV Import Successful, #{@new_tasks.size} lines found."
+				render 'upload'
+			else
+				flash.now[:error] = "There was an error processing your file. You must have at least two rows in your file."
+				render 'file'
+			end
 		end
 	end
 	
@@ -115,5 +112,48 @@ class PathsController < ApplicationController
 				redirect_to root_path
 				flash[:error] = "You do not have the ability to change this path."
 			end
+		end
+		
+		def parse_file(uploaded_file)
+			new_tasks = []
+			parsed_file = CSV.parse(uploaded_file.read)
+			if file_properly_formatted?(parsed_file)
+				row_count = 0
+				parsed_file.each do |row|
+					if row_count != 0
+						new_tasks << create_task(row)
+					end
+					row_count += 1
+				end
+				return new_tasks
+			else
+				return nil
+			end
+		end
+		
+		def file_properly_formatted?(parsed_file)
+			file_header = parsed_file[0]
+			if file_header[0] =~ /question/i &&
+				file_header[1] =~ /correct answer/i &&
+				file_header[2] =~ /wrong answer/i &&
+				file_header[3] =~ /wrong answer/i &&
+				file_header[4] =~ /wrong answer/i &&
+				file_header[5] =~ /points/i
+				return true
+			else
+				return false
+			end
+		end
+		
+		def create_task(row)
+			t = Task.new
+			t.question = row[0]
+			t.answer1 = row[1]
+			t.answer2 = row[2]
+			t.answer3 = row[3]
+			t.answer4 = row[4]
+			t.correct_answer = 1
+			t.points = row[5]
+			return t.save
 		end
 end

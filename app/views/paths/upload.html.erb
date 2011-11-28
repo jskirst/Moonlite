@@ -1,13 +1,17 @@
-<ol>
-<% @parsed_file.each do |row| %>
-	<li>
-		<dl>
-			<dt>Question:</dt>
-			<dd><%= row[0] %></dd>
-			<dt>Answer:</dt>
-			<dd><%= row[1] %></dd>
-		</dl>
-	</li>
+<% if @new_tasks %>
+	<ol>
+	@new_tasks.each do |task| %>
+		<% if task %>
+		<li>
+			<dl>
+				<dt>Question:</dt>
+				<dd><%= task.question %></dd>
+				<dt>Answer:</dt>
+				<dd><%= task.answer1 %></dd>
+			</dl>
+		</li>
+		<% end %>
+	<% end %>
+	</ol>
+	<%= link_to "Go back", @path %>
 <% end %>
-</ol>
-<%= link_to "Go back", @path %>
