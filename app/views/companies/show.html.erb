@@ -25,7 +25,7 @@
 		<% else %>
 		<ol>
 			<% @company_users.each do |cu| %>
-			<li><%= cu.user.name %></li>
+			<li><%= link_to cu.user.name, cu.user %></li>
 			<% end %>
 		</ol>
 		<% end %>

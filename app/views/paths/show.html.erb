@@ -26,7 +26,7 @@
 	</section>
 	<% if current_user.enrolled?(@path) %>
 	<section id="progress">
-		<h2><%= gravatar_for current_user, :size => "20" %>Chatterati rank - <span class="current-rank"><%= @current_rank %></span></h2>
+		<h2><%= gravatar_for current_user, :size => "20" %>Path Rank - <span class="current-rank"><%= @current_rank %></span></h2>
 		<% if @remaining_tasks > 0 %>
 		<h3>You need to answer <%= pluralize(@remaining_tasks, "question") %> before you reach rank <span class="next-rank"><%= @next_rank %></span>!</h3>
 		<% else %>

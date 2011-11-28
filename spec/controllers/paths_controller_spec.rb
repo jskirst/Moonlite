@@ -300,7 +300,7 @@ describe PathsController do
 		end
 	end
 	
-	describe "Get 'show'" do
+	describe "GET 'show'" do
 		before(:each) do
 			@user = Factory(:user)
 			@path = Factory(:path, :user => @user)
@@ -482,16 +482,6 @@ describe PathsController do
 				response.should render_template("file")
 			end
 		end
-		
-		describe "success" do
-			before(:each) do
-			end
-		
-			it "should add all questions to a path" 
-			
-			it "should send you back to the path page"
-		end
 	end
-	
 end
 	

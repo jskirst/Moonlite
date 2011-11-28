@@ -86,7 +86,7 @@ class PathsController < ApplicationController
 	
 	def upload
 		if !params[:path][:file].nil?
-			@parsed_file = CSV.parse(params[:path][:file])
+			@parsed_file = CSV.parse(params[:path][:file].read)
 			if @parsed_file.length <= 1
 				flash.now[:error] = "There was an error processing your file. You must have at least two rows in your file."
 				render 'file'

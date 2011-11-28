@@ -247,7 +247,7 @@ describe CompaniesController do
 				it "should list registered users" do
 					get :show, :id => @company
 					@users[0..2].each do |u|
-						response.should have_selector("li", :content => u.name)
+						response.should have_selector("a", :content => u.name)
 					end
 				end
 			end
