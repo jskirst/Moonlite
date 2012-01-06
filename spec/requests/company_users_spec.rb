@@ -91,9 +91,9 @@ describe "CompanyUsers" do
 				fill_in :email, :with => @non_admin_user.email
 				fill_in :password, :with => @non_admin_user.password
 				click_button
-				response.should_not have_selector("a", "My Company")
-				visit companies_path
-				response.should redirect_to root_path
+				response.should_not have_selector("a", :content => "My Company")
+				visit company_path @company
+				response.should have_selector("title", :content => "Home")
 			end
 		end
 	end

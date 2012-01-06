@@ -1,0 +1,24 @@
+<h1><%= @form_title %></h1>
+<%= form_for @reward do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :company_id, :value => @company.id %><br/>
+	<div class="field">
+		<%= f.label :name %><br/>
+		<%= f.text_field :name, :maxlength => 255, :size => 75 %>
+	</div>
+	<div class="field">
+		<%= f.label :description %><br/>
+		<%= f.text_field :description, :maxlength => 255, :size => 75 %>
+	</div>
+	<div class="field">
+		<%= f.label :image_url %><br/>
+		<%= f.text_field :image_url, :maxlength => 255, :size => 75 %>
+	</div>
+	<div class="field">
+		<%= f.label :points %><br/>
+		<%= f.text_field :points, :maxlength => 15, :size => 30 %>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save" %>
+	</div>
+<% end %>

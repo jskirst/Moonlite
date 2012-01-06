@@ -468,7 +468,7 @@ describe PathsController do
 		
 		describe "failure" do
 			before(:each) do
-				@attr = { :file => "asdf" }
+				@attr = { :file => nil }
 			end
 		
 			it "should not add questions to a path" do

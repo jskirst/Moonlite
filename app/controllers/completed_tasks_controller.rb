@@ -2,7 +2,6 @@ class CompletedTasksController < ApplicationController
 	before_filter :authenticate
 	before_filter :enrolled_user?
 	
-	#TODO: Eliminate redirect, move entirely to path controller
 	def create
 		resp = params[:completed_task]
 		resp[:quiz_session] = resp[:quiz_session] || DateTime.now
@@ -19,7 +18,16 @@ class CompletedTasksController < ApplicationController
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))		
 		if @completed_task.save
 			set_flash_message(status_id, answer, @task.correct_answer)
-			redirect_to continue_path_path :id => @completed_task.task.path, :max => resp[:max], :count => resp[:count], :quiz_session => resp[:quiz_session]
+			if status_id == 1
+				PointTransaction.create!({:user_id => current_user.id,
+					:task_id => @completed_task.task.id, 
+					:points => @completed_task.task.points,
+					:status => 1})
+			end
+			redirect_to continue_path_path :id => @completed_task.task.path, 
+				:max => resp[:max], 
+				:count => resp[:count], 
+				:quiz_session => resp[:quiz_session]
 		else
 			redirect_to root_path
 		end

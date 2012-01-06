@@ -48,6 +48,12 @@ describe CompletedTasksController do
 					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)
 				end
 				
+				it "should not create a point transaction" do
+					lambda do
+						post :create, :completed_task => @attr  
+					end.should_not change(PointTransaction, :count)
+				end
+				
 				it "should take you to the next question" do
 					post :create, :completed_task => @attr
 					flash[:error].should =~ /incorrect/i
@@ -61,6 +67,17 @@ describe CompletedTasksController do
 					end.should change(CompletedTask, :count).by(1)
 					cp = CompletedTask.find(:first, :conditions => ["task_id=? AND user_id=? AND status_id=1", @task.id, @user.id])
 					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)
+				end
+				
+				it "should create a point transaction with status 1 and same attributes as the completed task" do
+					lambda do
+						post :create, :completed_task => @attr
+					end.should change(PointTransaction, :count).by(1)
+					pt = PointTransaction.find(:last, :conditions => ["task_id=? AND user_id=?", @task.id, @user.id])
+					pt.status.should == 1
+					pt.points.should == @task.points
+					pt.user_id.should == @user.id
+					pt.task_id.should == @task.id
 				end
 				
 				it "should take you to the next question" do

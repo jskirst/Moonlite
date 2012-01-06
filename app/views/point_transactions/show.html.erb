@@ -1,0 +1,33 @@
+<section>
+	<style>
+		section {
+			margin-top: 0px;
+		} h1 {
+			margin-bottom: 0px;
+			font-size: 32px;
+		} h2 {
+			font-size: 28px;
+		} h3 {
+			margin-top: 15px;
+			font-size: 20px;
+		} p {
+			font-size: 16px;
+			margin-bottom: 0px;
+		} ol {
+			margin-bottom: 10px;
+		}
+	</style>
+	<h1>Point Transaction</h1>
+	<section id="user">
+		<h2>User</h2>
+		<h3><%= link_to @point_transaction.user.name, @point_transaction.user%></h3>
+	</section>
+	<section id="point_transaction">
+		<p>Points: <%= @point_transaction.points %></p>
+		<p>Status: <%= @point_transaction.status %></p>
+		<% if @point_transaction.task_id %>
+		<p>Task: <%= @point_transaction.task_id %>
+		<% end %>
+		<p><%= link_to "Edit", edit_point_transaction_path(@point_transaction) %></p>
+	</section>
+</section>

@@ -1,6 +1,8 @@
+TASK_POINTS = 5
+
 Factory.define :user do |user|
 	user.name					"Jonathan Dudearino"
-	user.email					"test@testing.com"
+	user.email					{ Faker::Internet.email }
 	user.password				"testpassword"
 	user.password_confirmation	"testpassword"
 end
@@ -19,7 +21,7 @@ Factory.define :task do |task|
 	task.question "Test question"
 	task.answer1 "Test answer"
 	task.correct_answer 1
-	task.points 5
+	task.points TASK_POINTS
 	task.association :path
 end
 
@@ -46,6 +48,13 @@ Factory.define :completed_task do |completed_task|
 	completed_task.association :task
 	completed_task.association :user
 	completed_task.status_id 1
+end
+
+Factory.define :point_transaction do |pt|
+	pt.association :user
+	pt.association :task
+	pt.points TASK_POINTS
+	pt.status 0
 end
 
 Factory.sequence :email do |n|

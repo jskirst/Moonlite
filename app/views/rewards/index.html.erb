@@ -1,0 +1,12 @@
+<h1><%= @company.name %> Company Store</h1>
+<% if current_user.company_admin? || current_user.admin? %>
+<p><%= link_to "Add a new store item", new_reward_path(:company_id => @company.id) %></p>
+<% end %>
+
+<%= will_paginate %>
+
+<ul class='rewards'>
+	<%= render @rewards %>
+</ul>
+
+<%= will_paginate %>

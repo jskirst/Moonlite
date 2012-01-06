@@ -24,6 +24,8 @@ SampleApp::Application.routes.draw do
 	resources :tasks
 	resources :completed_tasks
 	resources :info_resources
+	resources :point_transactions
+	resources :rewards
 	
 	root 				:to => "pages#home"
 	

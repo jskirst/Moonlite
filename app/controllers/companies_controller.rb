@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
 	before_filter :authenticate
-	before_filter :admin_only, :only => [:new, :create]
-	before_filter :admin_or_company_admin, :only => [:show, :edit, :index]
+	before_filter :admin_only, :only => [:new, :create, :index]
+	before_filter :admin_or_company_admin, :only => [:show, :edit]
 	
 	def new
 		@company = Company.new

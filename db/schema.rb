@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111124205743) do
+ActiveRecord::Schema.define(:version => 20111231204105) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -70,6 +70,26 @@ ActiveRecord::Schema.define(:version => 20111124205743) do
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
+
+  create_table "point_transactions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "reward_id"
+    t.integer  "task_id"
+    t.integer  "points"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rewards", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "points"
+    t.string   "image_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tasks", :force => true do |t|
     t.string   "question"

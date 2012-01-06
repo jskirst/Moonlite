@@ -20,6 +20,11 @@ describe CompaniesController do
 				response.should redirect_to(signin_path)
 			end
 			
+			it "should deny access to 'index'" do
+				get :index
+				response.should redirect_to(signin_path)
+			end
+			
 			it "should deny access to 'show'" do
 				get :show, :id => @company
 				response.should redirect_to(signin_path)
@@ -44,6 +49,11 @@ describe CompaniesController do
 		
 			it "should deny access to 'create'" do
 				post :create
+				response.should redirect_to root_path
+			end
+			
+			it "should deny access to 'index'" do
+				get :index
 				response.should redirect_to root_path
 			end
 			
@@ -72,6 +82,11 @@ describe CompaniesController do
 		
 			it "should allow access to 'create'" do
 				post :create, :company => @attr
+				response.should redirect_to Company.last
+			end
+			
+			it "should allow access to 'index'" do
+				get :index
 				response.should be_success
 			end
 			
@@ -100,6 +115,11 @@ describe CompaniesController do
 		
 			it "should deny access to 'create'" do
 				post :create
+				response.should redirect_to root_path
+			end
+			
+			it "should deny access to 'index'" do
+				get :index
 				response.should redirect_to root_path
 			end
 			
@@ -158,7 +178,7 @@ describe CompaniesController do
 			
 			it "should render the new page" do
 				post :create, :company => @attr
-				response.should render_template('new')
+				response.should render_template("new")
 			end
 		end
 		
@@ -214,13 +234,17 @@ describe CompaniesController do
 		
 		describe "associated users" do
 			describe "when they don't exist" do
+				before(:each) do
+					@no_user_company = Factory(:company)
+				end
+				
 				it "should display a message saying no registered users exist" do
-					get :show, :id => @company
+					get :show, :id => @no_user_company
 					response.should have_selector("p", :content => "not have any users")
 				end
 				
 				it "should display a message saying no unregistered users exist" do
-					get :show, :id => @company
+					get :show, :id => @no_user_company
 					response.should have_selector("p", :content => "no outstanding user invitations")
 				end
 			end
