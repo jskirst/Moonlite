@@ -149,6 +149,29 @@ describe "User" do
 			@user.salt.should == current_salt
 		end
 	end
+
+	describe "company_admin?" do
+		it "should respond with false if user is not company admin" do
+			@user = Factory(:user)
+			@user.company_admin?.should be_false
+		end
+		
+		it "should respond with true if user is company admin" do
+			@user = Factory(:user)
+			Factory(:company_user, :user => @user, :is_admin => "t")
+			@user.company_admin?.should be_true
+		end
+	end
+	
+	describe "completed tasks" do
+		it "should respond with all completed tasks"
+		
+		describe "completed?" do
+			it "should respond with false if task not completed"
+			
+			it "should respond with true if the task is completed"
+		end
+	end
 	
 	describe "paths" do
 		before(:each) do
@@ -187,28 +210,33 @@ describe "User" do
 			@user.should respond_to(:enrolled?)
 		end
 		
+		it "enroll? should return nil if user is not enrolled" do
+			@user.enrolled?(@path).should be_nil
+		end
+		
+		it "enroll? should return the enrollment if user is enrolled" do
+			enrollment = Factory(:enrollment, :path => @path, :user => @user)
+			@user.enrolled?(@path).should == enrollment
+		end
+		
 		it "should respond to enroll! method" do
 			@user.should respond_to(:enroll!)
 		end
 		
-		it "should in enroll in a path" do
-			@user.enroll!(@path)
-			@user.should be_enrolled(@path)
+		it "enroll! should in enroll in a path" do
+			lambda do
+				@user.enroll!(@path)
+			end.should change(Enrollment, :count).by(1)
 		end
-		
-		it "should not say enrolled if it isn't" 
-		# do
-			# @user.should_not be_enrolled(@path)
-		# end
 		
 		it "should respond to unenroll!" do
 			@user.should respond_to(:unenroll!)
 		end
 		
 		it "should unenroll from a path" do
-			@user.enroll!(@path)
+			Factory(:enrollment, :path => @path, :user => @user)
 			@user.unenroll!(@path)
-			@user.should_not be_enrolled(@path)
+			Enrollment.find(:all, :conditions => ["path_id = ? and user_id = ?", @path.id, @user.id]).should be_empty
 		end
 	end
 	
@@ -225,9 +253,10 @@ describe "User" do
 	
 	describe "completed tasks" do
 		before(:each) do
-			@user = User.create!(@attr)
+			@user = Factory(:user)
 			@path = Factory(:path, :user => @user)
 			@task1 = Factory(:task, :path => @path, :points => 1)
+			@completed_task = Factory(:completed_task, :task => @task1, :user => @user)
 			@task2 = Factory(:task, :path => @path, :points => 2)
 		end
 		
@@ -235,23 +264,47 @@ describe "User" do
 			@user.should respond_to(:completed_tasks)
 		end
 		
-		it "should respond to completed? method" do
-			@user.should respond_to(:completed?)
+		describe "completed?" do
+			it "should respond to successfully" do
+				@user.should respond_to(:completed?)
+			end
+			
+			it "should return nil if not task not completed" do
+				@user.completed?(@task2).should be_nil
+			end
+			
+			it "should return completed task if task is completed" do
+				@user.completed?(@task1).should == @completed_task
+			end
+		end
+	end
+	
+	describe "points" do
+		before(:each) do
+			@user = Factory(:user)
+			@path = Factory(:path, :user => @user)
+			@task = Factory(:task, :path => @path)
+			@enrollment = Factory(:enrollment, :path => @path, :user => @user)
 		end
 		
-		#TODO: REMOVE
-		# it "should respond to complete! method" do
-			# @user.should respond_to(:complete!)
-		# end
+		describe "award_points" do
+			it "should add task's points to earned points" do
+				@user.award_points(@task)
+				@user.earned_points.should == @task.points
+			end
+				
+			it "should add task's points to the appropriate enrollment's total_points" do
+				@user.award_points(@task)
+				@user.enrollments.find_by_path_id(@path.id).total_points.should == @task.points
+			end
+		end
 		
-		#TODO: REMOVE
-		# it "should compelete a task" do
-			# @user.complete!(@task1)
-			# @user.should be_completed(@task1)
-		# end
-		
-		it "should not say enrolled if it isn't" do
-			@user.should_not be_completed(@task2)
+		describe "available_points" do
+			it "should equal the earned points minus the spent points" do
+				@user.earned_points = 100
+				@user.spent_points = 25
+				@user.available_points.should == 75
+			end
 		end
 	end
 end
