@@ -1,0 +1,12 @@
+........................................................................................................................................................................................................................................................................................................................................................................................................................................................................................*............................*.....
+
+Pending:
+  User enrollments should not say enrolled if it isn't
+    # Not Yet Implemented
+    # ./spec/models/user_spec.rb:199
+  PointTransactions creation success should complete a task and list the point transaction on the transactions page
+    # Not Yet Implemented
+    # ./spec/requests/point_transactions_spec.rb:23
+
+Finished in 132.74 seconds
+507 examples, 0 failures, 2 pending

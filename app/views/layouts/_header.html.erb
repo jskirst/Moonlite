@@ -14,6 +14,9 @@
 			<% end %>
 			<li><%= link_to "Profile", current_user %></li>
 			<li><%= link_to "Paths", all_paths_path %></li>
+			<% if !current_user.company.nil? %>
+				<li><%= link_to "Store", rewards_path(:company_id => current_user.company.id) %></li>
+			<% end %>
 			<li><%= link_to "Settings", edit_user_path(current_user) %></li>
 			<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
 			<% else %>

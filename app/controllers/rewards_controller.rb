@@ -13,7 +13,7 @@ class RewardsController < ApplicationController
 	def create
 		@reward = @company.rewards.build(params[:reward])
 		if @reward.save
-			flash[:success] = "Store item created."
+			flash[:success] = "Reward created."
 			redirect_to @reward
 		else
 			@title = "New"
@@ -48,11 +48,6 @@ class RewardsController < ApplicationController
 		end
 	end
 	
-	# def destroy
-		# @task.destroy
-		# redirect_back_or_to @task.path
-	# end
-	
 	private
 		def admin_or_company_admin
 			redirect_to(root_path) unless (current_user.admin? || current_user.company_admin?)
@@ -86,7 +81,7 @@ class RewardsController < ApplicationController
 				end
 			else
 				flash[:error] = "You must supply a company argument."
-				redirect_to root_path
+				redirect_to rewards_path
 			end
 		end
 end
