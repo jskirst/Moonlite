@@ -17,7 +17,7 @@ class Reward < ActiveRecord::Base
 		
 	validates :points, 
 		:presence 		=> true,
-		:numericality	=> { :less_than => 51 }
+		:numericality	=> { :less_than => 100000 }
 	
 	validates :company_id, :presence => true
 	

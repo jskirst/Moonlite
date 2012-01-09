@@ -84,7 +84,7 @@ describe "Rewards" do
 		end
 		
 		it "should a reject points value thats too high" do
-			@company.rewards.build(@attr.merge(:points => 1000000)).should_not be_valid
+			@company.rewards.build(@attr.merge(:points => 100000000000)).should_not be_valid
 		end
 	end
 end

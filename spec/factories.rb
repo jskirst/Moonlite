@@ -11,6 +11,14 @@ Factory.define :company do |company|
 	company.name					"Solyndra"
 end
 
+Factory.define :reward do |reward|
+	reward.association :company
+	reward.name "Reward Name"
+	reward.description "Reward Description"
+	reward.points 1000
+	reward.image_url "http://www.google.com"
+end
+
 Factory.define :path do |path|
 	path.name "Solar Power"
 	path.description "This is what you would say here, something like this."

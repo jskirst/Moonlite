@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation
+	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points
 	
 	has_one :company_user
 	has_one :company, :through => :company_user
@@ -72,19 +72,18 @@ class User < ActiveRecord::Base
 		end
 	end
 	
-	def total_earned_points(path = nil)
-		total_earned_points = 0
-		cp = completed_tasks.find_all_by_status_id(1)
-		cp.each do |t|
-			if path.nil? || t.task.path_id == path.id
-				total_earned_points += t.task.points
-			end
-		end
-		return total_earned_points
+	def award_points(task)
+		self.update_attribute('earned_points', self.earned_points + task.points)
+		enrollments.find_by_path_id(task.path_id).add_earned_points(task.points)
+	end
+	
+	def available_points()
+		available_points = self.earned_points
+		spent_points = self.spent_points
+		return available_points - spent_points
 	end
 	
 	private
-	
 		def encrypt_password
 			self.salt = make_salt if new_record?
 			self.encrypted_password = encrypt(password)

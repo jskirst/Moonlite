@@ -179,17 +179,27 @@ describe UsersController do
 					@enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
 					
 					@task1_path1 = Factory(:task, :path => @path1, :points => 2)
+					@user.award_points(@task1_path1)
 					@task2_path1 = Factory(:task, :path => @path1, :points => 2)
+					@user.award_points(@task2_path1)
 					@task3_path1 = Factory(:task, :path => @path1, :points => 2)
+					@user.award_points(@task3_path1)
+					@path1_earned_points = 6
 					
 					@task1_path2 = Factory(:task, :path => @path2, :points => 7)
+					@user.award_points(@task1_path2)
 					@task2_path2 = Factory(:task, :path => @path2, :points => 7)
+					@user.award_points(@task2_path2)
 					@task3_path2 = Factory(:task, :path => @path2, :points => 7)
+					@user.award_points(@task3_path2)
+					@path2_earned_points = 21
 					
 					@completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
 					@completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
 					@completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
 					@completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
+					
+					@total_earned_points = @path1_earned_points + @path2_earned_points
 				end
 				
 				it "should show the user's paths" do
@@ -199,14 +209,11 @@ describe UsersController do
 				end
 				
 				it "should show the users total earned points" do
-					total_earned_points = @task1_path1.points + @task2_path1.points + @task1_path2.points + @task1_path2.points
 					get :show, :id => @user
-					response.should have_selector("p", :content => "#{total_earned_points}")
+					response.should have_selector("p", :content => "#{@total_earned_points}")
 				end
 				
 				it "should show the users point total for each path" do
-					path1_earned_points = @task1_path1.points + @task2_path1.points
-					path1_earned_points = @task1_path2.points + @task2_path2.points
 					get :show, :id => @user
 					response.should have_selector("p", :content => "#{@path1_earned_points}")
 					response.should have_selector("p", :content => "#{@path2_earned_points}")

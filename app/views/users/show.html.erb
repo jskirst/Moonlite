@@ -7,17 +7,17 @@
 		<% if !@company.nil? %>
 		<p>Company: <%= link_to @company.name, @company %></p>
 		<% end %>
-		<p><%= @user.name %> has earned <strong><%= @user.total_earned_points %></strong> total points.</p>
+		<p><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
 	</section>
 	<section>
 		<h2>Enrolled Paths</h2>
-		<% if @enrolled_paths.empty? %>
+		<% if @user.enrollments.empty? %>
 		<p><%= @user.name %> is not currently enrolled in any paths.</p>
 		<% else %>
 		<ul>
-			<% @enrolled_paths.each do |p| %>
+			<% @user.enrollments.each do |e| %>
 			<li>
-				<p><%= link_to p.name, p %> - <strong><%= @user.total_earned_points(p) %></strong> Points Earned</p>
+				<p><%= link_to e.path.name, e.path %> - <strong><%= e.total_earned_points() %></strong> Points Earned</p>
 			</li>
 			<% end %>
 		</ul>

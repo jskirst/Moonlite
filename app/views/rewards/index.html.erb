@@ -1,4 +1,5 @@
 <h1><%= @company.name %> Company Store</h1>
+<p><strong>Points available: </strong><%= current_user.available_points.to_s %></p>
 <% if current_user.company_admin? || current_user.admin? %>
 <p><%= link_to "Add a new store item", new_reward_path(:company_id => @company.id) %></p>
 <% end %>
