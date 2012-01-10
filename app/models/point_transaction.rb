@@ -7,11 +7,10 @@ class PointTransaction < ActiveRecord::Base
 	
 	belongs_to :user
 	belongs_to :task
+	belongs_to :reward
 	
 	validates :user_id, 
 		:presence => true
-	validates :task_id,		
-		:presence 	=> true
 	validates :points,
 		:presence 	=> true
 	validates :status,

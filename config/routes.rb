@@ -25,7 +25,12 @@ SampleApp::Application.routes.draw do
 	resources :completed_tasks
 	resources :info_resources
 	resources :point_transactions
-	resources :rewards
+	resources :rewards do
+		member do
+			get :review
+			get :purchase
+		end
+	end	
 	
 	root 				:to => "pages#home"
 	
@@ -40,6 +45,8 @@ SampleApp::Application.routes.draw do
 	match '/news',		:to => 'pages#news'
 	match '/landing',	:to => 'pages#landing'
 
+	match '/dashboard',	:to => 'reports#dashboard'
+	
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

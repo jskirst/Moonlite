@@ -1,0 +1,199 @@
+<section id="dashboard">
+	<style>
+		#dashboard h1 {
+			font-size:28px;
+		}
+		#dashboard h2 {
+			font-size:22px;
+		}		
+		#dashboard h3 {
+			font-size:18px;
+		}
+		#dashboard tbody tr:nth-child(even) td, tbody tr.even td {
+			background: transparent;
+		}
+	</style>
+	<h1>Dashboard</h1>
+	<section>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+		// Load the Visualization API and the piechart package.
+		google.load('visualization', '1.0', {'packages':['corechart', 'table', 'gauge']});
+
+		// Set a callback to run when the Google Visualization API is loaded.
+		google.setOnLoadCallback(drawUserActivity);
+
+		function drawUserActivity() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Activity');
+			data.addColumn('number', 'Users');
+			data.addRows([
+				['Not Active', <%= @user_activity[0] %>],
+				['Active', <%= @user_activity[1] %>],
+				['Very Active', <%= @user_activity[2] %>]
+			]);
+			var options = {'title':'Users by Activity',
+				'width':200,
+				'height':200,
+				'legend': 'bottom'};
+
+			var chart = new google.visualization.PieChart(document.getElementById('graph_user_activity'));
+			chart.draw(data, options);
+			drawTasksCompleted();
+		}
+		
+		function drawTasksCompleted() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Completed Tasks');
+			data.addRows([
+				<% @tasks_completed.each do |t| %>
+				['<%= t[0] %>', <%= t[1] %>],
+				<% end %>
+			]);
+			var options = {'title':'Tasks Completed by Day',
+				'width':200,
+				'height':200,
+				'legend': 'bottom'};
+
+			var chart = new google.visualization.ColumnChart(document.getElementById('graph_tasks_completed'));
+			chart.draw(data, options);
+			drawUserPoints();
+		}
+		
+		function drawUserPoints() {
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Points');
+			data.addColumn('number', 'Users');
+			data.addRows([
+				<% @user_points.each do |t| %>
+				['<%= t[0] %>', <%= t[1] %>],
+				<% end %>
+			]);
+			var options = {'title':'Users by Points',
+				'width':200,
+				'height':200,
+				'legend': 'bottom'};
+
+			var chart = new google.visualization.PieChart(document.getElementById('graph_user_points'));
+			chart.draw(data, options);
+			drawPathEnrollment();
+		}
+		
+		function drawPathEnrollment() {
+			<% path_counter = 0 
+			@path_statistics.each do |p| 
+				enrollment_stats = p[1] %>
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Status');
+			data.addColumn('number', 'Users');
+			data.addRows([
+				["Enrolled", <%= enrollment_stats[0] %>],
+				["Not Enrolled", <%= enrollment_stats[1] %>]
+			]);
+			var options = {'title':'Enrollment',
+			'width':200,
+			'height':200,
+			'legend': 'bottom'};
+
+			var chart = new google.visualization.PieChart(document.getElementById('graph_enrollment_<%= path_counter %>'));
+			chart.draw(data, options);
+			<% path_counter += 1 %>
+			<% end %>
+			drawPathActivity();
+		}
+		
+		function drawPathActivity() {
+			<% path_counter = 0 
+			@path_statistics.each do |p| 
+			path_activity = p[2] %>
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Date');
+			data.addColumn('number', 'Completed Tasks');
+			data.addRows([
+				<% path_activity.each do |t| %>
+				['<%= t[0] %>', <%= t[1] %>],
+				<% end %>
+			]);
+			var options = {'title':'Recent Activity',
+			'width':200,
+			'height':200,
+			'legend': 'bottom'};
+
+			var chart = new google.visualization.ColumnChart(document.getElementById('graph_activity_<%= path_counter %>'));
+			chart.draw(data, options);
+			<% path_counter += 1 %>
+			<% end %>
+			drawUserScore();
+		}
+		
+		function drawUserScore() {
+			<% path_counter = 0 
+			@path_statistics.each do |p| 
+			user_score = p[3] %>
+			var data = new google.visualization.DataTable();
+			data.addColumn('string', 'Label');
+			data.addColumn('number', 'Value');
+			data.addRows([
+				['Score', <%= user_score %>]
+			]);
+			var options = {
+				width: 200, height: 200,
+				redFrom: 0, redTo: 40,
+				yellowFrom:40, yellowTo: 70,
+				greenFrom:70, greenTo: 100,
+				minorTicks: 5
+			};
+
+			var chart = new google.visualization.Gauge(document.getElementById('graph_score_<%= path_counter %>'));
+			chart.draw(data, options);
+			<% path_counter += 1 %>
+			<% end %>
+		}
+		
+		
+    </script>
+		<h2>User Statistics</h2>
+		<table>
+			<tr>
+				<td>
+					<div id="graph_user_activity"></div>
+				</td>
+				<td>
+					<div id="graph_tasks_completed"></div>
+				</td>
+				<td>
+					<div id="graph_user_points"></div>
+				</td>
+			</tr>
+		</table>
+	</section>
+	<section>
+		<h2>Path Statistics</h2>
+		<table>
+			<% path_counter = 0 %>
+			<% @path_statistics.each do |p| %>
+			<tr>
+				<td>
+					<h3><%= p[0] %></h3>
+					<table>
+						<tr>
+							<td>
+								<div id="graph_enrollment_<%= path_counter %>"></div>
+							</td>
+							<td>
+								<div id="graph_activity_<%= path_counter %>"></div>
+							</td>
+							<td>
+								<div id="graph_score_<%= path_counter %>"></div>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+			<% path_counter += 1 %>
+			<% end %>
+		</table>
+	</section>
+</section>
+				

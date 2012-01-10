@@ -1,0 +1,11 @@
+<h1>Confirm Purchase</h1>
+<section class="reward">
+	<h2><%= @reward.name %></h2>
+	<p><%= @reward.description %></p>
+	<p><%= @reward.points %></p>
+	<p><%= @reward.image_url %></p>
+</section>
+<section>
+	<%= button_to "Cancel", {:action => "index"}, :method => "get" %>
+	<%= button_to "Purchase", {:action => "purchase", :id => @reward.id}, :method => "get" %>
+</section>

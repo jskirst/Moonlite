@@ -75,6 +75,10 @@ class User < ActiveRecord::Base
 	def award_points(task)
 		self.update_attribute('earned_points', self.earned_points + task.points)
 		enrollments.find_by_path_id(task.path_id).add_earned_points(task.points)
+	end	
+	
+	def debit_points(points)
+		self.update_attribute('spent_points', self.spent_points + points)
 	end
 	
 	def available_points()

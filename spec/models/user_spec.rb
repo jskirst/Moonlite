@@ -282,8 +282,11 @@ describe "User" do
 	describe "points" do
 		before(:each) do
 			@user = Factory(:user)
+			@company = Factory(:company)
+			Factory(:company_user, :user => @user, :company => @company)
 			@path = Factory(:path, :user => @user)
 			@task = Factory(:task, :path => @path)
+			@reward = Factory(:reward, :company => @user.company)
 			@enrollment = Factory(:enrollment, :path => @path, :user => @user)
 		end
 		
@@ -296,6 +299,15 @@ describe "User" do
 			it "should add task's points to the appropriate enrollment's total_points" do
 				@user.award_points(@task)
 				@user.enrollments.find_by_path_id(@path.id).total_points.should == @task.points
+			end
+		end		
+		
+		describe "debit_points" do
+			it "should add points to spent points" do
+				current_points = @user.spent_points
+				@user.debit_points(@reward.points)
+				@user.spent_points.should > current_points
+				@user.spent_points.should == current_points + @reward.points
 			end
 		end
 		

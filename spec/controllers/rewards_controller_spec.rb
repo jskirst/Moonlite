@@ -4,13 +4,14 @@ describe RewardsController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
+		@reward_points = 1000
+		@user = Factory(:user, :earned_points => @reward_points + 10, :spent_points => 10)
 		@company = Factory(:company)
 		@attr = { :company_id => @company.id,
 			:name => "Fubar",
 			:description => "Fucked up beyond all recognition",
 			:image_url => "http://www.o.co/face",
-			:points => 5}
+			:points => @reward_points}
 	end
 	
 	describe "access controller" do
@@ -47,7 +48,22 @@ describe RewardsController do
 			it "should deny access to 'update'" do
 				put :update, :id => @reward, :reward => @attr
 				response.should redirect_to signin_path
-			end			
+			end
+			
+			it "should deny access to 'review'" do
+				get :review, :id => @reward
+				response.should redirect_to signin_path
+			end
+			
+			it "should deny access to 'purchase'" do
+				get :purchase, :id => @reward
+				response.should redirect_to signin_path
+			end
+
+			it "should deny access to 'destroy'" do
+				delete :destroy, :id => @reward
+				response.should redirect_to signin_path
+			end				
 		end
 		
 		describe "when signed in as a regular user" do
@@ -88,7 +104,22 @@ describe RewardsController do
 			it "should deny access to 'update'" do
 				put :update, :id => @reward, :reward => @attr
 				response.should redirect_to root_path
-			end		
+			end
+			
+			it "should allow access to 'review'" do
+				get :review, :id => @reward
+				response.should be_success
+			end
+			
+			it "should allow access to 'purchase'" do
+				get :purchase, :id => @reward
+				response.should be_success
+			end
+			
+			it "should deny access to 'destroy'" do
+				delete :destroy, :id => @reward
+				response.should redirect_to root_path
+			end	
 		end
 		
 		describe "when signed in as company admin" do
@@ -136,53 +167,68 @@ describe RewardsController do
 				put :update, :id => @reward, :reward => @attr
 				response.should redirect_to @reward
 			end
+			
+			it "should allow access to 'review'" do
+				get :review, :id => @reward
+				response.should be_success
+			end
+			
+			it "should allow access to 'purchase'" do
+				get :purchase, :id => @reward
+				response.should be_success
+			end
+			
+			it "should allow access to 'destroy'" do
+				delete :destroy, :id => @reward
+				response.should_not redirect_to root_path
+			end	
 		end
 		
 		describe "when signed in as admin" do
-			before(:each) do
-				@user.toggle!(:admin)
-				test_sign_in(@user)
-			end
-			
-			it "should allow access to 'new'" do
+			it "should deny access to 'new'" do
 				get :new, :company_id => @company
-				response.should_not redirect_to root_path
-				response.should_not redirect_to @user
-				response.should be_success
+				response.should redirect_to signin_path
 			end
 		
-			it "should allow access to 'create'" do
+			it "should deny access to 'create'" do
 				post :create, :reward => @attr
-				response.should_not redirect_to root_path
-				response.should_not redirect_to @user
-				response.should redirect_to Reward.find(2)
+				response.should redirect_to signin_path
 			end
 			
-			it "should allow access to 'index'" do
+			it "should deny access to 'index'" do
 				get :index, :company_id => @company
-				response.should_not redirect_to root_path
-				response.should_not redirect_to @user
-				response.should be_success
+				response.should redirect_to signin_path
 			end
 			
-			it "should allow access to 'show'" do
+			it "should deny access to 'show'" do
 				get :show, :id => @reward
-				response.should_not redirect_to root_path
-				response.should_not redirect_to @user
-				response.should be_success
+				response.should redirect_to signin_path
 			end
 			
-			it "should allow access to 'edit'" do
+			it "should deny access to 'edit'" do
 				get :edit, :id => @reward
-				response.should_not redirect_to root_path
-				response.should_not redirect_to @user
-				response.should be_success
+				response.should redirect_to signin_path
+			end
+
+			it "should deny access to 'update'" do
+				put :update, :id => @reward, :reward => @attr
+				response.should redirect_to signin_path
 			end
 			
-			it "should allow access to 'update'" do
-				put :update, :id => @reward, :reward => @attr
-				response.should redirect_to @reward
+			it "should deny access to 'review'" do
+				get :review, :id => @reward
+				response.should redirect_to signin_path
 			end
+			
+			it "should deny access to 'purchase'" do
+				get :purchase, :id => @reward
+				response.should redirect_to signin_path
+			end
+
+			it "should deny access to 'destroy'" do
+				delete :destroy, :id => @reward
+				response.should redirect_to signin_path
+			end	
 		end
 	end
 	
@@ -190,7 +236,8 @@ describe RewardsController do
 		before(:each) do
 			@user = Factory(:user)
 			@company_user = Factory(:company_user, :user => @user, :company => @company, :is_admin => "t")
-			@reward = Factory(:reward, :company => @company)
+			@reward_points = 1000
+			@reward = Factory(:reward, :company => @company, :points => @reward_points)
 			test_sign_in(@user)
 		end
 	
@@ -346,36 +393,101 @@ describe RewardsController do
 			end
 		end
 		
-		# describe "DELETE 'destroy'" do
-			# describe "as an unauthorized user" do
-				# before(:each) do
-					# @user = Factory(:user)
-					# @path = Factory(:path, :user => @user)
-					# @task = Factory(:task, :path => @path)
-					
-					# @other_user = Factory(:user, :email => "other@o.com")
-					# test_sign_in(@other_user)
-				# end
-				
-				# it "should deny access" do
-					# delete :destroy, :id => @task
-					# response.should redirect_to(root_path)
-				# end
-			# end
+		describe "GET 'review'" do
+			it "should be successful" do
+				get :review, :id => @reward
+				response.should be_success
+			end
+
+			it "should have right title" do
+				get :review, :id => @reward
+				response.should have_selector("title", :content => "Confirm purchase")
+			end
 			
-			# describe "as an authorized user" do
-				# before(:each) do
-					# @user = test_sign_in(Factory(:user))
-					# @path = Factory(:path, :user => @user)
-					# @task = Factory(:task, :path => @path)
-				# end
+			it "should have the right name" do
+				get :review, :id => @reward
+				response.should have_selector("h2", :content => @reward.name)
+			end
+		end
+		
+		describe "GET 'purchase'" do
+			describe "when user has insufficient points" do
+				before(:each) do
+					@user.earned_points = 10
+					@user.spent_points = 10
+					@user.save!
+				end
 				
-				# it "should destroy the task" do
-					# lambda do
-						# delete :destroy, :id => @task
-					# end.should change(Task, :count).by(-1)
-				# end
-			# end
-		# end
+				it "should display error message" do
+					get :purchase, :id => @reward
+					flash[:info].should =~ /do not have enough points/i
+				end
+				
+				it "should redirect back to review page" do
+					get :purchase, :id => @reward
+					response.should redirect_to review_reward_path(@reward)
+				end
+				
+				it "should not create a point transaction" do
+					lambda do
+						get :purchase, :id => @reward
+					end.should_not change(PointTransaction, :count)
+				end
+			end
+			
+			describe "when user has sufficient points" do
+				before(:each) do
+					@user.earned_points = @reward_points + 10
+					@user.spent_points = 10
+					@user.save!
+				end
+				
+				it "should display success message" do
+					get :purchase, :id => @reward
+					flash[:success].should =~ /purchase successful/i
+				end
+
+				it "should have right title" do
+					get :purchase, :id => @reward
+					response.should have_selector("title", :content => "Purchase successful")
+				end
+				
+				it "should have the right reward name" do
+					get :purchase, :id => @reward
+					response.should have_selector("h2", :content => @reward.name)
+				end
+				
+				it "should create a new point transaction" do
+					lambda do
+						get :purchase, :id => @reward
+					end.should change(PointTransaction, :count).by(1)
+				end
+				
+				it "should have point transaction with correct reward and points" do
+					get :purchase, :id => @reward
+					pt = PointTransaction.find(:first, :conditions => ["reward_id = ? and user_id = ?", @reward.id, @user.id])
+					pt.reward_id.should == @reward.id
+					pt.points.should == @reward.points
+				end
+			end
+		end
+		
+		describe "DELETE 'destroy'" do
+			it "should destroy the reward" do
+				lambda do
+					delete :destroy, :id => @reward
+				end.should change(Reward, :count).by(-1)
+			end
+			
+			it "should redirect to the reward index" do
+				delete :destroy, :id => @reward
+				response.should redirect_to rewards_path(:company_id => @company.id)
+			end
+			
+			it "should have a success message" do
+				delete :destroy, :id => @reward
+				flash[:success].should =~ /deleted successfully/i
+			end
+		end
 	end
 end
