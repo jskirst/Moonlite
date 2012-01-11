@@ -71,19 +71,11 @@ class ReportsController < ApplicationController
 				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '" + 7.days.ago.to_s + "'" }
 			)
 			if !path_score.nil?
-				path_score = path_score * 100
+				path_score = Integer(path_score * 100)
 			end
 			
 			@path_statistics << [p.name, enrollment_statistics, path_activity, path_score]
 		end
-		
-		
-		@path_ranks = CompletedTask.count(
-			:group => "tasks.path_id",
-			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN company_users on company_users.user_id = completed_tasks.user_id",
-			:order => "1 desc",
-			:conditions => "company_users.company_id = #{@company_id} and completed_tasks.updated_at > '" + 7.days.ago.to_s + "'"
-		)
 	end
 	
 	private

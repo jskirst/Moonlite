@@ -1,3 +1,8 @@
+<section style="float:right;">
+<% if @user.id == current_user.id %>
+	<%= link_to "Edit", edit_user_path(current_user), :class => "btn primary" %>
+<% end %>
+</section>
 <section class="user_profile">
 	<h1>
 		<%= gravatar_for @user %>

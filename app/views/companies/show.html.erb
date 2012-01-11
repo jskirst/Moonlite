@@ -1,35 +1,37 @@
 <section id="company-profile">
-	<style>
-		section {
-			margin-top: 0px;
-		} h1 {
-			margin-bottom: 0px;
-			font-size: 32px;
-		} h2 {
-			font-size: 28px;
-		} h3 {
-			margin-top: 15px;
-			font-size: 20px;
-		} p {
-			font-size: 16px;
-			margin-bottom: 0px;
-		} ol {
-			margin-bottom: 10px;
-		}
-	</style>
 	<h1><%= @company.name %></h1>
+	<ul class="tabs">
+		<li class="active"><a href="#">Users</a></li>
+		<li><%= link_to "Settings", edit_company_path(@company) %></li>
+	</ul>
 	<section id="users">
-		<h2>Users</h2>
+		<h2>Registered Users</h2>
 		<% if @company_users.empty? %>
 			<p>You do not have any users for your organization yet.</p>
 		<% else %>
-		<ol>
-			<% @company_users.each do |cu| %>
-			<li><%= link_to cu.user.name, cu.user %></li>
-			<% end %>
-		</ol>
+		<table>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Other</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% user_counter = 0 %>
+				<% @company_users.each do |cu| %>
+					<tr>
+						<%= link_to "", cu.user %>
+						<td><%= user_counter.to_s %></td>
+						<td><%= cu.user.name %></td>
+						<td><%= rand(1000).to_s %></td>
+					</tr>
+					<% user_counter += 1 %>
+				<% end %>
+			</tbody>
+		</table>
 		<% end %>
-		<p><%= link_to "Add user", {:controller => "company_users", :action => "new", :company => @company } %></p>
+		<p><%= link_to "Add user", new_company_user_path(:company => @company), :class => "btn primary" %></p>
 		<h3>Awaiting reply from:</h3>
 		<% if @unregistered_company_users.empty? %>
 			<p>There are no outstanding user invitations.</p>

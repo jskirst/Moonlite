@@ -1,20 +1,12 @@
+<section style="float:right;">
+<% if @path.user_id == current_user.id %>
+	<%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn primary" %>
+<% end %>
+</section>
 <section class="path">
-	<section id="enrollment">
-	<% if current_user.enrolled?(@path) %>
-		<%= render "unenroll" %>
-	<% else %>
-		<%= render "enroll" %>
-	<% end %>
-	</section>
 	<section id="description">
 		<h1><%= @path.name %></h1>
 		<p><%= @path.description %></p>
-		<% if @path.user_id == current_user.id %>
-			<p><%= link_to "Edit path", {:controller => "paths", :action => "edit", :id => @path.id } %></p>
-			<p><%= link_to "Add a question", {:controller => "tasks", :action => "new", :path => @path } %></p>
-			<p><%= link_to "Upload a list of questions", {:controller => "paths", :action => "file", :id => @path.id }%></p>
-			<p><%= link_to "Add a resource", {:controller => "info_resources", :action => "new", :path => @path } %></p>
-		<% end %>
 		<ol>
 		<% @info_resources.each do |resource| %>
 			<li>
@@ -23,6 +15,11 @@
 			</li>
 		<% end %>
 		</ol>
+	</section>
+	<section>
+	<% if !current_user.enrolled?(@path) %>
+		<%= render "enroll" %>
+	<% end %>
 	</section>
 	<% if current_user.enrolled?(@path) %>
 	<section id="progress">
@@ -36,12 +33,12 @@
 	</section>
 		<% if @remaining_tasks > 0 %>
 		<section id="action">
-			<%= link_to "Solve Problems", continue_path_path, :class => "signup_button round left" %>
-			<%= link_to "Post Achievement", "/achievements/6", :class => "signup_button round right" %>
+			<%= link_to "Solve Problems", continue_path_path, :class => "btn primary" %>
+			<%= link_to "Post Achievement", "/achievements/6", :class => "btn secondary" %>
 		</section>
 		<% else %>
 		<section id="action">
-			<%= link_to "Post Achievement", "/achievements/6", :class => "signup_button round" %>
+			<%= link_to "Post Achievement", "/achievements/6", :class => "btn primary" %>
 		</section>
 		<% end %>
 	<% end %>

@@ -1,14 +1,8 @@
 <h1>All Paths</h1>
-<table class='profile' summary='Profile Information'>
-	<tr>
-		<td class='Main'>
-			<% unless @paths.empty? %>
-			<table class="paths" summary="Users paths">
-				<%= render @paths %>
-			</table>
-			<%= will_paginate @paths %>
-			<% end %>
-		</td>
-	</tr>
-</table>
+	<% unless @paths.empty? %>
+	<table class="paths" summary="Users paths">
+		<%= render @paths %>
+	</table>
+	<%= will_paginate @paths %>
+	<% end %>
 <%= link_to "Create new Path", new_path_path %>

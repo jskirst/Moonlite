@@ -6,24 +6,32 @@
 		<%= f.hidden_field :email, :value => @company_user.email %>
 	<% end %>
 	<div class="field">
-		<%= f.label :name %><br/>
-		<%= f.text_field :name %>
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name %>
+		</div>
 	</div>
 	<% if @company_user.nil? %>
 	<div class="field">
-		<%= f.label :email %><br/>
-		<%= f.text_field :email %>
+		<%= f.label :email %>
+		<div class="input">
+			<%= f.text_field :email %>
+		</div>
 	</div>
 	<% end %>
 	<div class="field">
-		<%= f.label :password %><br/>
-		<%= f.password_field :password %>
+		<%= f.label :password %>
+		<div class="input">
+			<%= f.password_field :password %>
+		</div>
 	</div>
 	<div class="field">
-		<%= f.label :password_confirmation, "Confirm password" %><br/>
-		<%= f.password_field :password_confirmation %>
+		<%= f.label :password_confirmation, "Confirm password" %>
+		<div class="input">
+			<%= f.password_field :password_confirmation %>
+		</div>
 	</div>
 	<div class="actions">
-		<%= f.submit "Sign up" %>
+		<%= f.submit "Sign up", :class => "btn primary" %>
 	</div>
 <% end %>

@@ -2,10 +2,9 @@
 <section class="reward">
 	<h2><%= @reward.name %></h2>
 	<p><%= @reward.description %></p>
-	<p><%= @reward.points %></p>
-	<p><%= @reward.image_url %></p>
+	<p><strong>Cost: <%= @reward.points %></strong></p>
 </section>
 <section>
-	<%= button_to "Cancel", {:action => "index"}, :method => "get" %>
-	<%= button_to "Purchase", {:action => "purchase", :id => @reward.id}, :method => "get" %>
+	<%= link_to "Confirm Purchase", {:action => "purchase", :id => @reward.id}, :method => "get", :class => "btn primary" %>
+	<%= link_to "Cancel", {:action => "index"}, :method => "get", :class => "btn secondary" %>
 </section>

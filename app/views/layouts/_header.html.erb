@@ -1,27 +1,39 @@
 <header>
-	<%= link_to logo, root_path %>
-	<nav class="round">
-		<ul>
-			<% if signed_in? %>
-			<li><%= link_to "Home", root_path %></li>
-			<% if current_user.admin? %>
-				<li><%= link_to "Companies", companies_path %></li>
-				<li><%= link_to "Users", users_path %></li>
-			<% end %>
-			<% if current_user.company_admin? %>
-				<li><%= link_to "My Company", current_user.company %></li>
-				<li><%= link_to "Dashboard", dashboard_path %></li>
-			<% end %>
-			<li><%= link_to "Profile", current_user %></li>
-			<li><%= link_to "Paths", all_paths_path %></li>
-			<% if !current_user.company.nil? %>
-				<li><%= link_to "Store", rewards_path %></li>
-			<% end %>
-			<li><%= link_to "Settings", edit_user_path(current_user) %></li>
-			<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
-			<% else %>
-			<li><%= link_to "Sign in", signin_path %></li>
-			<% end %>
-		</ul>
+	<nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown">
+		<div class="fill">
+			<div class="container">
+				<h3><a href="/">Moonlite</a></h3>
+				<% if signed_in? %>
+				<ul>
+					<% if current_user.company_admin? %>
+						<li><%= link_to "My Company", current_user.company %></li>
+						<li><%= link_to "Dashboard", dashboard_path %></li>
+					<% end %>
+					<li><%= link_to "Paths", all_paths_path %></li>
+					<li><%= link_to current_user.name, current_user %></li>
+					<li><%= link_to "Store", rewards_path %></li>
+				</ul>
+				<% end %>
+				<ul class="nav secondary-nav">
+					<% if signed_in? %>
+					<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
+					<% else %>
+					<li ><%= link_to "Sign in", signin_path %></li>
+					<% end %>
+				</ul>
+				<% if signed_in? && current_user.admin? %>
+				<ul class="nav secondary-nav">
+					<li class="menu">
+						<a href="#" class="dropdown-toggle">Admin</a>
+						<ul class="dropdown-menu">
+							<li><%= link_to "Companies", companies_path %></li>
+							<li><%= link_to "Users", users_path %></li>
+							<li><%= link_to "Transactions", point_transactions_path %></li>
+						</ul>
+					</li>
+				</ul>
+				<% end %>
+			</div>
+		</div>
 	</nav>
 </header>

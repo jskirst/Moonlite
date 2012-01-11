@@ -1,15 +1,22 @@
 <h1>Edit Path</h1>
 <%= form_for(@path) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
-	<div class="field">
-		<%= f.label :name %><br/>
-		<%= f.text_field :name %>
+	<div class="field clearfix">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :description %><br/>
-		<%= f.text_area :description %>
+	<div class="field clearfix">
+		<%= f.label :description %>
+		<div class="input">
+			<%= f.text_area :description %>
+		</div>
 	</div>
 	<div class="actions">
-		<%= f.submit "Save" %>
+		<%= f.submit "Save", :class => "btn primary" %>
+		<%= link_to "Add Question", {:controller => "tasks", :action => "new", :path => @path }, :class => "btn secondary" %>
+		<%= link_to "Upload Questions", {:controller => "paths", :action => "file", :id => @path.id }, :class => "btn secondary"%>
+		<%= link_to "Add Resource", {:controller => "info_resources", :action => "new", :path => @path }, :class => "btn secondary" %>
 	</div>
 <% end %>

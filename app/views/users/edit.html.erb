@@ -1,27 +1,32 @@
 <h1>Edit user</h1>
 <%= form_for(@user) do |f| %>
 	<%= render 'shared/error_messages', :object => f.object %>
-	<div class="field">
-		<%= f.label :name %><br/>
-		<%= f.text_field :name %>
+	<div class="field clearfix">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :email %><br/>
-		<%= f.text_field :email %>
+	<div class="field clearfix">
+		<%= f.label :email %>
+		<div class="input">
+			<%= f.text_field :email %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :password %><br/>
-		<%= f.password_field :password %>
+	<div class="field clearfix">
+		<%= f.label :password %>
+		<div class="input">
+			<%= f.password_field :password %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :password_confirmation, "Confirm Password" %><br/>
-		<%= f.password_field :password_confirmation %>
+	<div class="field clearfix">
+		<%= f.label :password_confirmation, "Confirm Password" %>
+		<div class="input">
+			<%= f.password_field :password_confirmation %>
+		</div>
 	</div>
 	<div class="actions">
-		<%= f.submit "Save" %>
+		<%= f.submit "Save", :class => "btn primary" %>
+		<%= link_to "Cancel", current_user, :class => "btn secondary" %>
 	</div>
 <% end %>
-<div>
-	<%= gravatar_for @user %>
-	<a href="http://www.gravatar.com/email">Change</a>
-</div>

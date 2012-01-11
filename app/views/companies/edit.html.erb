@@ -1,11 +1,21 @@
-<h1>Edit Company</h1>
-<%= form_for(@company) do |f| %>
-	<%= render "shared/error_messages", :object => f.object %>
-	<div class="field">
-		<%= f.label :name %><br/>
-		<%= f.text_field :name %>
-	</div>
-	<div class="actions">
-		<%= f.submit "Save" %>
-	</div>
-<% end %>
+<section id="company-settings">
+	<h1><%= @company.name %></h1>
+	<ul class="tabs">
+		<li><%= link_to "Users", @company %></li>
+		<li class="active"><a href="#">Settings</a></li>
+	</ul>
+	<section id="settings">
+		<%= form_for(@company) do |f| %>
+			<%= render "shared/error_messages", :object => f.object %>
+			<div class="field clearfix">
+				<%= f.label :name %>
+				<div class="input">
+					<%= f.text_field :name %>
+				</div>
+			</div>
+			<div class="actions">
+				<%= f.submit "Save", :class => "btn primary" %>
+			</div>
+		<% end %>
+	</section>
+</section>

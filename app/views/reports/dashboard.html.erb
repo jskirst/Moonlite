@@ -1,20 +1,5 @@
 <section id="dashboard">
-	<style>
-		#dashboard h1 {
-			font-size:28px;
-		}
-		#dashboard h2 {
-			font-size:22px;
-		}		
-		#dashboard h3 {
-			font-size:18px;
-		}
-		#dashboard tbody tr:nth-child(even) td, tbody tr.even td {
-			background: transparent;
-		}
-	</style>
 	<h1>Dashboard</h1>
-	<section>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 		// Load the Visualization API and the piechart package.
@@ -23,7 +8,7 @@
 		// Set a callback to run when the Google Visualization API is loaded.
 		google.setOnLoadCallback(drawUserActivity);
 
-		function drawUserActivity() {
+		function drawUserActivity(){
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Activity');
 			data.addColumn('number', 'Users');
@@ -42,7 +27,7 @@
 			drawTasksCompleted();
 		}
 		
-		function drawTasksCompleted() {
+		function drawTasksCompleted(){
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Date');
 			data.addColumn('number', 'Completed Tasks');
@@ -61,7 +46,7 @@
 			drawUserPoints();
 		}
 		
-		function drawUserPoints() {
+		function drawUserPoints(){
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Points');
 			data.addColumn('number', 'Users');
@@ -80,7 +65,7 @@
 			drawPathEnrollment();
 		}
 		
-		function drawPathEnrollment() {
+		function drawPathEnrollment(){
 			<% path_counter = 0 
 			@path_statistics.each do |p| 
 				enrollment_stats = p[1] %>
@@ -103,7 +88,7 @@
 			drawPathActivity();
 		}
 		
-		function drawPathActivity() {
+		function drawPathActivity(){
 			<% path_counter = 0 
 			@path_statistics.each do |p| 
 			path_activity = p[2] %>
@@ -127,7 +112,7 @@
 			drawUserScore();
 		}
 		
-		function drawUserScore() {
+		function drawUserScore(){
 			<% path_counter = 0 
 			@path_statistics.each do |p| 
 			user_score = p[3] %>
@@ -153,6 +138,7 @@
 		
 		
     </script>
+	<section>
 		<h2>User Statistics</h2>
 		<table>
 			<tr>
@@ -170,30 +156,28 @@
 	</section>
 	<section>
 		<h2>Path Statistics</h2>
-		<table>
+		<ul>
 			<% path_counter = 0 %>
 			<% @path_statistics.each do |p| %>
-			<tr>
-				<td>
-					<h3><%= p[0] %></h3>
-					<table>
-						<tr>
-							<td>
-								<div id="graph_enrollment_<%= path_counter %>"></div>
-							</td>
-							<td>
-								<div id="graph_activity_<%= path_counter %>"></div>
-							</td>
-							<td>
-								<div id="graph_score_<%= path_counter %>"></div>
-							</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
+			<li>
+				<h3><%= p[0] %></h3>
+				<table>
+					<tr>
+						<td>
+							<div id="graph_enrollment_<%= path_counter %>"></div>
+						</td>
+						<td>
+							<div id="graph_activity_<%= path_counter %>"></div>
+						</td>
+						<td>
+							<div id="graph_score_<%= path_counter %>"></div>
+						</td>
+					</tr>
+				</table>
+			</li>
 			<% path_counter += 1 %>
 			<% end %>
-		</table>
+		</ul>
 	</section>
 </section>
 				

@@ -13,21 +13,21 @@ $(document).ready(function() {
 });
 </script>
 <h1>My Paths</h1>
-<table class='profile' summary='Profile Information'>
-	<tr>
-		<td class='Main'>
-			<% if @paths.empty? %>
-				<p>You are not currently enrolled in any paths. <%= link_to "Get started!", all_paths_path %></p>
-			<% else %>
-			<table class="paths" summary="Users paths">
-				<%= render @paths %>
-			</table>
-			<% end %>
-		</td>
-	</tr>
-</table>
+	<% if @paths.empty? %>
+		<p>You are not currently enrolled in any paths. <%= link_to "Get started!", all_paths_path %></p>
+	<% else %>
+	<table class="paths" summary="Users paths">
+		<%= render @paths %>
+	</table>
+	<% end %>
 <% else %>
+<section style="float:left; margin-right: 100px;">
+	<img src="/images/logo.png" width="200" height="200"/>
+</section>
+<section>
 	<h1>Project Moonlite</h1>
-	<p>Know who knows what. And who doesn't.</p>
-	<%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+	<h4>Know who knows what. And who doesn't.</h4>
+	<br>
+	<%= link_to "Sign up now!", signup_path, :class => "btn primary" %>
+</section>
 <% end %>

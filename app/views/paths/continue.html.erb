@@ -1,23 +1,59 @@
-<section class="path-question">
-	<p>Questions left: <%= @max %></p>
-	<p><%= @task.question %></p>
+<section class="task">
+	<style>
+		.task blockquote {
+			margin: 30px 15px 30px 15px;
+		}		
+		.task blockquote p{
+			font-size: 19px;
+		}
+		.task .answer label {
+			font-size: 17px;
+			margin-top: 10px;
+		}
+	</style>
+	<section class="question">
+		<h2><%= @task.path.name %></h2>
+		<blockquote>
+			<p>
+				<%= @task.question %>
+			</p>
+		</blockquote>
+	</section>
+	<section class="answer">
+	<%= form_for current_user.completed_tasks.build(:task_id => @task.id) do |f| %>
+		<%= f.hidden_field :task_id %>
+		<%= f.hidden_field :max, :value => @max %>
+		<%= f.hidden_field :count, :value => @count %>
+		<%= f.hidden_field :quiz_session, :value => @quiz_session %>
+		<div class="field clearfix">
+			<label>Answer:</label>
+			<div class="input">
+				<ul class="inputs-list">
+					<li>
+						<label>
+							<input id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1">
+							<span><%= @task.answer1 %></span>
+						</label>
+						<label>
+							<input id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2">
+							<span><%= @task.answer2 %></span>
+						</label>
+						<label>
+							<input id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3">
+							<span><%= @task.answer3 %></span>
+						</label>
+						<label>
+							<input id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4">
+							<span><%= @task.answer4 %></span>
+						</label>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="actions">
+			<%= f.submit "Next", :class => "btn primary" %>
+		</div>
+	<% end %>
+	</section>
 </section>
-<%= form_for current_user.completed_tasks.build(:task_id => @task.id) do |f| %>
-	<%= f.hidden_field :task_id %>
-	<%= f.hidden_field :max, :value => @max %>
-	<%= f.hidden_field :count, :value => @count %>
-	<%= f.hidden_field :quiz_session, :value => @quiz_session %>
-	<div class="field">
-		<%= f.label "Answer" %><br/>
-		<ol>
-			<li><input id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1"><%= @task.answer1 %></input></li>
-			<li><input id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2"><%= @task.answer2 %></input></li>
-			<li><input id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3"><%= @task.answer3 %></input></li>
-			<li><input id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4"><%= @task.answer4 %></input></li>
-		</ol>
-	</div>
-	<div class="actions">
-		<%= f.submit "Next" %>
-	</div>
-<% end %>
 <span style="float:right;"><%= link_to "Continue quiz later", @task.path %></span>

@@ -2,50 +2,66 @@
 <%= form_for @task do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
 	<%= f.hidden_field :path_id, :value => @path_id %><br/>
-	<div class="field">
-		<%= f.label :question %><br/>
-		<%= f.text_field :question, :maxlength => 255, :size => 75 %>
+	<div class="field clearfix">
+		<%= f.label :question %>
+		<div class="input">
+			<%= f.text_field :question, :maxlength => 255, :size => 75 %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :answer1 %><br/>
-		<%= f.text_field :answer1, :maxlength => 255, :size => 75 %>
+	<div class="field clearfix">
+		<%= f.label :answer1 %>
+		<div class="input">
+			<%= f.text_field :answer1, :maxlength => 255, :size => 75 %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :answer2 %><br/>
-		<%= f.text_field :answer2, :maxlength => 255, :size => 75 %>
+	<div class="field clearfix">
+		<%= f.label :answer2 %>
+		<div class="input">
+			<%= f.text_field :answer2, :maxlength => 255, :size => 75 %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :answer3 %><br/>
-		<%= f.text_field :answer3, :maxlength => 255, :size => 75 %>
+	<div class="field clearfix">
+		<%= f.label :answer3 %>
+		<div class="input">
+			<%= f.text_field :answer3, :maxlength => 255, :size => 75 %>
+		</div>
 	</div>
-		<div class="field">
-		<%= f.label :answer4 %><br/>
-		<%= f.text_field :answer4, :maxlength => 255, :size => 75 %>
+		<div class="field clearfix">
+		<%= f.label :answer4 %>
+		<div class="input">
+			<%= f.text_field :answer4, :maxlength => 255, :size => 75 %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :resource %><br/>
-		<%= f.text_field :resource, :maxlength => 255, :size => 75 %>
+	<div class="field clearfix">
+		<%= f.label :resource %>
+		<div class="input">
+			<%= f.text_field :resource, :maxlength => 255, :size => 75 %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :correct_answer %><br/>
-		<select id="task_correct_answer" name="task[correct_answer]">
-			<option value="1">1</option>
-			<option value="2">2</option>
-			<option value="3">3</option>
-			<option value="4">4</option>
-		</select>
+	<div class="field clearfix">
+		<%= f.label :correct_answer %>
+		<div class="input">
+			<select id="task_correct_answer" name="task[correct_answer]">
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :points %><br/>
-		<select id="task_points" name="task[points]">
-			<option value="5">5</option>
-			<option value="10">10</option>
-			<option value="15">15</option>
-			<option value="20">20</option>
-			<option value="25">25</option>
-		</select>
+	<div class="field clearfix">
+		<%= f.label :points %>
+		<div class="input">
+			<select id="task_points" name="task[points]">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+			</select>
+		</div>
 	</div>
 	<div class="actions">
-		<%= f.submit "Save" %>
+		<%= f.submit "Save", :class => "btn primary" %>
 	</div>
 <% end %>
