@@ -105,7 +105,7 @@ class ReportsController < ApplicationController
 			:conditions => "tasks.path_id = #{@path.id} and status_id = 0",
 			:order => "1 desc",
 			:limit => "10",
-			:select => "count(*) as count, tasks.*"
+			:select => "count(*) as count, tasks.id"
 		)
 		
 		@most_correct_tasks = CompletedTask.all(
@@ -114,7 +114,7 @@ class ReportsController < ApplicationController
 			:conditions => "tasks.path_id = #{@path.id} and status_id = 1",
 			:order => "1 desc",
 			:limit => "10",
-			:select => "count(*) as count, tasks.*"
+			:select => "count(*) as count, tasks.id"
 		)
 	end
 end

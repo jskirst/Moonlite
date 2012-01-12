@@ -16,7 +16,7 @@
 			<% @most_incorrect_tasks.each do |t| %>
 				<tr>
 					<td id="incorrect_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
-					<td id="incorrect_question_<%= t.id.to_s %>"><%= t.question %></td>
+					<td id="incorrect_question_<%= t.id.to_s %>"><%= Task.find(t.id).question %></td>
 					<td id="incorrect_count_<%= t.id.to_s %>"><%= t.count %></td>
 				</tr>
 			<% task_counter += 1 %>
@@ -37,7 +37,7 @@
 			<% @most_correct_tasks.each do |t| %>
 				<tr>
 					<td id="correct_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
-					<td id="correct_question_<%= t.id.to_s %>"><%= t.question %></td>
+					<td id="correct_question_<%= t.id.to_s %>"><%= Task.find(t.id).question %></td>
 					<td id="correct_count_<%= t.id.to_s %>"><%= t.count %></td>
 				</tr>
 			<% task_counter += 1 %>
