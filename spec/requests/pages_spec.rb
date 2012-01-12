@@ -6,11 +6,6 @@ describe "Pages" do
 		response.should have_selector('title',:content => 'Home')
 	end
 	
-	it "should have a Contact page at '/contact'" do
-		get '/contact'
-		response.should have_selector('title',:content => 'Contact')
-	end
-	
 	it "should have a About page at '/about'" do
 		get '/about'
 		response.should have_selector('title',:content => 'About')
@@ -19,11 +14,6 @@ describe "Pages" do
 	it "should have a Help page at '/help'" do
 		get '/help'
 		response.should have_selector('title',:content => 'Help')
-	end
-	
-	it "should have a Help page at '/signup'" do
-		get '/signup'
-		response.should have_selector('title',:content => 'Sign up')
 	end
 	
 	describe "when signed out" do
@@ -36,14 +26,14 @@ describe "Pages" do
 		
 		it "should have the appropriate links" do
 			visit root_path
-			click_link "Sign up now!"
-			response.should have_selector("title", :content => "Sign up")
-			click_link "About"
+			click_link "Learn more!"
 			response.should have_selector("title", :content => "About")
-			click_link "Contact"
-			response.should have_selector("title", :content => "Contact")
-			click_link "News"
-			response.should have_selector("title", :content => "News")
+		end
+		
+		it "should have the appropriate links" do
+			visit about_path
+			click_link "Request an invite"
+			response.should have_selector("title", :content => "Request")
 		end
 	end
 	
@@ -65,13 +55,11 @@ describe "Pages" do
 		
 		it "should have the appropriate links" do
 			visit root_path
-			click_link "Home"
-			response.should have_selector("title", :content => "Home")
 			click_link "Paths"
 			response.should have_selector("title", :content => "Paths")
-			click_link "Profile"
+			click_link @user.name
 			response.should have_selector("title", :content => @user.name)
-			click_link "Settings"
+			click_link "Edit"
 			response.should have_selector("title", :content => "Settings")
 			click_link "Sign out"
 			response.should be_success

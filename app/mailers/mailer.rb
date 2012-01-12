@@ -3,7 +3,12 @@ class Mailer < ActionMailer::Base
 
 	def welcome(details)
 		@user_email = details[:email]
-		@accept_url = "http://localhost:3000/users/#{details[:token1]}/accept"
+		@accept_url = "http://moonlite.heroku.com/users/#{details[:token1]}/accept"
 		mail(:to => details[:email], :subject => "Hello World")
+	end
+	
+	def invitation_alert(email)
+		@email = email
+		mail(:to => "jskirst@gmail.com", :subject => "Invitation Alert")
 	end
 end

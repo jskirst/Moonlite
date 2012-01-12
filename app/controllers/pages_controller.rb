@@ -8,14 +8,6 @@ class PagesController < ApplicationController
 			@paths = []
 		end
 	end
-
-	def contact
-		@title = "Contact"
-	end
-	
-	def news
-		@title = "News"
-	end
   
 	def about
 		@title = "About"
@@ -29,5 +21,17 @@ class PagesController < ApplicationController
 		@title = "All Paths"
 		@paths = Path.paginate(:page => params[:page])
 	end
-
+	
+	def invitation
+		@title = "Request an invite"
+		if params[:pages] && params[:pages][:email]
+			send_invitation_alert(params[:pages][:email])
+			render "invitation_sent"
+		end
+	end
+	
+	private
+		def send_invitation_alert(email)
+			Mailer.invitation_alert(email).deliver
+		end
 end

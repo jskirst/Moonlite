@@ -15,11 +15,9 @@ describe PagesController do
 		end
 		
 		describe "when not signed in" do
-			describe "signup material" do
-				it "should have a link to the signup page" do
-					get 'home'
-					response.should have_selector("a", :href => "/signup")
-				end
+			it "should have a link to the about page" do
+				get 'home'
+				response.should have_selector("a", :href => "/about")
 			end
 		end
 		
@@ -57,18 +55,6 @@ describe PagesController do
 			end
 		end
 	end
-
-	describe "GET 'contact'" do
-		it "should be successful" do
-			get 'contact'
-			response.should be_success
-		end
-	
-		it "should have the right title" do
-			get 'contact'
-			response.should have_selector("title", :content => "Project Moonlite | Contact")
-		end
-	end
   
 	describe "GET 'about'" do
 		it "should be successful" do
@@ -81,5 +67,4 @@ describe PagesController do
 		  response.should have_selector("title", :content => "Project Moonlite | About")
 		end
 	end
-
 end

@@ -8,18 +8,6 @@ describe UsersController do
 		@company_user = Factory(:company_user, :company => @company)
 	end
 	
-	describe "GET 'new'" do
-		it "should be successful" do
-			get :new
-			response.should be_success
-		end
-
-		it "should have right title" do
-			get :new
-			response.should have_selector("title", :content => "Sign up")
-		end
-	end
-	
 	describe "GET 'accept'" do
 		describe "with invalid token" do
 			it "should redirect to root" do
@@ -49,42 +37,47 @@ describe UsersController do
 	describe "POST 'create'" do
 		describe "failure" do
 			before(:each) do
-				@attr = {:name => "", :email => "", :password => "", :password_confirmation => ""}
+				@attr = {:name => "", :password => "", :password_confirmation => "", :token1 => @company_user.token1}
 			end
 			
 			describe "because of invalid token" do
+				before(:each) do
+					@attr = @attr.merge(:token1 => "XYZ")
+				end
 				it "should should not create a user" do
 					lambda do
-						post :create, :user => @attr.merge(:token1 => "XYZ")
+						post :create, :user => @attr
 					end.should_not change(User, :count)
 				end
 				
 				it "should should redirect to root" do
-					post :create, :user => @attr.merge(:token1 => "XYZ")
+					post :create, :user => @attr
 					response.should redirect_to root_path
 				end
 			end
 			
-			it "should not create a user" do
-				lambda do
+			describe "because of blank fields" do
+				it "should not create a user" do
+					lambda do
+						post :create, :user => @attr
+					end.should_not change(User, :count)
+				end
+				
+				it "should have the right title" do
 					post :create, :user => @attr
-				end.should_not change(User, :count)
-			end
-			
-			it "should have the right title" do
-				post :create, :user => @attr
-				response.should have_selector("title", :content => "Sign up")
-			end
-			
-			it "should render the new page" do
-				post :create, :user => @attr
-				response.should render_template('new')
+					response.should have_selector("title", :content => "Sign up")
+				end
+				
+				it "should render the new page" do
+					post :create, :user => @attr
+					response.should render_template("new")
+				end
 			end
 		end
 		
 		describe "success" do
 			before(:each) do
-				@attr = {:name => "Test", :email => "test@testing.com", :password => "testing", :password_confirmation => "testing"}
+				@attr = {:name => "Test", :password => "testing", :password_confirmation => "testing", :token1 => @company_user.token1}
 			end
 			
 			it "Should save new user successfully" do
@@ -100,7 +93,7 @@ describe UsersController do
 			
 			it "Should have a welcome message" do
 				post :create, :user => @attr
-				flash[:success].should =~ /welcome to the sample app/i
+				flash[:success].should =~ /welcome to/i
 			end
 			
 			it "Should sign the user in" do
@@ -108,24 +101,11 @@ describe UsersController do
 				controller.should be_signed_in
 			end
 			
-			describe "with a valid token" do
-				it "Should save new user successfully" do
-					lambda do
-						post :create, :user => @attr.merge(:token1 => @company_user.token1)
-					end.should change(User, :count).by(1)
-				end
-				
-				it "Should redirect to profile page" do
+			it "should add user_id to company_user" do
+				lambda do
 					post :create, :user => @attr.merge(:token1 => @company_user.token1)
-					response.should redirect_to(user_path(assigns(:user)))
-				end
-			
-				it "should add user_id to company_user" do
-					lambda do
-						post :create, :user => @attr.merge(:token1 => @company_user.token1)
-						@company_user.reload
-					end.should change(@company_user, :user_id)
-				end
+					@company_user.reload
+				end.should change(@company_user, :user_id)
 			end
 		end
 	end
@@ -236,14 +216,6 @@ describe UsersController do
 		it "should have right title" do
 			get :edit, :id => @user
 			response.should have_selector("title", :content => "Settings")
-		end
-		
-		it "should have have a link to change the gravatar" do
-			get :edit, :id => @user
-			gravatar_url = "http://www.gravatar.com/email"
-			response.should have_selector("a", 
-				:href => gravatar_url,
-				:content => "Change")
 		end
 	end
 	

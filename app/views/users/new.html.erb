@@ -1,24 +1,13 @@
 <h1>Sign up</h1>
 <%= form_for(@user) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
-	<% if !@company_user.nil? %>
-		<%= f.hidden_field :token1, :value => @company_user.token1 %>
-		<%= f.hidden_field :email, :value => @company_user.email %>
-	<% end %>
+	<%= f.hidden_field :token1, :value => @company_user.token1 %>
 	<div class="field">
 		<%= f.label :name %>
 		<div class="input">
 			<%= f.text_field :name %>
 		</div>
 	</div>
-	<% if @company_user.nil? %>
-	<div class="field">
-		<%= f.label :email %>
-		<div class="input">
-			<%= f.text_field :email %>
-		</div>
-	</div>
-	<% end %>
 	<div class="field">
 		<%= f.label :password %>
 		<div class="input">

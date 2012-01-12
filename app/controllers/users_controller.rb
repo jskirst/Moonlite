@@ -1,13 +1,8 @@
 class UsersController < ApplicationController
 	before_filter :check_environment, :except => [:accept, :show, :index, :create, :verify, :edit, :update, :destroy]
-	before_filter :authenticate, :except => [:new, :create, :accept, :verify]
-	before_filter :correct_user, :except => [:new, :accept, :create, :verify, :show, :index, :destroy]
-	before_filter :admin_user, :except => [:new, :accept, :verify, :create, :show, :edit, :update]
-	
-	def new
-		@user = User.new
-		@title = "Sign up"
-	end
+	before_filter :authenticate, :except => [:create, :accept, :verify]
+	before_filter :correct_user, :except => [:accept, :create, :verify, :show, :index, :destroy]
+	before_filter :admin_user, :except => [:accept, :verify, :create, :show, :edit, :update]
 	
 	def accept
 		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", params[:id]])
@@ -43,36 +38,33 @@ class UsersController < ApplicationController
 		
 	def create
 		token1 = params[:user][:token1]
-		if !token1.nil?
-			@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", token1])
-			if @company_user.nil?
-				redirect_to root_path and return
-			end
+		if token1.nil?
+			redirect_to root_path and return
+		end
+		
+		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", token1])
+		if @company_user.nil?
+			redirect_to root_path and return
 		end
 		
 		@user = User.new(params[:user])
+		@user.email = @company_user.email
 		if @user.save
 			@user.reload
 			sign_in @user
 			if @company_user.nil?
-				flash[:success] = "Welcome to the sample app!"
+				flash[:success] = "Welcome to the Moonlite!"
 				redirect_to @user
 			else
 				@company_user.user_id = @user.id
 				@company_user.save!
-				#@company_user.send_verification_email
-				flash[:success] = "Welcome to the sample app!"
+				flash[:success] = "Welcome to the Moonlite!"
 				redirect_to @user
 			end
 		else
 			@title = "Sign up"
 			render 'new'
 		end
-	end
-	
-	def verify
-		@company_user = CompanyUser.find(:first, :conditions => ["token2 = ?", params[:id]])
-		@title = "User Verification"
 	end
 	
 	def edit

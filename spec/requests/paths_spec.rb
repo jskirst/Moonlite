@@ -56,7 +56,8 @@ describe "Paths" do
 			it "should add all questions to a path" do
 				visit all_paths_path
 				click_link @path.name
-				click_link "Upload a list of questions"
+				click_link "Edit"
+				click_link "Upload Questions"
 				Rails.logger.debug File.join(Rails.root, @file_path, @file_name)
 				attach_file "path_file", File.join(Rails.root, @file_path, @file_name), "text/csv"
 				click_button "Submit"

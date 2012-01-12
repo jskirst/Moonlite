@@ -34,16 +34,13 @@ SampleApp::Application.routes.draw do
 	
 	root 				:to => "pages#home"
 	
-	match '/signup',	:to => 'users#new'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
 	
-	match '/contact', 	:to => 'pages#contact'
 	match '/about',		:to => 'pages#about'
 	match '/help',		:to => 'pages#help'
 	match '/all_paths',	:to => 'pages#all_paths'
-	match '/news',		:to => 'pages#news'
-	match '/landing',	:to => 'pages#landing'
+	match '/invitation',:to => 'pages#invitation'
 
 	match '/dashboard',	:to => 'reports#dashboard'
 	

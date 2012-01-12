@@ -24,7 +24,7 @@ describe "CompanyUsers" do
 						response.should render_template("company_users/new")
 						response.should have_selector("title", :content => @company.name)
 						fill_in "email", :with => @new_user_email
-						check "Is admin"
+						check "User add new users"
 						click_button "Submit"
 						response.should have_selector("div.success")
 					end.should change(CompanyUser, :count).by(1)

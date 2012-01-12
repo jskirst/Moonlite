@@ -24,7 +24,8 @@ describe "Tasks" do
 				lambda do
 					visit all_paths_path
 					click_link @path_name
-					click_link "Add a question"
+					click_link "Edit"
+					click_link "Add Question"
 					fill_in :task_question, :with => ""
 					fill_in :task_answer1, :with => ""
 					fill_in :task_points, :with => ""
@@ -40,7 +41,8 @@ describe "Tasks" do
 				lambda do
 					visit all_paths_path
 					click_link @path_name
-					click_link "Add a question"
+					click_link "Edit"
+					click_link "Add Question"
 					fill_in :task_question, :with => "Test question"
 					fill_in :task_answer1, :with => "Test answer"
 					fill_in :task_points, :with => "1"
@@ -56,7 +58,8 @@ describe "Tasks" do
 				lambda do
 					visit all_paths_path
 					click_link @path_name
-					click_link "Add a question"
+					click_link "Edit"
+					click_link "Add Question"
 					fill_in :task_question, :with => ""
 					fill_in :task_answer1, :with => ""
 					fill_in :task_points, :with => ""
