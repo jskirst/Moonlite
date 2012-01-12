@@ -8,18 +8,11 @@ class Enrollment < ActiveRecord::Base
 	validates :path_id, :presence => true, :uniqueness => { :scope => :user_id }
 	
 	def add_earned_points(points)
-		if self.total_points.nil?
-			self.total_points = 0
-		end
 		self.total_points = self.total_points + points
-		self.save
+		self.save!
 	end
 	
 	def total_earned_points()
-		if self.total_points.nil?
-			return 0
-		else
-			return self.total_points
-		end
+		return self.total_points
 	end
 end

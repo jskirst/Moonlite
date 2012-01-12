@@ -64,7 +64,28 @@ describe PagesController do
 		
 		it "should have the right title" do
 		  get 'about'
-		  response.should have_selector("title", :content => "Project Moonlite | About")
+		  response.should have_selector("title", :content => "About")
+		end
+	end
+	
+	describe "GET 'invitation'" do
+		it "should be successful" do
+			get 'invitation'
+			response.should be_success
+		end
+		
+		it "should have the right title" do
+			get 'invitation'
+			response.should have_selector("title", :content => "Request an invite")
+		end
+		
+		describe "email" do
+			it "should send an alert e-mail" do
+				email = "fake_email_for_testing@123456atesting.com"
+				email_to = "jskirst@gmail.com"
+				get 'invitation', :pages => { :email => email }
+				ActionMailer::Base.deliveries.last.to.should == [email_to]
+			end
 		end
 	end
 end

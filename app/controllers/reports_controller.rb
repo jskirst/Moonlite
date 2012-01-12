@@ -6,8 +6,13 @@ class ReportsController < ApplicationController
 		if !params[:time]
 			@time = 7
 		else
-			@time = Integer(params[:time])
+			begin
+				@time = Integer(params[:time])
+			rescue ArgumentError => e
+				@time = 7
+			end
 		end
+		time_sql = @time.days.ago.to_s
 		
 		@title = "Dashboard"
 		@user_activity = [0,0,0]
@@ -16,7 +21,7 @@ class ReportsController < ApplicationController
 		@company_users = @company.company_users
 		@users = @company.users
 		@paths = @company.paths
-		time_sql = @time.days.ago.to_s
+		
 		
 		completed_tasks = CompletedTask.count(
 			:group => "completed_tasks.user_id",
@@ -95,7 +100,7 @@ class ReportsController < ApplicationController
 		end
 		@title = "Details"
 		@most_incorrect_tasks = CompletedTask.all(
-			:group => "completed_tasks.task_id",
+			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
 			:conditions => "tasks.path_id = #{@path.id} and status_id = 0",
 			:order => "1 desc",
@@ -104,7 +109,7 @@ class ReportsController < ApplicationController
 		)
 		
 		@most_correct_tasks = CompletedTask.all(
-			:group => "completed_tasks.task_id",
+			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
 			:conditions => "tasks.path_id = #{@path.id} and status_id = 1",
 			:order => "1 desc",

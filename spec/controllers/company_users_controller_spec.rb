@@ -48,19 +48,30 @@ describe CompanyUsersController do
 		end
 		
 		describe "failure" do
-			before(:each) do
-				@attr = @attr.merge(:company_id => "", :email => "")
-			end
-		
-			it "should not create an company_user" do
-				lambda do
-					post :create, :company_user => @attr  
-				end.should_not change(CompanyUser, :count)
+			describe "because of bad email argument" do
+				it "should not create an company_user" do
+					lambda do
+						post :create, :company_user => {:company_id => @company.id, :email => ""}  
+					end.should_not change(CompanyUser, :count)
+				end
+				
+				it "should take you back to the root path" do
+					post :create, :company_user => {:company_id => @company.id, :email => ""} 
+					response.should redirect_to root_path
+				end
 			end
 			
-			it "should take you back to the root path" do
-				post :create, :company_user => @attr
-				response.should redirect_to root_path
+			describe "because of bad company argument" do
+				it "should not create an company_user" do
+					lambda do
+						post :create, :company_user => {:company_id => "abc", :email => "testXYZ2@testing"}  
+					end.should_not change(CompanyUser, :count)
+				end
+				
+				it "should take you back to the root path" do
+					post :create, :company_user => {:company_id => "abc", :email => "testXYZ2@testing"}  
+					response.should redirect_to root_path
+				end
 			end
 		end
 		

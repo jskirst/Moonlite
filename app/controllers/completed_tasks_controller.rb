@@ -36,11 +36,15 @@ class CompletedTasksController < ApplicationController
 	
 	private
 		def enrolled_user?
-			@task = Task.find_by_id(params[:completed_task][:task_id])
-			if @task.nil?
-				redirect_to root_path
+			if !params[:completed_task].nil? && !params[:completed_task][:task_id].nil? 
+				@task = Task.find_by_id(params[:completed_task][:task_id])
+				if @task.nil?
+					redirect_to root_path
+				else
+					redirect_to root_path unless current_user.enrolled?(@task.path)
+				end
 			else
-				redirect_to root_path unless current_user.enrolled?(@task.path)
+				redirect_to root_path
 			end
 		end
 		

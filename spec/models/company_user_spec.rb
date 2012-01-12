@@ -147,11 +147,5 @@ describe CompanyUser do
 			@company_user.send_invitation_email
 			ActionMailer::Base.deliveries.last.to.should == [@company_user.email]
 		end
-		
-		it "should send a verification e-mail to the right user" do
-			@company_user = Factory(:company_user)
-			@company_user.send_verification_email
-			ActionMailer::Base.deliveries.last.to.should == [@company_user.email]
-		end
 	end
 end

@@ -35,15 +35,8 @@ class Task < ActiveRecord::Base
 	
 	default_scope :order => 'tasks.points ASC'
 	
-	def describe_correct_answer  
-		if correct_answer == 1 
-			return answer1
-		elsif correct_answer == 2 
-			return answer2
-		elsif correct_answer == 3 
-			return answer3
-		elsif correct_answer == 4 
-			return answer4 
-		end 
+	def describe_correct_answer
+		answers = [nil,answer1,answer2,answer3,answer4]
+		return answers[correct_answer]
 	end
 end

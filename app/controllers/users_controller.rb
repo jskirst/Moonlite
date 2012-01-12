@@ -17,7 +17,7 @@ class UsersController < ApplicationController
 	end
   
 	def show
-		@user = User.find(params[:id])
+		@user = User.find_by_id(params[:id])
 		if @user.nil?
 			redirect_to root_path
 		else
@@ -37,12 +37,11 @@ class UsersController < ApplicationController
 	end
 		
 	def create
-		token1 = params[:user][:token1]
-		if token1.nil?
+		if params[:user].nil? || params[:user][:token1].nil?
 			redirect_to root_path and return
 		end
 		
-		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", token1])
+		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", params[:user][:token1]])
 		if @company_user.nil?
 			redirect_to root_path and return
 		end
@@ -52,15 +51,10 @@ class UsersController < ApplicationController
 		if @user.save
 			@user.reload
 			sign_in @user
-			if @company_user.nil?
-				flash[:success] = "Welcome to the Moonlite!"
-				redirect_to @user
-			else
-				@company_user.user_id = @user.id
-				@company_user.save!
-				flash[:success] = "Welcome to the Moonlite!"
-				redirect_to @user
-			end
+			@company_user.user_id = @user.id
+			@company_user.save!
+			flash[:success] = "Welcome to the Moonlite!"
+			redirect_to @user
 		else
 			@title = "Sign up"
 			render 'new'
@@ -89,13 +83,6 @@ class UsersController < ApplicationController
 	end
 	
 	private
-		def check_environment
-			if Rails.env.production?
-				flash[:notice] = "We are not currently taking signups right now. Check back soon!"
-				redirect_to landing_path
-			end
-		end
-	
 		def correct_user
 			@user = User.find(params[:id])
 			redirect_to root_path unless current_user?(@user)

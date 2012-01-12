@@ -242,29 +242,49 @@ describe RewardsController do
 		end
 	
 		describe "Get 'show'" do
-			it "should be successful" do
-				get :show, :id => @reward
-				response.should be_success
+			describe "failure" do
+				describe "because of bad reward argument" do
+					it "should redirect to root path" do
+						get :show, :id => "abc"
+						response.should redirect_to root_path
+					end
+				end
+				
+				describe "because reward does not belong to user's company" do
+					it "should redirect to root path" do
+						other_company = Factory(:company)
+						other_reward = Factory(:reward, :company => other_company)
+						get :show, :id => other_reward.id
+						response.should redirect_to @user
+					end
+				end
 			end
 			
-			it "Should find the right task" do
-				get :show, :id => @reward
-				assigns(:reward).should == @reward
-			end
-			
-			it "Should have the path's name in the title" do
-				get :show, :id => @reward
-				response.should have_selector("title", :content => @reward.name)
-			end
-			
-			it "should display the description" do
-				get :show, :id => @reward
-				response.should have_selector("p", :content => @reward.description)
-			end
-			
-			it "should display the point cost" do
-				get :show, :id => @reward
-				response.should have_selector("p", :content => @reward.points.to_s)
+			describe "success" do
+				it "should be successful" do
+					get :show, :id => @reward
+					response.should be_success
+				end
+				
+				it "Should find the right task" do
+					get :show, :id => @reward
+					assigns(:reward).should == @reward
+				end
+				
+				it "Should have the path's name in the title" do
+					get :show, :id => @reward
+					response.should have_selector("title", :content => @reward.name)
+				end
+				
+				it "should display the description" do
+					get :show, :id => @reward
+					response.should have_selector("p", :content => @reward.description)
+				end
+				
+				it "should display the point cost" do
+					get :show, :id => @reward
+					response.should have_selector("p", :content => @reward.points.to_s)
+				end
 			end
 		end
 		
@@ -284,6 +304,14 @@ describe RewardsController do
 			describe "failure" do
 				before(:each) do
 					@attr = { :name => "", :description => "", :image_url => "", :points => "", :company_id => @company.id }
+				end
+				
+				describe "because reward does not belong to user's company" do
+					it "should redirect to root path" do
+						other_company = Factory(:company)
+						post :create, :reward => @attr.merge(:company_id => other_company.id)
+						response.should redirect_to @user
+					end
 				end
 			
 				it "should not create a reward" do

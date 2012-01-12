@@ -30,11 +30,6 @@ class CompanyUser < ActiveRecord::Base
 		Mailer.welcome(email_details).deliver
 	end
 	
-	def send_verification_email
-		email_details = { :email => self.email, :token1 => self.token1 }
-		Mailer.welcome(email_details).deliver
-	end
-	
 	private
 		def set_tokens
 			if(self.token1 == nil)

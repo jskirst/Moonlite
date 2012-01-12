@@ -23,6 +23,13 @@ describe CompletedTasksController do
 			@attr = { :user_id => @user.id, :task_id => @task.id, :answer => @task.correct_answer, :quiz_session => @quiz_session }
 		end
 		
+		describe "with a bad task argument" do
+			it "should redirect to root_path" do
+				post :create, :completed_task => @attr.delete("task_id")
+				response.should redirect_to root_path
+			end
+		end
+		
 		describe "as an unenrolled user" do
 			it "should deny access" do
 				post :create, :completed_task => @attr

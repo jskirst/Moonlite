@@ -93,6 +93,13 @@ describe ReportsController do
 			get :dashboard
 			response.should have_selector("title", :content => "Dashboard")
 		end
+		
+		describe "with invalid integer time argument" do
+			it "should default to 7 days" do
+				get :dashboard, :time => "abc"
+				response.should have_selector("a.selected-time", :content => "7 days")
+			end
+		end
 	end
 	
 	describe "GET 'details'" do

@@ -44,6 +44,12 @@ describe UsersController do
 				before(:each) do
 					@attr = @attr.merge(:token1 => "XYZ")
 				end
+				
+				it "should not be successful" do
+					post :create, :user => @attr.delete("token1")
+					response.should_not be_success
+				end
+				
 				it "should should not create a user" do
 					lambda do
 						post :create, :user => @attr
@@ -115,6 +121,15 @@ describe UsersController do
 			@user = Factory(:user)
 			test_sign_in(@user)
 			@other_user = Factory(:user, :email => "other_user@email.com")
+		end
+		
+		describe "failure" do
+			describe "because of invalid id" do
+				it "should redirect to root path" do
+					get :show, :id => "abc"
+					response.should redirect_to root_path
+				end
+			end
 		end
 		
 		it "should be successful" do

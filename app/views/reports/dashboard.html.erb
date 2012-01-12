@@ -1,7 +1,12 @@
 <section id="dashboard">
+	<style>
+		.selected-time {
+			text-decoration:underline;
+		}
+	</style>
 	<h1>Dashboard</h1>
 	<div style="float:right;">
-		<% selected = "style='text-decoration:underline;'" %>
+		<% selected = "class='selected-time'" %>
 		<a href="/dashboard?time=7" <%= @time == 7 ? selected : "" %>>7 days</a> | 
 		<a href="/dashboard?time=30" <%= @time == 30 ? selected : "" %>>30 days</a> | 
 		<a href="/dashboard?time=90" <%= @time == 90 ? selected : "" %>>90 days</a>
