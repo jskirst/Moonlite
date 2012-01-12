@@ -1,0 +1,103 @@
+2012-01-11T05:05:34+00:00 heroku[api]: Release v8 created by jskirst@gmail.com
+2012-01-11T05:05:35+00:00 heroku[slugc]: Slug compilation finished
+2012-01-11T05:09:27+00:00 heroku[web.1]: Unidling
+2012-01-11T05:09:27+00:00 heroku[web.1]: State changed from down to created
+2012-01-11T05:09:27+00:00 heroku[web.1]: State changed from created to starting
+2012-01-11T05:09:38+00:00 heroku[web.1]: Starting process with command `thin -p 19678 -e production -R /home/heroku_rack/heroku.ru start`
+2012-01-11T05:09:39+00:00 app[web.1]: >> Thin web server (v1.2.6 codename Crazy Delicious)
+2012-01-11T05:09:39+00:00 app[web.1]: >> Maximum connections set to 1024
+2012-01-11T05:09:39+00:00 app[web.1]: >> Listening on 0.0.0.0:19678, CTRL+C to stop
+2012-01-11T05:09:39+00:00 heroku[web.1]: State changed from starting to up
+2012-01-11T05:09:42+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-11T05:09:42+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the 
+release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-11T05:09:42+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-11T05:09:42+00:00 app[web.1]: !! Unexpected error while processing request: undefined method `action_mailer' for #<Rails::Application::Configuration:0x00000001e6d060>
+2012-01-11T05:09:42+00:00 heroku[router]: Error H13 (Connection closed without response) -> POST moonlite.heroku.com/_heroku/console dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-11T05:09:56+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/ dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-11T05:09:56+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-11T05:09:56+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/favicon.ico dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-11T05:09:56+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-11T05:14:55+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-11T05:14:55+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-11T05:14:55+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/favicon.ico dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-11T05:14:55+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/ dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-11T06:14:14+00:00 heroku[web.1]: Idling
+2012-01-11T06:14:18+00:00 heroku[web.1]: State changed from up to down
+2012-01-11T06:14:20+00:00 heroku[web.1]: Stopping process with SIGTERM
+2012-01-11T06:14:20+00:00 app[web.1]: >> Stopping ...
+2012-01-11T06:14:21+00:00 heroku[web.1]: Process exited
+2012-01-11T11:27:14+00:00 heroku[web.1]: Unidling
+2012-01-11T11:27:14+00:00 heroku[web.1]: State changed from down to created
+2012-01-11T11:27:14+00:00 heroku[web.1]: State changed from created to starting
+2012-01-11T11:27:27+00:00 heroku[web.1]: Starting process with command `thin -p 32463 -e production -R /home/heroku_rack/heroku.ru start`
+2012-01-11T11:27:27+00:00 app[web.1]: >> Thin web server (v1.2.6 codename Crazy Delicious)
+2012-01-11T11:27:27+00:00 app[web.1]: >> Maximum connections set to 1024
+2012-01-11T11:27:27+00:00 app[web.1]: >> Listening on 0.0.0.0:32463, CTRL+C to stop
+2012-01-11T11:27:28+00:00 heroku[web.1]: State changed from starting to up
+2012-01-11T11:27:29+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-11T11:27:29+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-11T11:27:29+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-11T11:27:29+00:00 app[web.1]: !! Unexpected error while processing request: undefined method `action_mailer' for #<Rails::Application::Configuration:0x00000002c51c08>
+2012-01-11T11:27:29+00:00 heroku[router]: Error H13 (Connection closed without response) -> POST moonlite.heroku.com/_heroku/console dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-11T12:30:46+00:00 heroku[web.1]: Idling
+2012-01-11T12:30:47+00:00 heroku[web.1]: State changed from up to down
+2012-01-11T12:30:49+00:00 heroku[web.1]: Stopping process with SIGTERM
+2012-01-11T12:30:49+00:00 app[web.1]: >> Stopping ...
+2012-01-11T12:30:49+00:00 heroku[web.1]: Process exited
+2012-01-12T02:56:00+00:00 heroku[web.1]: Unidling
+2012-01-12T02:56:00+00:00 heroku[web.1]: State changed from down to created
+2012-01-12T02:56:00+00:00 heroku[web.1]: State changed from created to starting
+2012-01-12T02:56:13+00:00 heroku[web.1]: Starting process with command `thin -p 38828 -e production -R /home/heroku_rack/heroku.ru start`
+2012-01-12T02:56:13+00:00 app[web.1]: >> Thin web server (v1.2.6 codename Crazy Delicious)
+2012-01-12T02:56:13+00:00 app[web.1]: >> Maximum connections set to 1024
+2012-01-12T02:56:13+00:00 app[web.1]: >> Listening on 0.0.0.0:38828, CTRL+C to stop
+2012-01-12T02:56:15+00:00 heroku[web.1]: State changed from starting to up
+2012-01-12T02:56:17+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-12T02:56:17+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-12T02:56:17+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-12T02:56:17+00:00 app[web.1]: !! Unexpected error while processing request: undefined method `action_mailer' for #<Rails::Application::Configuration:0x000000024fe690>
+2012-01-12T02:56:17+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/ dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T02:56:17+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/favicon.ico dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T02:56:17+00:00 a
+pp[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-12T03:00:00+00:00 heroku[slugc]: Slug compilation started
+2012-01-12T03:01:58+00:00 heroku[api]: Deploy 2bed822 by jskirst@gmail.com
+2012-01-12T03:01:58+00:00 heroku[api]: Release v9 created by jskirst@gmail.com
+2012-01-12T03:01:59+00:00 heroku[web.1]: State changed from up to bouncing
+2012-01-12T03:01:59+00:00 heroku[web.1]: State changed from bouncing to created
+2012-01-12T03:01:59+00:00 heroku[web.1]: State changed from created to starting
+2012-01-12T03:01:59+00:00 heroku[slugc]: Slug compilation finished
+2012-01-12T03:02:02+00:00 heroku[web.1]: Starting process with command `thin -p 40174 -e production -R /home/heroku_rack/heroku.ru start`
+2012-01-12T03:02:02+00:00 app[web.1]: >> Maximum connections set to 1024
+2012-01-12T03:02:02+00:00 app[web.1]: >> Thin web server (v1.2.6 codename Crazy Delicious)
+2012-01-12T03:02:02+00:00 app[web.1]: >> Listening on 0.0.0.0:40174, CTRL+C to stop
+2012-01-12T03:02:02+00:00 heroku[web.1]: Stopping process with SIGTERM
+2012-01-12T03:02:02+00:00 app[web.1]: >> Stopping ...
+2012-01-12T03:02:02+00:00 heroku[web.1]: Process exited
+2012-01-12T03:02:03+00:00 heroku[web.1]: State changed from starting to up
+2012-01-12T03:03:59+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in y
+our Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-12T03:03:59+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-12T03:03:59+00:00 app[web.1]: DEPRECATION WARNING: You have Rails 2.3-style plugins in vendor/plugins! Support for these plugins will be removed in Rails 4.0. Move them out and bundle them in your Gemfile, or fold them in to your app as lib/myplugin/* and config/initializers/myplugin.rb. See the release notes for more on this: http://weblog.rubyonrails.org/2012/01/04/rails-3-2-0-rc2-has-been-released. (called from <top (required)> at /app/config/environment.rb:5)
+2012-01-12T03:03:59+00:00 app[web.1]: !! Unexpected error while processing request: undefined method `action_mailer' for #<Rails::Application::Configuration:0x00000002624ee8>
+2012-01-12T03:03:59+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/ dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:03:59+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/favicon.ico dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:03:59+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-12T03:05:17+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-12T03:05:17+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/ dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:05:17+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/favicon.ico dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:05:17+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-12T03:05:57+00:00 heroku[run.1]: State changed from created to starting
+2012-01-12T03:06:00+00:00 app[run.1]: Awaiting client
+2012-01-12T03:06:00+00:00 app[run.1]: Starting process with command `console`
+2012-01-12T03:06:01+00:00 app[run.1]: Error: No child processes
+2012-01-12T03:06:00+00:00 heroku[run.1]: State changed from starting to up
+2012-01-12T03:06:02+00:00 heroku[run.1]: State changed from up to complete
+2012-01-12T03:06:02+00:00 heroku[run.1]: Process exited
+2012-01-12T03:06:16+00:00 heroku[router]: Error H13 (Connection closed without response) -> POST moonlite.heroku.com/_heroku/console dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:06:16+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-12T03:08:05+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array
+2012-01-12T03:08:05+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/ dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:08:06+00:00 heroku[router]: Error H13 (Connection closed without response) -> GET moonlite.heroku.com/favicon.ico dyno=web.1 queue= wait= service= status=503 bytes=
+2012-01-12T03:08:06+00:00 app[web.1]: !! Unexpected error while processing request: can't modify frozen array

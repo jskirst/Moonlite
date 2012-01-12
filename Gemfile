@@ -1,9 +1,10 @@
 source 'http://rubygems.org'
 
-gem 'rails'
+gem 'rails', '~> 3.0'
 gem 'gravatar_image_tag'
 gem 'will_paginate'
 gem 'jquery-rails', '>= 1.0.12'
+gem 'actionmailer', '~> 3.0'
 
 group :production do
 	gem 'pg'

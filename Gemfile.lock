@@ -121,13 +121,14 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  actionmailer (~> 3.0)
   annotate
   factory_girl_rails
   faker
   gravatar_image_tag
   jquery-rails (>= 1.0.12)
   pg
-  rails
+  rails (~> 3.0)
   rspec-rails
   spork
   sqlite3-ruby
