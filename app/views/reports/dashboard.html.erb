@@ -1,5 +1,11 @@
 <section id="dashboard">
 	<h1>Dashboard</h1>
+	<div style="float:right;">
+		<% selected = "style='text-decoration:underline;'" %>
+		<a href="/dashboard?time=7" <%= @time == 7 ? selected : "" %>>7 days</a> | 
+		<a href="/dashboard?time=30" <%= @time == 30 ? selected : "" %>>30 days</a> | 
+		<a href="/dashboard?time=90" <%= @time == 90 ? selected : "" %>>90 days</a>
+	</div>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <script type="text/javascript">
 		// Load the Visualization API and the piechart package.
@@ -160,7 +166,7 @@
 			<% path_counter = 0 %>
 			<% @path_statistics.each do |p| %>
 			<li>
-				<h3><%= p[0] %></h3>
+				<h3><%= link_to p[0].name, details_path(:path_id => p[0].id) %></h3>
 				<table>
 					<tr>
 						<td>

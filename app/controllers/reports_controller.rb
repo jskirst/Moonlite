@@ -3,6 +3,12 @@ class ReportsController < ApplicationController
 	before_filter :company_admin
 
 	def dashboard
+		if !params[:time]
+			@time = 7
+		else
+			@time = Integer(params[:time])
+		end
+		
 		@title = "Dashboard"
 		@user_activity = [0,0,0]
 		@company = current_user.company
@@ -10,11 +16,12 @@ class ReportsController < ApplicationController
 		@company_users = @company.company_users
 		@users = @company.users
 		@paths = @company.paths
+		time_sql = @time.days.ago.to_s
 		
 		completed_tasks = CompletedTask.count(
 			:group => "completed_tasks.user_id",
 			:joins => "JOIN company_users on company_users.user_id = completed_tasks.user_id",
-			:conditions => "company_users.company_id = #{@company_id} and completed_tasks.updated_at > '" + 7.days.ago.to_s + "'"
+			:conditions => "company_users.company_id = #{@company_id} and completed_tasks.updated_at > '#{time_sql}'"
 		)
 		completed_tasks.each do |cp|
 			if cp[1] == 0
@@ -29,7 +36,7 @@ class ReportsController < ApplicationController
 		@tasks_completed = CompletedTask.count(
 			:group => "Date(completed_tasks.updated_at)",
 			:joins => "JOIN company_users on company_users.user_id = completed_tasks.user_id",
-			:conditions => "company_users.company_id = #{@company_id} and completed_tasks.updated_at > '" + 7.days.ago.to_s + "'"
+			:conditions => "company_users.company_id = #{@company_id} and completed_tasks.updated_at > '#{time_sql}'"
 		)
 		
 		@user_points = {"0-50" => 0, "51-100" => 0, "101-500" => 0, "501-2000" => 0, "2000+" => 0 }
@@ -63,23 +70,46 @@ class ReportsController < ApplicationController
 			path_activity = CompletedTask.count(
 				:group => "Date(completed_tasks.updated_at)",
 				:joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN company_users on company_users.user_id = completed_tasks.user_id",
-				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '" + 7.days.ago.to_s + "'"
+				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '#{time_sql}'"
 			)
 			
 			path_score = CompletedTask.average("status_id",
 				{ :joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN company_users on company_users.user_id = completed_tasks.user_id",
-				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '" + 7.days.ago.to_s + "'" }
+				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '#{time_sql}'" }
 			)
 			if !path_score.nil?
 				path_score = Integer(path_score * 100)
 			end
 			
-			@path_statistics << [p.name, enrollment_statistics, path_activity, path_score]
+			@path_statistics << [p, enrollment_statistics, path_activity, path_score]
 		end
 	end
 	
-	private
-		def company_admin
-			redirect_to(root_path) unless current_user.company_admin?
+	def details
+		if !params["path_id"]
+			flash[:error] = "No path argument supplied."
+			redirect_to dashboard_path and return
+		elsif !@path = Path.find_by_id(params[:path_id])
+			flash[:error] = "Bad path argument supplied."
+			redirect_to dashboard_path and return
 		end
+		@title = "Details"
+		@most_incorrect_tasks = CompletedTask.all(
+			:group => "completed_tasks.task_id",
+			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
+			:conditions => "tasks.path_id = #{@path.id} and status_id = 0",
+			:order => "1 desc",
+			:limit => "10",
+			:select => "count(*) as count, tasks.*"
+		)
+		
+		@most_correct_tasks = CompletedTask.all(
+			:group => "completed_tasks.task_id",
+			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
+			:conditions => "tasks.path_id = #{@path.id} and status_id = 1",
+			:order => "1 desc",
+			:limit => "10",
+			:select => "count(*) as count, tasks.*"
+		)
+	end
 end

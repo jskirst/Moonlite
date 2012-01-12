@@ -43,6 +43,7 @@ SampleApp::Application.routes.draw do
 	match '/invitation',:to => 'pages#invitation'
 
 	match '/dashboard',	:to => 'reports#dashboard'
+	match '/details',	:to => 'reports#details'
 	
   # The priority is based upon order of creation:
   # first created -> highest priority.

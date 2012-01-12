@@ -75,10 +75,6 @@ class RewardsController < ApplicationController
 	end
 	
 	private
-		def company_admin
-			redirect_to(root_path) unless current_user.company_admin?
-		end
-		
 		def correct_company
 			if !params[:id].nil?
 				@reward = Reward.find_by_id(params[:id])

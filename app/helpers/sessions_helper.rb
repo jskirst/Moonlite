@@ -29,6 +29,10 @@ module SessionsHelper
 		deny_access unless signed_in?
 	end
 	
+	def company_admin
+		redirect_to(root_path) unless current_user.company_admin?
+	end
+	
 	def deny_access
 		store_location
 		flash[:notice] = "Please sign in to access this page."

@@ -1,0 +1,49 @@
+<section id="dashboard">
+	<h1>Report - <%= @path.name %></h1>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<section>
+		<h2>Most incorrectly answered questions</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Question</th>
+					<th>Wrong Answers</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% task_counter = 1 %>
+			<% @most_incorrect_tasks.each do |t| %>
+				<tr>
+					<td id="incorrect_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
+					<td id="incorrect_question_<%= t.id.to_s %>"><%= t.question %></td>
+					<td id="incorrect_count_<%= t.id.to_s %>"><%= t.count %></td>
+				</tr>
+			<% task_counter += 1 %>
+			<% end %>
+			</tbody>
+		</table>
+		<h2>Most correctly answered questions</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Rank</th>
+					<th>Question</th>
+					<th>Correct Answers</th>
+				</tr>
+			</thead>
+			<tbody>
+			<% task_counter = 1 %>
+			<% @most_correct_tasks.each do |t| %>
+				<tr>
+					<td id="correct_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
+					<td id="correct_question_<%= t.id.to_s %>"><%= t.question %></td>
+					<td id="correct_count_<%= t.id.to_s %>"><%= t.count %></td>
+				</tr>
+			<% task_counter += 1 %>
+			<% end %>
+			</tbody>
+		</table>
+	</section>
+</section>
+				
