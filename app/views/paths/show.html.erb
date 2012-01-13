@@ -4,9 +4,16 @@
 <% end %>
 </section>
 <section class="path">
-	<section id="description">
-		<h1><%= @path.name %></h1>
+	<div style="float:left; margin: 0px 15px 5px 0px;"><%= image_tag(@path.path_pic, :size=>"50x50") %></div>
+	<div>
+		<h1>
+			<%= @path.name %>
+		</h1>
+	</div>
+	<div style="padding:10px">
 		<p><%= @path.description %></p>
+	</div>
+	<div>
 		<ol>
 		<% @info_resources.each do |resource| %>
 			<li>
@@ -15,7 +22,7 @@
 			</li>
 		<% end %>
 		</ol>
-	</section>
+	</div>
 	<section>
 	<% if !current_user.enrolled?(@path) %>
 		<%= render "enroll" %>
@@ -23,7 +30,7 @@
 	</section>
 	<% if current_user.enrolled?(@path) %>
 	<section id="progress">
-		<h2><%= gravatar_for current_user, :size => "20" %>Path Rank - <span class="current-rank"><%= @current_rank %></span></h2>
+		<h2>Path Rank - <span class="current-rank"><%= @current_rank %></span></h2>
 		<% if @remaining_tasks > 0 %>
 		<h3>You need to answer <%= pluralize(@remaining_tasks, "question") %> before you reach rank <span class="next-rank"><%= @next_rank %></span>!</h3>
 		<% else %>

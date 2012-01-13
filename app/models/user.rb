@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points
+	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points, :image_url
 	
 	has_one :company_user
 	has_one :company, :through => :company_user
@@ -28,6 +28,14 @@ class User < ActiveRecord::Base
 		:length		=> { :within => 6..40 }
 	
 	before_save :encrypt_password
+	
+	def profile_pic
+		if self.image_url != nil
+			return self.image_url
+		else
+			return "/images/default_profile_pic.jpg"
+		end
+	end
 	
 	def has_password?(submitted_password)
 		encrypted_password == encrypt(submitted_password)

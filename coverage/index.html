@@ -23,27 +23,27 @@
       <img src="./assets/0.5.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2012-01-12T15:28:11-08:00">2012-01-12T15:28:11-08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2012-01-12T15:53:56-08:00">2012-01-12T15:53:56-08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">99.37%</span></span>
+    (<span class="covered_percent"><span class="green">99.35%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         15.86
+         15.73
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>71</b> files in total.
-    <b>3499</b> relevant lines. 
-    <span class="green"><b>3477</b> lines covered</span> and
-    <span class="red"><b>22</b> lines missed </span>
+    <b>3514</b> relevant lines. 
+    <span class="green"><b>3491</b> lines covered</span> and
+    <span class="red"><b>23</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -341,12 +341,12 @@
       
       <tr>
         <td class="strong"><a href="#89c4ede6c5ce41c8d4d68f8430cf7a8daad0b86b" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
-        <td class="green strong">100.0 %</td>
-        <td>107</td>
-        <td>57</td>
-        <td>57</td>
-        <td>0</td>
-        <td>146.2</td>
+        <td class="green strong">98.36 %</td>
+        <td>115</td>
+        <td>61</td>
+        <td>60</td>
+        <td>1</td>
+        <td>137.0</td>
       </tr>
       
       <tr>
@@ -642,9 +642,9 @@
       <tr>
         <td class="strong"><a href="#c930734a41539ddd840224cf717fb956bcf60f99" class="src_link" title="spec/models/path_spec.rb">spec/models/path_spec.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>133</td>
-        <td>73</td>
-        <td>73</td>
+        <td>141</td>
+        <td>77</td>
+        <td>77</td>
         <td>0</td>
         <td>2.0</td>
       </tr>
@@ -682,9 +682,9 @@
       <tr>
         <td class="strong"><a href="#bcc51de30424269238878be0f06f3618910e7b8e" class="src_link" title="spec/models/user_spec.rb">spec/models/user_spec.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>322</td>
-        <td>188</td>
-        <td>188</td>
+        <td>336</td>
+        <td>195</td>
+        <td>195</td>
         <td>0</td>
         <td>1.6</td>
       </tr>
@@ -8065,8 +8065,8 @@
           <code class="ruby">	def user_belongs_to_company</code>
         </li>
       
-        <li class="covered" data-hits="413" data-linenumber="67">
-          <span class="hits">413</span>
+        <li class="covered" data-hits="415" data-linenumber="67">
+          <span class="hits">415</span>
           
           <code class="ruby">		if company != nil</code>
         </li>
@@ -8684,11 +8684,11 @@
         <div class="source_table" id="89c4ede6c5ce41c8d4d68f8430cf7a8daad0b86b">
   <div class="header">
     <h3>app/models/user.rb</h3>
-    <h4><span class="green">100.0 %</span> covered</h4>
+    <h4><span class="green">98.36 %</span> covered</h4>
     <div>
-      <b>57</b> relevant lines. 
-      <span class="green"><b>57</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>61</b> relevant lines. 
+      <span class="green"><b>60</b> lines covered</span> and
+      <span class="red"><b>1</b> lines missed.</span>
     </div>
   </div>
   
@@ -8710,7 +8710,7 @@
         <li class="covered" data-hits="1" data-linenumber="3">
           <span class="hits">1</span>
           
-          <code class="ruby">	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points</code>
+          <code class="ruby">	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points, :image_url</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
@@ -8884,127 +8884,127 @@
         <li class="covered" data-hits="1" data-linenumber="32">
           <span class="hits">1</span>
           
-          <code class="ruby">	def has_password?(submitted_password)</code>
+          <code class="ruby">	def profile_pic</code>
         </li>
       
-        <li class="covered" data-hits="19" data-linenumber="33">
-          <span class="hits">19</span>
+        <li class="covered" data-hits="1" data-linenumber="33">
+          <span class="hits">1</span>
           
-          <code class="ruby">		encrypted_password == encrypt(submitted_password)</code>
+          <code class="ruby">		if self.image_url != nil</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="34">
+        <li class="missed" data-hits="0" data-linenumber="34">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">			return self.image_url</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="35">
           
           
-          <code class="ruby">	</code>
+          <code class="ruby">		else</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="36">
           <span class="hits">1</span>
           
+          <code class="ruby">			return &quot;/images/default_profile_pic.jpg&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="37">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="38">
+          
+          
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="39">
+          
+          
+          <code class="ruby">	</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="40">
+          <span class="hits">1</span>
+          
+          <code class="ruby">	def has_password?(submitted_password)</code>
+        </li>
+      
+        <li class="covered" data-hits="19" data-linenumber="41">
+          <span class="hits">19</span>
+          
+          <code class="ruby">		encrypted_password == encrypt(submitted_password)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="42">
+          
+          
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="43">
+          
+          
+          <code class="ruby">	</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="44">
+          <span class="hits">1</span>
+          
           <code class="ruby">	def self.authenticate(email, submitted_password)</code>
         </li>
       
-        <li class="covered" data-hits="25" data-linenumber="37">
+        <li class="covered" data-hits="25" data-linenumber="45">
           <span class="hits">25</span>
           
           <code class="ruby">		user = find_by_email(email)</code>
         </li>
       
-        <li class="covered" data-hits="25" data-linenumber="38">
+        <li class="covered" data-hits="25" data-linenumber="46">
           <span class="hits">25</span>
           
           <code class="ruby">		return nil if user.nil?</code>
         </li>
       
-        <li class="covered" data-hits="18" data-linenumber="39">
+        <li class="covered" data-hits="18" data-linenumber="47">
           <span class="hits">18</span>
           
           <code class="ruby">		return user if user.has_password?(submitted_password)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="40">
+        <li class="never" data-hits="" data-linenumber="48">
           
           
           <code class="ruby">	end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="41">
-          
-          
-          <code class="ruby">	</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="42">
-          <span class="hits">1</span>
-          
-          <code class="ruby">	def self.authenticate_with_salt(id, cookie_salt)</code>
-        </li>
-      
-        <li class="covered" data-hits="310" data-linenumber="43">
-          <span class="hits">310</span>
-          
-          <code class="ruby">		user = find_by_id(id)</code>
-        </li>
-      
-        <li class="covered" data-hits="310" data-linenumber="44">
-          <span class="hits">310</span>
-          
-          <code class="ruby">		(user &amp;&amp; user.salt == cookie_salt) ? user : nil</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="45">
-          
-          
-          <code class="ruby">	end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="46">
-          
-          
-          <code class="ruby">	</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="47">
-          <span class="hits">1</span>
-          
-          <code class="ruby">	def enrolled?(path)</code>
-        </li>
-      
-        <li class="covered" data-hits="84" data-linenumber="48">
-          <span class="hits">84</span>
-          
-          <code class="ruby">		enrollments.find_by_path_id(path.id)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="49">
           
           
-          <code class="ruby">	end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="50">
-          
-          
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="51">
+        <li class="covered" data-hits="1" data-linenumber="50">
           <span class="hits">1</span>
           
-          <code class="ruby">	def enroll!(path)</code>
+          <code class="ruby">	def self.authenticate_with_salt(id, cookie_salt)</code>
         </li>
       
-        <li class="covered" data-hits="19" data-linenumber="52">
-          <span class="hits">19</span>
+        <li class="covered" data-hits="310" data-linenumber="51">
+          <span class="hits">310</span>
           
-          <code class="ruby">		enrollments.create!(:path_id =&gt; path.id)</code>
+          <code class="ruby">		user = find_by_id(id)</code>
+        </li>
+      
+        <li class="covered" data-hits="310" data-linenumber="52">
+          <span class="hits">310</span>
+          
+          <code class="ruby">		(user &amp;&amp; user.salt == cookie_salt) ? user : nil</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="53">
@@ -9022,13 +9022,13 @@
         <li class="covered" data-hits="1" data-linenumber="55">
           <span class="hits">1</span>
           
-          <code class="ruby">	def unenroll!(path)</code>
+          <code class="ruby">	def enrolled?(path)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="56">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="84" data-linenumber="56">
+          <span class="hits">84</span>
           
-          <code class="ruby">		enrollments.find_by_path_id(path.id).destroy</code>
+          <code class="ruby">		enrollments.find_by_path_id(path.id)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="57">
@@ -9040,19 +9040,19 @@
         <li class="never" data-hits="" data-linenumber="58">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="59">
           <span class="hits">1</span>
           
-          <code class="ruby">	def completed?(task)</code>
+          <code class="ruby">	def enroll!(path)</code>
         </li>
       
-        <li class="covered" data-hits="113" data-linenumber="60">
-          <span class="hits">113</span>
+        <li class="covered" data-hits="19" data-linenumber="60">
+          <span class="hits">19</span>
           
-          <code class="ruby">		completed_tasks.find_by_task_id(task.id)</code>
+          <code class="ruby">		enrollments.create!(:path_id =&gt; path.id)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="61">
@@ -9070,13 +9070,13 @@
         <li class="covered" data-hits="1" data-linenumber="63">
           <span class="hits">1</span>
           
-          <code class="ruby">	def admin?</code>
+          <code class="ruby">	def unenroll!(path)</code>
         </li>
       
-        <li class="covered" data-hits="615" data-linenumber="64">
-          <span class="hits">615</span>
+        <li class="covered" data-hits="1" data-linenumber="64">
+          <span class="hits">1</span>
           
-          <code class="ruby">		return self.admin</code>
+          <code class="ruby">		enrollments.find_by_path_id(path.id).destroy</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
@@ -9088,43 +9088,43 @@
         <li class="never" data-hits="" data-linenumber="66">
           
           
-          <code class="ruby">	</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="67">
           <span class="hits">1</span>
           
-          <code class="ruby">	def company_admin?</code>
+          <code class="ruby">	def completed?(task)</code>
         </li>
       
-        <li class="covered" data-hits="328" data-linenumber="68">
-          <span class="hits">328</span>
+        <li class="covered" data-hits="113" data-linenumber="68">
+          <span class="hits">113</span>
           
-          <code class="ruby">		if company_user.nil?</code>
+          <code class="ruby">		completed_tasks.find_by_task_id(task.id)</code>
         </li>
       
-        <li class="covered" data-hits="190" data-linenumber="69">
-          <span class="hits">190</span>
+        <li class="never" data-hits="" data-linenumber="69">
           
-          <code class="ruby">			return false</code>
+          
+          <code class="ruby">	end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">		else</code>
+          <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="138" data-linenumber="71">
-          <span class="hits">138</span>
+        <li class="covered" data-hits="1" data-linenumber="71">
+          <span class="hits">1</span>
           
-          <code class="ruby">			return company_user.is_admin</code>
+          <code class="ruby">	def admin?</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="72">
+        <li class="covered" data-hits="615" data-linenumber="72">
+          <span class="hits">615</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">		return self.admin</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="73">
@@ -9142,163 +9142,163 @@
         <li class="covered" data-hits="1" data-linenumber="75">
           <span class="hits">1</span>
           
-          <code class="ruby">	def award_points(task)</code>
+          <code class="ruby">	def company_admin?</code>
         </li>
       
-        <li class="covered" data-hits="27" data-linenumber="76">
-          <span class="hits">27</span>
+        <li class="covered" data-hits="328" data-linenumber="76">
+          <span class="hits">328</span>
           
-          <code class="ruby">		self.update_attribute('earned_points', self.earned_points + task.points)</code>
+          <code class="ruby">		if company_user.nil?</code>
         </li>
       
-        <li class="covered" data-hits="27" data-linenumber="77">
-          <span class="hits">27</span>
+        <li class="covered" data-hits="190" data-linenumber="77">
+          <span class="hits">190</span>
           
-          <code class="ruby">		enrollments.find_by_path_id(task.path_id).add_earned_points(task.points)</code>
+          <code class="ruby">			return false</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="78">
           
           
-          <code class="ruby">	end	</code>
+          <code class="ruby">		else</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="79">
+        <li class="covered" data-hits="138" data-linenumber="79">
+          <span class="hits">138</span>
           
-          
-          <code class="ruby">	</code>
+          <code class="ruby">			return company_user.is_admin</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="80">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="80">
           
-          <code class="ruby">	def debit_points(points)</code>
+          
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="81">
-          <span class="hits">8</span>
+        <li class="never" data-hits="" data-linenumber="81">
           
-          <code class="ruby">		self.update_attribute('spent_points', self.spent_points + points)</code>
+          
+          <code class="ruby">	end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="82">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">	</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="83">
+        <li class="covered" data-hits="1" data-linenumber="83">
+          <span class="hits">1</span>
+          
+          <code class="ruby">	def award_points(task)</code>
+        </li>
+      
+        <li class="covered" data-hits="27" data-linenumber="84">
+          <span class="hits">27</span>
+          
+          <code class="ruby">		self.update_attribute('earned_points', self.earned_points + task.points)</code>
+        </li>
+      
+        <li class="covered" data-hits="27" data-linenumber="85">
+          <span class="hits">27</span>
+          
+          <code class="ruby">		enrollments.find_by_path_id(task.path_id).add_earned_points(task.points)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="86">
+          
+          
+          <code class="ruby">	end	</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="87">
           
           
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="84">
+        <li class="covered" data-hits="1" data-linenumber="88">
+          <span class="hits">1</span>
+          
+          <code class="ruby">	def debit_points(points)</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="89">
+          <span class="hits">8</span>
+          
+          <code class="ruby">		self.update_attribute('spent_points', self.spent_points + points)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="90">
+          
+          
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="91">
+          
+          
+          <code class="ruby">	</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="92">
           <span class="hits">1</span>
           
           <code class="ruby">	def available_points()</code>
         </li>
       
-        <li class="covered" data-hits="13" data-linenumber="85">
+        <li class="covered" data-hits="13" data-linenumber="93">
           <span class="hits">13</span>
           
           <code class="ruby">		available_points = self.earned_points</code>
         </li>
       
-        <li class="covered" data-hits="13" data-linenumber="86">
+        <li class="covered" data-hits="13" data-linenumber="94">
           <span class="hits">13</span>
           
           <code class="ruby">		spent_points = self.spent_points</code>
         </li>
       
-        <li class="covered" data-hits="13" data-linenumber="87">
+        <li class="covered" data-hits="13" data-linenumber="95">
           <span class="hits">13</span>
           
           <code class="ruby">		return available_points - spent_points</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="88">
+        <li class="never" data-hits="" data-linenumber="96">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="89">
+        <li class="never" data-hits="" data-linenumber="97">
           
           
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="90">
+        <li class="covered" data-hits="1" data-linenumber="98">
           <span class="hits">1</span>
           
           <code class="ruby">	private</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="91">
+        <li class="covered" data-hits="1" data-linenumber="99">
           <span class="hits">1</span>
           
           <code class="ruby">		def encrypt_password</code>
         </li>
       
-        <li class="covered" data-hits="1023" data-linenumber="92">
-          <span class="hits">1023</span>
+        <li class="covered" data-hits="1027" data-linenumber="100">
+          <span class="hits">1027</span>
           
           <code class="ruby">			self.salt = make_salt if new_record?</code>
         </li>
       
-        <li class="covered" data-hits="1023" data-linenumber="93">
-          <span class="hits">1023</span>
+        <li class="covered" data-hits="1027" data-linenumber="101">
+          <span class="hits">1027</span>
           
           <code class="ruby">			self.encrypted_password = encrypt(password)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="94">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="95">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="96">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		def encrypt(string)</code>
-        </li>
-      
-        <li class="covered" data-hits="1042" data-linenumber="97">
-          <span class="hits">1042</span>
-          
-          <code class="ruby">			secure_hash(&quot;#{salt}--#{string}&quot;)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="98">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="99">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="100">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		def make_salt</code>
-        </li>
-      
-        <li class="covered" data-hits="937" data-linenumber="101">
-          <span class="hits">937</span>
-          
-          <code class="ruby">			secure_hash(&quot;#{Time.now.utc}--#{password}&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="102">
@@ -9316,13 +9316,13 @@
         <li class="covered" data-hits="1" data-linenumber="104">
           <span class="hits">1</span>
           
-          <code class="ruby">		def secure_hash(string)</code>
+          <code class="ruby">		def encrypt(string)</code>
         </li>
       
-        <li class="covered" data-hits="1979" data-linenumber="105">
-          <span class="hits">1979</span>
+        <li class="covered" data-hits="1046" data-linenumber="105">
+          <span class="hits">1046</span>
           
-          <code class="ruby">			Digest::SHA2.hexdigest(string)</code>
+          <code class="ruby">			secure_hash(&quot;#{salt}--#{string}&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="106">
@@ -9332,6 +9332,54 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="107">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="108">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		def make_salt</code>
+        </li>
+      
+        <li class="covered" data-hits="941" data-linenumber="109">
+          <span class="hits">941</span>
+          
+          <code class="ruby">			secure_hash(&quot;#{Time.now.utc}--#{password}&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="110">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="111">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="112">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		def secure_hash(string)</code>
+        </li>
+      
+        <li class="covered" data-hits="1987" data-linenumber="113">
+          <span class="hits">1987</span>
+          
+          <code class="ruby">			Digest::SHA2.hexdigest(string)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="114">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby">end</code>
@@ -28549,8 +28597,8 @@
           <code class="ruby">	user.name					&quot;Jonathan Dudearino&quot;</code>
         </li>
       
-        <li class="covered" data-hits="653" data-linenumber="5">
-          <span class="hits">653</span>
+        <li class="covered" data-hits="655" data-linenumber="5">
+          <span class="hits">655</span>
           
           <code class="ruby">	user.email					{ Faker::Internet.email }</code>
         </li>
@@ -31618,8 +31666,8 @@
     <h3>spec/models/path_spec.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>73</b> relevant lines. 
-      <span class="green"><b>73</b> lines covered</span> and
+      <b>77</b> relevant lines. 
+      <span class="green"><b>77</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -31651,14 +31699,14 @@
           <code class="ruby">	before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="20" data-linenumber="5">
-          <span class="hits">20</span>
+        <li class="covered" data-hits="22" data-linenumber="5">
+          <span class="hits">22</span>
           
           <code class="ruby">		@user = Factory(:user)</code>
         </li>
       
-        <li class="covered" data-hits="20" data-linenumber="6">
-          <span class="hits">20</span>
+        <li class="covered" data-hits="22" data-linenumber="6">
+          <span class="hits">22</span>
           
           <code class="ruby">		@attr = { :name =&gt; &quot;Test name&quot;, :description =&gt; &quot;Test description&quot;, :created_at =&gt; 1.day.ago }</code>
         </li>
@@ -31822,301 +31870,301 @@
         <li class="never" data-hits="" data-linenumber="33">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="34">
+        <li class="covered" data-hits="1" data-linenumber="34">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">	</code>
+          <code class="ruby">		it &quot;should respond to image_url&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="35">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;user associations&quot; do</code>
+          <code class="ruby">			@user.paths.create!(@attr).should respond_to(:image_url)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="36">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		before(:each) do</code>
-        </li>
-      
-        <li class="covered" data-hits="2" data-linenumber="37">
-          <span class="hits">2</span>
-          
-          <code class="ruby">			@path = @user.paths.create(@attr)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="38">
+        <li class="never" data-hits="" data-linenumber="36">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="39">
+        <li class="never" data-hits="" data-linenumber="37">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="40">
+        <li class="covered" data-hits="1" data-linenumber="38">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have a user attribute&quot; do</code>
+          <code class="ruby">		it &quot;should respond with profile_pic set to default if image_url is not set&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="41">
+        <li class="covered" data-hits="1" data-linenumber="39">
           <span class="hits">1</span>
           
-          <code class="ruby">			@path.should respond_to(:user)</code>
+          <code class="ruby">			@user.paths.create!(@attr).profile_pic.should == &quot;/images/default_profile_pic.jpg&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="40">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">	end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="42">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">	</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="43">
+        <li class="covered" data-hits="1" data-linenumber="43">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		</code>
+          <code class="ruby">	describe &quot;user associations&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="44">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have the right associated user&quot; do</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="45">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="45">
+          <span class="hits">2</span>
           
-          <code class="ruby">			@path.user_id.should == @user.id</code>
+          <code class="ruby">			@path = @user.paths.create(@attr)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="46">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="46">
           
-          <code class="ruby">			@path.user.should == @user</code>
+          
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="47">
           
           
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="48">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should have a user attribute&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="49">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@path.should respond_to(:user)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="50">
+          
+          
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="48">
+        <li class="never" data-hits="" data-linenumber="51">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="49">
-          
-          
-          <code class="ruby">	</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="50">
+        <li class="covered" data-hits="1" data-linenumber="52">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;company association&quot; do</code>
+          <code class="ruby">		it &quot;should have the right associated user&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="51">
+        <li class="covered" data-hits="1" data-linenumber="53">
           <span class="hits">1</span>
           
-          <code class="ruby">		before(:each) do</code>
+          <code class="ruby">			@path.user_id.should == @user.id</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="52">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="1" data-linenumber="54">
+          <span class="hits">1</span>
           
-          <code class="ruby">			@path = @user.paths.build(@attr)</code>
+          <code class="ruby">			@path.user.should == @user</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="53">
-          <span class="hits">4</span>
+        <li class="never" data-hits="" data-linenumber="55">
           
-          <code class="ruby">			@company = Factory(:company)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="54">
-          <span class="hits">4</span>
           
-          <code class="ruby">			@company_user = Factory(:company_user, :company =&gt; @company, :user =&gt; @user)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="55">
-          <span class="hits">4</span>
-          
-          <code class="ruby">			@other_company = Factory(:company, :name =&gt; &quot;Other Company&quot;)</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="56">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">	end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="57">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="58">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have a company attribute&quot; do</code>
+          <code class="ruby">	describe &quot;company association&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="59">
           <span class="hits">1</span>
           
-          <code class="ruby">			@path.should respond_to(:company)</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="60">
+        <li class="covered" data-hits="4" data-linenumber="60">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@path = @user.paths.build(@attr)</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="61">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@company = Factory(:company)</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="62">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@company_user = Factory(:company_user, :company =&gt; @company, :user =&gt; @user)</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="63">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@other_company = Factory(:company, :name =&gt; &quot;Other Company&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="64">
           
           
           <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="61">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="62">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		it &quot;should not require a company&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="63">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path.company = nil</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="64">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path.should be_valid			</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="66">
+        <li class="covered" data-hits="1" data-linenumber="66">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		</code>
+          <code class="ruby">		it &quot;should have a company attribute&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="67">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should reject a company the user doesn't belong to&quot; do</code>
+          <code class="ruby">			@path.should respond_to(:company)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="68">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path.company = @other_company</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="69">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path.should_not be_valid</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="70">
+        <li class="never" data-hits="" data-linenumber="68">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="71">
+        <li class="never" data-hits="" data-linenumber="69">
           
           
           <code class="ruby">		</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="70">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should not require a company&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="71">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@path.company = nil</code>
+        </li>
+      
         <li class="covered" data-hits="1" data-linenumber="72">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should accept a company the user belongs to&quot; do</code>
+          <code class="ruby">			@path.should be_valid			</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="73">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path.company = @company</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="74">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path.should be_valid</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="75">
+        <li class="never" data-hits="" data-linenumber="73">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="76">
+        <li class="never" data-hits="" data-linenumber="74">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="77">
-          
-          
-          <code class="ruby">	</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="78">
+        <li class="covered" data-hits="1" data-linenumber="75">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;task associations&quot; do</code>
+          <code class="ruby">		it &quot;should reject a company the user doesn't belong to&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="79">
+        <li class="covered" data-hits="1" data-linenumber="76">
           <span class="hits">1</span>
           
-          <code class="ruby">		before(:each) do</code>
+          <code class="ruby">			@path.company = @other_company</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="80">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="1" data-linenumber="77">
+          <span class="hits">1</span>
           
-          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
+          <code class="ruby">			@path.should_not be_valid</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="81">
-          <span class="hits">8</span>
+        <li class="never" data-hits="" data-linenumber="78">
           
-          <code class="ruby">			@task1 = Factory(:task, :path =&gt; @path, :points =&gt; 1)</code>
+          
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="82">
-          <span class="hits">8</span>
+        <li class="never" data-hits="" data-linenumber="79">
           
-          <code class="ruby">			@task2 = Factory(:task, :path =&gt; @path, :points =&gt; 2)</code>
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="80">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should accept a company the user belongs to&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="81">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@path.company = @company</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="82">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@path.should be_valid</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="83">
@@ -32128,43 +32176,43 @@
         <li class="never" data-hits="" data-linenumber="84">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">	end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="85">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="85">
           
-          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
+          
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="86">
           <span class="hits">1</span>
           
-          <code class="ruby">			@path.should respond_to(:tasks)</code>
+          <code class="ruby">	describe &quot;task associations&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="87">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="88">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="89">
+        <li class="covered" data-hits="1" data-linenumber="87">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have the right paths in the right order (lowest points first)&quot; do</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="90">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="8" data-linenumber="88">
+          <span class="hits">8</span>
           
-          <code class="ruby">			@path.tasks.should == [@task1, @task2]</code>
+          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="89">
+          <span class="hits">8</span>
+          
+          <code class="ruby">			@task1 = Factory(:task, :path =&gt; @path, :points =&gt; 1)</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="90">
+          <span class="hits">8</span>
+          
+          <code class="ruby">			@task2 = Factory(:task, :path =&gt; @path, :points =&gt; 2)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="91">
@@ -32182,109 +32230,109 @@
         <li class="covered" data-hits="1" data-linenumber="93">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should destroy associated tasks&quot; do</code>
+          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="94">
           <span class="hits">1</span>
           
-          <code class="ruby">			@path.destroy</code>
+          <code class="ruby">			@path.should respond_to(:tasks)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="95">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			[@task1, @task2].each do |t|</code>
-        </li>
-      
-        <li class="covered" data-hits="2" data-linenumber="96">
-          <span class="hits">2</span>
-          
-          <code class="ruby">				Task.find_by_id(t.id).should be_nil</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="97">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="98">
+        <li class="never" data-hits="" data-linenumber="95">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="99">
+        <li class="never" data-hits="" data-linenumber="96">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="100">
+        <li class="covered" data-hits="1" data-linenumber="97">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;next task&quot; do</code>
+          <code class="ruby">		it &quot;should have the right paths in the right order (lowest points first)&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="98">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@path.tasks.should == [@task1, @task2]</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="99">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="100">
+          
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="101">
           <span class="hits">1</span>
           
-          <code class="ruby">			before(:each) do</code>
+          <code class="ruby">		it &quot;should destroy associated tasks&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="102">
-          <span class="hits">3</span>
+        <li class="covered" data-hits="1" data-linenumber="102">
+          <span class="hits">1</span>
           
-          <code class="ruby">				@completed_task = Factory(:completed_task, :user =&gt; @user, :task =&gt; @task1)</code>
+          <code class="ruby">			@path.destroy</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="103">
+        <li class="covered" data-hits="1" data-linenumber="103">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			[@task1, @task2].each do |t|</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="104">
+          <span class="hits">2</span>
+          
+          <code class="ruby">				Task.find_by_id(t.id).should be_nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="105">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="104">
+        <li class="never" data-hits="" data-linenumber="106">
           
           
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="105">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			it &quot;should have a next task method&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="106">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				@path.should respond_to(:next_task)</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="107">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="108">
+        <li class="covered" data-hits="1" data-linenumber="108">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			</code>
+          <code class="ruby">		describe &quot;next task&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="109">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should return the next uncompleted task for a user&quot; do</code>
+          <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="110">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="3" data-linenumber="110">
+          <span class="hits">3</span>
           
-          <code class="ruby">				@path.next_task(@user).should == @task2</code>
+          <code class="ruby">				@completed_task = Factory(:completed_task, :user =&gt; @user, :task =&gt; @task1)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="111">
@@ -32296,109 +32344,109 @@
         <li class="never" data-hits="" data-linenumber="112">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="113">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should return nil if there are no more incomplete tasks&quot; do</code>
+          <code class="ruby">			it &quot;should have a next task method&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="114">
           <span class="hits">1</span>
           
-          <code class="ruby">				@completed_task2 = Factory(:completed_task, :user =&gt; @user, :task =&gt; @task2)</code>
+          <code class="ruby">				@path.should respond_to(:next_task)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="115">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="115">
           
-          <code class="ruby">				@path.next_task(@user).should == nil</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="116">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="117">
-          
-          
-          <code class="ruby">		end		</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="118">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="119">
+        <li class="covered" data-hits="1" data-linenumber="117">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;remaining tasks&quot; do</code>
+          <code class="ruby">			it &quot;should return the next uncompleted task for a user&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="120">
+        <li class="covered" data-hits="1" data-linenumber="118">
           <span class="hits">1</span>
           
-          <code class="ruby">			before(:each) do</code>
+          <code class="ruby">				@path.next_task(@user).should == @task2</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="121">
-          <span class="hits">2</span>
-          
-          <code class="ruby">				@completed_task = Factory(:completed_task, :user =&gt; @user, :task =&gt; @task1)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="122">
+        <li class="never" data-hits="" data-linenumber="119">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="123">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="124">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			it &quot;should have a next task method&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="125">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				@path.should respond_to(:remaining_tasks)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="126">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="127">
+        <li class="never" data-hits="" data-linenumber="120">
           
           
           <code class="ruby">			</code>
         </li>
       
+        <li class="covered" data-hits="1" data-linenumber="121">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			it &quot;should return nil if there are no more incomplete tasks&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="122">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@completed_task2 = Factory(:completed_task, :user =&gt; @user, :task =&gt; @task2)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="123">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@path.next_task(@user).should == nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="124">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="125">
+          
+          
+          <code class="ruby">		end		</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="126">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="127">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		describe &quot;remaining tasks&quot; do</code>
+        </li>
+      
         <li class="covered" data-hits="1" data-linenumber="128">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should return the next the correct number of incomplete tasks&quot; do</code>
+          <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="129">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="129">
+          <span class="hits">2</span>
           
-          <code class="ruby">				@path.remaining_tasks(@user).should == @path.tasks.count - @user.completed_tasks.count</code>
+          <code class="ruby">				@completed_task = Factory(:completed_task, :user =&gt; @user, :task =&gt; @task1)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="130">
@@ -32410,16 +32458,64 @@
         <li class="never" data-hits="" data-linenumber="131">
           
           
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="132">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			it &quot;should have a next task method&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="133">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@path.should respond_to(:remaining_tasks)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="134">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="135">
+          
+          
+          <code class="ruby">			</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="136">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			it &quot;should return the next the correct number of incomplete tasks&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="137">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@path.remaining_tasks(@user).should == @path.tasks.count - @user.completed_tasks.count</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="138">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="139">
+          
+          
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="132">
+        <li class="never" data-hits="" data-linenumber="140">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="133">
+        <li class="never" data-hits="" data-linenumber="141">
           
           
           <code class="ruby">end</code>
@@ -34000,8 +34096,8 @@
     <h3>spec/models/user_spec.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>188</b> relevant lines. 
-      <span class="green"><b>188</b> lines covered</span> and
+      <b>195</b> relevant lines. 
+      <span class="green"><b>195</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -34033,8 +34129,8 @@
           <code class="ruby">	before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="43" data-linenumber="5">
-          <span class="hits">43</span>
+        <li class="covered" data-hits="45" data-linenumber="5">
+          <span class="hits">45</span>
           
           <code class="ruby">		@attr = { </code>
         </li>
@@ -34918,181 +35014,181 @@
         <li class="never" data-hits="" data-linenumber="152">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="153">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;company_admin?&quot; do</code>
+          <code class="ruby">	describe &quot;image url validations&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="154">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should respond with false if user is not company admin&quot; do</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="155">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="155">
+          <span class="hits">2</span>
           
-          <code class="ruby">			@user = Factory(:user)</code>
+          <code class="ruby">			@user = User.create!(@attr)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="156">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="156">
           
-          <code class="ruby">			@user.company_admin?.should be_false</code>
+          
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="157">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="158">
+        <li class="covered" data-hits="1" data-linenumber="158">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		</code>
+          <code class="ruby">		it &quot;should respond to image_url&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="159">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should respond with true if user is company admin&quot; do</code>
+          <code class="ruby">			@user.should respond_to(:image_url)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="160">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user = Factory(:user)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="161">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			Factory(:company_user, :user =&gt; @user, :is_admin =&gt; &quot;t&quot;)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="162">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user.company_admin?.should be_true</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="163">
+        <li class="never" data-hits="" data-linenumber="160">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="164">
-          
-          
-          <code class="ruby">	end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="165">
-          
-          
-          <code class="ruby">	</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="166">
-          <span class="hits">1</span>
-          
-          <code class="ruby">	describe &quot;completed tasks&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="167">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		it &quot;should respond with all completed tasks&quot;</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="168">
+        <li class="never" data-hits="" data-linenumber="161">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="169">
+        <li class="covered" data-hits="1" data-linenumber="162">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;completed?&quot; do</code>
+          <code class="ruby">		it &quot;should respond with profile_pic set to default if image_url is not set&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="170">
+        <li class="covered" data-hits="1" data-linenumber="163">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should respond with false if task not completed&quot;</code>
+          <code class="ruby">			@user.profile_pic.should == &quot;/images/default_profile_pic.jpg&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="171">
-          
-          
-          <code class="ruby">			</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="172">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			it &quot;should respond with true if the task is completed&quot;</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="173">
+        <li class="never" data-hits="" data-linenumber="164">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="174">
+        <li class="never" data-hits="" data-linenumber="165">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="175">
+        <li class="never" data-hits="" data-linenumber="166">
           
           
-          <code class="ruby">	</code>
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="167">
+          <span class="hits">1</span>
+          
+          <code class="ruby">	describe &quot;company_admin?&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="168">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should respond with false if user is not company admin&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="169">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user = Factory(:user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="170">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user.company_admin?.should be_false</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="171">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="172">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="173">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should respond with true if user is company admin&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="174">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user = Factory(:user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="175">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			Factory(:company_user, :user =&gt; @user, :is_admin =&gt; &quot;t&quot;)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="176">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;paths&quot; do</code>
+          <code class="ruby">			@user.company_admin?.should be_true</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="177">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		before(:each) do</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="178">
-          <span class="hits">3</span>
-          
-          <code class="ruby">			@user = User.create!(@attr)</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="179">
-          <span class="hits">3</span>
-          
-          <code class="ruby">			@path1 = Factory(:path, :user =&gt; @user, :created_at =&gt; 1.day.ago)</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="180">
-          <span class="hits">3</span>
-          
-          <code class="ruby">			@path2 = Factory(:path, :user =&gt; @user, :created_at =&gt; 1.hour.ago)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="181">
+        <li class="never" data-hits="" data-linenumber="177">
           
           
           <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="178">
+          
+          
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="179">
+          
+          
+          <code class="ruby">	</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="180">
+          <span class="hits">1</span>
+          
+          <code class="ruby">	describe &quot;completed tasks&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="181">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should respond with all completed tasks&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="182">
@@ -35104,121 +35200,121 @@
         <li class="covered" data-hits="1" data-linenumber="183">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
+          <code class="ruby">		describe &quot;completed?&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="184">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.should respond_to(:paths)</code>
+          <code class="ruby">			it &quot;should respond with false if task not completed&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="185">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="186">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="187">
+        <li class="covered" data-hits="1" data-linenumber="186">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have the right paths in the right order&quot; do</code>
+          <code class="ruby">			it &quot;should respond with true if the task is completed&quot;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="188">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user.paths.should == [@path2, @path1]</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="189">
+        <li class="never" data-hits="" data-linenumber="187">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="190">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="191">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		it &quot;should destroy associated paths&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="192">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user.destroy</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="193">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			[@path1, @path2].each do |p|</code>
-        </li>
-      
-        <li class="covered" data-hits="2" data-linenumber="194">
-          <span class="hits">2</span>
-          
-          <code class="ruby">				Path.find_by_id(p.id).should be_nil</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="195">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="196">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="197">
+        <li class="never" data-hits="" data-linenumber="188">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="198">
+        <li class="never" data-hits="" data-linenumber="189">
           
           
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="199">
+        <li class="covered" data-hits="1" data-linenumber="190">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;enrollments&quot; do</code>
+          <code class="ruby">	describe &quot;paths&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="200">
+        <li class="covered" data-hits="1" data-linenumber="191">
           <span class="hits">1</span>
           
           <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="201">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="3" data-linenumber="192">
+          <span class="hits">3</span>
           
           <code class="ruby">			@user = User.create!(@attr)</code>
         </li>
       
-        <li class="covered" data-hits="8" data-linenumber="202">
-          <span class="hits">8</span>
+        <li class="covered" data-hits="3" data-linenumber="193">
+          <span class="hits">3</span>
           
-          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
+          <code class="ruby">			@path1 = Factory(:path, :user =&gt; @user, :created_at =&gt; 1.day.ago)</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="194">
+          <span class="hits">3</span>
+          
+          <code class="ruby">			@path2 = Factory(:path, :user =&gt; @user, :created_at =&gt; 1.hour.ago)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="195">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="196">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="197">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="198">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user.should respond_to(:paths)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="199">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="200">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="201">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should have the right paths in the right order&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="202">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user.paths.should == [@path2, @path1]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="203">
@@ -35236,175 +35332,175 @@
         <li class="covered" data-hits="1" data-linenumber="205">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
+          <code class="ruby">		it &quot;should destroy associated paths&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="206">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.should respond_to(:enrollments)</code>
+          <code class="ruby">			@user.destroy</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="207">
+        <li class="covered" data-hits="1" data-linenumber="207">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			[@path1, @path2].each do |p|</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="208">
+          <span class="hits">2</span>
+          
+          <code class="ruby">				Path.find_by_id(p.id).should be_nil</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="209">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="210">
           
           
           <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="208">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="209">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		it &quot;should respond to enrolled? method&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="210">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user.should respond_to(:enrolled?)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="211">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">	end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="212">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="213">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;enroll? should return nil if user is not enrolled&quot; do</code>
+          <code class="ruby">	describe &quot;enrollments&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="214">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.enrolled?(@path).should be_nil</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="215">
+        <li class="covered" data-hits="8" data-linenumber="215">
+          <span class="hits">8</span>
+          
+          <code class="ruby">			@user = User.create!(@attr)</code>
+        </li>
+      
+        <li class="covered" data-hits="8" data-linenumber="216">
+          <span class="hits">8</span>
+          
+          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="217">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="216">
+        <li class="never" data-hits="" data-linenumber="218">
           
           
           <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="217">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		it &quot;enroll? should return the enrollment if user is enrolled&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="218">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			enrollment = Factory(:enrollment, :path =&gt; @path, :user =&gt; @user)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="219">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.enrolled?(@path).should == enrollment</code>
+          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="220">
+        <li class="covered" data-hits="1" data-linenumber="220">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">			@user.should respond_to(:enrollments)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="221">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="222">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="222">
           
-          <code class="ruby">		it &quot;should respond to enroll! method&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="223">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.should respond_to(:enroll!)</code>
+          <code class="ruby">		it &quot;should respond to enrolled? method&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="224">
+        <li class="covered" data-hits="1" data-linenumber="224">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">			@user.should respond_to(:enrolled?)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="225">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="226">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="226">
           
-          <code class="ruby">		it &quot;enroll! should in enroll in a path&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="227">
           <span class="hits">1</span>
           
-          <code class="ruby">			lambda do</code>
+          <code class="ruby">		it &quot;enroll? should return nil if user is not enrolled&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="228">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.enroll!(@path)</code>
+          <code class="ruby">			@user.enrolled?(@path).should be_nil</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="229">
           
           
-          <code class="ruby">			end.should change(Enrollment, :count).by(1)</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="230">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="231">
+        <li class="covered" data-hits="1" data-linenumber="231">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		</code>
+          <code class="ruby">		it &quot;enroll? should return the enrollment if user is enrolled&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="232">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should respond to unenroll!&quot; do</code>
+          <code class="ruby">			enrollment = Factory(:enrollment, :path =&gt; @path, :user =&gt; @user)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="233">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.should respond_to(:unenroll!)</code>
+          <code class="ruby">			@user.enrolled?(@path).should == enrollment</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="234">
@@ -35422,151 +35518,151 @@
         <li class="covered" data-hits="1" data-linenumber="236">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should unenroll from a path&quot; do</code>
+          <code class="ruby">		it &quot;should respond to enroll! method&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="237">
           <span class="hits">1</span>
           
-          <code class="ruby">			Factory(:enrollment, :path =&gt; @path, :user =&gt; @user)</code>
+          <code class="ruby">			@user.should respond_to(:enroll!)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="238">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user.unenroll!(@path)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="239">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			Enrollment.find(:all, :conditions =&gt; [&quot;path_id = ? and user_id = ?&quot;, @path.id, @user.id]).should be_empty</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="240">
+        <li class="never" data-hits="" data-linenumber="238">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="241">
-          
-          
-          <code class="ruby">	end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="242">
-          
-          
-          <code class="ruby">	</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="243">
-          <span class="hits">1</span>
-          
-          <code class="ruby">	describe &quot;enrolled paths&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="244">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		before(:each) do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="245">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@user = User.create!(@attr)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="246">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="247">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="248">
+        <li class="never" data-hits="" data-linenumber="239">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="249">
+        <li class="covered" data-hits="1" data-linenumber="240">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
+          <code class="ruby">		it &quot;enroll! should in enroll in a path&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="250">
+        <li class="covered" data-hits="1" data-linenumber="241">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.should respond_to(:enrolled_paths)</code>
+          <code class="ruby">			lambda do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="251">
+        <li class="covered" data-hits="1" data-linenumber="242">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.enroll!(@path)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="243">
+          
+          
+          <code class="ruby">			end.should change(Enrollment, :count).by(1)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="244">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="252">
+        <li class="never" data-hits="" data-linenumber="245">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="246">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should respond to unenroll!&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="247">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user.should respond_to(:unenroll!)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="248">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="249">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="250">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		it &quot;should unenroll from a path&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="251">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			Factory(:enrollment, :path =&gt; @path, :user =&gt; @user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="252">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			@user.unenroll!(@path)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="253">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			Enrollment.find(:all, :conditions =&gt; [&quot;path_id = ? and user_id = ?&quot;, @path.id, @user.id]).should be_empty</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="254">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="255">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="253">
+        <li class="never" data-hits="" data-linenumber="256">
           
           
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="254">
+        <li class="covered" data-hits="1" data-linenumber="257">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;completed tasks&quot; do</code>
+          <code class="ruby">	describe &quot;enrolled paths&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="255">
+        <li class="covered" data-hits="1" data-linenumber="258">
           <span class="hits">1</span>
           
           <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="256">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="1" data-linenumber="259">
+          <span class="hits">1</span>
           
-          <code class="ruby">			@user = Factory(:user)</code>
+          <code class="ruby">			@user = User.create!(@attr)</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="257">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="1" data-linenumber="260">
+          <span class="hits">1</span>
           
           <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="258">
-          <span class="hits">4</span>
-          
-          <code class="ruby">			@task1 = Factory(:task, :path =&gt; @path, :points =&gt; 1)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="259">
-          <span class="hits">4</span>
-          
-          <code class="ruby">			@completed_task = Factory(:completed_task, :task =&gt; @task1, :user =&gt; @user)</code>
-        </li>
-      
-        <li class="covered" data-hits="4" data-linenumber="260">
-          <span class="hits">4</span>
-          
-          <code class="ruby">			@task2 = Factory(:task, :path =&gt; @path, :points =&gt; 2)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="261">
@@ -35584,13 +35680,13 @@
         <li class="covered" data-hits="1" data-linenumber="263">
           <span class="hits">1</span>
           
-          <code class="ruby">		it &quot;should have a completed tasks attribute&quot; do</code>
+          <code class="ruby">		it &quot;should have a paths attribute&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="264">
           <span class="hits">1</span>
           
-          <code class="ruby">			@user.should respond_to(:completed_tasks)</code>
+          <code class="ruby">			@user.should respond_to(:enrolled_paths)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="265">
@@ -35602,79 +35698,79 @@
         <li class="never" data-hits="" data-linenumber="266">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">	end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="267">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="267">
           
-          <code class="ruby">		describe &quot;completed?&quot; do</code>
+          
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="268">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should respond to successfully&quot; do</code>
+          <code class="ruby">	describe &quot;completed tasks&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="269">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.should respond_to(:completed?)</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="270">
+        <li class="covered" data-hits="4" data-linenumber="270">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">			@user = Factory(:user)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="271">
+        <li class="covered" data-hits="4" data-linenumber="271">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">			</code>
+          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="272">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="4" data-linenumber="272">
+          <span class="hits">4</span>
           
-          <code class="ruby">			it &quot;should return nil if not task not completed&quot; do</code>
+          <code class="ruby">			@task1 = Factory(:task, :path =&gt; @path, :points =&gt; 1)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="273">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="4" data-linenumber="273">
+          <span class="hits">4</span>
           
-          <code class="ruby">				@user.completed?(@task2).should be_nil</code>
+          <code class="ruby">			@completed_task = Factory(:completed_task, :task =&gt; @task1, :user =&gt; @user)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="274">
+        <li class="covered" data-hits="4" data-linenumber="274">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">			@task2 = Factory(:task, :path =&gt; @path, :points =&gt; 2)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="275">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="276">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="276">
           
-          <code class="ruby">			it &quot;should return completed task if task is completed&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="277">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.completed?(@task1).should == @completed_task</code>
+          <code class="ruby">		it &quot;should have a completed tasks attribute&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="278">
+        <li class="covered" data-hits="1" data-linenumber="278">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">			@user.should respond_to(:completed_tasks)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="279">
@@ -35686,187 +35782,187 @@
         <li class="never" data-hits="" data-linenumber="280">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="281">
+        <li class="covered" data-hits="1" data-linenumber="281">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">	</code>
+          <code class="ruby">		describe &quot;completed?&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="282">
           <span class="hits">1</span>
           
-          <code class="ruby">	describe &quot;points&quot; do</code>
+          <code class="ruby">			it &quot;should respond to successfully&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="283">
           <span class="hits">1</span>
           
-          <code class="ruby">		before(:each) do</code>
+          <code class="ruby">				@user.should respond_to(:completed?)</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="284">
-          <span class="hits">4</span>
+        <li class="never" data-hits="" data-linenumber="284">
           
-          <code class="ruby">			@user = Factory(:user)</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="285">
-          <span class="hits">4</span>
+        <li class="never" data-hits="" data-linenumber="285">
           
-          <code class="ruby">			@company = Factory(:company)</code>
+          
+          <code class="ruby">			</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="286">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="1" data-linenumber="286">
+          <span class="hits">1</span>
           
-          <code class="ruby">			Factory(:company_user, :user =&gt; @user, :company =&gt; @company)</code>
+          <code class="ruby">			it &quot;should return nil if not task not completed&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="287">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="1" data-linenumber="287">
+          <span class="hits">1</span>
           
-          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
+          <code class="ruby">				@user.completed?(@task2).should be_nil</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="288">
-          <span class="hits">4</span>
+        <li class="never" data-hits="" data-linenumber="288">
           
-          <code class="ruby">			@task = Factory(:task, :path =&gt; @path)</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="289">
-          <span class="hits">4</span>
+        <li class="never" data-hits="" data-linenumber="289">
           
-          <code class="ruby">			@reward = Factory(:reward, :company =&gt; @user.company)</code>
+          
+          <code class="ruby">			</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="290">
-          <span class="hits">4</span>
+        <li class="covered" data-hits="1" data-linenumber="290">
+          <span class="hits">1</span>
           
-          <code class="ruby">			@enrollment = Factory(:enrollment, :path =&gt; @path, :user =&gt; @user)</code>
+          <code class="ruby">			it &quot;should return completed task if task is completed&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="291">
+        <li class="covered" data-hits="1" data-linenumber="291">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">				@user.completed?(@task1).should == @completed_task</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="292">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">			end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="293">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="293">
           
-          <code class="ruby">		describe &quot;award_points&quot; do</code>
+          
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="294">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="294">
           
-          <code class="ruby">			it &quot;should add task's points to earned points&quot; do</code>
+          
+          <code class="ruby">	end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="295">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="295">
           
-          <code class="ruby">				@user.award_points(@task)</code>
+          
+          <code class="ruby">	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="296">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.earned_points.should == @task.points</code>
+          <code class="ruby">	describe &quot;points&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="297">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="298">
-          
-          
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="299">
+        <li class="covered" data-hits="1" data-linenumber="297">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should add task's points to the appropriate enrollment's total_points&quot; do</code>
+          <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="300">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="4" data-linenumber="298">
+          <span class="hits">4</span>
           
-          <code class="ruby">				@user.award_points(@task)</code>
+          <code class="ruby">			@user = Factory(:user)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="301">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="4" data-linenumber="299">
+          <span class="hits">4</span>
           
-          <code class="ruby">				@user.enrollments.find_by_path_id(@path.id).total_points.should == @task.points</code>
+          <code class="ruby">			@company = Factory(:company)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="302">
+        <li class="covered" data-hits="4" data-linenumber="300">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">			Factory(:company_user, :user =&gt; @user, :company =&gt; @company)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="303">
+        <li class="covered" data-hits="4" data-linenumber="301">
+          <span class="hits">4</span>
           
-          
-          <code class="ruby">		end		</code>
+          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="304">
+        <li class="covered" data-hits="4" data-linenumber="302">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@task = Factory(:task, :path =&gt; @path)</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="303">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@reward = Factory(:reward, :company =&gt; @user.company)</code>
+        </li>
+      
+        <li class="covered" data-hits="4" data-linenumber="304">
+          <span class="hits">4</span>
+          
+          <code class="ruby">			@enrollment = Factory(:enrollment, :path =&gt; @path, :user =&gt; @user)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="305">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="306">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="305">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		describe &quot;debit_points&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="306">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			it &quot;should add points to spent points&quot; do</code>
-        </li>
-      
         <li class="covered" data-hits="1" data-linenumber="307">
           <span class="hits">1</span>
           
-          <code class="ruby">				current_points = @user.spent_points</code>
+          <code class="ruby">		describe &quot;award_points&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="308">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.debit_points(@reward.points)</code>
+          <code class="ruby">			it &quot;should add task's points to earned points&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="309">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.spent_points.should &gt; current_points</code>
+          <code class="ruby">				@user.award_points(@task)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="310">
           <span class="hits">1</span>
           
-          <code class="ruby">				@user.spent_points.should == current_points + @reward.points</code>
+          <code class="ruby">				@user.earned_points.should == @task.points</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="311">
@@ -35878,64 +35974,148 @@
         <li class="never" data-hits="" data-linenumber="312">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">				</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="313">
+        <li class="covered" data-hits="1" data-linenumber="313">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		</code>
+          <code class="ruby">			it &quot;should add task's points to the appropriate enrollment's total_points&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="314">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;available_points&quot; do</code>
+          <code class="ruby">				@user.award_points(@task)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="315">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should equal the earned points minus the spent points&quot; do</code>
+          <code class="ruby">				@user.enrollments.find_by_path_id(@path.id).total_points.should == @task.points</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="316">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				@user.earned_points = 100</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="317">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				@user.spent_points = 25</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="318">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				@user.available_points.should == 75</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="319">
+        <li class="never" data-hits="" data-linenumber="316">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="320">
+        <li class="never" data-hits="" data-linenumber="317">
+          
+          
+          <code class="ruby">		end		</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="318">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="319">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		describe &quot;debit_points&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="320">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			it &quot;should add points to spent points&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="321">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				current_points = @user.spent_points</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="322">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.debit_points(@reward.points)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="323">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.spent_points.should &gt; current_points</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="324">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.spent_points.should == current_points + @reward.points</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="325">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="326">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="321">
+        <li class="never" data-hits="" data-linenumber="327">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="328">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		describe &quot;available_points&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="329">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			it &quot;should equal the earned points minus the spent points&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="330">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.earned_points = 100</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="331">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.spent_points = 25</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="332">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				@user.available_points.should == 75</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="333">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="334">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="335">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="322">
+        <li class="never" data-hits="" data-linenumber="336">
           
           
           <code class="ruby">end</code>

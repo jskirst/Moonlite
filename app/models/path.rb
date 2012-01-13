@@ -1,5 +1,5 @@
 class Path < ActiveRecord::Base
-	attr_accessible :name, :description, :company_id
+	attr_accessible :name, :description, :company_id, :image_url
 	
 	belongs_to :user
 	belongs_to :company
@@ -21,6 +21,14 @@ class Path < ActiveRecord::Base
 	validate :company_id, :if => :user_belongs_to_company, :allow_nil => true
 	
 	default_scope :order => 'paths.created_at DESC'
+	
+	def path_pic
+		if self.image_url != nil
+			return self.image_url
+		else
+			return "/images/default_path_pic.jpg"
+		end
+	end
 	
 	def next_task(user, previous_question = nil)
 		tasks.each do |t|

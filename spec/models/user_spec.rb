@@ -149,6 +149,20 @@ describe "User" do
 			@user.salt.should == current_salt
 		end
 	end
+	
+	describe "image url validations" do
+		before(:each) do
+			@user = User.create!(@attr)
+		end
+		
+		it "should respond to image_url" do
+			@user.should respond_to(:image_url)
+		end
+		
+		it "should respond with profile_pic set to default if image_url is not set" do
+			@user.profile_pic.should == "/images/default_profile_pic.jpg"
+		end
+	end
 
 	describe "company_admin?" do
 		it "should respond with false if user is not company admin" do

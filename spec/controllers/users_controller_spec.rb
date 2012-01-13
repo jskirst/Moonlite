@@ -152,9 +152,9 @@ describe UsersController do
 			response.should have_selector("h1", :content => @user.name)
 		end
 		
-		it "Should have a gravatar inside the header" do
+		it "Should have a profile pic inside the header" do
 			get :show, :id => @user
-			response.should have_selector("h1>img", :class => "gravatar")
+			response.should have_selector("h1>img", :class => "profile_pic")
 		end
 		
 		describe "achievement details" do

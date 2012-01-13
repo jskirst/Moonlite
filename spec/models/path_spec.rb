@@ -30,6 +30,14 @@ describe "Paths" do
 		it "should reject long description" do
 			@user.paths.build(:description => "a"*501).should_not be_valid
 		end
+
+		it "should respond to image_url" do
+			@user.paths.create!(@attr).should respond_to(:image_url)
+		end
+		
+		it "should respond with path_pic set to default if image_url is not set" do
+			@user.paths.create!(@attr).path_pic.should == "/images/default_path_pic.jpg"
+		end
 	end
 	
 	describe "user associations" do

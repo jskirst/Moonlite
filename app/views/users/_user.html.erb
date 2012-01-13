@@ -1,5 +1,5 @@
 <li>
-	<%= gravatar_for user, :size => 30 %>
+	<%= image_tag(user.profile_pic, :size =>"50x50", :class => "profile_pic") %>
 	<%= link_to user.name, user %> | 
 	<% if current_user.admin? %> 
 	<%= link_to "delete", 
