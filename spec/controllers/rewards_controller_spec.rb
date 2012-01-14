@@ -459,7 +459,7 @@ describe RewardsController do
 				it "should not create a point transaction" do
 					lambda do
 						get :purchase, :id => @reward
-					end.should_not change(PointTransaction, :count)
+					end.should_not change(UserTransaction, :count)
 				end
 			end
 			
@@ -488,14 +488,14 @@ describe RewardsController do
 				it "should create a new point transaction" do
 					lambda do
 						get :purchase, :id => @reward
-					end.should change(PointTransaction, :count).by(1)
+					end.should change(UserTransaction, :count).by(1)
 				end
 				
 				it "should have point transaction with correct reward and points" do
 					get :purchase, :id => @reward
-					pt = PointTransaction.find(:first, :conditions => ["reward_id = ? and user_id = ?", @reward.id, @user.id])
+					pt = UserTransaction.find(:first, :conditions => ["reward_id = ? and user_id = ?", @reward.id, @user.id])
 					pt.reward_id.should == @reward.id
-					pt.points.should == @reward.points
+					pt.amount.should == @reward.points
 				end
 			end
 		end

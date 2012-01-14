@@ -3,6 +3,11 @@ class PathsController < ApplicationController
 	before_filter :authenticate
 	before_filter :authorized_user, :only => [:edit, :update, :destroy, :file, :upload]
 	
+	def index
+		@title = "All Paths"
+		@paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ?", current_user.company.id])
+	end
+	
 	def new
 		@path = Path.new
 		@title = "New Path"
@@ -13,6 +18,7 @@ class PathsController < ApplicationController
 	end
 
 	def create
+		params[:path][:company_id] = current_user.company.id
 		@path = current_user.paths.build(params[:path])
 		if @path.save
 			flash[:success] = "Path created."
@@ -97,6 +103,63 @@ class PathsController < ApplicationController
 				flash.now[:error] = "There was an error processing your file. You must have at least two rows in your file."
 				render 'file'
 			end
+		end
+	end
+	
+	def marketplace
+		@title = "Marketplace"
+		if !params[:search].nil?
+			@query = params[:search]
+			@paths = Path.find(:all, :conditions => ["is_public = ? and name LIKE ?", true, "%#{@query}%"])
+		end
+	end
+	
+	def review
+		@title = "Review purchase"
+		if !@path = Path.find_by_id(params[:id])
+			flash[:error] = "No path found for the argument supplied."
+			redirect_to root_path and return
+		elsif !@path.is_public
+			flash[:error] = "This path is not available for purchase."
+			redirect_to root_path and return
+		end
+	end
+	
+	def purchase
+		if !@path = Path.find_by_id(params[:id])
+			flash[:error] = "No path found for the argument supplied."
+			redirect_to root_path and return
+		elsif !@path.is_public
+			flash[:error] = "This path is not available for purchase."
+			redirect_to root_path and return
+		else
+			UserTransaction.create!({
+				:user_id => current_user.id,
+				:path_id => @path.id,
+				:amount => 15.00,
+				:status => 0})
+			purchased_path = current_user.paths.create!({
+				:user_id => current_user.id,
+				:company_id => @current_user.company.id,
+				:purchased_path_id => @path.id,
+				:name => @path.name,
+				:description => @path.description,
+				:amount => 15.00,
+				:status => 0})
+			@path.tasks.each do |t|
+				purchased_path.tasks.create!(
+					:question => t.question,
+					:answer1 => t.answer1,
+					:answer2 => t.answer2,
+					:answer3 => t.answer3,
+					:answer4 => t.answer4,
+					:correct_answer => t.correct_answer,
+					:points => t.points,
+					:resource => t.resource
+				)
+			end
+			@title = "Purchase successful"
+			flash[:success] = "Purchase successful. Enjoy!."
 		end
 	end
 	

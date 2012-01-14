@@ -1,0 +1,77 @@
+<section>
+	<div class="input" style="float:right; margin-top: 5px">
+	<%= form_tag marketplace_path, :method => "get" do %>
+		<%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
+		<%= submit_tag "Search", :class => "btn primary" %>
+	<% end %>
+	</div>
+	<div>
+		<h1>Path Marketplace</h1>
+	</div>
+</section>
+<section>
+	<% if !@query.nil? %>
+	<p>Your search for <strong><%= @query %></strong> returned <%= @paths.size.to_s %> results.</p>
+		<% if !@paths.empty? %>
+		<ul class="media-grid">
+			<% @paths.each do |p| %>
+			<li>
+				<a href="paths/<%= p.id %>/review"><img class="thumbnail" src="<%= p.path_pic %>" height="150" width="210"></a>
+			</li>
+			<% end %>
+		</ul>
+		<% end %>
+	<% else %>	
+	<ul class="media-grid">
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/rsz_biotech_1.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/rsz_network_1.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/rsz_productivity_2.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/rsz_software_2.png" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+		<li>
+			<a href="#"><img class="thumbnail" src="/images/paths/biotech.jpg" height="150" width="210"></a>
+		</li>
+	</ul>
+	<% end %>
+</section>
+		

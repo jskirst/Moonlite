@@ -17,11 +17,6 @@ class PagesController < ApplicationController
 		@title = "Help"
 	end
 	
-	def all_paths
-		@title = "All Paths"
-		@paths = Path.paginate(:page => params[:page])
-	end
-	
 	def invitation
 		@title = "Request an invite"
 		if params[:pages] && params[:pages][:email]

@@ -1,0 +1,15 @@
+<h1>Edit transaction</h1>
+<%= form_for(@user_transaction) do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<div class="field">
+		<%= f.label :status %><br/>
+		<select id="user_transaction_status" name="user_transaction[status]">
+			<option value="1">Pending</option>
+			<option value="2">In Progress</option>
+			<option value="1">Completed</option>
+		</select>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save" %>
+	</div>
+<% end %>

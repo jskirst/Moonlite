@@ -13,6 +13,12 @@
 			<%= f.text_area :description %>
 		</div>
 	</div>
+	<div class="field clearfix">
+		<%= f.label "Path Picture URL" %>
+		<div class="input">
+			<%= f.text_field :image_url, :value => "Link to web hosted picture...", :onclick => "this.value='';" %>
+		</div>
+	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
 		<%= link_to "Add Question", {:controller => "tasks", :action => "new", :path => @path }, :class => "btn secondary" %>

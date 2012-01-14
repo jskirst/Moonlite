@@ -4,12 +4,14 @@ describe "Enrollments" do
 	before(:each) do
 		#Sign in
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@company = Factory(:company)
+		Factory(:company_user, :user => @user, :company => @company)
+		@path = Factory(:path, :user => @user, :company => @company)
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button #goes to user page (path index)
-		visit all_paths_path
+		visit paths_path
 		click_link @path.name
 	end
 	

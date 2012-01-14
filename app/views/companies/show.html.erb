@@ -21,9 +21,8 @@
 				<% user_counter = 0 %>
 				<% @company_users.each do |cu| %>
 					<tr>
-						<%= link_to "", cu.user %>
 						<td><%= user_counter.to_s %></td>
-						<td><%= cu.user.name %></td>
+						<td><%= link_to cu.user.name, cu.user %></td>
 						<td><%= rand(1000).to_s %></td>
 					</tr>
 					<% user_counter += 1 %>

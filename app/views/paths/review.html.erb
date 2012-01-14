@@ -1,0 +1,9 @@
+<h1>Confirm Purchase</h1>
+<section class="path">
+	<h2><%= @path.name %></h2>
+	<p><%= @path.description %></p>
+</section>
+<section>
+	<%= link_to "Confirm Purchase", {:action => "purchase", :id => @path.id}, :method => "get", :class => "btn primary" %>
+	<%= link_to "Cancel", {:action => "marketplace"}, :method => "get", :class => "btn secondary" %>
+</section>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120112233203) do
+ActiveRecord::Schema.define(:version => 20120113224541) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -69,19 +69,11 @@ ActiveRecord::Schema.define(:version => 20120112233203) do
     t.datetime "updated_at"
     t.integer  "company_id"
     t.string   "image_url"
+    t.boolean  "is_public",         :default => false
+    t.integer  "purchased_path_id"
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
-
-  create_table "point_transactions", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "reward_id"
-    t.integer  "task_id"
-    t.integer  "points"
-    t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "rewards", :force => true do |t|
     t.integer  "company_id"
@@ -108,6 +100,17 @@ ActiveRecord::Schema.define(:version => 20120112233203) do
   end
 
   add_index "tasks", ["path_id"], :name => "index_tasks_on_path_id"
+
+  create_table "user_transactions", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "reward_id"
+    t.integer  "task_id"
+    t.float    "amount"
+    t.integer  "status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "path_id"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name"

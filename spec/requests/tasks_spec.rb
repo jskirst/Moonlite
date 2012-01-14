@@ -4,13 +4,15 @@ describe "Tasks" do
 	before(:each) do
 		#Sign in
 		@user = Factory(:user)
+		@company = Factory(:company)
+		Factory(:company_user, :user => @user, :company => @company)
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button #goes to user page (path index)
 		
 		#Create a path
-		visit all_paths_path
+		click_link "Paths"
 		click_link "Create new Path"
 		@path_name = "New Path Name"
 		fill_in :path_name, :with => @path_name
@@ -22,7 +24,7 @@ describe "Tasks" do
 		describe "failure" do
 			it "should not make a new task" do
 				lambda do
-					visit all_paths_path
+					click_link "Paths"
 					click_link @path_name
 					click_link "Edit"
 					click_link "Add Question"
@@ -39,7 +41,7 @@ describe "Tasks" do
 		describe "success" do
 			it "should make a new task" do
 				lambda do
-					visit all_paths_path
+					click_link "Paths"
 					click_link @path_name
 					click_link "Edit"
 					click_link "Add Question"
@@ -56,7 +58,7 @@ describe "Tasks" do
 		describe "failure followed by success" do
 			it "should make a new task" do
 				lambda do
-					visit all_paths_path
+					click_link "Paths"
 					click_link @path_name
 					click_link "Edit"
 					click_link "Add Question"

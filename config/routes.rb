@@ -15,6 +15,8 @@ SampleApp::Application.routes.draw do
 	end
     resources :paths do
 		member do
+			get :review
+			get :purchase
 			get :continue
 			get :file
 			post :upload
@@ -24,7 +26,7 @@ SampleApp::Application.routes.draw do
 	resources :tasks
 	resources :completed_tasks
 	resources :info_resources
-	resources :point_transactions
+	resources :user_transactions
 	resources :rewards do
 		member do
 			get :review
@@ -44,6 +46,8 @@ SampleApp::Application.routes.draw do
 
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'
+	
+	match '/marketplace',:to => 'paths#marketplace'
 	
   # The priority is based upon order of creation:
   # first created -> highest priority.

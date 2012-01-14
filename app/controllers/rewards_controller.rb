@@ -55,10 +55,10 @@ class RewardsController < ApplicationController
 	def purchase
 		if current_user.available_points >= @reward.points
 			current_user.debit_points(@reward.points)
-			PointTransaction.create!({:user_id => current_user.id,
+			UserTransaction.create!({:user_id => current_user.id,
 					:task_id => nil,
 					:reward_id => @reward.id,
-					:points => @reward.points,
+					:amount => @reward.points,
 					:status => 0})			
 			@title = "Purchase successful"
 			flash[:success] = "Purchase successful. Enjoy!."

@@ -37,7 +37,11 @@ describe UsersController do
 	describe "POST 'create'" do
 		describe "failure" do
 			before(:each) do
-				@attr = {:name => "", :password => "", :password_confirmation => "", :token1 => @company_user.token1}
+				@attr = {:name => "", 
+					:password => "", 
+					:password_confirmation => "", 
+					:image_url => "", 
+					:token1 => @company_user.token1}
 			end
 			
 			describe "because of invalid token" do
@@ -83,26 +87,29 @@ describe UsersController do
 		
 		describe "success" do
 			before(:each) do
-				@attr = {:name => "Test", :password => "testing", :password_confirmation => "testing", :token1 => @company_user.token1}
+				@attr = {:name => "Test", 
+					:password => "testing", 
+					:password_confirmation => "testing",
+					:token1 => @company_user.token1}
 			end
 			
-			it "Should save new user successfully" do
+			it "should save new user successfully" do
 				lambda do
 					post :create, :user => @attr
 				end.should change(User, :count).by(1)
 			end
 			
-			it "Should redirect to profile page" do
+			it "should redirect to profile page" do
 				post :create, :user => @attr
 				response.should redirect_to(user_path(assigns(:user)))
 			end
 			
-			it "Should have a welcome message" do
+			it "should have a welcome message" do
 				post :create, :user => @attr
 				flash[:success].should =~ /welcome to/i
 			end
 			
-			it "Should sign the user in" do
+			it "should sign the user in" do
 				post :create, :user => @attr
 				controller.should be_signed_in
 			end
@@ -137,22 +144,22 @@ describe UsersController do
 			response.should be_success
 		end
 		
-		it "Should find the right user" do
+		it "should find the right user" do
 			get :show, :id => @user
 			assigns(:user).should == @user
 		end
 		
-		it "Should have the user's name in the title" do
+		it "should have the user's name in the title" do
 			get :show, :id => @user
 			response.should have_selector("title", :content => @user.name)
 		end
 		
-		it "Should have the user's name in the header" do
+		it "should have the user's name in the header" do
 			get :show, :id => @user
 			response.should have_selector("h1", :content => @user.name)
 		end
 		
-		it "Should have a profile pic inside the header" do
+		it "should have a profile pic inside the header" do
 			get :show, :id => @user
 			response.should have_selector("h1>img", :class => "profile_pic")
 		end
@@ -240,11 +247,12 @@ describe UsersController do
 			test_sign_in(@user)
 		end
 		
-		describe "Failure" do
+		describe "failure" do
 			before(:each) do
 				@attr = {:name => "", 
 				:email => "", 
-				:password => "", 
+				:password => "",
+				:image_url => "",
 				:password_confirmation => ""}
 			end
 			
@@ -264,15 +272,16 @@ describe UsersController do
 			end
 		end
 		
-		describe "Success" do
+		describe "success" do
 			before(:each) do
 				@attr = {:name => "EditTest", 
 				:email => "edittest@testing.com", 
-				:password => "edittesting", 
+				:password => "edittesting",
+				:image_url => "http://placehold.it/210x150",
 				:password_confirmation => "edittesting"}
 			end
 			
-			it "Should change user successfully" do
+			it "should change user successfully" do
 				put :update, :id => @user, :user => @attr
 				@user.reload
 				@user.name.should == @attr[:name]
@@ -280,14 +289,20 @@ describe UsersController do
 				#CANNOT TEST PASSWORD CHANGE
 			end
 			
-			it "Should redirect to profile page" do
+			it "should redirect to profile page" do
 				put :update, :id => @user, :user => @attr
 				response.should redirect_to(user_path(assigns(:user)))
 			end
 			
-			it "Should have a success message" do
+			it "should have a success message" do
 				put :update, :id => @user, :user => @attr
 				flash[:success].should =~ /updated/i
+			end
+			
+			it "should return profile pic set in image_url" do
+				put :update, :id => @user, :user => @attr
+				@user.reload
+				@user.profile_pic.should == @attr[:image_url]
 			end
 		end
 	end

@@ -19,9 +19,9 @@ class CompletedTasksController < ApplicationController
 		if @completed_task.save
 			set_flash_message(status_id, answer, @task.correct_answer)
 			if status_id == 1
-				PointTransaction.create!({:user_id => current_user.id,
+				UserTransaction.create!({:user_id => current_user.id,
 					:task_id => @completed_task.task.id, 
-					:points => @completed_task.task.points,
+					:amount => @completed_task.task.points,
 					:status => 1})
 				current_user.award_points(@completed_task.task)
 			end

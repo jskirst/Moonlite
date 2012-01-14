@@ -1,5 +1,5 @@
 class Path < ActiveRecord::Base
-	attr_accessible :name, :description, :company_id, :image_url
+	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, :is_public
 	
 	belongs_to :user
 	belongs_to :company
@@ -18,7 +18,7 @@ class Path < ActiveRecord::Base
 	
 	validates :user_id, :presence => true
 	
-	validate :company_id, :if => :user_belongs_to_company, :allow_nil => true
+	validate :company_id, :if => :user_belongs_to_company
 	
 	default_scope :order => 'paths.created_at DESC'
 	

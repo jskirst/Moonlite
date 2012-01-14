@@ -10,7 +10,7 @@ describe "Paths" do
 		@user.paths.create!(@attr)
 	end
 	
-	describe "validations" do
+	describe "attributes" do
 		it "should require a user id" do
 			Path.new(@attr).should_not be_valid
 		end
@@ -37,6 +37,14 @@ describe "Paths" do
 		
 		it "should respond with path_pic set to default if image_url is not set" do
 			@user.paths.create!(@attr).path_pic.should == "/images/default_path_pic.jpg"
+		end
+		
+		it "should respond with is_public set to false if not set" do
+			@user.paths.create!(@attr).is_public.should == false
+		end
+		
+		it "should respond with is_public set to false if not set" do
+			@user.paths.create!(@attr).should respond_to(:purchased_path_id)
 		end
 	end
 	

@@ -3,7 +3,9 @@ require 'spec_helper'
 describe "CompletedTasks" do
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@company = Factory(:company)
+		Factory(:company_user, :user => @user, :company => @company)
+		@path = Factory(:path, :user => @user, :company => @company)
 		@task1 = Factory(:task, :path => @path)
 		@task2 = Factory(:task, :path => @path)
 		@task3 = Factory(:task, :path => @path)
@@ -12,7 +14,7 @@ describe "CompletedTasks" do
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button #goes to user page (path index)
-		visit all_paths_path
+		visit paths_path
 		click_link @path.name
 		click_button "Take Path"
 	end

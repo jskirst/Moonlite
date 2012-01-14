@@ -9,9 +9,9 @@
 						<li><%= link_to "My Company", current_user.company %></li>
 						<li><%= link_to "Dashboard", dashboard_path %></li>
 					<% end %>
-					<li><%= link_to "Paths", all_paths_path %></li>
+					<li><%= link_to "Paths", paths_path %></li>
 					<li><%= link_to current_user.name, current_user %></li>
-					<li><%= link_to "Store", rewards_path %></li>
+					<li><%= link_to "Company Store", rewards_path %></li>
 				</ul>
 				<% end %>
 				<ul class="nav secondary-nav">
@@ -28,7 +28,7 @@
 						<ul class="dropdown-menu">
 							<li><%= link_to "Companies", companies_path %></li>
 							<li><%= link_to "Users", users_path %></li>
-							<li><%= link_to "Transactions", point_transactions_path %></li>
+							<li><%= link_to "Transactions", user_transactions_path %></li>
 						</ul>
 					</li>
 				</ul>

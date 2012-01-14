@@ -3,6 +3,8 @@ require 'spec_helper'
 describe "Paths" do
 	before(:each) do
 		@user = Factory(:user)
+		@company = Factory(:company)
+		Factory(:company_user, :user => @user, :company => @company)
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
@@ -13,7 +15,7 @@ describe "Paths" do
 		describe "failure" do
 			it "should not make a new path" do
 				lambda do
-					visit all_paths_path
+					click_link "Paths"
 					click_link "Create new Path"
 					fill_in "Name", :with => ""
 					fill_in "Description", :with => ""
@@ -29,7 +31,7 @@ describe "Paths" do
 				lambda do
 					name = "NAME"
 					description = "DESCRIPTION"
-					visit all_paths_path
+					visit paths_path
 					click_link "Create new Path"
 					fill_in "Name", :with => name
 					fill_in "Description", :with => description
@@ -43,7 +45,7 @@ describe "Paths" do
 	
 	describe "question upload" do
 		before(:each) do
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @company)
 		end
 	
 		describe "success" do
@@ -54,7 +56,7 @@ describe "Paths" do
 			end
 		
 			it "should add all questions to a path" do
-				visit all_paths_path
+				visit paths_path
 				click_link @path.name
 				click_link "Edit"
 				click_link "Upload Questions"
