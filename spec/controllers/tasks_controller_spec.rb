@@ -106,7 +106,7 @@ describe TasksController do
 			it "should not create a task" do
 				lambda do
 					post :create, :task => @attr  
-				end.should_not change(Path, :count)
+				end.should_not change(Task, :count)
 			end
 			
 			it "should take you back to the new task page" do

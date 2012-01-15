@@ -13,7 +13,22 @@
 	<div style="padding:10px">
 		<p><%= @path.description %></p>
 	</div>
+	<% if !@achievements.empty? %>
 	<div>
+		<h3>Achievements</h3>
+		<ol>
+		<% @achievements.each do |a| %>
+			<li>
+				<h5><%= a.name %></h5>
+				<p><%= a.description %></p>
+			</li>
+		<% end %>
+		</ol>
+	</div>
+	<% end %>
+	<% if !@info_resources.empty? %>
+	<div>
+		<h3>Resources</h3>
 		<ol>
 		<% @info_resources.each do |resource| %>
 			<li>
@@ -23,6 +38,7 @@
 		<% end %>
 		</ol>
 	</div>
+	<% end %>
 	<section>
 	<% if !current_user.enrolled?(@path) %>
 		<%= render "enroll" %>

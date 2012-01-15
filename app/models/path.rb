@@ -3,6 +3,7 @@ class Path < ActiveRecord::Base
 	
 	belongs_to :user
 	belongs_to :company
+	has_many :achievements, :dependent => :destroy
 	has_many :tasks, :dependent => :destroy
 	has_many :completed_tasks, :through => :tasks
 	has_many :enrollments, :dependent => :destroy

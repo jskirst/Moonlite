@@ -46,6 +46,7 @@ class PathsController < ApplicationController
 		@current_rank = @path.get_user_rank(current_user)
 		@next_rank = @path.get_user_rank(current_user) + 1
 		@info_resources = @path.info_resources
+		@achievements = @path.achievements.all(:limit => 5)
 	end
 	
 	def continue

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 	has_many :enrolled_paths, :through => :enrollments, :source => :path
 	has_many :completed_tasks, :dependent => :destroy
 	has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
+	has_many :user_achievements, :dependent => :destroy
 	
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

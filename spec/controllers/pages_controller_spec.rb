@@ -24,6 +24,8 @@ describe PagesController do
 		describe "when signed in" do
 			before(:each) do
 				@user = Factory(:user, :email => "test@user.com")
+				@company = Factory(:company)
+				Factory(:company_user, :company => @company, :user => @user)
 				@creator = Factory(:user, :email => "creator@user.com")
 				test_sign_in(@user)
 			end

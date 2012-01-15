@@ -24,5 +24,6 @@
 		<%= link_to "Add Question", {:controller => "tasks", :action => "new", :path => @path }, :class => "btn secondary" %>
 		<%= link_to "Upload Questions", {:controller => "paths", :action => "file", :id => @path.id }, :class => "btn secondary"%>
 		<%= link_to "Add Resource", {:controller => "info_resources", :action => "new", :path => @path }, :class => "btn secondary" %>
+		<%= link_to "Add Achievement", {:controller => "achievements", :action => "new", :path_id => @path.id }, :class => "btn secondary" %>
 	</div>
 <% end %>

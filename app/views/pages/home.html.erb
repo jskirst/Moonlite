@@ -20,6 +20,22 @@ $(document).ready(function() {
 		<%= render @paths %>
 	</table>
 	<% end %>
+	<% if @user_achievements.empty? %>
+		<p>There are currently not achievements for your company.</p>
+	<% else %>
+	<table>
+		<% @user_achievements.each do |ua| %>
+		<tr>
+			<td style="width: 70px; padding: 5px;">
+				<%= image_tag ua.user.profile_pic, :size => "60x60" %>
+			</td>
+			<td>
+				<p><strong><%= ua.user.name %></strong> got the <%= ua.achievement.name %> achievement. +<%= ua.achievement.points %></p>
+			</td>
+		</tr>	
+		<% end %>
+	</table>
+	<% end %>
 <% else %>
 <section style="float:left; margin-right: 100px;">
 	<img src="/images/logo.png" width="200" height="200"/>

@@ -1,4 +1,5 @@
 require 'spec_helper'
+#TODO : Stop creation if user not enrolled
 
 describe CompletedTask do
   	before(:each) do

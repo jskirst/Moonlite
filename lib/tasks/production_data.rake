@@ -4,6 +4,13 @@ NUMBER_OF_TASKS = 30
 TIME_PERIOD = 7
 AVG_SCORE = 7
 
+ACHIEVEMENTS = [["Top Gun","Correctly answer 20 questions in a row.",300],
+	["Straight Shooter","Correctly answer the hardest question for the path.",25],
+	["88 MPH","Correctly answering 6 questions in under a minute.", 50],
+	["Revenge of the Nerds","Correctly answering all the architecture scalability questions.", 200],
+	["You always remember your first","Finishing your first path.", 150],
+	["That'll do pig","Getting 10 answers correct in a row.", 100]]
+
 FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt/anton/CaveJohnson/CaveJohnson50.png"], 
 		["Carl Malone","http://uvtblog.com/wp-content/uploads/2009/07/stocktonmalone.jpg"], 
 		["Mara Jade","http://fc07.deviantart.net/fs50/f/2009/270/6/c/Mara_Jade_Skywalker_by_wraithdt.jpg"], 
@@ -25,7 +32,7 @@ FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt
 REWARDS = [["$10 iTunes Gift Card", "iTunes Gift Card worth 10 Dollars.", "http://cultofmac.cultofmaccom.netdna-cdn.com/wp-content/uploads/2011/10/itunes_giftcard.jpg", 500],
 		["$20 Amazon Gift Card", "Amazon Gift Card worth 20 Dollars.", "http://news.cnet.com/i/tim/2011/01/19/Amazon_gift_card.jpg", 1000],
 		["$40 Apple Store Gift Card", "Apple Store Gift Card worth 40 Dollars.", "http://images.apple.com/gift-cards/images/apple_card20100217.png", 2000],
-		["2 Days of Payed-Time-Off", "You've worked pretty hard. Take a day off or two on the company.", "http://static1.itsuxtobefat.com/uploads/vacation.jpg", 3000],
+		["2 Days of Paid-Time-Off", "You've worked pretty hard. Take a day off or two on the company.", "http://static1.itsuxtobefat.com/uploads/vacation.jpg", 3000],
 		["2 Southwest Tickets", "2 Roundtrip Southwest tickets to anywhere in the U.S.", "http://www.nawbo.org/imageuploads/video_southwest.jpg", 10000],
 		["2% Pay Increase", "You are a valuable and knowledgeable member of our team, so heres a little extra moula to keep you around.", "http://www.wpclipart.com/money/bag_of_money.png", 20000]]
 
@@ -75,6 +82,10 @@ namespace :db do
 					:points => 10
 				)
 			end
+			
+			ACHIEVEMENTS.each do |a|
+				path.achievements.create!(:name => a[0], :description => a[1], :criteria => "Blah", :points => a[2])
+			end
 		end
 		
 		NUMBER_OF_USERS.times do |n|
@@ -98,16 +109,21 @@ namespace :db do
 						if stop_counter >= stop
 							break
 						else
+							date = rand(TIME_PERIOD).days.ago
 							score = rand(10)
 							if score > AVG_SCORE
 								status_id = 0
+								new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
 							else
 								status_id = 1
+								new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
+								new_user.award_points(t)
 							end
 							
-							date = rand(TIME_PERIOD).days.ago
-							new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
-							new_user.award_points(t)
+							if rand(6) == 1
+								achievement = p.achievements.first
+								new_user.user_achievements.create!(:achievement_id => achievement.id, :updated_at => date)
+							end							
 						end
 						stop_counter += 1							
 					end

@@ -34,6 +34,14 @@ Factory.define :task do |task|
 	task.association :path
 end
 
+Factory.define :achievement do |f|
+	f.name Faker::Lorem.sentence(3)
+	f.description Faker::Lorem.sentence(3)
+	f.criteria Faker::Lorem.sentence(3)
+	f.points 100
+	f.association :path
+end
+
 Factory.define :enrollment do |enrollment|
 	enrollment.association :path
 	enrollment.association :user
@@ -46,7 +54,7 @@ Factory.define :info_resource do |info_resource|
 end
 
 Factory.define :company_user do |company_user|
-	company_user.email "test@test.com"
+	company_user.email { Faker::Internet.email }
 	company_user.user_id nil
 	company_user.association :company
 	company_user.is_admin "f"

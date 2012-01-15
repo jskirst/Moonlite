@@ -24,6 +24,7 @@ SampleApp::Application.routes.draw do
 	end
 	resources :enrollments
 	resources :tasks
+	resources :achievements
 	resources :completed_tasks
 	resources :info_resources
 	resources :user_transactions
