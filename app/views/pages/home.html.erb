@@ -14,7 +14,7 @@ $(document).ready(function() {
 </script>
 <h1>My Paths</h1>
 	<% if @paths.empty? %>
-		<p>You are not currently enrolled in any paths. <%= link_to "Get started!", all_paths_path %></p>
+		<p>You are not currently enrolled in any paths. <%= link_to "Get started!", paths_path %></p>
 	<% else %>
 	<table class="paths" summary="Users paths">
 		<%= render @paths %>
