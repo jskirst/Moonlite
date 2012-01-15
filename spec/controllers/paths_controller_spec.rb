@@ -540,7 +540,7 @@ describe PathsController do
 					it "should have listings for each result by name" do
 						get :marketplace, :search => "Ruby"
 						@purchaseable_paths.each do |p|
-							response.should have_selector("h3", :content => p.name)
+							response.should have_selector("span", :content => p.name)
 						end
 					end
 				end
