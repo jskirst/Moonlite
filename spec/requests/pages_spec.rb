@@ -26,7 +26,7 @@ describe "Pages" do
 		
 		it "should have the appropriate links" do
 			visit root_path
-			click_link "Learn more!"
+			click_link "Learn more"
 			response.should have_selector("title", :content => "About")
 		end
 		
