@@ -100,6 +100,31 @@ describe CompletedTasksController do
 					flash[:success].should =~ /correct/i
 				end
 				
+				describe "with an invalid achievement" do
+					before(:each) do
+						@achievement = Factory(:achievement, :path => @path, :criteria => "abcd")
+					end
+					
+					it "should still create a completed task with status 1" do
+						lambda do
+							post :create, :completed_task => @attr
+						end.should change(CompletedTask, :count).by(1)
+						cp = CompletedTask.find(:first, :conditions => ["task_id=? AND user_id=? AND status_id=1", @task.id, @user.id])
+						cp.should_not be_nil
+					end
+					
+					it "should still take you to the next question" do
+						post :create, :completed_task => @attr
+						flash[:success].should =~ /correct/i
+					end
+					
+					it "should not award an achievement" do
+						lambda do
+							post :create, :completed_task => @attr
+						end.should_not change(UserAchievement, :count)
+					end
+				end
+				
 				describe "with valid achievements" do
 					before(:each) do
 						@old_task1 = Factory(:task, :path => @path)

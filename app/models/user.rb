@@ -99,7 +99,8 @@ class User < ActiveRecord::Base
 				completed_all = true
 				task_ids = pa.criteria.split(",")
 				task_ids.each do |id|
-					if !self.completed?(Task.find_by_id(id))
+					t = Task.find_by_id(id)
+					if t.nil? || !self.completed?(t)
 						completed_all = false
 						break
 					end
