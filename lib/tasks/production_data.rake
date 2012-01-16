@@ -45,7 +45,7 @@ PATHS = [["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries
 		["Salesforce CRM","Its monstrous, complex and an eyesore, but its the best CRM and sales management tool out there so we're stuck with it so we better learn how to use it.", "http://www.crunchbase.com/assets/images/resized/0001/1691/11691v3-max-250x250.png"]]
 
 def create_user(name, email,image_url,company_id, is_admin = false)
-	u = User.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD)
+	u = User.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10)
 	CompanyUser.create!(:company_id => company_id, :email => email ,:user_id => u.id, :is_admin => is_admin)
 	return u
 end
@@ -59,7 +59,6 @@ namespace :db do
 		create_user("Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg", moonlite_company.id, true)
 		create_user("Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg", moonlite_company.id, true)
 		create_user("Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg", moonlite_company.id, true)
-		moonlite_admin.toggle!(:admin)
 		
 		REWARDS.each do |r|
 			moonlite_company.rewards.create!(:name => r[0], :description => r[1], :image_url => r[2], :points => r[3])

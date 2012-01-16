@@ -16,7 +16,8 @@ describe CompletedTasksController do
 	
 	describe "POST 'create'" do
 		before(:each) do
-			@user = Factory(:user)
+			@password = "current_password"
+			@user = Factory(:user, :password => @password, :password_confirmation => @password)
 			@company = Factory(:company)
 			Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
 			@path = Factory(:path, :user => @user)
@@ -145,6 +146,9 @@ describe CompletedTasksController do
 							ua = UserAchievement.find(:all, :conditions => ["achievement_id = ? and user_id = ?", @achievement.id, @user.id])
 							ua.should_not be_empty
 						end
+						
+						it "should not change the user's encrypted password" 
+						#TODO: automation isn't catching this. See user.rb:128
 					end
 					
 					describe "for completing tasks specified in achievement criteria" do

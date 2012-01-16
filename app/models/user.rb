@@ -23,12 +23,12 @@ class User < ActiveRecord::Base
 		:format		=> { :with => email_regex },
 		:uniqueness => { :case_sensitive => false }
 	
-	validates :password, 	
+	validates :password,
 		:presence	=> true,
 		:confirmation => true,
 		:length		=> { :within => 6..40 }
 	
-	before_save :encrypt_password
+	before_save :encrypt_password, :only => [:create]
 	
 	def profile_pic
 		if self.image_url != nil
@@ -125,8 +125,10 @@ class User < ActiveRecord::Base
 	
 	private
 		def encrypt_password
-			self.salt = make_salt if new_record?
-			self.encrypted_password = encrypt(password)
+			if new_record?
+				self.salt = make_salt
+				self.encrypted_password = encrypt(password)
+			end
 		end
 		
 		def encrypt(string)

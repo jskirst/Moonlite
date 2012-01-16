@@ -23,7 +23,7 @@
       <img src="./assets/0.5.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2012-01-16T10:20:06-08:00">2012-01-16T10:20:06-08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2012-01-16T12:44:07-08:00">2012-01-16T12:44:07-08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -34,15 +34,15 @@
      covered at
      <span class="covered_strength">
        <span class="green">
-         18.48
+         18.59
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>78</b> files in total.
-    <b>4116</b> relevant lines. 
-    <span class="green"><b>4084</b> lines covered</span> and
+    <b>4119</b> relevant lines. 
+    <span class="green"><b>4087</b> lines covered</span> and
     <span class="red"><b>32</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -362,11 +362,11 @@
       <tr>
         <td class="strong"><a href="#89c4ede6c5ce41c8d4d68f8430cf7a8daad0b86b" class="src_link" title="app/models/user.rb">app/models/user.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>143</td>
-        <td>80</td>
-        <td>80</td>
+        <td>145</td>
+        <td>81</td>
+        <td>81</td>
         <td>0</td>
-        <td>119.1</td>
+        <td>127.3</td>
       </tr>
       
       <tr>
@@ -512,11 +512,11 @@
       <tr>
         <td class="strong"><a href="#f2b0d22ee66c02b53eeec4f4fa0f03ec999209d0" class="src_link" title="spec/controllers/completed_tasks_controller_spec.rb">spec/controllers/completed_tasks_controller_spec.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>188</td>
-        <td>111</td>
-        <td>111</td>
+        <td>192</td>
+        <td>113</td>
+        <td>113</td>
         <td>0</td>
-        <td>2.3</td>
+        <td>2.4</td>
       </tr>
       
       <tr>
@@ -832,7 +832,7 @@
       <tr>
         <td class="strong"><a href="#c67f1ca13cba6f29325f5a8da31cc08130bb381b" class="src_link" title="spec/requests/users_spec.rb">spec/requests/users_spec.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>4</td>
+        <td>5</td>
         <td>2</td>
         <td>2</td>
         <td>0</td>
@@ -9536,8 +9536,8 @@
     <h3>app/models/user.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>80</b> relevant lines. 
-      <span class="green"><b>80</b> lines covered</span> and
+      <b>81</b> relevant lines. 
+      <span class="green"><b>81</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -9698,7 +9698,7 @@
         <li class="covered" data-hits="1" data-linenumber="26">
           <span class="hits">1</span>
           
-          <code class="ruby">	validates :password, 	</code>
+          <code class="ruby">	validates :password,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="27">
@@ -9728,7 +9728,7 @@
         <li class="covered" data-hits="1" data-linenumber="31">
           <span class="hits">1</span>
           
-          <code class="ruby">	before_save :encrypt_password</code>
+          <code class="ruby">	before_save :encrypt_password, :only =&gt; [:create]</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="32">
@@ -10310,94 +10310,106 @@
         <li class="covered" data-hits="1145" data-linenumber="128">
           <span class="hits">1145</span>
           
-          <code class="ruby">			self.salt = make_salt if new_record?</code>
+          <code class="ruby">			if new_record?</code>
         </li>
       
-        <li class="covered" data-hits="1145" data-linenumber="129">
-          <span class="hits">1145</span>
+        <li class="covered" data-hits="1054" data-linenumber="129">
+          <span class="hits">1054</span>
           
-          <code class="ruby">			self.encrypted_password = encrypt(password)</code>
+          <code class="ruby">				self.salt = make_salt</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="130">
+        <li class="covered" data-hits="1054" data-linenumber="130">
+          <span class="hits">1054</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">				self.encrypted_password = encrypt(password)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="131">
           
           
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="132">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="133">
+          
+          
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="132">
+        <li class="covered" data-hits="1" data-linenumber="134">
           <span class="hits">1</span>
           
           <code class="ruby">		def encrypt(string)</code>
         </li>
       
-        <li class="covered" data-hits="1164" data-linenumber="133">
-          <span class="hits">1164</span>
+        <li class="covered" data-hits="1073" data-linenumber="135">
+          <span class="hits">1073</span>
           
           <code class="ruby">			secure_hash(&quot;#{salt}--#{string}&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="134">
+        <li class="never" data-hits="" data-linenumber="136">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="135">
+        <li class="never" data-hits="" data-linenumber="137">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="136">
+        <li class="covered" data-hits="1" data-linenumber="138">
           <span class="hits">1</span>
           
           <code class="ruby">		def make_salt</code>
         </li>
       
-        <li class="covered" data-hits="1054" data-linenumber="137">
+        <li class="covered" data-hits="1054" data-linenumber="139">
           <span class="hits">1054</span>
           
           <code class="ruby">			secure_hash(&quot;#{Time.now.utc}--#{password}&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="138">
+        <li class="never" data-hits="" data-linenumber="140">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="139">
+        <li class="never" data-hits="" data-linenumber="141">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="140">
+        <li class="covered" data-hits="1" data-linenumber="142">
           <span class="hits">1</span>
           
           <code class="ruby">		def secure_hash(string)</code>
         </li>
       
-        <li class="covered" data-hits="2218" data-linenumber="141">
-          <span class="hits">2218</span>
+        <li class="covered" data-hits="2127" data-linenumber="143">
+          <span class="hits">2127</span>
           
           <code class="ruby">			Digest::SHA2.hexdigest(string)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="142">
+        <li class="never" data-hits="" data-linenumber="144">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="143">
+        <li class="never" data-hits="" data-linenumber="145">
           
           
           <code class="ruby">end</code>
@@ -15134,8 +15146,8 @@
     <h3>spec/controllers/completed_tasks_controller_spec.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>111</b> relevant lines. 
-      <span class="green"><b>111</b> lines covered</span> and
+      <b>113</b> relevant lines. 
+      <span class="green"><b>113</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -15254,1018 +15266,1042 @@
         <li class="covered" data-hits="16" data-linenumber="19">
           <span class="hits">16</span>
           
-          <code class="ruby">			@user = Factory(:user)</code>
+          <code class="ruby">			@password = &quot;current_password&quot;</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="20">
           <span class="hits">16</span>
           
-          <code class="ruby">			@company = Factory(:company)</code>
+          <code class="ruby">			@user = Factory(:user, :password =&gt; @password, :password_confirmation =&gt; @password)</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="21">
           <span class="hits">16</span>
           
-          <code class="ruby">			Factory(:company_user, :company =&gt; @company, :user =&gt; @user, :is_admin =&gt; &quot;t&quot;)</code>
+          <code class="ruby">			@company = Factory(:company)</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="22">
           <span class="hits">16</span>
           
-          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
+          <code class="ruby">			Factory(:company_user, :company =&gt; @company, :user =&gt; @user, :is_admin =&gt; &quot;t&quot;)</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="23">
           <span class="hits">16</span>
           
-          <code class="ruby">			@task = Factory(:task, :path =&gt; @path)</code>
+          <code class="ruby">			@path = Factory(:path, :user =&gt; @user)</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="24">
           <span class="hits">16</span>
           
-          <code class="ruby">			test_sign_in(@user)</code>
+          <code class="ruby">			@task = Factory(:task, :path =&gt; @path)</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="25">
           <span class="hits">16</span>
           
-          <code class="ruby">			@attr = { :user_id =&gt; @user.id, :task_id =&gt; @task.id, :answer =&gt; @task.correct_answer, :quiz_session =&gt; @quiz_session }</code>
+          <code class="ruby">			test_sign_in(@user)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="26">
+        <li class="covered" data-hits="16" data-linenumber="26">
+          <span class="hits">16</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">			@attr = { :user_id =&gt; @user.id, :task_id =&gt; @task.id, :answer =&gt; @task.correct_answer, :quiz_session =&gt; @quiz_session }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="27">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="28">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="28">
           
-          <code class="ruby">		describe &quot;with a bad task argument&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="29">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should redirect to root_path&quot; do</code>
+          <code class="ruby">		describe &quot;with a bad task argument&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="30">
           <span class="hits">1</span>
           
-          <code class="ruby">				post :create, :completed_task =&gt; @attr.delete(&quot;task_id&quot;)</code>
+          <code class="ruby">			it &quot;should redirect to root_path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="31">
           <span class="hits">1</span>
           
-          <code class="ruby">				response.should redirect_to root_path</code>
+          <code class="ruby">				post :create, :completed_task =&gt; @attr.delete(&quot;task_id&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="32">
+        <li class="covered" data-hits="1" data-linenumber="32">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">				response.should redirect_to root_path</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="33">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="34">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="35">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="35">
           
-          <code class="ruby">		describe &quot;as an unenrolled user&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="36">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should deny access&quot; do</code>
+          <code class="ruby">		describe &quot;as an unenrolled user&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="37">
           <span class="hits">1</span>
           
-          <code class="ruby">				post :create, :completed_task =&gt; @attr</code>
+          <code class="ruby">			it &quot;should deny access&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="38">
           <span class="hits">1</span>
           
-          <code class="ruby">				response.should redirect_to(root_path)</code>
+          <code class="ruby">				post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="39">
+        <li class="covered" data-hits="1" data-linenumber="39">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">				response.should redirect_to(root_path)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="40">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="41">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="42">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="42">
           
-          <code class="ruby">		describe &quot;as an enrolled user&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="43">
           <span class="hits">1</span>
           
+          <code class="ruby">		describe &quot;as an enrolled user&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="44">
+          <span class="hits">1</span>
+          
           <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="14" data-linenumber="44">
+        <li class="covered" data-hits="14" data-linenumber="45">
           <span class="hits">14</span>
           
           <code class="ruby">				@user.enroll!(@path)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="45">
+        <li class="never" data-hits="" data-linenumber="46">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="46">
+        <li class="never" data-hits="" data-linenumber="47">
           
           
           <code class="ruby">			</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="47">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			describe &quot;with an incorrect answer&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="48">
           <span class="hits">1</span>
           
+          <code class="ruby">			describe &quot;with an incorrect answer&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="49">
+          <span class="hits">1</span>
+          
           <code class="ruby">				before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="49">
+        <li class="covered" data-hits="4" data-linenumber="50">
           <span class="hits">4</span>
           
           <code class="ruby">					@attr = @attr.merge(:answer =&gt; 0)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="50">
+        <li class="never" data-hits="" data-linenumber="51">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="51">
+        <li class="never" data-hits="" data-linenumber="52">
           
           
           <code class="ruby">			</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="52">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should create a completed task with status 0&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="53">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				it &quot;should create a completed task with status 0&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="54">
           <span class="hits">1</span>
           
+          <code class="ruby">					lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="55">
+          <span class="hits">1</span>
+          
           <code class="ruby">						post :create, :completed_task =&gt; @attr  </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="55">
+        <li class="never" data-hits="" data-linenumber="56">
           
           
           <code class="ruby">					end.should change(CompletedTask, :count).by(1)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="56">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=0&quot;, @task.id, @user.id])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="57">
           <span class="hits">1</span>
           
-          <code class="ruby">					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)</code>
+          <code class="ruby">					cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=0&quot;, @task.id, @user.id])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="58">
+        <li class="covered" data-hits="1" data-linenumber="58">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="59">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="60">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="60">
           
-          <code class="ruby">				it &quot;should not create a point transaction&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="61">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				it &quot;should not create a point transaction&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="62">
           <span class="hits">1</span>
           
-          <code class="ruby">						post :create, :completed_task =&gt; @attr  </code>
+          <code class="ruby">					lambda do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="63">
+        <li class="covered" data-hits="1" data-linenumber="63">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">					end.should_not change(UserTransaction, :count)</code>
+          <code class="ruby">						post :create, :completed_task =&gt; @attr  </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="64">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">					end.should_not change(UserTransaction, :count)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="65">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="66">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="66">
           
-          <code class="ruby">				it &quot;should not create a user achievement&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="67">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				it &quot;should not create a user achievement&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="68">
           <span class="hits">1</span>
           
-          <code class="ruby">						post :create, :completed_task =&gt; @attr  </code>
+          <code class="ruby">					lambda do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="69">
+        <li class="covered" data-hits="1" data-linenumber="69">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">					end.should_not change(UserAchievement, :count)</code>
+          <code class="ruby">						post :create, :completed_task =&gt; @attr  </code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="70">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">					end.should_not change(UserAchievement, :count)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="71">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="72">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="72">
           
-          <code class="ruby">				it &quot;should take you to the next question&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="73">
           <span class="hits">1</span>
           
-          <code class="ruby">					post :create, :completed_task =&gt; @attr</code>
+          <code class="ruby">				it &quot;should take you to the next question&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="74">
           <span class="hits">1</span>
           
-          <code class="ruby">					flash[:error].should =~ /incorrect/i</code>
+          <code class="ruby">					post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="75">
+        <li class="covered" data-hits="1" data-linenumber="75">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">					flash[:error].should =~ /incorrect/i</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="76">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="77">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby">			end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="78">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="78">
           
-          <code class="ruby">			describe &quot;with a correct answer&quot; do</code>
+          
+          <code class="ruby">			</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="79">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should create a completed task with status 1&quot; do</code>
+          <code class="ruby">			describe &quot;with a correct answer&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="80">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				it &quot;should create a completed task with status 1&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="81">
           <span class="hits">1</span>
           
+          <code class="ruby">					lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="82">
+          <span class="hits">1</span>
+          
           <code class="ruby">						post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="82">
+        <li class="never" data-hits="" data-linenumber="83">
           
           
           <code class="ruby">					end.should change(CompletedTask, :count).by(1)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="83">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=1&quot;, @task.id, @user.id])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="84">
           <span class="hits">1</span>
           
-          <code class="ruby">					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)</code>
+          <code class="ruby">					cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=1&quot;, @task.id, @user.id])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="85">
+        <li class="covered" data-hits="1" data-linenumber="85">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="86">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="87">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="87">
           
-          <code class="ruby">				it &quot;should create a point transaction with status 1 and same attributes as the completed task&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="88">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				it &quot;should create a point transaction with status 1 and same attributes as the completed task&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="89">
           <span class="hits">1</span>
           
+          <code class="ruby">					lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="90">
+          <span class="hits">1</span>
+          
           <code class="ruby">						post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="90">
+        <li class="never" data-hits="" data-linenumber="91">
           
           
           <code class="ruby">					end.should change(UserTransaction, :count).by(1)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="91">
+        <li class="covered" data-hits="1" data-linenumber="92">
           <span class="hits">1</span>
           
           <code class="ruby">					pt = UserTransaction.find(:last, :conditions =&gt; [&quot;task_id=? AND user_id=?&quot;, @task.id, @user.id])</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="92">
+        <li class="covered" data-hits="1" data-linenumber="93">
           <span class="hits">1</span>
           
           <code class="ruby">					pt.status.should == 1</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="93">
+        <li class="covered" data-hits="1" data-linenumber="94">
           <span class="hits">1</span>
           
           <code class="ruby">					pt.amount.should == @task.points</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="94">
+        <li class="covered" data-hits="1" data-linenumber="95">
           <span class="hits">1</span>
           
           <code class="ruby">					pt.user_id.should == @user.id</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="95">
+        <li class="covered" data-hits="1" data-linenumber="96">
           <span class="hits">1</span>
           
           <code class="ruby">					pt.task_id.should == @task.id</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="96">
+        <li class="never" data-hits="" data-linenumber="97">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="97">
+        <li class="never" data-hits="" data-linenumber="98">
           
           
           <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="98">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should take you to the next question&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="99">
           <span class="hits">1</span>
           
-          <code class="ruby">					post :create, :completed_task =&gt; @attr</code>
+          <code class="ruby">				it &quot;should take you to the next question&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="100">
           <span class="hits">1</span>
           
-          <code class="ruby">					flash[:success].should =~ /correct/i</code>
+          <code class="ruby">					post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="101">
+        <li class="covered" data-hits="1" data-linenumber="101">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">					flash[:success].should =~ /correct/i</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="102">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="103">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="103">
           
-          <code class="ruby">				describe &quot;with an invalid achievement&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="104">
           <span class="hits">1</span>
           
+          <code class="ruby">				describe &quot;with an invalid achievement&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="105">
+          <span class="hits">1</span>
+          
           <code class="ruby">					before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="105">
+        <li class="covered" data-hits="3" data-linenumber="106">
           <span class="hits">3</span>
           
           <code class="ruby">						@achievement = Factory(:achievement, :path =&gt; @path, :criteria =&gt; &quot;abcd&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="106">
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby">					end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="107">
+        <li class="never" data-hits="" data-linenumber="108">
           
           
           <code class="ruby">					</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="108">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					it &quot;should still create a completed task with status 1&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="109">
           <span class="hits">1</span>
           
-          <code class="ruby">						lambda do</code>
+          <code class="ruby">					it &quot;should still create a completed task with status 1&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="110">
           <span class="hits">1</span>
           
+          <code class="ruby">						lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="111">
+          <span class="hits">1</span>
+          
           <code class="ruby">							post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="111">
+        <li class="never" data-hits="" data-linenumber="112">
           
           
           <code class="ruby">						end.should change(CompletedTask, :count).by(1)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="112">
+        <li class="covered" data-hits="1" data-linenumber="113">
           <span class="hits">1</span>
           
           <code class="ruby">						cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=1&quot;, @task.id, @user.id])</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="113">
+        <li class="covered" data-hits="1" data-linenumber="114">
           <span class="hits">1</span>
           
           <code class="ruby">						cp.should_not be_nil</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="114">
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby">					end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="115">
+        <li class="never" data-hits="" data-linenumber="116">
           
           
           <code class="ruby">					</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="116">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					it &quot;should still take you to the next question&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="117">
           <span class="hits">1</span>
           
-          <code class="ruby">						post :create, :completed_task =&gt; @attr</code>
+          <code class="ruby">					it &quot;should still take you to the next question&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="118">
           <span class="hits">1</span>
           
-          <code class="ruby">						flash[:success].should =~ /correct/i</code>
+          <code class="ruby">						post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="119">
+        <li class="covered" data-hits="1" data-linenumber="119">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">					end</code>
+          <code class="ruby">						flash[:success].should =~ /correct/i</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="120">
           
           
-          <code class="ruby">					</code>
+          <code class="ruby">					end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="121">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="121">
           
-          <code class="ruby">					it &quot;should not award an achievement&quot; do</code>
+          
+          <code class="ruby">					</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="122">
           <span class="hits">1</span>
           
-          <code class="ruby">						lambda do</code>
+          <code class="ruby">					it &quot;should not award an achievement&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="123">
           <span class="hits">1</span>
           
-          <code class="ruby">							post :create, :completed_task =&gt; @attr</code>
+          <code class="ruby">						lambda do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="124">
+        <li class="covered" data-hits="1" data-linenumber="124">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">						end.should_not change(UserAchievement, :count)</code>
+          <code class="ruby">							post :create, :completed_task =&gt; @attr</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="125">
           
           
-          <code class="ruby">					end</code>
+          <code class="ruby">						end.should_not change(UserAchievement, :count)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="126">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">					end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="127">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="128">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="128">
           
-          <code class="ruby">				describe &quot;with valid achievements&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="129">
           <span class="hits">1</span>
           
-          <code class="ruby">					before(:each) do</code>
+          <code class="ruby">				describe &quot;with valid achievements&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="130">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="1" data-linenumber="130">
+          <span class="hits">1</span>
           
-          <code class="ruby">						@old_task1 = Factory(:task, :path =&gt; @path)</code>
+          <code class="ruby">					before(:each) do</code>
         </li>
       
         <li class="covered" data-hits="2" data-linenumber="131">
           <span class="hits">2</span>
           
-          <code class="ruby">						@old_task2 = Factory(:task, :path =&gt; @path)</code>
+          <code class="ruby">						@old_task1 = Factory(:task, :path =&gt; @path)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="132">
+        <li class="covered" data-hits="2" data-linenumber="132">
+          <span class="hits">2</span>
           
-          
-          <code class="ruby">					end</code>
+          <code class="ruby">						@old_task2 = Factory(:task, :path =&gt; @path)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="133">
           
           
-          <code class="ruby">					</code>
+          <code class="ruby">					end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="134">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="134">
           
-          <code class="ruby">					describe &quot;for completing all tasks for the path&quot; do</code>
+          
+          <code class="ruby">					</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="135">
           <span class="hits">1</span>
           
-          <code class="ruby">						before(:each) do</code>
+          <code class="ruby">					describe &quot;for completing all tasks for the path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="136">
           <span class="hits">1</span>
           
-          <code class="ruby">							Factory(:completed_task, :task =&gt; @old_task1, :user =&gt; @user)</code>
+          <code class="ruby">						before(:each) do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="137">
           <span class="hits">1</span>
           
-          <code class="ruby">							Factory(:completed_task, :task =&gt; @old_task2, :user =&gt; @user)</code>
+          <code class="ruby">							Factory(:completed_task, :task =&gt; @old_task1, :user =&gt; @user)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="138">
           <span class="hits">1</span>
           
-          <code class="ruby">							@achievement = Factory(:achievement, :path =&gt; @path, :criteria =&gt; &quot;all&quot;)</code>
+          <code class="ruby">							Factory(:completed_task, :task =&gt; @old_task2, :user =&gt; @user)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="139">
+        <li class="covered" data-hits="1" data-linenumber="139">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">						end</code>
+          <code class="ruby">							@achievement = Factory(:achievement, :path =&gt; @path, :criteria =&gt; &quot;all&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="140">
           
           
-          <code class="ruby">					</code>
+          <code class="ruby">						end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="141">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="141">
           
-          <code class="ruby">						it &quot;should award the achievement&quot; do</code>
+          
+          <code class="ruby">					</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="142">
           <span class="hits">1</span>
           
-          <code class="ruby">							lambda do</code>
+          <code class="ruby">						it &quot;should award the achievement&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="143">
           <span class="hits">1</span>
           
+          <code class="ruby">							lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="144">
+          <span class="hits">1</span>
+          
           <code class="ruby">								post :create, :completed_task =&gt; @attr</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="144">
+        <li class="never" data-hits="" data-linenumber="145">
           
           
           <code class="ruby">							end.should change(UserAchievement, :count).by(1)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="145">
-          <span class="hits">1</span>
-          
-          <code class="ruby">							ua = UserAchievement.find(:all, :conditions =&gt; [&quot;achievement_id = ? and user_id = ?&quot;, @achievement.id, @user.id])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="146">
           <span class="hits">1</span>
           
-          <code class="ruby">							ua.should_not be_empty</code>
+          <code class="ruby">							ua = UserAchievement.find(:all, :conditions =&gt; [&quot;achievement_id = ? and user_id = ?&quot;, @achievement.id, @user.id])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="147">
+        <li class="covered" data-hits="1" data-linenumber="147">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">						end</code>
+          <code class="ruby">							ua.should_not be_empty</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="148">
           
           
-          <code class="ruby">					end</code>
+          <code class="ruby">						end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="149">
           
           
-          <code class="ruby">					</code>
+          <code class="ruby">						</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="150">
           <span class="hits">1</span>
           
-          <code class="ruby">					describe &quot;for completing tasks specified in achievement criteria&quot; do</code>
+          <code class="ruby">						it &quot;should not change the user's encrypted password&quot; </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="151">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="151">
           
-          <code class="ruby">						before(:each) do</code>
+          
+          <code class="ruby">						#TODO: automation isn't catching this. See user.rb:128</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="152">
-          <span class="hits">1</span>
-          
-          <code class="ruby">							Factory(:completed_task, :task =&gt; @old_task1, :user =&gt; @user)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="153">
-          <span class="hits">1</span>
-          
-          <code class="ruby">							@achievement = Factory(:achievement, :path =&gt; @path, :criteria =&gt; @old_task1.id.to_s + &quot;,&quot; + @task.id.to_s)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="154">
-          
-          
-          <code class="ruby">						end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="155">
-          
-          
-          <code class="ruby">						</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="156">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						it &quot;should award the achievement&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="157">
-          <span class="hits">1</span>
-          
-          <code class="ruby">							lambda do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="158">
-          <span class="hits">1</span>
-          
-          <code class="ruby">								post :create, :completed_task =&gt; @attr</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="159">
-          
-          
-          <code class="ruby">							end.should change(UserAchievement, :count).by(1)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="160">
-          <span class="hits">1</span>
-          
-          <code class="ruby">							ua = UserAchievement.find(:all, :conditions =&gt; [&quot;achievement_id = ? and user_id = ?&quot;, @achievement.id, @user.id])</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="161">
-          <span class="hits">1</span>
-          
-          <code class="ruby">							ua.should_not be_empty</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="162">
-          
-          
-          <code class="ruby">						end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="163">
+        <li class="never" data-hits="" data-linenumber="152">
           
           
           <code class="ruby">					end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="164">
+        <li class="never" data-hits="" data-linenumber="153">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">					</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="165">
+        <li class="covered" data-hits="1" data-linenumber="154">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					describe &quot;for completing tasks specified in achievement criteria&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="155">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						before(:each) do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="156">
+          <span class="hits">1</span>
+          
+          <code class="ruby">							Factory(:completed_task, :task =&gt; @old_task1, :user =&gt; @user)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="157">
+          <span class="hits">1</span>
+          
+          <code class="ruby">							@achievement = Factory(:achievement, :path =&gt; @path, :criteria =&gt; @old_task1.id.to_s + &quot;,&quot; + @task.id.to_s)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="158">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">						end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="159">
+          
+          
+          <code class="ruby">						</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="160">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						it &quot;should award the achievement&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="161">
+          <span class="hits">1</span>
+          
+          <code class="ruby">							lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="162">
+          <span class="hits">1</span>
+          
+          <code class="ruby">								post :create, :completed_task =&gt; @attr</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="163">
+          
+          
+          <code class="ruby">							end.should change(UserAchievement, :count).by(1)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="164">
+          <span class="hits">1</span>
+          
+          <code class="ruby">							ua = UserAchievement.find(:all, :conditions =&gt; [&quot;achievement_id = ? and user_id = ?&quot;, @achievement.id, @user.id])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="165">
+          <span class="hits">1</span>
+          
+          <code class="ruby">							ua.should_not be_empty</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="166">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby">						end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="167">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="167">
           
-          <code class="ruby">			describe &quot;with a skipped answer&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="168">
-          <span class="hits">1</span>
           
-          <code class="ruby">				before(:each) do</code>
+          <code class="ruby">					end</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="169">
-          <span class="hits">2</span>
-          
-          <code class="ruby">					@attr = @attr.merge(:answer =&gt; nil)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="170">
+        <li class="never" data-hits="" data-linenumber="168">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="171">
-          
-          
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="172">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should create a completed task with status 2 and quiz = &quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="173">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					lambda do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="174">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						post :create, :completed_task =&gt; @attr</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="175">
-          
-          
-          <code class="ruby">					end.should change(CompletedTask, :count).by(1)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="176">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=2&quot;, @task.id, @user.id])</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="177">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="178">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="179">
-          
-          
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="180">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should take you to the next question&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="181">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					post :create, :completed_task =&gt; @attr</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="182">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					flash[:notice].should =~ /skipped/i</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="183">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="184">
+        <li class="never" data-hits="" data-linenumber="169">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="185">
+        <li class="never" data-hits="" data-linenumber="170">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="186">
+        <li class="covered" data-hits="1" data-linenumber="171">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			describe &quot;with a skipped answer&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="172">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				before(:each) do</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="173">
+          <span class="hits">2</span>
+          
+          <code class="ruby">					@attr = @attr.merge(:answer =&gt; nil)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="174">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="175">
+          
+          
+          <code class="ruby">				</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="176">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should create a completed task with status 2 and quiz = &quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="177">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="178">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						post :create, :completed_task =&gt; @attr</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="179">
+          
+          
+          <code class="ruby">					end.should change(CompletedTask, :count).by(1)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="180">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					cp = CompletedTask.find(:first, :conditions =&gt; [&quot;task_id=? AND user_id=? AND status_id=2&quot;, @task.id, @user.id])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="181">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="182">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="183">
+          
+          
+          <code class="ruby">				</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="184">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should take you to the next question&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="185">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					post :create, :completed_task =&gt; @attr</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="186">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					flash[:notice].should =~ /skipped/i</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="187">
           
           
-          <code class="ruby">end</code>
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="188">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="189">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="190">
+          
+          
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="191">
+          
+          
+          <code class="ruby">end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="192">
           
           
           <code class="ruby">	</code>
@@ -45312,6 +45348,12 @@
         </li>
       
         <li class="never" data-hits="" data-linenumber="4">
+          
+          
+          <code class="ruby"> it &quot;should successfully change password from the edit page&quot;</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="5">
           
           
           <code class="ruby">end</code>
