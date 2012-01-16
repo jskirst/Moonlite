@@ -17,6 +17,8 @@ describe CompletedTasksController do
 	describe "POST 'create'" do
 		before(:each) do
 			@user = Factory(:user)
+			@company = Factory(:company)
+			Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
 			@path = Factory(:path, :user => @user)
 			@task = Factory(:task, :path => @path)
 			test_sign_in(@user)
@@ -61,6 +63,12 @@ describe CompletedTasksController do
 					end.should_not change(UserTransaction, :count)
 				end
 				
+				it "should not create a user achievement" do
+					lambda do
+						post :create, :completed_task => @attr  
+					end.should_not change(UserAchievement, :count)
+				end
+				
 				it "should take you to the next question" do
 					post :create, :completed_task => @attr
 					flash[:error].should =~ /incorrect/i
@@ -90,6 +98,44 @@ describe CompletedTasksController do
 				it "should take you to the next question" do
 					post :create, :completed_task => @attr
 					flash[:success].should =~ /correct/i
+				end
+				
+				describe "with valid achievements" do
+					before(:each) do
+						@old_task1 = Factory(:task, :path => @path)
+						@old_task2 = Factory(:task, :path => @path)
+					end
+					
+					describe "for completing all tasks for the path" do
+						before(:each) do
+							Factory(:completed_task, :task => @old_task1, :user => @user)
+							Factory(:completed_task, :task => @old_task2, :user => @user)
+							@achievement = Factory(:achievement, :path => @path, :criteria => "all")
+						end
+					
+						it "should award the achievement" do
+							lambda do
+								post :create, :completed_task => @attr
+							end.should change(UserAchievement, :count).by(1)
+							ua = UserAchievement.find(:all, :conditions => ["achievement_id = ? and user_id = ?", @achievement.id, @user.id])
+							ua.should_not be_empty
+						end
+					end
+					
+					describe "for completing tasks specified in achievement criteria" do
+						before(:each) do
+							Factory(:completed_task, :task => @old_task1, :user => @user)
+							@achievement = Factory(:achievement, :path => @path, :criteria => @old_task1.id.to_s + "," + @task.id.to_s)
+						end
+						
+						it "should award the achievement" do
+							lambda do
+								post :create, :completed_task => @attr
+							end.should change(UserAchievement, :count).by(1)
+							ua = UserAchievement.find(:all, :conditions => ["achievement_id = ? and user_id = ?", @achievement.id, @user.id])
+							ua.should_not be_empty
+						end
+					end
 				end
 			end
 			

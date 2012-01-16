@@ -25,6 +25,7 @@ SampleApp::Application.routes.draw do
 	resources :enrollments
 	resources :tasks
 	resources :achievements
+	resources :user_achievements
 	resources :completed_tasks
 	resources :info_resources
 	resources :user_transactions

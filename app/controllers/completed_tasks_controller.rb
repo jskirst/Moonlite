@@ -24,6 +24,7 @@ class CompletedTasksController < ApplicationController
 					:amount => @completed_task.task.points,
 					:status => 1})
 				current_user.award_points(@completed_task.task)
+				current_user.award_achievements(@completed_task)
 			end
 			redirect_to continue_path_path :id => @completed_task.task.path, 
 				:max => resp[:max], 

@@ -14,18 +14,35 @@
 		<% end %>
 		<p><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
 	</section>
+	<% if !@user_achievements.empty? %>
 	<section>
-		<h2>Enrolled Paths</h2>
-		<% if @user.enrollments.empty? %>
-		<p><%= @user.name %> is not currently enrolled in any paths.</p>
-		<% else %>
+		<h3>Achievements</h3>
 		<ul>
-			<% @user.enrollments.each do |e| %>
+			<% @user.user_achievements.each do |e| %>
 			<li>
-				<p><%= link_to e.path.name, e.path %> - <strong><%= e.total_earned_points() %></strong> Points Earned</p>
+				<p><%= link_to e.achievement.name, e %> - <strong><%= e.achievement.points %></strong> Points Earned</p>
 			</li>
 			<% end %>
 		</ul>
+	</section>
+	<% end %>
+	<section>
+		<h3>Enrolled Paths</h3>
+		<% if @user.enrollments.empty? %>
+		<p><%= @user.name %> is not currently enrolled in any paths.</p>
+		<% else %>
+		<table>
+			<% @user.enrollments.each do |e| %>
+				<% path = e.path %>
+				<tr>
+					<td style="vertical-align: middle;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
+					<td class="path">
+						<h3 class="name"><%= link_to path.name, path %></h3>
+						<p class="description"><%= path.description %></p>
+					</td>
+				</tr>
+			<% end %>
+		</table>
 		<% end %>
 	</section>
 </section>

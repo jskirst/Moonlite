@@ -1,49 +1,54 @@
 <% if signed_in? %>
-<script>
-$(document).ready(function() {
-	$(".progressbar").each(function(){
-		var details = $(this).attr("alt").split("/");
-		var completed = details[0];
-		var total = details[1];
-		if(total != 0){
-			var pb_value = 100 * (completed/total);
-			$(this).progressbar({ value: pb_value });
-		}
+	<script>
+	$(document).ready(function() {
+		$(".progressbar").each(function(){
+			var details = $(this).attr("alt").split("/");
+			var completed = details[0];
+			var total = details[1];
+			if(total != 0){
+				var pb_value = 100 * (completed/total);
+				$(this).progressbar({ value: pb_value });
+			}
+		});
 	});
-});
-</script>
-<h1>My Paths</h1>
-	<% if @paths.empty? %>
-		<p>You are not currently enrolled in any paths. <%= link_to "Get started!", paths_path %></p>
-	<% else %>
-	<table class="paths" summary="Users paths">
-		<%= render @paths %>
-	</table>
-	<% end %>
-	<% if @user_achievements.empty? %>
-		<p>There are currently not achievements for your company.</p>
-	<% else %>
-	<table>
-		<% @user_achievements.each do |ua| %>
-		<tr>
-			<td style="width: 70px; padding: 5px;">
-				<%= image_tag ua.user.profile_pic, :size => "60x60" %>
-			</td>
-			<td>
-				<p><strong><%= ua.user.name %></strong> got the <%= ua.achievement.name %> achievement. +<%= ua.achievement.points %></p>
-			</td>
-		</tr>	
+	</script>
+	<section>
+		<h2>My Paths</h2>
+		<% if @paths.empty? %>
+			<p>You are not currently enrolled in any paths. <%= link_to "Get started!", paths_path %></p>
+		<% else %>
+		<table class="paths" summary="Users paths">
+			<%= render @paths %>
+		</table>
 		<% end %>
-	</table>
+	</section>
+	<section>
+		<h2>News</h2>
+	<% if @user_achievements.empty? %>
+		<p>There are currently not achievements set for your company.</p>
+	<% else %>
+		<table>
+			<% @user_achievements.each do |ua| %>
+			<tr>
+				<td style="width: 70px; padding: 5px;">
+					<%= image_tag ua.user.profile_pic, :size => "60x60" %>
+				</td>
+				<td>
+					<p><strong><%= ua.user.name %></strong> got the <%= link_to ua.achievement.name, ua %> achievement. +<%= ua.achievement.points %></p>
+				</td>
+			</tr>	
+			<% end %>
+		</table>
 	<% end %>
+	</section>
 <% else %>
-<section style="float:left; margin-right: 100px;">
-	<img src="/images/logo.png" width="200" height="200"/>
-</section>
-<section>
-	<h1>Project Moonlite</h1>
-	<h4>Know who knows what. And who doesn't.</h4>
-	<br>
-	<%= link_to "Learn more!", about_path, :class => "btn primary" %>
-</section>
+	<section style="float:left; margin-right: 100px;">
+		<img src="/images/logo.png" width="200" height="200"/>
+	</section>
+	<section>
+		<h1>Project Moonlite</h1>
+		<h4>Know who knows what. And who doesn't.</h4>
+		<br>
+		<%= link_to "Learn more!", about_path, :class => "btn primary" %>
+	</section>
 <% end %>

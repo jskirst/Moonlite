@@ -1,15 +1,16 @@
-DEFAULT_PASSWORD = "password"
+DEFAULT_PASSWORD = "a1b2c3"
 NUMBER_OF_USERS = 7
 NUMBER_OF_TASKS = 30
 TIME_PERIOD = 7
 AVG_SCORE = 7
 
-ACHIEVEMENTS = [["Top Gun","Correctly answer 20 questions in a row.",300],
-	["Straight Shooter","Correctly answer the hardest question for the path.",25],
-	["88 MPH","Correctly answering 6 questions in under a minute.", 50],
-	["Revenge of the Nerds","Correctly answering all the architecture scalability questions.", 200],
-	["You always remember your first","Finishing your first path.", 150],
-	["That'll do pig","Getting 10 answers correct in a row.", 100]]
+ACHIEVEMENTS = [["Path Completed","Correctly answer the questions for this path.",200, "all"],
+	["Top Gun","Correctly answer 20 questions in a row.",300,nil],
+	["Straight Shooter","Correctly answer the hardest question for the path.",25,nil],
+	["88 MPH","Correctly answer 6 questions in under a minute.", 50,nil],
+	["Revenge of the Nerds","Correctly answer all the architecture scalability questions.", 200,nil],
+	["You always remember your first","Finishing your first path.", 150,nil],
+	["That'll do pig","Correctly answer 10 questions in a row.", 100,nil]]
 
 FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt/anton/CaveJohnson/CaveJohnson50.png"], 
 		["Carl Malone","http://uvtblog.com/wp-content/uploads/2009/07/stocktonmalone.jpg"], 
@@ -57,6 +58,7 @@ namespace :db do
 		moonlite_admin = create_user("Jonathan Kirst", "jc@moonlite.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg", moonlite_company.id, true)
 		create_user("Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg", moonlite_company.id, true)
 		create_user("Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg", moonlite_company.id, true)
+		create_user("Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg", moonlite_company.id, true)
 		moonlite_admin.toggle!(:admin)
 		
 		REWARDS.each do |r|
@@ -84,7 +86,8 @@ namespace :db do
 			end
 			
 			ACHIEVEMENTS.each do |a|
-				path.achievements.create!(:name => a[0], :description => a[1], :criteria => "Blah", :points => a[2])
+				criteria = (a[3] == nil ? "Blah" : a[3])
+				path.achievements.create!(:name => a[0], :description => a[1], :criteria => criteria, :points => a[2])
 			end
 		end
 		
@@ -120,9 +123,10 @@ namespace :db do
 								new_user.award_points(t)
 							end
 							
-							if rand(6) == 1
-								achievement = p.achievements.first
-								new_user.user_achievements.create!(:achievement_id => achievement.id, :updated_at => date)
+							if rand(7) == 1
+								a = p.achievements[rand(6)]
+								new_user.user_achievements.create!(:achievement_id => a.id, :updated_at => date)
+								new_user.update_attribute('earned_points', new_user.earned_points + a.points)
 							end							
 						end
 						stop_counter += 1							

@@ -24,7 +24,7 @@ class Task < ActiveRecord::Base
 		:presence 		=> true,
 		:numericality	=> { :less_than => 5 }
 	
-	validates :points, 
+	validates :points,
 		:presence 		=> true,
 		:numericality	=> { :less_than => 51 }
 		

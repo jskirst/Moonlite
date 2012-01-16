@@ -9,7 +9,7 @@
 	</section>
 	<section>
 		<% unless @paths.empty? %>
-		<table class="paths" summary="Users paths">
+		<table class="paths">
 			<%= render @paths %>
 		</table>
 		<%= will_paginate @paths %>
