@@ -95,7 +95,7 @@ class User < ActiveRecord::Base
 					self.user_achievements.create!(:achievement_id => pa.id)
 					self.update_attribute('earned_points', self.earned_points + pa.points)
 				end
-			else
+			elsif !pa.criteria.nil?
 				completed_all = true
 				task_ids = pa.criteria.split(",")
 				task_ids.each do |id|
