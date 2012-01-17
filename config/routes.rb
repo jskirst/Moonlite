@@ -7,6 +7,12 @@ SampleApp::Application.routes.draw do
 			put :join
 		end
 	end
+	resources :tours do
+		member do
+			get :admin_tour
+			get :user_tour
+		end
+	end
 	resources :companies
 	resources :company_users do
 		member do

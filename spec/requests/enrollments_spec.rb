@@ -19,7 +19,7 @@ describe "Enrollments" do
 		describe "success" do
 			it "should make a new enrollment" do
 				lambda do
-					click_button "Take Path"
+					click_button "Enroll"
 					response.should render_template("paths/show")
 					response.should have_selector("div.success")
 				end.should change(Enrollment, :count).by(1)

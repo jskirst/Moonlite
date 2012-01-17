@@ -1,0 +1,109 @@
+<section class="tour-header">
+	<%= render "user_header" %>
+</section>
+<section class="tour-body">
+	<style>
+		strong {
+			font-size: 14px;
+		}
+	</style>
+	<% if @page == 1 %>
+	<div class="page-header">
+		<h2>Home</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>Welcome to your Home page! You can reach this page at any time by clicking the <strong>Moonlite</strong> logo at the top left of the navigation bar.</p>
+			<p>All of the Paths you are currently enrolled in are displayed at the top. Moonlite news from around your company is just below, and will feature stories about every user's achievements and path progress.</p>
+		</div>
+		<div class="span10 columns">
+			<%= image_tag "/images/tour/home.png", :size=>"600x400"%>
+		</div>
+	</div>
+	<% elsif @page == 2 %>
+	<div class="page-header">
+		<h2>Paths</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>The Paths page is the heart of every Moonlite account.</p>
+			<p>You can access each of the Paths that your organization has made or purchased from the <strong>Path Marketplace</strong> (top right).</p>
+		</div>
+		<div class="span10 columns">
+			<%= image_tag "/images/tour/all_paths.png", :size=>"600x400"%>
+		</div>
+	</div>
+	<div class="page-header">
+		<h2>Viewing & Enrolling in a Path</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>You can view the details of a Path by clicking on its name from the Paths page.</p>
+			<p>Unlockable <strong>Achievements</strong> for the Path are displayed along with a detailed description of what the user can expect to learn by taking it.</p>
+			<p>Once here, you can enroll in the Path by clicking the <strong>Enroll</strong> button at the bottom.</p>
+		</div>
+		<div class="span10 columns">
+			<%= image_tag "/images/tour/enroll_path.png", :size=>"600x400"%>
+		</div>
+	</div>
+	<div class="page-header">
+		<h2>Continueing a Path</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>Once you've enrolled in a path, you can click the <strong>Continue</strong> button at the bottom to start a short quiz session.</p>
+		</div>
+		<div class="span10 columns">
+			<%= image_tag "/images/tour/continue_path.png", :size=>"600x500"%>
+		</div>
+	</div>
+	<div class="page-header">
+		<h2>Solving Problems</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>Each quiz session is meant to take 5-10 minutes and will present you with some of the questions you haven't yet answered.</p>
+			<p>You will gain points for each question you answer correctly and get access to harder and harder questions until you have completed the Path.</p>
+			<p>Later on in the tour we'll talk about how you can spend your hard earned points at the <strong>Company Store</strong>.</p>
+		</div>
+		<div class="span10 columns">
+			<%= image_tag "/images/tour/continue_answer_path.png", :size=>"600x300"%>
+			<%= image_tag "/images/tour/continue_answer_correct_path.png", :size=>"600x300"%>
+		</div>
+	</div>
+	<% elsif @page == 3 %>
+	<div class="page-header">
+		<h2>Company Store</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>To be completed.</p>
+		</div>
+		<div class="span10 columns">
+		</div>
+	</div>
+	<% elsif @page == 4 %>
+	<div class="page-header">
+		<h2>Bon Voyage!</h2>
+	</div>
+	<div class="row">
+		<div class="span6 columns">
+			<p>To be completed.</p>
+		</div>
+		<div class="span10 columns">
+		</div>
+	</div>
+	<% end %>
+	<div class="actions">
+		<% if @page == @final_page %>
+			<%= link_to "Finish", root_path, :class => "btn primary" %>
+		<% else %>
+			<% if @page > 1 %>
+			<%= link_to "Previous", admin_tour_tour_path(@page-1), :class => "btn secondary" %>
+			<% end %>
+			<%= link_to "Next", admin_tour_tour_path(@page+1), :class => "btn primary" %>
+		<% end %>
+	</div>
+</section>
+
+

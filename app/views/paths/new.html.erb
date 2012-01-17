@@ -1,15 +1,19 @@
 <h1>New Path</h1>
 <%= form_for(@path) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
-	<div class="field">
-		<%= f.label :name %><br/>
-		<%= f.text_field :name %>
+	<div class="field clearfix">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name %>
+		</div>
 	</div>
-	<div class="field">
-		<%= f.label :description %><br/>
-		<%= f.text_area :description %>
+	<div class="field clearfix">
+		<%= f.label :description %>
+		<div class="input">
+			<%= f.text_area :description, :class => "xxlarge", :rows => "4" %>
+		</div>
 	</div>
 	<div class="actions">
-		<%= f.submit "Create" %>
+		<%= f.submit "Create", :class => "btn primary" %>
 	</div>
 <% end %>

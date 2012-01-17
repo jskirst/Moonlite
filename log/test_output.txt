@@ -1,6 +1,9 @@
-.......................................................................................FF.....................................................................................................F............................................................................................................................................................................................................................................................................................................................................................................................................***.........................................................
+...........................................................................................*..................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................***..........................................................*
 
 Pending:
+  CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing all tasks for the path should not change the user's encrypted password
+    # Not Yet Implemented
+    # ./spec/controllers/completed_tasks_controller_spec.rb:150
   User completed tasks should respond with all completed tasks
     # Not Yet Implemented
     # ./spec/models/user_spec.rb:181
@@ -10,178 +13,10 @@ Pending:
   User User completed tasks completed? should respond with true if the task is completed
     # Not Yet Implemented
     # ./spec/models/user_spec.rb:186
+  Users should successfully change password from the edit page
+    # Not Yet Implemented
+    # ./spec/requests/users_spec.rb:4
 
-Failures:
-
-  1) CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing all tasks for the path should award the achievement
-     Failure/Error: post :create, :completed_task => @attr
-     NameError:
-       undefined local variable or method `current_user' for #<User:0x7114098>
-     # ./app/models/user.rb:94:in `block in award_achievements'
-     # ./app/models/user.rb:92:in `award_achievements'
-     # ./app/controllers/completed_tasks_controller.rb:27:in `create'
-     # ./spec/controllers/completed_tasks_controller_spec.rb:118:in `block (8 levels) in <top (required)>'
-     # ./spec/controllers/completed_tasks_controller_spec.rb:117:in `block (7 levels) in <top (required)>'
-
-  2) CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing tasks specified in achievement criteria should award the achievement
-     Failure/Error: @achievement = Factory(:achievement, :path => @path, :criteria => old_task1.id.to_s + "," + @task.id.to_s)
-     NameError:
-       undefined local variable or method `old_task1' for #<RSpec::Core::ExampleGroup::Nested_4::Nested_2::Nested_3::Nested_2::Nested_1::Nested_2:0x6d5b250>
-     # ./spec/controllers/completed_tasks_controller_spec.rb:128:in `block (7 levels) in <top (required)>'
-
-  3) PathsController actions GET 'continue' users score on results screen should be 1/2 when half answers are incorrect
-     Failure/Error: response.should have_selector("p", :content => "1/2")
-       expected following output to contain a <p>1/2</p> tag:
-       <!DOCTYPE html>
-       <html>
-       <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-       <title>Project Moonlite | Results</title>
-       <script src="/javascripts/jquery.js?1321834318" type="text/javascript"></script><script src="/javascripts/jquery_ujs.js?1321834318" type="text/javascript"></script><script src="/javascripts/application.js?1316741548" type="text/javascript"></script><script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-scrollspy.js"></script><script src="http://twitter.github.com/bootstrap/1.4.0/bootstrap-dropdown.js"></script><link rel="stylesheet" href="http://twitter.github.com/bootstrap/1.4.0/bootstrap.min.css">
-       <style>
-       	#content {
-       		padding-top: 75px;
-       	}
-       	
-       	/* Footer */
-       	footer {
-       		text-align: center;
-       		margin-top: 100px;
-       		margin-left: auto;
-       		margin-right: auto;
-       	} 
-       	footer nav {
-       		float: none;
-       	}
-       	footer ul {
-       		list-style-type: none;
-       	}
-       	footer li {
-       		display: inline;
-       	}
-       	footer .quote{
-       		font-size: 12px;
-       		font-style: italic;
-       	}
-       	
-       	/* User signup */
-       	div.field, div.action {
-       		margin-bottom: 10px;
-       	} 
-       	.field_with_errors {
-       		margin-top: 10px;
-       		padding: 2px;
-       		background-color: red;
-       		display: table;
-       	} 
-       	.field_with_errors label {
-       		color: #fff;
-       	} 
-       	#error_explanation {
-       		width: 400px;
-       		border: 2px solid red;
-       		padding: 7px;
-       		padding-bottom: 12px;
-       		margin-bottom: 20px;
-       		background-color: #f0f0f0;
-       	} 
-       	#error_explanation h2 {
-       		text-align: left;
-       		font-weight: bold;
-       		padding: 5px 5px 5px 15px;
-       		font-size: 12px;
-       		margin: -7px;
-       		background-color: #c00;
-       		color: #fff;
-       	} 
-       	#error_explanation p {
-       		color: #333;
-       		margin-bottom: 0;
-       		padding: 5px;
-       	} 
-       	#error_explanation ul li {
-       		font-size: 12px;
-       		list-style: square;
-       	}
-       	
-       	#dashboard ul {
-       		list-style-type: none;
-       	}
-       	#dashboard h1 {
-       		font-size:28px;
-       	}
-       	#dashboard h2 {
-       		font-size:22px;
-       	}		
-       	#dashboard h3 {
-       		font-size:18px;
-       	}
-       	#dashboard tbody tr:nth-child(even) td, tbody tr.even td {
-       		background: transparent;
-       	}
-       	
-       	.error,
-       	.alert,
-       	.notice,
-       	.success,
-       	.info { padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
-       
-       	.error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
-       	.notice        { background: #fff6bf; color: #514721; border-color: #ffd324; }
-       	.success       { background: #e6efc2; color: #264409; border-color: #c6d880; }
-       	.info          { background: #d5edf8; color: #205791; border-color: #92cae4; }
-       	.error a, .alert a { color: #8a1f11; }
-       	.notice a          { color: #514721; }
-       	.success a         { color: #264409; }
-       	.info a            { color: #205791; }
-       </style>
-       <script>
-       	$('#topbar').scrollSpy();
-       	$('#topbar').dropdown();
-       </script><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script><script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script><link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
-       <script type="text/javascript">
-       	var _gaq = _gaq || [];
-       	_gaq.push(['_setAccount', 'UA-26236755-1']);
-       	_gaq.push(['_trackPageview']);
-       
-       	(function() {
-       		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-       		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-       		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-       	})();
-       </script>
-       </head>
-       <body>
-       <div class="container">
-       	<header><nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown"><div class="fill">
-       			<div class="container">
-       				<h3><a href="/">Moonlite</a></h3>
-       				<ul>
-       <li><a href="/paths">Paths</a></li>
-       					<li><a href="/users/2">Jonathan Dudearino</a></li>
-       					<li><a href="/rewards">Company Store</a></li>
-       				</ul>
-       <ul class="nav secondary-nav">
-       <li><a href="/signout" data-method="delete" rel="nofollow">Sign out</a></li>
-       				</ul>
-       </div>
-       		</div>
-       	</nav></header><section id="content"><p>Congratulations! You completed this path.</p>
-       
-       <a href="/paths/1">Go back</a>
-       	</section><footer><nav><p class="quote">Stay hungry, stay foolish.</p>
-       	</nav></footer>
-       </div>
-       </body>
-       </html>
-     # ./spec/controllers/paths_controller_spec.rb:437:in `block (5 levels) in <top (required)>'
-
-Finished in 37753.03 seconds
-647 examples, 3 failures, 3 pending
-
-Failed examples:
-
-rspec ./spec/controllers/completed_tasks_controller_spec.rb:116 # CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing all tasks for the path should award the achievement
-rspec ./spec/controllers/completed_tasks_controller_spec.rb:131 # CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing tasks specified in achievement criteria should award the achievement
-rspec ./spec/controllers/paths_controller_spec.rb:433 # PathsController actions GET 'continue' users score on results screen should be 1/2 when half answers are incorrect
-  <-- Slave(1) run done!
+Finished in 202.85 seconds
+652 examples, 0 failures, 5 pending
+  <-- Slave(2) run done!

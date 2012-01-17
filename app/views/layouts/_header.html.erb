@@ -5,17 +5,18 @@
 				<h3><a href="/">Moonlite</a></h3>
 				<% if signed_in? %>
 				<ul>
+					<li><%= link_to "Paths", paths_path %></li>
+					<li><%= link_to current_user.name, current_user %></li>
+					<li><%= link_to "Company Store", rewards_path %></li>
 					<% if current_user.company_admin? %>
 						<li><%= link_to "My Company", current_user.company %></li>
 						<li><%= link_to "Dashboard", dashboard_path %></li>
 					<% end %>
-					<li><%= link_to "Paths", paths_path %></li>
-					<li><%= link_to current_user.name, current_user %></li>
-					<li><%= link_to "Company Store", rewards_path %></li>
 				</ul>
 				<% end %>
 				<ul class="nav secondary-nav">
 					<% if signed_in? %>
+					<li><%= link_to "Take the tour", tours_path %></li>
 					<li><%= link_to "Sign out", signout_path, :method => :delete %></li>
 					<% else %>
 					<li ><%= link_to "Sign in", signin_path %></li>

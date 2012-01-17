@@ -17,14 +17,14 @@ describe "CompletedTasks" do
 		click_button #goes to user page (path index)
 		visit paths_path
 		click_link @path.name
-		click_button "Take Path"
+		click_button "Enroll"
 	end
 	
 	describe 'creation' do
 		describe "success" do
 			it "should complete a task" do
 				lambda do
-					click_link "Solve Problems"
+					click_link "Continue"
 					response.should render_template("paths/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
@@ -36,7 +36,7 @@ describe "CompletedTasks" do
 			
 			it "should complete a task and then complete a path" do
 				lambda do
-					click_link "Solve Problems"
+					click_link "Continue"
 					response.should render_template("paths/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
@@ -53,7 +53,7 @@ describe "CompletedTasks" do
 			end
 			
 			it "should complete a task and not reset user's password" do
-				click_link "Solve Problems"
+				click_link "Continue"
 				response.should render_template("paths/continue")
 				response.should have_selector("p", :content => @task1.question)
 				choose "completed_task_answer1"

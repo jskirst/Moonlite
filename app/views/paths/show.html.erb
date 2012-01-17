@@ -54,15 +54,11 @@
 		<% end %>
 		<p>You can earn points by solving problems or by posting achievements related to this path. Fellow Moonliters will vote on your achievements to decide how many points to award you. Post something really impressive and you could get enough points to jump muliple ranks!</p>
 	</section>
+	<br>
 		<% if @remaining_tasks > 0 %>
-		<section id="action">
-			<%= link_to "Solve Problems", continue_path_path, :class => "btn primary" %>
-			<%= link_to "Post Achievement", "/achievements/6", :class => "btn secondary" %>
-		</section>
-		<% else %>
-		<section id="action">
-			<%= link_to "Post Achievement", "/achievements/6", :class => "btn primary" %>
-		</section>
+		<div class="actions">
+			<%= link_to "Continue", continue_path_path, :class => "btn primary" %>
+		</div>
 		<% end %>
 	<% end %>
 </section>
