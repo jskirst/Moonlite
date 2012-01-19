@@ -47,7 +47,7 @@
 		</div>
 	</div>
 	<div class="page-header">
-		<h2>Continueing a Path</h2>
+		<h2>Continuing a Path</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
@@ -100,10 +100,31 @@
 		<h2>Bon Voyage!</h2>
 	</div>
 	<div class="row">
-		<div class="span6 columns">
-			<p>To be completed.</p>
-		</div>
-		<div class="span10 columns">
+		<style>
+			ol {
+				margin: 20px; 
+			}
+			li {
+				color: #404040;
+				margin-bottom: 20px;
+			}
+		</style>
+		<div class="span12 columns">
+			<p>Now your path begins! A couple recommendations to get you started:</p>
+			<ol>
+				<li>
+					<p>Enroll in a Path.</p>
+					<%= link_to "View Paths", paths_path, :class => "btn secondary" %>
+				</li>
+				<li>
+					<p>Visit the home page to see what others in your account are up to.</p>
+					<%= link_to "Go Home", root_path, :class => "btn secondary" %>
+				</li>
+				<li>
+					<p>Check out your Moonlite Profile.</p>
+					<%= link_to "My Profile", current_user, :class => "btn secondary" %>
+				</li>
+			</ol>
 		</div>
 	</div>
 	<% end %>
@@ -112,9 +133,9 @@
 			<%= link_to "Finish", root_path, :class => "btn primary" %>
 		<% else %>
 			<% if @page > 1 %>
-			<%= link_to "Previous", admin_tour_tour_path(@page-1), :class => "btn secondary" %>
+			<%= link_to "Previous", user_tour_tour_path(@page-1), :class => "btn secondary" %>
 			<% end %>
-			<%= link_to "Next", admin_tour_tour_path(@page+1), :class => "btn primary" %>
+			<%= link_to "Next", user_tour_tour_path(@page+1), :class => "btn primary" %>
 		<% end %>
 	</div>
 </section>

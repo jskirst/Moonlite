@@ -22,7 +22,7 @@ describe "CompanyUsers" do
 						click_link @company.name
 						click_link "Add user"
 						response.should render_template("company_users/new")
-						response.should have_selector("title", :content => @company.name)
+						response.should have_selector("title", :content => "Invite user")
 						fill_in "email", :with => @new_user_email
 						check "User add new users"
 						click_button "Submit"

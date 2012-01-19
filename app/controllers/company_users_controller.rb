@@ -5,7 +5,7 @@ class CompanyUsersController < ApplicationController
 	def new
 		@company = Company.find(params[:company])
 		@company_user = CompanyUser.new
-		@title = @company.name
+		@title = "Invite user"
 	end
 	
 	def create

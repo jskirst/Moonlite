@@ -33,7 +33,7 @@ describe CompanyUsersController do
 
 		it "should have right title" do
 			get :new, :company => @company
-			response.should have_selector("title", :content => @company.name)
+			response.should have_selector("title", :content => "Invite user")
 		end
 		
 		it "should render the new page" do
