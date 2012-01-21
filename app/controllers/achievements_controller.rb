@@ -1,8 +1,9 @@
 class AchievementsController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user
+	before_filter :company_admin
 	
 	def new
+		@path = Path.find_by_id(params[:path_id])
 		@achievement = Achievement.new
 		@title = "New achievement"
 		@form_title = @title
@@ -10,6 +11,7 @@ class AchievementsController < ApplicationController
 	end
 	
 	def create
+		@path = Path.find_by_id(params[:achievement][:path_id])
 		@achievement = @path.achievements.build(params[:achievement])
 		if @achievement.save
 			flash[:success] = "Achievement created."
@@ -22,20 +24,8 @@ class AchievementsController < ApplicationController
 	end
 	
 	def index
+		@path = Path.find_by_id(params[:path_id])
 		@achievements = Achievement.paginate(:page => params[:page], :conditions => ["path_id = ?", @path.id])
 		@title = "All achievements"
 	end
-	
-	private
-		def authorized_user
-			if !params[:path_id].nil?
-				@path = Path.find(params[:path_id])
-				redirect_to root_path unless current_user?(@path.user)
-			elsif !params[:achievement].nil? && !params[:achievement][:path_id].nil?
-				@path = Path.find(params[:achievement][:path_id])
-				redirect_to root_path unless current_user?(@path.user)
-			else
-				redirect_to root_path
-			end
-		end
 end

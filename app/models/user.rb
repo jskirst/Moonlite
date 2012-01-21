@@ -83,15 +83,16 @@ class User < ActiveRecord::Base
 	
 	def award_points(task)
 		self.update_attribute('earned_points', self.earned_points + task.points)
-		enrollments.find_by_path_id(task.path_id).add_earned_points(task.points)
+		enrollments.find_by_path_id(task.section.path_id).add_earned_points(task.points)
 	end
 	
 	def award_achievements(completed_task)
-		path = completed_task.task.path
+		section = completed_task.task.section
+		path = section.path
 		potential_achievements = path.achievements
 		potential_achievements.each do |pa|
 			if pa.criteria == "all"
-				if path.remaining_tasks(self) == 0
+				if section.remaining_tasks(self) == 0
 					self.user_achievements.create!(:achievement_id => pa.id)
 					self.update_attribute('earned_points', self.earned_points + pa.points)
 				end

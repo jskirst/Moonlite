@@ -3,9 +3,5 @@
 	<td class="path">
 		<h3 class="name"><%= link_to path.name, path %></h3>
 		<p class="description"><%= path.description %></p>
-		<% if current_user.enrolled?(path) %>
-			<% percent_complete = [path.tasks.count-path.remaining_tasks(current_user),path.tasks.count].join("/") %>
-			<div class="progressbar" alt="<%=percent_complete%>"></div>
-		<% end %>
 	</td>
 </tr>

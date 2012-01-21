@@ -6,7 +6,7 @@ describe RewardsController do
 	before(:each) do
 		@reward_points = 1000
 		@user = Factory(:user, :earned_points => @reward_points + 10, :spent_points => 10)
-		@company = Factory(:company)
+		@company = @user.company
 		@attr = { :company_id => @company.id,
 			:name => "Fubar",
 			:description => "Fucked up beyond all recognition",
@@ -68,7 +68,6 @@ describe RewardsController do
 		
 		describe "when signed in as a regular user" do
 			before(:each) do
-				@company_user = Factory(:company_user, :company => @company, :user => @user)
 				test_sign_in(@user)
 			end
 			
@@ -124,7 +123,7 @@ describe RewardsController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+				@user.company_user.toggle!(:is_admin)
 				test_sign_in(@user)
 			end
 			
@@ -234,8 +233,7 @@ describe RewardsController do
 	
 	describe "action" do
 		before(:each) do
-			@user = Factory(:user)
-			@company_user = Factory(:company_user, :user => @user, :company => @company, :is_admin => "t")
+			@user.company_user.toggle!(:is_admin)
 			@reward_points = 1000
 			@reward = Factory(:reward, :company => @company, :points => @reward_points)
 			test_sign_in(@user)

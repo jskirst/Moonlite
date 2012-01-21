@@ -2,23 +2,13 @@ require 'spec_helper'
 
 describe CompanyUser do
 	before(:each) do
-		@user = Factory(:user)
+		@user = Factory(:user, :company_user => nil)
 		@company = Factory(:company)
 		@attr = { :company_id => @company, :email => "test@test.com", :is_admin => true }
-		@company_user = @company.company_users.build(@attr)
-	end
-	
-	it "should create a new instance given valid attributes" do
-		@company_user.save!
+		@company_user = @company.company_users.create!(@attr.merge(:user_id => @user.id))
 	end
 	
 	describe "attributes" do
-		before(:each) do
-			@company_user.user_id = @user.id
-			@company_user.save
-			@company_user.reload
-		end
-		
 		it "should have a user attribute" do
 			@company_user.should respond_to(:user)
 		end
@@ -51,6 +41,10 @@ describe CompanyUser do
 	end
 	
 	describe "validations" do
+		before(:each) do
+			@company
+		end
+		
 		describe "for company_id" do
 			it "should require a company_id" do
 				@company_user.company_id = nil
@@ -58,11 +52,7 @@ describe CompanyUser do
 			end
 			
 			it "should reject a duplicate registration" do
-				cu = Factory(:company_user, :user => @user, :company => @company)
-				cu2 = CompanyUser.new
-				cu2.company_id = @company.id
-				cu2.user_id = @user.id
-				cu2.should_not be_valid
+				CompanyUser.new(:company_id => @company.id, :user_id => @company.id).should_not be_valid
 			end
 		end
 		
@@ -90,8 +80,7 @@ describe CompanyUser do
 			
 			it "should reject a duplicate email address" do
 				upcased_email = @attr[:email].upcase
-				CompanyUser.create!(@attr.merge(:email => upcased_email))
-				company_user = CompanyUser.new(@attr)
+				company_user = CompanyUser.new(@attr.merge(:email => upcased_email))
 				company_user.should_not be_valid
 			end
 		end

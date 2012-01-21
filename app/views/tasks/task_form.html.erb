@@ -1,7 +1,7 @@
 <h1><%= @form_title %></h1>
 <%= form_for @task do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
-	<%= f.hidden_field :path_id, :value => @path_id %><br/>
+	<%= f.hidden_field :section_id, :value => @section_id %><br/>
 	<div class="field clearfix">
 		<%= f.label :question %>
 		<div class="input">

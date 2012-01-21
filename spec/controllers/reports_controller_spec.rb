@@ -4,13 +4,9 @@ describe ReportsController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user, :email => "our.protagonist@t.com")
-		@other_user = Factory(:user, :email => "our.antagonist@t.com")
-		
-		@company = Factory(:company)
-		Factory(:company_user, :company => @company, :email => @other_user.email, :user => @other_user)		
-		
-		@path = Factory(:path, :user => @other_user, :company => @company)
+		@user = Factory(:user)
+		@path = Factory(:path, :user => @user, :company => @user.company)
+		@section = Factory(:section, :path => @path)
 	end
 	
 	describe "access controller" do
@@ -28,7 +24,6 @@ describe ReportsController do
 		
 		describe "when signed in as a regular user" do
 			before(:each) do
-				@company_user = Factory(:company_user, :company => @company, :user => @user)
 				test_sign_in(@user)
 			end
 			
@@ -45,7 +40,7 @@ describe ReportsController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+				@user.company_user.toggle!(:is_admin)
 				test_sign_in(@user)
 			end
 			
@@ -62,7 +57,7 @@ describe ReportsController do
 		
 		describe "when signed in as admin" do
 			before(:each) do
-				Factory(:company_user, :company => @company, :email => @user.email, :user => @user)
+				@user.toggle!(:admin)
 				test_sign_in(@user)
 			end
 			
@@ -80,7 +75,7 @@ describe ReportsController do
 
 	describe "GET 'dashboard'" do
 		before(:each) do
-			@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+			@user.company_user.toggle!(:is_admin)
 			test_sign_in(@user)
 		end
 	
@@ -104,7 +99,7 @@ describe ReportsController do
 	
 	describe "GET 'details'" do
 		before(:each) do
-			Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+			@user.company_user.toggle!(:is_admin)
 			test_sign_in(@user)
 		end
 		
@@ -137,20 +132,20 @@ describe ReportsController do
 			
 			describe "correctly answered question table" do
 				before(:each) do
-					@task1 = Factory(:task, :path => @path)
-					@task2 = Factory(:task, :path => @path)
-					@task3 = Factory(:task, :path => @path)
+					@task1 = Factory(:task, :section => @section)
+					@task2 = Factory(:task, :section => @section)
+					@task3 = Factory(:task, :section => @section)
 					
 					3.times do |n|
-						Factory(:completed_task, :task => @task1, :user => @other_user, :status_id => 1)
+						Factory(:completed_task, :task => @task1, :user => @user, :status_id => 1)
 					end
 					
 					2.times do |n|
-						Factory(:completed_task, :task => @task2, :user => @other_user, :status_id => 1)
+						Factory(:completed_task, :task => @task2, :user => @user, :status_id => 1)
 					end
 					
 					1.times do |n|
-						Factory(:completed_task, :task => @task3, :user => @other_user, :status_id => 1)
+						Factory(:completed_task, :task => @task3, :user => @user, :status_id => 1)
 					end
 					
 				end
@@ -179,20 +174,20 @@ describe ReportsController do
 			
 			describe "incorrectly answered question table" do
 				before(:each) do
-					@task1 = Factory(:task, :path => @path)
-					@task2 = Factory(:task, :path => @path)
-					@task3 = Factory(:task, :path => @path)
+					@task1 = Factory(:task, :section => @section)
+					@task2 = Factory(:task, :section => @section)
+					@task3 = Factory(:task, :section => @section)
 					
 					3.times do |n|
-						Factory(:completed_task, :task => @task1, :user => @other_user, :status_id => 0)
+						Factory(:completed_task, :task => @task1, :user => @user, :status_id => 0)
 					end
 					
 					2.times do |n|
-						Factory(:completed_task, :task => @task2, :user => @other_user, :status_id => 0)
+						Factory(:completed_task, :task => @task2, :user => @user, :status_id => 0)
 					end
 					
 					1.times do |n|
-						Factory(:completed_task, :task => @task3, :user => @other_user, :status_id => 0)
+						Factory(:completed_task, :task => @task3, :user => @user, :status_id => 0)
 					end
 				end
 				

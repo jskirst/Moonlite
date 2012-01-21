@@ -3,8 +3,8 @@ require 'spec_helper'
 describe UserTransaction do
 	before(:each) do
 		@user = Factory(:user)
-		@company = Factory(:company)
-		@company_user = Factory(:company_user, :user => @user, :company => @company)
+		@path = Factory(:path, :user => @user)
+		@section = Factory(:section, :path => @path)
 		@attr = { :user_id => @user, :amount => 15, :status => 1 }
 	end
 	
@@ -15,8 +15,7 @@ describe UserTransaction do
 		
 		describe "for tasks" do
 			before(:each) do
-				@path = Factory(:path, :user => @user)
-				@task = Factory(:task, :path => @path)
+				@task = Factory(:task, :section => @section)
 				@attr = @attr.merge(:task_id => @task)
 				@transaction = UserTransaction.create!(@attr)
 			end
@@ -54,7 +53,7 @@ describe UserTransaction do
 		
 		describe "for rewards" do
 			before(:each) do
-				@reward = Factory(:reward, :company => @company)
+				@reward = Factory(:reward, :company => @user.company)
 				@attr = @attr.merge(:reward_id => @reward)
 				@transaction = UserTransaction.create!(@attr)
 			end
@@ -75,7 +74,6 @@ describe UserTransaction do
 		
 		describe "for paths" do
 			before(:each) do
-				@path = Factory(:path, :user => @user)
 				@attr = @attr.merge(:path_id => @path)
 				@transaction = UserTransaction.create!(@attr)
 			end

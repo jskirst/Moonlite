@@ -5,21 +5,11 @@ describe CompanyUsersController do
 	
 	before(:each) do
 		@user = Factory(:user)
-		@company = Factory(:company)
+		@company = @user.company
 		@attr = { :company_id => @company.id, :email => "testXYZ@testing.com", :is_admin => true }
 	end
 	
-	describe "access controller" do
-		it "should deny access to 'new'" do
-			get :new
-			response.should redirect_to(signin_path)
-		end
-		
-		it "should deny access to 'create'" do
-			post :create
-			response.should redirect_to(signin_path)
-		end
-	end
+	it "should control access"
 	
 	describe "GET 'new'" do
 		before(:each) do

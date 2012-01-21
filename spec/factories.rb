@@ -6,6 +6,7 @@ Factory.define :user do |user|
 	user.email					{ Faker::Internet.email }
 	user.password				"testpassword"
 	user.password_confirmation	"testpassword"
+	user.association :company_user
 end
 
 Factory.define :company do |company|
@@ -14,30 +15,37 @@ end
 
 Factory.define :reward do |reward|
 	reward.association :company
-	reward.name Faker::Lorem.sentence(5)
-	reward.description Faker::Lorem.sentence(10)
+	reward.name Faker::Lorem.sentence(1)
+	reward.description Faker::Lorem.sentence(2)
 	reward.points 1000
 	reward.image_url "http://www.google.com"
 end
 
 Factory.define :path do |path|
-	path.name Faker::Lorem.sentence(5) + "[Ruby]"
-	path.description Faker::Lorem.sentence(10)
+	path.name Faker::Lorem.sentence(1) + "[Ruby]"
+	path.description Faker::Lorem.sentence(12)
 	path.association :user
 end
 
+Factory.define :section do |f|
+	f.name Faker::Lorem.sentence(1)
+	f.instructions Faker::Lorem.sentence(2)
+	f.position 0
+	f.association :path
+end
+
 Factory.define :task do |task|
-	task.question Faker::Lorem.sentence(10)
-	task.answer1 Faker::Lorem.sentence(5)
+	task.question Faker::Lorem.sentence(1)
+	task.answer1 Faker::Lorem.sentence(2)
 	task.correct_answer 1
 	task.points TASK_POINTS
-	task.association :path
+	task.association :section
 end
 
 Factory.define :achievement do |f|
-	f.name Faker::Lorem.sentence(3)
-	f.description Faker::Lorem.sentence(3)
-	f.criteria Faker::Lorem.sentence(3)
+	f.name Faker::Lorem.sentence(1)
+	f.description Faker::Lorem.sentence(2)
+	f.criteria Faker::Lorem.sentence(2)
 	f.points 100
 	f.association :path
 end

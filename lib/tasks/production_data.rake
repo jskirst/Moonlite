@@ -1,6 +1,6 @@
 DEFAULT_PASSWORD = "a1b2c3"
 NUMBER_OF_USERS = 7
-NUMBER_OF_TASKS = 30
+NUMBER_OF_TASKS = 10
 TIME_PERIOD = 7
 AVG_SCORE = 7
 
@@ -44,6 +44,8 @@ PATHS = [["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries
 		["Moonlite Feature Set","Know the Moonlite feature set from top to bottom to become and enterprise sales machine!", "/images/logo.png"],
 		["Salesforce CRM","Its monstrous, complex and an eyesore, but its the best CRM and sales management tool out there so we're stuck with it so we better learn how to use it.", "http://www.crunchbase.com/assets/images/resized/0001/1691/11691v3-max-250x250.png"]]
 
+PATH_SECTIONS = ["Introduction", "First steps", "Basic concepts", "Application", "Intermediate topics", "Advanced", "Final test"]
+
 def create_user(name, email,image_url,company_id, is_admin = false)
 	u = User.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10)
 	CompanyUser.create!(:company_id => company_id, :email => email ,:user_id => u.id, :is_admin => is_admin)
@@ -73,17 +75,19 @@ namespace :db do
 		end
 		
 		Path.all.each do |path|
-			NUMBER_OF_TASKS.times do |n|
-				path.tasks.create!(:question => "What is #{n} + #{n}?",
-					:answer1 => "#{n-10}",
-					:answer2 => "#{2*n}",
-					:answer3 => "#{(3*n)+1}",
-					:answer4 => "#{(4*n)+2}",
-					:correct_answer => 2,
-					:points => 10
-				)
+			PATH_SECTIONS.each do |s|
+				section = path.sections.create(:name => s, :instructions => "Instructions to follow.")
+				NUMBER_OF_TASKS.times do |n|
+					section.tasks.create!(:question => "What is #{n} + #{n}?",
+						:answer1 => "#{n-10}",
+						:answer2 => "#{2*n}",
+						:answer3 => "#{(3*n)+1}",
+						:answer4 => "#{(4*n)+2}",
+						:correct_answer => 2,
+						:points => 10
+					)
+				end
 			end
-			
 			ACHIEVEMENTS.each do |a|
 				criteria = (a[3] == nil ? "Blah" : a[3])
 				path.achievements.create!(:name => a[0], :description => a[1], :criteria => criteria, :points => a[2])
@@ -105,30 +109,33 @@ namespace :db do
 			Path.all.each do |p|
 				if rand(2) == 1
 					new_user.enrollments.create!(:path_id => p.id)
-					stop = rand(NUMBER_OF_TASKS)
+					stop = rand(NUMBER_OF_TASKS*PATH_SECTIONS.size)
 					stop_counter = 0
-					p.tasks.each do |t|
-						if stop_counter >= stop
-							break
-						else
-							date = rand(TIME_PERIOD).days.ago
-							score = rand(10)
-							if score > AVG_SCORE
-								status_id = 0
-								new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
+					
+					p.sections.each do |s|
+						s.tasks.each do |t|
+							if stop_counter >= stop
+								break
 							else
-								status_id = 1
-								new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
-								new_user.award_points(t)
+								date = rand(TIME_PERIOD).days.ago
+								score = rand(10)
+								if score > AVG_SCORE
+									status_id = 0
+									new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
+								else
+									status_id = 1
+									new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
+									new_user.award_points(t)
+								end
+								
+								if rand(8) == 1
+									a = p.achievements[rand(6)]
+									new_user.user_achievements.create!(:achievement_id => a.id, :updated_at => date)
+									new_user.update_attribute('earned_points', new_user.earned_points + a.points)
+								end							
 							end
-							
-							if rand(7) == 1
-								a = p.achievements[rand(6)]
-								new_user.user_achievements.create!(:achievement_id => a.id, :updated_at => date)
-								new_user.update_attribute('earned_points', new_user.earned_points + a.points)
-							end							
+							stop_counter += 1							
 						end
-						stop_counter += 1							
 					end
 				end
 			end

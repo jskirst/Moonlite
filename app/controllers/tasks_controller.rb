@@ -1,39 +1,39 @@
 class TasksController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user, :only => :destroy
+	before_filter :company_admin
 	
 	def new
 		@task = Task.new
 		@title = "New Question"
-		@path_id = params[:path]
+		@section_id = params[:section]
 		@form_title = "New Question"
 		render "tasks/task_form"
 	end
 	
 	def create
-		@path = Path.find(params[:task][:path_id])
-		@task = @path.tasks.build(params[:task])
+		@section = Section.find(params[:task][:section_id])
+		@task = @section.tasks.build(params[:task])
 		if @task.save
 			flash[:success] = "Task created."
-			redirect_to @path
+			redirect_to @section
 		else
 			@title = "Edit"
 			@form_title = @title
-			@path_id = @path.id
+			@section_id = @section.id
 			render "tasks/task_form"
 		end
 	end
 	
 	def show
 		@task = Task.find(params[:id])
-		@title = @task.path.name
+		@title = @task.section.name
 	end
 	
 	def edit
 		@title = "Edit Question"
 		@form_title = "Edit Question"
 		@task = Task.find(params[:id])
-		@path_id = @task.path_id
+		@section_id = @task.section_id
 		render "task_form"
 	end
 	
@@ -51,12 +51,6 @@ class TasksController < ApplicationController
 	
 	def destroy
 		@task.destroy
-		redirect_back_or_to @task.path
+		redirect_back_or_to @task.section
 	end
-	
-	private
-		def authorized_user
-			@task = Task.find(params[:id])
-			redirect_to root_path unless current_user?(@task.path.user)
-		end
 end

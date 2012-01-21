@@ -3,9 +3,9 @@ class Path < ActiveRecord::Base
 	
 	belongs_to :user
 	belongs_to :company
+	has_many :sections, :dependent => :destroy
+	has_many :tasks, :through => :sections
 	has_many :achievements, :dependent => :destroy
-	has_many :tasks, :dependent => :destroy
-	has_many :completed_tasks, :through => :tasks
 	has_many :enrollments, :dependent => :destroy
 	has_many :info_resources, :dependent => :destroy
 	
@@ -29,27 +29,6 @@ class Path < ActiveRecord::Base
 		else
 			return "/images/default_path_pic.jpg"
 		end
-	end
-	
-	def next_task(user, previous_question = nil)
-		tasks.each do |t|
-			if !user.completed?(t)
-				if t != previous_question
-					return t
-				end
-			end
-		end
-		return nil
-	end
-	
-	def remaining_tasks(user)
-		remaining_task_count = 0
-		tasks.each do |t|
-			if !user.completed?(t)
-				remaining_task_count += 1
-			end
-		end
-		return remaining_task_count
 	end
 	
 	def get_user_rank(user)

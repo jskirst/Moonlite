@@ -7,13 +7,7 @@ class CompletedTasksController < ApplicationController
 		resp[:quiz_session] = resp[:quiz_session] || DateTime.now
 		answer = resp[:answer]
 		
-		if answer.nil? || answer == ""
-			status_id = 2
-		elsif Integer(answer) == Integer(@task.correct_answer)
-			status_id = 1
-		else
-			status_id = 0
-		end
+		status_id = (Integer(answer) == Integer(@task.correct_answer) ? 1 : 0)
 		
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))		
 		if @completed_task.save
@@ -26,10 +20,7 @@ class CompletedTasksController < ApplicationController
 				current_user.award_points(@completed_task.task)
 				current_user.award_achievements(@completed_task)
 			end
-			redirect_to continue_path_path :id => @completed_task.task.path, 
-				:max => resp[:max], 
-				:count => resp[:count], 
-				:quiz_session => resp[:quiz_session]
+			redirect_to continue_section_path :id => @completed_task.task.section, :quiz_session => resp[:quiz_session]
 		else
 			redirect_to root_path
 		end

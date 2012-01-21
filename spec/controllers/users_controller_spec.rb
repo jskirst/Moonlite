@@ -5,7 +5,7 @@ describe UsersController do
 
 	before(:each) do
 		@company = Factory(:company)
-		@company_user = Factory(:company_user, :company => @company)
+		@company_user = Factory(:company_user, :company => @company, :user_id => nil)
 	end
 	
 	describe "GET 'accept'" do
@@ -172,55 +172,55 @@ describe UsersController do
 				end
 			end
 		
-			describe "when they exist" do
-				before(:each) do
-					@path1 = Factory(:path, :user => @other_user, :name => "Name1")
-					@path2 = Factory(:path, :user => @other_user, :name => "Name2")
+			# describe "when they exist" do
+				# before(:each) do
+					# @path1 = Factory(:path, :user => @other_user, :name => "Name1")
+					# @path2 = Factory(:path, :user => @other_user, :name => "Name2")
 					
-					@enrollment1 = Factory(:enrollment, :path => @path1, :user => @user)
-					@enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
+					# @enrollment1 = Factory(:enrollment, :path => @path1, :user => @user)
+					# @enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
 					
-					@task1_path1 = Factory(:task, :path => @path1, :points => 2)
-					@user.award_points(@task1_path1)
-					@task2_path1 = Factory(:task, :path => @path1, :points => 2)
-					@user.award_points(@task2_path1)
-					@task3_path1 = Factory(:task, :path => @path1, :points => 2)
-					@user.award_points(@task3_path1)
-					@path1_earned_points = 6
+					# @task1_path1 = Factory(:task, :path => @path1, :points => 2)
+					# @user.award_points(@task1_path1)
+					# @task2_path1 = Factory(:task, :path => @path1, :points => 2)
+					# @user.award_points(@task2_path1)
+					# @task3_path1 = Factory(:task, :path => @path1, :points => 2)
+					# @user.award_points(@task3_path1)
+					# @path1_earned_points = 6
 					
-					@task1_path2 = Factory(:task, :path => @path2, :points => 7)
-					@user.award_points(@task1_path2)
-					@task2_path2 = Factory(:task, :path => @path2, :points => 7)
-					@user.award_points(@task2_path2)
-					@task3_path2 = Factory(:task, :path => @path2, :points => 7)
-					@user.award_points(@task3_path2)
-					@path2_earned_points = 21
+					# @task1_path2 = Factory(:task, :path => @path2, :points => 7)
+					# @user.award_points(@task1_path2)
+					# @task2_path2 = Factory(:task, :path => @path2, :points => 7)
+					# @user.award_points(@task2_path2)
+					# @task3_path2 = Factory(:task, :path => @path2, :points => 7)
+					# @user.award_points(@task3_path2)
+					# @path2_earned_points = 21
 					
-					@completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
-					@completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
-					@completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
-					@completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
+					# @completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
+					# @completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
+					# @completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
+					# @completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
 					
-					@total_earned_points = @path1_earned_points + @path2_earned_points
-				end
+					# @total_earned_points = @path1_earned_points + @path2_earned_points
+				# end
 				
-				it "should show the user's paths" do
-					get :show, :id => @user
-					response.should have_selector("td", :content => @path1.name)
-					response.should have_selector("td", :content => @path2.name)
-				end
+				# it "should show the user's paths" do
+					# get :show, :id => @user
+					# response.should have_selector("td", :content => @path1.name)
+					# response.should have_selector("td", :content => @path2.name)
+				# end
 				
-				it "should show the users total earned points" do
-					get :show, :id => @user
-					response.should have_selector("p", :content => "#{@total_earned_points}")
-				end
+				# it "should show the users total earned points" do
+					# get :show, :id => @user
+					# response.should have_selector("p", :content => "#{@total_earned_points}")
+				# end
 				
 				# it "should show the users point total for each path" do
 					# get :show, :id => @user
 					# response.should have_selector("p", :content => "#{@path1_earned_points}")
 					# response.should have_selector("p", :content => "#{@path2_earned_points}")
 				# end
-			end
+			# end
 		end
 	end
 	

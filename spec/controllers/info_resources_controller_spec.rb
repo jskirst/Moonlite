@@ -76,7 +76,7 @@ describe InfoResourcesController do
 			it "should not create a info_resource" do
 				lambda do
 					post :create, :info_resource => @attr  
-				end.should_not change(Path, :count)
+				end.should_not change(InfoResource, :count)
 			end
 			
 			it "should take you back to the new info_resource page" do

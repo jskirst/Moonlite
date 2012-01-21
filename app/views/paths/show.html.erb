@@ -13,6 +13,16 @@
 	<div style="padding:10px">
 		<p><%= @path.description %></p>
 	</div>
+	<% if !@sections.empty? %>
+	<div>
+		<h3>Sections</h3>
+		<ol>
+		<% @sections.each do |s| %>
+			<li><h5><%= link_to s.name, s %></h5></li>
+		<% end %>
+		</ol>
+	</div>
+	<% end %>
 	<% if !@achievements.empty? %>
 	<div>
 		<h3>Achievements</h3>
@@ -33,7 +43,7 @@
 		<% @info_resources.each do |resource| %>
 			<li>
 				<p><%= resource.description %></p>
-				<p><%= resource.link %></p>
+				<p><%= link_to resource.link, resource.link, :target => "_blank" %></p>
 			</li>
 		<% end %>
 		</ol>
@@ -45,20 +55,6 @@
 	<% end %>
 	</section>
 	<% if current_user.enrolled?(@path) %>
-	<section id="progress">
-		<h2>Path Rank - <span class="current-rank"><%= @current_rank %></span></h2>
-		<% if @remaining_tasks > 0 %>
-		<h3>You need to answer <%= pluralize(@remaining_tasks, "question") %> before you reach rank <span class="next-rank"><%= @next_rank %></span>!</h3>
-		<% else %>
-		<h3>Congratulations, you have completed this path!</h3> 
-		<% end %>
-		<p>You can earn points by solving problems or by posting achievements related to this path. Fellow Moonliters will vote on your achievements to decide how many points to award you. Post something really impressive and you could get enough points to jump muliple ranks!</p>
-	</section>
-	<br>
-		<% if @remaining_tasks > 0 %>
-		<div class="actions">
-			<%= link_to "Continue", continue_path_path, :class => "btn primary" %>
-		</div>
-		<% end %>
+		<p>You are currently enrolled.</p>
 	<% end %>
 </section>

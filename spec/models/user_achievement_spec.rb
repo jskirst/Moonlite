@@ -4,12 +4,9 @@ require 'spec_helper'
 describe UserAchievement do
 	before(:each) do
 		@user = Factory(:user)
-		@company = Factory(:company)
-		Factory(:company_user, :company => @company, :user => @user)
-		@path = Factory(:path, :user => @user)
-		@achievement = Factory(:achievement, :path => @path)
-		@attr = { :achievement_id => @achievement.id }
+		@achievement = Factory(:achievement)
 		
+		@attr = { :achievement_id => @achievement.id }
 		@user_achievement = @user.user_achievements.build(@attr)
 	end
 	
@@ -41,7 +38,7 @@ describe UserAchievement do
 			@user_achievement.should respond_to(:achievement)
 		end
 		
-		it "should have the right path" do
+		it "should have the right achievement" do
 			@user_achievement.achievement_id.should == @achievement.id
 			@user_achievement.achievement.should == @achievement
 		end

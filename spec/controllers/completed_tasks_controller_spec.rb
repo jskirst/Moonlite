@@ -18,10 +18,10 @@ describe CompletedTasksController do
 		before(:each) do
 			@password = "current_password"
 			@user = Factory(:user, :password => @password, :password_confirmation => @password)
-			@company = Factory(:company)
-			Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+			@user.company_user.toggle!(:is_admin)
 			@path = Factory(:path, :user => @user)
-			@task = Factory(:task, :path => @path)
+			@section = Factory(:section, :path => @path)
+			@task = Factory(:task, :section => @section)
 			test_sign_in(@user)
 			@attr = { :user_id => @user.id, :task_id => @task.id, :answer => @task.correct_answer, :quiz_session => @quiz_session }
 		end
@@ -165,25 +165,6 @@ describe CompletedTasksController do
 							ua.should_not be_empty
 						end
 					end
-				end
-			end
-			
-			describe "with a skipped answer" do
-				before(:each) do
-					@attr = @attr.merge(:answer => nil)
-				end
-				
-				it "should create a completed task with status 2 and quiz = " do
-					lambda do
-						post :create, :completed_task => @attr
-					end.should change(CompletedTask, :count).by(1)
-					cp = CompletedTask.find(:first, :conditions => ["task_id=? AND user_id=? AND status_id=2", @task.id, @user.id])
-					cp.quiz_session.should == Time.parse(@quiz_session.utc.to_s)
-				end
-				
-				it "should take you to the next question" do
-					post :create, :completed_task => @attr
-					flash[:notice].should =~ /skipped/i
 				end
 			end
 		end

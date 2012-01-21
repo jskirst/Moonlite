@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Tasks" do
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@section = Factory(:section)
 		@attr = { :question => "This is a question",
 			:answer1 => "This is an answer.",
 			:answer2 => nil,
@@ -14,12 +14,12 @@ describe "Tasks" do
 	end
 	
 	it "should create a new instance given valid attributes" do
-		@path.tasks.create!(@attr)
+		@section.tasks.create!(@attr)
 	end
 	
 	describe "attributes" do
 		before(:each) do
-			@task = @path.tasks.create(@attr)
+			@task = @section.tasks.create(@attr)
 		end
 		
 		it "should include a question" do
@@ -51,57 +51,56 @@ describe "Tasks" do
 		end
 	end
 	
-	describe "path associations" do
+	describe "section associations" do
 		before(:each) do
-			@task = @path.tasks.create(@attr)
+			@task = @section.tasks.create(@attr)
 		end
 		
-		it "should have a path attribute" do
-			@task.should respond_to(:path)
+		it "should have a section attribute" do
+			@task.should respond_to(:section)
 		end
 		
-		it "should have the right associated path" do
-			@task.path_id.should == @path.id
-			@task.path.should == @path
+		it "should have the right associated section" do
+			@task.section_id.should == @section.id
+			@task.section.should == @section
 		end
 	end
 	
 	describe "validations" do
-	
-		it "should require a path id" do
+		it "should require a section id" do
 			Task.new(@attr).should_not be_valid
 		end
 		
 		it "should require non-blank question" do
-			@path.tasks.build(@attr.merge(:question => "")).should_not be_valid
+			@section.tasks.build(@attr.merge(:question => "")).should_not be_valid
 		end
 		
 		it "should require non-blank answer1" do
-			@path.tasks.build(@attr.merge(:answer1 => "")).should_not be_valid
+			@section.tasks.build(@attr.merge(:answer1 => "")).should_not be_valid
 		end
 		
 		it "should require non-nil points" do
-			@path.tasks.build(@attr.merge(:points => nil)).should_not be_valid
+			@section.tasks.build(@attr.merge(:points => nil)).should_not be_valid
 		end		
 		
 		it "should require non-nil correct_answer" do
-			@path.tasks.build(@attr.merge(:correct_answer => nil)).should_not be_valid
+			@section.tasks.build(@attr.merge(:correct_answer => nil)).should_not be_valid
 		end
 		
 		it "should reject long questions" do
-			@path.tasks.build(@attr.merge(:question => "a"*256)).should_not be_valid
+			@section.tasks.build(@attr.merge(:question => "a"*256)).should_not be_valid
 		end
 		
 		it "should reject long answers" do
-			@path.tasks.build(@attr.merge(:answer1 => "a"*256)).should_not be_valid
+			@section.tasks.build(@attr.merge(:answer1 => "a"*256)).should_not be_valid
 		end
 		
 		it "should a reject points value thats too high" do
-			@path.tasks.build(@attr.merge(:points => 51)).should_not be_valid
+			@section.tasks.build(@attr.merge(:points => 51)).should_not be_valid
 		end
 		
 		it "should a reject out of range correct answers" do
-			@path.tasks.build(@attr.merge(:correct_answer => 5)).should_not be_valid
+			@section.tasks.build(@attr.merge(:correct_answer => 5)).should_not be_valid
 		end
 	end
 end

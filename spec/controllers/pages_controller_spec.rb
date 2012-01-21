@@ -24,18 +24,16 @@ describe PagesController do
 		describe "when signed in" do
 			before(:each) do
 				@user = Factory(:user, :email => "test@user.com")
-				@company = Factory(:company)
-				Factory(:company_user, :company => @company, :user => @user)
-				@creator = Factory(:user, :email => "creator@user.com")
+				@user.company_user.toggle!(:is_admin)
 				test_sign_in(@user)
 			end
 		
 			describe "enrolled paths" do
 				describe "when they exist" do
 					before(:each) do
-						@path1 = Factory(:path, :name => "Path1", :user => @creator)
-						@path2 = Factory(:path, :name => "Path2", :user => @creator)
-						@path3 = Factory(:path, :name => "Path I'm not enrolled in", :user => @creator)
+						@path1 = Factory(:path, :name => "Path1", :user => @user)
+						@path2 = Factory(:path, :name => "Path2", :user => @user)
+						@path3 = Factory(:path, :name => "Path I'm not enrolled in", :user => @user)
 						
 						@enrollment = Factory(:enrollment, :path => @path1, :user => @user)
 						@enrollment = Factory(:enrollment, :path => @path2, :user => @user)

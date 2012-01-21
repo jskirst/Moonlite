@@ -23,9 +23,13 @@ SampleApp::Application.routes.draw do
 		member do
 			get :review
 			get :purchase
-			get :continue
 			get :file
 			post :upload
+		end
+	end
+	resources :sections do
+		member do
+			get :continue
 		end
 	end
 	resources :enrollments

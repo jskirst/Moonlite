@@ -5,7 +5,6 @@ describe ToursController do
 	
 	before(:each) do
 		@user = Factory(:user)
-		@company = Factory(:company)
 	end
 	
 	describe "access controller" do
@@ -28,7 +27,6 @@ describe ToursController do
 		
 		describe "when signed in as a regular user" do
 			before(:each) do
-				Factory(:company_user, :company => @company, :user => @user)
 				test_sign_in(@user)
 			end
 			
@@ -50,7 +48,7 @@ describe ToursController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@company_user = Factory(:company_user, :company => @company, :user => @user, :is_admin => "t")
+				@user.company_user.toggle!(:is_admin)
 				test_sign_in(@user)
 			end
 			

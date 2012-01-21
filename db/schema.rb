@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115111802) do
+ActiveRecord::Schema.define(:version => 20120119162953) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -95,12 +95,21 @@ ActiveRecord::Schema.define(:version => 20120115111802) do
     t.datetime "updated_at"
   end
 
+  create_table "sections", :force => true do |t|
+    t.integer  "path_id"
+    t.string   "name"
+    t.string   "instructions"
+    t.integer  "position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "tasks", :force => true do |t|
     t.string   "question"
     t.string   "answer1"
     t.string   "resource"
     t.integer  "points"
-    t.integer  "path_id"
+    t.integer  "section_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "answer2"
@@ -109,7 +118,7 @@ ActiveRecord::Schema.define(:version => 20120115111802) do
     t.integer  "correct_answer", :default => 1
   end
 
-  add_index "tasks", ["path_id"], :name => "index_tasks_on_path_id"
+  add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
 
   create_table "user_achievements", :force => true do |t|
     t.integer  "achievement_id"

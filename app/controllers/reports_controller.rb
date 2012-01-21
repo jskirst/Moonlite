@@ -61,6 +61,15 @@ class ReportsController < ApplicationController
 	
 		@path_statistics = []
 		@paths.each do |p|
+			section_ids = []
+			p.sections.each do |s|
+				section_ids << s.id.to_s
+			end
+			section_ids = section_ids.join(",")
+			if section_ids == ""
+				redirect_to root_path and return
+			end
+		
 			enrolled = 0
 			not_enrolled = 0
 			@users.each do |u|
@@ -75,12 +84,12 @@ class ReportsController < ApplicationController
 			path_activity = CompletedTask.count(
 				:group => "Date(completed_tasks.updated_at)",
 				:joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN company_users on company_users.user_id = completed_tasks.user_id",
-				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '#{time_sql}'"
+				:conditions => "company_users.company_id = #{@company_id} and tasks.section_id IN (#{section_ids}) and completed_tasks.updated_at > '#{time_sql}'"
 			)
 			
 			path_score = CompletedTask.average("status_id",
 				{ :joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN company_users on company_users.user_id = completed_tasks.user_id",
-				:conditions => "company_users.company_id = #{@company_id} and tasks.path_id = #{p.id} and completed_tasks.updated_at > '#{time_sql}'" }
+				:conditions => "company_users.company_id = #{@company_id} and tasks.section_id IN (#{section_ids}) and completed_tasks.updated_at > '#{time_sql}'" }
 			)
 			if !path_score.nil?
 				path_score = Integer(path_score * 100)
@@ -99,10 +108,19 @@ class ReportsController < ApplicationController
 			redirect_to dashboard_path and return
 		end
 		@title = "Details"
+		section_ids = []
+		@path.sections.each do |s|
+			section_ids << s.id.to_s
+		end
+		section_ids = section_ids.join(",")
+		if section_ids == ""
+			redirect_to root_path and return
+		end
+		
 		@most_incorrect_tasks = CompletedTask.all(
 			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
-			:conditions => "tasks.path_id = #{@path.id} and status_id = 0",
+			:conditions => "tasks.section_id IN (#{section_ids}) and status_id = 0",
 			:order => "1 desc",
 			:limit => "10",
 			:select => "count(*) as count, tasks.id"
@@ -111,7 +129,7 @@ class ReportsController < ApplicationController
 		@most_correct_tasks = CompletedTask.all(
 			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
-			:conditions => "tasks.path_id = #{@path.id} and status_id = 1",
+			:conditions => "tasks.section_id IN (#{section_ids}) and status_id = 1",
 			:order => "1 desc",
 			:limit => "10",
 			:select => "count(*) as count, tasks.id"

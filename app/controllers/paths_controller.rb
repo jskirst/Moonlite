@@ -1,7 +1,8 @@
 require 'csv'
 class PathsController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user, :only => [:edit, :update, :destroy, :file, :upload]
+	before_filter :authorized_user, :except => [:index, :show, :marketplace, :review, :purchase, :new, :create]
+	before_filter :company_admin, :only => [:new, :create]
 	
 	def index
 		@title = "All Paths"
@@ -22,7 +23,7 @@ class PathsController < ApplicationController
 		@path = current_user.paths.build(params[:path])
 		if @path.save
 			flash[:success] = "Path created."
-			redirect_to root_path
+			redirect_to @path
 		else
 			@title = "New Path"
 			render 'new'
@@ -42,49 +43,9 @@ class PathsController < ApplicationController
 	def show
 		@path = Path.find(params[:id])
 		@title = @path.name
-		@remaining_tasks = @path.tasks_until_next_rank(current_user)
-		@current_rank = @path.get_user_rank(current_user)
-		@next_rank = @path.get_user_rank(current_user) + 1
-		@info_resources = @path.info_resources
+		@info_resources = @path.info_resources(:limit => 5)
 		@achievements = @path.achievements.all(:limit => 5)
-	end
-	
-	def continue
-		@path = Path.find(params[:id])
-		if current_user.enrolled?(@path)
-			@count = Integer(params[:count] || 0)
-			@max = Integer(params[:max] || 5)
-			@quiz_session = params[:quiz_session] || DateTime.now
-			@quiz_session = Time.parse(@quiz_session.to_s)
-			remaining_tasks = @path.remaining_tasks(current_user)
-			
-			if @max > remaining_tasks
-				@max = remaining_tasks
-			end
-			
-			if @count >= @max
-				@title = "Results"
-				@answers = CompletedTask.find(:all, :conditions => ["user_id=? AND quiz_session=?", current_user.id, @quiz_session])
-				if !@answers.empty?
-					@correct_answers = 0
-					@total_answers = 0
-					@answers.each do |a|
-						if a.status_id < 2
-							@total_answers += 1
-						end
-						if a.status_id == 1
-							@correct_answers += 1
-						end
-					end
-				end
-				render "results"
-			else
-				@title = @path.name
-				@task = @path.next_task(current_user)
-			end
-		else
-			redirect_to @path
-		end
+		@sections = @path.sections
 	end
 	
 	def file
@@ -147,17 +108,24 @@ class PathsController < ApplicationController
 				:description => @path.description,
 				:amount => 15.00,
 				:status => 0})
-			@path.tasks.each do |t|
-				purchased_path.tasks.create!(
-					:question => t.question,
-					:answer1 => t.answer1,
-					:answer2 => t.answer2,
-					:answer3 => t.answer3,
-					:answer4 => t.answer4,
-					:correct_answer => t.correct_answer,
-					:points => t.points,
-					:resource => t.resource
+			@path.sections.each do |s|
+				purchased_section = purchased_path.sections.create!(
+					:name => s.name,
+					:instructions => s.instructions,
+					:position => s.position
 				)
+				s.tasks.each do |t|				
+					purchased_section.tasks.create!(
+						:question => t.question,
+						:answer1 => t.answer1,
+						:answer2 => t.answer2,
+						:answer3 => t.answer3,
+						:answer4 => t.answer4,
+						:correct_answer => t.correct_answer,
+						:points => t.points,
+						:resource => t.resource
+					)
+				end
 			end
 			@title = "Purchase successful"
 			flash[:success] = "Purchase successful. Enjoy!."
@@ -166,13 +134,16 @@ class PathsController < ApplicationController
 	
 	def destroy
 		@path.destroy
-		redirect_back_or_to root_path
+		redirect_back_or_to paths_path
 	end
 	
 	private
 		def authorized_user
-			@path = Path.find(params[:id])
-			if !current_user?(@path.user)
+			@path = Path.find_by_id(params[:id])
+			if @path.nil?
+				redirect_to root_path
+				flash[:error] = "You must be an administrator to access this functionality."
+			elsif !current_user.company_admin?
 				redirect_to root_path
 				flash[:error] = "You do not have the ability to change this path."
 			end

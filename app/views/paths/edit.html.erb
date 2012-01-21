@@ -21,6 +21,7 @@
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
+		<%= link_to "Add Section", {:controller => "sections", :action => "new", :path_id => @path }, :class => "btn secondary" %>
 		<%= link_to "Add Question", {:controller => "tasks", :action => "new", :path => @path }, :class => "btn secondary" %>
 		<%= link_to "Upload Questions", {:controller => "paths", :action => "file", :id => @path.id }, :class => "btn secondary"%>
 		<%= link_to "Add Resource", {:controller => "info_resources", :action => "new", :path => @path }, :class => "btn secondary" %>

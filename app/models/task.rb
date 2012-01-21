@@ -1,7 +1,8 @@
 class Task < ActiveRecord::Base
 	attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer
 	
-	belongs_to :path
+	belongs_to 	:section
+	has_one 	:path, :through => :section
 	
 	validates :question, 
 		:presence 		=> true,
@@ -31,7 +32,7 @@ class Task < ActiveRecord::Base
 	validates :resource,
 		:length			=> { :maximum => 255 }
 	
-	validates :path_id, :presence => true
+	validates :section_id, :presence => true
 	
 	default_scope :order => 'tasks.points ASC'
 	

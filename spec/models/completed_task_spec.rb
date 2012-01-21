@@ -4,8 +4,8 @@ require 'spec_helper'
 describe CompletedTask do
   	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
-		@task = Factory(:task, :path => @path)
+		@section = Factory(:section)
+		@task = Factory(:task, :section => @section)
 		@quiz_session = DateTime.now
 		@attr = { :task_id => @task.id, :status_id => 0, :quiz_session => @quiz_session }
 		

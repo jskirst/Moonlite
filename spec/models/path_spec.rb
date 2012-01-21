@@ -66,8 +66,6 @@ describe "Paths" do
 	describe "company association" do
 		before(:each) do
 			@path = @user.paths.build(@attr)
-			@company = Factory(:company)
-			@company_user = Factory(:company_user, :company => @company, :user => @user)
 			@other_company = Factory(:company, :name => "Other Company")
 		end
 		
@@ -77,7 +75,7 @@ describe "Paths" do
 		
 		it "should not require a company" do
 			@path.company = nil
-			@path.should be_valid			
+			@path.should be_valid
 		end
 		
 		it "should reject a company the user doesn't belong to" do
@@ -91,58 +89,25 @@ describe "Paths" do
 		end
 	end
 	
-	describe "task associations" do
+	describe "section associations" do
 		before(:each) do
 			@path = Factory(:path, :user => @user)
-			@task1 = Factory(:task, :path => @path, :points => 1)
-			@task2 = Factory(:task, :path => @path, :points => 2)
+			@section1 = Factory(:section, :path => @path, :position => 0)
+			@section2 = Factory(:section, :path => @path, :position => 1)
 		end
 		
-		it "should have a paths attribute" do
-			@path.should respond_to(:tasks)
+		it "should have a sections attribute" do
+			@path.should respond_to(:sections)
 		end
 		
 		it "should have the right paths in the right order (lowest points first)" do
-			@path.tasks.should == [@task1, @task2]
+			@path.sections.should == [@section1, @section2]
 		end
 		
 		it "should destroy associated tasks" do
 			@path.destroy
-			[@task1, @task2].each do |t|
-				Task.find_by_id(t.id).should be_nil
-			end
-		end
-		
-		describe "next task" do
-			before(:each) do
-				@completed_task = Factory(:completed_task, :user => @user, :task => @task1)
-			end
-		
-			it "should have a next task method" do
-				@path.should respond_to(:next_task)
-			end
-			
-			it "should return the next uncompleted task for a user" do
-				@path.next_task(@user).should == @task2
-			end
-			
-			it "should return nil if there are no more incomplete tasks" do
-				@completed_task2 = Factory(:completed_task, :user => @user, :task => @task2)
-				@path.next_task(@user).should == nil
-			end
-		end		
-		
-		describe "remaining tasks" do
-			before(:each) do
-				@completed_task = Factory(:completed_task, :user => @user, :task => @task1)
-			end
-		
-			it "should have a next task method" do
-				@path.should respond_to(:remaining_tasks)
-			end
-			
-			it "should return the next the correct number of incomplete tasks" do
-				@path.remaining_tasks(@user).should == @path.tasks.count - @user.completed_tasks.count
+			[@section1, @section2].each do |s|
+				Section.find_by_id(s.id).should be_nil
 			end
 		end
 	end

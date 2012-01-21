@@ -16,21 +16,17 @@ describe "User" do
 	
 	describe "name validations" do
 		it "should require a name" do
-			user = User.new(@attr.merge(:name => ""))
-			user.should_not be_valid
+			User.new(@attr.merge(:name => "")).should_not be_valid
 		end
 		
 		it "should reject names that are too long" do
-			long_name = 'a' * 55
-			user = User.new(@attr.merge(:name => long_name))
-			user.should_not be_valid
+			User.new(@attr.merge(:name => 'a' * 55)).should_not be_valid
 		end
 	end
 	
 	describe "email validations" do	
 		it "should require an email" do
-			user = User.new(@attr.merge(:email => ""))
-			user.should_not be_valid
+			User.new(@attr.merge(:email => "")).should_not be_valid
 		end
 		
 		it "should accept valid emails" do
@@ -50,39 +46,28 @@ describe "User" do
 		end
 		
 		it "should reject a duplicate email address" do
-			upcased_email = @attr[:email].upcase
-			User.create!(@attr.merge(:email => upcased_email))
-			user = User.new(@attr)
-			user.should_not be_valid
+			User.create!(@attr.merge(:email => @attr[:email].upcase))
+			User.new(@attr).should_not be_valid
 		end
 	end
 	
 	describe "password validations" do
 		it "should require a password and confirmation" do
-			pw = ""
-			pw_conf = ""
-			user = User.new(@attr.merge(:password => pw, :password_confirmation => pw_conf))
-			user.should_not be_valid
+			User.new(@attr.merge(:password => "", :password_confirmation => "")).should_not be_valid
 		end
 		
 		it "should require a matching password confirmation" do
-			pw_conf = "not foobar"
-			user = User.new(@attr.merge(:password_confirmation => pw_conf))
-			user.should_not be_valid
+			User.new(@attr.merge(:password_confirmation => "not foobar")).should_not be_valid
 		end
 		
 		it "should reject short passwords" do
 			pw = "a" * 5
-			pw_conf = pw
-			user = User.new(@attr.merge(:password => pw, :password_confirmation => pw_conf))
-			user.should_not be_valid
+			User.new(@attr.merge(:password => pw, :password_confirmation => pw)).should_not be_valid
 		end
 		
 		it "should reject long passwords" do
 			pw = "a" * 41
-			pw_conf = pw
-			user = User.new(@attr.merge(:password => pw, :password_confirmation => pw_conf))
-			user.should_not be_valid
+			User.new(@attr.merge(:password => pw, :password_confirmation => pw)).should_not be_valid
 		end
 	end
 	
@@ -102,18 +87,15 @@ describe "User" do
 	
 	describe "user authentication" do
 		it "should reject a bad password" do
-			user = User.authenticate(@attr[:email], "badpassword")
-			user.should be_nil
+			User.authenticate(@attr[:email], "badpassword").should be_nil
 		end
 		
 		it "should reject a nil email" do
-			user = User.authenticate("bademail", @attr[:password])
-			user.should be_nil
+			User.authenticate("bademail", @attr[:password]).should be_nil
 		end
 		
 		it "should accept a good combination" do
-			user = User.authenticate(@attr[:email], @attr[:password])
-			user.should == @user
+			User.authenticate(@attr[:email], @attr[:password]).should == @user
 		end
 	end
 	
@@ -151,29 +133,24 @@ describe "User" do
 	end
 	
 	describe "image url validations" do
-		before(:each) do
-			@user = User.create!(@attr)
-		end
-		
 		it "should respond to image_url" do
-			@user.should respond_to(:image_url)
+			User.create!(@attr).should respond_to(:image_url)
 		end
 		
 		it "should respond with profile_pic set to default if image_url is not set" do
-			@user.profile_pic.should == "/images/default_profile_pic.jpg"
+			User.create!(@attr).profile_pic.should == "/images/default_profile_pic.jpg"
 		end
 	end
 
 	describe "company_admin?" do
 		it "should respond with false if user is not company admin" do
-			@user = Factory(:user)
-			@user.company_admin?.should be_false
+			Factory(:user).company_admin?.should be_false
 		end
 		
 		it "should respond with true if user is company admin" do
-			@user = Factory(:user)
-			Factory(:company_user, :user => @user, :is_admin => "t")
-			@user.company_admin?.should be_true
+			user = Factory(:user)
+			user.company_user.toggle!(:is_admin)
+			user.company_admin?.should be_true
 		end
 	end
 	
@@ -268,10 +245,9 @@ describe "User" do
 	describe "completed tasks" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
-			@task1 = Factory(:task, :path => @path, :points => 1)
+			@task1 = Factory(:task)
+			@task2 = Factory(:task)
 			@completed_task = Factory(:completed_task, :task => @task1, :user => @user)
-			@task2 = Factory(:task, :path => @path, :points => 2)
 		end
 		
 		it "should have a completed tasks attribute" do
@@ -296,12 +272,9 @@ describe "User" do
 	describe "points" do
 		before(:each) do
 			@user = Factory(:user)
-			@company = Factory(:company)
-			Factory(:company_user, :user => @user, :company => @company)
-			@path = Factory(:path, :user => @user)
-			@task = Factory(:task, :path => @path)
+			@task = Factory(:task)
 			@reward = Factory(:reward, :company => @user.company)
-			@enrollment = Factory(:enrollment, :path => @path, :user => @user)
+			@enrollment = Factory(:enrollment, :path => @task.section.path, :user => @user)
 		end
 		
 		describe "award_points" do
@@ -312,7 +285,7 @@ describe "User" do
 				
 			it "should add task's points to the appropriate enrollment's total_points" do
 				@user.award_points(@task)
-				@user.enrollments.find_by_path_id(@path.id).total_points.should == @task.points
+				@user.enrollments.find_by_path_id(@task.section.path.id).total_points.should == @task.points
 			end
 		end		
 		
