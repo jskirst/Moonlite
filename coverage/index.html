@@ -23,27 +23,27 @@
       <img src="./assets/0.5.3/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2012-01-20T19:27:26-08:00">2012-01-20T19:27:26-08:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2012-01-21T15:31:22-08:00">2012-01-21T15:31:22-08:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">97.53%</span></span>
+    (<span class="covered_percent"><span class="green">97.35%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         35.96
+         36.03
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>62</b> files in total.
-    <b>3198</b> relevant lines. 
-    <span class="green"><b>3119</b> lines covered</span> and
-    <span class="red"><b>79</b> lines missed </span>
+    <b>3208</b> relevant lines. 
+    <span class="green"><b>3123</b> lines covered</span> and
+    <span class="red"><b>85</b> lines missed </span>
   </div>
   <table class="file_list">
     <thead>
@@ -141,12 +141,12 @@
       
       <tr>
         <td class="strong"><a href="#51e9dbc5026ef404659680a1a5b542f91eaf98a4" class="src_link" title="app/controllers/paths_controller.rb">app/controllers/paths_controller.rb</a></td>
-        <td class="red strong">71.56 %</td>
-        <td>193</td>
-        <td>109</td>
-        <td>78</td>
+        <td class="red strong">71.82 %</td>
+        <td>194</td>
+        <td>110</td>
+        <td>79</td>
         <td>31</td>
-        <td>2.9</td>
+        <td>3.0</td>
       </tr>
       
       <tr>
@@ -266,7 +266,7 @@
         <td>35</td>
         <td>35</td>
         <td>0</td>
-        <td>187.1</td>
+        <td>187.3</td>
       </tr>
       
       <tr>
@@ -316,7 +316,7 @@
         <td>20</td>
         <td>20</td>
         <td>0</td>
-        <td>1606.6</td>
+        <td>1610.3</td>
       </tr>
       
       <tr>
@@ -356,7 +356,7 @@
         <td>34</td>
         <td>23</td>
         <td>11</td>
-        <td>20.8</td>
+        <td>20.9</td>
       </tr>
       
       <tr>
@@ -376,7 +376,7 @@
         <td>25</td>
         <td>25</td>
         <td>0</td>
-        <td>16.9</td>
+        <td>17.0</td>
       </tr>
       
       <tr>
@@ -396,7 +396,7 @@
         <td>82</td>
         <td>80</td>
         <td>2</td>
-        <td>104.5</td>
+        <td>104.7</td>
       </tr>
       
       <tr>
@@ -581,12 +581,12 @@
       
       <tr>
         <td class="strong"><a href="#0ad0dea58cf417c51d933d5ff09c4639808da796" class="src_link" title="spec/controllers/paths_controller_spec.rb">spec/controllers/paths_controller_spec.rb</a></td>
-        <td class="green strong">100.0 %</td>
-        <td>522</td>
-        <td>302</td>
-        <td>302</td>
-        <td>0</td>
-        <td>2.4</td>
+        <td class="green strong">98.07 %</td>
+        <td>540</td>
+        <td>311</td>
+        <td>305</td>
+        <td>6</td>
+        <td>2.3</td>
       </tr>
       
       <tr>
@@ -676,7 +676,7 @@
         <td>63</td>
         <td>63</td>
         <td>0</td>
-        <td>29.3</td>
+        <td>29.4</td>
       </tr>
       
     </tbody>
@@ -2612,10 +2612,10 @@
         <div class="source_table" id="51e9dbc5026ef404659680a1a5b542f91eaf98a4">
   <div class="header">
     <h3>app/controllers/paths_controller.rb</h3>
-    <h4><span class="red">71.56 %</span> covered</h4>
+    <h4><span class="red">71.82 %</span> covered</h4>
     <div>
-      <b>109</b> relevant lines. 
-      <span class="green"><b>78</b> lines covered</span> and
+      <b>110</b> relevant lines. 
+      <span class="green"><b>79</b> lines covered</span> and
       <span class="red"><b>31</b> lines missed.</span>
     </div>
   </div>
@@ -2896,7 +2896,7 @@
         <li class="covered" data-hits="5" data-linenumber="46">
           <span class="hits">5</span>
           
-          <code class="ruby">		@info_resources = @path.info_resources</code>
+          <code class="ruby">		@info_resources = @path.info_resources(:limit =&gt; 5)</code>
         </li>
       
         <li class="covered" data-hits="5" data-linenumber="47">
@@ -2905,877 +2905,883 @@
           <code class="ruby">		@achievements = @path.achievements.all(:limit =&gt; 5)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="48">
+        <li class="covered" data-hits="5" data-linenumber="48">
+          <span class="hits">5</span>
           
-          
-          <code class="ruby">	end</code>
+          <code class="ruby">		@sections = @path.sections</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="49">
           
           
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="50">
+          
+          
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="50">
+        <li class="covered" data-hits="1" data-linenumber="51">
           <span class="hits">1</span>
           
           <code class="ruby">	def file</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="51">
+        <li class="covered" data-hits="3" data-linenumber="52">
           <span class="hits">3</span>
           
           <code class="ruby">		@title = &quot;File&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="52">
+        <li class="never" data-hits="" data-linenumber="53">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="53">
+        <li class="never" data-hits="" data-linenumber="54">
           
           
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="54">
+        <li class="covered" data-hits="1" data-linenumber="55">
           <span class="hits">1</span>
           
           <code class="ruby">	def upload</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="55">
+        <li class="covered" data-hits="2" data-linenumber="56">
           <span class="hits">2</span>
           
           <code class="ruby">		uploaded_file = params[:path][:file]</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="56">
+        <li class="covered" data-hits="2" data-linenumber="57">
           <span class="hits">2</span>
           
           <code class="ruby">		if uploaded_file.nil?</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="57">
+        <li class="covered" data-hits="2" data-linenumber="58">
           <span class="hits">2</span>
           
           <code class="ruby">			flash.now[:error] = &quot;Please provide a file for import.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="58">
+        <li class="covered" data-hits="2" data-linenumber="59">
           <span class="hits">2</span>
           
           <code class="ruby">			render 'file'</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="59">
+        <li class="never" data-hits="" data-linenumber="60">
           
           
           <code class="ruby">		else</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="60">
-          
-          
-          <code class="ruby">			if @new_tasks = parse_file(uploaded_file)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="61">
           
           
-          <code class="ruby">				flash.now[:success] = &quot;CSV Import Successful, #{@new_tasks.size} lines found.&quot;</code>
+          <code class="ruby">			if @new_tasks = parse_file(uploaded_file)</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="62">
           
           
+          <code class="ruby">				flash.now[:success] = &quot;CSV Import Successful, #{@new_tasks.size} lines found.&quot;</code>
+        </li>
+      
+        <li class="missed" data-hits="0" data-linenumber="63">
+          
+          
           <code class="ruby">				render 'upload'</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="63">
+        <li class="never" data-hits="" data-linenumber="64">
           
           
           <code class="ruby">			else</code>
-        </li>
-      
-        <li class="missed" data-hits="0" data-linenumber="64">
-          
-          
-          <code class="ruby">				flash.now[:error] = &quot;There was an error processing your file. You must have at least two rows in your file.&quot;</code>
         </li>
       
         <li class="missed" data-hits="0" data-linenumber="65">
           
           
-          <code class="ruby">				render 'file'</code>
+          <code class="ruby">				flash.now[:error] = &quot;There was an error processing your file. You must have at least two rows in your file.&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="66">
+        <li class="missed" data-hits="0" data-linenumber="66">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">				render 'file'</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="67">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="68">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="69">
           
           
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="70">
+          
+          
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="70">
+        <li class="covered" data-hits="1" data-linenumber="71">
           <span class="hits">1</span>
           
           <code class="ruby">	def marketplace</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="71">
+        <li class="covered" data-hits="6" data-linenumber="72">
           <span class="hits">6</span>
           
           <code class="ruby">		@title = &quot;Marketplace&quot;</code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="72">
+        <li class="covered" data-hits="6" data-linenumber="73">
           <span class="hits">6</span>
           
           <code class="ruby">		if !params[:search].nil?</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="73">
+        <li class="covered" data-hits="5" data-linenumber="74">
           <span class="hits">5</span>
           
           <code class="ruby">			@query = params[:search]</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="74">
+        <li class="covered" data-hits="5" data-linenumber="75">
           <span class="hits">5</span>
           
           <code class="ruby">			@paths = Path.find(:all, :conditions =&gt; [&quot;is_public = ? and name LIKE ?&quot;, true, &quot;%#{@query}%&quot;])</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="75">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="76">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="77">
           
           
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="78">
+          
+          
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="78">
+        <li class="covered" data-hits="1" data-linenumber="79">
           <span class="hits">1</span>
           
           <code class="ruby">	def review</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="79">
+        <li class="covered" data-hits="5" data-linenumber="80">
           <span class="hits">5</span>
           
           <code class="ruby">		@title = &quot;Review purchase&quot;</code>
         </li>
       
-        <li class="covered" data-hits="5" data-linenumber="80">
+        <li class="covered" data-hits="5" data-linenumber="81">
           <span class="hits">5</span>
           
           <code class="ruby">		if !@path = Path.find_by_id(params[:id])</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="81">
+        <li class="covered" data-hits="1" data-linenumber="82">
           <span class="hits">1</span>
           
           <code class="ruby">			flash[:error] = &quot;No path found for the argument supplied.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="82">
+        <li class="covered" data-hits="1" data-linenumber="83">
           <span class="hits">1</span>
           
           <code class="ruby">			redirect_to root_path and return</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="83">
+        <li class="covered" data-hits="4" data-linenumber="84">
           <span class="hits">4</span>
           
           <code class="ruby">		elsif !@path.is_public</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="84">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			flash[:error] = &quot;This path is not available for purchase.&quot;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="85">
           <span class="hits">1</span>
           
-          <code class="ruby">			redirect_to root_path and return</code>
+          <code class="ruby">			flash[:error] = &quot;This path is not available for purchase.&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="86">
+        <li class="covered" data-hits="1" data-linenumber="86">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">			redirect_to root_path and return</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="87">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="88">
           
           
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="89">
+          
+          
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="89">
+        <li class="covered" data-hits="1" data-linenumber="90">
           <span class="hits">1</span>
           
           <code class="ruby">	def purchase</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="90">
+        <li class="covered" data-hits="11" data-linenumber="91">
           <span class="hits">11</span>
           
           <code class="ruby">		if !@path = Path.find_by_id(params[:id])</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="91">
+        <li class="covered" data-hits="1" data-linenumber="92">
           <span class="hits">1</span>
           
           <code class="ruby">			flash[:error] = &quot;No path found for the argument supplied.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="92">
+        <li class="covered" data-hits="1" data-linenumber="93">
           <span class="hits">1</span>
           
           <code class="ruby">			redirect_to root_path and return</code>
         </li>
       
-        <li class="covered" data-hits="10" data-linenumber="93">
+        <li class="covered" data-hits="10" data-linenumber="94">
           <span class="hits">10</span>
           
           <code class="ruby">		elsif !@path.is_public</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="94">
+        <li class="covered" data-hits="1" data-linenumber="95">
           <span class="hits">1</span>
           
           <code class="ruby">			flash[:error] = &quot;This path is not available for purchase.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="95">
+        <li class="covered" data-hits="1" data-linenumber="96">
           <span class="hits">1</span>
           
           <code class="ruby">			redirect_to root_path and return</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="96">
+        <li class="never" data-hits="" data-linenumber="97">
           
           
           <code class="ruby">		else</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="97">
+        <li class="covered" data-hits="9" data-linenumber="98">
           <span class="hits">9</span>
           
           <code class="ruby">			UserTransaction.create!({</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="98">
-          
-          
-          <code class="ruby">				:user_id =&gt; current_user.id,</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="99">
           
           
-          <code class="ruby">				:path_id =&gt; @path.id,</code>
+          <code class="ruby">				:user_id =&gt; current_user.id,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="100">
           
           
-          <code class="ruby">				:amount =&gt; 15.00,</code>
+          <code class="ruby">				:path_id =&gt; @path.id,</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="101">
           
           
+          <code class="ruby">				:amount =&gt; 15.00,</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="102">
+          
+          
           <code class="ruby">				:status =&gt; 0})</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="102">
+        <li class="covered" data-hits="9" data-linenumber="103">
           <span class="hits">9</span>
           
           <code class="ruby">			purchased_path = current_user.paths.create!({</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="103">
+        <li class="never" data-hits="" data-linenumber="104">
           
           
           <code class="ruby">				:user_id =&gt; current_user.id,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="104">
+        <li class="never" data-hits="" data-linenumber="105">
           
           
           <code class="ruby">				:company_id =&gt; @current_user.company.id,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="105">
+        <li class="never" data-hits="" data-linenumber="106">
           
           
           <code class="ruby">				:purchased_path_id =&gt; @path.id,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="106">
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby">				:name =&gt; @path.name,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="107">
+        <li class="never" data-hits="" data-linenumber="108">
           
           
           <code class="ruby">				:description =&gt; @path.description,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="108">
+        <li class="never" data-hits="" data-linenumber="109">
           
           
           <code class="ruby">				:amount =&gt; 15.00,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="109">
+        <li class="never" data-hits="" data-linenumber="110">
           
           
           <code class="ruby">				:status =&gt; 0})</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="110">
+        <li class="covered" data-hits="9" data-linenumber="111">
           <span class="hits">9</span>
           
           <code class="ruby">			@path.sections.each do |s|</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="111">
+        <li class="covered" data-hits="3" data-linenumber="112">
           <span class="hits">3</span>
           
           <code class="ruby">				purchased_section = purchased_path.sections.create!(</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="112">
+        <li class="never" data-hits="" data-linenumber="113">
           
           
           <code class="ruby">					:name =&gt; s.name,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="113">
+        <li class="never" data-hits="" data-linenumber="114">
           
           
           <code class="ruby">					:instructions =&gt; s.instructions,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="114">
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby">					:position =&gt; s.position</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="115">
+        <li class="never" data-hits="" data-linenumber="116">
           
           
           <code class="ruby">				)</code>
         </li>
       
-        <li class="covered" data-hits="3" data-linenumber="116">
+        <li class="covered" data-hits="3" data-linenumber="117">
           <span class="hits">3</span>
           
           <code class="ruby">				s.tasks.each do |t|				</code>
         </li>
       
-        <li class="covered" data-hits="9" data-linenumber="117">
+        <li class="covered" data-hits="9" data-linenumber="118">
           <span class="hits">9</span>
           
           <code class="ruby">					purchased_section.tasks.create!(</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="118">
+        <li class="never" data-hits="" data-linenumber="119">
           
           
           <code class="ruby">						:question =&gt; t.question,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="119">
+        <li class="never" data-hits="" data-linenumber="120">
           
           
           <code class="ruby">						:answer1 =&gt; t.answer1,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="120">
+        <li class="never" data-hits="" data-linenumber="121">
           
           
           <code class="ruby">						:answer2 =&gt; t.answer2,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="121">
+        <li class="never" data-hits="" data-linenumber="122">
           
           
           <code class="ruby">						:answer3 =&gt; t.answer3,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="122">
+        <li class="never" data-hits="" data-linenumber="123">
           
           
           <code class="ruby">						:answer4 =&gt; t.answer4,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="123">
+        <li class="never" data-hits="" data-linenumber="124">
           
           
           <code class="ruby">						:correct_answer =&gt; t.correct_answer,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="124">
+        <li class="never" data-hits="" data-linenumber="125">
           
           
           <code class="ruby">						:points =&gt; t.points,</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="125">
+        <li class="never" data-hits="" data-linenumber="126">
           
           
           <code class="ruby">						:resource =&gt; t.resource</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="126">
+        <li class="never" data-hits="" data-linenumber="127">
           
           
           <code class="ruby">					)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="127">
+        <li class="never" data-hits="" data-linenumber="128">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="128">
+        <li class="never" data-hits="" data-linenumber="129">
           
           
           <code class="ruby">			end</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="129">
-          <span class="hits">9</span>
-          
-          <code class="ruby">			@title = &quot;Purchase successful&quot;</code>
         </li>
       
         <li class="covered" data-hits="9" data-linenumber="130">
           <span class="hits">9</span>
           
-          <code class="ruby">			flash[:success] = &quot;Purchase successful. Enjoy!.&quot;</code>
+          <code class="ruby">			@title = &quot;Purchase successful&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="131">
+        <li class="covered" data-hits="9" data-linenumber="131">
+          <span class="hits">9</span>
           
-          
-          <code class="ruby">		end</code>
+          <code class="ruby">			flash[:success] = &quot;Purchase successful. Enjoy!.&quot;</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="132">
           
           
-          <code class="ruby">	end</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="133">
           
           
+          <code class="ruby">	end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="134">
+          
+          
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="134">
+        <li class="covered" data-hits="1" data-linenumber="135">
           <span class="hits">1</span>
           
           <code class="ruby">	def destroy</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="135">
+        <li class="covered" data-hits="2" data-linenumber="136">
           <span class="hits">2</span>
           
           <code class="ruby">		@path.destroy</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="136">
+        <li class="covered" data-hits="2" data-linenumber="137">
           <span class="hits">2</span>
           
           <code class="ruby">		redirect_back_or_to paths_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="137">
+        <li class="never" data-hits="" data-linenumber="138">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="138">
+        <li class="never" data-hits="" data-linenumber="139">
           
           
           <code class="ruby">	</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="139">
+        <li class="covered" data-hits="1" data-linenumber="140">
           <span class="hits">1</span>
           
           <code class="ruby">	private</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="140">
+        <li class="covered" data-hits="1" data-linenumber="141">
           <span class="hits">1</span>
           
           <code class="ruby">		def authorized_user</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="141">
+        <li class="covered" data-hits="21" data-linenumber="142">
           <span class="hits">21</span>
           
           <code class="ruby">			@path = Path.find_by_id(params[:id])</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="142">
+        <li class="covered" data-hits="21" data-linenumber="143">
           <span class="hits">21</span>
           
           <code class="ruby">			if @path.nil?</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="143">
+        <li class="missed" data-hits="0" data-linenumber="144">
           
           
           <code class="ruby">				redirect_to root_path</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="144">
+        <li class="missed" data-hits="0" data-linenumber="145">
           
           
           <code class="ruby">				flash[:error] = &quot;You must be an administrator to access this functionality.&quot;</code>
         </li>
       
-        <li class="covered" data-hits="21" data-linenumber="145">
+        <li class="covered" data-hits="21" data-linenumber="146">
           <span class="hits">21</span>
           
           <code class="ruby">			elsif !current_user.company_admin?</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="146">
+        <li class="covered" data-hits="4" data-linenumber="147">
           <span class="hits">4</span>
           
           <code class="ruby">				redirect_to root_path</code>
         </li>
       
-        <li class="covered" data-hits="4" data-linenumber="147">
+        <li class="covered" data-hits="4" data-linenumber="148">
           <span class="hits">4</span>
           
           <code class="ruby">				flash[:error] = &quot;You do not have the ability to change this path.&quot;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="148">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="149">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="150">
           
           
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="151">
+          
+          
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="151">
+        <li class="covered" data-hits="1" data-linenumber="152">
           <span class="hits">1</span>
           
           <code class="ruby">		def parse_file(uploaded_file)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="152">
+        <li class="missed" data-hits="0" data-linenumber="153">
           
           
           <code class="ruby">			new_tasks = []</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="153">
+        <li class="missed" data-hits="0" data-linenumber="154">
           
           
           <code class="ruby">			parsed_file = CSV.parse(uploaded_file.read)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="154">
+        <li class="missed" data-hits="0" data-linenumber="155">
           
           
           <code class="ruby">			if file_properly_formatted?(parsed_file)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="155">
+        <li class="missed" data-hits="0" data-linenumber="156">
           
           
           <code class="ruby">				row_count = 0</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="156">
+        <li class="missed" data-hits="0" data-linenumber="157">
           
           
           <code class="ruby">				parsed_file.each do |row|</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="157">
+        <li class="missed" data-hits="0" data-linenumber="158">
           
           
           <code class="ruby">					if row_count != 0</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="158">
+        <li class="missed" data-hits="0" data-linenumber="159">
           
           
           <code class="ruby">						new_tasks &lt;&lt; create_task(row)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="159">
+        <li class="never" data-hits="" data-linenumber="160">
           
           
           <code class="ruby">					end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="160">
+        <li class="missed" data-hits="0" data-linenumber="161">
           
           
           <code class="ruby">					row_count += 1</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="161">
+        <li class="never" data-hits="" data-linenumber="162">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="162">
+        <li class="missed" data-hits="0" data-linenumber="163">
           
           
           <code class="ruby">				return new_tasks</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="163">
-          
-          
-          <code class="ruby">			else</code>
-        </li>
-      
         <li class="never" data-hits="" data-linenumber="164">
           
           
-          <code class="ruby">				return nil</code>
+          <code class="ruby">			else</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="165">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">				return nil</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="166">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="167">
           
           
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="168">
+          
+          
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="168">
+        <li class="covered" data-hits="1" data-linenumber="169">
           <span class="hits">1</span>
           
           <code class="ruby">		def file_properly_formatted?(parsed_file)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="169">
+        <li class="missed" data-hits="0" data-linenumber="170">
           
           
           <code class="ruby">			file_header = parsed_file[0]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="170">
+        <li class="never" data-hits="" data-linenumber="171">
           
           
           <code class="ruby">			if file_header[0] =~ /question/i &amp;&amp;</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="171">
+        <li class="missed" data-hits="0" data-linenumber="172">
           
           
           <code class="ruby">				file_header[1] =~ /correct answer/i &amp;&amp;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="172">
+        <li class="never" data-hits="" data-linenumber="173">
           
           
           <code class="ruby">				file_header[2] =~ /wrong answer/i &amp;&amp;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="173">
+        <li class="never" data-hits="" data-linenumber="174">
           
           
           <code class="ruby">				file_header[3] =~ /wrong answer/i &amp;&amp;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="174">
+        <li class="never" data-hits="" data-linenumber="175">
           
           
           <code class="ruby">				file_header[4] =~ /wrong answer/i &amp;&amp;</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="175">
+        <li class="never" data-hits="" data-linenumber="176">
           
           
           <code class="ruby">				file_header[5] =~ /points/i</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="176">
+        <li class="missed" data-hits="0" data-linenumber="177">
           
           
           <code class="ruby">				return true</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="177">
+        <li class="never" data-hits="" data-linenumber="178">
           
           
           <code class="ruby">			else</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="178">
+        <li class="missed" data-hits="0" data-linenumber="179">
           
           
           <code class="ruby">				return false</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="179">
+        <li class="never" data-hits="" data-linenumber="180">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="180">
+        <li class="never" data-hits="" data-linenumber="181">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="181">
+        <li class="never" data-hits="" data-linenumber="182">
           
           
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="182">
+        <li class="covered" data-hits="1" data-linenumber="183">
           <span class="hits">1</span>
           
           <code class="ruby">		def create_task(row)</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="183">
+        <li class="missed" data-hits="0" data-linenumber="184">
           
           
           <code class="ruby">			t = Task.new</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="184">
+        <li class="missed" data-hits="0" data-linenumber="185">
           
           
           <code class="ruby">			t.question = row[0]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="185">
+        <li class="missed" data-hits="0" data-linenumber="186">
           
           
           <code class="ruby">			t.answer1 = row[1]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="186">
+        <li class="missed" data-hits="0" data-linenumber="187">
           
           
           <code class="ruby">			t.answer2 = row[2]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="187">
+        <li class="missed" data-hits="0" data-linenumber="188">
           
           
           <code class="ruby">			t.answer3 = row[3]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="188">
+        <li class="missed" data-hits="0" data-linenumber="189">
           
           
           <code class="ruby">			t.answer4 = row[4]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="189">
+        <li class="missed" data-hits="0" data-linenumber="190">
           
           
           <code class="ruby">			t.correct_answer = 1</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="190">
+        <li class="missed" data-hits="0" data-linenumber="191">
           
           
           <code class="ruby">			t.points = row[5]</code>
         </li>
       
-        <li class="missed" data-hits="0" data-linenumber="191">
+        <li class="missed" data-hits="0" data-linenumber="192">
           
           
           <code class="ruby">			return t.save</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="192">
+        <li class="never" data-hits="" data-linenumber="193">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="193">
+        <li class="never" data-hits="" data-linenumber="194">
           
           
           <code class="ruby">end</code>
@@ -7549,14 +7555,14 @@
           <code class="ruby">	def sign_in(user)</code>
         </li>
       
-        <li class="covered" data-hits="388" data-linenumber="3">
-          <span class="hits">388</span>
+        <li class="covered" data-hits="390" data-linenumber="3">
+          <span class="hits">390</span>
           
           <code class="ruby">		cookies.permanent.signed[:remember_token] = [user.id, user.salt]</code>
         </li>
       
-        <li class="covered" data-hits="388" data-linenumber="4">
-          <span class="hits">388</span>
+        <li class="covered" data-hits="390" data-linenumber="4">
+          <span class="hits">390</span>
           
           <code class="ruby">		self.current_user= user</code>
         </li>
@@ -7603,8 +7609,8 @@
           <code class="ruby">	def current_user=(user)</code>
         </li>
       
-        <li class="covered" data-hits="389" data-linenumber="12">
-          <span class="hits">389</span>
+        <li class="covered" data-hits="391" data-linenumber="12">
+          <span class="hits">391</span>
           
           <code class="ruby">		@current_user = user</code>
         </li>
@@ -8521,20 +8527,20 @@
           <code class="ruby">		def set_tokens</code>
         </li>
       
-        <li class="covered" data-hits="1953" data-linenumber="35">
-          <span class="hits">1953</span>
+        <li class="covered" data-hits="1959" data-linenumber="35">
+          <span class="hits">1959</span>
           
           <code class="ruby">			if(self.token1 == nil)</code>
         </li>
       
-        <li class="covered" data-hits="887" data-linenumber="36">
-          <span class="hits">887</span>
+        <li class="covered" data-hits="889" data-linenumber="36">
+          <span class="hits">889</span>
           
           <code class="ruby">				self.token1 = random_alphanumeric</code>
         </li>
       
-        <li class="covered" data-hits="887" data-linenumber="37">
-          <span class="hits">887</span>
+        <li class="covered" data-hits="889" data-linenumber="37">
+          <span class="hits">889</span>
           
           <code class="ruby">				self.token2 = random_alphanumeric</code>
         </li>
@@ -8563,8 +8569,8 @@
           <code class="ruby">		def random_alphanumeric(size=15)</code>
         </li>
       
-        <li class="covered" data-hits="28384" data-linenumber="42">
-          <span class="hits">28384</span>
+        <li class="covered" data-hits="28448" data-linenumber="42">
+          <span class="hits">28448</span>
           
           <code class="ruby">			(1..size).collect { (i = Kernel.rand(62); i += ((i &lt; 10) ? 48 : ((i &lt; 36) ? 55 : 61 ))).chr }.join</code>
         </li>
@@ -9241,14 +9247,14 @@
           <code class="ruby">	def user_belongs_to_company</code>
         </li>
       
-        <li class="covered" data-hits="467" data-linenumber="55">
-          <span class="hits">467</span>
+        <li class="covered" data-hits="469" data-linenumber="55">
+          <span class="hits">469</span>
           
           <code class="ruby">		if company != nil</code>
         </li>
       
-        <li class="covered" data-hits="167" data-linenumber="56">
-          <span class="hits">167</span>
+        <li class="covered" data-hits="169" data-linenumber="56">
+          <span class="hits">169</span>
           
           <code class="ruby">			if user.company != company</code>
         </li>
@@ -9763,8 +9769,8 @@
           <code class="ruby">		def set_position</code>
         </li>
       
-        <li class="covered" data-hits="302" data-linenumber="49">
-          <span class="hits">302</span>
+        <li class="covered" data-hits="305" data-linenumber="49">
+          <span class="hits">305</span>
           
           <code class="ruby">			self.position = 0</code>
         </li>
@@ -10843,20 +10849,20 @@
           <code class="ruby">		def encrypt_password</code>
         </li>
       
-        <li class="covered" data-hits="922" data-linenumber="129">
-          <span class="hits">922</span>
+        <li class="covered" data-hits="924" data-linenumber="129">
+          <span class="hits">924</span>
           
           <code class="ruby">			if new_record?</code>
         </li>
       
-        <li class="covered" data-hits="842" data-linenumber="130">
-          <span class="hits">842</span>
+        <li class="covered" data-hits="844" data-linenumber="130">
+          <span class="hits">844</span>
           
           <code class="ruby">				self.salt = make_salt</code>
         </li>
       
-        <li class="covered" data-hits="842" data-linenumber="131">
-          <span class="hits">842</span>
+        <li class="covered" data-hits="844" data-linenumber="131">
+          <span class="hits">844</span>
           
           <code class="ruby">				self.encrypted_password = encrypt(password)</code>
         </li>
@@ -10885,8 +10891,8 @@
           <code class="ruby">		def encrypt(string)</code>
         </li>
       
-        <li class="covered" data-hits="844" data-linenumber="136">
-          <span class="hits">844</span>
+        <li class="covered" data-hits="846" data-linenumber="136">
+          <span class="hits">846</span>
           
           <code class="ruby">			secure_hash(&quot;#{salt}--#{string}&quot;)</code>
         </li>
@@ -10909,8 +10915,8 @@
           <code class="ruby">		def make_salt</code>
         </li>
       
-        <li class="covered" data-hits="842" data-linenumber="140">
-          <span class="hits">842</span>
+        <li class="covered" data-hits="844" data-linenumber="140">
+          <span class="hits">844</span>
           
           <code class="ruby">			secure_hash(&quot;#{Time.now.utc}--#{password}&quot;)</code>
         </li>
@@ -10933,8 +10939,8 @@
           <code class="ruby">		def secure_hash(string)</code>
         </li>
       
-        <li class="covered" data-hits="1686" data-linenumber="144">
-          <span class="hits">1686</span>
+        <li class="covered" data-hits="1690" data-linenumber="144">
+          <span class="hits">1690</span>
           
           <code class="ruby">			Digest::SHA2.hexdigest(string)</code>
         </li>
@@ -19220,11 +19226,11 @@
         <div class="source_table" id="0ad0dea58cf417c51d933d5ff09c4639808da796">
   <div class="header">
     <h3>spec/controllers/paths_controller_spec.rb</h3>
-    <h4><span class="green">100.0 %</span> covered</h4>
+    <h4><span class="green">98.07 %</span> covered</h4>
     <div>
-      <b>302</b> relevant lines. 
-      <span class="green"><b>302</b> lines covered</span> and
-      <span class="red"><b>0</b> lines missed.</span>
+      <b>311</b> relevant lines. 
+      <span class="green"><b>305</b> lines covered</span> and
+      <span class="red"><b>6</b> lines missed.</span>
     </div>
   </div>
   
@@ -19267,14 +19273,14 @@
           <code class="ruby">	before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="66" data-linenumber="7">
-          <span class="hits">66</span>
+        <li class="covered" data-hits="68" data-linenumber="7">
+          <span class="hits">68</span>
           
           <code class="ruby">		@user = Factory(:user)</code>
         </li>
       
-        <li class="covered" data-hits="66" data-linenumber="8">
-          <span class="hits">66</span>
+        <li class="covered" data-hits="68" data-linenumber="8">
+          <span class="hits">68</span>
           
           <code class="ruby">		@path = Factory(:path, :user =&gt; @user, :company =&gt; @user.company)</code>
         </li>
@@ -19285,8 +19291,8 @@
           <code class="ruby">		</code>
         </li>
       
-        <li class="covered" data-hits="66" data-linenumber="10">
-          <span class="hits">66</span>
+        <li class="covered" data-hits="68" data-linenumber="10">
+          <span class="hits">68</span>
           
           <code class="ruby">		@attr = {</code>
         </li>
@@ -19975,14 +19981,14 @@
           <code class="ruby">		before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="49" data-linenumber="125">
-          <span class="hits">49</span>
+        <li class="covered" data-hits="51" data-linenumber="125">
+          <span class="hits">51</span>
           
           <code class="ruby">			@user.company_user.toggle!(:is_admin)</code>
         </li>
       
-        <li class="covered" data-hits="49" data-linenumber="126">
-          <span class="hits">49</span>
+        <li class="covered" data-hits="51" data-linenumber="126">
+          <span class="hits">51</span>
           
           <code class="ruby">			test_sign_in(@user)</code>
         </li>
@@ -20926,343 +20932,343 @@
         <li class="covered" data-hits="1" data-linenumber="283">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should show all the resources for the path&quot; do</code>
+          <code class="ruby">			it &quot;should show all the resources for the path&quot; do	</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="284">
           <span class="hits">1</span>
           
-          <code class="ruby">				t1 = Factory(:info_resource, :path =&gt; @path, :description =&gt; &quot;Q1&quot;, :link =&gt; &quot;http://www.youtube.com&quot;)</code>
+          <code class="ruby">				@resources = []</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="285">
           <span class="hits">1</span>
           
-          <code class="ruby">				t2 = Factory(:info_resource, :path =&gt; @path, :description =&gt; &quot;Q2&quot;, :link =&gt; &quot;http://www.google.com&quot;)</code>
+          <code class="ruby">				3.times do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="286">
           <span class="hits">1</span>
           
-          <code class="ruby">				t3 = Factory(:info_resource, :path =&gt; @path, :description =&gt; &quot;Q3&quot;, :link =&gt; &quot;http://www.facebook.com&quot;)</code>
+          <code class="ruby">					@resources &lt;&lt; Factory(:resources, :path =&gt; @path)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="287">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="288">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="288">
+          
           
           <code class="ruby">				get :show, :id =&gt; @path</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="289">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="289">
           
-          <code class="ruby">				response.should have_selector(&quot;p&quot;, :content =&gt; t1.description)</code>
+          
+          <code class="ruby">				@resources.each do |r|</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="290">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="290">
           
-          <code class="ruby">				response.should have_selector(&quot;p&quot;, :content =&gt; t1.link)</code>
+          
+          <code class="ruby">					response.should have_selector(&quot;p&quot;, :content =&gt; r.description)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="291">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="291">
           
-          <code class="ruby">				response.should have_selector(&quot;p&quot;, :content =&gt; t2.description)</code>
+          
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="292">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="292">
           
-          <code class="ruby">				response.should have_selector(&quot;p&quot;, :content =&gt; t2.link)			</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="293">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="293">
           
-          <code class="ruby">				response.should have_selector(&quot;p&quot;, :content =&gt; t3.description)</code>
+          
+          <code class="ruby">			</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="294">
           <span class="hits">1</span>
           
-          <code class="ruby">				response.should have_selector(&quot;p&quot;, :content =&gt; t3.link)</code>
+          <code class="ruby">			it &quot;should show all the achievements possible for the path&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="295">
+        <li class="covered" data-hits="1" data-linenumber="295">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			end</code>
+          <code class="ruby">				@achievements = []</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="296">
+        <li class="covered" data-hits="1" data-linenumber="296">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			</code>
+          <code class="ruby">				3.times do </code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="297">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should show all the achievements possible for the path&quot;</code>
+          <code class="ruby">					@achievements &lt;&lt; Factory(:achievements, :path =&gt; @path)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="298">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="299">
+        <li class="missed" data-hits="0" data-linenumber="299">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">				get :show, :id =&gt; @path</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="300">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="300">
           
-          <code class="ruby">		describe &quot;GET 'file'&quot; do</code>
+          
+          <code class="ruby">				@achievements.each do |s|</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="301">
-          <span class="hits">1</span>
+        <li class="missed" data-hits="0" data-linenumber="301">
           
-          <code class="ruby">			before(:each) do</code>
+          
+          <code class="ruby">					response.should have_selector(&quot;a&quot;, :content =&gt; a.name)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="302">
-          <span class="hits">2</span>
+        <li class="never" data-hits="" data-linenumber="302">
           
-          <code class="ruby">				@path = Factory(:path, :user =&gt; @user)</code>
+          
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="303">
-          <span class="hits">2</span>
+        <li class="never" data-hits="" data-linenumber="303">
           
-          <code class="ruby">				@other_user = Factory(:user, :email =&gt; &quot;other@t.com&quot;)</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="304">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="305">
+        <li class="covered" data-hits="1" data-linenumber="305">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			</code>
+          <code class="ruby">			it &quot;should show all the sections for a path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="306">
           <span class="hits">1</span>
           
-          <code class="ruby">			it &quot;should be successful&quot; do</code>
+          <code class="ruby">				@sections = []</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="307">
           <span class="hits">1</span>
           
-          <code class="ruby">				test_sign_in(@user)</code>
+          <code class="ruby">				3.times do </code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="308">
+        <li class="covered" data-hits="3" data-linenumber="308">
+          <span class="hits">3</span>
+          
+          <code class="ruby">					@sections &lt;&lt; Factory(:section, :path =&gt; @path)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="309">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="310">
           <span class="hits">1</span>
           
-          <code class="ruby">				get :file, :id =&gt; @path</code>
+          <code class="ruby">				get :show, :id =&gt; @path</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="309">
+        <li class="covered" data-hits="1" data-linenumber="311">
           <span class="hits">1</span>
           
-          <code class="ruby">				response.should be_success</code>
+          <code class="ruby">				@sections.each do |s| </code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="310">
+        <li class="covered" data-hits="3" data-linenumber="312">
+          <span class="hits">3</span>
+          
+          <code class="ruby">					response.should have_selector(&quot;a&quot;, :content =&gt; s.name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="313">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="314">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="311">
-          
-          
-          <code class="ruby">			</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="312">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			it &quot;should have right title&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="313">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				test_sign_in(@user)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="314">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				get :file, :id =&gt; @path</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="315">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				response.should have_selector(&quot;title&quot;, :content =&gt; &quot;File&quot;)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="316">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="317">
+        <li class="never" data-hits="" data-linenumber="315">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="318">
+        <li class="never" data-hits="" data-linenumber="316">
           
           
-          <code class="ruby">		</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="319">
+        <li class="covered" data-hits="1" data-linenumber="317">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;POST 'upload'&quot; do</code>
+          <code class="ruby">		describe &quot;GET 'file'&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="320">
+        <li class="covered" data-hits="1" data-linenumber="318">
           <span class="hits">1</span>
           
           <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="321">
+        <li class="covered" data-hits="2" data-linenumber="319">
           <span class="hits">2</span>
           
           <code class="ruby">				@path = Factory(:path, :user =&gt; @user)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="322">
+        <li class="covered" data-hits="2" data-linenumber="320">
           <span class="hits">2</span>
           
-          <code class="ruby">				test_sign_in(@user)</code>
+          <code class="ruby">				@other_user = Factory(:user, :email =&gt; &quot;other@t.com&quot;)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="323">
+        <li class="never" data-hits="" data-linenumber="321">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="324">
+        <li class="never" data-hits="" data-linenumber="322">
           
           
           <code class="ruby">			</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="323">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			it &quot;should be successful&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="324">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				test_sign_in(@user)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="325">
           <span class="hits">1</span>
           
-          <code class="ruby">			describe &quot;failure&quot; do</code>
+          <code class="ruby">				get :file, :id =&gt; @path</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="326">
           <span class="hits">1</span>
           
-          <code class="ruby">				before(:each) do</code>
+          <code class="ruby">				response.should be_success</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="327">
-          <span class="hits">2</span>
+        <li class="never" data-hits="" data-linenumber="327">
           
-          <code class="ruby">					@attr = { :file =&gt; nil }</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="328">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="329">
+        <li class="covered" data-hits="1" data-linenumber="329">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">			</code>
+          <code class="ruby">			it &quot;should have right title&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="330">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should not add questions to a path&quot; do</code>
+          <code class="ruby">				test_sign_in(@user)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="331">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				get :file, :id =&gt; @path</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="332">
           <span class="hits">1</span>
           
-          <code class="ruby">						post :upload, :id =&gt; @path.id, :path =&gt; @attr</code>
+          <code class="ruby">				response.should have_selector(&quot;title&quot;, :content =&gt; &quot;File&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="333">
           
           
-          <code class="ruby">					end.should change(Task, :count).by(0)	</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="334">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">		end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="335">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="336">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should render the file page&quot; do</code>
+          <code class="ruby">		describe &quot;POST 'upload'&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="337">
           <span class="hits">1</span>
           
-          <code class="ruby">					post :upload, :id =&gt; @path.id, :path =&gt; @attr</code>
+          <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="338">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="338">
+          <span class="hits">2</span>
           
-          <code class="ruby">					response.should render_template(&quot;file&quot;)</code>
+          <code class="ruby">				@path = Factory(:path, :user =&gt; @user)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="339">
+        <li class="covered" data-hits="2" data-linenumber="339">
+          <span class="hits">2</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">				test_sign_in(@user)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="340">
@@ -21274,97 +21280,97 @@
         <li class="never" data-hits="" data-linenumber="341">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="342">
+        <li class="covered" data-hits="1" data-linenumber="342">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">		</code>
+          <code class="ruby">			describe &quot;failure&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="343">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;GET 'marketplace'&quot; do</code>
+          <code class="ruby">				before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="344">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="2" data-linenumber="344">
+          <span class="hits">2</span>
           
-          <code class="ruby">			before(:each) do</code>
+          <code class="ruby">					@attr = { </code>
         </li>
       
-        <li class="covered" data-hits="6" data-linenumber="345">
-          <span class="hits">6</span>
+        <li class="never" data-hits="" data-linenumber="345">
           
-          <code class="ruby">				@other_user = Factory(:user)</code>
+          
+          <code class="ruby">					:file =&gt; nil }</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="346">
           
           
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="6" data-linenumber="347">
-          <span class="hits">6</span>
-          
-          <code class="ruby">				@purchaseable_paths = []</code>
-        </li>
-      
-        <li class="covered" data-hits="6" data-linenumber="348">
-          <span class="hits">6</span>
-          
-          <code class="ruby">				3.times do</code>
-        </li>
-      
-        <li class="covered" data-hits="18" data-linenumber="349">
-          <span class="hits">18</span>
-          
-          <code class="ruby">					@purchaseable_paths &lt;&lt; Factory(:path, :company =&gt; @other_user.company, :user =&gt; @other_user, :is_public =&gt; true)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="350">
-          
-          
           <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="347">
+          
+          
+          <code class="ruby">			</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="348">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should not add questions to a path&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="349">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					lambda do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="350">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						post :upload, :id =&gt; @path.id, :path =&gt; @attr</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="351">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">					end.should change(Task, :count).by(0)	</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="352">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="353">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="353">
           
-          <code class="ruby">			describe &quot;without search terms&quot; do</code>
+          
+          <code class="ruby">				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="354">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should be successful&quot; do</code>
+          <code class="ruby">				it &quot;should render the file page&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="355">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :marketplace</code>
+          <code class="ruby">					post :upload, :id =&gt; @path.id, :path =&gt; @attr</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="356">
           <span class="hits">1</span>
           
-          <code class="ruby">					response.should be_success</code>
+          <code class="ruby">					response.should render_template(&quot;file&quot;)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="357">
@@ -21382,379 +21388,379 @@
         <li class="never" data-hits="" data-linenumber="359">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby">		end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="360">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="360">
           
-          <code class="ruby">			describe &quot;with search terms&quot; do</code>
+          
+          <code class="ruby">		</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="361">
           <span class="hits">1</span>
           
-          <code class="ruby">				describe &quot;that do not have results&quot; do</code>
+          <code class="ruby">		describe &quot;GET 'marketplace'&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="362">
           <span class="hits">1</span>
           
-          <code class="ruby">					it &quot;should be successful&quot; do</code>
+          <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="363">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="6" data-linenumber="363">
+          <span class="hits">6</span>
           
-          <code class="ruby">						get :marketplace, :search =&gt; &quot;ABCDEFGHIJK123&quot;</code>
+          <code class="ruby">				@other_user = Factory(:user)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="364">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="364">
           
-          <code class="ruby">						response.should be_success</code>
+          
+          <code class="ruby">				</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="365">
+        <li class="covered" data-hits="6" data-linenumber="365">
+          <span class="hits">6</span>
           
-          
-          <code class="ruby">					end</code>
+          <code class="ruby">				@purchaseable_paths = []</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="366">
+        <li class="covered" data-hits="6" data-linenumber="366">
+          <span class="hits">6</span>
           
-          
-          <code class="ruby">					</code>
+          <code class="ruby">				3.times do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="367">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="18" data-linenumber="367">
+          <span class="hits">18</span>
           
-          <code class="ruby">					it &quot;should state that there are no results&quot; do</code>
+          <code class="ruby">					@purchaseable_paths &lt;&lt; Factory(:path, :company =&gt; @other_user.company, :user =&gt; @other_user, :is_public =&gt; true)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="368">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="368">
           
-          <code class="ruby">						get :marketplace, :search =&gt; &quot;ABCDEFGHIJK123&quot;</code>
+          
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="369">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="369">
           
-          <code class="ruby">						response.should have_selector(&quot;p&quot;, :content =&gt; &quot;returned 0 results.&quot;)</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="370">
           
           
-          <code class="ruby">					end</code>
+          <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="371">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="372">
-          
-          
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="373">
+        <li class="covered" data-hits="1" data-linenumber="371">
           <span class="hits">1</span>
           
-          <code class="ruby">				describe &quot;that do have results&quot; do</code>
+          <code class="ruby">			describe &quot;without search terms&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="374">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					it &quot;should be successful&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="375">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						get :marketplace, :search =&gt; &quot;Ruby&quot;</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="376">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						response.should be_success</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="377">
-          
-          
-          <code class="ruby">					end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="378">
-          
-          
-          <code class="ruby">					</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="379">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					it &quot;should have right header&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="380">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						get :marketplace, :search =&gt; &quot;Ruby&quot;</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="381">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						response.should have_selector(&quot;h1&quot;, :content =&gt; &quot;Path Marketplace&quot;)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="382">
-          
-          
-          <code class="ruby">					end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="383">
-          
-          
-          <code class="ruby">					</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="384">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					it &quot;should have listings for each result by name&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="385">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						get :marketplace, :search =&gt; &quot;Ruby&quot;</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="386">
-          <span class="hits">1</span>
-          
-          <code class="ruby">						@purchaseable_paths.each do |p|</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="387">
-          <span class="hits">3</span>
-          
-          <code class="ruby">							response.should have_selector(&quot;span&quot;, :content =&gt; p.name)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="388">
-          
-          
-          <code class="ruby">						end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="389">
-          
-          
-          <code class="ruby">					end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="390">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="391">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="392">
-          
-          
-          <code class="ruby">		end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="393">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="394">
-          <span class="hits">1</span>
-          
-          <code class="ruby">		describe &quot;GET 'review'&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="395">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			before(:each) do</code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="396">
-          <span class="hits">5</span>
-          
-          <code class="ruby">				@other_user = Factory(:user)</code>
-        </li>
-      
-        <li class="covered" data-hits="5" data-linenumber="397">
-          <span class="hits">5</span>
-          
-          <code class="ruby">				@purchaseable_path = Factory(:path, :company =&gt; @other_user.company, :user =&gt; @other_user, :is_public =&gt; true)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="398">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="399">
-          
-          
-          <code class="ruby">			</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="400">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			describe &quot;failure&quot; do				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="401">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should redirect bad path id to root_path&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="402">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					get :review, :id =&gt; &quot;abc&quot;</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="403">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					response.should redirect_to root_path</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="404">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="405">
-          
-          
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="406">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should redirect private path request to root_path&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="407">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					unpurchaseable_path = Factory(:path, :company =&gt; @other_company, :user =&gt; @other_user, :is_public =&gt; false)</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="408">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					get :review, :id =&gt; unpurchaseable_path</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="409">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					response.should redirect_to root_path</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="410">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="411">
-          
-          
-          <code class="ruby">			end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="412">
-          
-          
-          <code class="ruby">		</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="413">
-          <span class="hits">1</span>
-          
-          <code class="ruby">			describe &quot;success&quot; do</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="414">
+        <li class="covered" data-hits="1" data-linenumber="372">
           <span class="hits">1</span>
           
           <code class="ruby">				it &quot;should be successful&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="415">
+        <li class="covered" data-hits="1" data-linenumber="373">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :review, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					get :marketplace</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="416">
+        <li class="covered" data-hits="1" data-linenumber="374">
           <span class="hits">1</span>
           
           <code class="ruby">					response.should be_success</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="417">
+        <li class="never" data-hits="" data-linenumber="375">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="418">
+        <li class="never" data-hits="" data-linenumber="376">
           
           
-          <code class="ruby"></code>
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="377">
+          
+          
+          <code class="ruby">			</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="378">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			describe &quot;with search terms&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="379">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				describe &quot;that do not have results&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="380">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					it &quot;should be successful&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="381">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						get :marketplace, :search =&gt; &quot;ABCDEFGHIJK123&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="382">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						response.should be_success</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="383">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="384">
+          
+          
+          <code class="ruby">					</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="385">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					it &quot;should state that there are no results&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="386">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						get :marketplace, :search =&gt; &quot;ABCDEFGHIJK123&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="387">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						response.should have_selector(&quot;p&quot;, :content =&gt; &quot;returned 0 results.&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="388">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="389">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="390">
+          
+          
+          <code class="ruby">				</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="391">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				describe &quot;that do have results&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="392">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					it &quot;should be successful&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="393">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						get :marketplace, :search =&gt; &quot;Ruby&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="394">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						response.should be_success</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="395">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="396">
+          
+          
+          <code class="ruby">					</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="397">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					it &quot;should have right header&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="398">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						get :marketplace, :search =&gt; &quot;Ruby&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="399">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						response.should have_selector(&quot;h1&quot;, :content =&gt; &quot;Path Marketplace&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="400">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="401">
+          
+          
+          <code class="ruby">					</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="402">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					it &quot;should have listings for each result by name&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="403">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						get :marketplace, :search =&gt; &quot;Ruby&quot;</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="404">
+          <span class="hits">1</span>
+          
+          <code class="ruby">						@purchaseable_paths.each do |p|</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="405">
+          <span class="hits">3</span>
+          
+          <code class="ruby">							response.should have_selector(&quot;span&quot;, :content =&gt; p.name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="406">
+          
+          
+          <code class="ruby">						end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="407">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="408">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="409">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="410">
+          
+          
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="411">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="412">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		describe &quot;GET 'review'&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="413">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			before(:each) do</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="414">
+          <span class="hits">5</span>
+          
+          <code class="ruby">				@other_user = Factory(:user)</code>
+        </li>
+      
+        <li class="covered" data-hits="5" data-linenumber="415">
+          <span class="hits">5</span>
+          
+          <code class="ruby">				@purchaseable_path = Factory(:path, :company =&gt; @other_user.company, :user =&gt; @other_user, :is_public =&gt; true)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="416">
+          
+          
+          <code class="ruby">			end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="417">
+          
+          
+          <code class="ruby">			</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="418">
+          <span class="hits">1</span>
+          
+          <code class="ruby">			describe &quot;failure&quot; do				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="419">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should have right title&quot; do</code>
+          <code class="ruby">				it &quot;should redirect bad path id to root_path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="420">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :review, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					get :review, :id =&gt; &quot;abc&quot;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="421">
           <span class="hits">1</span>
           
-          <code class="ruby">					response.should have_selector(&quot;title&quot;, :content =&gt; &quot;Review purchase&quot;)</code>
+          <code class="ruby">					response.should redirect_to root_path</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="422">
@@ -21772,37 +21778,37 @@
         <li class="covered" data-hits="1" data-linenumber="424">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should have the right name&quot; do</code>
+          <code class="ruby">				it &quot;should redirect private path request to root_path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="425">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :review, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					unpurchaseable_path = Factory(:path, :company =&gt; @other_company, :user =&gt; @other_user, :is_public =&gt; false)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="426">
           <span class="hits">1</span>
           
-          <code class="ruby">					response.should have_selector(&quot;h2&quot;, :content =&gt; @purchaseable_path.name)</code>
+          <code class="ruby">					get :review, :id =&gt; unpurchaseable_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="427">
+        <li class="covered" data-hits="1" data-linenumber="427">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">					response.should redirect_to root_path</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="428">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="429">
           
           
-          <code class="ruby">		end</code>
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="430">
@@ -21814,169 +21820,169 @@
         <li class="covered" data-hits="1" data-linenumber="431">
           <span class="hits">1</span>
           
-          <code class="ruby">		describe &quot;GET 'purchase'&quot; do</code>
+          <code class="ruby">			describe &quot;success&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="432">
           <span class="hits">1</span>
           
-          <code class="ruby">			before(:each) do</code>
+          <code class="ruby">				it &quot;should be successful&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="433">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="1" data-linenumber="433">
+          <span class="hits">1</span>
           
-          <code class="ruby">				@other_user = Factory(:user, :email =&gt; &quot;path_author@testing.com&quot;)</code>
+          <code class="ruby">					get :review, :id =&gt; @purchaseable_path</code>
         </li>
       
-        <li class="covered" data-hits="11" data-linenumber="434">
-          <span class="hits">11</span>
+        <li class="covered" data-hits="1" data-linenumber="434">
+          <span class="hits">1</span>
           
-          <code class="ruby">				@purchaseable_path = Factory(:path, :company =&gt; @other_user.company, :user =&gt; @other_user, :is_public =&gt; true)</code>
+          <code class="ruby">					response.should be_success</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="435">
           
           
-          <code class="ruby">			end</code>
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="436">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby"></code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="437">
           <span class="hits">1</span>
           
-          <code class="ruby">			describe &quot;failure&quot; do				</code>
+          <code class="ruby">				it &quot;should have right title&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="438">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should redirect bad path id to root_path&quot; do</code>
+          <code class="ruby">					get :review, :id =&gt; @purchaseable_path</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="439">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :purchase, :id =&gt; &quot;abc&quot;</code>
+          <code class="ruby">					response.should have_selector(&quot;title&quot;, :content =&gt; &quot;Review purchase&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="440">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="440">
           
-          <code class="ruby">					response.should redirect_to root_path</code>
+          
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="441">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">				</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="442">
+        <li class="covered" data-hits="1" data-linenumber="442">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				</code>
+          <code class="ruby">				it &quot;should have the right name&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="443">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should redirect private path request to root_path&quot; do</code>
+          <code class="ruby">					get :review, :id =&gt; @purchaseable_path</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="444">
           <span class="hits">1</span>
           
-          <code class="ruby">					unpurchaseable_path = Factory(:path, :company =&gt; @other_company, :user =&gt; @other_user, :is_public =&gt; false)</code>
+          <code class="ruby">					response.should have_selector(&quot;h2&quot;, :content =&gt; @purchaseable_path.name)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="445">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					get :purchase, :id =&gt; unpurchaseable_path</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="446">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					response.should redirect_to root_path</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="447">
+        <li class="never" data-hits="" data-linenumber="445">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="448">
+        <li class="never" data-hits="" data-linenumber="446">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="449">
+        <li class="never" data-hits="" data-linenumber="447">
           
           
-          <code class="ruby">			</code>
+          <code class="ruby">		end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="448">
+          
+          
+          <code class="ruby">		</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="449">
+          <span class="hits">1</span>
+          
+          <code class="ruby">		describe &quot;GET 'purchase'&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="450">
           <span class="hits">1</span>
           
-          <code class="ruby">			describe &quot;success&quot; do</code>
+          <code class="ruby">			before(:each) do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="451">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="11" data-linenumber="451">
+          <span class="hits">11</span>
           
-          <code class="ruby">				it &quot;should display success message&quot; do</code>
+          <code class="ruby">				@other_user = Factory(:user, :email =&gt; &quot;path_author@testing.com&quot;)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="452">
-          <span class="hits">1</span>
+        <li class="covered" data-hits="11" data-linenumber="452">
+          <span class="hits">11</span>
           
-          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">				@purchaseable_path = Factory(:path, :company =&gt; @other_user.company, :user =&gt; @other_user, :is_public =&gt; true)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="453">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="453">
           
-          <code class="ruby">					flash[:success].should =~ /purchase successful/i</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="454">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">			</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="455">
+        <li class="covered" data-hits="1" data-linenumber="455">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby"></code>
+          <code class="ruby">			describe &quot;failure&quot; do				</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="456">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should have right title&quot; do</code>
+          <code class="ruby">				it &quot;should redirect bad path id to root_path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="457">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					get :purchase, :id =&gt; &quot;abc&quot;</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="458">
           <span class="hits">1</span>
           
-          <code class="ruby">					response.should have_selector(&quot;title&quot;, :content =&gt; &quot;Purchase successful&quot;)</code>
+          <code class="ruby">					response.should redirect_to root_path</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="459">
@@ -21994,127 +22000,127 @@
         <li class="covered" data-hits="1" data-linenumber="461">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should have the right path name&quot; do</code>
+          <code class="ruby">				it &quot;should redirect private path request to root_path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="462">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					unpurchaseable_path = Factory(:path, :company =&gt; @other_company, :user =&gt; @other_user, :is_public =&gt; false)</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="463">
           <span class="hits">1</span>
           
-          <code class="ruby">					response.should have_selector(&quot;h2&quot;, :content =&gt; @purchaseable_path.name)</code>
+          <code class="ruby">					get :purchase, :id =&gt; unpurchaseable_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="464">
+        <li class="covered" data-hits="1" data-linenumber="464">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				end</code>
+          <code class="ruby">					response.should redirect_to root_path</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="465">
           
           
-          <code class="ruby">				</code>
+          <code class="ruby">				end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="466">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="466">
           
-          <code class="ruby">				it &quot;should create a new path&quot; do</code>
+          
+          <code class="ruby">			end</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="467">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="467">
           
-          <code class="ruby">					lambda do</code>
+          
+          <code class="ruby">			</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="468">
           <span class="hits">1</span>
           
-          <code class="ruby">						get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">			describe &quot;success&quot; do</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="469">
-          
-          
-          <code class="ruby">					end.should change(Path, :count).by(1)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="470">
-          
-          
-          <code class="ruby">				end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="471">
-          
-          
-          <code class="ruby">				</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="472">
+        <li class="covered" data-hits="1" data-linenumber="469">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should set the purchased path for the new path&quot; do</code>
+          <code class="ruby">				it &quot;should display success message&quot; do</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="473">
+        <li class="covered" data-hits="1" data-linenumber="470">
           <span class="hits">1</span>
           
           <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="474">
+        <li class="covered" data-hits="1" data-linenumber="471">
           <span class="hits">1</span>
           
-          <code class="ruby">					purchased_path = Path.find(:first, :conditions =&gt; [&quot;company_id = ? and purchased_path_id = ?&quot;, @user.company.id, @purchaseable_path.id])</code>
+          <code class="ruby">					flash[:success].should =~ /purchase successful/i</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="475">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					purchased_path.name.should == @purchaseable_path.name</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="476">
+        <li class="never" data-hits="" data-linenumber="472">
           
           
           <code class="ruby">				end</code>
         </li>
       
+        <li class="never" data-hits="" data-linenumber="473">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="474">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should have right title&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="475">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="476">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					response.should have_selector(&quot;title&quot;, :content =&gt; &quot;Purchase successful&quot;)</code>
+        </li>
+      
         <li class="never" data-hits="" data-linenumber="477">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="478">
           
           
           <code class="ruby">				</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="478">
-          <span class="hits">1</span>
-          
-          <code class="ruby">				it &quot;should create a new transaction&quot; do</code>
-        </li>
-      
         <li class="covered" data-hits="1" data-linenumber="479">
           <span class="hits">1</span>
           
-          <code class="ruby">					lambda do</code>
+          <code class="ruby">				it &quot;should have the right path name&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="480">
           <span class="hits">1</span>
           
-          <code class="ruby">						get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="481">
+        <li class="covered" data-hits="1" data-linenumber="481">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">					end.should change(UserTransaction, :count).by(1)</code>
+          <code class="ruby">					response.should have_selector(&quot;h2&quot;, :content =&gt; @purchaseable_path.name)</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="482">
@@ -22132,232 +22138,340 @@
         <li class="covered" data-hits="1" data-linenumber="484">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should have point transaction with correct path&quot; do</code>
+          <code class="ruby">				it &quot;should create a new path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="485">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					lambda do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="486">
           <span class="hits">1</span>
           
-          <code class="ruby">					ut = UserTransaction.find(:first, :conditions =&gt; [&quot;path_id = ? and user_id = ?&quot;, @purchaseable_path.id, @user.id])</code>
+          <code class="ruby">						get :purchase, :id =&gt; @purchaseable_path</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="487">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="487">
           
-          <code class="ruby">					ut.path_id.should == @purchaseable_path.id</code>
+          
+          <code class="ruby">					end.should change(Path, :count).by(1)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="488">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="488">
           
-          <code class="ruby">					ut.path.should == @purchaseable_path</code>
+          
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="489">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">				</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="490">
+        <li class="covered" data-hits="1" data-linenumber="490">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				</code>
+          <code class="ruby">				it &quot;should set the purchased path for the new path&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="491">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should have point transaction with the correct points&quot; do</code>
+          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="492">
           <span class="hits">1</span>
           
-          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+          <code class="ruby">					purchased_path = Path.find(:first, :conditions =&gt; [&quot;company_id = ? and purchased_path_id = ?&quot;, @user.company.id, @purchaseable_path.id])</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="493">
           <span class="hits">1</span>
           
-          <code class="ruby">					ut = UserTransaction.find(:first, :conditions =&gt; [&quot;path_id = ? and user_id = ?&quot;, @purchaseable_path.id, @user.id])</code>
+          <code class="ruby">					purchased_path.name.should == @purchaseable_path.name</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="494">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="494">
           
-          <code class="ruby">					ut.amount.should == 15.00</code>
+          
+          <code class="ruby">				end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="495">
           
           
-          <code class="ruby">				end</code>
+          <code class="ruby">				</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="496">
+        <li class="covered" data-hits="1" data-linenumber="496">
+          <span class="hits">1</span>
           
-          
-          <code class="ruby">				</code>
+          <code class="ruby">				it &quot;should create a new transaction&quot; do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="497">
           <span class="hits">1</span>
           
-          <code class="ruby">				it &quot;should create and associate all the sections and tasks for the purchased path&quot; do</code>
+          <code class="ruby">					lambda do</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="498">
           <span class="hits">1</span>
           
-          <code class="ruby">					@tasks = []</code>
+          <code class="ruby">						get :purchase, :id =&gt; @purchaseable_path</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="499">
-          <span class="hits">1</span>
+        <li class="never" data-hits="" data-linenumber="499">
           
-          <code class="ruby">					@sections = []</code>
+          
+          <code class="ruby">					end.should change(UserTransaction, :count).by(1)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="500">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					3.times do</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="501">
-          <span class="hits">3</span>
-          
-          <code class="ruby">						section = Factory(:section, :path =&gt; @purchaseable_path)</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="502">
-          <span class="hits">3</span>
-          
-          <code class="ruby">						@sections &lt;&lt; section</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="503">
-          <span class="hits">3</span>
-          
-          <code class="ruby">						3.times do</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="504">
-          <span class="hits">9</span>
-          
-          <code class="ruby">							@tasks &lt;&lt; Factory(:task, :section =&gt; section)</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="505">
-          
-          
-          <code class="ruby">						end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="506">
-          
-          
-          <code class="ruby">					end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="507">
-          
-          
-          <code class="ruby">					</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="508">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="509">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					purchased_path = Path.find(:first, :conditions =&gt; [&quot;company_id = ? and purchased_path_id = ?&quot;, @user.company.id, @purchaseable_path.id])</code>
-        </li>
-      
-        <li class="covered" data-hits="1" data-linenumber="510">
-          <span class="hits">1</span>
-          
-          <code class="ruby">					3.times do |n|</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="511">
-          <span class="hits">3</span>
-          
-          <code class="ruby">						purchased_section = purchased_path.sections[n]</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="512">
-          <span class="hits">3</span>
-          
-          <code class="ruby">						purchased_section.name.should == @sections[n].name</code>
-        </li>
-      
-        <li class="covered" data-hits="3" data-linenumber="513">
-          <span class="hits">3</span>
-          
-          <code class="ruby">						3.times do |n|</code>
-        </li>
-      
-        <li class="covered" data-hits="9" data-linenumber="514">
-          <span class="hits">9</span>
-          
-          <code class="ruby">							purchased_section.tasks[n].question.should == @tasks[n].question</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="515">
-          
-          
-          <code class="ruby">						end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="516">
-          
-          
-          <code class="ruby">					end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="517">
+        <li class="never" data-hits="" data-linenumber="500">
           
           
           <code class="ruby">				end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="518">
+        <li class="never" data-hits="" data-linenumber="501">
+          
+          
+          <code class="ruby">				</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="502">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should have point transaction with correct path&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="503">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="504">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					ut = UserTransaction.find(:first, :conditions =&gt; [&quot;path_id = ? and user_id = ?&quot;, @purchaseable_path.id, @user.id])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="505">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					ut.path_id.should == @purchaseable_path.id</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="506">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					ut.path.should == @purchaseable_path</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="507">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="508">
+          
+          
+          <code class="ruby">				</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="509">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should have point transaction with the correct points&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="510">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="511">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					ut = UserTransaction.find(:first, :conditions =&gt; [&quot;path_id = ? and user_id = ?&quot;, @purchaseable_path.id, @user.id])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="512">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					ut.amount.should == 15.00</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="513">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="514">
+          
+          
+          <code class="ruby">				</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="515">
+          <span class="hits">1</span>
+          
+          <code class="ruby">				it &quot;should create and associate all the sections and tasks for the purchased path&quot; do</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="516">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					@tasks = []</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="517">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					@sections = []</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="518">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					3.times do</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="519">
+          <span class="hits">3</span>
+          
+          <code class="ruby">						section = Factory(:section, :path =&gt; @purchaseable_path)</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="520">
+          <span class="hits">3</span>
+          
+          <code class="ruby">						@sections &lt;&lt; section</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="521">
+          <span class="hits">3</span>
+          
+          <code class="ruby">						3.times do</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="522">
+          <span class="hits">9</span>
+          
+          <code class="ruby">							@tasks &lt;&lt; Factory(:task, :section =&gt; section)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="523">
+          
+          
+          <code class="ruby">						end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="524">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="525">
+          
+          
+          <code class="ruby">					</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="526">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					get :purchase, :id =&gt; @purchaseable_path</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="527">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					purchased_path = Path.find(:first, :conditions =&gt; [&quot;company_id = ? and purchased_path_id = ?&quot;, @user.company.id, @purchaseable_path.id])</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="528">
+          <span class="hits">1</span>
+          
+          <code class="ruby">					3.times do |n|</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="529">
+          <span class="hits">3</span>
+          
+          <code class="ruby">						purchased_section = purchased_path.sections[n]</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="530">
+          <span class="hits">3</span>
+          
+          <code class="ruby">						purchased_section.name.should == @sections[n].name</code>
+        </li>
+      
+        <li class="covered" data-hits="3" data-linenumber="531">
+          <span class="hits">3</span>
+          
+          <code class="ruby">						3.times do |n|</code>
+        </li>
+      
+        <li class="covered" data-hits="9" data-linenumber="532">
+          <span class="hits">9</span>
+          
+          <code class="ruby">							purchased_section.tasks[n].question.should == @tasks[n].question</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="533">
+          
+          
+          <code class="ruby">						end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="534">
+          
+          
+          <code class="ruby">					end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="535">
+          
+          
+          <code class="ruby">				end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="536">
           
           
           <code class="ruby">			end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="519">
+        <li class="never" data-hits="" data-linenumber="537">
           
           
           <code class="ruby">		end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="520">
+        <li class="never" data-hits="" data-linenumber="538">
           
           
           <code class="ruby">	end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="521">
+        <li class="never" data-hits="" data-linenumber="539">
           
           
           <code class="ruby">end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="522">
+        <li class="never" data-hits="" data-linenumber="540">
           
           
           <code class="ruby">	</code>
@@ -35311,8 +35425,8 @@
           <code class="ruby">	user.name					&quot;Jonathan Dudearino&quot;</code>
         </li>
       
-        <li class="covered" data-hits="640" data-linenumber="6">
-          <span class="hits">640</span>
+        <li class="covered" data-hits="642" data-linenumber="6">
+          <span class="hits">642</span>
           
           <code class="ruby">	user.email					{ Faker::Internet.email }</code>
         </li>
@@ -35665,8 +35779,8 @@
           <code class="ruby">Factory.define :company_user do |company_user|</code>
         </li>
       
-        <li class="covered" data-hits="877" data-linenumber="65">
-          <span class="hits">877</span>
+        <li class="covered" data-hits="879" data-linenumber="65">
+          <span class="hits">879</span>
           
           <code class="ruby">	company_user.email { Faker::Internet.email }</code>
         </li>

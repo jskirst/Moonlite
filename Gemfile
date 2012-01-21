@@ -4,7 +4,11 @@ gem 'rails', '~> 3.0'
 gem 'gravatar_image_tag'
 gem 'will_paginate'
 gem 'jquery-rails', '>= 1.0.12'
-gem 'actionmailer', '~> 3.0'
+gem 'actionpack', '= 3.1.2'
+gem 'actionmailer', '= 3.1.2'
+gem 'activerecord', '= 3.1.2'
+gem 'activemodel', '= 3.1.2'
+gem 'activesupport', '= 3.1.2'
 
 group :production do
 	gem 'pg'
