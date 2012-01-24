@@ -37,6 +37,7 @@ end
 Factory.define :task do |task|
 	task.question Faker::Lorem.sentence(1)
 	task.answer1 Faker::Lorem.sentence(2)
+	task.answer2 Faker::Lorem.sentence(2)
 	task.correct_answer 1
 	task.points TASK_POINTS
 	task.association :section

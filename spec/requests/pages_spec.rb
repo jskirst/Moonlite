@@ -40,8 +40,6 @@ describe "Pages" do
 	describe "when signed in" do
 		before(:each) do
 			@user = Factory(:user)
-			@company = Factory(:company)
-			Factory(:company_user, :user => @user, :company => @company)
 			visit signin_path
 			fill_in :email,		:with => @user.email
 			fill_in :password,	:with => @user.password
@@ -83,8 +81,6 @@ describe "Pages" do
 		describe "success" do
 			it "should sign a user in and out" do
 				user = Factory(:user)
-				@company = Factory(:company)
-				Factory(:company_user, :user => @user, :company => @company)
 				visit signin_path
 				fill_in :email,		:with => user.email
 				fill_in :password, 	:with => user.password

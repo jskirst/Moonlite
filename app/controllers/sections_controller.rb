@@ -19,7 +19,11 @@ class SectionsController < ApplicationController
 			@section = @path.sections.build(params[:section])
 			if @section.save
 				flash[:success] = "Section created."
-				redirect_to @section
+				if params[:commit] == "Save and New"
+					redirect_to new_section_path(:path_id => @path.id)
+				else
+					redirect_to @section
+				end
 			else
 				@title = "New section"
 				@form_title = @title

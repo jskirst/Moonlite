@@ -4,12 +4,12 @@ describe "CompletedTasks" do
 	before(:each) do
 		@password = "current_password"
 		@user = Factory(:user, :password => @password, :password_confirmation => @password)
-		@company = Factory(:company)
-		Factory(:company_user, :user => @user, :company => @company)
-		@path = Factory(:path, :user => @user, :company => @company)
-		@task1 = Factory(:task, :path => @path)
-		@task2 = Factory(:task, :path => @path)
-		@task3 = Factory(:task, :path => @path)
+		@user.company_user.toggle!(:is_admin)
+		@path = Factory(:path, :user => @user, :company => @user.company)
+		@section = Factory(:section, :path => @path)
+		@task1 = Factory(:task, :section => @section)
+		@task2 = Factory(:task, :section => @section)
+		@task3 = Factory(:task, :section => @section)
 		
 		visit signin_path
 		fill_in :email, :with => @user.email
@@ -25,7 +25,7 @@ describe "CompletedTasks" do
 			it "should complete a task" do
 				lambda do
 					click_link "Continue"
-					response.should render_template("paths/continue")
+					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
 					click_button "Next"
@@ -37,7 +37,7 @@ describe "CompletedTasks" do
 			it "should complete a task and then complete a path" do
 				lambda do
 					click_link "Continue"
-					response.should render_template("paths/continue")
+					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
 					click_button "Next"
@@ -54,7 +54,7 @@ describe "CompletedTasks" do
 			
 			it "should complete a task and not reset user's password" do
 				click_link "Continue"
-				response.should render_template("paths/continue")
+				response.should render_template("sections/continue")
 				response.should have_selector("p", :content => @task1.question)
 				choose "completed_task_answer1"
 				click_button "Next"

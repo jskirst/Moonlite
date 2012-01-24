@@ -1,5 +1,12 @@
 <section>
 	<h2><%= @section.name %></h2>
-	<p><%= @section.instructions %></p>
-	<%= link_to "Edit", edit_section_path(@section), :class => "btn primary" %>
+	<div style="padding: 20px"><%= simple_format(@section.instructions) %></div>
+	<div class="actions">
+		<%= link_to "Continue", continue_section_path(@section), :class => "btn primary" %>
+		<% if current_user.company_admin? %>
+			<%= link_to "Edit", edit_section_path(@section), :class => "btn secondary" %>
+			<%= link_to "Add Tasks", new_task_path(:section_id => @section.id), :class => "btn secondary" %>
+			<%= link_to "Review Tasks", tasks_path(:section_id => @section.id), :class => "btn secondary" %>
+		<% end %>
+	</div>
 </section>

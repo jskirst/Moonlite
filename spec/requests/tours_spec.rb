@@ -3,7 +3,6 @@ require 'spec_helper'
 describe "Tours" do
 	before(:each) do
 		@user = Factory(:user)
-		@company = Factory(:company)
 		
 		@final_user_tour_page = 4
 		@final_admin_tour_page = 8
@@ -11,7 +10,6 @@ describe "Tours" do
 
 	describe "as a regular user" do
 		before(:each) do
-			Factory(:company_user, :user => @user, :company => @company)
 			visit signin_path
 			fill_in :email, :with => @user.email
 			fill_in :password, :with => @user.password
@@ -61,7 +59,7 @@ describe "Tours" do
 	
 	describe "as an admin user" do
 		before(:each) do
-			Factory(:company_user, :user => @user, :company => @company, :is_admin => "t")
+			@user.company_user.toggle!(:is_admin)
 			visit signin_path
 			fill_in :email, :with => @user.email
 			fill_in :password, :with => @user.password

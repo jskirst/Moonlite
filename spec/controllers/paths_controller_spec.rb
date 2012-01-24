@@ -280,28 +280,6 @@ describe PathsController do
 				response.should have_selector("p", :content => @path.description)
 			end
 			
-			it "should show all the resources for the path" do	
-				@resources = []
-				3.times do
-					@resources << Factory(:resources, :path => @path)
-				end
-				get :show, :id => @path
-				@resources.each do |r|
-					response.should have_selector("p", :content => r.description)
-				end
-			end
-			
-			it "should show all the achievements possible for the path" do
-				@achievements = []
-				3.times do 
-					@achievements << Factory(:achievements, :path => @path)
-				end
-				get :show, :id => @path
-				@achievements.each do |s|
-					response.should have_selector("a", :content => a.name)
-				end
-			end
-			
 			it "should show all the sections for a path" do
 				@sections = []
 				3.times do 

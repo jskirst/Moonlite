@@ -5,37 +5,31 @@
 	<div class="field clearfix">
 		<%= f.label :question %>
 		<div class="input">
-			<%= f.text_field :question, :maxlength => 255, :size => 75 %>
+			<%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
 		</div>
 	</div>
 	<div class="field clearfix">
-		<%= f.label :answer1 %>
+		<%= f.label "Answer 1" %>
 		<div class="input">
 			<%= f.text_field :answer1, :maxlength => 255, :size => 75 %>
 		</div>
 	</div>
 	<div class="field clearfix">
-		<%= f.label :answer2 %>
+		<%= f.label "Answer 2" %>
 		<div class="input">
 			<%= f.text_field :answer2, :maxlength => 255, :size => 75 %>
 		</div>
 	</div>
 	<div class="field clearfix">
-		<%= f.label :answer3 %>
+		<%= f.label "Answer 3" %>
 		<div class="input">
 			<%= f.text_field :answer3, :maxlength => 255, :size => 75 %>
 		</div>
 	</div>
 		<div class="field clearfix">
-		<%= f.label :answer4 %>
+		<%= f.label "Answer 4" %>
 		<div class="input">
 			<%= f.text_field :answer4, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label :resource %>
-		<div class="input">
-			<%= f.text_field :resource, :maxlength => 255, :size => 75 %>
 		</div>
 	</div>
 	<div class="field clearfix">
@@ -63,5 +57,8 @@
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
+		<% if @task.new_record? %>
+			<%= f.submit "Save and New", :class => "btn secondary" %>
+		<% end %>
 	</div>
 <% end %>

@@ -1,16 +1,40 @@
-.......................F.........
+................................................................*........................*................................................................*..........................................................................................................................................................................................................................................................................................................................................................................................................................................................***.......*...................................................***........................................................................*
 
-Failures:
+Pending:
+  CompanyUsersController should control access
+    # Not Yet Implemented
+    # ./spec/controllers/company_users_controller_spec.rb:12
+  CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing all tasks for the path should not change the user's encrypted password
+    # Not Yet Implemented
+    # ./spec/controllers/completed_tasks_controller_spec.rb:150
+  PathsController access controller when signed in as company admin should allow access to 'upload'
+    # Not Yet Implemented
+    # ./spec/controllers/paths_controller_spec.rb:119
+  Section validations should force order of position
+    # Not Yet Implemented
+    # ./spec/models/section_spec.rb:68
+  Section position should return a set of sections in order of position
+    # Not Yet Implemented
+    # ./spec/models/section_spec.rb:72
+  Section position should automatically order new sections on top of old ones
+    # Not Yet Implemented
+    # ./spec/models/section_spec.rb:74
+  Section task associations remaining tasks should return the next the correct number of incomplete tasks
+    # Not Yet Implemented
+    # ./spec/models/section_spec.rb:127
+  User completed tasks should respond with all completed tasks
+    # Not Yet Implemented
+    # ./spec/models/user_spec.rb:158
+  User User completed tasks completed? should respond with false if task not completed
+    # Not Yet Implemented
+    # ./spec/models/user_spec.rb:161
+  User User completed tasks completed? should respond with true if the task is completed
+    # Not Yet Implemented
+    # ./spec/models/user_spec.rb:163
+  Users should successfully change password from the edit page
+    # Not Yet Implemented
+    # ./spec/requests/users_spec.rb:4
 
-  1) TasksController actions POST 'create' success should redirect to the path page
-     Failure/Error: response.should redirect_to(@path)
-       Expected response to be a redirect to <http://test.host/paths/1> but was a redirect to <http://test.host/sections/1>
-     # ./spec/controllers/tasks_controller_spec.rb:176:in `block (5 levels) in <top (required)>'
-
-Finished in 51.2 seconds
-33 examples, 1 failure
-
-Failed examples:
-
-rspec ./spec/controllers/tasks_controller_spec.rb:174 # TasksController actions POST 'create' success should redirect to the path page
-Coverage report generated for RSpec to C:/Users/JC/Moonlite/coverage. 537 / 1099 LOC (48.86%) covered.
+Finished in 255.51 seconds
+735 examples, 0 failures, 11 pending
+Coverage report generated for RSpec to C:/Users/JC/Moonlite/coverage. 4356 / 4392 LOC (99.18%) covered.

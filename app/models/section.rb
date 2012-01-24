@@ -5,7 +5,7 @@ class Section < ActiveRecord::Base
 	
 	belongs_to :path
 	has_many :tasks, :dependent => :destroy
-	has_many :completed_tasks, :through => :tasks
+	has_many :completed_tasks, :through => :tasks, :source => :section
 	
 	validates :name, 
 		:presence 		=> true,
@@ -13,7 +13,7 @@ class Section < ActiveRecord::Base
 	
 	validates :instructions, 
 		:presence 		=> true,
-		:length			=> { :within => 1..255 }
+		:length			=> { :within => 1..2500 }
 		
 	validates :position,
 		:presence		=> true

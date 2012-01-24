@@ -3,8 +3,7 @@ require 'spec_helper'
 describe "Paths" do
 	before(:each) do
 		@user = Factory(:user)
-		@company = Factory(:company)
-		Factory(:company_user, :user => @user, :company => @company)
+		@user.company_user.toggle!(:is_admin)
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
@@ -36,8 +35,6 @@ describe "Paths" do
 					fill_in "Name", :with => name
 					fill_in "Description", :with => description
 					click_button
-					# TODO
-					# response.should render_template('pages/home')
 				end.should change(Path, :count).by(1)
 			end
 		end
@@ -45,7 +42,7 @@ describe "Paths" do
 	
 	describe "question upload" do
 		before(:each) do
-			@path = Factory(:path, :user => @user, :company => @company)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 		end
 	
 		describe "success" do

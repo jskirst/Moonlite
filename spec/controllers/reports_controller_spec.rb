@@ -191,21 +191,21 @@ describe ReportsController do
 					end
 				end
 				
-				it "should display the rank of the correctly answered questions" do
+				it "should properly rank the incorrectly answered questions by count" do
 					get :details, :path_id => @path.id
 					response.should have_selector("td#incorrect_rank_"+@task1.id.to_s, :content => "1")
 					response.should have_selector("td#incorrect_rank_"+@task2.id.to_s, :content => "2")
 					response.should have_selector("td#incorrect_rank_"+@task3.id.to_s, :content => "3")
 				end
 				
-				it "should display the question of the correctly answered questions" do
+				it "should display the question of the incorrectly answered questions" do
 					get :details, :path_id => @path.id
 					response.should have_selector("td#incorrect_question_"+@task1.id.to_s, :content => @task1.question)
 					response.should have_selector("td#incorrect_question_"+@task2.id.to_s, :content => @task2.question)
 					response.should have_selector("td#incorrect_question_"+@task3.id.to_s, :content => @task3.question)
 				end
 				
-				it "should display the count of the correctly answered questions" do
+				it "should display the count of the incorrectly answered questions" do
 					get :details, :path_id => @path.id
 					response.should have_selector("td#incorrect_count_"+@task1.id.to_s, :content => "3")
 					response.should have_selector("td#incorrect_count_"+@task2.id.to_s, :content => "2")

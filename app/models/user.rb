@@ -74,11 +74,7 @@ class User < ActiveRecord::Base
 	end
 	
 	def company_admin?
-		if company_user.nil?
-			return false
-		else
-			return company_user.is_admin
-		end
+		return company_user.is_admin
 	end
 	
 	def award_points(task)
@@ -122,6 +118,16 @@ class User < ActiveRecord::Base
 		available_points = self.earned_points
 		spent_points = self.spent_points
 		return available_points - spent_points
+	end
+	
+	def most_recent_section(path)
+		cps = self.completed_tasks.all(:order => "completed_tasks.updated_at DESC")
+		cps.each do |cp|
+			if cp.path.id == path.id
+				return cp.task.section
+			end
+		end
+		return nil
 	end
 	
 	private

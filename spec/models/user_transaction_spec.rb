@@ -3,8 +3,10 @@ require 'spec_helper'
 describe UserTransaction do
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@path = Factory(:path, :user => @user, :company => @user.company)
 		@section = Factory(:section, :path => @path)
+		@task = Factory(:task, :section => @section)
+		@reward = Factory(:reward, :company => @user.company)
 		@attr = { :user_id => @user, :amount => 15, :status => 1 }
 	end
 	
@@ -13,9 +15,20 @@ describe UserTransaction do
 			UserTransaction.new(@attr).should_not be_valid
 		end
 		
+		it "should reject transaction with path and task" do
+			UserTransaction.new(@attr.merge(:path_id => @path, :task_id => @task)).should_not be_valid
+		end
+		
+		it "should reject transaction with path and reward" do
+			UserTransaction.new(@attr.merge(:path_id => @path, :reward_id => @reward)).should_not be_valid
+		end
+		
+		it "should reject transaction with reward and task" do
+			UserTransaction.new(@attr.merge(:reward_id => @reward, :task_id => @task)).should_not be_valid
+		end
+		
 		describe "for tasks" do
 			before(:each) do
-				@task = Factory(:task, :section => @section)
 				@attr = @attr.merge(:task_id => @task)
 				@transaction = UserTransaction.create!(@attr)
 			end
@@ -53,7 +66,6 @@ describe UserTransaction do
 		
 		describe "for rewards" do
 			before(:each) do
-				@reward = Factory(:reward, :company => @user.company)
 				@attr = @attr.merge(:reward_id => @reward)
 				@transaction = UserTransaction.create!(@attr)
 			end

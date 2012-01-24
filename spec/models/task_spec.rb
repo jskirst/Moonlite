@@ -6,7 +6,7 @@ describe "Tasks" do
 		@section = Factory(:section)
 		@attr = { :question => "This is a question",
 			:answer1 => "This is an answer.",
-			:answer2 => nil,
+			:answer2 => "This is an answer2.",
 			:answer3 => nil,
 			:answer4 => nil,
 			:resource => "http://www.wikipedia.com",

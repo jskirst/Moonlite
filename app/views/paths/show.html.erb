@@ -11,50 +11,33 @@
 		</h1>
 	</div>
 	<div style="padding:10px">
-		<p><%= @path.description %></p>
+		<div><%= simple_format(@path.description) %></div>
 	</div>
 	<% if !@sections.empty? %>
 	<div>
 		<h3>Sections</h3>
 		<ol>
 		<% @sections.each do |s| %>
-			<li><h5><%= link_to s.name, s %></h5></li>
-		<% end %>
-		</ol>
-	</div>
-	<% end %>
-	<% if !@achievements.empty? %>
-	<div>
-		<h3>Achievements</h3>
-		<ol>
-		<% @achievements.each do |a| %>
 			<li>
-				<h5><%= a.name %></h5>
-				<p><%= a.description %></p>
-			</li>
-		<% end %>
-		</ol>
-	</div>
-	<% end %>
-	<% if !@info_resources.empty? %>
-	<div>
-		<h3>Resources</h3>
-		<ol>
-		<% @info_resources.each do |resource| %>
-			<li>
-				<p><%= resource.description %></p>
-				<p><%= link_to resource.link, resource.link, :target => "_blank" %></p>
+				<h5>
+					<%= link_to s.name, s %>
+				</h5>
+				<p><%= truncate(s.instructions, :length => 140) %></p>
+				<% if s.remaining_tasks(current_user) == 0 %>
+				<span class="label success">Completed</span>
+				<% end %>
 			</li>
 		<% end %>
 		</ol>
 	</div>
 	<% end %>
 	<section>
+	<div class="actions">
 	<% if !current_user.enrolled?(@path) %>
 		<%= render "enroll" %>
+	<% else %>
+		<%= link_to "Continue", continue_path_path(@path), :class => "btn primary" %>
 	<% end %>
+	</div>
 	</section>
-	<% if current_user.enrolled?(@path) %>
-		<p>You are currently enrolled.</p>
-	<% end %>
 </section>

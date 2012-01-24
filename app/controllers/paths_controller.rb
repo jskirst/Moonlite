@@ -13,10 +13,6 @@ class PathsController < ApplicationController
 		@path = Path.new
 		@title = "New Path"
 	end
-	
-	def edit
-		@title = "Edit"
-	end
 
 	def create
 		params[:path][:company_id] = current_user.company.id
@@ -30,6 +26,18 @@ class PathsController < ApplicationController
 		end
 	end
 	
+	def show
+		@path = Path.find(params[:id])
+		@title = @path.name
+		@info_resources = @path.info_resources(:limit => 5)
+		@achievements = @path.achievements.all(:limit => 5)
+		@sections = @path.sections
+	end
+	
+	def edit
+		@title = "Edit"
+	end
+	
 	def update
 		if @path.update_attributes(params[:path])
 			flash[:success] = "Changes saved."
@@ -40,12 +48,13 @@ class PathsController < ApplicationController
 		end
 	end
 	
-	def show
-		@path = Path.find(params[:id])
-		@title = @path.name
-		@info_resources = @path.info_resources(:limit => 5)
-		@achievements = @path.achievements.all(:limit => 5)
-		@sections = @path.sections
+	def continue
+		@section = current_user.most_recent_section(@path)
+		if @section.nil?
+			redirect_to continue_section_path(@path.sections.first)
+		else
+			redirect_to continue_section_path(@section)
+		end
 	end
 	
 	def file

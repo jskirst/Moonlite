@@ -24,6 +24,7 @@ SampleApp::Application.routes.draw do
 			get :review
 			get :purchase
 			get :file
+			get :continue
 			post :upload
 		end
 	end

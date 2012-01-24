@@ -4,9 +4,8 @@ describe "Enrollments" do
 	before(:each) do
 		#Sign in
 		@user = Factory(:user)
-		@company = Factory(:company)
-		Factory(:company_user, :user => @user, :company => @company)
-		@path = Factory(:path, :user => @user, :company => @company)
+		@user.company_user.toggle!(:is_admin)
+		@path = Factory(:path, :user => @user, :company => @user.company)
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password

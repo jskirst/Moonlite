@@ -24,11 +24,11 @@ describe "Paths" do
 		end
 		
 		it "should reject long name" do
-			@user.paths.build(:name => "a"*81).should_not be_valid
+			@user.paths.build(:name => "a"*141).should_not be_valid
 		end
 		
 		it "should reject long description" do
-			@user.paths.build(:description => "a"*501).should_not be_valid
+			@user.paths.build(:description => "a"*2501).should_not be_valid
 		end
 
 		it "should respond to image_url" do

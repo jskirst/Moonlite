@@ -3,6 +3,7 @@ class Task < ActiveRecord::Base
 	
 	belongs_to 	:section
 	has_one 	:path, :through => :section
+	has_many	:completed_tasks
 	
 	validates :question, 
 		:presence 		=> true,
@@ -13,6 +14,7 @@ class Task < ActiveRecord::Base
 		:length			=> { :within => 1..255 }
 		
 	validates :answer2,
+		:presence 		=> true,
 		:length			=> { :maximum => 255 }
 
 	validates :answer3,

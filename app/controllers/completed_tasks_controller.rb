@@ -43,10 +43,8 @@ class CompletedTasksController < ApplicationController
 		def set_flash_message(status_id, user_answer, correct_answer)
 			if status_id == 0
 				flash[:error] = "Incorrect. You answered #{user_answer}. The correct answer was #{correct_answer}."
-			elsif status_id == 1
-				flash[:success] = "Correct!"
 			else
-				flash[:notice] = "Question skipped."
+				flash[:success] = "Correct!"
 			end
 		end
 end

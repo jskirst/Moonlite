@@ -11,11 +11,11 @@ class Path < ActiveRecord::Base
 	
 	validates :name, 
 		:presence => true,
-		:length		=> { :within => 2..80 }
+		:length		=> { :within => 2..140 }
 	
 	validates :description, 
 		:presence => true,
-		:length		=> { :within => 2..500 }
+		:length		=> { :within => 2..2500 }
 	
 	validates :user_id, :presence => true
 	
@@ -29,26 +29,6 @@ class Path < ActiveRecord::Base
 		else
 			return "/images/default_path_pic.jpg"
 		end
-	end
-	
-	def get_user_rank(user)
-		completed_task_count = 0
-		tasks.each do |t|
-			if user.completed?(t)
-				completed_task_count += 1
-			end
-		end
-		return completed_task_count/5
-	end
-	
-	def tasks_until_next_rank(user)
-		completed_task_count = 0
-		tasks.each do |t|
-			if user.completed?(t)
-				completed_task_count += 1
-			end
-		end
-		return 5-(completed_task_count.remainder(5))
 	end
 	
 	def user_belongs_to_company
