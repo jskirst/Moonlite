@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120119162953) do
+ActiveRecord::Schema.define(:version => 20120124193636) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -73,13 +73,13 @@ ActiveRecord::Schema.define(:version => 20120119162953) do
 
   create_table "paths", :force => true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description",       :limit => 255
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
     t.string   "image_url"
-    t.boolean  "is_public",         :default => false
+    t.boolean  "is_public",                        :default => false
     t.integer  "purchased_path_id"
   end
 
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20120119162953) do
   create_table "sections", :force => true do |t|
     t.integer  "path_id"
     t.string   "name"
-    t.string   "instructions"
+    t.text     "instructions", :limit => 255
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"

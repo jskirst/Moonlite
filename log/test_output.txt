@@ -35,6 +35,6 @@ Pending:
     # Not Yet Implemented
     # ./spec/requests/users_spec.rb:4
 
-Finished in 255.51 seconds
+Finished in 248.11 seconds
 735 examples, 0 failures, 11 pending
 Coverage report generated for RSpec to C:/Users/JC/Moonlite/coverage. 4356 / 4392 LOC (99.18%) covered.
