@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120126052704) do
+ActiveRecord::Schema.define(:version => 20120126185714) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
   create_table "companies", :force => true do |t|
@@ -28,6 +29,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "enable_company_store", :default => true
+    t.integer  "owner_id"
   end
 
   create_table "company_users", :force => true do |t|
@@ -39,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin"
+    t.integer  "owner_id"
   end
 
   create_table "completed_tasks", :force => true do |t|
@@ -48,6 +51,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.datetime "updated_at"
     t.integer  "status_id",    :default => 0
     t.datetime "quiz_session"
+    t.integer  "owner_id"
   end
 
   create_table "enrollments", :force => true do |t|
@@ -56,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "total_points", :default => 0
+    t.integer  "owner_id"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -68,6 +73,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
   add_index "info_resources", ["path_id"], :name => "index_info_resources_on_path_id"
@@ -84,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.integer  "purchased_path_id"
     t.boolean  "is_published",                     :default => false
     t.boolean  "is_purchaseable",                  :default => false
+    t.integer  "owner_id"
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
@@ -96,6 +103,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
   create_table "sections", :force => true do |t|
@@ -105,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
   create_table "tasks", :force => true do |t|
@@ -119,6 +128,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.string   "answer3"
     t.string   "answer4"
     t.integer  "correct_answer", :default => 1
+    t.integer  "owner_id"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
@@ -128,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "owner_id"
   end
 
   create_table "user_transactions", :force => true do |t|
@@ -139,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "path_id"
+    t.integer  "owner_id"
   end
 
   create_table "users", :force => true do |t|
@@ -152,6 +164,7 @@ ActiveRecord::Schema.define(:version => 20120126052704) do
     t.integer  "earned_points",      :default => 0
     t.integer  "spent_points",       :default => 0
     t.string   "image_url"
+    t.integer  "owner_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

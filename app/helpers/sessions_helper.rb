@@ -44,6 +44,13 @@ module SessionsHelper
 		clear_return_to
 	end
 	
+	# def verify_ownership
+		# if @owner_id != current_user.company.id
+			# flash[:error] = "You do not have access to this data."
+			# redirect_to root_path
+		# end
+	# end
+	
 	private
 		def user_from_remember_token
 			User.authenticate_with_salt(*remember_token)

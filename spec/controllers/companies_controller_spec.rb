@@ -116,6 +116,33 @@ describe CompaniesController do
 			end
 		end
 		
+		describe "when signed in as company admin of another company" do
+			before(:each) do
+				@other_user = Factory(:user)
+				@other_user.company_user.toggle!(:is_admin)
+				@attr = {:name => "Changed"}
+				test_sign_in(@other_user)
+			end
+			
+			it "should deny access to 'show'" do
+				get :show, :id => 1
+				response.should redirect_to root_path
+				flash[:error].should =~ /do not have access/i
+			end
+			
+			it "should deny access to 'edit'" do
+				get :edit, :id => 1
+				response.should redirect_to root_path
+				flash[:error].should =~ /do not have access/i
+			end
+			
+			it "should deny access to 'update'" do
+				put :update, :id => @company, :company => @attr
+				response.should redirect_to root_path
+				flash[:error].should =~ /do not have access/i
+			end
+		end
+		
 		describe "when signed in as company admin" do
 			before(:each) do
 				@user.company_user.toggle!(:is_admin)
@@ -221,15 +248,6 @@ describe CompaniesController do
 		end
 		
 		describe "Get 'show'" do
-			it "should not allow access to a company admin of another company"
-				# other_user = Factory(:user)
-				# other_user.set_company_admin(true)
-				# test_sign_in(other_user)
-				# get :show, :id => @company
-				# response.should_not have_selector("title", :content => @company.name)
-				# response.should redirect_to root_path
-			# end
-		
 			it "should be successful" do
 				get :show, :id => @company
 				response.should be_success
@@ -251,22 +269,6 @@ describe CompaniesController do
 			end
 			
 			describe "associated users" do
-				describe "when they don't exist" do
-					before(:each) do
-						@no_user_company = Factory(:company)
-					end
-					
-					it "should display a message saying no registered users exist" do
-						get :show, :id => @no_user_company
-						response.should have_selector("p", :content => "not have any users")
-					end
-					
-					it "should display a message saying no unregistered users exist" do
-						get :show, :id => @no_user_company
-						response.should have_selector("p", :content => "no outstanding user invitations")
-					end
-				end
-				
 				describe "when they exist" do
 					before(:each) do
 						@other_user1 = Factory(:user, :email => "other_user1@testing.com", :name => "Other user1", :company_user => nil)

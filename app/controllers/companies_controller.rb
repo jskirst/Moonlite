@@ -3,6 +3,7 @@ class CompaniesController < ApplicationController
 	before_filter :admin_only, :only => [:new, :create, :index]
 	before_filter :admin_or_company_admin, :only => [:show, :edit, :update]
 	before_filter :get_company_from_id, :only => [:show, :edit, :update]
+	before_filter :verify_owner, :only => [:show, :edit, :update]
 	
 	def new
 		@company = Company.new
@@ -56,8 +57,16 @@ class CompaniesController < ApplicationController
 		
 		def get_company_from_id
 			@company = Company.find_by_id(params[:id])
+			@owner_id = @company.id
 			if @company.nil?
 				flash[:error] = "This is not a valid company."
+				redirect_to root_path
+			end
+		end
+		
+		def verify_owner
+			if @owner_id != current_user.company.id
+				flash[:error] = "You do not have access to this data."
 				redirect_to root_path
 			end
 		end
