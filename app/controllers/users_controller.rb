@@ -21,7 +21,7 @@ class UsersController < ApplicationController
 		if @user.nil?
 			redirect_to root_path
 		else
-			@enrolled_paths = @user.enrolled_paths.paginate(:page => params[:page])
+			@enrolled_paths = @user.enrolled_paths.find(:all, :conditions => ["paths.is_public = ?", true])
 			@user_achievements = @user.user_achievements
 			@company_user = CompanyUser.find_by_user_id(@user.id)
 			if !@company_user.nil?

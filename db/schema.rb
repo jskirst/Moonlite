@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120124193636) do
+ActiveRecord::Schema.define(:version => 20120126052704) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20120124193636) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enable_company_store", :default => true
   end
 
   create_table "company_users", :force => true do |t|
@@ -81,6 +82,8 @@ ActiveRecord::Schema.define(:version => 20120124193636) do
     t.string   "image_url"
     t.boolean  "is_public",                        :default => false
     t.integer  "purchased_path_id"
+    t.boolean  "is_published",                     :default => false
+    t.boolean  "is_purchaseable",                  :default => false
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"

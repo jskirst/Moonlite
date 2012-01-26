@@ -1,8 +1,3 @@
-<section style="float:right;">
-<% if @path.user_id == current_user.id %>
-	<%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn primary" %>
-<% end %>
-</section>
 <section class="path">
 	<div style="float:left; margin: 0px 15px 5px 0px;"><%= image_tag(@path.path_pic, :size=>"50x50") %></div>
 	<div>
@@ -21,23 +16,32 @@
 			<li>
 				<h5>
 					<%= link_to s.name, s %>
+					<% if s.remaining_tasks(current_user) == 0 %>
+					<span class="label">Completed</span>
+					<% end %>
 				</h5>
 				<p><%= truncate(s.instructions, :length => 140) %></p>
-				<% if s.remaining_tasks(current_user) == 0 %>
-				<span class="label success">Completed</span>
-				<% end %>
 			</li>
 		<% end %>
 		</ol>
 	</div>
 	<% end %>
 	<section>
-	<div class="actions">
-	<% if !current_user.enrolled?(@path) %>
-		<%= render "enroll" %>
-	<% else %>
-		<%= link_to "Continue", continue_path_path(@path), :class => "btn primary" %>
-	<% end %>
-	</div>
+		<div class="actions">
+		<% if !current_user.enrolled?(@path) %>
+			<%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
+				<%= f.hidden_field :path_id %>
+				<%= f.submit "Enroll", :class=> "btn primary" %>
+			<% end %>
+		<% else %>
+			<%= link_to "Continue", continue_path_path(@path), :class => "btn primary" %>
+		<% end %>
+		<% if current_user.company_admin? %>
+			<%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn secondary" %>
+			<%= link_to "Add Section", {:controller => "sections", :action => "new", :path_id => @path }, :class => "btn secondary" %>
+			<%= link_to "Add Achievement", {:controller => "achievements", :action => "new", :path_id => @path.id }, :class => "btn secondary" %>
+			<%= link_to "Delete", @path, :method => "delete", :confirm => "Are you sure you want to delete this path?", :title => "Delete task", :class => "btn secondary" %>
+		<% end %>
+		</div>
 	</section>
 </section>

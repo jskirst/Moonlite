@@ -11,7 +11,6 @@ describe "Sections" do
 		click_button #goes to user page (path index)
 		click_link "Paths"
 		click_link @path.name
-		click_link "Edit"
 		click_link "Add Section"
 	end
 	

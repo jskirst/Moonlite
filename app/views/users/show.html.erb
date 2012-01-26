@@ -28,17 +28,16 @@
 	<% end %>
 	<section>
 		<h3>Enrolled Paths</h3>
-		<% if @user.enrollments.empty? %>
-		<p><%= @user.name %> is not currently enrolled in any paths.</p>
+		<% if @enrolled_paths.empty? %>
+		<p><%= @user.name %> is not currently enrolled in any publically accessible paths.</p>
 		<% else %>
 		<table>
-			<% @user.enrollments.each do |e| %>
-				<% path = e.path %>
+			<% @enrolled_paths.each do |path| %>
 				<tr>
 					<td style="vertical-align: middle;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
 					<td class="path">
 						<h3 class="name"><%= link_to path.name, path %></h3>
-						<p class="description"><%= path.description %></p>
+						<p class="description"><%= truncate(path.description, :length => 255) %></p>
 					</td>
 				</tr>
 			<% end %>

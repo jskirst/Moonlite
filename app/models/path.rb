@@ -1,5 +1,5 @@
 class Path < ActiveRecord::Base
-	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, :is_public
+	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, :is_public, :is_published, :is_purchaseable
 	
 	belongs_to :user
 	belongs_to :company

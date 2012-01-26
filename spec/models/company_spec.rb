@@ -11,13 +11,23 @@ describe "Company" do
 		Company.create!(@attr)
 	end
 	
-	describe "name validations" do
+	describe "validation" do
 		it "should require a name" do
 			Company.new(@attr.merge(:name => "")).should_not be_valid
 		end
 		
 		it "should reject names that are too long" do
 			Company.new(@attr.merge(:name => 'a' * 101)).should_not be_valid
+		end
+		
+		it "should respond to enable_company_store" do
+			c = Company.create!(@attr)
+			c.should respond_to(:enable_company_store)
+		end
+		
+		it "should set enable_company_store to false by default" do
+			c = Company.create!(@attr)
+			c.enable_company_store.should be_true
 		end
 	end
 	

@@ -25,6 +25,9 @@ Factory.define :path do |path|
 	path.name Faker::Lorem.sentence(1) + "[Ruby]"
 	path.description Faker::Lorem.sentence(12)
 	path.association :user
+	path.is_published "t"
+	path.is_public "t"
+	path.is_purchaseable "t"
 end
 
 Factory.define :section do |f|

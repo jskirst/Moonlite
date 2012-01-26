@@ -2,6 +2,11 @@
 	padding-top: 75px;
 }
 
+/* Path */
+.new_enrollment {
+	display:inline;
+}
+
 /* Task */
 .task div,td{
 	padding: 20px 0px 10px 20px;

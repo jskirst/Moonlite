@@ -13,6 +13,19 @@
 					<%= f.text_field :name %>
 				</div>
 			</div>
+			<div class="field clearfix">
+				<label>Settings</label>
+				<div class="input">
+					<ul class="inputs-list">
+						<li>
+							<label>
+								<%= f.check_box :enable_company_store %>
+								<span>Enable Company Store</span>
+							</label>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="actions">
 				<%= f.submit "Save", :class => "btn primary" %>
 			</div>

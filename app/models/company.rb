@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-	attr_accessible :name
+	attr_accessible :name, :enable_company_store
 	
 	has_many :company_users
 	has_many :users, :through => :company_users

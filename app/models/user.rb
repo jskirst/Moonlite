@@ -130,6 +130,15 @@ class User < ActiveRecord::Base
 		return nil
 	end
 	
+	def set_company_admin(val)
+		current_val = company_user.is_admin
+		if !current_val && val == true
+			company_user.toggle!(:is_admin)
+		elsif !val && current_val == true
+			company_user.toggle!(:is_admin)
+		end
+	end
+	
 	private
 		def encrypt_password
 			if new_record?

@@ -6,34 +6,40 @@ describe CompaniesController do
 	before(:each) do
 		@user = Factory(:user)
 		@company = @user.company
+		@attr = {:name => "New company", :enable_company_store => "t"}
 	end
 	
 	describe "access controller" do
 		describe "when not signed in" do
 			it "should deny access to 'new'" do
 				get :new
-				response.should redirect_to(signin_path)
+				response.should redirect_to signin_path
 			end
 		
 			it "should deny access to 'create'" do
 				post :create
-				response.should redirect_to(signin_path)
+				response.should redirect_to signin_path
 			end
 			
 			it "should deny access to 'index'" do
 				get :index
-				response.should redirect_to(signin_path)
+				response.should redirect_to signin_path
 			end
 			
 			it "should deny access to 'show'" do
 				get :show, :id => @company
-				response.should redirect_to(signin_path)
+				response.should redirect_to signin_path
 			end
 			
 			it "should deny access to 'edit'" do
 				get :edit, :id => @company
-				response.should redirect_to(signin_path)
-			end			
+				response.should redirect_to signin_path
+			end
+
+			it "should deny access to 'update'" do
+				put :update, :id => @company, :company => @attr
+				response.should redirect_to signin_path
+			end
 		end
 		
 		describe "when signed in as a regular user" do
@@ -63,6 +69,11 @@ describe CompaniesController do
 			
 			it "should deny access to 'edit'" do
 				get :edit, :id => @company
+				response.should redirect_to root_path
+			end
+			
+			it "should deny access to 'update'" do
+				put :update, :id => @company, :company => @attr
 				response.should redirect_to root_path
 			end
 		end
@@ -98,6 +109,11 @@ describe CompaniesController do
 				get :edit, :id => 1
 				response.should be_success
 			end
+			
+			it "should allow access to 'update'" do
+				put :update, :id => @company, :company => @attr
+				response.should redirect_to @company
+			end
 		end
 		
 		describe "when signed in as company admin" do
@@ -130,6 +146,11 @@ describe CompaniesController do
 			it "should allow access to 'edit'" do
 				get :edit, :id => 1
 				response.should be_success
+			end
+			
+			it "should allow access to 'update'" do
+				put :update, :id => @company, :company => @attr
+				response.should redirect_to @company
 			end
 		end
 	end
@@ -200,6 +221,15 @@ describe CompaniesController do
 		end
 		
 		describe "Get 'show'" do
+			it "should not allow access to a company admin of another company"
+				# other_user = Factory(:user)
+				# other_user.set_company_admin(true)
+				# test_sign_in(other_user)
+				# get :show, :id => @company
+				# response.should_not have_selector("title", :content => @company.name)
+				# response.should redirect_to root_path
+			# end
+		
 			it "should be successful" do
 				get :show, :id => @company
 				response.should be_success
@@ -275,6 +305,27 @@ describe CompaniesController do
 			it "should have right title" do
 				get :edit, :id => @user.company
 				response.should have_selector("title", :content => "Company Settings")
+			end
+		end
+		
+		describe "PUT 'update'" do
+			describe "failure" do
+				it "should redirect back to edit when bad attributes supplied" do
+					put :update, :id => @company, :company => @attr.merge(:name => "a"*500)
+					response.should render_template "edit"
+				end
+			end
+			
+			describe "success" do
+				it "should redirect to show company" do
+					put :update, :id => @company, :company => @attr
+					response.should redirect_to @company
+				end
+				
+				it "should have a success message" do
+					put :update, :id => @company, :company => @attr
+					flash[:success].should =~ /update successful/i
+				end
 			end
 		end
 		

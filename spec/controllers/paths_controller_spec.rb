@@ -6,6 +6,7 @@ describe PathsController do
 	before(:each) do
 		@user = Factory(:user)
 		@path = Factory(:path, :user => @user, :company => @user.company)
+		@other_user = Factory(:user)
 		
 		@attr = {
 			:name => "Path name", 
@@ -260,6 +261,13 @@ describe PathsController do
 		end
 		
 		describe "GET 'show'" do
+			it "should not allow non-admins to access unpublished paths" do
+				@user.company_user.toggle!(:is_admin)
+				unpurchaseable_path = Factory(:path, :company => @user.company, :user => @user, :is_published => false)
+				get :show, :id => unpurchaseable_path
+				response.should redirect_to root_path
+			end
+			
 			it "should find the right path" do
 				get :show, :id => @path
 				assigns(:path).should == @path
@@ -338,11 +346,9 @@ describe PathsController do
 		
 		describe "GET 'marketplace'" do
 			before(:each) do
-				@other_user = Factory(:user)
-				
 				@purchaseable_paths = []
 				3.times do
-					@purchaseable_paths << Factory(:path, :company => @other_user.company, :user => @other_user, :is_public => true)
+					@purchaseable_paths << Factory(:path, :company => @other_user.company, :user => @other_user)
 				end
 			end
 
@@ -383,24 +389,41 @@ describe PathsController do
 							response.should have_selector("span", :content => p.name)
 						end
 					end
+					
+					it "should not list unpurchaseable paths" do
+						unpurchaseable = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => true, :is_purchaseable => false)
+						get :marketplace, :search => "Ruby"
+						response.should_not have_selector("a", :href => "/paths/#{unpurchaseable.id}/review")
+					end
+					
+					it "should not list unpublished paths" do
+						unpurchaseable = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => false, :is_purchaseable => true)
+						get :marketplace, :search => "Ruby"
+						response.should_not have_selector("a", :href => "/paths/#{unpurchaseable.id}/review")
+					end
 				end
 			end
 		end
 		
 		describe "GET 'review'" do
 			before(:each) do
-				@other_user = Factory(:user)
 				@purchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_public => true)
 			end
 			
-			describe "failure" do				
+			describe "failure" do					
 				it "should redirect bad path id to root_path" do
 					get :review, :id => "abc"
 					response.should redirect_to root_path
 				end
 				
-				it "should redirect private path request to root_path" do
-					unpurchaseable_path = Factory(:path, :company => @other_company, :user => @other_user, :is_public => false)
+				it "should redirect unpublished path request to root_path" do
+					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => false)
+					get :review, :id => unpurchaseable_path
+					response.should redirect_to root_path
+				end
+				
+				it "should redirect unpurchaseable path request to root_path" do
+					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_purchaseable => false)
 					get :review, :id => unpurchaseable_path
 					response.should redirect_to root_path
 				end
@@ -426,7 +449,6 @@ describe PathsController do
 		
 		describe "GET 'purchase'" do
 			before(:each) do
-				@other_user = Factory(:user, :email => "path_author@testing.com")
 				@purchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_public => true)
 			end
 			
@@ -436,8 +458,14 @@ describe PathsController do
 					response.should redirect_to root_path
 				end
 				
-				it "should redirect private path request to root_path" do
-					unpurchaseable_path = Factory(:path, :company => @other_company, :user => @other_user, :is_public => false)
+				it "should redirect unpublished path request to root_path" do
+					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => false)
+					get :purchase, :id => unpurchaseable_path
+					response.should redirect_to root_path
+				end
+				
+				it "should redirect unpurchaseable path request to root_path" do
+					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_purchaseable => false)
 					get :purchase, :id => unpurchaseable_path
 					response.should redirect_to root_path
 				end

@@ -44,6 +44,11 @@ describe SectionsController do
 				put :update, :id => @section, :section => @attr
 				response.should redirect_to signin_path
 			end
+
+			it "should deny access to 'destroy'" do
+				delete :destroy, :id => @section
+				response.should redirect_to signin_path
+			end
 			
 			it "should deny access to 'continue'" do
 				get :continue, :id => @section
@@ -78,6 +83,11 @@ describe SectionsController do
 			
 			it "should deny access to 'update'" do
 				put :update, :id => @section, :section => @attr
+				response.should redirect_to root_path
+			end
+			
+			it "should deny access to 'destroy'" do
+				delete :destroy, :id => @section
 				response.should redirect_to root_path
 			end
 			
@@ -117,6 +127,11 @@ describe SectionsController do
 			it "should allow access to 'update'" do
 				put :update, :id => @section, :section => @attr.delete("path_id")
 				response.should redirect_to @section
+			end
+			
+			it "should allow access to 'destroy'" do
+				delete :destroy, :id => @section
+				response.should redirect_to @path
 			end
 			
 			it "should allow access to 'continue'" do
@@ -250,6 +265,19 @@ describe SectionsController do
 					put :update, :id => @section, :section => @attr
 					flash[:success].should =~ /updated/i
 				end
+			end
+		end
+		
+		describe "DELETE 'destroy'" do
+			it "should destroy the section" do
+				lambda do
+					delete :destroy, :id => @section
+				end.should change(Section, :count).by(-1)
+			end
+			
+			it "should redirect to the section's path" do
+				delete :destroy, :id => @section
+				response.should redirect_to @path
 			end
 		end
 		

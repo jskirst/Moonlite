@@ -59,6 +59,13 @@ class SectionsController < ApplicationController
 		end
 	end
 	
+	def destroy
+		@section = Section.find(params[:id])
+		@section.destroy
+		flash[:success] = "Section successfully deleted."
+		redirect_back_or_to @section.path
+	end
+	
 	def continue
 		@section = Section.find(params[:id])
 		if current_user.enrolled?(@section.path)

@@ -43,8 +43,24 @@ describe "Paths" do
 			@user.paths.create!(@attr).is_public.should == false
 		end
 		
-		it "should respond with is_public set to false if not set" do
+		it "should respond to purchased_path_id" do
 			@user.paths.create!(@attr).should respond_to(:purchased_path_id)
+		end
+		
+		it "should respond to is_published set to false if not set" do
+			@user.paths.create!(@attr).should respond_to(:is_published)
+		end
+		
+		it "should respond with is_published set to false if not set" do
+			@user.paths.create!(@attr).is_published.should == false
+		end
+		
+		it "should respond to is_purchaseable" do
+			@user.paths.create!(@attr).should respond_to(:is_purchaseable)
+		end
+		
+		it "should respond with is_purchaseable set to false if not set" do
+			@user.paths.create!(@attr).is_purchaseable.should == false
 		end
 	end
 	

@@ -71,6 +71,18 @@ describe RewardsController do
 				test_sign_in(@user)
 			end
 			
+			describe "when company store is disabled" do
+				before(:each) do
+					@user.company.enable_company_store = false
+					@user.company.save!
+				end
+				
+				it "should categorically deny access" do
+					get :index, :company_id => @company.id
+					response.should redirect_to root_path
+				end
+			end
+			
 			it "should deny access to 'new'" do
 				get :new, :company_id => @company.id
 				response.should redirect_to root_path
@@ -125,6 +137,18 @@ describe RewardsController do
 			before(:each) do
 				@user.company_user.toggle!(:is_admin)
 				test_sign_in(@user)
+			end
+			
+			describe "when company store is disabled" do
+				before(:each) do
+					@user.company.enable_company_store = false
+					@user.company.save!
+				end
+				
+				it "should categorically deny access" do
+					get :index, :company_id => @company.id
+					response.should redirect_to root_path
+				end
 			end
 			
 			it "should allow access to 'new'" do

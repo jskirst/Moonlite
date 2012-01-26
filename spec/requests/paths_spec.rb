@@ -40,29 +40,29 @@ describe "Paths" do
 		end
 	end
 	
-	describe "question upload" do
-		before(:each) do
-			@path = Factory(:path, :user => @user, :company => @user.company)
-		end
+	# describe "question upload" do
+		# before(:each) do
+			# @path = Factory(:path, :user => @user, :company => @user.company)
+		# end
 	
-		describe "success" do
-			before(:each) do
-				@file_name = "test_upload_file.csv"
+		# describe "success" do
+			# before(:each) do
+				# @file_name = "test_upload_file.csv"
 				# @file_name = "test.txt"
-				@file_path = "/public/misc/"
-			end
+				# @file_path = "/public/misc/"
+			# end
 		
-			it "should add all questions to a path" do
-				visit paths_path
-				click_link @path.name
-				click_link "Edit"
-				click_link "Upload Questions"
-				Rails.logger.debug File.join(Rails.root, @file_path, @file_name)
-				attach_file "path_file", File.join(Rails.root, @file_path, @file_name), "text/csv"
-				click_button "Submit"
-				response.should be_success
-			end
-		end
-	end
+			# it "should add all questions to a path" do
+				# visit paths_path
+				# click_link @path.name
+				# click_link "Edit"
+				# click_link "Upload Questions"
+				# Rails.logger.debug File.join(Rails.root, @file_path, @file_name)
+				# attach_file "path_file", File.join(Rails.root, @file_path, @file_name), "text/csv"
+				# click_button "Submit"
+				# response.should be_success
+			# end
+		# end
+	# end
 	
 end

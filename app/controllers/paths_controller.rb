@@ -1,12 +1,14 @@
 require 'csv'
 class PathsController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user, :except => [:index, :show, :marketplace, :review, :purchase, :new, :create]
-	before_filter :company_admin, :only => [:new, :create]
+	before_filter :company_admin, :except => [:index, :show, :continue, :marketplace, :review, :purchase]
+	before_filter :get_path_from_id, :except => [:index, :new, :create, :marketplace]
+	before_filter :unpublished_not_for_purchase, :only => [:review, :purchase]
+	before_filter :unpublished_for_admins_only, :only => [:show, :continue]
 	
 	def index
+		@paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, true])
 		@title = "All Paths"
-		@paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ?", current_user.company.id])
 	end
 	
 	def new
@@ -27,7 +29,6 @@ class PathsController < ApplicationController
 	end
 	
 	def show
-		@path = Path.find(params[:id])
 		@title = @path.name
 		@info_resources = @path.info_resources(:limit => 5)
 		@achievements = @path.achievements.all(:limit => 5)
@@ -81,80 +82,78 @@ class PathsController < ApplicationController
 		@title = "Marketplace"
 		if !params[:search].nil?
 			@query = params[:search]
-			@paths = Path.find(:all, :conditions => ["is_public = ? and name LIKE ?", true, "%#{@query}%"])
+			@paths = Path.find(:all, :conditions => ["is_purchaseable = ? and is_published = ? and name LIKE ?", true, true, "%#{@query}%"])
 		end
 	end
 	
 	def review
 		@title = "Review purchase"
-		if !@path = Path.find_by_id(params[:id])
-			flash[:error] = "No path found for the argument supplied."
-			redirect_to root_path and return
-		elsif !@path.is_public
-			flash[:error] = "This path is not available for purchase."
-			redirect_to root_path and return
-		end
 	end
 	
 	def purchase
-		if !@path = Path.find_by_id(params[:id])
-			flash[:error] = "No path found for the argument supplied."
-			redirect_to root_path and return
-		elsif !@path.is_public
-			flash[:error] = "This path is not available for purchase."
-			redirect_to root_path and return
-		else
-			UserTransaction.create!({
-				:user_id => current_user.id,
-				:path_id => @path.id,
-				:amount => 15.00,
-				:status => 0})
-			purchased_path = current_user.paths.create!({
-				:user_id => current_user.id,
-				:company_id => @current_user.company.id,
-				:purchased_path_id => @path.id,
-				:name => @path.name,
-				:description => @path.description,
-				:amount => 15.00,
-				:status => 0})
-			@path.sections.each do |s|
-				purchased_section = purchased_path.sections.create!(
-					:name => s.name,
-					:instructions => s.instructions,
-					:position => s.position
+		UserTransaction.create!({
+			:user_id => current_user.id,
+			:path_id => @path.id,
+			:amount => 15.00,
+			:status => 0})
+
+		purchased_path = current_user.paths.create!({
+			:user_id => current_user.id,
+			:company_id => @current_user.company.id,
+			:purchased_path_id => @path.id,
+			:name => @path.name,
+			:description => @path.description,
+			:amount => 15.00,
+			:status => 0})
+		
+		@path.sections.each do |s|
+			purchased_section = purchased_path.sections.create!(
+				:name => s.name,
+				:instructions => s.instructions,
+				:position => s.position
+			)
+			s.tasks.each do |t|				
+				purchased_section.tasks.create!(
+					:question => t.question,
+					:answer1 => t.answer1,
+					:answer2 => t.answer2,
+					:answer3 => t.answer3,
+					:answer4 => t.answer4,
+					:correct_answer => t.correct_answer,
+					:points => t.points,
+					:resource => t.resource
 				)
-				s.tasks.each do |t|				
-					purchased_section.tasks.create!(
-						:question => t.question,
-						:answer1 => t.answer1,
-						:answer2 => t.answer2,
-						:answer3 => t.answer3,
-						:answer4 => t.answer4,
-						:correct_answer => t.correct_answer,
-						:points => t.points,
-						:resource => t.resource
-					)
-				end
 			end
-			@title = "Purchase successful"
-			flash[:success] = "Purchase successful. Enjoy!."
 		end
+		@title = "Purchase successful"
+		flash[:success] = "Purchase successful. Enjoy!."
 	end
 	
 	def destroy
 		@path.destroy
+		flash[:success] = "Path successfully deleted."
 		redirect_back_or_to paths_path
 	end
 	
 	private
-		def authorized_user
-			@path = Path.find_by_id(params[:id])
-			if @path.nil?
+		def get_path_from_id
+			if !@path = Path.find_by_id(params[:id])
+				flash[:error] = "No path found for the argument supplied."
+				redirect_to root_path and return
+			end
+		end
+		
+		def unpublished_not_for_purchase
+			if !(@path.is_published && @path.is_purchaseable)
+				flash[:error] = "This path is not available for access."
+				redirect_to root_path and return
+			end
+		end
+		
+		def unpublished_for_admins_only
+			if !@path.is_published && !current_user.company_admin?
+				flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
 				redirect_to root_path
-				flash[:error] = "You must be an administrator to access this functionality."
-			elsif !current_user.company_admin?
-				redirect_to root_path
-				flash[:error] = "You do not have the ability to change this path."
 			end
 		end
 		

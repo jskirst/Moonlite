@@ -7,7 +7,9 @@
 				<ul>
 					<li><%= link_to "Paths", paths_path %></li>
 					<li><%= link_to current_user.name, current_user %></li>
-					<li><%= link_to "Company Store", rewards_path %></li>
+					<% if current_user.company.enable_company_store %>
+						<li><%= link_to "Company Store", rewards_path %></li>
+					<% end %>
 					<% if current_user.company_admin? %>
 						<li><%= link_to "My Company", current_user.company %></li>
 						<li><%= link_to "Dashboard", dashboard_path %></li>
