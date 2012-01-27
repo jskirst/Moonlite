@@ -23,7 +23,7 @@
 					<tr>
 						<td><%= user_counter.to_s %></td>
 						<td><%= link_to u.name, u %></td>
-						<td><%= rand(1000).to_s %></td>
+						<td><%= u.earned_points.to_s %></td>
 					</tr>
 					<% user_counter += 1 %>
 				<% end %>

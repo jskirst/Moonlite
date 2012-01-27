@@ -65,11 +65,11 @@ namespace :db do
 		end
 			
 		PATHS.each do |p|
-			moonlite_admin.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :company_id => moonlite_company.id)
+			moonlite_admin.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :company_id => moonlite_company.id, :is_published => true, :is_public => true)
 		end
 		
 		PATHS.each do |p|
-			moonlite_admin.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :is_public => true)
+			moonlite_admin.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :is_published => true, :is_public => true, :is_purchaseable => true)
 		end
 		
 		Path.all.each do |path|

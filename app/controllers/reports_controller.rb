@@ -22,13 +22,13 @@ class ReportsController < ApplicationController
 		@paths = @company.paths
 		
 		
-		completed_tasks = CompletedTask.count(
-			:group => "completed_tasks.user_id",
-			:joins => "JOIN users on users.id = completed_tasks.user_id",
-			:conditions => "users.company_id = #{@company_id} and completed_tasks.updated_at > '#{time_sql}'"
+		completed_tasks = User.count(
+			:group => "users.id",
+			:joins => "LEFT JOIN completed_tasks on users.id = completed_tasks.user_id and completed_tasks.updated_at > '#{time_sql}'",
+			:conditions => "users.company_id = #{@company_id}"
 		)
 		completed_tasks.each do |cp|
-			if cp[1] == 0
+			if cp[1] == 1
 				@user_activity[0] = @user_activity[0] + 1
 			elsif cp[1] <= 10
 				@user_activity[1] = @user_activity[1] + 1

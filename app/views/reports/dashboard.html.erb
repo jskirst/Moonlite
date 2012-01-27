@@ -24,7 +24,7 @@
 			data.addColumn('string', 'Activity');
 			data.addColumn('number', 'Users');
 			data.addRows([
-				['Not Active', <%= @user_activity[0] %>],
+				['Inactive', <%= @user_activity[0] %>],
 				['Active', <%= @user_activity[1] %>],
 				['Very Active', <%= @user_activity[2] %>]
 			]);
@@ -126,7 +126,8 @@
 		function drawUserScore(){
 			<% path_counter = 0 
 			@path_statistics.each do |p| 
-			user_score = p[3] %>
+			user_score = (p[3].nil? ? 0 : p[3])
+			%>
 			var data = new google.visualization.DataTable();
 			data.addColumn('string', 'Label');
 			data.addColumn('number', 'Value');

@@ -3,6 +3,9 @@
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<section>
 		<h2>Most incorrectly answered questions</h2>
+		<% if @most_incorrect_tasks.empty? %>
+			<p style="margin-bottom: 30px">There is not enough useage information for this Path yet to create a report.</p>
+		<% else %>
 		<table>
 			<thead>
 				<tr>
@@ -23,7 +26,11 @@
 			<% end %>
 			</tbody>
 		</table>
+		<% end %>
 		<h2>Most correctly answered questions</h2>
+		<% if @most_correct_tasks.empty? %>
+			<p>There is not enough useage information for this Path yet to create a report.</p>
+		<% else %>
 		<table>
 			<thead>
 				<tr>
@@ -44,6 +51,7 @@
 			<% end %>
 			</tbody>
 		</table>
+		<% end %>
 	</section>
 </section>
 				
