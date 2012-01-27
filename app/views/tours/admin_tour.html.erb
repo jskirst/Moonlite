@@ -290,7 +290,7 @@
 				</li>
 				<li>
 					<p>Invite other users to your account.</p>
-					<%= link_to "Add Users", new_company_user_path(:company => current_user.company.id,), :class => "btn secondary" %>
+					<%= link_to "Add Users", new_user_path(:company_id => current_user.company_id,), :class => "btn secondary" %>
 				</li>
 			</ol>
 		</div>

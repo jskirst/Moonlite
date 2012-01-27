@@ -135,7 +135,7 @@ describe RewardsController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.company_user.toggle!(:is_admin)
+				@user.set_company_admin(true)
 				test_sign_in(@user)
 			end
 			
@@ -257,7 +257,7 @@ describe RewardsController do
 	
 	describe "action" do
 		before(:each) do
-			@user.company_user.toggle!(:is_admin)
+			@user.set_company_admin(true)
 			@reward_points = 1000
 			@reward = Factory(:reward, :company => @company, :points => @reward_points)
 			test_sign_in(@user)

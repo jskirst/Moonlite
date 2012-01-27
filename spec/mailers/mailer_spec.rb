@@ -3,8 +3,8 @@ require "spec_helper"
 describe Mailer do
 	describe 'welcome' do
 		before(:each) do
-			@company_user = Factory(:company_user)
-			@mail = Mailer.welcome({:email => @company_user.email, :token1 => @company_user.token1})
+			@user = Factory(:user)
+			@mail = Mailer.welcome({:email => @user.email, :signup_token => @user.signup_token})
 		end
 
 		it 'renders the subject' do
@@ -12,7 +12,7 @@ describe Mailer do
 		end
 
 		it 'renders the receiver email' do
-		  @mail.to.should == [@company_user.email]
+		  @mail.to.should == [@user.email]
 		end
 
 		it 'renders the sender email' do

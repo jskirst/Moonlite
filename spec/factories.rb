@@ -6,7 +6,8 @@ Factory.define :user do |user|
 	user.email					{ Faker::Internet.email }
 	user.password				"testpassword"
 	user.password_confirmation	"testpassword"
-	user.association :company_user
+	user.association :company
+	user.company_admin			"f"
 end
 
 Factory.define :company do |company|
@@ -63,13 +64,6 @@ Factory.define :info_resource do |info_resource|
 	info_resource.association :path
 	info_resource.description "This is a description of the resource."
 	info_resource.link "http://www.testlink.com"
-end
-
-Factory.define :company_user do |company_user|
-	company_user.email { Faker::Internet.email }
-	company_user.user_id nil
-	company_user.association :company
-	company_user.is_admin "f"
 end
 
 Factory.define :completed_task do |completed_task|

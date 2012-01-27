@@ -14,11 +14,6 @@ SampleApp::Application.routes.draw do
 		end
 	end
 	resources :companies
-	resources :company_users do
-		member do
-			get :verify
-		end
-	end
     resources :paths do
 		member do
 			get :review

@@ -5,52 +5,35 @@ describe UsersController do
 
 	before(:each) do
 		@company = Factory(:company)
-		@company_user = Factory(:company_user, :company => @company, :user_id => nil)
+		@attr = {:email => "test@t.com", :company_id => @company.id}
 	end
 	
-	describe "GET 'accept'" do
-		describe "with invalid token" do
-			it "should redirect to root" do
-				get :accept, :id => "XYZ"
-				response.should redirect_to root_path
-			end
+	describe "GET 'new'" do
+		before(:each) do
+			@user = Factory(:user, :company_admin => true)
+			test_sign_in @user
 		end
-		
-		describe "with valid token" do
-			it "should be successful" do
-				get :accept, :id => @company_user.token1
-				response.should be_success
-			end
-			
-			it "should render new" do
-				get :accept, :id => @company_user.token1
-				response.should render_template("new")
-			end
-
-			it "should have right title" do
-				get :accept, :id => @company_user.token1
-				response.should have_selector("title", :content => @company.name)
-			end
+	
+		it "should be successful" do
+			get :new, :company_id => @company.id
+			response.should be_success
 		end
 	end
 	
 	describe "POST 'create'" do
+		before(:each) do
+			@user = Factory(:user, :company => @company, :company_admin => true)
+			test_sign_in @user
+		end
+		
 		describe "failure" do
-			before(:each) do
-				@attr = {:name => "", 
-					:password => "", 
-					:password_confirmation => "", 
-					:image_url => "", 
-					:token1 => @company_user.token1}
-			end
-			
-			describe "because of invalid token" do
+			describe "because of invalid company id" do
 				before(:each) do
-					@attr = @attr.merge(:token1 => "XYZ")
+					@attr = @attr.merge(:company_id => "abc")
 				end
 				
 				it "should not be successful" do
-					post :create, :user => @attr.delete("token1")
+					post :create, :user => @attr
 					response.should_not be_success
 				end
 				
@@ -66,7 +49,11 @@ describe UsersController do
 				end
 			end
 			
-			describe "because of blank fields" do
+			describe "because of invalid email" do
+				before(:each) do
+					@attr = @attr.merge(:email => "")
+				end
+				
 				it "should not create a user" do
 					lambda do
 						post :create, :user => @attr
@@ -75,7 +62,7 @@ describe UsersController do
 				
 				it "should have the right title" do
 					post :create, :user => @attr
-					response.should have_selector("title", :content => "Sign up")
+					response.should have_selector("title", :content => "Invite user")
 				end
 				
 				it "should render the new page" do
@@ -86,39 +73,127 @@ describe UsersController do
 		end
 		
 		describe "success" do
-			before(:each) do
-				@attr = {:name => "Test", 
-					:password => "testing", 
-					:password_confirmation => "testing",
-					:token1 => @company_user.token1}
-			end
-			
 			it "should save new user successfully" do
 				lambda do
 					post :create, :user => @attr
 				end.should change(User, :count).by(1)
 			end
 			
-			it "should redirect to profile page" do
+			it "should redirect to company page" do
 				post :create, :user => @attr
-				response.should redirect_to(user_path(assigns(:user)))
+				response.should redirect_to @company
+			end
+			
+			it "should have a success message" do
+				post :create, :user => @attr
+				flash[:success].should =~ /success/i
+			end
+		end
+	end
+	
+	describe "GET 'accept'" do
+		before(:each) do
+			@user = Factory(:user, :name => "pending")
+		end
+	
+		describe "with invalid token" do
+			it "should redirect to root" do
+				get :accept, :id => "XYZ"
+				response.should redirect_to root_path
+			end
+		end
+		
+		describe "with valid token" do
+			it "should be successful" do
+				get :accept, :id => @user.signup_token
+				response.should be_success
+			end
+			
+			it "should render new" do
+				get :accept, :id => @user.signup_token
+				response.should render_template("accept")
+			end
+
+			it "should have right title" do
+				get :accept, :id => @user.signup_token
+				response.should have_selector("title", :content => @company.name)
+			end
+		end
+	end
+	
+	describe "PUT 'join'" do
+		before(:each) do
+			@user = Factory(:user, :company => @company, :name => "pending")
+		end
+	
+		describe "failure" do
+			before(:each) do
+				@attr = {:name => "", 
+					:password => "", 
+					:password_confirmation => "", 
+					:image_url => "", 
+					:signup_token => @user.signup_token}
+			end
+			
+			describe "because of invalid token" do
+				it "should not be successful" do
+					put :join, :id => @user.signup_token, :user => @attr.delete("signup_token")
+					response.should_not be_success
+				end
+				
+				it "should should redirect to root" do
+					put :join, :id => @user.signup_token, :user => @attr.delete("signup_token")
+					response.should redirect_to root_path
+				end
+			end
+			
+			describe "because of blank fields" do
+				it "should not create a user" do
+					lambda do
+						put :join, :id => @user.signup_token, :user => @attr
+					end.should_not change(User, :count)
+				end
+				
+				it "should have the right title" do
+					put :join, :id => @user.signup_token, :user => @attr
+					response.should have_selector("title", :content => "Accept invite")
+				end
+				
+				it "should render the new page" do
+						put :join, :id => @user.signup_token, :user => @attr
+					response.should render_template("accept")
+				end
+			end
+		end
+		
+		describe "success" do
+			before(:each) do
+				@attr = {:name => "Test", 
+					:password => "testing", 
+					:password_confirmation => "testing",
+					:signup_token => @user.signup_token}
+			end
+			
+			it "should redirect to profile page" do
+				put :join, :id => @user.signup_token, :user => @attr
+				response.should redirect_to @user
 			end
 			
 			it "should have a welcome message" do
-				post :create, :user => @attr
+				put :join, :id => @user.signup_token, :user => @attr
 				flash[:success].should =~ /welcome to/i
 			end
 			
 			it "should sign the user in" do
-				post :create, :user => @attr
+				put :join, :id => @user.signup_token, :user => @attr
 				controller.should be_signed_in
 			end
 			
-			it "should add user_id to company_user" do
+			it "should change name to proper name" do
 				lambda do
-					post :create, :user => @attr.merge(:token1 => @company_user.token1)
-					@company_user.reload
-				end.should change(@company_user, :user_id)
+					put :join, :id => @user.signup_token, :user => @attr
+					@user.reload
+				end.should change(@user, :name)
 			end
 		end
 	end
@@ -127,7 +202,6 @@ describe UsersController do
 		before(:each) do
 			@user = Factory(:user)
 			test_sign_in(@user)
-			@other_user = Factory(:user, :email => "other_user@email.com")
 		end
 		
 		describe "failure" do
@@ -307,120 +381,23 @@ describe UsersController do
 		end
 	end
 	
-	describe "authentication of edit/update pages" do
-		before(:each) do
-			@user = Factory(:user)
-		end
-		
-		describe "for non-signed-in users" do
-			it "should deny access to 'edit'" do
-				get :edit, :id => @user, :user => {}
-				response.should redirect_to(signin_path)
-			end
-			
-			it "should deny access to 'update'" do
-				put :update, :id => @user, :user => {}
-				response.should redirect_to(signin_path)
-			end
-		end
-		
-		describe "for signed-in users" do
-			before(:each) do
-				wrong_user = Factory(:user, :email => "wronguser@testing.com")
-				test_sign_in(wrong_user)
-			end
-		
-			it "should require matching user to 'edit'" do
-				put :update, :id => @user, :user => {}
-				response.should redirect_to(root_path)
-			end
-			
-			it "should require matching user to 'update'" do
-				put :update, :id => @user, :user => {}
-				response.should redirect_to(root_path)
-			end
-		end
-	end
-
-	describe "GET 'index'" do
-		describe "for non-signed-in users" do
-			it "should deny access" do
-				get :index
-				response.should redirect_to(signin_path)
-				flash[:notice].should =~ /sign in/i
-			end
-		end
-		
-		describe "for signed_in users" do
-			before(:each) do
-				@user = test_sign_in(Factory(:user))
-				user1 = Factory(:user, :email => "indextest1@testing.com")
-				user2 = Factory(:user, :email => "indextest2@testing.com")
-				@users = [@user, user1, user2]
-				
-				30.times do
-					@users << Factory(:user, :email => Factory.next(:email))
-				end
-			end
-			
-			describe "as a non-admin user" do
-				it "should protect the page" do
-					get :index
-					response.should redirect_to(root_path)
-				end
-			end
-			
-			describe "as an admin user" do
-				before(:each) do
-					admin = Factory(:user, 
-						:email => "admin@testing.com", 
-						:admin => true)
-					test_sign_in(admin)
-				end
-				
-				it "should be successful" do
-					get :index
-					response.should be_success
-				end
-				
-				it "should have the right title" do
-					get :index
-					response.should have_selector("title", :content => "All users")
-				end
-				
-				it "should display all users" do
-					get :index
-					@users[0..2].each do |u|
-						response.should have_selector("li", :content => u.name)
-					end
-				end
-				
-				it "should paginate users" do
-					get :index
-					response.should have_selector("div.pagination")
-					response.should have_selector("span.disabled", :content => "Previous")
-					response.should have_selector("a", :href => "/users?page=2", :content => "2")
-				end
-			end
-		end
-	end
-	
 	describe "DELETE 'destroy'" do
 		before(:each) do
 			@user = Factory(:user)
-			@user.toggle!(:admin)
+			@user.toggle!(:company_admin)
+			@other_user = Factory(:user, :company => @user.company)
 			test_sign_in(@user)
 		end
 		
 		it "should destroy the user" do
 			lambda do
-				delete :destroy, :id => @user
+				delete :destroy, :id => @other_user
 			end.should change(User, :count).by(-1)
 		end
 		
 		it "should redirect to users page" do
-			delete :destroy, :id => @user
-			response.should redirect_to users_path
+			delete :destroy, :id => @other_user
+			response.should redirect_to @user.company
 		end
 	end
 end

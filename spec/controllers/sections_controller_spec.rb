@@ -100,7 +100,7 @@ describe SectionsController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.company_user.toggle!(:is_admin)
+				@user.set_company_admin(true)
 				test_sign_in(@user)
 			end
 			
@@ -144,7 +144,7 @@ describe SectionsController do
 	
 	describe "actions" do
 		before(:each) do
-			@user.company_user.toggle!(:is_admin)
+			@user.set_company_admin(true)
 			test_sign_in(@user)
 		end
 		

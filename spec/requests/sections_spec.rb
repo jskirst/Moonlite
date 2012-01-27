@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Sections" do
 	before(:each) do
 		@user = Factory(:user)
-		@user.company_user.toggle!(:is_admin)
+		@user.set_company_admin(true)
 		@path = Factory(:path, :user => @user, :company => @user.company)
 		visit signin_path
 		fill_in :email, :with => @user.email

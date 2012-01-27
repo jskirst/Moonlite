@@ -59,7 +59,7 @@ describe "Tours" do
 	
 	describe "as an admin user" do
 		before(:each) do
-			@user.company_user.toggle!(:is_admin)
+			@user.set_company_admin(true)
 			visit signin_path
 			fill_in :email, :with => @user.email
 			fill_in :password, :with => @user.password

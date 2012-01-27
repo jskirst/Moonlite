@@ -4,7 +4,7 @@ describe "CompletedTasks" do
 	before(:each) do
 		@password = "current_password"
 		@user = Factory(:user, :password => @password, :password_confirmation => @password)
-		@user.company_user.toggle!(:is_admin)
+		@user.set_company_admin(true)
 		@path = Factory(:path, :user => @user, :company => @user.company)
 		@section = Factory(:section, :path => @path)
 		@task1 = Factory(:task, :section => @section)

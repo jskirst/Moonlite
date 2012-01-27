@@ -4,8 +4,8 @@ class PagesController < ApplicationController
 		@title = "Home"
 		if signed_in?
 			@paths = current_user.enrolled_paths
-			@user_achievements = UserAchievement.find(:all, :joins => "JOIN company_users on user_achievements.user_id = company_users.user_id JOIN achievements on achievements.id = user_achievements.achievement_id", 
-				:conditions => ["company_users.company_id = ?", current_user.company.id], :limit => 15)
+			@user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
+				:conditions => ["users.company_id = ?", current_user.company_id], :limit => 15)
 		else
 			@paths = []
 		end

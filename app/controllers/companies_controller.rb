@@ -22,8 +22,8 @@ class CompaniesController < ApplicationController
 	end
   
 	def show
-		@company_users = CompanyUser.find(:all, :conditions => ["company_id = ? AND user_id IS NOT NULL", @company.id])
-		@unregistered_company_users = CompanyUser.find(:all, :conditions => ["company_id = ? AND user_id IS NULL", @company.id])
+		@users = @company.users.find(:all, :conditions => ["company_id = ? AND name != ?", @company.id, "pending"])
+		@unregistered_users =  @company.users.find(:all, :conditions => ["company_id = ? AND name = ?", @company.id, "pending"])
 		@title = @company.name
 	end
 	

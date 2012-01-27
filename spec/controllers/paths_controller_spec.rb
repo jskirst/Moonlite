@@ -88,7 +88,7 @@ describe PathsController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.company_user.toggle!(:is_admin)
+				@user.set_company_admin(true)
 				test_sign_in(@user)
 			end
 			
@@ -123,7 +123,7 @@ describe PathsController do
 	
 	describe "actions" do
 		before(:each) do
-			@user.company_user.toggle!(:is_admin)
+			@user.set_company_admin(true)
 			test_sign_in(@user)
 		end
 		
@@ -262,7 +262,7 @@ describe PathsController do
 		
 		describe "GET 'show'" do
 			it "should not allow non-admins to access unpublished paths" do
-				@user.company_user.toggle!(:is_admin)
+				@user.set_company_admin(false)
 				unpurchaseable_path = Factory(:path, :company => @user.company, :user => @user, :is_published => false)
 				get :show, :id => unpurchaseable_path
 				response.should redirect_to root_path

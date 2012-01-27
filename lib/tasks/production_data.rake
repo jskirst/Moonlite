@@ -1,5 +1,5 @@
 DEFAULT_PASSWORD = "a1b2c3"
-NUMBER_OF_USERS = 7
+NUMBER_OF_USERS = 5
 NUMBER_OF_TASKS = 10
 TIME_PERIOD = 7
 AVG_SCORE = 7
@@ -46,10 +46,8 @@ PATHS = [["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries
 
 PATH_SECTIONS = ["Introduction", "First steps", "Basic concepts", "Application", "Intermediate topics", "Advanced", "Final test"]
 
-def create_user(name, email,image_url,company_id, is_admin = false)
-	u = User.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10)
-	CompanyUser.create!(:company_id => company_id, :email => email ,:user_id => u.id, :is_admin => is_admin)
-	return u
+def create_user(company,name, email,image_url,is_admin = false)
+	return company.users.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10, :company_admin => is_admin)
 end
 		
 namespace :db do
@@ -57,10 +55,10 @@ namespace :db do
 	task :genesis => :environment do
 		Rake::Task['db:reset'].invoke
 		moonlite_company = Company.create!(:name => "Moonlite")
-		moonlite_admin = create_user("Jonathan Kirst", "jc@moonlite.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg", moonlite_company.id, true)
-		create_user("Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg", moonlite_company.id, true)
-		create_user("Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg", moonlite_company.id, true)
-		create_user("Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg", moonlite_company.id, true)
+		moonlite_admin = create_user(moonlite_company,"Jonathan Kirst", "jc@moonlite.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg", true)
+		create_user(moonlite_company,"Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg", true)
+		create_user(moonlite_company,"Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg", true)
+		create_user(moonlite_company,"Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg", true)
 		
 		REWARDS.each do |r|
 			moonlite_company.rewards.create!(:name => r[0], :description => r[1], :image_url => r[2], :points => r[3])
@@ -102,7 +100,7 @@ namespace :db do
 				email = name.gsub(" ",".") + "@moonlite.com"
 				image_url = fake_user[1]
 				if User.find_by_email(email).nil?
-					new_user = create_user(name,email,image_url,moonlite_company.id,)
+					new_user = create_user(moonlite_company,name,email,image_url)
 				end
 			end
 			

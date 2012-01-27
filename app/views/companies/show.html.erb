@@ -6,7 +6,7 @@
 	</ul>
 	<section id="users">
 		<h2>Registered Users</h2>
-		<% if @company_users.empty? %>
+		<% if @users.empty? %>
 			<p>You do not have any users for your organization yet.</p>
 		<% else %>
 		<table>
@@ -19,10 +19,10 @@
 			</thead>
 			<tbody>
 				<% user_counter = 0 %>
-				<% @company_users.each do |cu| %>
+				<% @users.each do |u| %>
 					<tr>
 						<td><%= user_counter.to_s %></td>
-						<td><%= link_to cu.user.name, cu.user %></td>
+						<td><%= link_to u.name, u %></td>
 						<td><%= rand(1000).to_s %></td>
 					</tr>
 					<% user_counter += 1 %>
@@ -30,14 +30,14 @@
 			</tbody>
 		</table>
 		<% end %>
-		<p><%= link_to "Add user", new_company_user_path(:company => @company), :class => "btn primary" %></p>
+		<p><%= link_to "Add user", new_user_path(:company_id => @company), :class => "btn primary" %></p>
 		<h3>Awaiting reply from:</h3>
-		<% if @unregistered_company_users.empty? %>
+		<% if @unregistered_users.empty? %>
 			<p>There are no outstanding user invitations.</p>
 		<% else %>
 		<ol>
-			<% @unregistered_company_users.each do |cu| %>
-			<li><%= cu.email %></li>
+			<% @unregistered_users.each do |u| %>
+			<li><%= u.email %></li>
 			<% end %>
 		</ol>
 		<% end %>

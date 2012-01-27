@@ -119,7 +119,7 @@ describe CompaniesController do
 		describe "when signed in as company admin of another company" do
 			before(:each) do
 				@other_user = Factory(:user)
-				@other_user.company_user.toggle!(:is_admin)
+				@other_user.set_company_admin(true)
 				@attr = {:name => "Changed"}
 				test_sign_in(@other_user)
 			end
@@ -145,7 +145,7 @@ describe CompaniesController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.company_user.toggle!(:is_admin)
+				@user.set_company_admin(true)
 				@attr = {:name => "Changed"}
 				test_sign_in(@user)
 			end
@@ -185,7 +185,7 @@ describe CompaniesController do
 	describe "actions" do
 		before(:each) do
 			@user.toggle!(:admin)
-			@user.company_user.toggle!(:is_admin)
+			@user.set_company_admin(true)
 			test_sign_in(@user)
 		end
 
@@ -271,21 +271,17 @@ describe CompaniesController do
 			describe "associated users" do
 				describe "when they exist" do
 					before(:each) do
-						@other_user1 = Factory(:user, :email => "other_user1@testing.com", :name => "Other user1", :company_user => nil)
-						@other_user2 = Factory(:user, :email => "other_user2@testing.com", :name => "Other user2", :company_user => nil)
-						@other_user3 = Factory(:user, :email => "other_user3@testing.com", :name => "Other user3", :company_user => nil)
-					
-						@unreg_company_user = Factory(:company_user, :email => "unreg@t.com", :company => @company, :user_id => nil)
-						@company_user1 = Factory(:company_user, :email => @other_user1.email, :company => @company, :user_id => @other_user1.id)
-						@company_user1 = Factory(:company_user, :email => @other_user2.email, :company => @company, :user_id => @other_user2.id)
-						@company_user1 = Factory(:company_user, :email => @other_user3.email, :company => @company, :user_id => @other_user3.id)
-						
+						@other_user1 = Factory(:user, :company => @company)
+						@other_user2 = Factory(:user, :company => @company)
+						@other_user3 = Factory(:user, :company => @company)
 						@users = [@other_user1, @other_user2, @other_user3]
+					
+						@unreg_user = Factory(:user, :name => "pending", :company => @company)
 					end
 					
 					it "should list unregistered users" do
 						get :show, :id => @company
-						response.should have_selector("li", :content => @unreg_company_user.email)
+						response.should have_selector("li", :content => @unreg_user.email)
 					end
 					
 					it "should list registered users" do

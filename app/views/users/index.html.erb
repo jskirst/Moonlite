@@ -3,7 +3,17 @@
 <%= will_paginate %>
 
 <ul class='users'>
-	<%= render @users %>
+<% @users.each do |user| %>
+	<li>
+		<%= image_tag(user.profile_pic, :size =>"50x50", :class => "profile_pic") %>
+		<%= link_to user.name, user %> | 
+		<%= link_to "delete", 
+			user, 
+			:method => :delete,
+			:confirm => "You sure?",
+			:title => "Delete #{user.name}" %>
+	</li>
+<% end %>
 </ul>
 
 <%= will_paginate %>

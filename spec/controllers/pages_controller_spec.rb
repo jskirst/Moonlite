@@ -24,7 +24,7 @@ describe PagesController do
 		describe "when signed in" do
 			before(:each) do
 				@user = Factory(:user, :email => "test@user.com")
-				@user.company_user.toggle!(:is_admin)
+				@user.set_company_admin(true)
 				test_sign_in(@user)
 			end
 		

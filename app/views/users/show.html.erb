@@ -9,9 +9,7 @@
 		<%= @user.name %>
 	</h1>
 	<section>
-		<% if !@company.nil? %>
 		<p>Company: <%= link_to @company.name, @company %></p>
-		<% end %>
 		<p><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
 	</section>
 	<% if !@user_achievements.empty? %>

@@ -1,9 +1,6 @@
-......................................................F.................*........................*................................................................*............................................................................................................................................................................................................................................................................................................................................................................................................................................................................***.......*...................................................***.......................................................................*
+......................................................................................*................................................................*......................................................................................................................................................................................................................................................................................................................................................................................................................................................***.......*..................................................***.....................................................................*
 
 Pending:
-  CompanyUsersController should control access
-    # Not Yet Implemented
-    # ./spec/controllers/company_users_controller_spec.rb:12
   CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing all tasks for the path should not change the user's encrypted password
     # Not Yet Implemented
     # ./spec/controllers/completed_tasks_controller_spec.rb:150
@@ -24,87 +21,17 @@ Pending:
     # ./spec/models/section_spec.rb:127
   User completed tasks should respond with all completed tasks
     # Not Yet Implemented
-    # ./spec/models/user_spec.rb:158
+    # ./spec/models/user_spec.rb:159
   User User completed tasks completed? should respond with false if task not completed
     # Not Yet Implemented
-    # ./spec/models/user_spec.rb:161
+    # ./spec/models/user_spec.rb:162
   User User completed tasks completed? should respond with true if the task is completed
     # Not Yet Implemented
-    # ./spec/models/user_spec.rb:163
+    # ./spec/models/user_spec.rb:164
   Users should successfully change password from the edit page
     # Not Yet Implemented
     # ./spec/requests/users_spec.rb:4
 
-Failures:
-
-  1) CompaniesController actions Get 'show' should not allow access to a company admin of another company
-     Failure/Error: response.should_not have_selector("title", :content => @company.name)
-       expected following output to omit a <title>Solyndra</title>:
-       <!DOCTYPE html>
-       <html>
-       <head>
-       <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-       <title>Project Moonlite | Solyndra</title>
-       <script src="/javascripts/jquery.js?1321834318" type="text/javascript"></script><script src="/javascripts/jquery_ujs.js?1321834318" type="text/javascript"></script><script src="/javascripts/application.js?1316741548" type="text/javascript"></script><script src="/javascripts/bootstrap-scrollspy.js"></script><script src="/javascripts/bootstrap-dropdown.js"></script><script src="/javascripts/core.js"></script><link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-       <link rel="stylesheet" href="/stylesheets/core.css">
-       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script><script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script><link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css">
-       </head>
-       <body>
-       <p>&gt;&gt;&gt;&gt;&gt;&gt; 37fe25bf93cd319ad2b9cad3c5a4fa311bff0a4f
-       
-       </p>
-       <div class="container">
-       	<header><nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown"><div class="fill">
-       			<div class="container">
-       				<h3><a href="/">Moonlite</a></h3>
-       				<ul>
-       <li><a href="/paths">Paths</a></li>
-       					<li><a href="/users/2">Jonathan Dudearino</a></li>
-       						<li><a href="/rewards">Company Store</a></li>
-       						<li><a href="/companies/2">My Company</a></li>
-       						<li><a href="/dashboard">Dashboard</a></li>
-       				</ul>
-       <ul class="nav secondary-nav">
-       <li>
-       						<a href="/tours">Take the tour</a>
-       </li>
-       					<li><a href="/signout" data-method="delete" rel="nofollow">Sign out</a></li>
-       				</ul>
-       </div>
-       		</div>
-       	</nav></header><section id="content"><section id="company-profile"><h1>Solyndra</h1>
-       	<ul class="tabs">
-       <li class="active"><a href="#">Users</a></li>
-       		<li><a href="/companies/1/edit">Settings</a></li>
-       	</ul>
-       <section id="users"><h2>Registered Users</h2>
-       		<table>
-       <thead><tr>
-       <th>#</th>
-       					<th>Name</th>
-       					<th>Other</th>
-       				</tr></thead>
-       <tbody><tr>
-       <td>0</td>
-       						<td><a href="/users/1">Jonathan Dudearino</a></td>
-       						<td>225</td>
-       					</tr></tbody>
-       </table>
-       <p><a href="/company_users/new?company=1" class="btn primary">Add user</a></p>
-       		<h3>Awaiting reply from:</h3>
-       			<p>There are no outstanding user invitations.</p>
-       	</section></section></section><footer><nav><p class="quote">Stay hungry, stay foolish.</p>
-       	</nav></footer>
-       </div>
-       
-       </body>
-       </html>
-     # ./spec/controllers/companies_controller_spec.rb:229:in `block (4 levels) in <top (required)>'
-
-Finished in 114.81 seconds
-760 examples, 1 failure, 11 pending
-
-Failed examples:
-
-rspec ./spec/controllers/companies_controller_spec.rb:224 # CompaniesController actions Get 'show' should not allow access to a company admin of another company
-  <-- Slave(2) run done!
+Finished in 101.69 seconds
+724 examples, 0 failures, 10 pending
+  <-- Slave(1) run done!

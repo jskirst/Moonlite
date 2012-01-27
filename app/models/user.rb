@@ -1,9 +1,8 @@
 class User < ActiveRecord::Base
 	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points, :image_url
+	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points, :image_url, :signup_token, :company_admin
 	
-	has_one :company_user
-	has_one :company, :through => :company_user
+	belongs_to :company
 	has_many :paths, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
 	has_many :enrolled_paths, :through => :enrollments, :source => :path
@@ -29,6 +28,12 @@ class User < ActiveRecord::Base
 		:length		=> { :within => 6..40 }
 	
 	before_save :encrypt_password, :only => [:create]
+	before_save :set_tokens
+	
+	def send_invitation_email
+		email_details = { :email => self.email, :token1 => self.signup_token }
+		Mailer.welcome(email_details).deliver
+	end
 	
 	def profile_pic
 		if self.image_url != nil
@@ -74,7 +79,7 @@ class User < ActiveRecord::Base
 	end
 	
 	def company_admin?
-		return company_user.is_admin
+		return company_admin
 	end
 	
 	def award_points(task)
@@ -131,11 +136,11 @@ class User < ActiveRecord::Base
 	end
 	
 	def set_company_admin(val)
-		current_val = company_user.is_admin
+		current_val = self.company_admin
 		if !current_val && val == true
-			company_user.toggle!(:is_admin)
+			self.toggle!(:company_admin)
 		elsif !val && current_val == true
-			company_user.toggle!(:is_admin)
+			self.toggle!(:company_admin)
 		end
 	end
 	
@@ -157,5 +162,15 @@ class User < ActiveRecord::Base
 		
 		def secure_hash(string)
 			Digest::SHA2.hexdigest(string)
+		end
+		
+		def set_tokens
+			if(self.signup_token == nil)
+				self.signup_token = random_alphanumeric
+			end
+		end
+		
+		def random_alphanumeric(size=15)
+			(1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
 		end
 end

@@ -1,18 +1,66 @@
 class UsersController < ApplicationController
-	before_filter :check_environment, :except => [:accept, :show, :index, :create, :verify, :edit, :update, :destroy]
-	before_filter :authenticate, :except => [:create, :accept, :verify]
-	before_filter :correct_user, :except => [:accept, :create, :verify, :show, :index, :destroy]
-	before_filter :admin_user, :except => [:accept, :verify, :create, :show, :edit, :update]
+	before_filter :authenticate, :except => [:accept, :join]
+	before_filter :company_admin, :except => [:accept, :join, :show, :edit, :update]
 	
-	def accept
-		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", params[:id]])
-		if @company_user.nil?
+	def new
+		@company = Company.find(params[:company_id])
+		@user = User.new
+		@title = "Invite user"
+	end
+	
+	def create
+		nil_company_message = "The company you tried to add a user to did not exist."
+		error_message = "Something bad happened and a new invitation could not be sent."
+		success_message = "Successfully invited."
+		
+		@company = Company.find_by_id(params[:user][:company_id])
+		if @company.nil?
+			flash[:error] = nil_company_message
 			redirect_to root_path
 		else
-			@company = Company.find_by_id(@company_user.company_id)
-			@title = @company.name
-			@user = User.new
-			render 'new'
+			params[:user].delete("company_id")
+			params[:user][:name] = "pending"
+			params[:user][:password] = "pending"
+			params[:user][:password_confirmation] = "pending"
+			@user = @company.users.build(params[:user])
+			if @user.save
+				@user.send_invitation_email
+				flash[:success] = success_message
+				redirect_to @company
+			else
+				@title = "Invite user"
+				render "new"
+			end
+		end
+	end
+	
+	def accept
+		@user = User.find(:first, :conditions => ["signup_token = ?", params[:id]])
+		if @user.nil?
+			redirect_to root_path
+		else
+			@title = @user.company.name
+		end
+	end
+	
+	def join
+		if params[:user].nil?
+			redirect_to root_path and return
+		end
+		
+		@user = User.find_by_signup_token(params[:user][:signup_token])
+		if @user.nil?
+			redirect_to root_path and return
+		end
+		
+		if @user.update_attributes(params[:user])
+			@user.reload
+			sign_in @user
+			flash[:success] = "Welcome to the Moonlite!"
+			redirect_to @user
+		else
+			@title = "Accept invite"
+			render "accept"
 		end
 	end
   
@@ -23,10 +71,7 @@ class UsersController < ApplicationController
 		else
 			@enrolled_paths = @user.enrolled_paths.find(:all, :conditions => ["paths.is_public = ?", true])
 			@user_achievements = @user.user_achievements
-			@company_user = CompanyUser.find_by_user_id(@user.id)
-			if !@company_user.nil?
-				@company = @company_user.company
-			end
+			@company = @user.company
 			@title = @user.name
 		end
 	end
@@ -35,33 +80,9 @@ class UsersController < ApplicationController
 		@users = User.paginate(:page => params[:page])
 		@title = "All users"
 	end
-		
-	def create
-		if params[:user].nil? || params[:user][:token1].nil?
-			redirect_to root_path and return
-		end
-		
-		@company_user = CompanyUser.find(:first, :conditions => ["token1 = ?", params[:user][:token1]])
-		if @company_user.nil?
-			redirect_to root_path and return
-		end
-		
-		@user = User.new(params[:user])
-		@user.email = @company_user.email
-		if @user.save
-			@user.reload
-			sign_in @user
-			@company_user.user_id = @user.id
-			@company_user.save!
-			flash[:success] = "Welcome to the Moonlite!"
-			redirect_to @user
-		else
-			@title = "Sign up"
-			render 'new'
-		end
-	end
 	
 	def edit
+		@user = User.find(params[:id])
 		@title = "Settings"
 	end
 	
@@ -77,17 +98,18 @@ class UsersController < ApplicationController
 	end
 	
 	def destroy
-		User.find_by_id(params[:id]).destroy
-		flash[:success] = "User destroyed"
-		redirect_to users_path
+		@user = User.find_by_id(params[:id])
+		if @user.nil?
+			flash[:error] = "No such user exists."
+			redirect_to current_user.company
+		else
+			@user.destroy
+			flash[:success] = "User destroyed"
+			redirect_to current_user.company
+		end
 	end
 	
-	private
-		def correct_user
-			@user = User.find(params[:id])
-			redirect_to root_path unless current_user?(@user)
-		end
-		
+	private		
 		def admin_user
 			redirect_to(root_path) unless current_user.admin?
 		end
