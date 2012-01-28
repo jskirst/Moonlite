@@ -126,7 +126,7 @@ describe SectionsController do
 			
 			it "should allow access to 'update'" do
 				put :update, :id => @section, :section => @attr.delete("path_id")
-				response.should redirect_to @section
+				response.should render_template "edit"
 			end
 			
 			it "should allow access to 'destroy'" do
@@ -234,7 +234,7 @@ describe SectionsController do
 				
 				it "should render the edit page" do
 					put :update, :id => @section, :section => @attr
-					response.should render_template("sections/section_form")
+					response.should render_template("edit")
 				end
 				
 				it "should have the right title" do
@@ -258,7 +258,7 @@ describe SectionsController do
 				
 				it "Should redirect to section page" do
 					put :update, :id => @section, :section => @attr
-					response.should redirect_to(section_path(assigns(:section)))
+					response.should render_template "edit"
 				end
 				
 				it "Should have a success message" do

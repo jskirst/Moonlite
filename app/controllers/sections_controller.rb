@@ -6,8 +6,6 @@ class SectionsController < ApplicationController
 		@section = Section.new
 		@title = "New section"
 		@path_id = params[:path_id]
-		@form_title = "New"
-		render "section_form"
 	end
 	
 	def create
@@ -22,13 +20,13 @@ class SectionsController < ApplicationController
 				if params[:commit] == "Save and New"
 					redirect_to new_section_path(:path_id => @path.id)
 				else
-					redirect_to @section
+					redirect_to edit_path_path(@path, :m => "sections")
 				end
 			else
 				@title = "New section"
 				@form_title = @title
 				@path_id = @path.id
-				render "section_form"
+				render "new"
 			end
 		end
 	end
@@ -41,21 +39,24 @@ class SectionsController < ApplicationController
 	
 	def edit
 		@title = "Edit section"
-		@form_title = "Edit section"
 		@section = Section.find(params[:id])
 		@path_id = @section.path_id
-		render "section_form"
+		if params[:m] == "tasks"
+			@tasks = @section.tasks
+			render "edit_tasks"
+		elsif params[:m] == "settings"
+			render "edit_settings"
+		end
 	end
 	
 	def update
 		@section = Section.find(params[:id])
 		if @section.update_attributes(params[:section])
 			flash[:success] = "Section successfully updated."
-			redirect_to @section
+			render "edit"
 		else
 			@title = "Edit"
-			@form_title = @title
-			render "section_form"
+			render "edit"
 		end
 	end
 	
@@ -63,7 +64,7 @@ class SectionsController < ApplicationController
 		@section = Section.find(params[:id])
 		@section.destroy
 		flash[:success] = "Section successfully deleted."
-		redirect_back_or_to @section.path
+		redirect_back_or_to edit_path_path(@section.path, :m => "sections")
 	end
 	
 	def continue

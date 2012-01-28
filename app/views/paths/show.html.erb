@@ -20,7 +20,7 @@
 					<span class="label">Completed</span>
 					<% end %>
 				</h5>
-				<p><%= truncate(s.instructions, :length => 140) %></p>
+				<p><%= truncate(strip_tags(s.instructions), :length => 140) %></p>
 			</li>
 		<% end %>
 		</ol>
@@ -38,8 +38,6 @@
 		<% end %>
 		<% if current_user.company_admin? %>
 			<%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn secondary" %>
-			<%= link_to "Add Section", {:controller => "sections", :action => "new", :path_id => @path }, :class => "btn secondary" %>
-			<%= link_to "Add Achievement", {:controller => "achievements", :action => "new", :path_id => @path.id }, :class => "btn secondary" %>
 			<%= link_to "Delete", @path, :method => "delete", :confirm => "Are you sure you want to delete this path?", :title => "Delete task", :class => "btn secondary" %>
 		<% end %>
 		</div>

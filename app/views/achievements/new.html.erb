@@ -1,0 +1,38 @@
+<h1>New Achievement</h1>
+<%= form_for @achievement do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :path_id, :value => @path.id %><br/>
+	<div class="field clearfix">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name, :maxlength => 255, :size => 75 %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<%= f.label :description %>
+		<div class="input">
+			<%= f.text_field :description, :maxlength => 255, :size => 75 %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<%= f.label :criteria %>
+		<div class="input">
+			<%= f.text_field :criteria, :maxlength => 255, :size => 75 %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<%= f.label :points %>
+		<div class="input">
+			<select id="achievement_points" name="achievement[points]">
+				<option value="5">5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+				<option value="20">20</option>
+				<option value="25">25</option>
+			</select>
+		</div>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save", :class => "btn primary" %>
+	</div>
+<% end %>

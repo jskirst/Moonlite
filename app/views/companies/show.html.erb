@@ -14,7 +14,9 @@
 				<tr>
 					<th>#</th>
 					<th>Name</th>
-					<th>Other</th>
+					<th>User Type</th>
+					<th>Enrolled Paths</th>
+					<th>Points Earned</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -23,6 +25,23 @@
 					<tr>
 						<td><%= user_counter.to_s %></td>
 						<td><%= link_to u.name, u %></td>
+						<% if u.company_admin %>
+							<td>Admin</td>
+						<% else %>
+							<td>User</td>
+						<% end %>
+						<%
+							enrolled_paths = []
+							u.enrolled_paths.each do |p|
+								enrolled_paths << p.name
+							end
+							enrolled_paths = enrolled_paths.join(", ")						
+						%>
+						<% if enrolled_paths.blank? %>
+							<td>None</td>
+						<% else %>
+							<td><%= truncate(enrolled_paths, :length => 80) %></td>
+						<% end %>
 						<td><%= u.earned_points.to_s %></td>
 					</tr>
 					<% user_counter += 1 %>

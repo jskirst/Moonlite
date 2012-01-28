@@ -8,6 +8,7 @@ class PathsController < ApplicationController
 	
 	def index
 		@paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, true])
+		@unpublished_paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, false])
 		@title = "All Paths"
 	end
 	
@@ -37,9 +38,21 @@ class PathsController < ApplicationController
 	
 	def edit
 		@title = "Edit"
+		if params[:m] == "settings"
+			render "edit_settings"
+		elsif params[:m] == "sections"
+			@sections = @path.sections
+			render "edit_sections"
+		elsif params[:m] == "achievements"
+			@achievements = @path.achievements
+			render "edit_achievements"
+		end
 	end
 	
 	def update
+		if params[:path][:image_url].blank?
+			params[:path].delete("image_url")
+		end
 		if @path.update_attributes(params[:path])
 			flash[:success] = "Changes saved."
 			redirect_to @path

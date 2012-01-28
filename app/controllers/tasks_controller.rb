@@ -29,7 +29,7 @@ class TasksController < ApplicationController
 			if params[:commit] == "Save and New"
 				redirect_to new_task_path(:section_id => @section.id)
 			else
-				redirect_to @section
+				redirect_to edit_section_path(@section, :m => "tasks")
 			end
 		else
 			@title = "Edit"

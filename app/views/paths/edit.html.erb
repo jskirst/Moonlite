@@ -1,4 +1,11 @@
 <h1>Edit Path</h1>
+<ul class="tabs">
+	<li class="active"><a href="#">Content</a></li>
+	<li><%= link_to "Settings", edit_path_path(@path, :m=>"settings") %></li>
+	<li><%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %></li>
+	<li><%= link_to "Achievements", edit_path_path(@path.id, :m=>"achievements") %></li>
+</ul>
+<section>
 <%= form_for(@path) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
 	<div class="field clearfix">
@@ -10,38 +17,11 @@
 	<div class="field clearfix">
 		<%= f.label :description %>
 		<div class="input">
-			<%= f.text_area :description, :class => "xxlarge", :rows => "4" %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label "Path Picture URL" %>
-		<div class="input">
-			<%= f.text_field :image_url, :value => "Link to web hosted picture...", :onclick => "this.value='';" %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<label>Settings</label>
-		<div class="input">
-			<ul class="inputs-list">
-				<li>
-					<label>
-						<%= f.check_box :is_published, :confirm => "This will publish the path so all users in your account can access it. Are you sure you want to publish this now?" %>
-						<span>Publish this Path to your Moonlite account.</span>
-					</label>
-					<label>
-						<%= f.check_box :is_public, :confirm => "This will publish the path so all users in your account can access it. Are you sure you want to publish this now?" %>
-						<span>Allow users to post this Path to their public profile</span>
-					</label>
-					<label>
-						<%= f.check_box :is_purchaseable, :confirm => "This will publish the Path to the Path Marketplace where any Moonlite account can purchase it. Are you sure you want to publish this to the Marketplace right now?" %>
-						<span>List this Path Marketplace for purchase</span>
-					</label>
-				</li>
-			</ul>
+			<%= f.text_area :description, :class=>"markitup", :rows => "15", %>
 		</div>
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "Cancel", @path, :class => "btn secondary" %>
+		<%= link_to "Back to Path", @path, :class => "btn secondary" %>
 	</div>
 <% end %>

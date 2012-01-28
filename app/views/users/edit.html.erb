@@ -16,7 +16,12 @@
 	<div class="field clearfix">
 		<%= f.label "Profile Picture URL" %>
 		<div class="input">
-			<%= f.text_field :image_url, :value => "Link to web hosted picture...", :onclick => "this.value='';" %>
+			<%= f.text_field :image_url %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<div class="input">
+			<%= image_tag(@user.profile_pic, :width => "210") %>
 		</div>
 	</div>
 	<div class="field clearfix">

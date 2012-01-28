@@ -1,0 +1,48 @@
+<h1>Edit Path</h1>
+<ul class="tabs">
+	<li><%= link_to "Content", edit_path_path(@path.id) %></li>
+	<li class="active"><a href="#">Settings</a></li>
+	<li><%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %></li>
+	<li><%= link_to "Achievements", edit_path_path(@path.id, :m=>"achievements") %></li>
+</ul>
+<section>
+<%= form_for(@path) do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<div class="field clearfix">
+		<%= f.label "Profile Picture URL" %>
+		<div class="input">
+			<%= f.text_field :image_url, :class=>"xxlarge" %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<div class="input">
+			<%= image_tag(@path.path_pic, :width => "210", :style=>"margin:20px 0px 20px 10px") %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<label>Settings</label>
+		<div class="input">
+			<ul class="inputs-list">
+				<li>
+					<label>
+						<%= f.check_box :is_published, :confirm => "This will publish the path so all users in your account can access it. Are you sure you want to publish this now?" %>
+						<span>Publish this Path to your Moonlite account.</span>
+					</label>
+					<label>
+						<%= f.check_box :is_public, :confirm => "This will publish the path so all users in your account can access it. Are you sure you want to publish this now?" %>
+						<span>Allow users to post this Path to their public profile</span>
+					</label>
+					<label>
+						<%= f.check_box :is_purchaseable, :confirm => "This will publish the Path to the Path Marketplace where any Moonlite account can purchase it. Are you sure you want to publish this to the Marketplace right now?" %>
+						<span>List this Path Marketplace for purchase</span>
+					</label>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save", :class => "btn primary" %>
+		<%= link_to "Back to Path", @path, :class => "btn secondary" %>
+	</div>
+<% end %>
+</section>

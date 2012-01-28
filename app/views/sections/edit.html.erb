@@ -1,0 +1,28 @@
+<h1>Edit Section</h1>
+<ul class="tabs">
+	<li class="active"><a href="#">Content</a></li>
+	<li><%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %></li>
+	<li><%= link_to "Tasks", edit_section_path(@section.id, :m => "tasks") %></li>
+</ul>
+<section>
+<%= form_for @section do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :path_id, :value => @path_id %><br/>
+	<div class="field">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name, :class => "xlarge" %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<%= f.label :instructions %>
+		<div class="input">
+			<%= f.text_area :instructions, :class => "markitup", :rows => "8" %>
+		</div>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save", :class => "btn primary" %>
+		<%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
+	</div>
+<% end %>
+</section>

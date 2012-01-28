@@ -1,0 +1,39 @@
+<h1>Edit Section</h1>
+<ul class="tabs">
+	<li><%= link_to "Content", edit_section_path(@section.id) %></li>
+	<li><%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %></li>
+	<li class="active"><a href="#">Tasks</a></li>
+</ul>
+<section>
+	<div style="float: right; display:inline;">
+		<%= link_to "New Task", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
+	</div>
+	<h2><%= @section.name %></h2>
+	<% if @tasks.empty? %>
+		<p style="margin: 30px 0px 200px 0px;">You have not yet created any tasks for this Path.</p>
+	<% else %>
+		<table>
+		<% @tasks.each do |t| %>
+			<tr class="task"><td>	
+				<blockquote>
+					<p>
+						<%= t.question %>
+					</p>
+				</blockquote>
+				<ol>
+					<% if !t.answer1.blank? %><li><%= t.answer1 %></li><% end %>
+					<% if !t.answer2.blank? %><li><%= t.answer2 %></li><% end %>
+					<% if !t.answer3.blank? %><li><%= t.answer3 %></li><% end %>
+					<% if !t.answer4.blank? %><li><%= t.answer4 %></li><% end %>
+				</ol>
+				<p style="float: left;">Correct Answer: <%= t.correct_answer %></p>
+				<%= link_to "Delete", t, :method => :delete, :confirm => "You sure?", :title => "Delete task", :class => "btn secondary" %>
+				<%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
+			</tr></td>
+		<% end %>
+		</table>
+	<% end %>
+	<div class="actions">
+		<%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
+	</div>
+</section>

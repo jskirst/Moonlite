@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-	attr_accessible :name, :instructions, :position
+	attr_accessible :name, :instructions, :position, :is_published
 	
 	before_validation :set_position
 	
