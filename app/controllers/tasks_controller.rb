@@ -2,17 +2,6 @@ class TasksController < ApplicationController
 	before_filter :authenticate
 	before_filter :company_admin
 	
-	def index
-		@section = Section.find_by_id(params[:section_id])
-		if @section.nil?
-			flash[:error] = "This is not a valid section."
-			redirect_to root_path
-		else
-			@title = @section.name
-			@tasks = @section.tasks
-		end
-	end
-	
 	def new
 		@task = Task.new
 		@title = "New Question"

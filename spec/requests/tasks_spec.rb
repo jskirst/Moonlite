@@ -12,8 +12,11 @@ describe "Tasks" do
 		click_button #goes to user page (path index)
 		click_link "Paths"
 		click_link @path.name
-		click_link @section.name
-		click_link "Add Tasks"
+		click_link "Edit"
+		click_link "Sections"
+		click_link "Edit"
+		click_link "Tasks"
+		click_link "New Task"
 	end
 	
 	describe 'creation' do
@@ -38,7 +41,7 @@ describe "Tasks" do
 					fill_in :task_answer1, :with => "Test answer"
 					fill_in :task_answer2, :with => "Test answer2"
 					click_button "Save"
-					response.should render_template('sections/show')
+					response.should render_template('sections/edit_tasks')
 					response.should have_selector("div.success")
 				end.should change(Task, :count).by(1)
 			end

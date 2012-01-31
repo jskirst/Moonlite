@@ -15,7 +15,7 @@ describe "Paths" do
 			it "should not make a new path" do
 				lambda do
 					click_link "Paths"
-					click_link "Create new Path"
+					click_link "New Path"
 					fill_in "Name", :with => ""
 					fill_in "Description", :with => ""
 					click_button
@@ -31,7 +31,7 @@ describe "Paths" do
 					name = "NAME"
 					description = "DESCRIPTION"
 					visit paths_path
-					click_link "Create new Path"
+					click_link "New Path"
 					fill_in "Name", :with => name
 					fill_in "Description", :with => description
 					click_button

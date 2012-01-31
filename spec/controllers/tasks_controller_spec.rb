@@ -32,11 +32,6 @@ describe TasksController do
 				response.should redirect_to signin_path
 			end
 			
-			it "should deny access to 'index'" do
-				get :index, :section_id => @section.id
-				response.should redirect_to signin_path
-			end
-			
 			it "should deny access to 'show'" do
 				get :show, :id => @task
 				response.should redirect_to signin_path
@@ -70,11 +65,6 @@ describe TasksController do
 		
 			it "should deny access to 'create'" do
 				post :create, :task => @attr
-				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'index'" do
-				get :index, :section_id => @section.id
 				response.should redirect_to root_path
 			end
 			
@@ -112,12 +102,7 @@ describe TasksController do
 		
 			it "should allow access to 'create' and redirect to section" do
 				post :create, :task => @attr
-				response.should redirect_to @section
-			end
-			
-			it "should allow access to 'index'" do
-				get :index, :section_id => @section.id
-				response.should be_success
+				response.should redirect_to edit_section_path(@section, :m => "tasks")
 			end
 			
 			it "should allow access to 'show'" do
@@ -182,32 +167,13 @@ describe TasksController do
 				
 				it "should redirect to the path page" do
 					post :create, :task => @attr
-					response.should redirect_to @section
+					response.should redirect_to edit_section_path(@section, :m => "tasks")
 				end
 				
 				it "should have a flash message" do
 					post :create, :task => @attr
 					flash[:success].should =~ /task created/i
 				end
-			end
-		end
-		
-		describe "Get 'index'" do
-			it "should redirect to root for bad section parameter" do
-				get :index, :section_id => "abc"
-				response.should redirect_to root_path
-			end
-			
-			it "should have the section's name in the title" do
-				get :index, :section_id => @section
-				response.should have_selector("title", :content => @section.name)
-			end
-			
-			it "should display all the section tasks questions" do
-				task2 = Factory(:task, :section => @section)
-				get :index, :section_id => @section
-				response.should have_selector("p", :content => @task.question)
-				response.should have_selector("p", :content => task2.question)
 			end
 		end
 		

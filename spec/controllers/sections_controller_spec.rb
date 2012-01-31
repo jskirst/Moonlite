@@ -111,7 +111,7 @@ describe SectionsController do
 		
 			it "should allow access to 'create'" do
 				post :create, :section => @attr
-				response.should redirect_to Section.find(2)
+				response.should redirect_to edit_path_path(@path, :m => "sections")
 			end
 			
 			it "should allow access to 'show'" do
@@ -131,7 +131,7 @@ describe SectionsController do
 			
 			it "should allow access to 'destroy'" do
 				delete :destroy, :id => @section
-				response.should redirect_to @path
+				response.should redirect_to edit_path_path(@path, :m => "sections")
 			end
 			
 			it "should allow access to 'continue'" do
@@ -174,7 +174,7 @@ describe SectionsController do
 				
 				it "should take you back to the new section page" do
 					post :create, :section => @attr
-					response.should render_template("sections/section_form")
+					response.should render_template("new")
 				end
 			end
 			
@@ -187,7 +187,7 @@ describe SectionsController do
 				
 				it "should redirect to the section show page" do
 					post :create, :section => @attr
-					response.should redirect_to Section.find(2)
+					response.should redirect_to edit_path_path(@path, :m => "sections")
 				end
 				
 				it "should have a flash message" do
@@ -277,7 +277,7 @@ describe SectionsController do
 			
 			it "should redirect to the section's path" do
 				delete :destroy, :id => @section
-				response.should redirect_to @path
+				response.should redirect_to edit_path_path(@path, :m => "sections")
 			end
 		end
 		

@@ -27,12 +27,7 @@ describe AchievementsController do
 			it "should deny access to 'create'" do
 				post :create, :achievement => @attr
 				response.should redirect_to(signin_path)
-			end
-			
-			it "should deny access to 'index'" do
-				get :index, :path_id => @path.id
-				response.should redirect_to(signin_path)
-			end		
+			end	
 		end
 		
 		describe "when signed in as a regular user" do
@@ -47,11 +42,6 @@ describe AchievementsController do
 		
 			it "should deny access to 'create'" do
 				post :create, :achievement => @attr
-				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'index'" do
-				get :index, :path_id => @path.id
 				response.should redirect_to root_path
 			end
 		end
@@ -69,16 +59,11 @@ describe AchievementsController do
 		
 			it "should allow access to 'create'" do
 				post :create, :achievement => @attr
-				response.should redirect_to @path
-			end
-			
-			it "should allow access to 'index'" do
-				get :index, :path_id => @path.id
-				response.should be_success
+				response.should redirect_to edit_path_path(@path, :m => "achievements")
 			end
 		end
 		
-		describe "when signed in as company admin" do
+		describe "when signed in as other company admin" do
 			before(:each) do
 				@other_user = Factory(:user)
 				@other_user.toggle!(:admin)
@@ -94,11 +79,6 @@ describe AchievementsController do
 				post :create, :achievement => @attr
 				response.should redirect_to root_path
 			end
-			
-			it "should deny access to 'index'" do
-				get :index, :path_id => @path.id
-				response.should redirect_to root_path
-			end
 		end
 	end
 	
@@ -106,32 +86,6 @@ describe AchievementsController do
 		before(:each) do
 			@user.set_company_admin(true)
 			test_sign_in(@user)
-		end
-	
-		describe "GET 'index'" do
-			before(:each) do
-				@achievements = []
-				5.times do
-					@achievements << Factory(:achievement, :path => @path)
-				end
-			end
-			
-			it "should be successful" do
-				get :index, :path_id => @path.id
-				response.should be_success
-			end
-			
-			it "should have the right title" do
-				get :index, :path_id => @path.id
-				response.should have_selector("title", :content => "All achievements")
-			end
-			
-			it "should display all achievements" do
-				get :index, :path_id => @path.id
-				@achievements[0..2].each do |a|
-					response.should have_selector("span", :content => a.name)
-				end
-			end
 		end
 		
 		describe "GET 'new'" do
@@ -160,7 +114,7 @@ describe AchievementsController do
 				
 				it "should take you back to the new achievement page" do
 					post :create, :achievement => @attr
-					response.should render_template("achievements/form")
+					response.should render_template("new")
 				end
 			end
 			
@@ -173,7 +127,7 @@ describe AchievementsController do
 				
 				it "should redirect to the path page" do
 					post :create, :achievement => @attr
-					response.should redirect_to(@path)
+					response.should redirect_to edit_path_path(@path, :m => "achievements")
 				end
 				
 				it "should have a flash message" do

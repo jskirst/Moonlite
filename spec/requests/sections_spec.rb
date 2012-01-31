@@ -23,7 +23,7 @@ describe "Sections" do
 					fill_in :name, :with => ""
 					fill_in :instructions, :with => ""
 					click_button "Save"
-					response.should render_template("sections/section_form")
+					response.should render_template("new")
 					response.should have_selector("div#error_explanation")
 				end.should_not change(Section, :count)
 			end
@@ -35,7 +35,7 @@ describe "Sections" do
 					fill_in :name, :with => "Test Name"
 					fill_in :instructions, :with => "Test instructions"
 					click_button "Save"
-					response.should render_template('sections/show')
+					response.should render_template("show")
 					response.should have_selector("div.success")
 				end.should change(Section, :count).by(1)
 			end
@@ -45,7 +45,7 @@ describe "Sections" do
 					fill_in :name, :with => "Test Name"
 					fill_in :instructions, :with => "Test instructions"
 					click_button "Save and New"
-					response.should render_template("sections/section_form")
+					response.should render_template("new")
 					response.should have_selector("div.success")
 				end.should change(Section, :count).by(1)
 			end
