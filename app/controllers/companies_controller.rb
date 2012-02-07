@@ -65,7 +65,7 @@ class CompaniesController < ApplicationController
 		end
 		
 		def verify_owner
-			if @owner_id != current_user.company.id
+			unless @owner_id == current_user.company_id
 				flash[:error] = "You do not have access to this data."
 				redirect_to root_path
 			end

@@ -1,5 +1,7 @@
 SampleApp::Application.routes.draw do
 
+	get ":id" => "users#show", :id => /\d+/
+	
 	resources :sessions, :only => [:new, :create, :destroy]
 	resources :users do
 		member do

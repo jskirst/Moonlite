@@ -2,44 +2,51 @@ class AchievementsController < ApplicationController
 	before_filter :authenticate
 	before_filter :company_admin
 	before_filter :get_from_id, :except => [:new, :create]
+	before_filter :get_path_from_id, :only => [:new]
+  before_filter :get_path_from_params, :only => [:create]
+  before_filter :authorized
 	
 	def new
-		@path = Path.find_by_id(params[:path_id])
 		if @path.nil?
 			flash[:error] = "No Path argument supplied."
 			redirect_to root_path
 		else
+			@sections = @path.sections
 			@achievement = Achievement.new
 			@title = "New Achievement"
-		end
-	end
-	
-	def create
-		@path = Path.find_by_id(params[:achievement][:path_id])
-		@achievement = @path.achievements.build(params[:achievement])
-		if @achievement.save
-			flash[:success] = "Achievement created."
-			redirect_to edit_path_path(@path, :m => "achievements")
-		else
-			@title = "New achievement"
 			render "new"
 		end
 	end
 	
-	def show
-		@title = @achievement.name
-		@path = @achievement.path
+	def create
+		a = params[:achievement]
+    @achievement = @path.achievements.build(a)
+    @sections = @path.sections
+    if a[:tasks].nil?
+			flash[:error] = "You did not select any tasks or sections to include as criteria for unlocking this achievement."
+			render "new"
+    else
+      @achievement.criteria = a[:tasks].map { |id, state| id }.join(",")
+      if @achievement.save
+        flash[:success] = "Achievement created."
+        redirect_to edit_path_path(@path, :m => "achievements")
+      else
+        @title = "New achievement"
+        render "new"
+      end
+    end
 	end
 	
 	def edit
-		@path = @achievement.path
+    task_ids = @achievement.criteria
+    @tasks = Task.find(:all, :conditions => ["tasks.id IN (#{task_ids})"])
 		@title = "Edit Achievement"
 	end
 	
 	def update
-		if @achievement.update_attributes(params[:path])
+		if @achievement.update_attributes(params[:achievement])
 			flash[:success] = "Changes saved."
-			redirect_to @achievement
+			redirect_to edit_path_path(@path, :m => "achievements")
 		else
 			@title = "Edit Achievement"
 			render 'edit'
@@ -54,9 +61,31 @@ class AchievementsController < ApplicationController
 	
 	private
 		def get_from_id
-			if !@achievement = Achievement.find_by_id(params[:id])
+			unless @achievement = Achievement.find_by_id(params[:id])
+				flash[:error] = "No record found for the argument supplied."
+				redirect_to root_path and return
+			end
+      @path = @achievement.path
+		end
+    
+    def get_path_from_id
+			unless @path = Path.find_by_id(params[:path_id])
 				flash[:error] = "No record found for the argument supplied."
 				redirect_to root_path and return
 			end
 		end
+    
+    def get_path_from_params
+			unless @path = Path.find_by_id(params[:achievement][:path_id])
+				flash[:error] = "No record found for the argument supplied."
+				redirect_to root_path and return
+			end
+		end
+    
+    def authorized
+      unless @path.company_id == current_user.company_id
+        flash[:error] = "You are not authorized to access that data."
+        redirect_to signin_path and return
+      end
+    end
 end

@@ -6,6 +6,9 @@ describe AchievementsController do
 	before(:each) do
 		@user = Factory(:user)
 		@path = Factory(:path, :company => @user.company, :user => @user)
+    @section = Factory(:section, :path => @path)
+    @task1 = Factory(:task, :section => @section)
+    @task2 = Factory(:task, :section => @section)
 		@achievement = Factory(:achievement, :path => @path)
 		
 		@attr = {
@@ -13,7 +16,8 @@ describe AchievementsController do
 			:description => "Replacement answer", 
 			:criteria => "fake", 
 			:points => 5,
-			:path_id => @path.id
+      :path_id => @path.id,
+			:tasks => [{ @task1.id => "on" }, { @task2.id => "on" }]
 		}
 	end
 	
@@ -59,7 +63,7 @@ describe AchievementsController do
 		
 			it "should allow access to 'create'" do
 				post :create, :achievement => @attr
-				response.should redirect_to edit_path_path(@path, :m => "achievements")
+        response.should redirect_to edit_path_path(@path, :m => "achievements")
 			end
 		end
 		

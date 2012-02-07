@@ -15,12 +15,6 @@
 		</div>
 	</div>
 	<div class="field clearfix">
-		<%= f.label :criteria %>
-		<div class="input">
-			<%= f.text_field :criteria, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
 		<%= f.label :points %>
 		<div class="input">
 			<select id="achievement_points" name="achievement[points]">
@@ -32,6 +26,22 @@
 			</select>
 		</div>
 	</div>
+  <div class="clearfix">
+    <%= f.label :criteria %>
+    <div class="input">
+      <ul class="inputs-list">
+    <% if @tasks.empty? %>
+        <li><span>You have not added any criteria for this achievement.</span></li>
+    <% else %>
+      <% @tasks.each do |t| %>
+        <li class="task_<%= t.id.to_s %>">
+          <%= t.question %>
+        </li>
+      <% end %>
+    <% end %>
+      </ul>
+    </div>
+  </div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
 		<%= link_to "Back to Path", edit_path_path(@path, :m => "achievements"), :class => "btn secondary" %>
