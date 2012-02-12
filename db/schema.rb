@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120127205336) do
+ActiveRecord::Schema.define(:version => 20120209025634) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -130,6 +130,7 @@ ActiveRecord::Schema.define(:version => 20120127205336) do
     t.string   "answer4"
     t.integer  "correct_answer", :default => 1
     t.integer  "owner_id"
+    t.integer  "position"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

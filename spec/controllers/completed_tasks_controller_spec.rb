@@ -136,7 +136,7 @@ describe CompletedTasksController do
 						before(:each) do
 							Factory(:completed_task, :task => @old_task1, :user => @user)
 							Factory(:completed_task, :task => @old_task2, :user => @user)
-							@achievement = Factory(:achievement, :path => @path, :criteria => "all")
+							@achievement = Factory(:achievement, :path => @path, :criteria => "#{@old_task1.id},#{@old_task2.id}")
 						end
 					
 						it "should award the achievement" do

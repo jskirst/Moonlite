@@ -8,12 +8,8 @@
 }
 
 /* Task */
-.task div,td{
-	padding: 20px 0px 10px 20px;
-}
 .task ol {
-	margin-left: 40px;
-	margin-bottom: 10px;
+	margin: 0px 0px 9px 40px;
 }
 .task .secondary {
 	float: right;
@@ -21,6 +17,10 @@
 }
 .task blockquote p {
 	line-height: 1.3em;
+}
+.task .correct {
+  color: green; 
+  font-weight: bold;
 }
 	
 /* Footer */

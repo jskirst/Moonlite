@@ -9,6 +9,7 @@ gem 'actionmailer', '= 3.1.2'
 gem 'activerecord', '= 3.1.2'
 gem 'activemodel', '= 3.1.2'
 gem 'activesupport', '= 3.1.2'
+gem 'zip', '~> 2.0.2'
 
 group :production do
 	gem 'pg'

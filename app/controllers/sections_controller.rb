@@ -1,4 +1,5 @@
 class SectionsController < ApplicationController
+  include OrderHelper
 	before_filter :authenticate
 	before_filter :company_admin, :except => [:continue, :show]
 	
@@ -43,6 +44,7 @@ class SectionsController < ApplicationController
 		@path_id = @section.path_id
 		if params[:m] == "tasks"
 			@tasks = @section.tasks
+      @reorder = true if params[:a] == "reorder"
 			render "edit_tasks"
 		elsif params[:m] == "settings"
 			render "edit_settings"
@@ -59,6 +61,17 @@ class SectionsController < ApplicationController
 			render "edit"
 		end
 	end
+  
+  def reorder_tasks
+    @section = Section.find(params[:id])
+    old_order = @section.tasks.map { |t| [t.id, t.position] }
+    new_order = params[:tasks][:positions].map { |id, position| [id.to_i, position.to_i] }
+    revised_order = reorder(old_order, new_order)
+    revised_order.each do |t|
+      @section.tasks.find(t[0]).update_attribute(:position, t[1])
+    end
+    redirect_to edit_section_path(@section, :m => "tasks")
+  end
 	
 	def destroy
 		@section = Section.find(params[:id])

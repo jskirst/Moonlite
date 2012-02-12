@@ -23,5 +23,8 @@
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
 		<%= link_to "Back to Path", @path, :class => "btn secondary" %>
+		<% if @file_upload_possible %>
+      <%= link_to "Upload Setup File", file_path_path(@path), :class => "btn secondary" %>
+    <% end %>
 	</div>
 <% end %>

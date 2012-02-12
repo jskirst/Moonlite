@@ -1,6 +1,7 @@
 class Task < ActiveRecord::Base
-	attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer
-	
+	attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position
+	before_create :set_position
+  
 	belongs_to 	:section
 	has_one 	:path, :through => :section
 	has_many	:completed_tasks
@@ -14,7 +15,6 @@ class Task < ActiveRecord::Base
 		:length			=> { :within => 1..255 }
 		
 	validates :answer2,
-		:presence 		=> true,
 		:length			=> { :maximum => 255 }
 
 	validates :answer3,
@@ -36,10 +36,23 @@ class Task < ActiveRecord::Base
 	
 	validates :section_id, :presence => true
 	
-	default_scope :order => 'tasks.points ASC'
+	default_scope :order => 'tasks.position ASC'
 	
 	def describe_correct_answer
 		answers = [nil,answer1,answer2,answer3,answer4]
 		return answers[correct_answer]
 	end
+  
+  private
+    def set_position
+			self.position = get_next_position_for_section
+		end
+    
+    def get_next_position_for_section
+      unless section.tasks.empty?
+        return section.tasks.last.position + 1
+      else
+        return 1
+      end
+    end
 end

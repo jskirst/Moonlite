@@ -261,13 +261,13 @@ describe PathsController do
 		end
 		
 		describe "GET 'show'" do
-			it "should not allow non-admins to access unpublished paths" do
+      it "should not show any unpublished paths" do
 				@user.set_company_admin(false)
-				unpurchaseable_path = Factory(:path, :company => @user.company, :user => @user, :is_published => false)
-				get :show, :id => unpurchaseable_path
+				unpublished_path = Factory(:path, :company => @user.company, :user => @user, :is_published => false)
+				get :show, :id => unpublished_path
 				response.should redirect_to root_path
 			end
-			
+      
 			it "should find the right path" do
 				get :show, :id => @path
 				assigns(:path).should == @path
@@ -288,16 +288,23 @@ describe PathsController do
 				response.should have_selector("p", :content => @path.description)
 			end
 			
-			it "should show all the sections for a path" do
+			it "should show all the published sections" do
 				@sections = []
 				3.times do 
-					@sections << Factory(:section, :path => @path)
+					@sections << Factory(:section, :path => @path, :is_published => true)
 				end
 				get :show, :id => @path
 				@sections.each do |s| 
 					response.should have_selector("a", :content => s.name)
 				end
 			end
+      
+      it "should not show any unpublished sections" do
+				s = Factory(:section, :path => @path, :is_published => false)
+				get :show, :id => @path
+				response.should_not have_selector("a", :content => s.name)
+			end
+      
 		end
 
 		describe "GET 'file'" do
@@ -318,6 +325,89 @@ describe PathsController do
 				response.should have_selector("title", :content => "File")
 			end
 		end
+    
+    describe "POST 'preview'" do
+			before(:each) do
+				@path = Factory(:path, :user => @user)
+				test_sign_in(@user)
+			end
+			
+			describe "failure" do
+				before(:each) do
+					@attr = { :file => nil }
+				end
+			
+				it "should redirect to the file upload page" do
+					post :preview, :id => @path.id, :path => @attr
+          response.should redirect_to file_path_path(@path)
+				end
+			end
+      
+      describe "success" do
+        before(:each) do
+          @file = fixture_file_upload('files/test.zip', 'application/zip')
+          @attr = { :file => @file }
+        end
+      
+        it "should load preview successfully." do
+          post :preview, :id => @path.id, :path => @attr
+          response.should be_success
+        end
+        
+        it "should preview the path description." do
+          post :preview, :id => @path.id, :path => @attr
+          response.should have_selector("p", :content => "Test description")
+        end
+        
+        it "should preview all the section names." do
+          post :preview, :id => @path.id, :path => @attr
+          response.should have_selector("h2", :content => "First")
+          response.should have_selector("h2", :content => "Second")
+          response.should have_selector("h2", :content => "Third")
+          response.should have_selector("h2", :content => "Fourth")
+        end
+        
+        it "should preview all the section instructions." do
+          post :preview, :id => @path.id, :path => @attr
+          response.should have_selector("p", :content => "First instructions")
+          response.should have_selector("p", :content => "Second instructions")
+          response.should have_selector("p", :content => "Third instructions")
+          response.should have_selector("p", :content => "Fourth instructions")
+        end
+        
+        it "should preview all the questions." do
+          post :preview, :id => @path.id, :path => @attr
+          response.should have_selector("blockquote", :content => "First section first question")
+          response.should have_selector("blockquote", :content => "First section second question")
+          response.should have_selector("blockquote", :content => "Second section first question")
+          response.should have_selector("blockquote", :content => "Second section second question")          
+          response.should have_selector("blockquote", :content => "Third section first question")
+          response.should have_selector("blockquote", :content => "Third section second question")
+          response.should have_selector("blockquote", :content => "Fourth section first question")
+          response.should have_selector("blockquote", :content => "Fourth section second question")
+        end
+        
+        it "should preview all the answers." do
+          post :preview, :id => @path.id, :path => @attr
+          response.should have_selector("li", :content => "First section first question first answer")
+          response.should have_selector("li", :content => "First section first question second answer")
+          response.should have_selector("li", :content => "First section second question first answer")
+          response.should have_selector("li", :content => "First section second question second answer")
+          response.should have_selector("li", :content => "Second section first question first answer")
+          response.should have_selector("li", :content => "Second section first question second answer")
+          response.should have_selector("li", :content => "Second section second question first answer")
+          response.should have_selector("li", :content => "Second section second question second answer")
+          response.should have_selector("li", :content => "Third section first question first answer")
+          response.should have_selector("li", :content => "Third section first question second answer")
+          response.should have_selector("li", :content => "Third section second question first answer")
+          response.should have_selector("li", :content => "Third section second question second answer")
+          response.should have_selector("li", :content => "Fourth section first question first answer")
+          response.should have_selector("li", :content => "Fourth section first question second answer")
+          response.should have_selector("li", :content => "Fourth section second question first answer")
+          response.should have_selector("li", :content => "Fourth section second question second answer")
+        end
+      end
+		end
 		
 		describe "POST 'upload'" do
 			before(:each) do
@@ -327,8 +417,7 @@ describe PathsController do
 			
 			describe "failure" do
 				before(:each) do
-					@attr = { 
-					:file => nil }
+					@attr = {}
 				end
 			
 				it "should not add questions to a path" do
@@ -337,9 +426,67 @@ describe PathsController do
 					end.should change(Task, :count).by(0)	
 				end
 				
-				it "should render the file page" do
+				it "should redirect to the file page" do
 					post :upload, :id => @path.id, :path => @attr
-					response.should render_template("file")
+					response.should redirect_to file_path_path(@path)
+				end
+			end
+      
+      describe "success" do
+				before(:each) do
+          @attr = { "description" => "Upload test description",
+            "sections" => {
+              "0" => { :name => "First section name",
+                :instructions => "First section instructions.",
+                :tasks => {
+                  "0" => { :question => "First section question",
+                    :answer1 => "First section first answer",
+                    :correct_answer => "1",
+                    :points => "1"
+                  }
+                }
+              }
+            }
+          }
+				end
+			
+				it "should change the path description" do
+          post :upload, :id => @path.id, :path => @attr
+          @path.reload
+          @path.description.should == @attr["description"]
+				end
+        
+        it "should add sections to the path" do
+        	lambda do
+						post :upload, :id => @path.id, :path => @attr
+					end.should change(Section, :count).by(1)	
+        end
+        
+        it "should add sections with the correct task details" do
+          post :upload, :id => @path.id, :path => @attr
+          @path.reload
+          @path.sections.first.name.should == "First section name"
+          @path.sections.first.instructions.should == "First section instructions."
+        end
+        
+        it "should add tasks to each section" do
+          lambda do
+						post :upload, :id => @path.id, :path => @attr
+					end.should change(Task, :count).by(1)	
+        end
+        
+        it "should add tasks with the correct task details" do
+          post :upload, :id => @path.id, :path => @attr
+          @path.reload
+          @path.sections.first.tasks.first.question.should == "First section question"
+          @path.sections.first.tasks.first.answer1.should == "First section first answer"
+          @path.sections.first.tasks.first.correct_answer.should == 1
+          @path.sections.first.tasks.first.points.should == 1
+        end
+				
+				it "should redirect to the edit page" do
+					post :upload, :id => @path.id, :path => @attr
+					response.should redirect_to edit_path_path(@path)
 				end
 			end
 		end

@@ -8,24 +8,26 @@
 	<div style="padding:10px">
 		<div><%= simple_format(@path.description) %></div>
 	</div>
-	<% if !@sections.empty? %>
-	<div>
-		<h3>Sections</h3>
-		<ol>
-		<% @sections.each do |s| %>
-			<li>
-				<h5>
-					<%= link_to s.name, s %>
-					<% if s.remaining_tasks(current_user) == 0 %>
-					<span class="label">Completed</span>
-					<% end %>
-				</h5>
-				<p><%= truncate(strip_tags(s.instructions), :length => 140) %></p>
-			</li>
-		<% end %>
-		</ol>
-	</div>
-	<% end %>
+	<div style="padding:10px">
+    <h3>Sections</h3>
+    <% if @sections.empty? %>
+    <p>No sections have been published for this path yet. Check back later to see if any have been posted!</p>
+    <% else %>
+      <ol>
+      <% @sections.each do |s| %>
+        <li>
+          <h5>
+            <%= link_to s.name, s %>
+            <% if s.remaining_tasks(current_user) == 0 %>
+            <span class="label">Completed</span>
+            <% end %>
+          </h5>
+          <p><%= truncate(strip_tags(s.instructions), :length => 140) %></p>
+        </li>
+      <% end %>
+      </ol>
+    <% end %>
+  </div>
 	<section>
 		<div class="actions">
 		<% if !current_user.enrolled?(@path) %>

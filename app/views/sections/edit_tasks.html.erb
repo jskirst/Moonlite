@@ -5,8 +5,15 @@
 	<li class="active"><a href="#">Tasks</a></li>
 </ul>
 <section>
+  <%= form_tag({:controller => :sections, :action => :reorder_tasks}, :method => :put) %>
 	<div style="float: right; display:inline;">
-		<%= link_to "New Task", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
+    <% if @reorder %>
+      <%= submit_tag "Save", :class => "btn primary" %>
+      <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
+    <% else %>
+      <%= link_to "New Task", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
+      <%= link_to "Reorder", edit_section_path(@section.id, :m => "tasks", :a => "reorder"), :class=>"btn secondary" %>
+    <% end %>
 	</div>
 	<h2><%= @section.name %></h2>
 	<% if @tasks.empty? %>
@@ -21,19 +28,42 @@
 					</p>
 				</blockquote>
 				<ol>
-					<% if !t.answer1.blank? %><li><%= t.answer1 %></li><% end %>
-					<% if !t.answer2.blank? %><li><%= t.answer2 %></li><% end %>
-					<% if !t.answer3.blank? %><li><%= t.answer3 %></li><% end %>
-					<% if !t.answer4.blank? %><li><%= t.answer4 %></li><% end %>
+          <% ca = t.correct_answer %>
+					<% if !t.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= t.answer1 %></li><% end %>
+					<% if !t.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= t.answer2 %></li><% end %>
+					<% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
+					<% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
 				</ol>
-				<p style="float: left;">Correct Answer: <%= t.correct_answer %></p>
-				<%= link_to "Delete", t, :method => :delete, :confirm => "You sure?", :title => "Delete task", :class => "btn secondary" %>
-				<%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
+        <div style="float:left;display:inline;">
+          <span class="label"><%= link_to t.points.to_s + " points", edit_task_path(t), :style => "color:white;" %></span>
+        </div>
+        <div style="float:right;display:inline">
+          <% if @reorder %>
+          <div class="field clearfix">
+            <%= label_tag :order %>
+            <div class="input">
+              <select id="task_positions_<%= t.id %>" name="tasks[positions][<%= t.id %>]" class="small">
+                <% (1..@tasks.size).each do |x| %>
+                  <option value="<%= x %>" <%= "selected='selected'" if t.position == x %>><%= x %></option>
+                <% end %>
+              </select>
+            </div>
+          </div>
+          <% else %>
+          <%= link_to "Delete", t, :method => :delete, :confirm => "You sure?", :title => "Delete task", :class => "btn secondary" %>
+          <%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
+          <% end %>
+        </div>
 			</tr></td>
 		<% end %>
 		</table>
 	<% end %>
 	<div class="actions">
-		<%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
+  <% if @reorder %>
+    <%= submit_tag "Save", :class => "btn primary" %>
+    <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
+  <% else %>
+    <%= link_to "Back to Section", edit_section_path(@section), :class => "btn secondary" %>
+  <% end %>
 	</div>
 </section>

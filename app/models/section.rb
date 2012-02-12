@@ -1,7 +1,7 @@
 class Section < ActiveRecord::Base
 	attr_accessible :name, :instructions, :position, :is_published
 	
-	before_validation :set_position
+	before_create :set_position
 	
 	belongs_to :path
 	has_many :tasks, :dependent => :destroy
@@ -14,14 +14,11 @@ class Section < ActiveRecord::Base
 	validates :instructions, 
 		:presence 		=> true,
 		:length			=> { :within => 1..2500 }
-		
-	validates :position,
-		:presence		=> true
 	
 	validates :path_id, 
 		:presence 		=> true
 		
-	default_scope :order => 'position ASC'
+	default_scope :order => 'sections.position ASC'
 		
 	def next_task(user, previous_question = nil)
 		tasks.each do |t|
@@ -46,6 +43,14 @@ class Section < ActiveRecord::Base
 		
 	private
 		def set_position
-			self.position = 0
+			self.position = get_next_position_for_path
 		end
+    
+    def get_next_position_for_path
+      unless path.sections.empty?
+        return path.sections.last.position + 1
+      else
+        return 1
+      end
+    end
 end

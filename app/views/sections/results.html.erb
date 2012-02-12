@@ -1,5 +1,5 @@
 <% answer_status = ["Wrong", "Correct", "Skipped"] %>
-<p>Congratulations! You completed this path.</p>
+<h3>You completed this section.</h3>
 <% if !@answers.empty? %>
 	<p>Your score was <%= @correct_answers.to_s + "/" + @total_answers.to_s %></p>
 	<p>Your provided the following answers:</p>
@@ -18,4 +18,6 @@
 	<% end %>
 <% end %>
 </ol>
-<%= link_to "Go back", @section.path %>
+<div class="actions">
+  <%= link_to "Go back", @section.path, :class => "btn primary" %>
+</div>

@@ -45,7 +45,7 @@ describe "CompletedTasks" do
 					click_button "Next"
 					choose "completed_task_answer1"
 					click_button "Next"
-					response.should have_selector("p", :content => "Congratulations!")
+					response.should have_selector("h3", :content => "You completed this section")
 					response.should have_selector("dd", :content => @task1.answer1)
 					response.should have_selector("dd", :content => @task2.answer1)
 					response.should have_selector("dd", :content => @task3.answer1)

@@ -22,12 +22,15 @@ SampleApp::Application.routes.draw do
 			get :purchase
 			get :file
 			get :continue
+			post :preview
 			post :upload
+      put :reorder_sections
 		end
 	end
 	resources :sections do
 		member do
 			get :continue
+      put :reorder_tasks
 		end
 	end
 	resources :enrollments

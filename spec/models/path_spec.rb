@@ -108,20 +108,22 @@ describe "Paths" do
 	describe "section associations" do
 		before(:each) do
 			@path = Factory(:path, :user => @user)
-			@section1 = Factory(:section, :path => @path, :position => 0)
-			@section2 = Factory(:section, :path => @path, :position => 1)
+			@section1 = Factory(:section, :path => @path)
+			@section2 = Factory(:section, :path => @path)
+      @path.reload
 		end
 		
 		it "should have a sections attribute" do
 			@path.should respond_to(:sections)
 		end
 		
-		it "should have the right paths in the right order (lowest points first)" do
-			@path.sections.should == [@section1, @section2]
+		it "should return the right sections in the right order (lowest position first)" do
+      @path.sections.should == [@section1, @section2]
 		end
 		
 		it "should destroy associated tasks" do
-			@path.destroy
+			Rails::logger.debug "FUCK"
+      @path.destroy
 			[@section1, @section2].each do |s|
 				Section.find_by_id(s.id).should be_nil
 			end

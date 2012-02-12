@@ -24,9 +24,18 @@ describe "Section" do
 			@section.should respond_to(:instructions)
 		end
 		
-		it "should include instructions" do
+		it "should include position" do
 			@section.should respond_to(:position)
 		end
+    
+    it "should have position begin at 1" do
+      @section.position.should == 1
+    end
+    
+    it "should have increment the position value by 1" do
+      s2 = @path.sections.create(@attr)
+      s2.position.should == 2
+    end
 	end
 	
 	describe "path associations" do
@@ -64,28 +73,21 @@ describe "Section" do
 		it "should reject long instructions" do
 			@path.sections.build(@attr.merge(:instructions => "a"*3000)).should_not be_valid
 		end
-		
-		it "should force order of position"
-	end
-	
-	describe "position" do
-		it "should return a set of sections in order of position"
-		
-		it "should automatically order new sections on top of old ones"
-	end
+  end
 	
 	describe "task associations" do
 		before(:each) do
 			@section = Factory(:section)
 			@task1 = Factory(:task, :section => @section)
 			@task2 = Factory(:task, :section => @section)
+      @section.reload
 		end
 		
 		it "should have a paths attribute" do
 			@section.should respond_to(:tasks)
 		end
 		
-		it "should have the right paths in the right order (lowest points first)" do
+		it "should have the right paths in the right order (lowest position first)" do
 			@section.tasks.should == [@task1, @task2]
 		end
 		

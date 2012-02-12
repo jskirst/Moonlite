@@ -1,0 +1,51 @@
+<%= form_tag({:controller => :paths, :action => :upload, :id => @path.id}, :method => :post) %>
+<h1><%= @path.name %></h1>
+<p><%= simple_format(@path_description) %></p>
+<%= hidden_field_tag "path[description]", @path_description %>
+<table>
+<% @sections.each_index do |i| %>
+  <% name = @sections[i][0].name %>
+  <% instructions = @sections[i][0].instructions %>
+  <tr>
+    <td>
+      <h2><%= name %></h2>
+      <%= hidden_field_tag "path[sections]["+i.to_s+"][name]", name %>
+      <div><%= simple_format(instructions) %></div>
+      <%= hidden_field_tag "path[sections]["+i.to_s+"][instructions]", instructions %>
+      <table>
+      <% tasks = @sections[i][1] %>
+      <% tasks.each_index do |j| %>
+        <% t = tasks[j] %>
+        <tr>
+          <td>
+            <blockquote><%= t.question %></blockquote>
+            <ol>
+              <% ca = t.correct_answer %>
+              <% if !t.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= t.answer1 %></li><% end %>
+              <% if !t.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= t.answer2 %></li><% end %>
+              <% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
+              <% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
+            </ol>
+            <p>Points: <%= t.points %></p>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][question]", t.question.to_s %>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][answer1]", t.answer1 %>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][answer2]", t.answer2 %>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][answer3]", t.answer3 %>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][answer4]", t.answer4 %>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][correct_answer]", t.correct_answer %>
+            <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][points]", t.points %>
+            </p>
+          </td>
+        </tr>
+      <% end %>
+      </table>
+    </td>
+  </tr>
+<% end %>
+</table>
+<div>
+</div>
+<div class="actions">
+  <%= submit_tag "Submit", :class => "btn primary" %>
+  <%= link_to "Cancel", @path, :class=>"btn secondary"%>
+</div>

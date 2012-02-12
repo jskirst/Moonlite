@@ -49,6 +49,19 @@ describe "Tasks" do
 		it "should include a correct_answer" do
 			@task.should respond_to(:correct_answer)
 		end
+    
+    it "should include a position" do
+      @task.should respond_to(:position)
+    end
+    
+    it "should have position begin at 1" do
+      @task.position.should == 1
+    end
+    
+    it "should have increment the position value by 1" do
+      t2 = @section.tasks.create(@attr)
+      t2.position.should == 2
+    end
 	end
 	
 	describe "section associations" do

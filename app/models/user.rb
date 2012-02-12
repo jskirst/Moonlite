@@ -86,18 +86,18 @@ class User < ActiveRecord::Base
 		self.update_attribute('earned_points', self.earned_points + task.points)
 		enrollments.find_by_path_id(task.section.path_id).add_earned_points(task.points)
 	end
+  
+  def has_achievement?(achievement_id)
+    achievement = self.user_achievements.find_by_achievement_id(achievement_id)
+    return achievement.nil? ? false : true
+  end
 	
 	def award_achievements(completed_task)
 		section = completed_task.task.section
 		path = section.path
 		potential_achievements = path.achievements
 		potential_achievements.each do |pa|
-			if pa.criteria == "all"
-				if section.remaining_tasks(self) == 0
-					self.user_achievements.create!(:achievement_id => pa.id)
-					self.update_attribute('earned_points', self.earned_points + pa.points)
-				end
-			elsif !pa.criteria.nil?
+      unless pa.criteria.nil?
 				completed_all = true
 				task_ids = pa.criteria.split(",")
 				task_ids.each do |id|
@@ -107,12 +107,14 @@ class User < ActiveRecord::Base
 						break
 					end
 				end
-				if completed_all
+				if completed_all && !self.has_achievement?(pa.id)
 					self.user_achievements.create!(:achievement_id => pa.id)
 					self.update_attribute('earned_points', self.earned_points + pa.points)
+          return pa
 				end
 			end
 		end
+    return false
 	end
 	
 	def debit_points(points)

@@ -1,5 +1,7 @@
-require 'csv'
 class PathsController < ApplicationController
+  include OrderHelper
+  include UploadHelper
+  
 	before_filter :authenticate
 	before_filter :company_admin, :except => [:index, :show, :continue, :marketplace, :review, :purchase]
 	before_filter :get_path_from_id, :except => [:index, :new, :create, :marketplace]
@@ -33,15 +35,19 @@ class PathsController < ApplicationController
 		@title = @path.name
 		@info_resources = @path.info_resources(:limit => 5)
 		@achievements = @path.achievements.all(:limit => 5)
-		@sections = @path.sections
+		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
 	end
 	
 	def edit
 		@title = "Edit"
+    @file_upload_possible = @path.sections.size == 0 ? true : false
 		if params[:m] == "settings"
 			render "edit_settings"
 		elsif params[:m] == "sections"
 			@sections = @path.sections
+      if params[:a] == "reorder"
+        @reorder = true
+      end
 			render "edit_sections"
 		elsif params[:m] == "achievements"
 			@achievements = @path.achievements
@@ -61,6 +67,16 @@ class PathsController < ApplicationController
 			render 'edit'
 		end
 	end
+  
+  def reorder_sections
+    old_order = @path.sections.map { |s| [s.id, s.position] }
+    new_order = params[:sections][:positions].map { |id, position| [id.to_i, position.to_i] }
+    revised_order = reorder(old_order, new_order)
+    revised_order.each do |s|
+      @path.sections.find(s[0]).update_attribute(:position, s[1])
+    end
+    redirect_to edit_path_path(@path, :m => "sections")
+  end
 	
 	def continue
 		@section = current_user.most_recent_section(@path)
@@ -75,21 +91,57 @@ class PathsController < ApplicationController
 		@title = "File"
 	end
 	
-	def upload
-		uploaded_file = params[:path][:file]
-		if uploaded_file.nil?
-			flash.now[:error] = "Please provide a file for import."
-			render 'file'
-		else
-			if @new_tasks = parse_file(uploaded_file)
-				flash.now[:success] = "CSV Import Successful, #{@new_tasks.size} lines found."
-				render 'upload'
-			else
-				flash.now[:error] = "There was an error processing your file. You must have at least two rows in your file."
-				render 'file'
-			end
-		end
+	def preview
+    begin
+      read_file(params[:path][:file])
+      @path_description = get_path_description
+      @sections = []
+      details = get_section(@sections.size + 1)
+      until details.nil? || !flash[:error].nil?
+        s = @path.sections.build(details)
+        if s.valid?
+          tasks = get_section_tasks(@sections.size + 1)
+          unless tasks.nil?
+            valid_tasks = []
+            tasks.each do |task|
+              t = s.tasks.build(task)
+              valid_tasks << t
+              #There will alway be one error for section blank
+              flash[:error] =  t.errors.full_messages.join(". ") if t.errors.count > 1
+            end
+            if flash[:error].nil?
+              @sections << [s, valid_tasks]
+              details = get_section(@sections.size + 1)
+            end
+          else
+            flash[:error] = "There were no tasks found for section: " + s.name
+            break
+          end
+        else
+          flash[:error] = s.errors.full_messages.join(". ")
+        end
+      end
+    rescue
+      flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
+      redirect_to file_path_path(@path)
+    end
 	end
+  
+  def upload
+    begin
+      sections = params[:path][:sections]
+      @path.update_attribute("description", params[:path][:description])
+      sections.each do |id, s|
+        section = @path.sections.create!(:name => s[:name], :instructions => s[:instructions])
+        s[:tasks].each { |id, t| section.tasks.create!(t) }
+      end
+      redirect_to edit_path_path(@path)
+    rescue Exception => e
+      logger.debug e.to_s
+      flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
+      redirect_to file_path_path(@path)
+    end
+  end
 	
 	def marketplace
 		@title = "Marketplace"
@@ -168,48 +220,5 @@ class PathsController < ApplicationController
 				flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
 				redirect_to root_path
 			end
-		end
-		
-		def parse_file(uploaded_file)
-			new_tasks = []
-			parsed_file = CSV.parse(uploaded_file.read)
-			if file_properly_formatted?(parsed_file)
-				row_count = 0
-				parsed_file.each do |row|
-					if row_count != 0
-						new_tasks << create_task(row)
-					end
-					row_count += 1
-				end
-				return new_tasks
-			else
-				return nil
-			end
-		end
-		
-		def file_properly_formatted?(parsed_file)
-			file_header = parsed_file[0]
-			if file_header[0] =~ /question/i &&
-				file_header[1] =~ /correct answer/i &&
-				file_header[2] =~ /wrong answer/i &&
-				file_header[3] =~ /wrong answer/i &&
-				file_header[4] =~ /wrong answer/i &&
-				file_header[5] =~ /points/i
-				return true
-			else
-				return false
-			end
-		end
-		
-		def create_task(row)
-			t = Task.new
-			t.question = row[0]
-			t.answer1 = row[1]
-			t.answer2 = row[2]
-			t.answer3 = row[3]
-			t.answer4 = row[4]
-			t.correct_answer = 1
-			t.points = row[5]
-			return t.save
 		end
 end
