@@ -1,7 +1,7 @@
 SampleApp::Application.routes.draw do
 
 	get ":id" => "users#show", :id => /\d+/
-	
+  
 	resources :sessions, :only => [:new, :create, :destroy]
 	resources :users do
 		member do
@@ -16,7 +16,7 @@ SampleApp::Application.routes.draw do
 		end
 	end
 	resources :companies
-    resources :paths do
+  resources :paths do
 		member do
 			get :review
 			get :purchase
@@ -45,7 +45,8 @@ SampleApp::Application.routes.draw do
 			get :review
 			get :purchase
 		end
-	end	
+	end
+  resources :comments
 	
 	root 				:to => "pages#home"
 	
@@ -61,7 +62,7 @@ SampleApp::Application.routes.draw do
 	match '/details',	:to => 'reports#details'
 	
 	match '/marketplace',:to => 'paths#marketplace'
-	
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

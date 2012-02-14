@@ -11,4 +11,13 @@ class CompletedTask < ActiveRecord::Base
 	validates :status_id, :presence => true
 	validates :quiz_session, :presence => true
 
+  validate :user_enrolled_in_path
+  
+  private
+    def user_enrolled_in_path
+			unless user.nil? || task.nil? || user.enrolled?(task.path)
+				errors[:base] << "User must be enrolled in the path."
+      end
+    end
+  
 end

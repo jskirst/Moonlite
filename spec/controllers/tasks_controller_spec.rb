@@ -5,7 +5,7 @@ describe TasksController do
 	
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@path = Factory(:path, :user => @user, :company => @user.company)
 		@section = Factory(:section, :path => @path)
 		@task = Factory(:task, :section => @section)
 	
@@ -52,7 +52,7 @@ describe TasksController do
 				response.should redirect_to signin_path
 			end
 		end
-		
+    
 		describe "when signed in as a regular user" do
 			before(:each) do
 				test_sign_in(@user)

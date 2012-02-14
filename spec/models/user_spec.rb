@@ -168,8 +168,8 @@ describe "User" do
 	describe "paths" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path1 = Factory(:path, :user => @user, :created_at => 1.day.ago)
-			@path2 = Factory(:path, :user => @user, :created_at => 1.hour.ago)
+			@path1 = Factory(:path, :user => @user, :company => @user.company, :created_at => 1.day.ago)
+			@path2 = Factory(:path, :user => @user, :company => @user.company, :created_at => 1.hour.ago)
 		end
 		
 		it "should have a paths attribute" do
@@ -191,7 +191,7 @@ describe "User" do
 	describe "enrollments" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 		end
 		
 		it "should have a paths attribute" do
@@ -235,7 +235,7 @@ describe "User" do
 	describe "enrolled paths" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 		end
 		
 		it "should have a paths attribute" do
@@ -246,8 +246,11 @@ describe "User" do
 	describe "completed tasks" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@task1 = Factory(:task)
-			@task2 = Factory(:task)
+      @path = Factory(:path, :user => @user, :company => @user.company)
+      @user.enroll!(@path)
+      @section = Factory(:section, :path => @path)
+			@task1 = Factory(:task, :section => @section)
+			@task2 = Factory(:task, :section => @section)
 			@completed_task = Factory(:completed_task, :task => @task1, :user => @user)
 		end
 		
@@ -277,7 +280,7 @@ describe "User" do
 			@section = Factory(:section, :path => @path)
 			@task = Factory(:task, :section => @section)
 			@reward = Factory(:reward, :company => @user.company)
-			@enrollment = Factory(:enrollment, :path => @path, :user => @user)
+			@user.enroll!(@path)
 		end
 		
 		describe "award_points" do

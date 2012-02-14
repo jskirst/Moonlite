@@ -19,7 +19,7 @@ describe CompletedTasksController do
 			@password = "current_password"
 			@user = Factory(:user, :password => @password, :password_confirmation => @password)
 			@user.set_company_admin(true)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			@section = Factory(:section, :path => @path)
 			@task = Factory(:task, :section => @section)
 			test_sign_in(@user)

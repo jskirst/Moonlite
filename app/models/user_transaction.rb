@@ -19,8 +19,15 @@ class UserTransaction < ActiveRecord::Base
 		:presence 	=> true
 		
 	validate :has_task_or_reward_or_path
-	
+	before_create :user_enrolled_in_path
+
 	private
+    def user_enrolled_in_path
+			unless user.nil? || task.nil? || !reward.nil? || !path.nil? || user.enrolled?(task.path)
+				errors[:base] << "User must be enrolled in the path."
+      end
+    end
+  
 		def has_task_or_reward_or_path
 			if task.nil? && reward.nil? && path.nil?
 				errors[:base] << "Transaction requires one of the following: Task, Reward or Path."

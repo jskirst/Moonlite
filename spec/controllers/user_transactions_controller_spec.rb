@@ -5,8 +5,12 @@ describe UserTransactionsController do
 	
 	before(:each) do
 		@user = Factory(:user)
-		@other_user = Factory(:user)
-		@user_transaction = Factory(:user_transaction, :user => @other_user)
+    @path = Factory(:path, :user => @user, :company => @user.company)
+    @section = Factory(:section, :path => @path)
+    @task = Factory(:task, :section => @section)
+		@other_user = Factory(:user, :company => @user.company)
+    @other_user.enroll!(@path)
+		@user_transaction = Factory(:user_transaction, :task => @task, :user => @other_user)
 	end
 	
 	describe "access controller" do

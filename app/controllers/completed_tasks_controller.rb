@@ -3,7 +3,18 @@ class CompletedTasksController < ApplicationController
 	before_filter :enrolled_user?
 	
 	def create
-		resp = params[:completed_task]
+    if params[:commit] == "Post Comment"
+      @comment = current_user.comments.new(params[:comment])
+      if @comment.save
+        flash[:success] = "Comment added."
+      else
+        flash[:error] = "There was an error when saving your comment. Please try again."
+      end
+      redirect_to continue_section_path :id => @comment.task.section, :quiz_session => params[:completed_task][:quiz_session], :comments_on => "on"
+      return
+    end
+		
+    resp = params[:completed_task]
 		resp[:quiz_session] = resp[:quiz_session] || DateTime.now
 		answer = resp[:answer]
 		

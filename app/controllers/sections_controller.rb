@@ -79,7 +79,7 @@ class SectionsController < ApplicationController
 		flash[:success] = "Section successfully deleted."
 		redirect_back_or_to edit_path_path(@section.path, :m => "sections")
 	end
-	
+  
 	def continue
 		@section = Section.find(params[:id])
 		if current_user.enrolled?(@section.path)
@@ -101,6 +101,11 @@ class SectionsController < ApplicationController
 			else
 				@title = @section.name
 				@task = @section.next_task(current_user)
+        unless params[:comments_on].nil?
+          @comments_on = true
+          @comments = @task.comments.all
+          @comment = @task.comments.new
+        end
 			end
 		else
 			redirect_to @section

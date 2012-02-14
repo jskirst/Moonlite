@@ -309,7 +309,7 @@ describe PathsController do
 
 		describe "GET 'file'" do
 			before(:each) do
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				@other_user = Factory(:user, :email => "other@t.com")
 			end
 			
@@ -328,7 +328,7 @@ describe PathsController do
     
     describe "POST 'preview'" do
 			before(:each) do
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				test_sign_in(@user)
 			end
 			
@@ -411,7 +411,7 @@ describe PathsController do
 		
 		describe "POST 'upload'" do
 			before(:each) do
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				test_sign_in(@user)
 			end
 			

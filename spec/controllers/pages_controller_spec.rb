@@ -31,12 +31,11 @@ describe PagesController do
 			describe "enrolled paths" do
 				describe "when they exist" do
 					before(:each) do
-						@path1 = Factory(:path, :name => "Path1", :user => @user)
-						@path2 = Factory(:path, :name => "Path2", :user => @user)
-						@path3 = Factory(:path, :name => "Path I'm not enrolled in", :user => @user)
-						
-						@enrollment = Factory(:enrollment, :path => @path1, :user => @user)
-						@enrollment = Factory(:enrollment, :path => @path2, :user => @user)
+						@path1 = Factory(:path, :name => "Path1", :user => @user, :company => @user.company)
+						@path2 = Factory(:path, :name => "Path2", :user => @user, :company => @user.company)
+						@path3 = Factory(:path, :name => "Path I'm not enrolled in", :user => @user, :company => @user.company)
+            @user.enroll!(@path1)
+            @user.enroll!(@path2)
 					end
 					
 					it "should be displayed by name" do

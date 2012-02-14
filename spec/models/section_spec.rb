@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "Section" do
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@path = Factory(:path, :user => @user, :company => @user.company)
 		@attr = { :name => "In the beginning", :instructions => "DO THINGSSSS!!!!", :position => 0 }
 	end
 	
@@ -77,7 +77,8 @@ describe "Section" do
 	
 	describe "task associations" do
 		before(:each) do
-			@section = Factory(:section)
+      @user.enroll!(@path)
+			@section = Factory(:section, :path => @path)
 			@task1 = Factory(:task, :section => @section)
 			@task2 = Factory(:task, :section => @section)
       @section.reload

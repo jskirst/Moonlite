@@ -5,7 +5,7 @@ describe SectionsController do
 	
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@path = Factory(:path, :user => @user, :company => @user.company)
 		@section = Factory(:section, :path => @path, :position => 0)
 		@task = Factory(:task, :section => @section, :points => 1)
 		@user.enroll!(@path)

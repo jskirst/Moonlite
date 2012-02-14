@@ -1,65 +1,73 @@
-<section class="task">
-	<style>
-		.task blockquote {
-			margin: 30px 15px 30px 15px;
-		}		
-		.task blockquote p{
-			font-size: 19px;
-		}
-		.task .answer label {
-			font-size: 17px;
-			margin-top: 10px;
-		}
-	</style>
-	<section class="question">
-		<h2><%= @task.section.name %></h2>
-		<blockquote>
-			<p>
-				<%= @task.question %>
-			</p>
-		</blockquote>
-	</section>
-	<section class="answer">
-	<%= form_for current_user.completed_tasks.build(:task_id => @task.id) do |f| %>
-		<%= f.hidden_field :task_id %>
-		<%= f.hidden_field :quiz_session, :value => @quiz_session %>
-		<div class="field clearfix">
-			<label>Answer:</label>
-			<div class="input">
-				<ul class="inputs-list">
-					<li>
-						<% if !@task.answer1.blank? %>
-						<label>
-							<input id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1">
-							<span><%= @task.answer1 %></span>
-						</label>
-						<% end %>
-						<% if !@task.answer2.blank? %>
-						<label>
-							<input id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2">
-							<span><%= @task.answer2 %></span>
-						</label>
-						<% end %>
-						<% if !@task.answer3.blank? %>
-						<label>
-							<input id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3">
-							<span><%= @task.answer3 %></span>
-						</label>
-						<% end %>
-						<% if !@task.answer4.blank? %>
-						<label>
-							<input id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4">
-							<span><%= @task.answer4 %></span>
-						</label>
-						<% end %>
-					</li>
-				</ul>
-			</div>
-		</div>
-		<div class="actions">
-			<%= f.submit "Next", :class => "btn primary" %>
-		</div>
-	<% end %>
-	</section>
-</section>
-<span style="float:right;"><%= link_to "Continue quiz later", @task.section.path %></span>
+<%= form_tag({ :controller => :completed_tasks }, :method => :post) %>
+<div class="task row">
+  <div class="span10">
+    <div class="question">
+      <h2><%= @task.section.name %></h2>
+      <blockquote>
+        <p>
+          <%= @task.question %>
+        </p>
+      </blockquote>
+    </div>
+    <div class="answer">
+      <input type="hidden" name="completed_task[task_id]" value="<%= @task.id %>">
+      <input type="hidden" name="completed_task[quiz_session]" value="<%= @quiz_session %>">
+      <div class="field clearfix">
+        <label>Answer:</label>
+        <div class="input">
+          <ul class="inputs-list">
+            <li>
+              <% if !@task.answer1.blank? %>
+              <label>
+                <input id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1">
+                <span><%= @task.answer1 %></span>
+              </label>
+              <% end %>
+              <% if !@task.answer2.blank? %>
+              <label>
+                <input id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2">
+                <span><%= @task.answer2 %></span>
+              </label>
+              <% end %>
+              <% if !@task.answer3.blank? %>
+              <label>
+                <input id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3">
+                <span><%= @task.answer3 %></span>
+              </label>
+              <% end %>
+              <% if !@task.answer4.blank? %>
+              <label>
+                <input id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4">
+                <span><%= @task.answer4 %></span>
+              </label>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% if @comments_on %>
+  <div class="span6">
+    <div class="task-comments">
+      <% unless @comments.empty? %>
+      <ul style="list-style-type: none; margin: 0px; padding: 10px; margin-top: -60px;">
+      <% @comments.each do |comment| %>
+        <li style="line-height: 1;"><strong><%= comment.user.name %>:</strong> <%= comment.content %></li>
+      <% end %>
+      </ul>
+      <% else %>
+        <em style="padding: 15px;">There are no comments for this task</em>
+      <% end %>
+    <input type="hidden" name="comment[task_id]" value="<%= @task.id %>">
+    <textarea name="comment[content]" rows="3" class="xlarge"></textarea>
+    <%= submit_tag "Post Comment", :class => "btn primary", :style=>"margin-top: 10px;" %>
+  </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="actions" style="margin-top:50px">
+    <%= submit_tag "Next", :class => "btn primary", :style=>"margin-top: 10px;" %>
+    <%= link_to "View Discussion", continue_section_path(@task.section, :comments_on => "1"), :class => "btn secondary" %>
+  </div>
+</div>

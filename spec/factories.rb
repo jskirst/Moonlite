@@ -79,6 +79,12 @@ Factory.define :user_transaction do |pt|
 	pt.status 0
 end
 
+Factory.define :comment do |c|
+	c.association :user
+	c.association :task
+	c.content Faker::Lorem.sentence(2)
+end
+
 Factory.sequence :email do |n|
 	"person-#{n}@example.com"
 end

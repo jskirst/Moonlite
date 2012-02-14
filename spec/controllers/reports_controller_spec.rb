@@ -132,6 +132,7 @@ describe ReportsController do
 			
 			describe "correctly answered question table" do
 				before(:each) do
+          @user.enroll!(@path)
 					@task1 = Factory(:task, :section => @section)
 					@task2 = Factory(:task, :section => @section)
 					@task3 = Factory(:task, :section => @section)
@@ -174,6 +175,7 @@ describe ReportsController do
 			
 			describe "incorrectly answered question table" do
 				before(:each) do
+          @user.enroll!(@path)
 					@task1 = Factory(:task, :section => @section)
 					@task2 = Factory(:task, :section => @section)
 					@task3 = Factory(:task, :section => @section)

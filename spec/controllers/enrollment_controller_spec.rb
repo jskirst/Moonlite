@@ -18,7 +18,7 @@ describe EnrollmentsController do
 	describe "POST 'create'" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			test_sign_in(@user)
 		end
 		
@@ -66,7 +66,7 @@ describe EnrollmentsController do
 		describe "as an unauthorized user" do
 			before(:each) do
 				@user = Factory(:user)
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				@enrollment = Factory(:enrollment, :path => @path, :user => @user)
 				
 				@other_user = Factory(:user, :email => "o@o.com")
@@ -82,7 +82,7 @@ describe EnrollmentsController do
 		describe "as an authorized user" do
 			before(:each) do
 				@user = test_sign_in(Factory(:user))
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				@enrollment = Factory(:enrollment, :path => @path, :user => @user)
 				test_sign_in(@user)
 			end

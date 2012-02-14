@@ -4,7 +4,9 @@ require 'spec_helper'
 describe UserAchievement do
 	before(:each) do
 		@user = Factory(:user)
-		@achievement = Factory(:achievement)
+    @path = Factory(:path, :user => @user, :company => @user.company)
+    @achievement = Factory(:achievement, :path => @path)
+    @user.enroll!(@path)
 		
 		@attr = { :achievement_id => @achievement.id }
 		@user_achievement = @user.user_achievements.build(@attr)
@@ -41,6 +43,11 @@ describe UserAchievement do
 		it "should have the right achievement" do
 			@user_achievement.achievement_id.should == @achievement.id
 			@user_achievement.achievement.should == @achievement
+		end
+    
+    it "should reject an achievement for a path the user is not enrolled in" do
+			@user.unenroll!(@path)
+      @user_achievement.should_not be_valid
 		end
 	end
 end

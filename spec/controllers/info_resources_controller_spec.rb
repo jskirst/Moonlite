@@ -46,7 +46,7 @@ describe InfoResourcesController do
 	describe "GET 'new'" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			test_sign_in(@user)
 		end
 		
@@ -64,7 +64,7 @@ describe InfoResourcesController do
 	describe "POST 'create'" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			test_sign_in(@user)
 		end
 		
@@ -111,7 +111,7 @@ describe InfoResourcesController do
 	describe "Get 'show'" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			@info_resource = Factory(:info_resource, :path => @path)
 			test_sign_in(@user)
 		end
@@ -145,7 +145,7 @@ describe InfoResourcesController do
 	describe "GET 'edit'" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			@info_resource = Factory(:info_resource, :path => @path)
 			test_sign_in @user
 		end
@@ -164,7 +164,7 @@ describe InfoResourcesController do
 	describe "PUT 'update'" do
 		before(:each) do
 			@user = Factory(:user)
-			@path = Factory(:path, :user => @user)
+			@path = Factory(:path, :user => @user, :company => @user.company)
 			@info_resource = Factory(:info_resource, :path => @path)
 			test_sign_in(@user)
 		end
@@ -218,7 +218,7 @@ describe InfoResourcesController do
 		describe "as an unauthorized user" do
 			before(:each) do
 				@user = Factory(:user)
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				@info_resource = Factory(:info_resource, :path => @path)
 				
 				@other_user = Factory(:user, :email => "other@o.com")
@@ -234,7 +234,7 @@ describe InfoResourcesController do
 		describe "as an authorized user" do
 			before(:each) do
 				@user = test_sign_in(Factory(:user))
-				@path = Factory(:path, :user => @user)
+				@path = Factory(:path, :user => @user, :company => @user.company)
 				@info_resource = Factory(:info_resource, :path => @path)
 			end
 			

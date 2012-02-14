@@ -7,6 +7,7 @@ describe UserTransaction do
 		@section = Factory(:section, :path => @path)
 		@task = Factory(:task, :section => @section)
 		@reward = Factory(:reward, :company => @user.company)
+    @user.enroll!(@path)
 		@attr = { :user_id => @user, :amount => 15, :status => 1 }
 	end
 	
@@ -62,6 +63,13 @@ describe UserTransaction do
 			it "should have a status attribute" do
 				@transaction.should respond_to(:status)
 			end
+      
+      it "should reject a task that the user is not enrolled in" 
+      # do
+				# @other_user = Factory(:user, :company => @user.company)
+        # transaction = UserTransaction.create(@attr.merge(:user_id => @other_user.id))
+        # transaction.should_not be_valid
+			# end
 		end
 		
 		describe "for rewards" do
