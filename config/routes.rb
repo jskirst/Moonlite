@@ -1,5 +1,4 @@
 SampleApp::Application.routes.draw do
-
 	get ":id" => "users#show", :id => /\d+/
   
 	resources :sessions, :only => [:new, :create, :destroy]
@@ -47,6 +46,7 @@ SampleApp::Application.routes.draw do
 		end
 	end
   resources :comments
+  resources :leaderboards
 	
 	root 				:to => "pages#home"
 	

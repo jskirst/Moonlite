@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120212231230) do
+ActiveRecord::Schema.define(:version => 20120214200032) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -85,6 +85,14 @@ ActiveRecord::Schema.define(:version => 20120212231230) do
   end
 
   add_index "info_resources", ["path_id"], :name => "index_info_resources_on_path_id"
+
+  create_table "leaderboards", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "completed_tasks", :default => 0
+    t.integer  "score",           :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "paths", :force => true do |t|
     t.string   "name"

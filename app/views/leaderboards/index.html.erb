@@ -1,0 +1,27 @@
+<h1>Moonlite Leaderboard</h1>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>User</th>
+    <th>Completed tasks</th>
+    <th>Score</th>
+  </tr>
+
+<% counter = 1 %>
+<% @leaderboards.each do |leaderboard| %>
+  <tr>
+    <td><%= counter.to_s %></td>
+    <td class="user-name"><%= leaderboard.user.name %></td>
+    <td class="user-completed-tasks"><%= leaderboard.completed_tasks %></td>
+    <td class="user-score"><%= leaderboard.score %></td>
+  </tr>
+  <% counter += 1 %>
+<% end %>
+</table>
+
+<br />
+
+<% if current_user.company_admin? %>
+  <%= link_to "Refresh Leaderboard", new_leaderboard_path, :class => "btn primary" %>
+<% end %>
