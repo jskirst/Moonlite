@@ -9,7 +9,6 @@ class CompletedTask < ActiveRecord::Base
 	validates :user_id, :presence => true
 	validates :task_id, :presence => true
 	validates :status_id, :presence => true
-	validates :quiz_session, :presence => true
 
   validate :user_enrolled_in_path
   

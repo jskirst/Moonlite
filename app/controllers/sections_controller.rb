@@ -2,6 +2,7 @@ class SectionsController < ApplicationController
   include OrderHelper
 	before_filter :authenticate
 	before_filter :company_admin, :except => [:continue, :show]
+  before_filter :verify_enrollment, :only => [:continue]
 	
 	def new
 		@section = Section.new
@@ -36,6 +37,7 @@ class SectionsController < ApplicationController
 		@section = Section.find(params[:id])
 		@path_name = @section.path.name
 		@title = @section.name
+    @section_started = current_user.section_started?(@section)
 	end
 	
 	def edit
@@ -81,34 +83,38 @@ class SectionsController < ApplicationController
 	end
   
 	def continue
-		@section = Section.find(params[:id])
-		if current_user.enrolled?(@section.path)
-			@quiz_session = Time.parse((params[:quiz_session] || DateTime.now).to_s)
-			@remaining_tasks = @section.remaining_tasks(current_user)
-			
-			if @remaining_tasks == 0
-				@title = "Results"
-				@answers = CompletedTask.find(:all, :conditions => ["user_id=? AND quiz_session=?", current_user.id, @quiz_session])
-				if !@answers.empty?
-					@correct_answers = 0
-					@total_answers = 0
-					@answers.each do |a|
-						@total_answers += (a.status_id < 2 ? 1 : 0)
-						@correct_answers += (a.status_id == 1 ? 1 : 0)
-					end
-				end
-				render "results"
-			else
-				@title = @section.name
-				@task = @section.next_task(current_user)
-        unless params[:comments_on].nil?
-          @comments_on = true
-          @comments = @task.comments.all
-          @comment = @task.comments.new
+    @task = @section.next_task(current_user)
+    if @task.nil?
+      last_task = current_user.completed_tasks.first(:order => "completed_tasks.id DESC")
+      @answers = current_user.completed_tasks.joins(:task).where(["section_id = ?", last_task.task.section_id]).all
+      if !@answers.empty?
+        @correct_answers = 0
+        @total_answers = 0
+        @answers.each do |a|
+          @total_answers += (a.status_id < 2 ? 1 : 0)
+          @correct_answers += (a.status_id == 1 ? 1 : 0)
         end
-			end
-		else
-			redirect_to @section
-		end
+      end
+      render "results"
+    else
+      @progress = @path.percent_complete(current_user)
+      @progress = 1 if @progress == 0
+      @title = @section.name
+      unless params[:comments_on].nil?
+        @comments_on = true
+        @comments = @task.comments.all
+        @comment = @task.comments.new
+      end
+    end
 	end
+  
+  private
+    def verify_enrollment
+      @section = Section.find(params[:id], :include => :path)
+      @path = @section.path
+      unless current_user.enrolled?(@path)
+        flash[:warning] = "You must be enrolled in a path before you can begin."
+        redirect_to root_path
+      end
+    end
 end

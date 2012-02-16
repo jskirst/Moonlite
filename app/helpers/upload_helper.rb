@@ -1,5 +1,6 @@
 require 'csv'
 require 'zip/zip'
+require 'set'
 
 module UploadHelper
   def read_file(file)
@@ -80,19 +81,29 @@ module UploadHelper
 		
   def create_task(row)
     question = row[0].chomp unless row[0].nil?
-    answer1 = row[1].chomp unless row[1].nil?
-    answer2 = row[2].chomp unless row[2].nil?
-    answer3 = row[3].chomp unless row[3].nil?
-    answer4 = row[4].chomp unless row[4].nil?
-    correct_answer = 1
-    points = row[5].to_i
+    answers = []
+    answers << row[1].chomp unless row[1].nil?
+    answers << row[2].chomp unless row[2].nil?
+    answers << row[3].chomp unless row[3].nil?
+    answers << row[4].chomp unless row[4].nil?
+    answers = answers.shuffle
+    correct_answer = answers.index(row[1].chomp) + 1
+    points = 10
     task = { :question => question,
-      :answer1 => answer1,
-      :answer2 => answer2,
-      :answer3 => answer3,
-      :answer4 => answer4,
+      :answer1 => answers[0],
+      :answer2 => answers[1],
+      :answer3 => answers[2],
+      :answer4 => answers[3],
       :correct_answer => correct_answer,
       :points => points }
     return task
+  end
+  
+  def random_set(length, max)
+    randoms = Set.new
+    loop do
+        randoms << rand(max)
+        return randoms.to_a if randoms.length >= length
+    end
   end
 end

@@ -9,14 +9,13 @@
 		<%= @user.name %>
 	</h1>
 	<section>
-		<p>Company: <%= link_to @company.name, @company %></p>
 		<p><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
 	</section>
 	<% if !@user_achievements.empty? %>
 	<section>
 		<h3>Achievements</h3>
 		<ul>
-			<% @user.user_achievements.each do |e| %>
+			<% @user_achievements.each do |e| %>
 			<li>
 				<p><%= link_to e.achievement.name, e %> - <strong><%= e.achievement.points %></strong> Points Earned</p>
 			</li>
@@ -30,7 +29,19 @@
 		<p><%= @user.name %> is not currently enrolled in any publically accessible paths.</p>
 		<% else %>
 		<table>
+      <% @enrolled_paths.each do |path| %>
+        <% if path.completed?(current_user) %>
+				<tr>
+					<td style="vertical-align: middle;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
+					<td class="path">
+						<h3 class="name"><%= link_to path.name, path %><span class="label" style="margin: 0 0 0 10px; background-color: #468847;">Completed</span></h3>
+						<p class="description"><%= truncate(strip_tags(path.description), :length => 255) %></p>
+					</td>
+				</tr>
+        <% end %>
+			<% end %>
 			<% @enrolled_paths.each do |path| %>
+         <% unless path.completed?(current_user) %>
 				<tr>
 					<td style="vertical-align: middle;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
 					<td class="path">
@@ -38,6 +49,7 @@
 						<p class="description"><%= truncate(strip_tags(path.description), :length => 255) %></p>
 					</td>
 				</tr>
+        <% end %>
 			<% end %>
 		</table>
 		<% end %>

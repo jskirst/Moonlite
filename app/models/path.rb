@@ -4,7 +4,7 @@ class Path < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :company
 	has_many :sections, :dependent => :destroy
-	has_many :tasks, :through => :sections
+	has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
 	has_many :achievements, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
 	has_many :info_resources, :dependent => :destroy
@@ -22,6 +22,10 @@ class Path < ActiveRecord::Base
 	validate :company_id, :if => :user_belongs_to_company
 	
 	default_scope :order => 'paths.created_at DESC'
+  
+  def next_section(section)
+    return sections.where(["position > ?", section.position]).first
+  end
 	
 	def path_pic
 		if self.image_url != nil
@@ -30,6 +34,18 @@ class Path < ActiveRecord::Base
 			return "/images/default_path_pic.jpg"
 		end
 	end
+  
+  def completed?(user)
+    total_tasks = tasks.size
+    completed_tasks = user.completed_tasks.includes(:path).where(["paths.id = ? and status_id = 1", self.id]).count
+    return completed_tasks >= total_tasks
+  end
+  
+  def percent_complete(user)
+    total_tasks = tasks.size
+    completed_tasks = user.completed_tasks.includes(:path).where(["paths.id = ? and status_id = 1", self.id]).count
+    return ((completed_tasks.to_f / total_tasks.to_f) * 100).to_i
+  end
 	
 	def user_belongs_to_company
 		if company != nil

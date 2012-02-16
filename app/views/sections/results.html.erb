@@ -1,23 +1,36 @@
-<% answer_status = ["Wrong", "Correct", "Skipped"] %>
-<h3>You completed this section.</h3>
-<% if !@answers.empty? %>
-	<p>Your score was <%= @correct_answers.to_s + "/" + @total_answers.to_s %></p>
-	<p>Your provided the following answers:</p>
-	<ol>
-	<% @answers.each do |answer| %>
-		<li>
-			<dl>
-				<dt>Question:</dt>
-				<dd><%= answer.task.question %></dd>
-				<dt>Answer:</dt>
-				<dd><%= answer.task.describe_correct_answer %></dd>
-				<dt>Your answer:</dt>
-				<dd><%= answer_status[answer.status_id] %></dd>
-			</dl>
-		</li>
-	<% end %>
-<% end %>
-</ol>
+<style>
+.answer-list p {
+  font-size: 17px;
+  font-weight: bold;
+  line-height: 25px;
+}
+.answer-list ul {
+  list-style: none;
+  margin-top: 20px;
+}
+.answer-list li{
+  margin-top: 20px;
+}
+</style>
+<section class="answer-list">
+  <h2>Section <%= @section.position.to_s %>. <%= @section.name %>: Complete!</h2>
+  <% if !@answers.empty? %>
+    <h4>Your score was <%= @correct_answers.to_s + "/" + @total_answers.to_s %></h4>
+    <p>Your provided the following answers:</p>
+    <ul>
+    <% counter = 1 %>
+    <% @answers.each do |answer| %>
+      <% answer_class = answer.status_id == 1 ? "success" : "error" %>
+      <li class="alert-message block-message <%= answer_class %>">
+        <p><%= counter %>. Question: <%= answer.task.question %></p>
+        <p style="padding-left: 20px;">Answer: <%= answer.task.describe_correct_answer %></p>
+      </li>
+      <% counter += 1 %>
+    <% end %>
+    </ul>
+  <% end %>
+</section>
 <div class="actions">
-  <%= link_to "Go back", @section.path, :class => "btn primary" %>
+  <%= link_to "Next Section", continue_path_path(@path), :class => "btn primary" %>
+  <%= link_to "Continue Later", root_path, :class => "btn secondary" %>
 </div>

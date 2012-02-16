@@ -1,40 +1,21 @@
 class CompletedTasksController < ApplicationController
 	before_filter :authenticate
 	before_filter :enrolled_user?
+  before_filter :post_comment
 	
 	def create
-    if params[:commit] == "Post Comment"
-      @comment = current_user.comments.new(params[:comment])
-      if @comment.save
-        flash[:success] = "Comment added."
-      else
-        flash[:error] = "There was an error when saving your comment. Please try again."
-      end
-      redirect_to continue_section_path :id => @comment.task.section, :quiz_session => params[:completed_task][:quiz_session], :comments_on => "on"
-      return
-    end
-		
     resp = params[:completed_task]
-		resp[:quiz_session] = resp[:quiz_session] || DateTime.now
-		answer = resp[:answer]
-		
-		status_id = (Integer(answer) == Integer(@task.correct_answer) ? 1 : 0)
-		
+		status_id = (Integer(resp[:answer]) == Integer(@task.correct_answer) ? 1 : 0)
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))		
 		if @completed_task.save
-			set_flash_message(status_id, answer, @task.correct_answer)
+			set_flash_message(status_id, resp[:answer], @task.correct_answer)
 			if status_id == 1
-				UserTransaction.create!({:user_id => current_user.id,
-					:task_id => @completed_task.task.id, 
-					:amount => @completed_task.task.points,
-					:status => 1})
-				current_user.award_points(@completed_task.task)
-				achievement = current_user.award_achievements(@completed_task)
+        achievement = current_user.award_points_and_achievements(@task)
         if achievement
           flash[:success] = "Congrats! You unlocked the #{achievement.name} achievement!"
         end
 			end
-			redirect_to continue_section_path :id => @completed_task.task.section, :quiz_session => resp[:quiz_session]
+			redirect_to continue_section_path :id => @completed_task.task.section
 		else
 			redirect_to root_path
 		end
@@ -56,9 +37,22 @@ class CompletedTasksController < ApplicationController
 		
 		def set_flash_message(status_id, user_answer, correct_answer)
 			if status_id == 0
-				flash[:error] = "Incorrect. You answered #{user_answer}. The correct answer was #{correct_answer}."
+				flash[:info] = "Incorrect. Don't worry, you'll have a chance to try again later."
 			else
-				flash[:success] = "Correct!"
+				flash[:success] = "Correct! +10 Points"
 			end
 		end
+    
+    def post_comment
+      if params[:commit] == "Post Comment"
+        @comment = current_user.comments.new(params[:comment])
+        if @comment.save
+          flash[:success] = "Comment added."
+        else
+          flash[:error] = "There was an error when saving your comment. Please try again."
+        end
+        redirect_to continue_section_path :id => @comment.task.section, :quiz_session => params[:completed_task][:quiz_session], :comments_on => "on"
+        return
+      end
+    end
 end

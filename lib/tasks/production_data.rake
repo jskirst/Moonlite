@@ -74,7 +74,7 @@ namespace :db do
 		
 		Path.all.each do |path|
 			PATH_SECTIONS.each do |s|
-				section = path.sections.create(:name => s, :instructions => "Instructions to follow.")
+				section = path.sections.create(:name => s, :instructions => "Instructions to follow.", :is_published => true)
 				NUMBER_OF_TASKS.times do |n|
 					section.tasks.create!(:question => "What is #{n} + #{n}?",
 						:answer1 => "#{n-10}",

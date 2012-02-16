@@ -1,4 +1,29 @@
 <section class="path">
+  <% if @enrolled == true && !@path_started %>
+  <script>
+    $(function(){
+      $('#startmodal').modal({
+           keyboard: true,
+           backdrop: 'static',
+           show: true
+       });
+    });
+  </script>
+  <!-- sample modal content -->
+  <div id="startmodal" class="modal hide fade">
+    <div class="modal-header">
+      <a href="#" class="close"></a>
+      <h3>Get Started!</h3>
+    </div>
+    <div class="modal-body">
+      <p>You're now successfully enrolled in the <strong><%= @path.name %></strong> Path. Would you like to get started right now?</p>
+    </div>
+    <div class="modal-footer">
+      <a href="#" onclick="$('#startmodal').modal('hide');" class="btn secondary">Later</a>
+      <%= link_to "Get Started", continue_path_path(@path), :class => "btn primary" %>
+    </div>
+  </div>
+  <% end %>
 	<div style="float:left; margin: 0px 15px 5px 0px;"><%= image_tag(@path.path_pic, :size=>"50x50") %></div>
 	<div>
 		<h1>
@@ -18,7 +43,7 @@
         <li>
           <h5>
             <%= link_to s.name, s %>
-            <% if s.remaining_tasks(current_user) == 0 %>
+            <% if s.remaining_tasks(current_user) <= 0 %>
             <span class="label">Completed</span>
             <% end %>
           </h5>
@@ -30,14 +55,19 @@
   </div>
 	<section>
 		<div class="actions">
-		<% if !current_user.enrolled?(@path) %>
-			<%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
-				<%= f.hidden_field :path_id %>
-				<%= f.submit "Enroll", :class=> "btn primary" %>
-			<% end %>
-		<% else %>
-			<%= link_to "Continue", continue_path_path(@path), :class => "btn primary" %>
-		<% end %>
+    <% if @path.is_published %>
+      <% unless @enrolled %>
+        <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
+          <%= f.hidden_field :path_id %>
+          <%= f.submit "Enroll", :class=> "btn primary" %>
+        <% end %>
+      <% else %>
+        <% start_mode = @path_started == true ? "Continue" : "Start" %>
+        <%= link_to start_mode, continue_path_path(@path), :class => "btn primary" %>
+      <% end %>
+    <% else %>
+      <%= link_to "Publish", edit_path_path(@path, :m => "settings"), :class => "btn primary" %>
+    <% end %>
 		<% if current_user.company_admin? %>
 			<%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn secondary" %>
 			<%= link_to "Delete", @path, :method => "delete", :confirm => "Are you sure you want to delete this path?", :title => "Delete task", :class => "btn secondary" %>

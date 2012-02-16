@@ -1,8 +1,19 @@
+<script>
+$(function() {$( "#progressbar" ).progressbar({ value: <%= @progress %> }); });
+
+</script>
+<div style="float:right; width:450px;">
+<div id="progressbar" style="height:1.3em;"></div>
+</div>
 <%= form_tag({ :controller => :completed_tasks }, :method => :post) %>
 <div class="task row">
+  <% if @comments_on %>
   <div class="span10">
+  <% else %>
+  <div class="span16">
+  <% end %>
     <div class="question">
-      <h2><%= @task.section.name %></h2>
+      <h2>Section <%= @section.position.to_s %>. <%= @section.name %></h2>
       <blockquote>
         <p>
           <%= @task.question %>
@@ -68,6 +79,11 @@
 <div class="row">
   <div class="actions" style="margin-top:50px">
     <%= submit_tag "Next", :class => "btn primary", :style=>"margin-top: 10px;" %>
-    <%= link_to "View Discussion", continue_section_path(@task.section, :comments_on => "1"), :class => "btn secondary" %>
+    <% if @comments_on %>
+    <%= link_to "Hide Discussion", continue_section_path(@task.section), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
+    <% else %>
+    <%= link_to "View Discussion", continue_section_path(@task.section, :comments_on => "1"), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
+    <% end %>
+    <%= link_to "Continue Later", root_path, :class => "btn secondary", :style => "float:right;" %>
   </div>
 </div>

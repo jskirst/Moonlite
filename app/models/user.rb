@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
 	end
 	
 	def enrolled?(path)
-		enrollments.find_by_path_id(path.id)
+		return true unless enrollments.find_by_path_id(path.id).nil?
 	end
 	
 	def enroll!(path)
@@ -82,41 +82,38 @@ class User < ActiveRecord::Base
 	def company_admin?
 		return company_admin
 	end
-	
-	def award_points(task)
+  
+  def award_points_and_achievements(task)
+    award_points(task)
+    return award_achievements(task)
+  end
+  
+  def award_points(task)
+    log_transaction(task.id, task.points)
 		self.update_attribute('earned_points', self.earned_points + task.points)
 		enrollments.find_by_path_id(task.section.path_id).add_earned_points(task.points)
 	end
-  
-  def has_achievement?(achievement_id)
-    achievement = self.user_achievements.find_by_achievement_id(achievement_id)
-    return achievement.nil? ? false : true
-  end
 	
-	def award_achievements(completed_task)
-		section = completed_task.task.section
-		path = section.path
-		potential_achievements = path.achievements
+	def award_achievements(task)
+		potential_achievements = task.path.achievements
 		potential_achievements.each do |pa|
       unless pa.criteria.nil?
-				completed_all = true
 				task_ids = pa.criteria.split(",")
-				task_ids.each do |id|
-					t = Task.find_by_id(id)
-					if t.nil? || !self.completed?(t)
-						completed_all = false
-						break
-					end
-				end
-				if completed_all && !self.has_achievement?(pa.id)
-					self.user_achievements.create!(:achievement_id => pa.id)
-					self.update_attribute('earned_points', self.earned_points + pa.points)
+        cps = completed_tasks.find_all_by_task_id(task_ids, :conditions => ["status_id = ?", 1], :group => "task_id")
+        if cps.size == task_ids.size && !self.has_achievement?(pa.id)
+					user_achievements.create!(:achievement_id => pa.id)
+					update_attribute('earned_points', self.earned_points + pa.points)
           return pa
 				end
 			end
 		end
     return false
 	end
+  
+  def has_achievement?(achievement_id)
+    achievement = self.user_achievements.find_by_achievement_id(achievement_id)
+    return achievement.nil? ? false : true
+  end
 	
 	def debit_points(points)
 		self.update_attribute('spent_points', self.spent_points + points)
@@ -129,13 +126,14 @@ class User < ActiveRecord::Base
 	end
 	
 	def most_recent_section(path)
-		cps = self.completed_tasks.all(:order => "completed_tasks.updated_at DESC")
-		cps.each do |cp|
-			if cp.path.id == path.id
-				return cp.task.section
-			end
-		end
-		return nil
+		last_task = completed_tasks.includes(:path).where(["paths.id = ?", path.id]).first(:order => "completed_tasks.updated_at DESC")
+		if last_task.nil?
+      return nil
+    else
+      last_section = last_task.section
+      return last_section unless last_section.remaining_tasks(self) <= 0
+      return path.next_section(last_section)
+    end
 	end
 	
 	def set_company_admin(val)
@@ -146,6 +144,14 @@ class User < ActiveRecord::Base
 			self.toggle!(:company_admin)
 		end
 	end
+  
+  def path_started?(path)
+    return true unless my_completed_tasks.includes(:path).where(["paths.id = ?", path.id]).empty?
+  end
+  
+  def section_started?(section)
+    return true unless my_completed_tasks.where(["section_id = ?", section.id]).empty?
+  end
 	
 	private
 		def encrypt_password
@@ -176,4 +182,11 @@ class User < ActiveRecord::Base
 		def random_alphanumeric(size=15)
 			(1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
 		end
+    
+    def log_transaction(task_id, points)
+      UserTransaction.create!({:user_id => self.id,
+        :task_id => task_id, 
+        :amount => points,
+        :status => 1})
+    end
 end

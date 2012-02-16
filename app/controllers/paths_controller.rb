@@ -36,6 +36,8 @@ class PathsController < ApplicationController
 		@info_resources = @path.info_resources(:limit => 5)
 		@achievements = @path.achievements.all(:limit => 5)
 		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+    @enrolled = current_user.enrolled?(@path)
+    @path_started = current_user.path_started?(@path)
 	end
 	
 	def edit
@@ -59,6 +61,13 @@ class PathsController < ApplicationController
 		if params[:path][:image_url].blank?
 			params[:path].delete("image_url")
 		end
+    if params[:path][:is_published] == "1"
+      if @path.sections.where(["is_published = ?", true]).count.zero?
+        flash[:error] = "You need to publish at least one section before you can make your path publicly available."
+        render 'edit' 
+        return
+      end
+    end
 		if @path.update_attributes(params[:path])
 			flash[:success] = "Changes saved."
 			redirect_to @path
@@ -79,12 +88,8 @@ class PathsController < ApplicationController
   end
 	
 	def continue
-		@section = current_user.most_recent_section(@path)
-		if @section.nil?
-			redirect_to continue_section_path(@path.sections.first)
-		else
-			redirect_to continue_section_path(@section)
-		end
+		@next_section = current_user.most_recent_section(@path) || @path.sections.first
+		redirect_to @next_section
 	end
 	
 	def file

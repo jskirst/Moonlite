@@ -70,7 +70,7 @@ class UsersController < ApplicationController
 			redirect_to root_path
 		else
 			@enrolled_paths = @user.enrolled_paths.find(:all, :conditions => ["paths.is_public = ?", true])
-			@user_achievements = @user.user_achievements
+			@user_achievements = @user.user_achievements.joins(:achievement)
 			@company = @user.company
 			@title = @user.name
 		end

@@ -3,7 +3,8 @@
 	<div style="padding: 20px"><%= simple_format(@section.instructions) %></div>
 	<div class="actions">
     <% if current_user.enrolled?(@section.path) %>
-		<%= link_to "Continue", continue_section_path(@section), :class => "btn primary" %>
+      <% start_mode = @section_started == true ? "Continue" : "Start" %>
+      <%= link_to start_mode, continue_section_path(@section), :class => "btn primary" %>
     <% end %>
 		<%= link_to "Back", path_path(@section.path), :class => "btn secondary" %>
 	</div>
