@@ -6,6 +6,7 @@ class Section < ActiveRecord::Base
 	belongs_to :path
 	has_many :tasks, :dependent => :destroy
 	has_many :completed_tasks, :through => :tasks, :source => :completed_tasks
+  has_many :info_resources, :dependent => :destroy
 	
 	validates :name, 
 		:presence 		=> true,

@@ -22,6 +22,7 @@
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
+    <%= link_to "Add Resource", new_info_resource_path(:section_id => @section.id), :class => "btn secondary" %>
 		<%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
 	</div>
 <% end %>

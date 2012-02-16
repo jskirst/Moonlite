@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120214200032) do
+ActiveRecord::Schema.define(:version => 20120216193738) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(:version => 20120214200032) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.string   "image_url"
   end
 
   create_table "comments", :force => true do |t|
@@ -82,6 +83,9 @@ ActiveRecord::Schema.define(:version => 20120214200032) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
+    t.integer  "section_id"
+    t.integer  "task_id"
+    t.string   "info_type"
   end
 
   add_index "info_resources", ["path_id"], :name => "index_info_resources_on_path_id"

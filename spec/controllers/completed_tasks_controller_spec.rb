@@ -22,6 +22,7 @@ describe CompletedTasksController do
 			@path = Factory(:path, :user => @user, :company => @user.company)
 			@section = Factory(:section, :path => @path)
 			@task = Factory(:task, :section => @section)
+			@task2 = Factory(:task, :section => @section)
 			test_sign_in(@user)
 			@attr = { :user_id => @user.id, :task_id => @task.id, :answer => @task.correct_answer, :quiz_session => @quiz_session }
 		end
@@ -72,7 +73,7 @@ describe CompletedTasksController do
 				
 				it "should take you to the next question" do
 					post :create, :completed_task => @attr
-					flash[:error].should =~ /incorrect/i
+					flash[:info].should =~ /incorrect/i
 				end
 			end
 			

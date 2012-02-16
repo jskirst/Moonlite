@@ -60,15 +60,6 @@ describe CompletedTask do
 			@completed_task.should respond_to(:status_id)
 		end
     
-    it "should require a quiz_session" do
-			@completed_task.quiz_session = nil
-			@completed_task.should_not be_valid
-		end
-		
-		it "should have a quiz_session attribute" do
-			@completed_task.should respond_to(:quiz_session)
-		end
-    
     it "should reject a task if the user is not enrolled in the tasks path" do
       @user.unenroll!(@path)
       @completed_task.should_not be_valid

@@ -1,10 +1,10 @@
 class AchievementsController < ApplicationController
 	before_filter :authenticate
-	before_filter :company_admin
+	before_filter :company_admin, :except => [:show]
 	before_filter :get_from_id, :except => [:new, :create]
 	before_filter :get_path_from_id, :only => [:new]
   before_filter :get_path_from_params, :only => [:create]
-  before_filter :authorized
+  before_filter :authorized, :except => [:show]
 	
 	def new
 		if @path.nil?
@@ -36,6 +36,10 @@ class AchievementsController < ApplicationController
       end
     end
 	end
+  
+  def show
+    @user_achievements = @achievement.user_achievements
+  end
 	
 	def edit
     task_ids = @achievement.criteria
@@ -61,7 +65,8 @@ class AchievementsController < ApplicationController
 	
 	private
 		def get_from_id
-			unless @achievement = Achievement.find_by_id(params[:id])
+      @achievement = Achievement.find_by_id(params[:id])
+			if @achievement.nil?
 				flash[:error] = "No record found for the argument supplied."
 				redirect_to root_path and return
 			end

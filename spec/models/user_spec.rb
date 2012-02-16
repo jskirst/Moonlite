@@ -206,9 +206,9 @@ describe "User" do
 			@user.enrolled?(@path).should be_nil
 		end
 		
-		it "enroll? should return the enrollment if user is enrolled" do
-			enrollment = Factory(:enrollment, :path => @path, :user => @user)
-			@user.enrolled?(@path).should == enrollment
+		it "enroll? should return true if user is enrolled" do
+			@user.enroll!(@path)
+			@user.enrolled?(@path).should == true
 		end
 		
 		it "should respond to enroll! method" do

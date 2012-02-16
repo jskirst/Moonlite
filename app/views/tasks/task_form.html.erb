@@ -59,7 +59,9 @@
 		<%= f.submit "Save", :class => "btn primary" %>
 		<% if @task.new_record? %>
 			<%= f.submit "Save and New", :class => "btn secondary" %>
-		<% end %>
+		<% else %>
+      <%= link_to "Add Resource", new_info_resource_path(:task_id => @task.id), :class => "btn secondary" %>
+    <% end %>
 		<%= link_to "Back to Section", edit_section_path(@section_id, :m => "tasks"), :class => "btn secondary" %>
 	</div>
 <% end %>

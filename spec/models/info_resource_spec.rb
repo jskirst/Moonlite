@@ -3,17 +3,18 @@ require 'spec_helper'
 describe "Info Resources" do
 	before(:each) do
 		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
-		@attr = { :description => "This is a resource description", :link => "http://www.wikipedia.com" }
+		@path = Factory(:path, :user => @user, :company => @user.company)
+    @section = Factory(:section, :path => @path)
+		@attr = { :section_id => @section.id, :info_type => "text", :description => "resource description", :link => "http://www.wikipedia.com" }
 	end
 	
 	it "should create a new instance given valid attributes" do
-		@path.info_resources.create!(@attr)
+		InfoResource.create!(@attr)
 	end
 	
 	describe "attributes" do
 		before(:each) do
-			@info_resource = @path.info_resources.create(@attr)
+			@info_resource = InfoResource.create!(@attr)
 		end
 		
 		it "should include a description" do
@@ -23,43 +24,50 @@ describe "Info Resources" do
 		it "should include a link" do
 			@info_resource.should respond_to(:link)
 		end
+    
+    it "should include an info_type" do
+			@info_resource.should respond_to(:info_type)
+		end
 	end
 	
-	describe "path associations" do
+	describe "object associations" do
 		before(:each) do
-			@info_resource = @path.info_resources.create(@attr)
+			@info_resource = InfoResource.create!(@attr)
 		end
 		
-		it "should have a path attribute" do
-			@info_resource.should respond_to(:path)
+		it "should have a section attribute" do
+			@info_resource.should respond_to(:section)
 		end
 		
-		it "should have the right associated path" do
-			@info_resource.path_id.should == @path.id
-			@info_resource.path.should == @path
+		it "should have the right associated section" do
+			@info_resource.section_id.should == @section.id
+			@info_resource.section.should == @section
 		end
 	end
 	
 	describe "validations" do
-	
-		it "should require a path id" do
-			InfoResource.new(@attr).should_not be_valid
+		it "should require at least one section/path/task id" do
+			InfoResource.new(@attr.merge(:section_id => "")).should_not be_valid
 		end
 		
 		it "should require non-blank description" do
-			@path.info_resources.build(@attr.merge(:description => "")).should_not be_valid
+			InfoResource.new(@attr.merge(:description => "")).should_not be_valid
 		end
 		
 		it "should require non-blank link" do
-			@path.info_resources.build(@attr.merge(:link => "")).should_not be_valid
+			InfoResource.new(@attr.merge(:link => "")).should_not be_valid
 		end
 		
 		it "should reject long descriptions" do
-			@path.info_resources.build(@attr.merge(:description => "a"*256)).should_not be_valid
+			InfoResource.new(@attr.merge(:description => "a"*256)).should_not be_valid
 		end
 		
 		it "should reject long links" do
-			@path.info_resources.build(@attr.merge(:link => "a"*256)).should_not be_valid
+			InfoResource.new(@attr.merge(:link => "a"*256)).should_not be_valid
+		end
+    
+    it "should reject a non-standard info type" do
+			InfoResource.new(@attr.merge(:info_type => "aaa")).should_not be_valid
 		end
 	end
 end

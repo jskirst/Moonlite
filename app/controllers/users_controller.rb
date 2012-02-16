@@ -71,7 +71,7 @@ class UsersController < ApplicationController
 		else
 			@enrolled_paths = @user.enrolled_paths.find(:all, :conditions => ["paths.is_public = ?", true])
 			@user_achievements = @user.user_achievements.joins(:achievement)
-			@company = @user.company
+      @rank = Leaderboard.get_rank(current_user)
 			@title = @user.name
 		end
 	end

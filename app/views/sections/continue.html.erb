@@ -1,6 +1,5 @@
 <script>
 $(function() {$( "#progressbar" ).progressbar({ value: <%= @progress %> }); });
-
 </script>
 <div style="float:right; width:450px;">
 <div id="progressbar" style="height:1.3em;"></div>
@@ -19,6 +18,13 @@ $(function() {$( "#progressbar" ).progressbar({ value: <%= @progress %> }); });
           <%= @task.question %>
         </p>
       </blockquote>
+      <% if @info_resource %>
+        <% if @info_resource.info_type == "video" %>
+          <div style="margin: 20px 0px 20px 150px;">
+          <iframe width="560" height="315" src="<%= @info_resource.link %>" frameborder="0" allowfullscreen></iframe>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     <div class="answer">
       <input type="hidden" name="completed_task[task_id]" value="<%= @task.id %>">

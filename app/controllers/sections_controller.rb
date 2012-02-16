@@ -38,6 +38,7 @@ class SectionsController < ApplicationController
 		@path_name = @section.path.name
 		@title = @section.name
     @section_started = current_user.section_started?(@section)
+    @info_resources = @section.info_resources
 	end
 	
 	def edit
@@ -98,6 +99,7 @@ class SectionsController < ApplicationController
       render "results"
     else
       @progress = @path.percent_complete(current_user)
+      @info_resource = @task.info_resource
       @progress = 1 if @progress == 0
       @title = @section.name
       unless params[:comments_on].nil?

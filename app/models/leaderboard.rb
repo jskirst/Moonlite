@@ -13,4 +13,10 @@ class Leaderboard < ActiveRecord::Base
     :numericality	=> true
   
   default_scope :order => "leaderboards.created_at DESC"
+  
+  def self.get_rank(user)
+    previous_board = Leaderboard.first
+    latest_date = previous_board.nil? ? Time.now : previous_board.created_at
+    return Leaderboard.where(["created_at = ? and score > ?", latest_date, user.earned_points]).count(:order => "score DESC") + 1
+  end
 end

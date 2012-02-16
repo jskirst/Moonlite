@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
   
 	belongs_to 	:section
 	has_one 	:path, :through => :section
+  has_one   :info_resource
 	has_many	:completed_tasks
   has_many  :comments, :dependent => :destroy
 	

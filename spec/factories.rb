@@ -34,6 +34,7 @@ end
 Factory.define :section do |f|
 	f.name Faker::Lorem.sentence(1)
 	f.instructions Faker::Lorem.sentence(2)
+  f.is_published "t"
 	f.association :path
 end
 

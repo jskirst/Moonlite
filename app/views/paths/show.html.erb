@@ -44,7 +44,7 @@
           <h5>
             <%= link_to s.name, s %>
             <% if s.remaining_tasks(current_user) <= 0 %>
-            <span class="label">Completed</span>
+            <span class="label" style="background-color: #468847;">Completed</span>
             <% end %>
           </h5>
           <p><%= truncate(strip_tags(s.instructions), :length => 140) %></p>

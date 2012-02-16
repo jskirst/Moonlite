@@ -1,16 +1,2 @@
-...........F.....
-
-Failures:
-
-  1) UserTransaction validation for tasks should reject a task that the user is not enrolled in
-     Failure/Error: transaction.should_not be_valid
-       expected valid? to return false, got true
-     # ./spec/models/user_transaction_spec.rb:70:in `block (4 levels) in <top (required)>'
-
-Finished in 81.78 seconds
-17 examples, 1 failure
-
-Failed examples:
-
-rspec ./spec/models/user_transaction_spec.rb:67 # UserTransaction validation for tasks should reject a task that the user is not enrolled in
-Coverage report generated for RSpec to C:/Users/JC/Moonlite/coverage. 590 / 1400 LOC (42.14%) covered.
+Terminate batch job (Y/N)? 
+Terminate batch job (Y/N)? 

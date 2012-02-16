@@ -1,26 +1,23 @@
 class InfoResourcesController < ApplicationController
 	before_filter :authenticate
-	before_filter :authorized_user, :only => :destroy
-	
+	before_filter :get_parent_type_and_id, :only => :new
+  
 	def new
 		@info_resource = InfoResource.new
 		@title = "New Resource"
-		@path_id = params[:path]
-		@form_title = "New"
-		render "info_resource_form"
 	end
 	
 	def create
-		@path = Path.find(params[:info_resource][:path_id])
-		@info_resource = @path.info_resources.build(params[:info_resource])
+		@info_resource = InfoResource.new(params[:info_resource])
 		if @info_resource.save
 			flash[:success] = "Resource created."
-			redirect_to @path
+			redirect_to root_path
 		else
 			@title = "New"
-			@form_title = @title
-			@path_id = @path.id
-			render "info_resource_form"
+      get_parent_type_and_id
+			unless @parent_type.nil?
+        render "new"
+      end
 		end
 	end
 	
@@ -55,8 +52,19 @@ class InfoResourcesController < ApplicationController
 	end
 	
 	private
-		def authorized_user
-			@info_resource = InfoResource.find(params[:id])
-			redirect_to root_path unless current_user?(@info_resource.path.user)
-		end
+    def get_parent_type_and_id
+      if params[:path_id] || (!params[:info_resource].nil? && params[:info_resource][:path_id])
+        @parent_id = params[:path_id]
+        @parent_type = "path"
+      elsif params[:section_id] || (!params[:info_resource].nil? && params[:info_resource][:section_id])
+        @parent_id = params[:section_id]
+        @parent_type = "section"
+      elsif params[:task_id] || (!params[:info_resource].nil? && params[:info_resource][:task_id])
+        @parent_id = params[:task_id]
+        @parent_type = "task"
+      else
+        flash[:error] = "Invalid path/section/task id. Must provide at least one."
+        redirect_to root_path
+      end
+    end
 end

@@ -24,7 +24,8 @@ describe "CompletedTasks" do
 		describe "success" do
 			it "should complete a task" do
 				lambda do
-					click_link "Continue"
+					click_link "Start" #start path
+          click_link "Start" #start section
 					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
@@ -36,7 +37,8 @@ describe "CompletedTasks" do
 			
 			it "should complete a task and then complete a path" do
 				lambda do
-					click_link "Continue"
+					click_link "Start" #start path
+          click_link "Start" #start section
 					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
@@ -53,7 +55,8 @@ describe "CompletedTasks" do
 			end
 			
 			it "should complete a task and not reset user's password" do
-				click_link "Continue"
+				click_link "Start" #start path
+        click_link "Start" #start section
 				response.should render_template("sections/continue")
 				response.should have_selector("p", :content => @task1.question)
 				choose "completed_task_answer1"

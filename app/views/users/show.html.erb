@@ -9,15 +9,16 @@
 		<%= @user.name %>
 	</h1>
 	<section>
-		<p><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
+		<p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
+    <p style="font-size:15px;">Current Ranking: <strong>#<%= @rank %></strong></p>
 	</section>
 	<% if !@user_achievements.empty? %>
 	<section>
 		<h3>Achievements</h3>
-		<ul>
+		<ul class="media-grid" style="margin: 10px 0 10px 0px;">
 			<% @user_achievements.each do |e| %>
 			<li>
-				<p><%= link_to e.achievement.name, e %> - <strong><%= e.achievement.points %></strong> Points Earned</p>
+        <%= link_to image_tag(e.achievement.pic, :size=>"50x50", :class => "thumbnail", :title => e.achievement.name), e.achievement %>
 			</li>
 			<% end %>
 		</ul>
