@@ -99,7 +99,7 @@ class User < ActiveRecord::Base
 		potential_achievements.each do |pa|
       unless pa.criteria.nil?
 				task_ids = pa.criteria.split(",")
-        cps = completed_tasks.find_all_by_task_id(task_ids, :conditions => ["status_id = ?", 1], :group => "task_id")
+        cps = completed_tasks.find_all_by_task_id(task_ids, :conditions => ["status_id = ?", 1])
         if cps.size == task_ids.size && !self.has_achievement?(pa.id)
 					user_achievements.create!(:achievement_id => pa.id)
 					update_attribute('earned_points', self.earned_points + pa.points)
