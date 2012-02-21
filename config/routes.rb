@@ -24,6 +24,7 @@ SampleApp::Application.routes.draw do
 			post :preview
 			post :upload
       put :reorder_sections
+      get :hero
 		end
 	end
 	resources :sections do

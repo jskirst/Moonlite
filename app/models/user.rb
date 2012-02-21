@@ -83,15 +83,15 @@ class User < ActiveRecord::Base
 		return company_admin
 	end
   
-  def award_points_and_achievements(task)
-    award_points(task)
+  def award_points_and_achievements(task, points)
+    award_points(task, points)
     return award_achievements(task)
   end
   
-  def award_points(task)
-    log_transaction(task.id, task.points)
-		self.update_attribute('earned_points', self.earned_points + task.points)
-		enrollments.find_by_path_id(task.section.path_id).add_earned_points(task.points)
+  def award_points(task, points)
+    log_transaction(task.id, points)
+		self.update_attribute('earned_points', self.earned_points + points)
+		enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
 	end
 	
 	def award_achievements(task)
@@ -125,16 +125,11 @@ class User < ActiveRecord::Base
 		return available_points - spent_points
 	end
 	
-	def most_recent_section(path)
+	def most_recent_section_for_path(path)
 		last_task = completed_tasks.includes(:path).where(["paths.id = ?", path.id]).first(:order => "completed_tasks.updated_at DESC")
-		if last_task.nil?
-      return nil
-    else
-      last_section = last_task.section
-      return last_section unless last_section.remaining_tasks(self) <= 0
-      return path.next_section(last_section)
-    end
-	end
+    return path.sections.first if last_task.nil?
+		return last_task.section
+  end
 	
 	def set_company_admin(val)
 		current_val = self.company_admin

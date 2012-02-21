@@ -1,0 +1,62 @@
+<style>
+  .hero {
+    margin-top: 20px;
+  }
+  .hero h1 {
+    font-size: 20px;
+    line-height: 25px;
+    font-weight: normal;
+    margin-bottom: 10px
+  }
+  .hero .btn {
+    font-size: 18px;
+    line-height: 23px;
+  }
+  .path h1 {
+    margin-bottom: 5px;
+  }
+  .hero p {
+    font-size: 15px;
+  }
+</style>
+<section class="hero row">
+  <div style="float:left; margin: 0px 15px 5px 0px;">
+    <%= image_tag(@user_hero.profile_pic, :size => "100x100") %>
+  </div>
+  <div style="width: 845px; margin-bottom: 0px;">
+		<h1><strong><%= @user_hero.name %></strong> completed the <strong><%= @path.name %></strong> path with a score of <%= @hero_score %>. Can you beat that?</h1>
+      <%= link_to "Begin", path_path(@path), :class => "btn primary", :style => "float:right; margin: 15px 5px 0px 0px;"%>
+	</div>
+  <div>
+    <p>Other completed paths:</p>
+    <div>
+      <% @other_completed_paths.each do |p| %>
+        <%= image_tag p.path.path_pic, :size => "25x25", :title => p.path.name, :style => "margin-right: 15px;" %>
+      <% end %>
+    </div>
+  </div>
+</section>
+<hr>
+<section class="path">
+	<div style="float:left; margin: 0px 15px 5px 0px;"><%= image_tag(@path.path_pic, :size=>"100x100") %></div>
+	<div>
+		<h1>
+			<%= @path.name %>
+		</h1>
+	</div>
+	<div style="padding:0px 0px 10px 10px;">
+		<div class="description"><%= @path.description.html_safe %></div>
+	</div>
+	<div>
+    <h3>Sections</h3>
+    <ul class="media-grid">
+      <% @sections.each do |s| %>
+      <li>
+        <a href="<%= section_path(s) %>">
+          <img class="thumbnail" src="<%= s.pic %>" height="150" width="210" title="<%= s.name %>">
+        </a>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</section>

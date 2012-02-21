@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-	attr_accessible :name, :instructions, :position, :is_published
+	attr_accessible :name, :instructions, :position, :is_published, :image_url
 	
 	before_create :set_position
 	
@@ -20,18 +20,43 @@ class Section < ActiveRecord::Base
 		:presence 		=> true
 		
 	default_scope :order => 'sections.position ASC'
+  
+  def pic
+		if self.image_url != nil
+			return self.image_url
+		else
+			return "/images/default_section_pic.jpg"
+		end
+	end
 		
 	def next_task(user)
     next_task = get_next_unfinished_task(user)
     next_task = get_next_incorrectly_finished_task(user) if next_task.nil?
     return next_task
 	end
+  
+  def completed?(user)
+    return true if remaining_tasks(user) == 0
+  end
 	
 	def remaining_tasks(user)
     number_of_completed_tasks = completed_tasks.where(["completed_tasks.user_id = ? and status_id = 1", user.id]).count(:distinct => "completed_tasks.task_id")
     number_of_remaining_tasks = tasks.size - number_of_completed_tasks
     return number_of_remaining_tasks
 	end
+  
+  def user_streak(user)
+    user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all.reverse
+    streak = 0
+    user_completed_tasks.each do |t|
+      unless t.status_id == 1
+        break;
+      else
+        streak += 1
+      end
+    end
+    return streak
+  end
 		
 	private
     def get_next_unfinished_task(user)

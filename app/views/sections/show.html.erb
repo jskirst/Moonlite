@@ -17,7 +17,7 @@
   <% end %>
 	<div class="actions">
     <% if current_user.enrolled?(@section.path) %>
-      <% start_mode = @section_started == true ? "Continue" : "Start" %>
+      <% start_mode = @section_started == true ? "Continue" : "Get Started" %>
       <%= link_to start_mode, continue_section_path(@section), :class => "btn primary" %>
     <% end %>
 		<%= link_to "Back", path_path(@section.path), :class => "btn secondary" %>

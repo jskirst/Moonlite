@@ -23,8 +23,14 @@ class Path < ActiveRecord::Base
 	
 	default_scope :order => 'paths.created_at DESC'
   
-  def next_section(section)
-    return sections.where(["position > ?", section.position]).first
+  def current_section(current_user)
+		last_task = current_user.completed_tasks.includes(:path).where(["paths.id = ?", self.id]).first(:order => "completed_tasks.updated_at DESC")
+    return sections.first if last_task.nil?
+		return last_task.section
+  end
+  
+  def next_section(section=nil)
+    return sections.where(["position > ? and is_published = ?", section.position, true]).first
   end
 	
 	def path_pic

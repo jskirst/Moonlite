@@ -1,9 +1,31 @@
 <script>
-$(function() {$( "#progressbar" ).progressbar({ value: <%= @progress %> }); });
+$(function() {$("#progressbar").progressbar({ value: <%= @progress %> }); });
+$(function(){
+  var count = 30;
+  countdown = setInterval(function(){
+    if(count >= 10){
+      $(".timer").html("00:"+count);
+    } else {
+      $(".timer").html("00:0"+count);
+    }
+    
+    if(count==0){
+      $(".timer").removeClass("timer").addClass("expired-timer");
+      $(".streak").animate({opacity: 0.25}, 250);
+      $("#listless").val(false)
+    }count --;
+  }, 1000);
+});
 </script>
-<div style="float:right; width:450px;">
-<div id="progressbar" style="height:1.3em;"></div>
-</div>
+<section class="progress-box" style="margin-bottom: 50px;">
+  <div style="float:right; margin-top: 10px;">
+    <span class="points total"><%= @earned_points %></span>
+    <span class="points current">+<%= @possible_points %></span>
+    <span class="points streak">+<%= @streak_points %></span>
+    <span class="timer">00:30</span>
+  </div>
+  <div id="progressbar" style="float:right; margin-right: 10px;"></div>
+</section>
 <%= form_tag({ :controller => :completed_tasks }, :method => :post) %>
 <div class="task row">
   <% if @comments_on %>
@@ -23,6 +45,8 @@ $(function() {$( "#progressbar" ).progressbar({ value: <%= @progress %> }); });
           <div style="margin: 20px 0px 20px 150px;">
           <iframe width="560" height="315" src="<%= @info_resource.link %>" frameborder="0" allowfullscreen></iframe>
           </div>
+        <% elsif @info_resource.info_type == "picture" %>
+          <img src="<%= @info_resource.link %>" height="400" style="margin-left: 150px; margin-bottom: 30px;">
         <% end %>
       <% end %>
     </div>
@@ -84,7 +108,8 @@ $(function() {$( "#progressbar" ).progressbar({ value: <%= @progress %> }); });
 </div>
 <div class="row">
   <div class="actions" style="margin-top:50px">
-    <%= submit_tag "Next", :class => "btn primary", :style=>"margin-top: 10px;" %>
+    <input type="hidden" id="listless" name="listless" value="true">
+    <%= submit_tag "Submit", :class => "btn primary", :style=>"margin-top: 10px;" %>
     <% if @comments_on %>
     <%= link_to "Hide Discussion", continue_section_path(@task.section), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
     <% else %>

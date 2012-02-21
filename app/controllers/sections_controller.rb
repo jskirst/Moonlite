@@ -86,21 +86,22 @@ class SectionsController < ApplicationController
 	def continue
     @task = @section.next_task(current_user)
     if @task.nil?
-      last_task = current_user.completed_tasks.first(:order => "completed_tasks.id DESC")
+      last_task = current_user.completed_tasks.includes(:section).where(["sections.id = ?", @section.id]).first(:order => "completed_tasks.id DESC")
       @answers = current_user.completed_tasks.joins(:task).where(["section_id = ?", last_task.task.section_id]).all
       if !@answers.empty?
+        @total_answers = @answers.size
         @correct_answers = 0
-        @total_answers = 0
-        @answers.each do |a|
-          @total_answers += (a.status_id < 2 ? 1 : 0)
-          @correct_answers += (a.status_id == 1 ? 1 : 0)
-        end
+        @answers.each {|a| @correct_answers += a.status_id}
       end
+      @final_section = true if @path.next_section(@section).nil?
       render "results"
     else
-      @progress = @path.percent_complete(current_user)
+      @progress = @path.percent_complete(current_user) + 1
+      @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
+      @possible_points = 10
+      @streak_points = @section.user_streak(current_user)
+      
       @info_resource = @task.info_resource
-      @progress = 1 if @progress == 0
       @title = @section.name
       unless params[:comments_on].nil?
         @comments_on = true

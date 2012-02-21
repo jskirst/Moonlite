@@ -2,12 +2,22 @@ class PathsController < ApplicationController
   include OrderHelper
   include UploadHelper
   
-	before_filter :authenticate
-	before_filter :company_admin, :except => [:index, :show, :continue, :marketplace, :review, :purchase]
+	before_filter :authenticate, :except => [:hero]
+	before_filter :company_admin, :except => [:hero, :index, :show, :continue, :marketplace, :review, :purchase]
 	before_filter :get_path_from_id, :except => [:index, :new, :create, :marketplace]
 	before_filter :unpublished_not_for_purchase, :only => [:review, :purchase]
 	before_filter :unpublished_for_admins_only, :only => [:show, :continue]
 	
+  def hero
+    @title = @path.name
+    @user_hero = User.find_by_id(params[:hero])
+    @hero_score = @user_hero.enrollments.where("path_id = ?", @path.id).first.total_points
+    @other_completed_paths = @user_hero.enrollments.includes(:path).where("paths.id != ?", @path.id).all
+    @info_resources = @path.info_resources(:limit => 5)
+		@achievements = @path.achievements.all(:limit => 5)
+    @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+  end
+  
 	def index
 		@paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, true])
 		@unpublished_paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, false])
@@ -36,8 +46,13 @@ class PathsController < ApplicationController
 		@info_resources = @path.info_resources(:limit => 5)
 		@achievements = @path.achievements.all(:limit => 5)
 		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+    @current_position = @path.current_section(current_user).position unless @sections.empty?
     @enrolled = current_user.enrolled?(@path)
-    @path_started = current_user.path_started?(@path)
+    if current_user.path_started?(@path)
+      @start_mode = @path.completed?(current_user) ? "Review" : "Continue"
+    else
+      @start_mode = "Get Started"
+    end
 	end
 	
 	def edit
@@ -88,8 +103,14 @@ class PathsController < ApplicationController
   end
 	
 	def continue
-		@next_section = current_user.most_recent_section(@path) || @path.sections.first
-		redirect_to @next_section
+		@section = current_user.most_recent_section_for_path(@path)
+    @section = @path.next_section(@section) if @section.completed?(current_user)
+    if @section.nil? || @section.is_published == false
+      @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
+      render "completion"
+    else
+      redirect_to @section
+    end
 	end
 	
 	def file

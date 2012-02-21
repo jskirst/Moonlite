@@ -1,5 +1,5 @@
 <section class="path">
-  <% if @enrolled == true && !@path_started %>
+  <% if @start_mode == "Get Started" %>
   <script>
     $(function(){
       $('#startmodal').modal({
@@ -30,44 +30,57 @@
 			<%= @path.name %>
 		</h1>
 	</div>
-	<div style="padding:10px">
-		<div><%= simple_format(@path.description) %></div>
+	<div style="padding:10px;">
+		<div class="description"><%= @path.description.html_safe %></div>
 	</div>
-	<div style="padding:10px">
+	<div>
     <h3>Sections</h3>
     <% if @sections.empty? %>
     <p>No sections have been published for this path yet. Check back later to see if any have been posted!</p>
     <% else %>
-      <ol>
+      <ul class="media-grid">
       <% @sections.each do |s| %>
+        <% section_open = true if s.position <= @current_position %>
+        <% section_opacity = section_open ? "1.0" : "0.5" %>
+        <% section_link = section_open ? section_path(s) : "#" %>
         <li>
-          <h5>
-            <%= link_to s.name, s %>
+          <a href="<%= section_link %>" style="opacity: <%= section_opacity %>;">
             <% if s.remaining_tasks(current_user) <= 0 %>
-            <span class="label" style="background-color: #468847;">Completed</span>
+            <span class="caption">COMPLETED</span>
             <% end %>
-          </h5>
-          <p><%= truncate(strip_tags(s.instructions), :length => 140) %></p>
+            <img class="thumbnail" src="<%= s.pic %>" height="150" width="210" title="<%= s.name %>">
+          </a>
         </li>
       <% end %>
-      </ol>
+      </ul>
     <% end %>
   </div>
+  <div style="margin: 20px 0px 20px 0px;" class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
 	<section>
 		<div class="actions">
     <% if @path.is_published %>
+      
       <% unless @enrolled %>
         <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
           <%= f.hidden_field :path_id %>
           <%= f.submit "Enroll", :class=> "btn primary" %>
         <% end %>
       <% else %>
-        <% start_mode = @path_started == true ? "Continue" : "Start" %>
-        <%= link_to start_mode, continue_path_path(@path), :class => "btn primary" %>
+        <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary" %>
       <% end %>
+    
     <% else %>
       <%= link_to "Publish", edit_path_path(@path, :m => "settings"), :class => "btn primary" %>
     <% end %>
+    
 		<% if current_user.company_admin? %>
 			<%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn secondary" %>
 			<%= link_to "Delete", @path, :method => "delete", :confirm => "Are you sure you want to delete this path?", :title => "Delete task", :class => "btn secondary" %>

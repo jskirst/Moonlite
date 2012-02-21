@@ -2,9 +2,62 @@
 	padding-top: 75px;
 }
 
+/* Section Continue */
+.progress-box {
+  margin-bottom: 40px;
+  font-size: 22px; 
+}
+.points {
+  padding: 2px; 
+}
+.total {
+  border: 3px solid #339BB9;
+  color: #339BB9;
+}
+.current {
+  border: 3px solid #95F23C; 
+  color: #95F23C;
+}
+.streak {
+  border: 3px solid #6AAC2B;
+  color: #6AAC2B;
+}
+.timer {
+  padding: 2px; 
+  color: #6AAC2B;
+  border: 3px solid #6AAC2B;
+}
+.expired-timer {
+  padding: 2px; 
+  color: #C43C35;
+  border: 3px solid #C43C35;
+}
+#progressbar {
+  padding: 3px; 
+  margin-bottom: 0px;
+  height:31px; 
+  width:300px;
+}
+
 /* Path */
 .new_enrollment {
 	display:inline;
+}
+.path .description p {
+  font-size: 15px;
+  padding: 10px;
+}
+.caption {
+  display: inline;
+  z-index: 1000;
+  float: left;
+  position: absolute;
+  width: 194px;
+  background-color: grey;
+  font-size: 20px;
+  color: whitesmoke;
+  padding: 8px;
+  margin-top: 60px;
 }
 
 /* Task */
