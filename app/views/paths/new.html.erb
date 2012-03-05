@@ -7,10 +7,14 @@
 			<%= f.text_field :name %>
 		</div>
 	</div>
-	<div class="field clearfix">
-		<%= f.label :description %>
+  <div class="field clearfix">
+		<%= f.label :category_type %>
 		<div class="input">
-			<%= f.text_area :description, :class => "xxlarge", :rows => "4" %>
+			<select id="path_category_type" name="path[category_type]">
+				<% @category_types.each_index do |ci| %>
+          <option value="<%= ci %>"><%= @category_types[ci] %></option>
+        <% end %>
+			</select>
 		</div>
 	</div>
 	<div class="actions">

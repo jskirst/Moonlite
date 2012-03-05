@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120218190601) do
+ActiveRecord::Schema.define(:version => 20120227145403) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20120218190601) do
 
   create_table "paths", :force => true do |t|
     t.string   "name"
-    t.text     "description"
+    t.string   "description",       :default => ""
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(:version => 20120218190601) do
     t.boolean  "is_published",      :default => false
     t.boolean  "is_purchaseable",   :default => false
     t.integer  "owner_id"
+    t.integer  "category_type",     :default => 0
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"

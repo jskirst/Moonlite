@@ -50,7 +50,16 @@ module UploadHelper
   
   def parse_file(uploaded_file_string)
     new_tasks = []
-    parsed_file = CSV.parse(uploaded_file_string)
+    if @tab_delimited
+      parsed_file = []
+      uploaded_file_string.each_line do |line|
+        parsed_line = line.chomp.split(/\t/)
+        logger.debug parsed_line
+        parsed_file << parsed_line
+      end
+    else
+      parsed_file = CSV.parse(uploaded_file_string)
+    end
     if file_properly_formatted?(parsed_file)
       row_count = 0
       parsed_file.each do |row|
@@ -58,6 +67,9 @@ module UploadHelper
           new_tasks << create_task(row)
         end
         row_count += 1
+      end
+      if @collected_answers
+        new_tasks = insert_wrong_answers(new_tasks)
       end
       return new_tasks
     else
@@ -71,8 +83,7 @@ module UploadHelper
       file_header[1] =~ /correct answer/i &&
       file_header[2] =~ /wrong answer/i &&
       file_header[3] =~ /wrong answer/i &&
-      file_header[4] =~ /wrong answer/i &&
-      file_header[5] =~ /points/i
+      file_header[4] =~ /wrong answer/i
       return true
     else
       return false
@@ -99,11 +110,135 @@ module UploadHelper
     return task
   end
   
-  def random_set(length, max)
-    randoms = Set.new
+  def insert_wrong_answers(tasks)
+    answer_collection = []
+    tasks.each do |t|
+      unless is_predictable?(t[:answer1])
+        answer_collection.push(t[:answer1])
+      end
+    end
+    answer_collection = answer_collection.uniq
+    answer_collection_size = answer_collection.size - 1
+    tasks.each do |t|
+    
+      correct_answer = t[:answer1]
+      answers = []
+      answers << t[:answer2] if t[:answer2]
+      answers << t[:answer3] if t[:answer3]
+      answers << t[:answer4] if t[:answer4]
+      
+      unless answers.size > 0
+        correct_answer_index = answer_collection.index(correct_answer)
+        predictable_type = is_predictable?(correct_answer)
+        if predictable_type
+          answers = predict_answers(correct_answer, predictable_type)
+        else
+          logger.debug correct_answer_index
+          logger.debug answer_collection_size
+          random_order = random_set(3, answer_collection_size, [correct_answer_index])
+          answers << t[:answer1]
+          answers << answer_collection[random_order[0]]
+          answers << answer_collection[random_order[1]] if random_order[1]
+          answers << answer_collection[random_order[2]] if random_order[2]
+        end
+      else
+        answers << t[:answer1]
+      end
+      
+      answers = answers.shuffle
+      unless predictable_type == "bool"
+        answer_index = answers.index(correct_answer)
+        raise "Can't find correct answer in list of answers. Answer: "+correct_answer+"; Answers: "+answers.to_s if answer_index.nil?
+        correct_answer = answer_index + 1
+      else
+        correct_answer = answers.index("true")
+        correct_answer = answers.index("false") if correct_answer.nil?
+        correct_answer += 1
+      end
+      t[:answer1] = answers[0]
+      t[:answer2] = answers[1]
+      t[:answer3] = answers[2] if answers[2]
+      t[:answer4] = answers[3] if answers[3]
+      t[:correct_answer] = correct_answer
+    end
+    return tasks
+  end
+  
+  def is_predictable?(answer)
+    answer = answer.downcase
+    begin
+      Integer(answer)
+      return "int"
+    rescue ArgumentError
+      logger.debug "NOT INT"
+    end
+    
+    return (answer == "false" || answer == "true" ? "bool" : false)
+  end
+
+  def predict_answers(answer, type = nil)
+    logger.debug "PREDICTING"
+    type = is_predictable?(answer) if type == nil
+    answers = []
+    if type == "int"
+      answers = random_range_series(answer, 4)
+      answers = answers.map! {|a| a.to_s}
+    elsif type == "bool"
+      answer = answer.downcase
+      answers << answer
+      answers << (answer == "false" ? "true" : "false")
+    else
+      logger.debug "FUCK: Invalid predictable type."
+    end
+    return answers
+  end
+
+  def random_range_series(num, length)
+    num = Integer(num)
+    if num < 10
+      max_diff = 4
+    elsif num < 100
+      max_diff = 30
+    else
+      max_diff = num / 50
+    end
+    new_nums = Set.new
+    new_nums << num
+    loop_counter = 0
     loop do
-        randoms << rand(max)
-        return randoms.to_a if randoms.length >= length
+      loop_counter += 1
+      if loop_counter >= 1000
+        raise "Possible infinite loop in random range series"
+      end
+      diff = rand(max_diff)
+      new_num = (rand(2) == 1 ? (num + diff) : (num - diff))
+      if num < 2012 
+        if new_num >= 0 && new_num <= 2012
+          new_nums << new_num
+        end
+      else
+        new_nums << new_num
+      end 
+      return new_nums.to_a if new_nums.length >= length
+    end
+  end
+  
+  def random_set(length, max, excluded_nums = [])
+    if max <= length
+      length = max - 1
+    end
+    randoms = Set.new
+    loop_counter = 0
+    loop do
+      loop_counter += 1
+      if loop_counter >= 1000
+        raise "Possible infinite loop in random set"
+      end
+      n = rand(max)
+      unless excluded_nums.include?(n)
+        randoms << n
+      end
+      return randoms.to_a if randoms.length >= length
     end
   end
 end

@@ -1,0 +1,46 @@
+<section>
+	<div class="input" style="float:right; margin-top: 5px">
+	<%= form_tag explore_path, :method => "get" do %>
+		<%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
+		<%= submit_tag "Search", :class => "btn primary" %>
+	<% end %>
+	</div>
+	<div>
+		<a href="/marketplace"><h1>Explore Moonlite</h1></a>
+	</div>
+</section>
+<section>
+  <% @path_sections.each do |paths| %>
+    <% path_name = paths[0] %>
+    <% all_paths = paths[1] %>
+    <% if !@query.nil? %>
+      <p>Your search for <strong><%= @query %></strong> returned <%= all_paths.size.to_s %> results.</p>
+    <% else %>
+    <hr/>
+    <div class="row" style="padding-left: 20px;">
+      <h2 style="float: left; text-transform: uppercase; font-size: 19px; font-weight: bold; color: slategray;"><%= path_name %></h2>
+      <% if @display_all %>
+        <a href="/explore?m=<%= path_name %>" style="float: right; padding-top: 10px;">View All</a>
+      <% end %>
+    </div>
+    <% end %>
+    <ul class="media-grid">
+    <% all_paths.each_index do |pp| %>
+      <% if pp >= 12 && @display_all then break end %>
+      <li>
+        <a href="<%= path_path(all_paths[pp]) %>">
+          <span class="path-caption">
+            <span style="font-size: 12px; font-weight: bold; line-height: 13px;">
+              <%= truncate(all_paths[pp].name, :length => 35) %>
+            </span><br>
+            <span style="font-size: 10px; float: left;">237 Enrolled</span>
+            <span style="font-size: 10px; float: right;">Rating: 97%</span>
+          </span>
+          <img class="thumbnail" src="<%= all_paths[pp].path_pic %>" height="150" width="210">
+        </a>
+      </li>
+    <% end %>
+    </ul>
+	<% end %>
+</section>
+<%= link_to "Create Path", new_path_path, :class => "btn primary" %>

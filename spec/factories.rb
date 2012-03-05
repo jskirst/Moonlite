@@ -1,4 +1,4 @@
-TASK_POINTS = 5
+TASK_POINTS = 10
 SEARCH_TERM = "Ruby"
 
 Factory.define :user do |user|

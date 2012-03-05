@@ -47,17 +47,34 @@
   font-size: 15px;
   padding: 10px;
 }
-.caption {
+.section-caption {
   display: inline;
   z-index: 1000;
   float: left;
   position: absolute;
-  width: 194px;
-  background-color: grey;
-  font-size: 20px;
+  width: 155px;
+  margin-left: -5px;
+  background-color: slategray;
+  font-size: 16px;
   color: whitesmoke;
   padding: 8px;
   margin-top: 60px;
+}
+.path-caption {
+  display: inline;
+  z-index: 1000;
+  float: left;
+  position: absolute;
+  width: 204px;
+  background-color: slategray;
+  color: whitesmoke;
+  padding-top: 3px;
+  padding-left: 8px;
+  padding-bottom: 3px;
+  padding-right: 8px;
+  margin-top: 100px;
+  margin-left: -5px;
+  height: 35px;
 }
 
 /* Task */
@@ -171,6 +188,43 @@ div.field, div.action {
 }
 #dashboard tbody tr:nth-child(even) td, tbody tr.even td {
 	background: transparent;
+}
+
+/* Research */
+.wiki h1 {
+  font-size: 28px;
+  background-color: whitesmoke;
+  padding:10px;
+}
+.wiki h2 {
+  font-size: 18px;
+}
+.wiki .thumbcaption {
+  border: none;
+  text-align: left;
+  line-height: 1.4em;
+  padding: 3px !important;
+  font-size: 94%;
+}
+.wiki div.thumbinner {
+  border: 1px solid #CCC;
+  padding: 3px !important;
+  background-color: #F9F9F9;
+  font-size: 94%;
+  text-align: center;
+  overflow: hidden;
+}
+.wiki div.youtube {
+  padding: 25px;
+}
+.wiki .thumb {
+  float:right;
+}
+#articles {
+  margin-bottom: 30px;
+}
+.article {
+  padding-top: 50px;
 }
 
 .error,

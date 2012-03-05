@@ -1,6 +1,6 @@
 <section>
 	<h2><%= @section.name %></h2>
-	<div style="padding: 20px"><%= simple_format(@section.instructions) %></div>
+	<div style="padding: 20px"><%= @section.instructions.html_safe %></div>
   <% @info_resources.each do |r| %>
     <% if r.info_type == "video" %>
       <% r.link = r.link.gsub("watch?v=", "embed/") %>

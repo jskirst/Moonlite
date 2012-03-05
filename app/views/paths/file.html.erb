@@ -7,6 +7,25 @@
 		<%= f.file_field :file %>
 	</div>
 </div>
+<label>Settings</label>
+  <div class="input">
+    <ul class="inputs-list">
+      <li>
+        <label>
+          <%= check_box_tag :collected_answers %>
+          <span>Create random incorrect answers for each question by sampling from the other answers for each section.<br/>
+          <strong>NOTE:</strong> If you choose this option, fill in the correct_answer column. Leave the other answer columns blank.</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <%= check_box_tag :tab_delimited %>
+          <span>Check this box if you want the file task files to be processed as Tab Delimited files instead of .CSV files.<br/>
+        </label>
+      </li>
+    </ul>
+  </div>
+</label>
 <div class="actions">
 	<%= f.submit "Submit", :class => "btn primary" %>
 </div>

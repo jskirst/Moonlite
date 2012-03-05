@@ -15,7 +15,7 @@
 	<section>
 		<h2>My Paths</h2>
 		<% if @paths.empty? %>
-			<p>You are not currently enrolled in any paths. <%= link_to "Get started!", paths_path %></p>
+			<p>You are not currently enrolled in any paths. <%= link_to "Get started!", explore_path %></p>
 		<% else %>
 		<table class="paths" summary="Users paths">
 			<% @paths.each do |path| %>

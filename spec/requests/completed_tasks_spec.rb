@@ -29,7 +29,7 @@ describe "CompletedTasks" do
 					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
-					click_button "Next"
+					click_button "Submit"
 					response.should have_selector("div.success")
 					response.should have_selector("p", :content => @task2.question)
 				end.should change(CompletedTask, :count).by(1)
@@ -42,11 +42,11 @@ describe "CompletedTasks" do
 					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
 					choose "completed_task_answer1"
-					click_button "Next"
+					click_button "Submit"
 					choose "completed_task_answer1"
-					click_button "Next"
+					click_button "Submit"
 					choose "completed_task_answer1"
-					click_button "Next"
+					click_button "Submit"
 					response.should have_selector("h3", :content => "You completed this section")
 					response.should have_selector("dd", :content => @task1.answer1)
 					response.should have_selector("dd", :content => @task2.answer1)
@@ -60,7 +60,7 @@ describe "CompletedTasks" do
 				response.should render_template("sections/continue")
 				response.should have_selector("p", :content => @task1.question)
 				choose "completed_task_answer1"
-				click_button "Next"
+				click_button "Submit"
 				response.should have_selector("div.success")
 				response.should have_selector("p", :content => @task2.question)
 				click_link "Sign out"

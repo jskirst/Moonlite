@@ -31,6 +31,7 @@ SampleApp::Application.routes.draw do
 		member do
 			get :continue
       put :reorder_tasks
+      get :research
 		end
 	end
 	resources :enrollments
@@ -56,12 +57,13 @@ SampleApp::Application.routes.draw do
 	
 	match '/about',		:to => 'pages#about'
 	match '/help',		:to => 'pages#help'
-	match '/all_paths',	:to => 'pages#all_paths'
 	match '/invitation',:to => 'pages#invitation'
 
+  match '/all_paths',	:to => 'pages#explore'
+  match '/explore',:to => 'pages#explore'
+  
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'
-	
 	match '/marketplace',:to => 'paths#marketplace'
   
   # The priority is based upon order of creation:

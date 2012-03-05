@@ -285,12 +285,12 @@ describe "User" do
 		
 		describe "award_points" do
 			it "should add task's points to earned points" do
-				@user.award_points(@task)
+				@user.award_points(@task, @task.points)
 				@user.earned_points.should == @task.points
 			end
 				
 			it "should add task's points to the appropriate enrollment's total_points" do
-				@user.award_points(@task)
+				@user.award_points(@task, @task.points)
 				@user.enrollments.find_by_path_id(@task.section.path.id).total_points.should == @task.points
 			end
 		end		

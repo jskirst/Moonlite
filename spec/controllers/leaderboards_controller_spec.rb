@@ -90,15 +90,15 @@ describe LeaderboardsController do
       Factory(:completed_task, :task => @task1, :user => @user1)
       Factory(:completed_task, :task => @task2, :user => @user1)
       Factory(:completed_task, :task => @task3, :user => @user1)
-      @user1.award_points(@task1)
-      @user1.award_points(@task2)
-      @user1.award_points(@task3)
+      @user1.award_points(@task1, @task1.points)
+      @user1.award_points(@task2, @task2.points)
+      @user1.award_points(@task3, @task3.points)
       
       @user2.enroll!(@path)
       Factory(:completed_task, :task => @task1, :user => @user2)
       Factory(:completed_task, :task => @task2, :user => @user2)
-      @user2.award_points(@task1)
-      @user2.award_points(@task2)
+      @user2.award_points(@task1, @task1.points)
+      @user2.award_points(@task2, @task2.points)
     end
     
     describe "GET index" do

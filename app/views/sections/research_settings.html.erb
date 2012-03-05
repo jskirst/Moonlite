@@ -1,0 +1,40 @@
+<h1>Research Settings</h1>
+<p style="padding:20px">
+  Before we begin, please tell us which topics you would like researched and where you want to pull information from. 
+  We have compiled a list of topics that we think are important to this section below, separated by commas. 
+  Feel free to remove from or add to this list as much as you want.
+</p>
+<%= form_tag({:controller => "sections", :action => "research"}, { :method => "get" }) %>
+<div class="field clearfix">
+	<%= label_tag :topics %>
+	<div class="input">
+		<textarea name="topics" id="topics" class="xxlarge" rows="6"><%= @answers %></textarea>
+	</div>
+</div>
+<label>Sources</label>
+  <div class="input">
+    <ul class="inputs-list">
+      <li>
+        <label>
+          <%= check_box_tag :use_wikipedia %>
+          <span>Wikipedia</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <%= check_box_tag :use_youtube %>
+          <span>Youtube</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <%= check_box_tag :use_google_images %>
+          <span>Google Images</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</label>
+<div class="actions">
+	<%= submit_tag "Submit", :class => "btn primary" %>
+</div>

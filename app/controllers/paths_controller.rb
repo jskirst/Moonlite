@@ -26,6 +26,7 @@ class PathsController < ApplicationController
 	
 	def new
 		@path = Path.new
+    @category_types = Path.category_types
 		@title = "New Path"
 	end
 
@@ -37,21 +38,25 @@ class PathsController < ApplicationController
 			redirect_to @path
 		else
 			@title = "New Path"
+      @category_types = Path.category_types
 			render 'new'
 		end
 	end
 	
 	def show
 		@title = @path.name
-		@info_resources = @path.info_resources(:limit => 5)
-		@achievements = @path.achievements.all(:limit => 5)
+		#@info_resources = @path.info_resources(:limit => 5)
+		@achievements = @path.achievements.all(:limit => 20)
+    @enrolled_users = @path.enrolled_users.all(:limit => 20)
 		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
     @current_position = @path.current_section(current_user).position unless @sections.empty?
     @enrolled = current_user.enrolled?(@path)
     if current_user.path_started?(@path)
       @start_mode = @path.completed?(current_user) ? "Review" : "Continue"
-    else
+    elsif current_user.enrolled?(@path)
       @start_mode = "Get Started"
+    else
+      @start_mode = "Enroll"
     end
 	end
 	
@@ -118,8 +123,11 @@ class PathsController < ApplicationController
 	end
 	
 	def preview
-    begin
+    #begin
+      logger.debug 
       read_file(params[:path][:file])
+      @collected_answers = params[:collected_answers]
+      @tab_delimited = params[:tab_delimited]
       @path_description = get_path_description
       @sections = []
       details = get_section(@sections.size + 1)
@@ -147,10 +155,11 @@ class PathsController < ApplicationController
           flash[:error] = s.errors.full_messages.join(". ")
         end
       end
-    rescue
-      flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
-      redirect_to file_path_path(@path)
-    end
+    #rescue
+    #  flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
+    #  logger.debug $!.to_s
+    #  redirect_to file_path_path(@path)
+    #end
 	end
   
   def upload

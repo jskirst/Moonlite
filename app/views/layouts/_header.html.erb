@@ -5,7 +5,7 @@
 				<h3><a href="/">Moonlite</a></h3>
 				<% if signed_in? %>
 				<ul>
-					<li><%= link_to "Paths", paths_path %></li>
+					<li><%= link_to "Explore", explore_path %></li>
 					<li><%= link_to current_user.name, current_user %></li>
 					<% if current_user.company.enable_company_store %>
 						<li><%= link_to "Company Store", rewards_path %></li>

@@ -7,7 +7,6 @@
 <section>
 <%= form_for @section do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
-	<%= f.hidden_field :path_id, :value => @path_id %><br/>
 	<div class="field">
 		<%= f.label :name %>
 		<div class="input">
@@ -22,6 +21,7 @@
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
+    <%= link_to "Generate Description", research_section_path(:id => @section.id), :class => "btn secondary" %>
     <%= link_to "Add Resource", new_info_resource_path(:section_id => @section.id), :class => "btn secondary" %>
 		<%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
 	</div>

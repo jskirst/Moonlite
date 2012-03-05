@@ -26,7 +26,6 @@
               <% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
               <% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
             </ol>
-            <p>Points: <%= t.points %></p>
             <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][question]", t.question.to_s %>
             <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][answer1]", t.answer1 %>
             <%= hidden_field_tag "path[sections]["+i.to_s+"][tasks]["+j.to_s+"][answer2]", t.answer2 %>

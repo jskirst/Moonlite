@@ -10,9 +10,11 @@ class CompletedTasksController < ApplicationController
 		if @completed_task.save
 			if status_id == 1
         points = 10
-        if params[:listless] == true
+        if params[:listless] == "true"
           streak = @task.section.user_streak(current_user)
-          streak -= 1 unless streak == 0
+          unless streak == 0
+            streak -= 1
+          end
           points += streak
         end
         achievement = current_user.award_points_and_achievements(@task, points)

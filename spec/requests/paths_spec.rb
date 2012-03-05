@@ -17,7 +17,6 @@ describe "Paths" do
 					click_link "Paths"
 					click_link "New Path"
 					fill_in "Name", :with => ""
-					fill_in "Description", :with => ""
 					click_button
 					response.should render_template('paths/new')
 					response.should have_selector("div#error_explanation")
@@ -29,11 +28,9 @@ describe "Paths" do
 			it "should make a new path" do
 				lambda do
 					name = "NAME"
-					description = "DESCRIPTION"
 					visit paths_path
 					click_link "New Path"
 					fill_in "Name", :with => name
-					fill_in "Description", :with => description
 					click_button
 				end.should change(Path, :count).by(1)
 			end

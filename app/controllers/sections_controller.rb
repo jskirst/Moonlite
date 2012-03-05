@@ -111,6 +111,26 @@ class SectionsController < ApplicationController
     end
 	end
   
+  def research
+    @section = Section.find(params[:id])
+    unless params[:topics]
+      @answers = []
+      @section.tasks.all.each do |t|
+        @answers << t.describe_correct_answer
+      end
+      @answers = @answers.uniq.join(", ")
+      render "research_settings"
+    else
+      @topics = params[:topics].split(",")
+      @topics = @topics.map {|t| t.strip}
+      @quoted_topics = @topics.map {|t| '"'+t+'"'}
+      
+      @use_wikipedia = params[:use_wikipedia] ? true : false;
+      @use_youtube = params[:use_youtube] ? true : false;
+      @use_google_images = params[:use_google_images] ? true : false;
+    end
+  end
+  
   private
     def verify_enrollment
       @section = Section.find(params[:id], :include => :path)
