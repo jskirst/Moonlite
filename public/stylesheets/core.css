@@ -215,7 +215,12 @@ div.field, div.action {
   overflow: hidden;
 }
 .wiki div.youtube {
-  padding: 25px;
+  padding: 0px 25px 25px 25px;
+  width:425px;
+}
+.wiki .youtube h6 {
+  line-height: 0px; 
+  display: inline;
 }
 .wiki .thumb {
   float:right;
@@ -225,6 +230,10 @@ div.field, div.action {
 }
 .article {
   padding-top: 50px;
+}
+#settings_editor input[type="checkbox"]{
+  width:auto;
+  margin-top:10px;
 }
 
 .error,

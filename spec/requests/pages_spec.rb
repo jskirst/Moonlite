@@ -55,8 +55,8 @@ describe "Pages" do
 		
 		it "should have the appropriate links" do
 			visit root_path
-			click_link "Paths"
-			response.should have_selector("title", :content => "Paths")
+			click_link "Explore"
+			response.should have_selector("title", :content => "Explore")
 			click_link @user.name
 			response.should have_selector("title", :content => @user.name)
 			click_link "Edit"

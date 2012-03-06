@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Paths" do
+describe "Explore" do
 	before(:each) do
 		@user = Factory(:user)
 		@user.set_company_admin(true)
@@ -14,7 +14,7 @@ describe "Paths" do
 		describe "failure" do
 			it "should not make a new path" do
 				lambda do
-					click_link "Paths"
+					click_link "Explore"
 					click_link "New Path"
 					fill_in "Name", :with => ""
 					click_button

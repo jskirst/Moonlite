@@ -1,3 +1,4 @@
+<script src="/javascripts/research.js"></script>
 <script>
 $(function(){
   var topics = [<%= @quoted_topics.join(",").html_safe %>];
@@ -28,7 +29,48 @@ $(function(){
   }
 });
 </script>
-<script language=JavaScript> /*var message="Sorry! To prevent cheating, the path author has chosen to disable copy and paste on this page."; function clickIE4(){ if (event.button==2){ alert(message); return false; } } function clickNS4(e){ if (document.layers||document.getElementById&&!document.all){ if (e.which==2||e.which==3){ alert(message); return false; } } } if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; } else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; } document.oncontextmenu=new Function("alert(message);return false") */ </script>
+<div id="settings_editor" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3></h3>
+  </div>
+  <div class="modal-body">
+  <form>
+    <input type="hidden" id="last_article">
+    <div class="field clearfix">
+      <label>Youtube</label>
+      <div class="input">
+        <input type="checkbox" id="youtube_active" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Youtube URL</label>
+      <div class="input">
+        <input type="text" id="youtube_url" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Wikipedia</label>
+      <div class="input">
+        <input type="checkbox" id="wiki_active" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Wikipedia URL</label>
+      <div class="input">
+        <input type="text" id="wiki_url" class="xlarge">
+      </div>
+    </div>
+  </form>
+  </div>
+  <div class="modal-footer">
+    <a onclick="$('#settings_editor').modal('hide');" class="btn secondary">Cancel</a>
+    <a onclick="$('#settings_editor').modal('hide'); update_settings();" class="btn primary">Save</a>
+  </div>
+</div>
+<script> 
+  /*var message="Sorry! To prevent cheating, the path author has chosen to disable copy and paste on this page."; function clickIE4(){ if (event.button==2){ alert(message); return false; } } function clickNS4(e){ if (document.layers||document.getElementById&&!document.all){ if (e.which==2||e.which==3){ alert(message); return false; } } } if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; } else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; } document.oncontextmenu=new Function("alert(message);return false") */ 
+</script>
 <section id="doc_root" ondragstart="return false" onselectstart="return false">
   <section>
     <h1>Section <%= @section.position %>: <%= @section.name %></h1>
