@@ -1,4 +1,5 @@
 require 'net/http'
+require 'uri'
 require 'json/pure'
 
 class SectionsController < ApplicationController
@@ -142,9 +143,14 @@ class SectionsController < ApplicationController
   
   def generate
     @text = params[:text]
-    url = URI.parse('http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate')
-    post_args = {'text' => @text}
-    resp, @data = Net::HTTP.post_form(url, post_args)
+    uri = URI.parse("http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate")
+    http = Net::HTTP.new(uri.host, uri.port)
+
+    http.read_timeout = 30
+    request = Net::HTTP::Post.new(uri.request_uri)
+    request.set_form_data({'text' => @text})
+    resp, @data = http.request(request)
+    
     unless @data.nil?
       logger.debug @data
       respond_to do |format|
