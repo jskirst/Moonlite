@@ -9,8 +9,7 @@
 		<%= @user.name %>
 	</h1>
 	<section>
-		<p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.</p>
-    <p style="font-size:15px;">Current Ranking: <strong>#<%= @rank %></strong></p>
+		<p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points. Current Ranking: <strong>#<%= @rank %></strong></p>
 	</section>
 	<% if !@user_achievements.empty? %>
 	<section>

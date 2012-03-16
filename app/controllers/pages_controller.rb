@@ -1,13 +1,23 @@
 class PagesController < ApplicationController
-	
+	before_filter :authenticate, :only => [:explore]
+  
 	def home
 		@title = "Home"
 		if signed_in?
 			@paths = current_user.enrolled_paths
+      @enrolled_paths = []
+      @completed_paths = []
+      @paths.each do |p|
+        if p.completed?(current_user)
+          @completed_paths << p
+        else
+          @enrolled_paths << p
+        end
+      end
 			@user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
 				:conditions => ["users.company_id = ?", current_user.company_id], :limit => 15)
 		else
-			@paths = []
+			render "landing"
 		end
 	end
   
@@ -33,11 +43,11 @@ class PagesController < ApplicationController
       categories.each_index do |type|
         @path_sections << [categories[type], Path.with_category_type(type)]
       end
-    end
-    
-    unpublished_paths = current_user.paths.where("is_published = ?", false)
-    unless unpublished_paths.empty?
-      @path_sections << ["My Unpublished Paths", unpublished_paths]
+      
+      unpublished_paths = current_user.paths.where("is_published = ?", false)
+      unless unpublished_paths.empty?
+        @path_sections << ["My Unpublished Paths", unpublished_paths]
+      end
     end
 	end
   

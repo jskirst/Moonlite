@@ -38,6 +38,12 @@ Spork.prefork do
 		def test_sign_in(user)
 			controller.sign_in(user)
 		end
+    
+    class Fixnum
+      def to_json(options = nil)
+        to_s
+      end
+    end
 	end
 end
 

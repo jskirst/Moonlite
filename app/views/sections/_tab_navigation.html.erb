@@ -1,0 +1,6 @@
+<h1>Edit Section</h1>
+<ul class="tabs">
+	<li <% if @mode == "instructions" %> class="active" <% end %> ><%= link_to "Instructions", edit_section_path(@section.id, :m => "instructions") %></li>
+	<li <% if @mode == "settings" %> class="active" <% end %> ><%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %></li>
+	<li <% if @mode == "tasks" %> class="active" <% end %> ><%= link_to "Tasks", edit_section_path(@section.id, :m => "tasks") %></li>
+</ul>

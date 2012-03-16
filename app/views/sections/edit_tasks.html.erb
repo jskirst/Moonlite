@@ -1,9 +1,4 @@
-<h1>Edit Section</h1>
-<ul class="tabs">
-	<li><%= link_to "Content", edit_section_path(@section.id) %></li>
-	<li><%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %></li>
-	<li class="active"><a href="#">Tasks</a></li>
-</ul>
+<%= render "tab_navigation" %>
 <section>
   <%= form_tag({:controller => :sections, :action => :reorder_tasks}, :method => :put) %>
 	<div style="float: right; display:inline;">
@@ -17,7 +12,8 @@
 	</div>
 	<h2><%= @section.name %></h2>
 	<% if @tasks.empty? %>
-		<p style="margin: 30px 0px 200px 0px;">You have not yet created any tasks for this Path.</p>
+		<p style="margin: 30px 0px 200px 0px;">You have not yet created any tasks for this Path. You can start by letting 
+    <%= link_to "generating questions", questions_section_path(@section) %>.</p>
 	<% else %>
 		<table>
 		<% @tasks.each do |t| %>
@@ -63,7 +59,7 @@
     <%= submit_tag "Save", :class => "btn primary" %>
     <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
   <% else %>
-    <%= link_to "Back to Section", edit_section_path(@section), :class => "btn secondary" %>
+    <%= link_to "Back to Section", edit_section_path(@section, :m => "instructions"), :class => "btn primary" %>
   <% end %>
 	</div>
 </section>

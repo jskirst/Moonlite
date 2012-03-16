@@ -7,22 +7,25 @@ class PathsController < ApplicationController
 	before_filter :get_path_from_id, :except => [:index, :new, :create, :marketplace]
 	before_filter :unpublished_not_for_purchase, :only => [:review, :purchase]
 	before_filter :unpublished_for_admins_only, :only => [:show, :continue]
-	
-  def hero
-    @title = @path.name
-    @user_hero = User.find_by_id(params[:hero])
-    @hero_score = @user_hero.enrollments.where("path_id = ?", @path.id).first.total_points
-    @other_completed_paths = @user_hero.enrollments.includes(:path).where("paths.id != ?", @path.id).all
-    @info_resources = @path.info_resources(:limit => 5)
-		@achievements = @path.achievements.all(:limit => 5)
-    @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
-  end
   
-	def index
-		@paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, true])
-		@unpublished_paths = Path.paginate(:page => params[:page], :conditions => ["paths.company_id = ? and paths.is_published = ?", current_user.company.id, false])
-		@title = "All Paths"
+  def show
+		@title = @path.name
+		#@info_resources = @path.info_resources(:limit => 5)
+		@achievements = @path.achievements.all(:limit => 20)
+    @enrolled_users = @path.enrolled_users.all(:limit => 20)
+		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+    @current_position = @path.current_section(current_user).position unless @sections.empty?
+    @enrolled = current_user.enrolled?(@path)
+    if current_user.path_started?(@path)
+      @start_mode = @path.completed?(current_user) ? "Review" : "Continue"
+    elsif current_user.enrolled?(@path)
+      @start_mode = "Get Started"
+    else
+      @start_mode = "Enroll"
+    end
 	end
+
+# Begin Path Creation
 	
 	def new
 		@path = Path.new
@@ -42,24 +45,9 @@ class PathsController < ApplicationController
 			render 'new'
 		end
 	end
-	
-	def show
-		@title = @path.name
-		#@info_resources = @path.info_resources(:limit => 5)
-		@achievements = @path.achievements.all(:limit => 20)
-    @enrolled_users = @path.enrolled_users.all(:limit => 20)
-		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
-    @current_position = @path.current_section(current_user).position unless @sections.empty?
-    @enrolled = current_user.enrolled?(@path)
-    if current_user.path_started?(@path)
-      @start_mode = @path.completed?(current_user) ? "Review" : "Continue"
-    elsif current_user.enrolled?(@path)
-      @start_mode = "Get Started"
-    else
-      @start_mode = "Enroll"
-    end
-	end
-	
+
+# Begin Path Editing  
+  
 	def edit
 		@title = "Edit"
     @file_upload_possible = @path.sections.size == 0 ? true : false
@@ -106,24 +94,46 @@ class PathsController < ApplicationController
     end
     redirect_to edit_path_path(@path, :m => "sections")
   end
-	
+
+  def destroy
+		@path.destroy
+		flash[:success] = "Path successfully deleted."
+		redirect_back_or_to paths_path
+	end
+
+# Begin Path Journey
+  
 	def continue
 		@section = current_user.most_recent_section_for_path(@path)
     @section = @path.next_section(@section) if @section.completed?(current_user)
     if @section.nil? || @section.is_published == false
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
+      @similar_paths = @path.similar_paths
+      @suggested_paths = @path.suggested_paths(current_user)
       render "completion"
     else
       redirect_to @section
     end
 	end
+
+  def hero
+    @title = @path.name
+    @user_hero = User.find_by_id(params[:hero])
+    @hero_score = @user_hero.enrollments.where("path_id = ?", @path.id).first.total_points
+    @other_completed_paths = @user_hero.enrollments.includes(:path).where("paths.id != ?", @path.id).all
+    @info_resources = @path.info_resources(:limit => 5)
+		@achievements = @path.achievements.all(:limit => 5)
+    @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+  end
+  
+# Begin Path File Upload
 	
 	def file
 		@title = "File"
 	end
 	
 	def preview
-    #begin
+    begin
       logger.debug 
       read_file(params[:path][:file])
       @collected_answers = params[:collected_answers]
@@ -155,11 +165,11 @@ class PathsController < ApplicationController
           flash[:error] = s.errors.full_messages.join(". ")
         end
       end
-    #rescue
-    #  flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
-    #  logger.debug $!.to_s
-    #  redirect_to file_path_path(@path)
-    #end
+    rescue
+     flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
+     logger.debug $!.to_s
+     redirect_to file_path_path(@path)
+    end
 	end
   
   def upload
@@ -177,6 +187,8 @@ class PathsController < ApplicationController
       redirect_to file_path_path(@path)
     end
   end
+
+# Begin Corporate Path Marketplace #
 	
 	def marketplace
 		@title = "Marketplace"
@@ -227,12 +239,6 @@ class PathsController < ApplicationController
 		end
 		@title = "Purchase successful"
 		flash[:success] = "Purchase successful. Enjoy!."
-	end
-	
-	def destroy
-		@path.destroy
-		flash[:success] = "Path successfully deleted."
-		redirect_back_or_to paths_path
 	end
 	
 	private

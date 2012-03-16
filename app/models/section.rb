@@ -12,9 +12,8 @@ class Section < ActiveRecord::Base
 		:presence 		=> true,
 		:length			=> { :within => 1..255 }
 	
-	validates :instructions, 
-		:presence 		=> true,
-		:length			=> { :within => 1..1000000 }
+	validates :instructions,
+		:length			=> { :maximum => 1000000 }
 	
 	validates :path_id, 
 		:presence 		=> true

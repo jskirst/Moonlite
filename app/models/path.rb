@@ -21,14 +21,18 @@ class Path < ActiveRecord::Base
 	
 	validate :company_id, :if => :user_belongs_to_company
 	
-	default_scope :order => 'paths.created_at DESC'
+	#default_scope :order => 'paths.created_at DESC'
   
-  def self.with_category_type(type)
-    return Path.where("is_public = ? and is_published = ? and category_type = ?", true, true, "#{type}")
+  def self.with_category_type(type, excluded_id = -1, order = nil)
+    if order
+      return Path.where("is_published = ? and category_type = ? and id != ?", true, "#{type}", excluded_id).all(:order => order)
+    else
+      return Path.where("is_published = ? and category_type = ? and id != ?", true, "#{type}", excluded_id)
+    end
   end
   
   def self.with_name_like(name)
-    return Path.where("is_public = ? and is_published = ? and name LIKE ?", true, true, "%#{name}%")
+    return Path.where("is_published = ? and name LIKE ?", true, "%#{name}%")
   end
   
   def self.category_types
@@ -42,8 +46,17 @@ class Path < ActiveRecord::Base
     return nil
   end
   
+  def similar_paths
+    return Path.with_category_type(self.category_type, self.id, "id DESC")
+  end
+  
+  def suggested_paths(user)
+    return Path.with_category_type(0, self.id, "id ASC")
+  end
+  
   def current_section(current_user)
-		last_task = current_user.completed_tasks.includes(:path).where(["paths.id = ?", self.id]).first(:order => "completed_tasks.updated_at DESC")
+		last_task = current_user.completed_tasks.includes(:section).where(["sections.path_id = ?", self.id]).first(:order => "sections.position DESC")
+    logger.debug last_task
     return sections.first if last_task.nil?
 		return last_task.section
   end

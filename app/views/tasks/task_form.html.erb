@@ -1,3 +1,19 @@
+<script src="/javascripts/suggestions.js"></script>
+<script>
+var std_url = "<%= root_url %>";
+
+$(function(){
+  $(".correct_answer").each(function(){
+    var $answer = $(this);
+    var $suggestions = $answer.parent().parent().parent().parent().parent().find(".suggestions");
+    $answer.change(function(){
+      get_suggestions($answer, $suggestions);
+    });
+    get_suggestions($answer, $suggestions);
+  });
+});
+</script>
+
 <h1><%= @form_title %></h1>
 <%= form_for @task do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
@@ -8,53 +24,40 @@
 			<%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
 		</div>
 	</div>
-	<div class="field clearfix">
-		<%= f.label "Answer 1" %>
-		<div class="input">
-			<%= f.text_field :answer1, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label "Answer 2" %>
-		<div class="input">
-			<%= f.text_field :answer2, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label "Answer 3" %>
-		<div class="input">
-			<%= f.text_field :answer3, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-		<div class="field clearfix">
-		<%= f.label "Answer 4" %>
-		<div class="input">
-			<%= f.text_field :answer4, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label :correct_answer %>
-		<div class="input">
-			<select id="task_correct_answer" name="task[correct_answer]">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-			</select>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label :points %>
-		<div class="input">
-			<select id="task_points" name="task[points]">
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-			</select>
-		</div>
-	</div>
+  <div class="row">
+    <div class="span8">
+      <div class="field clearfix">
+        <%= f.label "Correct answer*" %>
+        <div class="input">
+          <%= f.text_field :answer1, :maxlength => 255, :size => 75, :class => "correct_answer" %>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Wrong answer*" %>
+        <div class="input">
+          <%= f.text_field :answer2, :maxlength => 255, :size => 75, :class => "wrong_answer" %>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Wrong answer" %>
+        <div class="input">
+          <%= f.text_field :answer3, :maxlength => 255, :size => 75, :class => "wrong_answer" %>
+        </div>
+      </div>
+        <div class="field clearfix">
+        <%= f.label "Wrong answer" %>
+        <div class="input">
+          <%= f.text_field :answer4, :maxlength => 255, :size => 75, :class => "wrong_answer" %>
+        </div>
+      </div>
+      <span style="font-style: italic; padding-left: 70px; padding-top: 6px">*Required</span>
+    </div>
+    <div class="span8 suggestions">
+      <p class="not_found_message" style="padding-top:10px; display: none;">No suggestions found.</p>
+      <p class="found_message" style="padding-top:10px; display: none;">Suggestions (doubleclick):</p>
+      <ol style="margin-top:10px; display: none;"></ol>
+    </div>
+  </div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
 		<% if @task.new_record? %>
@@ -62,6 +65,6 @@
 		<% else %>
       <%= link_to "Add Resource", new_info_resource_path(:task_id => @task.id), :class => "btn secondary" %>
     <% end %>
-		<%= link_to "Back to Section", edit_section_path(@section_id, :m => "tasks"), :class => "btn secondary" %>
+		<%= link_to "Cancel", edit_section_path(@section_id, :m => "tasks"), :class => "btn secondary" %>
 	</div>
 <% end %>

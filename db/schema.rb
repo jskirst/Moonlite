@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120227145403) do
+ActiveRecord::Schema.define(:version => 20120306211505) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -115,6 +115,24 @@ ActiveRecord::Schema.define(:version => 20120227145403) do
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
+
+  create_table "phrase_pairings", :force => true do |t|
+    t.integer  "phrase_id"
+    t.integer  "paired_phrase_id"
+    t.integer  "strength",         :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phrase_pairings", ["phrase_id"], :name => "index_phrase_pairings_on_phrase_id"
+
+  create_table "phrases", :force => true do |t|
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "phrases", ["content"], :name => "index_phrases_on_content", :unique => true
 
   create_table "rewards", :force => true do |t|
     t.integer  "company_id"

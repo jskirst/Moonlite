@@ -1,0 +1,102 @@
+<div id="text_editor" class="modal hide fade" style="width:600px;">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3></h3>
+  </div>
+  <div class="modal-body">
+    <p>Add text below. This text will be added to the bottom of the article.</p>
+    <form>
+      <input type="hidden" id="last_article_text">
+      <textarea id="new_text" class="xxlarge" rows="5" style="margin-top:10px;margin-bottom:25px"></textarea>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <a onclick="$('#text_editor').modal('hide');" class="btn secondary">Cancel</a>
+    <a onclick="$('#text_editor').modal('hide'); update_text();" class="btn primary">Save</a>
+  </div>
+</div>
+
+<div id="settings_editor" class="modal hide fade editor">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3></h3>
+  </div>
+  <div class="modal-body">
+  <form>
+    <input type="hidden" id="last_article">
+    <div class="field clearfix">
+      <label>Youtube</label>
+      <div class="input">
+        <input type="checkbox" id="youtube_active" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Youtube URL</label>
+      <div class="input">
+        <input type="text" id="youtube_url" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Wikipedia</label>
+      <div class="input">
+        <input type="checkbox" id="wiki_active" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Wikipedia URL</label>
+      <div class="input">
+        <input type="text" id="wiki_url" class="xlarge">
+      </div>
+    </div>
+  </form>
+  </div>
+  <div class="modal-footer">
+    <a onclick="$('#settings_editor').modal('hide');" class="btn secondary">Cancel</a>
+    <a onclick="$('#settings_editor').modal('hide'); update_settings();" class="btn primary">Save</a>
+  </div>
+</div>
+
+<div id="topic_editor" class="modal hide fade editor">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>New Topic</h3>
+  </div>
+  <div class="modal-body">
+  <form>
+    <div class="field clearfix">
+      <label>Topic Name</label>
+      <div class="input">
+        <input type="text" id="new_topic" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Youtube</label>
+      <div class="input">
+        <input type="checkbox" id="new_youtube_active" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Youtube URL</label>
+      <div class="input">
+        <input type="text" id="new_youtube_url" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Wikipedia</label>
+      <div class="input">
+        <input type="checkbox" id="new_wiki_active" class="xlarge">
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Wikipedia URL</label>
+      <div class="input">
+        <input type="text" id="new_wiki_url" class="xlarge">
+      </div>
+    </div>
+  </form>
+  </div>
+  <div class="modal-footer">
+    <a onclick="$('#topic_editor').modal('hide');" class="btn secondary">Cancel</a>
+    <a onclick="$('#topic_editor').modal('hide'); update_topics();" class="btn primary">Save</a>
+  </div>
+</div>

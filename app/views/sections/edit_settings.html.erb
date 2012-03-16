@@ -1,13 +1,25 @@
-<h1>Edit Section</h1>
-<ul class="tabs">
-	<li><%= link_to "Settings", edit_section_path(@section.id) %></li>
-	<li class="active"><a href="#">Settings</a></li>
-	<li><%= link_to "Tasks", edit_section_path(@section.id, :m => "tasks") %></li>
-</ul>
+<%= render "tab_navigation" %>
 <section>
 <%= form_for(@section) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
+  <div class="field clearfix">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name, :class => "xlarge" %>
+		</div>
+	</div>
+  <div class="field clearfix">
+		<%= f.label "Section Picture URL" %>
+		<div class="input">
+			<%= f.text_field :image_url, :class=>"xxlarge" %>
+		</div>
+	</div>
 	<div class="field clearfix">
+		<div class="input">
+			<%= image_tag(@section.pic, :width => "210", :style=>"margin:20px 0px 20px 10px") %>
+		</div>
+	</div>
+  <div class="field clearfix">
 		<label>Settings</label>
 		<div class="input">
 			<ul class="inputs-list">

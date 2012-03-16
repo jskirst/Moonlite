@@ -1,0 +1,95 @@
+<script src="/javascripts/suggestions.js"></script>
+<script>
+var std_url = "<%= root_url %>";
+
+function add_delete_button(){
+  if($(this).find("span").length == 0){
+    var $del_link = $("<span style='margin-left: 15px;' class='btn secondary delete'>Remove</span>").appendTo(this);
+    $del_link.click(function(){
+      $(this).parent().parent().parent().remove();
+    });
+  }
+}
+
+function remove_delete_button(){
+  $(this).find(".delete").remove();
+}
+
+$(function(){
+  $("blockquote").each(function(){
+    $(this).hover(add_delete_button, remove_delete_button);
+  });
+  $(".correct_answer").each(function(){
+    var $answer = $(this);
+    var $suggestions = $answer.parent().parent().parent().parent().parent().find(".suggestions");
+    $answer.change(function(){
+      get_suggestions($answer, $suggestions);
+    });
+    get_suggestions($answer, $suggestions);
+  });
+});
+</script>
+<style>
+#questions label { margin-right: 10px; }
+</style>
+<%= form_tag({:controller => :sections, :action => :bulk_tasks}, :method => :post) %>
+<section>
+  <section id="questions_header">
+    <h1>Review Questions</h1>
+    <div style="padding:10px">
+      <p>Please review each of the questions you selected from the generated list. Each question requires at least a correct answer and 1 incorrect answer. You can remove any of the questions by hovering your mouse over them and clicking the <strong>Remove</strong> button when it appears.</p>
+      <p>As you work, Moonlite will try to guess appropriate incorrect answers and suggest them next to each question. Simply double click any suggestion you like to import them into your answers. Once you have finished reviewing all the questions, click <strong>Finish</strong> below to add them to this section.
+    </div>
+  </section>
+  <section id="questions" style="margin-top: 20px">
+  <% @processed_questions.each do |key, pq| %>
+    <% unless pq[:errors].nil? %>
+    <div style="margin:15px;" class="alert-message danger"><%= pq[:errors].join(". ").to_s %></div>
+    <% end %>
+    <div class="row">
+      <div class="span10" style="padding: 0px 0px 20px 20px">
+        <blockquote style="margin: 0px; line-height:30px;"><%= pq[:question] %></blockquote>
+        <%= hidden_field_tag "questions["+key.to_s+"][question]", pq[:question] %>
+        <%= hidden_field_tag "questions["+key.to_s+"][correct_answer]", "1" %>
+        <div style="margin-top:15px;">
+          <div class="field clearfix">
+            <%= label_tag "Correct answer" %>
+            <div class="input">
+              <%= text_field_tag "questions["+key.to_s+"][answer1]", pq[:answer1], :maxlength => 255, :class => "correct_answer xlarge" %>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <%= label_tag "Wrong answer" %>
+            <div class="input">
+              <%= text_field_tag "questions["+key.to_s+"][answer2]", pq[:answer2], :maxlength => 255, :class => "wrong_answer xlarge"%>
+            </div>
+          </div>
+          <div class="field clearfix">
+            <%= label_tag "Wrong answer" %>
+            <div class="input">
+              <%= text_field_tag "questions["+key.to_s+"][answer3]", pq[:answer3], :maxlength => 255, :class => "wrong_answer xlarge" %>
+            </div>
+          </div>
+            <div class="field clearfix">
+            <%= label_tag "Wrong answer" %>
+            <div class="input">
+              <%= text_field_tag "questions["+key.to_s+"][answer4]", pq[:answer4], :maxlength => 255, :class => "wrong_answer xlarge" %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span4 suggestions">
+        <img class="loading" src="/images/loading.gif" width="25" height="25" style="display:none;"/>
+        <p class="not_found_message" style="line-height: 30px; display: none;">No answer suggestions found.</p>
+        <p class="found_message" style="line-height: 30px; display: none;">Suggestions (doubleclick):</p>
+        <ol style="margin-top:10px; display: none;"></ol>
+      </div>
+    </div>
+  <% end %>
+  </section>
+</section>
+<div id="hidden_inputs"></div>
+<div class="actions">
+  <%= submit_tag "Finish", :class => "btn primary" %>
+  <a class="btn secondary" onclick="history.go(-1);">Back</a>
+</div>

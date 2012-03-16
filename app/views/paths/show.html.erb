@@ -24,16 +24,18 @@
     </div>
   </div>
   <% end %>
-	<div style="float:left; margin: 0px 15px 5px 0px;">
-    <%= image_tag(@path.path_pic, :size=>"100x100") %>
+	<div style="min-height: 120px;">
+    <div style="float:left; margin: 0px 15px 0px 0px;">
+      <%= image_tag(@path.path_pic, :size=>"100x100") %>
+    </div>
+    <div>
+      <h1 style="margin-bottom: 0px;">
+        <%= @path.name %>
+      </h1>
+    </div>
+    <div style="padding:10px;">
+      <div class="description"><%= @path.description.html_safe %></div>
   </div>
-	<div>
-		<h1>
-			<%= @path.name %>
-		</h1>
-	</div>
-	<div style="padding:10px;">
-		<div class="description"><%= @path.description.html_safe %></div>
 	</div>
 	<div>
     <h3>Sections</h3>
@@ -41,19 +43,27 @@
     <p>No sections have been published for this path yet. Check back later to see if any have been posted!</p>
     <% else %>
       <ul class="media-grid">
+      <% previous_completed = false %>
+      <% first_path = true %>
       <% @sections.each do |s| %>
-        <% section_open = true if s.position <= @current_position %>
+        <% section_open = true if (s.position <= @current_position || previous_completed || !@enrolled)%>
         <% section_opacity = section_open ? "1.0" : "0.5" %>
         <% section_link = section_open ? section_path(s) : "#" %>
         <li>
           <a href="<%= section_link %>" style="opacity: <%= section_opacity %>;">
-            <% if s.remaining_tasks(current_user) <= 0 %>
-            <span class="section-caption">COMPLETED</span>
-            <% elsif s.remaining_tasks(current_user) == s.tasks.size %>
-            <span class="section-caption">LOCKED</span>
-            <% else %>
-            <span class="section-caption">IN PROGRESS</span>
+            <% if @enrolled %>   
+              <% if s.remaining_tasks(current_user) <= 0 %>
+                <span class="section-caption">COMPLETED</span>
+                <% previous_completed = true %>
+              <% elsif s.remaining_tasks(current_user) == s.tasks.size && previous_completed == false && first_path == false %>
+                <span class="section-caption">LOCKED</span>
+                <% previous_completed = false %>
+              <% else %>
+                <span class="section-caption">IN PROGRESS</span>
+                <% previous_completed = false %>
+              <% end %>
             <% end %>
+            <% first_path = false %>
             <img class="thumbnail" src="<%= s.pic %>" height="150" width="160" title="<%= s.name %>">
           </a>
         </li>

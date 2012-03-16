@@ -6,7 +6,10 @@ class UserAchievementsController < ApplicationController
 		if @user_achievement.nil?
 			redirect_to root_path and return
 		end
+    @user = @user_achievement.user
 		@achievement = @user_achievement.achievement
+    @path = @achievement.path
+    @date = @user_achievement.created_at
 		@title = @achievement.name
 	end
 end

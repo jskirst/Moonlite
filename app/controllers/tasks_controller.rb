@@ -4,15 +4,16 @@ class TasksController < ApplicationController
 	
 	def new
 		@task = Task.new
-		@title = "New Question"
+		@title = "New Task"
 		@section_id = params[:section_id]
-		@form_title = "New Question"
+		@form_title = "New Task"
 		render "tasks/task_form"
 	end
 	
 	def create
 		@section = Section.find(params[:task][:section_id])
 		@task = @section.tasks.build(params[:task])
+    @task.points = 10
 		if @task.save
 			flash[:success] = "Task created."
 			if params[:commit] == "Save and New"
@@ -34,8 +35,8 @@ class TasksController < ApplicationController
 	end
 	
 	def edit
-		@title = "Edit Question"
-		@form_title = "Edit Question"
+		@title = "Edit Task"
+		@form_title = "Edit Task"
 		@task = Task.find(params[:id])
 		@section_id = @task.section_id
 		render "task_form"
@@ -44,18 +45,31 @@ class TasksController < ApplicationController
 	def update
 		@task = Task.find(params[:id])
 		if @task.update_attributes(params[:task])
-			flash[:success] = "Question successfully updated."
-			redirect_to @task
+			flash[:success] = "Task updated."
+			redirect_to edit_section_path(@section, :m => "tasks")
 		else
 			@title = "Edit"
 			@form_title = @title
 			render "tasks/task_form"
 		end
 	end
+  
+  def suggest
+    phrase = params[:id]
+    phrase = Phrase.find_by_content(phrase.downcase)
+    @associated_phrases = []
+    unless phrase.nil?
+      @associated_phrases = phrase.associated_phrases
+    end
+    respond_to do |format|
+      format.json  
+    end  
+  end
 	
 	def destroy
 		@task = Task.find(params[:id])
 		@task.destroy
-		redirect_back_or_to tasks_path(:section_id => @task.section.id)
+    flash[:success] = "Task deleted."
+		redirect_to edit_section_path(@task.section, :m => "tasks")
 	end
 end

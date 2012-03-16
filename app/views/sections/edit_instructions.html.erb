@@ -1,0 +1,14 @@
+<%= render "tab_navigation" %>
+<section>
+<% if @section.instructions.nil? %>
+  <p style="padding: 25px;">You have not added any content for this section's instructions yet. Start by <%= link_to "adding some topics", research_section_path(@section, :m => "topics") %>.</p>
+<% else %>
+  <div style="float:right;">
+    <%= link_to "Edit", research_section_path(@section, :m => "edit"), :class => "btn primary" %>
+  </div>
+<% end %>
+<div><%= @section.instructions.html_safe unless @section.instructions.nil? %></div>
+</section>
+<div class="actions">
+  <%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
+</div>

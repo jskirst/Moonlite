@@ -24,7 +24,7 @@
     <% @sections.each do |s| %>
       <tr><td>	
         <h3>
-           <%= link_to s.name, edit_section_path(s) %>
+           <%= link_to s.name, edit_section_path(s, :m => "instructions") %>
         </h3>
         <p><%= truncate(strip_tags(s.instructions), :length => 255) %></p>
         <div style="float:left;display:inline;">

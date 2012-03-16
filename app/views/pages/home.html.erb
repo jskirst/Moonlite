@@ -1,25 +1,26 @@
-<% if signed_in? %>
-	<script>
-	$(document).ready(function() {
-		$(".progressbar").each(function(){
-			var details = $(this).attr("alt").split("/");
-			var completed = details[0];
-			var total = details[1];
-			if(total != 0){
-				var pb_value = 100 * (completed/total);
-				$(this).progressbar({ value: pb_value });
-			}
-		});
-	});
-	</script>
-	<section>
-		<h2>My Paths</h2>
-		<% if @paths.empty? %>
-			<p>You are not currently enrolled in any paths. <%= link_to "Get started!", explore_path %></p>
-		<% else %>
-		<table class="paths" summary="Users paths">
-			<% @paths.each do |path| %>
-        <% unless path.completed?(current_user) %>
+<script>
+$(document).ready(function() {
+  $(".progressbar").each(function(){
+    var details = $(this).attr("alt").split("/");
+    var completed = details[0];
+    var total = details[1];
+    if(total != 0){
+      var pb_value = 100 * (completed/total);
+      $(this).progressbar({ value: pb_value });
+    }
+  });
+});
+</script>
+<section>
+  <div style="margin-bottom:20px">
+    <h2 style="margin-bottom: 15px;">My Paths</h2>
+  <% if @enrolled_paths.empty? && @completed_paths.empty? %>
+    <p>You are not currently enrolled in any paths. <%= link_to "Get started!", explore_path %></p>
+  <% elsif @enrolled_paths.empty? && !@completed_paths.empty? %>
+    <p>Congratulations! You've completed all your enrolled paths. <%= link_to "Find more!", explore_path %></p>
+  <% else %>
+    <table class="paths" summary="Users paths">
+      <% @enrolled_paths.each do |path| %>
         <tr>
           <td style="vertical-align: middle; width: 70px;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
           <td class="path">
@@ -33,41 +34,27 @@
             </div>
           </td>
         </tr>
-        <% end %>
       <% end %>
-		</table>
-		<% end %>
-	</section>
-	<section>
-		<h2>News</h2>
-	<% if @user_achievements.empty? %>
-		<p>There are currently not achievements set for your company.</p>
-	<% else %>
-		<table>
-			<% @user_achievements.each do |ua| %>
-			<tr>
-				<td style="width: 70px; padding: 5px;">
-					<%= image_tag ua.user.profile_pic, :size => "60x60" %>
-				</td>
-				<td>
-					<p><strong><%= ua.user.name %></strong> got the <%= link_to ua.achievement.name, ua %> achievement. +<%= ua.achievement.points %></p>
-				</td>
-			</tr>	
-			<% end %>
-		</table>
-	<% end %>
-	</section>
+    </table>
+  <% end %>
+  </div>
+</section>
+<section>
+  <h2>News</h2>
+<% if @user_achievements.empty? %>
+  <p>No news yet today! <%= link_to "Go make some!", explore_path %></p>
 <% else %>
-	<section style="float:left; margin-right: 60px;">
-		<img src="/images/logo.png" width="200" height="250"/>
-	</section>
-	<section>
-		<h2>What do your employees know? What skills do they have?</h2>
-		<h3>What don't they know? What skills do they need?</h3>
-		<h4>... Are you sure?</h4>
-		<br>
-		<p style="font-size: 16px;">Find out how Moonlite can drive training and professional development within your company so everyone is on the same page.</p>
-		<br>
-		<%= link_to "Learn more", about_path, :class => "btn primary" %>
-	</section>
+  <table>
+    <% @user_achievements.each do |ua| %>
+    <tr>
+      <td style="width: 70px; padding: 5px;">
+        <%= image_tag ua.user.profile_pic, :size => "60x60" %>
+      </td>
+      <td>
+        <p><strong><%= link_to ua.user.name, ua.user %></strong> unlocked the <%= link_to ua.achievement.name, ua %> achievement. +<%= ua.achievement.points %></p>
+      </td>
+    </tr>	
+    <% end %>
+  </table>
 <% end %>
+</section>

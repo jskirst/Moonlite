@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
 	get ":id" => "users#show", :id => /\d+/
+  #post "sections/generate" => "sections#generate"
   
 	resources :sessions, :only => [:new, :create, :destroy]
 	resources :users do
@@ -32,10 +33,18 @@ SampleApp::Application.routes.draw do
 			get :continue
       put :reorder_tasks
       get :research
+      get :questions
+      post :generate
+      post :review
+      post :bulk_tasks
 		end
 	end
 	resources :enrollments
-	resources :tasks
+	resources :tasks do
+    member do
+      get :suggest
+    end
+  end
 	resources :achievements
 	resources :user_achievements
 	resources :completed_tasks

@@ -46,19 +46,19 @@
   <h2>Similar Paths</h2>
   <span>Categories: Just for fun, Pop Culture, Travel</span>
   <ul class="media-grid">
-    <li><a href="http://www.linkedin.com"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Kevin_Costner_DF-SD-05-08959_crop.jpg/220px-Kevin_Costner_DF-SD-05-08959_crop.jpg"></a></li>
-    <li><a href="http://www.linkedin.com"><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/300px-Star_Wars_Logo.svg.png"></a></li>
-    <li><a href="http://www.linkedin.com"><img src="http://top-people.starmedia.com/tmp/swotti/cacheAM9OBIBJDXNHY2S=/imgJohn%20Cusack1.jpg"></a></li>
-    <li><a href="http://www.linkedin.com"><img src="http://images.wikia.com/lotr/images/a/a5/Lotr_movie_gimli.jpg"></a></li>
+    <% @similar_paths.each_index do |p| %>
+      <% if p >= 4 then break else path = @similar_paths[p] end %>
+      <li><%= link_to image_tag(path.path_pic), path %>
+    <% end %>
   </ul>
 </section>
 <section class="suggested-paths">
   <h2>Recommended for you</h2>
   <span>Categories: Business, Sales, Information Technology</span>
   <ul class="media-grid">
-    <li><a href="http://www.linkedin.com"><img src="http://ecx.images-amazon.com/images/I/5107Zv0Vv4L._BO2,204,203,200_PIsitb-sticker-arrow-click,TopRight,35,-76_AA300_SH20_OU01_.jpg"></a></li>
-    <li><a href="http://www.linkedin.com"><img src="http://www.agilemarketing.net/wp-content/uploads/2012/01/RainmakingConversationsCover.jpg"></a></li>
-    <li><a href="http://www.linkedin.com"><img src="http://www.thetechscoop.net/wp-content/uploads/2010/09/salesforce_logo.jpg"></a></li>
-    <li><a href="http://www.linkedin.com"><img src="http://media.smashingmagazine.com/images/introduction-to-rails/rails.jpg"></a></li>
+    <% @suggested_paths.each_index do |p| %>
+      <% if p >= 4 then break else path = @suggested_paths[p] end %>
+      <li><%= link_to image_tag(path.path_pic), path %>
+    <% end %>
   </ul>
 </section>
