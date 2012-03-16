@@ -78,6 +78,10 @@ function get_questions(paragraphs, paragraph_index, limit){
         add_question_set(paragraph_index, resp.input, resp.output);
       }
       get_questions(paragraphs, paragraph_index + 1, limit);
+    },
+    error: function(resp){
+      console.log(resp);
+      get_questions(paragraphs, paragraph_index + 1, limit);
     }
   });
 }
