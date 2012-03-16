@@ -146,7 +146,7 @@ class SectionsController < ApplicationController
     uri = URI.parse("http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate")
     http = Net::HTTP.new(uri.host, uri.port)
 
-    http.read_timeout = 30
+    http.read_timeout = 90
     request = Net::HTTP::Post.new(uri.request_uri)
     request.set_form_data({'text' => @text})
     resp, @data = http.request(request)
