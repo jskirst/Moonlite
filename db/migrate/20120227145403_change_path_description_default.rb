@@ -1,5 +1,9 @@
 class ChangePathDescriptionDefault < ActiveRecord::Migration
-  def change
-    change_column :paths, :description, :string, :default => ''
+  def up
+    change_column :paths, :description, :text, :default => ''
+  end
+  
+  def down
+    change_column :paths, :description, :text, :default => nil
   end
 end
