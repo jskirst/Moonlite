@@ -136,9 +136,26 @@ class SectionsController < ApplicationController
     @limit = params[:limit]
     text = clean_text(@section.instructions)
     
-    @paragraphs = text.split("<p>")
-    @paragraphs = @paragraphs.map {|p| p.chomp.strip.gsub(/\r\n/," ").gsub(/\s\s/, " ").gsub(/"/,"'") }
-    @quoted_paragraphs = @paragraphs.map {|t| '"'+t+'"'}
+    paragraphs = text.split("<p>")
+    @split_paragraphs = []
+    paragraphs.each do |p|
+      split_paragraph = p.split(". ")
+      sentences = []
+      split_paragraph.each_index do |si|
+        sentence = split_paragraph[si].chomp + "."
+        if sentence.length > 15 
+          sentences << sentence
+        end
+        if sentence.length > 160 || sentences.length >= 3
+          @split_paragraphs << sentences.join(" ")
+          sentences = []
+        end
+      end
+      unless sentences.empty?
+        @split_paragraphs << sentences.join(" ")
+      end
+    end
+    @quoted_paragraphs = @split_paragraphs.map {|t| '"'+t+'"'}
   end
   
   def generate
@@ -249,6 +266,11 @@ class SectionsController < ApplicationController
         .gsub(/\([^\)]+\)/im," ")
         .gsub("&nbsp;"," ")
         .gsub("&quot;","")
+        .gsub(/\r\n/," ")
+        .gsub(/\s\s/, " ")
+        .gsub(/"/,"'")
+        .strip
+        .chomp
       return text
     end
 end
