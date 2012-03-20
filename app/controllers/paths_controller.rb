@@ -98,7 +98,7 @@ class PathsController < ApplicationController
   def destroy
 		@path.destroy
 		flash[:success] = "Path successfully deleted."
-		redirect_back_or_to paths_path
+		redirect_back_or_to explore_path
 	end
 
 # Begin Path Journey

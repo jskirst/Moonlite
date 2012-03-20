@@ -5,7 +5,7 @@ var std_url = "<%= generate_section_url  %>";
 $(function(){
   try {
     var paragraphs = [<%= @quoted_paragraphs.join(",").html_safe %>];
-    var limit = <%= (@limit.nil? ? 10 : @limit) %>;
+    var limit = <%= (@limit.nil? ? 1000 : @limit) %>;
     
     get_questions(paragraphs, 0, limit);
   } catch(err) {

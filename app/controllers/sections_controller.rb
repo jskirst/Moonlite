@@ -267,10 +267,10 @@ class SectionsController < ApplicationController
         .gsub("&nbsp;"," ")
         .gsub("&quot;","")
         .gsub(/\r\n/," ")
-        .gsub(/\s\s/, " ")
         .gsub(/"/,"'")
-        .strip
-        .chomp
-      return text
+      until text.gsub!(/\s\s/,"").nil?
+        text = text.gsub(/\s\s/, " ")
+      end
+      return text.strip.chomp
     end
 end

@@ -44,8 +44,22 @@ function transform(obj){
 function revert(save){
   $("li").find("p").each(function(){
     if($(this).find("span").length > 0){
+      var id = $(this).parent().attr("id");
       var val = save ? $(this).find("input").val() : $(this).find(".secondary").attr("alt");
       var prefix = $(this).find("input").hasClass("question") ? "Q" : "A";
+      
+      if(save){
+        var $input = $("#"+id+"_input");
+        var current_val = $input.val().split("?");
+        if(prefix=="Q"){
+          current_val[0] = val.replace("?","");
+        } else {
+          current_val[1] = val.replace("?","");
+        }
+        current_val = current_val.join("?");
+        $input.val(current_val);
+      }
+      
       $(this).find("span").remove();
       $(this).html("<strong>"+prefix+":</strong> "+val);
     }
