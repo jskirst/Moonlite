@@ -49,13 +49,15 @@ class Task < ActiveRecord::Base
   private
     def randomize_answers
       answers = answers_to_array
-      answers = answers.shuffle
-      self.correct_answer = answers.index(self.answer1.chomp) + 1
-      self.points = 10
-      self.answer1 = answers[0]
-      self.answer2 = answers[1]
-      self.answer3 = answers[2]
-      self.answer4 = answers[3]
+      if answers.size > 1
+        answers = answers.shuffle
+        self.correct_answer = answers.index(self.answer1.chomp) + 1
+        self.points = 10
+        self.answer1 = answers[0]
+        self.answer2 = answers[1]
+        self.answer3 = answers[2]
+        self.answer4 = answers[3]
+      end
     end
     
     def record_phrases

@@ -143,7 +143,7 @@ class SectionsController < ApplicationController
       sentences = []
       split_paragraph.each_index do |si|
         sentence = split_paragraph[si].chomp + "."
-        if sentence.length > 15 
+        if sentence.length > 35 
           sentences << sentence
         end
         if sentence.length > 160 || sentences.length >= 3
@@ -256,8 +256,8 @@ class SectionsController < ApplicationController
     
     def clean_text(text)
       text = text.gsub("This section will include questions on the following topics", "")
-        .gsub(/<a+[^>]*>/im,"")
-        .gsub(/<\/a>/im,"")
+        .gsub(/<a+[^>]*>/im," ")
+        .gsub(/<\/a>/im," ")
         .gsub(/<li\b[^>]*>(.*?)<\/li>/im," ")
         .gsub(/<!--[^>]*-->/im,"")
         .gsub(/<[\/a-z123456]{2}[^>]*>/im," ")

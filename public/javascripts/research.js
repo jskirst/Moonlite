@@ -14,7 +14,7 @@ function add_events(obj){
       save();
     });
   } else {
-    $("span,p,h2,h3,ol,ul,dl,div.thumb,div.rellink").each(function(){
+    $("span,p,h2,h3,ol,ul,dl,div.thumb,div.rellink,blockquote").each(function(){
       $(this).unbind("dblclick").dblclick(function(){
         $(this).remove();
         console.log("REMOVING");
