@@ -227,6 +227,7 @@ class SectionsController < ApplicationController
       @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
       @possible_points = 10
       @streak_points = @section.user_streak(current_user)
+      @correct = @streak_points > 0 ? true : false
       
       @info_resource = @task.info_resource
       @title = @section.name

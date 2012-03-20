@@ -1,5 +1,14 @@
 <script>
 $(function() {$("#progressbar").progressbar({ value: <%= @progress %> }); });
+
+$(function() {
+  var $correct_status = $("#correct_status");
+  var correct = <%= @correct %>;
+  if(correct){
+    $correct_status.css("color", "#6AAC2B").text("Correct!").animate({opacity: 0.0}, 6000);
+  }
+});
+
 $(function(){
   var count = 30;
   countdown = setInterval(function(){
@@ -25,6 +34,7 @@ $(function(){
     <span class="timer">00:30</span>
   </div>
   <div id="progressbar" style="float:right; margin-right: 10px;"></div>
+  <div id="correct_status" style="float:right; margin-top:10px;"></div>
 </section>
 <%= form_tag({ :controller => :completed_tasks }, :method => :post) %>
 <div class="task row">
