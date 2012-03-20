@@ -31,6 +31,12 @@ $(function(){
 <% else %>
 $(function(){
   add_editing_tools();
+  $("a[href*='/']").click(function(){
+    var leave = confirm("Are you sure you want to leave this page before saving? All changes will be lost."); 
+    if(!leave){
+      return false;
+    }
+  });
 });
 <% end %>
 </script>

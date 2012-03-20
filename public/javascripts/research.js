@@ -8,14 +8,16 @@ function save(){
 
 function add_events(obj){
   if(obj){
-    $(obj).dblclick(function(){
+    $(obj).unbind("dblclick").dblclick(function(){
       $(this).remove();
+      console.log("REMOVING");ry 
       save();
     });
   } else {
-    $("span,p,h2,h3,ol,ul,dl,div.thumb").each(function(){
-      $(this).dblclick(function(){
+    $("span,p,h2,h3,ol,ul,dl,div.thumb,div.rellink").each(function(){
+      $(this).unbind("dblclick").dblclick(function(){
         $(this).remove();
+        console.log("REMOVING");
         save();
       });
     });
@@ -174,6 +176,7 @@ function search_wikipedia(topic, original_topic, article_id){
       
       $article.find("div.wiki_content a").each(function(){
         $(this).attr("href", "http://www.wikipedia.com"+$(this).attr("href"));
+        $(this).click(function(){ return false; });
       });
       save();
       add_events();

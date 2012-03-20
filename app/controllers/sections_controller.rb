@@ -184,7 +184,7 @@ class SectionsController < ApplicationController
       value = value.split("?")
       question = value[0].to_s + "?"
       answer = value[1].to_s
-      @processed_questions[key] = {:question => question, :answer => answer}
+      @processed_questions[key] = {:question => question, :answer1 => answer}
     end
     logger.debug "PQ:"
     logger.debug @processed_questions.to_s

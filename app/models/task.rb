@@ -94,4 +94,19 @@ class Task < ActiveRecord::Base
       answers << self.answer3.chomp unless self.answer3.nil?
       answers << self.answer4.chomp unless self.answer4.nil?
     end
+    
+    def answers_to_hash_array
+      answer_list = []
+      answers = @task.answers_to_array
+      
+      answer_name = "answer"+self.correct_answer.to_s
+      @answer_list << {:answer_name => answer_name, :answer => answers[self.correct_answer]}
+      answers.each_index do |ai|
+        unless ai == self.correct_answer
+          answer_name = "answer"+ai.to_s
+          answer_list << {:answer_name => answer_name, :answer => answers[ai]}
+        end
+      end
+      return answer_list
+    end
 end

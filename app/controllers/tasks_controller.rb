@@ -4,6 +4,7 @@ class TasksController < ApplicationController
 	
 	def new
 		@task = Task.new
+    @ca = 1
 		@title = "New Task"
 		@section_id = params[:section_id]
 		@form_title = "New Task"
@@ -38,6 +39,7 @@ class TasksController < ApplicationController
 		@title = "Edit Task"
 		@form_title = "Edit Task"
 		@task = Task.find(params[:id])
+    @ca = @task.correct_answer
 		@section_id = @task.section_id
 		render "task_form"
 	end
@@ -46,7 +48,7 @@ class TasksController < ApplicationController
 		@task = Task.find(params[:id])
 		if @task.update_attributes(params[:task])
 			flash[:success] = "Task updated."
-			redirect_to edit_section_path(@section, :m => "tasks")
+			redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
 		else
 			@title = "Edit"
 			@form_title = @title
