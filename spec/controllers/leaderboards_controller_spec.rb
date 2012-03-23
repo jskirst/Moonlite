@@ -128,8 +128,8 @@ describe LeaderboardsController do
       
       it "should correctly list the number of completed task for each user" do
 				get :index
-        response.should have_selector("tr .user-score", :content => "15")
-        response.should have_selector("tr .user-score", :content => "10")
+        response.should have_selector("tr .user-score", :content => "30")
+        response.should have_selector("tr .user-score", :content => "20")
         response.should have_selector("tr .user-score", :content => "0")
 			end
     end

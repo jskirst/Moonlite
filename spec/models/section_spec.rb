@@ -62,16 +62,8 @@ describe "Section" do
 			@path.sections.build(@attr.merge(:name => "")).should_not be_valid
 		end
 		
-		it "should require non-blank instructions" do
-			@path.sections.build(@attr.merge(:instructions => "")).should_not be_valid
-		end
-		
 		it "should reject long names" do
 			@path.sections.build(@attr.merge(:name => "a"*256)).should_not be_valid
-		end
-		
-		it "should reject long instructions" do
-			@path.sections.build(@attr.merge(:instructions => "a"*3000)).should_not be_valid
 		end
   end
 	

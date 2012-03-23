@@ -67,13 +67,13 @@ describe "Pages" do
 	end
 	
 	describe "Sign in/out" do
-		describe "failure" do
+		describe "sign in failure" do
 			it "should not sign a user in" do
 				visit signin_path
 				fill_in :email,		:with => ""
 				fill_in :password, 	:with => ""
 				click_button
-				response.should have_selector("div.flash.error",
+				response.should have_selector("div.alert-message.error",
 					:content => "Invalid")
 			end
 		end

@@ -7,8 +7,8 @@ describe "Tasks" do
 		@attr = { :question => "This is a question",
 			:answer1 => "This is an answer.",
 			:answer2 => "This is an answer2.",
-			:answer3 => nil,
-			:answer4 => nil,
+			:answer3 => "This is an answer3.",
+			:answer4 => "This is an answer4.",
 			:resource => "http://www.wikipedia.com",
 			:points => 1 }
 	end

@@ -235,7 +235,7 @@ describe UsersController do
 		
 		it "should have a profile pic inside the header" do
 			get :show, :id => @user
-			response.should have_selector("h1>img", :class => "profile_pic")
+			response.should have_selector("img", :class => "profile_pic")
 		end
 		
 		describe "achievement details" do

@@ -10,8 +10,8 @@ describe "Enrollments" do
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button #goes to user page (path index)
-		visit paths_path
-		click_link @path.name
+		visit explore_path
+		click_link @path.name.gsub(" ","_")
 	end
 	
 	describe 'creation' do

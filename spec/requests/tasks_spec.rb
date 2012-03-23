@@ -10,8 +10,8 @@ describe "Tasks" do
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button #goes to user page (path index)
-		click_link "Paths"
-		click_link @path.name
+		click_link "Explore"
+		click_link @path.name.gsub(" ","_")
 		click_link "Edit"
 		click_link "Sections"
 		click_link "Edit"
@@ -26,7 +26,6 @@ describe "Tasks" do
 					fill_in :task_question, :with => ""
 					fill_in :task_answer1, :with => ""
 					fill_in :task_answer2, :with => ""
-					fill_in :task_points, :with => ""
 					click_button "Save"
 					response.should render_template("tasks/task_form")
 					response.should have_selector("div#error_explanation")

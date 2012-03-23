@@ -113,7 +113,7 @@ describe SectionsController do
 		
 			it "should allow access to 'create'" do
 				post :create, :section => @attr
-				response.should redirect_to edit_path_path(@path, :m => "sections")
+				response.should redirect_to edit_section_path(Section.last, :m => "instructions")
 			end
 			
 			it "should allow access to 'show'" do
@@ -127,8 +127,8 @@ describe SectionsController do
 			end
 			
 			it "should allow access to 'update'" do
-				put :update, :id => @section, :section => @attr.delete("path_id")
-				response.should render_template "edit"
+				put :update, :id => @section, :section => @attr.merge(:path_id => nil)
+				response.should redirect_to edit_section_path(Section.last, :m => "instructions")
 			end
 			
 			it "should allow access to 'destroy'" do
@@ -189,7 +189,7 @@ describe SectionsController do
 				
 				it "should redirect to the section show page" do
 					post :create, :section => @attr
-					response.should redirect_to edit_path_path(@path, :m => "sections")
+					response.should redirect_to edit_section_path(Section.last, :m => "instructions")
 				end
 				
 				it "should have a flash message" do
@@ -260,7 +260,7 @@ describe SectionsController do
 				
 				it "Should redirect to section page" do
 					put :update, :id => @section, :section => @attr
-					response.should render_template "edit"
+					response.should redirect_to edit_section_path(@section, :m => "instructions")
 				end
 				
 				it "Should have a success message" do

@@ -1,6 +1,5 @@
 require 'net/http'
 require 'uri'
-require 'json/pure'
 
 class SectionsController < ApplicationController
   include OrderHelper
@@ -36,7 +35,7 @@ class SectionsController < ApplicationController
 				if params[:commit] == "Save and New"
 					redirect_to new_section_path(:path_id => @path.id)
 				else
-					redirect_to research_section_path(:id => @section, :m => "topics")
+					redirect_to edit_section_path(:id => @section, :m => "instructions")
 				end
 			else
 				@title = "New section"
@@ -59,8 +58,6 @@ class SectionsController < ApplicationController
 			render "edit_tasks"
 		elsif @mode == "settings"
 			render "edit_settings"
-		elsif @mode == "instructions"
-			render "edit_instructions"
 		elsif @mode == "randomize"
       if @section.randomize_tasks
         flash[:success] = "Tasks randomly reordered."
@@ -70,11 +67,13 @@ class SectionsController < ApplicationController
       @section.reload
       @tasks = @section.tasks
 			render "edit_tasks"
-		end
+		else
+      render "edit_instructions"
+    end
 	end
 	
 	def update
-    if params[:section][:is_published] == "1"
+    if params[:section][:is_published]
       if @section.tasks.size.zero?
         flash[:error] = "You need to create at least 1 task for this section before you can make it publicly available."
         @mode = "settings"

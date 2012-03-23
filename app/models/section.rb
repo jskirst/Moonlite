@@ -83,7 +83,7 @@ class Section < ActiveRecord::Base
     def get_next_unfinished_task(user)
       previous_task = tasks.joins(:completed_tasks).where(["completed_tasks.user_id = ?", user.id]).last(:order => "position ASC")
       previous_task_position = previous_task.nil? ? 0 : previous_task.position
-      return tasks.where(["position > ?", previous_task_position]).first(:order => "position ASC")
+      return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
     end
     
     def get_next_incorrectly_finished_task(user)

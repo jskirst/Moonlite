@@ -47,8 +47,9 @@ describe "Company" do
 			@user.company.should respond_to(:paths)
 		end
 		
-		it "should have the right paths in the right order" do
-			@user.company.paths.should == [@path2, @path1]
+		it "should have the right paths" do
+			@user.company.paths.to_a.include?(@path1).should == true
+			@user.company.paths.to_a.include?(@path2).should == true
 		end
 		
 		it "should destroy associated paths" do

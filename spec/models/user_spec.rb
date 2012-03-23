@@ -177,7 +177,8 @@ describe "User" do
 		end
 		
 		it "should have the right paths in the right order" do
-			@user.paths.should == [@path2, @path1]
+			@user.paths.to_a.include?(@path1).should == true
+			@user.paths.to_a.include?(@path2).should == true
 		end
 		
 		it "should destroy associated paths" do

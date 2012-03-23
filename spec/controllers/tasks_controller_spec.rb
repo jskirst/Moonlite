@@ -12,7 +12,9 @@ describe TasksController do
 		@attr = {
 			:question => "Replacement question", 
 			:answer1 => "Replacement answer", 
-			:answer2 => "Replacement answer", 
+			:answer2 => "Replacement answer",
+			:answer3 => "Replacement answer",
+			:answer4 => "Replacement answer",
 			:resource => "fake", 
 			:points => 5,
 			:correct_answer => 1,
@@ -117,12 +119,12 @@ describe TasksController do
 			
 			it "should allow access to 'update' and redirect to updated task" do
 				put :update, :id => @task, :task => @attr.delete("section_id")
-				response.should redirect_to @task
+				response.should redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
 			end
 			
 			it "should allow access to 'destroy'" do
 				delete :destroy, :id => @task
-				response.should redirect_to tasks_path(:section_id => @section.id)
+				response.should redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
 			end
 		end
 	end
@@ -247,7 +249,7 @@ describe TasksController do
 				
 				it "should redirect to task page" do
 					put :update, :id => @task, :task => @attr
-					response.should redirect_to(task_path(assigns(:task)))
+					response.should redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
 				end
 				
 				it "should have a success message" do
@@ -266,7 +268,7 @@ describe TasksController do
 			
 			it "should redirect to index page" do
 				delete :destroy, :id => @task
-				response.should redirect_to tasks_path(:section_id => @section)
+        response.should redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
 			end
 		end
 	end

@@ -8,15 +8,15 @@ describe "Explore" do
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button
+    visit root_path
 	end
 	
 	describe 'creation' do
 		describe "failure" do
 			it "should not make a new path" do
 				lambda do
-					click_link "Explore"
-					click_link "New Path"
-					fill_in "Name", :with => ""
+					click_link "Create"
+					fill_in :path_name, :with => ""
 					click_button
 					response.should render_template('paths/new')
 					response.should have_selector("div#error_explanation")
@@ -27,10 +27,8 @@ describe "Explore" do
 		describe "success" do
 			it "should make a new path" do
 				lambda do
-					name = "NAME"
-					visit paths_path
-					click_link "New Path"
-					fill_in "Name", :with => name
+					click_link "Create"
+					fill_in :path_name, :with => "NAME"
 					click_button
 				end.should change(Path, :count).by(1)
 			end

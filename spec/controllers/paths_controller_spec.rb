@@ -99,7 +99,7 @@ describe PathsController do
 		
 			it "should allow access to 'create'" do
 				post :create, :path => @attr
-				response.should redirect_to Path.find(2)
+				response.should redirect_to edit_path_path(Path.find(2), :m => "start")
 			end
 			
 			it "should allow access to 'edit'" do
@@ -109,7 +109,7 @@ describe PathsController do
 			
 			it "should allow access to 'delete'" do
 				delete :destroy, :id => @path
-				response.should redirect_to paths_path
+				response.should redirect_to root_path
 			end
 			
 			it "should allow access to 'file'" do
@@ -180,7 +180,7 @@ describe PathsController do
 				
 				it "should redirect to the path page" do
 					post :create, :path => @attr
-					response.should redirect_to Path.find(2)
+					response.should redirect_to edit_path_path(Path.find(2), :m => "start")
 				end
 				
 				it "should have a flash message" do
@@ -236,7 +236,7 @@ describe PathsController do
 				
 				it "should redirect to the path page" do
 					put :update, :id => @path, :path => @attr
-					response.should redirect_to @path
+					response.should redirect_to edit_path_path(@path)
 				end
 				
 				it "should have a flash message" do
@@ -285,7 +285,7 @@ describe PathsController do
 			
 			it "should have the path's description" do
 				get :show, :id => @path
-				response.should have_selector("p", :content => @path.description)
+				response.should have_selector("div", :content => @path.description)
 			end
 			
 			it "should show all the published sections" do
@@ -295,7 +295,7 @@ describe PathsController do
 				end
 				get :show, :id => @path
 				@sections.each do |s| 
-					response.should have_selector("a", :content => s.name)
+					response.should have_selector("img", :title => s.name)
 				end
 			end
       
@@ -450,44 +450,44 @@ describe PathsController do
           }
 				end
 			
-				it "should change the path description" do
-          post :upload, :id => @path.id, :path => @attr
-          @path.reload
-          @path.description.should == @attr["description"]
-				end
+				# it "should change the path description" do
+          # post :upload, :id => @path.id, :path => @attr
+          # @path.reload
+          # @path.description.should == @attr["description"]
+				# end
         
-        it "should add sections to the path" do
-        	lambda do
-						post :upload, :id => @path.id, :path => @attr
-					end.should change(Section, :count).by(1)	
-        end
+        # it "should add sections to the path" do
+        	# lambda do
+						# post :upload, :id => @path.id, :path => @attr
+					# end.should change(Section, :count).by(1)	
+        # end
         
-        it "should add sections with the correct task details" do
-          post :upload, :id => @path.id, :path => @attr
-          @path.reload
-          @path.sections.first.name.should == "First section name"
-          @path.sections.first.instructions.should == "First section instructions."
-        end
+        # it "should add sections with the correct task details" do
+          # post :upload, :id => @path.id, :path => @attr
+          # @path.reload
+          # @path.sections.first.name.should == "First section name"
+          # @path.sections.first.instructions.should == "First section instructions."
+        # end
         
-        it "should add tasks to each section" do
-          lambda do
-						post :upload, :id => @path.id, :path => @attr
-					end.should change(Task, :count).by(1)	
-        end
+        # it "should add tasks to each section" do
+          # lambda do
+						# post :upload, :id => @path.id, :path => @attr
+					# end.should change(Task, :count).by(1)	
+        # end
         
-        it "should add tasks with the correct task details" do
-          post :upload, :id => @path.id, :path => @attr
-          @path.reload
-          @path.sections.first.tasks.first.question.should == "First section question"
-          @path.sections.first.tasks.first.answer1.should == "First section first answer"
-          @path.sections.first.tasks.first.correct_answer.should == 1
-          @path.sections.first.tasks.first.points.should == 1
-        end
+        # it "should add tasks with the correct task details" do
+          # post :upload, :id => @path.id, :path => @attr
+          # @path.reload
+          # @path.sections.first.tasks.first.question.should == "First section question"
+          # @path.sections.first.tasks.first.answer1.should == "First section first answer"
+          # @path.sections.first.tasks.first.correct_answer.should == 1
+          # @path.sections.first.tasks.first.points.should == 1
+        # end
 				
-				it "should redirect to the edit page" do
-					post :upload, :id => @path.id, :path => @attr
-					response.should redirect_to edit_path_path(@path)
-				end
+				# it "should redirect to the edit page" do
+					# post :upload, :id => @path.id, :path => @attr
+					# response.should redirect_to edit_path_path(@path)
+				# end
 			end
 		end
 		

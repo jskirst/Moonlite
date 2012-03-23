@@ -10,13 +10,14 @@ describe "CompletedTasks" do
 		@task1 = Factory(:task, :section => @section)
 		@task2 = Factory(:task, :section => @section)
 		@task3 = Factory(:task, :section => @section)
+    @section.reload
 		
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password
 		click_button #goes to user page (path index)
-		visit paths_path
-		click_link @path.name
+		visit explore_path
+		click_link @path.name.gsub(" ","_")
 		click_button "Enroll"
 	end
 	
@@ -28,9 +29,8 @@ describe "CompletedTasks" do
           click_link "Start" #start section
 					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
-					choose "completed_task_answer1"
+					choose "completed_task_answer"+@task1.correct_answer.to_s
 					click_button "Submit"
-					response.should have_selector("div.success")
 					response.should have_selector("p", :content => @task2.question)
 				end.should change(CompletedTask, :count).by(1)
 			end
@@ -41,16 +41,18 @@ describe "CompletedTasks" do
           click_link "Start" #start section
 					response.should render_template("sections/continue")
 					response.should have_selector("p", :content => @task1.question)
-					choose "completed_task_answer1"
+					choose "completed_task_answer"+@task1.correct_answer.to_s
 					click_button "Submit"
-					choose "completed_task_answer1"
+          response.should have_selector("p", :content => @task2.question)
+          choose "completed_task_answer"+@task2.correct_answer.to_s
 					click_button "Submit"
-					choose "completed_task_answer1"
+          response.should have_selector("p", :content => @task3.question)
+					choose "completed_task_answer"+@task3.correct_answer.to_s
 					click_button "Submit"
-					response.should have_selector("h3", :content => "You completed this section")
-					response.should have_selector("dd", :content => @task1.answer1)
-					response.should have_selector("dd", :content => @task2.answer1)
-					response.should have_selector("dd", :content => @task3.answer1)
+					response.should have_selector("h2", :content => "Complete!")
+					response.should have_selector("p", :content => @task1.question)
+					response.should have_selector("p", :content => @task2.question)
+					response.should have_selector("p", :content => @task3.question)
 				end.should change(CompletedTask, :count).by(3)
 			end
 			
@@ -59,9 +61,9 @@ describe "CompletedTasks" do
         click_link "Start" #start section
 				response.should render_template("sections/continue")
 				response.should have_selector("p", :content => @task1.question)
-				choose "completed_task_answer1"
+				choose "completed_task_answer"+@task1.correct_answer.to_s
 				click_button "Submit"
-				response.should have_selector("div.success")
+				response.should have_selector("div.question")
 				response.should have_selector("p", :content => @task2.question)
 				click_link "Sign out"
 				click_link "Sign in"

@@ -40,7 +40,7 @@ describe "Tours" do
 			it "should have a link to enroll in a new Path" do
 				visit user_tour_tour_path(@final_user_tour_page)
 				click_link "View Paths"
-				response.should have_selector("title", :content => "All Paths")
+				response.should have_selector("title", :content => "Explore")
 			end
 			
 			it "should have a link to home page" do
