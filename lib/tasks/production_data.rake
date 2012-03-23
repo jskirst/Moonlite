@@ -87,14 +87,15 @@ namespace :db do
 			PATH_SECTIONS.each do |s|
 				section = path.sections.create(:name => s[0], :instructions => "Instructions to follow.", :is_published => true, :image_url => s[1])
 				NUMBER_OF_TASKS.times do |n|
-					section.tasks.create!(:question => "What is #{n} + #{n}?",
-						:answer1 => "#{n-10}",
-						:answer2 => "#{2*n}",
+					t = section.tasks.new(:question => "What is #{n} + #{n}?",
+						:answer1 => "#{2*n}",
+						:answer2 => "#{n-10}",
 						:answer3 => "#{(3*n)+1}",
 						:answer4 => "#{(4*n)+2}",
-						:correct_answer => 2,
+						:correct_answer => 1,
 						:points => 10
 					)
+          t.save
 				end
 			end
 			ACHIEVEMENTS.each do |a|

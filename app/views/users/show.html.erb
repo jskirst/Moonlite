@@ -4,13 +4,15 @@
 <% end %>
 </section>
 <section class="user_profile">
-	<h1>
-		<%= image_tag(@user.profile_pic, :size =>"50x50", :class => "profile_pic") %>
-		<%= @user.name %>
-	</h1>
-	<section>
-		<p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points. Current Ranking: <strong>#<%= @rank %></strong></p>
-	</section>
+  <div style="margin-bottom:25px">
+    <div>
+      <%= image_tag @user.profile_pic, :size =>"100x100", :class => "profile_pic", :style => "float: left; margin-right: 10px;"%>
+    </div>
+    <div style="height: 100px">
+      <h1><%= @user.name %></h1>
+      <p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points. Current Ranking: <strong>#<%= @rank %></strong></p>
+    </div>
+  </div>
 	<% if !@user_achievements.empty? %>
 	<section>
 		<h3>Achievements</h3>

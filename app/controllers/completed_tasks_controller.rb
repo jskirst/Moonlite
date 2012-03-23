@@ -22,7 +22,7 @@ class CompletedTasksController < ApplicationController
           flash[:success] = "Congrats! You unlocked the #{achievement.name} achievement!"
         end
 			end
-			redirect_to continue_section_path :id => @completed_task.task.section
+			redirect_to continue_section_path :id => @completed_task.task.section, :previous => status_id
 		else
 			redirect_to root_path
 		end

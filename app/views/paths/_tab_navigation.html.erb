@@ -1,0 +1,20 @@
+<section class="tab_header">
+  <div>
+    <h4 style="margin-top:-15px;">Path Builder</h4>
+    <%= image_tag @path.path_pic %>
+    <h1><%= @path.name %></h1>
+  </div>
+  <div>
+    <ul class="tabs">
+      <li <% if @mode == "sections" %> class="active" <% end %>>
+        <%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %>
+      </li>
+      <li <% if @mode == "achievements" %> class="active" <% end %>>
+        <%= link_to "Achievements", edit_path_path(@path.id, :m=>"achievements") %>
+      </li>
+      <li <% if @mode == "settings" %> class="active" <% end %>>
+        <%= link_to "Settings", edit_path_path(@path.id, :m=>"settings") %>
+      </li>
+    </ul>
+  </div>
+</section>

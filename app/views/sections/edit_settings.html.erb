@@ -1,7 +1,7 @@
 <%= render "tab_navigation" %>
-<section>
 <%= form_for(@section) do |f| %>
-	<%= render "shared/error_messages", :object => f.object %>
+<%= render "shared/error_messages", :object => f.object %>
+<section class="tab_content">
   <div class="field clearfix">
 		<%= f.label :name %>
 		<div class="input">
@@ -11,12 +11,13 @@
   <div class="field clearfix">
 		<%= f.label "Section Picture URL" %>
 		<div class="input">
-			<%= f.text_field :image_url, :class=>"xxlarge" %>
+			<%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge" %>
+      <a class="btn secondary" style="margin-left:10px;">Preview</a>
 		</div>
 	</div>
 	<div class="field clearfix">
 		<div class="input">
-			<%= image_tag(@section.pic, :width => "210", :style=>"margin:20px 0px 20px 10px") %>
+			<%= image_tag(@section.pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 10px") %>
 		</div>
 	</div>
   <div class="field clearfix">
@@ -32,9 +33,9 @@
 			</ul>
 		</div>
 	</div>
-	<div class="actions">
-		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
-	</div>
-<% end %>
 </section>
+<div class="actions">
+  <%= f.submit "Save", :class => "btn primary" %>
+  <%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
+</div>
+<% end %>

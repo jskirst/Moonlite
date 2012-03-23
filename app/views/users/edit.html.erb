@@ -16,12 +16,13 @@
 	<div class="field clearfix">
 		<%= f.label "Profile Picture URL" %>
 		<div class="input">
-			<%= f.text_field :image_url %>
+			<%= f.text_field :image_url, :id => "image_url_input", :class => "xxlarge" %>
+      <a class="btn secondary" style="margin-left:10px;">Preview</a>
 		</div>
 	</div>
 	<div class="field clearfix">
 		<div class="input">
-			<%= image_tag(@user.profile_pic, :width => "210") %>
+			<%= image_tag @user.profile_pic, :id => "image_url_preview", :width => "210" %>
 		</div>
 	</div>
 	<div class="field clearfix">

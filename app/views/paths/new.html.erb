@@ -1,8 +1,8 @@
-<h1>New Path</h1>
+<h1 style="margin-bottom: 30px;">New Path</h1>
 <%= form_for(@path) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
 	<div class="field clearfix">
-		<%= f.label :name %>
+		<label>Path name</label>
 		<div class="input">
 			<%= f.text_field :name %>
 		</div>
@@ -15,6 +15,18 @@
           <option value="<%= ci %>"><%= @category_types[ci] %></option>
         <% end %>
 			</select>
+		</div>
+	</div>
+  <div class="field clearfix">
+		<label>Picture URL</label>
+		<div class="input">
+			<%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge", :placeholder => "URL to picture..." %>
+      <a class="btn secondary" style="margin-left:10px;">Preview</a>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<div class="input">
+			<%= image_tag(@path.path_pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 0  px") %>
 		</div>
 	</div>
 	<div class="actions">

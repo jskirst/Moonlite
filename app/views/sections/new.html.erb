@@ -1,38 +1,30 @@
-<script>
-$(function(){
-  $("#section_image_url").change(function(){
-    var link = $(this).val();
-    console.log(link);
-    $("#section_pic").attr("src", link);
-  });
-});
-</script>
-<h1>New Section</h1>
 <section>
-<%= form_for @section do |f| %>
-	<%= render "shared/error_messages", :object => f.object %>
-	<%= f.hidden_field :path_id, :value => @path_id %><br/>
-	<div class="field">
-		<%= f.label :name %>
-		<div class="input">
-			<%= f.text_field :name, :class => "xlarge" %>
-		</div>
-	</div>
-  <div class="field clearfix">
-		<%= f.label "Picture URL" %>
-		<div class="input">
-			<%= f.text_field :image_url, :class=>"xlarge" %>
-		</div>
-	</div>
-  <div class="field clearfix">
-    <%= f.label :default_picture %>
-		<div class="input">
-			<%= image_tag(@section.pic, :width => "210", :style=>"margin:10px 0px 20px 10px", :id => "section_pic") %>
-		</div>
-	</div>
-	<div class="actions">
-		<%= f.submit "Save", :class => "btn primary" %>
-		<%= f.submit "Save and New", :class => "btn secondary" %>
-		<%= link_to "Cancel", edit_path_path(@path_id, :m=>"sections"), :class => "btn secondary" %>
-	</div>
-<% end %>
+  <h2>Create new section</h2>
+  <p  style="padding: 15px;">Start by picking a name for your new section and a link to a photo that you think best represents it.</p>
+  <%= form_for @section do |f| %>
+    <%= render "shared/error_messages", :object => f.object %>
+    <%= f.hidden_field :path_id, :value => @path_id %><br/>
+    <div class="field">
+      <label>Section Name</label>
+      <div class="input">
+        <%= f.text_field :name, :class => "xlarge" %>
+      </div>
+    </div>
+    <div class="field clearfix">
+      <label>Picture URL</label>
+      <div class="input">
+        <%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge", :placeholder => "optional..." %>
+      </div>
+    </div>
+    <div class="field clearfix">
+      <%= f.label :default_picture %>
+      <div class="input">
+        <%= image_tag(@section.pic, :width => "210", :style=>"margin:10px 0px 20px 10px", :id => "image_url_preview") %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.submit "Next", :class => "btn primary" %>
+      <%= link_to "Cancel", edit_path_path(@path_id, :m=>"sections"), :class => "btn secondary" %>
+    </div>
+  <% end %>
+</section>

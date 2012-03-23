@@ -17,8 +17,23 @@ class Section < ActiveRecord::Base
 	
 	validates :path_id, 
 		:presence 		=> true
+    
+  before_save :check_image_url
 		
 	default_scope :order => 'sections.position ASC'
+  
+  def randomize_tasks
+    task_array = []
+    tasks.each do |t|
+      task_array << t
+    end
+    task_array = task_array.shuffle
+    task_array.each_index do |ti|
+      t = task_array[ti]
+      t.position = ti
+      t.save
+    end
+  end
   
   def pic
 		if self.image_url != nil
@@ -35,7 +50,8 @@ class Section < ActiveRecord::Base
 	end
   
   def completed?(user)
-    return true if remaining_tasks(user) == 0
+    return true if remaining_tasks(user) <= 0
+    return false
   end
 	
 	def remaining_tasks(user)
@@ -58,6 +74,12 @@ class Section < ActiveRecord::Base
   end
 		
 	private
+    def check_image_url
+      unless self.image_url.nil?
+        self.image_url = nil if self.image_url.length < 9
+      end
+    end
+  
     def get_next_unfinished_task(user)
       previous_task = tasks.joins(:completed_tasks).where(["completed_tasks.user_id = ?", user.id]).last(:order => "position ASC")
       previous_task_position = previous_task.nil? ? 0 : previous_task.position
@@ -65,7 +87,6 @@ class Section < ActiveRecord::Base
     end
     
     def get_next_incorrectly_finished_task(user)
-      logger.debug "INCORRECTlY FINISHED"
       incorrect_answers = tasks.joins(:completed_tasks).where(["status_id = 0 and user_id = ?", user.id]).all(:order => "position ASC")
       incorrect_answers.each do |a|
         other_answers = user.completed_tasks.where(["completed_tasks.task_id = ? and status_id = 1", a.id]).count
@@ -73,7 +94,6 @@ class Section < ActiveRecord::Base
           return a
         end
       end
-      logger.debug "END INCORRECTlY FINISHED"
       return nil
     end
   

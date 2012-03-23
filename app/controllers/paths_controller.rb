@@ -17,7 +17,7 @@ class PathsController < ApplicationController
     @current_position = @path.current_section(current_user).position unless @sections.empty?
     @enrolled = current_user.enrolled?(@path)
     if current_user.path_started?(@path)
-      @start_mode = @path.completed?(current_user) ? "Review" : "Continue"
+      @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Path"
     elsif current_user.enrolled?(@path)
       @start_mode = "Get Started"
     else
@@ -38,7 +38,7 @@ class PathsController < ApplicationController
 		@path = current_user.paths.build(params[:path])
 		if @path.save
 			flash[:success] = "Path created."
-			redirect_to @path
+			redirect_to edit_path_path(@path, :m => "start")
 		else
 			@title = "New Path"
       @category_types = Path.category_types
@@ -51,18 +51,21 @@ class PathsController < ApplicationController
 	def edit
 		@title = "Edit"
     @file_upload_possible = @path.sections.size == 0 ? true : false
+    @mode = params[:m]
 		if params[:m] == "settings"
 			render "edit_settings"
-		elsif params[:m] == "sections"
-			@sections = @path.sections
-      if params[:a] == "reorder"
-        @reorder = true
-      end
-			render "edit_sections"
 		elsif params[:m] == "achievements"
 			@achievements = @path.achievements
 			render "edit_achievements"
-		end
+		else
+      @start_mode = true if @mode == "start"
+      @mode = "sections"
+    	@sections = @path.sections
+      if params[:a] == "reorder"
+        @reorder = true
+      end
+      render "edit_sections"
+    end
 	end
 	
 	def update
@@ -78,7 +81,7 @@ class PathsController < ApplicationController
     end
 		if @path.update_attributes(params[:path])
 			flash[:success] = "Changes saved."
-			redirect_to @path
+			redirect_to edit_path_path(@path)
 		else
 			@title = "Edit Path"
 			render 'edit'
@@ -105,7 +108,9 @@ class PathsController < ApplicationController
   
 	def continue
 		@section = current_user.most_recent_section_for_path(@path)
-    @section = @path.next_section(@section) if @section.completed?(current_user)
+    until @section.nil? || !@section.completed?(current_user)
+      @section = @path.next_section(@section)
+    end
     if @section.nil? || @section.is_published == false
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
       @similar_paths = @path.similar_paths

@@ -46,10 +46,10 @@
 			});
 		</script>
 		<h2>Criteria</h2>
-		<p style="margin: 20px 0px 20px 20px;">Select which tasks, or which sections, must be completed for the user to unlock the achievement.</p>
 		<% if @sections.empty? %>
-			<p style="margin: 30px 0px 200px 0px;">You have not yet created any sections for this Path. You need to create at least one path to create an achievement.</p>
+			<p style="margin: 20px 0px 20px 20px;">You have not yet created any sections for this Path. You need to create at least one section to create an achievement.</p>
 		<% else %>
+      <p style="margin: 20px 0px 20px 20px;">Select which tasks, or which sections, must be completed for the user to unlock the achievement.</p>
 			<table>
 			<% @sections.each do |s| %>
 				<% if !s.tasks.empty? %>
@@ -75,6 +75,10 @@
 		<% end %>
 	</div>
 	<div class="actions">
+  <% if @sections.empty? %>
+    <%= link_to "Back", edit_path_path(@path, :m => "achievements"), :class => "btn primary"  %>
+  <% else %>
 		<%= f.submit "Save", :class => "btn primary" %>
+  <% end %>
 	</div>
 <% end %>

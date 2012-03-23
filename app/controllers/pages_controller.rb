@@ -14,7 +14,8 @@ class PagesController < ApplicationController
           @enrolled_paths << p
         end
       end
-			@user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
+      @suggested_paths = Path.all(:limit => 4)
+      @user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
 				:conditions => ["users.company_id = ?", current_user.company_id], :limit => 15)
 		else
 			render "landing"
@@ -46,7 +47,7 @@ class PagesController < ApplicationController
       
       unpublished_paths = current_user.paths.where("is_published = ?", false)
       unless unpublished_paths.empty?
-        @path_sections << ["My Unpublished Paths", unpublished_paths]
+        @path_sections << ["Unpublished Paths", unpublished_paths]
       end
     end
 	end

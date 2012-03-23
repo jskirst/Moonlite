@@ -1,31 +1,3 @@
-<style>
-  .completion img, h1, h4, a{
-    display: inline;
-  }
-  .completion a {
-    margin: 30px 20px 0px 0px;
-  }
-  .suggested-paths {
-    margin-bottom: 15px;
-    background: white url(/images/bg_mlt_slider.GIF) repeat-x left bottom;
-  }
-  .suggested-paths img {
-    height: 150px;
-    width: 210px;
-  }
-  .suggested-paths ul {
-    margin-top: 20px;
-  }
-  .suggested-paths h2 {
-    display: inline;
-  }
-  .suggested-paths span {
-    float:right;
-    padding-top:10px;
-    font-style: italic;
-    font-size: 14px;
-  }
-</style>
 <section class="completion row">
   <div class="span4">
     <%= image_tag @path.path_pic, :size => "200x200" %>
@@ -41,24 +13,5 @@
     </div>
   </div>
 </section>
-<hr>
-<section class="suggested-paths">
-  <h2>Similar Paths</h2>
-  <span>Categories: Just for fun, Pop Culture, Travel</span>
-  <ul class="media-grid">
-    <% @similar_paths.each_index do |p| %>
-      <% if p >= 4 then break else path = @similar_paths[p] end %>
-      <li><%= link_to image_tag(path.path_pic), path %>
-    <% end %>
-  </ul>
-</section>
-<section class="suggested-paths">
-  <h2>Recommended for you</h2>
-  <span>Categories: Business, Sales, Information Technology</span>
-  <ul class="media-grid">
-    <% @suggested_paths.each_index do |p| %>
-      <% if p >= 4 then break else path = @suggested_paths[p] end %>
-      <li><%= link_to image_tag(path.path_pic), path %>
-    <% end %>
-  </ul>
-</section>
+<%= render "pages/suggested_paths", {:paths_title => "Similar paths", :paths_list => @similar_paths} %>
+<%= render "pages/suggested_paths", {:paths_title => "Recommended for you", :paths_list => @suggested_paths} %>

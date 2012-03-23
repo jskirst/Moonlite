@@ -66,7 +66,7 @@ $(function(){
 <%= form_for @section do |f| %>
   <%= f.hidden_field :instructions %>
   <div class="actions">
-		<%= f.submit "Save", :confirm => "Warning: This will overwrite any previous material you had for this section.", :class => "btn primary" %>
+		<%= f.submit "Finish", :confirm => "Warning: This will overwrite any previous material you had for this section.", :class => "btn primary" %>
 		<a onclick="display_topic_editor();" class="btn secondary">Add Topic</a>
     <%= link_to "Back", edit_section_path(@section, :m=>"instructions"), :class => "btn secondary" %>
     <%= link_to "Clear", 

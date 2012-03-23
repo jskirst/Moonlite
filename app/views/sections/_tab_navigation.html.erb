@@ -1,6 +1,20 @@
-<h1>Edit Section</h1>
-<ul class="tabs">
-	<li <% if @mode == "instructions" %> class="active" <% end %> ><%= link_to "Instructions", edit_section_path(@section.id, :m => "instructions") %></li>
-	<li <% if @mode == "settings" %> class="active" <% end %> ><%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %></li>
-	<li <% if @mode == "tasks" %> class="active" <% end %> ><%= link_to "Tasks", edit_section_path(@section.id, :m => "tasks") %></li>
-</ul>
+<section class="tab_header">
+  <div>
+    <h4 style="margin-top:-15px;">Section Builder</h4>
+    <%= image_tag @section.pic %>
+    <h1><%= @section.name %></h1>
+  </div>
+  <div>
+    <ul class="tabs">
+      <li <% if @mode == "instructions" %> class="active" <% end %>>
+        <%= link_to "Instructions", edit_section_path(@section.id, :m => "instructions") %>
+      </li>
+      <li <% if @mode == "tasks" %> class="active" <% end %>>
+        <%= link_to "Tasks", edit_section_path(@section.id, :m => "tasks") %>
+      </li>
+      <li <% if @mode == "settings" %> class="active" <% end %>>
+        <%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %>
+      </li>
+    </ul>
+  </div>
+</section>

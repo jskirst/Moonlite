@@ -1,24 +1,20 @@
-<h1>Edit Path</h1>
-<ul class="tabs">
-	<li><%= link_to "Content", edit_path_path(@path.id) %></li>
-	<li class="active"><a href="#">Settings</a></li>
-	<li><%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %></li>
-	<li><%= link_to "Achievements", edit_path_path(@path.id, :m=>"achievements") %></li>
-</ul>
-<section>
+<%= render "tab_navigation" %>
+<section class="tab_content">
 <%= form_for(@path) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
 	<div class="field clearfix">
-		<%= f.label "Profile Picture URL" %>
+		<%= f.label "Path Name" %>
 		<div class="input">
-			<%= f.text_field :image_url, :class=>"xxlarge" %>
+			<%= f.text_field :name %>
 		</div>
 	</div>
 	<div class="field clearfix">
+		<%= f.label :description %>
 		<div class="input">
-			<%= image_tag(@path.path_pic, :width => "210", :style=>"margin:20px 0px 20px 10px") %>
+			<%= f.text_area :description, :class=>"markitup", :rows => "15", :placeholder => "Try to describe this path to others in a couple paragraphs or less..." %>
 		</div>
 	</div>
+  <hr/>
 	<div class="field clearfix">
 		<label>Settings</label>
 		<div class="input">
@@ -40,9 +36,22 @@
 			</ul>
 		</div>
 	</div>
+  <hr/>
+  <div class="field clearfix">
+		<label>Picture URL</label>
+		<div class="input">
+			<%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge", :placeholder => "URL to picture..." %>
+      <a class="btn secondary" style="margin-left:10px;">Preview</a>
+    </div>
+	</div>
+	<div class="field clearfix">
+		<div class="input">
+			<%= image_tag(@path.path_pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 0  px") %>
+		</div>
+	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "Back to Path", @path, :class => "btn secondary" %>
+		<%= link_to "View Path", @path, :class => "btn secondary" %>
 	</div>
 <% end %>
 </section>

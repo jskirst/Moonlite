@@ -1,4 +1,4 @@
-<section>
+<section class="tab_content">
 	<h2><%= @section.name %></h2>
 	<div style="padding: 20px"><%= @section.instructions.html_safe %></div>
   <% @info_resources.each do |r| %>
@@ -15,11 +15,11 @@
       </div>
     <% end %>
   <% end %>
-	<div class="actions">
-    <% if current_user.enrolled?(@section.path) %>
-      <% start_mode = @section_started == true ? "Continue" : "Get Started" %>
-      <%= link_to start_mode, continue_section_path(@section), :class => "btn primary" %>
-    <% end %>
-		<%= link_to "Back", path_path(@section.path), :class => "btn secondary" %>
-	</div>
 </section>
+<div class="actions">
+  <% if current_user.enrolled?(@section.path) %>
+    <% start_mode = @section_started == true ? "Continue" : "Get Started" %>
+    <%= link_to start_mode, continue_section_path(@section), :class => "btn primary" %>
+  <% end %>
+  <%= link_to "Back", path_path(@section.path), :class => "btn secondary" %>
+</div>

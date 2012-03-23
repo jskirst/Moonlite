@@ -1,8 +1,9 @@
 <%= render "tab_navigation" %>
-<section>
-  <%= form_tag({:controller => :sections, :action => :reorder_tasks}, :method => :put) %>
-	<div style="float: right; display:inline;">
+<%= form_tag({:controller => :sections, :action => :reorder_tasks}, :method => :put) %>
+<section class="tab_content">
+	<div style="float: right; margin-bottom:10px;">
     <% if @reorder %>
+      <%= link_to "Randomize", edit_section_path(@section.id, :m => "randomize"), :class => "btn primary" %>
       <%= submit_tag "Save", :class => "btn primary" %>
       <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
     <% else %>
@@ -10,10 +11,9 @@
       <%= link_to "Reorder", edit_section_path(@section.id, :m => "tasks", :a => "reorder"), :class=>"btn secondary" %>
     <% end %>
 	</div>
-	<h2><%= @section.name %></h2>
 	<% if @tasks.empty? %>
-		<p style="margin: 30px 0px 200px 0px;">You have not yet created any tasks for this Path. You can start by letting 
-    <%= link_to "generating questions", questions_section_path(@section) %>.</p>
+		<p style="padding:25px;">You have not yet created any tasks for this Path. You can start by helping Moonlite 
+    <%= link_to "generating questions for you", questions_section_path(@section) %>.</p>
 	<% else %>
 		<table>
 		<% @tasks.each do |t| %>
@@ -54,12 +54,12 @@
 		<% end %>
 		</table>
 	<% end %>
-	<div class="actions">
-  <% if @reorder %>
-    <%= submit_tag "Save", :class => "btn primary" %>
-    <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
-  <% else %>
-    <%= link_to "Back to Section", edit_section_path(@section, :m => "instructions"), :class => "btn primary" %>
-  <% end %>
-	</div>
 </section>
+<div class="actions">
+<% if @reorder %>
+  <%= submit_tag "Save", :class => "btn primary" %>
+  <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
+<% else %>
+  <%= link_to "Back to Path", edit_path_path(@section.path.id), :class => "btn primary" %>
+<% end %>
+</div>

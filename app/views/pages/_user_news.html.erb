@@ -1,0 +1,11 @@
+<table>
+  <% user_news.each do |un| %>
+  <tr>
+    <td style="width: 70px; padding: 5px;"><%= image_tag un.user.profile_pic, :size => "60x60" %>
+    </td>
+    <td>
+      <p><strong><%= link_to un.user.name, un.user %></strong> unlocked the <%= link_to un.achievement.name, un %> achievement. +<%= un.achievement.points %></p>
+    </td>
+  </tr>	
+  <% end %>
+</table>

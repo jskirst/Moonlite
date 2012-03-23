@@ -1,136 +1,44 @@
 <section class="path">
   <% if @start_mode == "Get Started" %>
-  <script>
-    $(function(){
-      $('#startmodal').modal({
-           keyboard: true,
-           backdrop: 'static',
-           show: true
-       });
-    });
-  </script>
-  <!-- sample modal content -->
-  <div id="startmodal" class="modal hide fade">
-    <div class="modal-header">
-      <a href="#" class="close"></a>
-      <h3>Get Started!</h3>
-    </div>
-    <div class="modal-body">
-      <p>You're now successfully enrolled in the <strong><%= @path.name %></strong> Path. Would you like to get started right now?</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#" onclick="$('#startmodal').modal('hide');" class="btn secondary">Later</a>
-      <%= link_to "Get Started", continue_path_path(@path), :class => "btn primary" %>
-    </div>
-  </div>
+    <%= render "paths/popups/get_started" %>
   <% end %>
 	<div style="min-height: 120px;">
     <div style="float:left; margin: 0px 15px 0px 0px;">
       <%= image_tag(@path.path_pic, :size=>"100x100") %>
     </div>
     <div>
-      <h1 style="margin-bottom: 0px;">
-        <%= @path.name %>
-      </h1>
-    </div>
-    <div style="padding:10px;">
-      <div class="description"><%= @path.description.html_safe %></div>
-  </div>
-	</div>
-	<div>
-    <h3>Sections</h3>
-    <% if @sections.empty? %>
-    <p>No sections have been published for this path yet. Check back later to see if any have been posted!</p>
-    <% else %>
-      <ul class="media-grid">
-      <% previous_completed = false %>
-      <% first_path = true %>
-      <% @sections.each do |s| %>
-        <% section_open = true if (s.position <= @current_position || previous_completed || !@enrolled)%>
-        <% section_opacity = section_open ? "1.0" : "0.5" %>
-        <% section_link = section_open ? section_path(s) : "#" %>
-        <li>
-          <a href="<%= section_link %>" style="opacity: <%= section_opacity %>;">
-            <% if @enrolled %>   
-              <% if s.remaining_tasks(current_user) <= 0 %>
-                <span class="section-caption">COMPLETED</span>
-                <% previous_completed = true %>
-              <% elsif s.remaining_tasks(current_user) == s.tasks.size && previous_completed == false && first_path == false %>
-                <span class="section-caption">LOCKED</span>
-                <% previous_completed = false %>
-              <% else %>
-                <span class="section-caption">IN PROGRESS</span>
-                <% previous_completed = false %>
-              <% end %>
-            <% end %>
-            <% first_path = false %>
-            <img class="thumbnail" src="<%= s.pic %>" height="150" width="160" title="<%= s.name %>">
-          </a>
-        </li>
-      <% end %>
-      </ul>
-    <% end %>
-  </div>
-  <% unless @achievements.empty? %>
-  <div>
-    <h3>Unlockable Achievements</h3>
-    <ul class="media-grid">
-      <% @achievements.each do |a| %>
-        <li>
-          <a href="<%= achievement_path(a) %>">
-            <img class="thumbnail" src="<%= a.pic %>" height="50" width="50" title="<%= a.name %>">
-          </a>
-        </li>
-      <% end %>
-      </ul>
-  </div>
-  <% end %>
-  <div>
-    <h3>Enrolled Users</h3>
-    <% if @enrolled_users.empty? %>
-    <p>Be the first to enroll in this path!</p>
-    <% else %>
-      <ul class="media-grid">
-      <% @enrolled_users.each do |u| %>
-       <li>
-          <a href="<%= user_path(u) %>">
-            <img class="thumbnail" src="<%= u.profile_pic %>" height="50" width="50" title="<%= u.name %>">
-          </a>
-        </li>
-      <% end %>
-      </ul>
-    <% end %>
-  </div>
-  <div style="margin: 20px 0px 20px 0px;" class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
-	<section>
-		<div class="actions">
-    <% if @path.is_published %>
-      
       <% unless @enrolled %>
         <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
           <%= f.hidden_field :path_id %>
-          <%= f.submit "Enroll", :class=> "btn primary" %>
+          <%= f.submit "Enroll", :class=> "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;" %>
         <% end %>
       <% else %>
-        <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary" %>
+        <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
       <% end %>
-    
-    <% else %>
+    </div>
+    <div>
+      <h1 style="margin-bottom: 0px;"><%= @path.name %></h1>
+    </div>
+    <div style="padding:15px 30px 0 10px;">
+      <div class="description"><%= @path.description.html_safe %></div>
+    </div>
+	</div>
+  <hr/>
+	<%= render "path_sections", { :sections => @sections } %>
+  <hr/>
+  <% unless @achievements.empty? %>
+    <%= render "unlockable_achievements", { :achievements => @achievements } %>
+    <hr/>
+  <% end %>
+  <%= render "enrolled_users", { :users => @enrolled_users } %>
+  <%= render "facebook_like" %>
+	<% if current_user.company_admin? %>
+  <div class="actions">
+    <% unless @path.is_published %>
       <%= link_to "Publish", edit_path_path(@path, :m => "settings"), :class => "btn primary" %>
     <% end %>
-    
-		<% if current_user.company_admin? %>
-				<%= link_to "Delete", @path, :method => "delete", :confirm => "Are you sure you want to delete this path?", :class => "btn secondary", :style=>"float: right;" %>
-        <%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn secondary", :style=>"float: right; margin-right: 10px;" %>
-		<% end %>
-		</div>
-	</section>
+    <%= link_to "Delete", @path, :method => "delete", :confirm => "Are you sure you want to delete this path?", :class => "btn secondary" %>
+    <%= link_to "Edit", {:controller => "paths", :action => "edit", :id => @path.id }, :class => "btn secondary" %>
+  <% end %>
+  </div>
 </section>

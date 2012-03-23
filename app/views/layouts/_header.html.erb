@@ -6,12 +6,17 @@
 				<% if signed_in? %>
 				<ul>
 					<li><%= link_to "Explore", explore_path %></li>
-					<li><%= link_to current_user.name, current_user %></li>
+					<li>
+            <a href="<%= user_url(current_user) %>">
+              <%= image_tag current_user.profile_pic, :size => "18x18", :style => "display:inline; float:left; margin-right: 5px;" %>
+              <%= current_user.name %>
+            </a>
+          </li>
 					<% if current_user.company.enable_company_store %>
-						<li><%= link_to "Company Store", rewards_path %></li>
+						<li><%= link_to "Rewards", rewards_path %></li>
 					<% end %>
 					<% if current_user.company_admin? %>
-						<li><%= link_to "My Company", current_user.company %></li>
+						<li><%= link_to "Account", current_user.company %></li>
 						<li><%= link_to "Dashboard", dashboard_path %></li>
 					<% end %>
           <li><%= link_to "Leaderboard", leaderboards_path %></li>

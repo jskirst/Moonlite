@@ -36,7 +36,7 @@ class SectionsController < ApplicationController
 				if params[:commit] == "Save and New"
 					redirect_to new_section_path(:path_id => @path.id)
 				else
-					redirect_to edit_section_path(@section, :m => "instructions")
+					redirect_to research_section_path(:id => @section, :m => "topics")
 				end
 			else
 				@title = "New section"
@@ -61,6 +61,15 @@ class SectionsController < ApplicationController
 			render "edit_settings"
 		elsif @mode == "instructions"
 			render "edit_instructions"
+		elsif @mode == "randomize"
+      if @section.randomize_tasks
+        flash[:success] = "Tasks randomly reordered."
+      else
+        flash[:error] = "There was a problem reordering your tasks."
+      end
+      @section.reload
+      @tasks = @section.tasks
+			render "edit_tasks"
 		end
 	end
 	
@@ -102,6 +111,7 @@ class SectionsController < ApplicationController
 # Begin Section Construction 
   
   def research
+    @mode = params[:m]
     if params[:m] == "clear"
       if @section.update_attribute("instructions", nil)
         flash[:success] = "Instructions cleared."
@@ -111,6 +121,9 @@ class SectionsController < ApplicationController
       redirect_to edit_section_path(@section, :m => "instructions")
     elsif params[:m] == "create"
       @topics = params[:topics].split(",")
+      if params[:main_topic]
+        @topics << @section.name
+      end
       @topics = @topics.map {|t| t.strip}
       @quoted_topics = @topics.map {|t| '"'+t+'"'}
       
@@ -223,11 +236,13 @@ class SectionsController < ApplicationController
       @final_section = true if @path.next_section(@section).nil?
       render "results"
     else
+      if params[:previous]
+        @correct = (params[:previous] == "1" ? true : false)
+      end
       @progress = @path.percent_complete(current_user) + 1
       @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
       @possible_points = 10
       @streak_points = @section.user_streak(current_user)
-      @correct = @streak_points > 0 ? true : false
       
       @info_resource = @task.info_resource
       @title = @section.name
@@ -257,8 +272,12 @@ class SectionsController < ApplicationController
     
     def clean_text(text)
       text = text.gsub("This section will include questions on the following topics", "")
-        .gsub(/<a+[^>]*>/im," ")
-        .gsub(/<\/a>/im," ")
+        .gsub("<b>","  ")
+        .gsub("</b>","  ")
+        .gsub("<sub>","")
+        .gsub("</sub>","  ")
+        .gsub(/<a[^>]*>/im,"  ")
+        .gsub(/<\/a>/im,"  ")
         .gsub(/<li\b[^>]*>(.*?)<\/li>/im," ")
         .gsub(/<!--[^>]*-->/im,"")
         .gsub(/<[\/a-z123456]{2}[^>]*>/im," ")
@@ -272,6 +291,7 @@ class SectionsController < ApplicationController
       until text.gsub!(/\s\s/,"").nil?
         text = text.gsub(/\s\s/, " ")
       end
+      text = text.gsub(" .", ".").gsub(" ,", ",")
       return text.strip.chomp
     end
 end

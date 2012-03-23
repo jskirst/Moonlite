@@ -8,5 +8,13 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
+$(function(){
+  $("#image_url_input").change(function(){
+    var link = $(this).val();
+    console.log(link);
+    $("#image_url_preview").attr("src", link);
+  });
+});
+
 $('#topbar').scrollSpy();
 $('#topbar').dropdown();

@@ -1,11 +1,5 @@
-<h1>Edit Path</h1>
-<ul class="tabs">
-	<li><%= link_to "Content", edit_path_path(@path.id) %></li>
-	<li><%= link_to "Settings", edit_path_path(@path.id, :m=>"settings") %></li>
-	<li><%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %></li>
-	<li class="active"><a href="#">Achievements</a></li>
-</ul>
-<section>
+<%= render "tab_navigation" %>
+<section class="tab_content">
 	<div style="float: right; display:inline;">
 		<%= link_to "New Achievement", new_achievement_path(:path_id => @path.id), :class=>"btn primary" %>
 	</div>
@@ -32,6 +26,6 @@
 		</table>
 	<% end %>
 	<div class="actions">
-		<%= link_to "Back to Path", @path, :class => "btn primary" %>
+		<%= link_to "View Path", @path, :class => "btn primary" %>
 	</div>
 </section>

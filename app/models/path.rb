@@ -20,6 +20,8 @@ class Path < ActiveRecord::Base
 	validates :user_id, :presence => true
 	
 	validate :company_id, :if => :user_belongs_to_company
+  
+  before_save :check_image_url
 	
 	#default_scope :order => 'paths.created_at DESC'
   
@@ -92,4 +94,11 @@ class Path < ActiveRecord::Base
 			end
 		end
 	end
+  
+  private
+    def check_image_url
+      unless self.image_url.nil?
+        self.image_url = nil if self.image_url.length < 9
+      end
+    end
 end

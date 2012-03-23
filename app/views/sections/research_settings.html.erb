@@ -1,18 +1,28 @@
-<h1>Section Topics</h1>
-<p style="padding:20px">
-  Before we begin, please tell us which topics you would like researched and where you want to pull information from. 
-  We have compiled a list of topics that we think are important to this section below, separated by commas. 
-  Feel free to remove from or add to this list as much as you want.
+<h2>Add Section Topics</h2>
+<p style="padding:15px 0 0 15px;">
+  List which topics will be covered in your section below. Don't worry about having them all ready now - you can add more topics later at any time. You can also choose to have Moonlite do some automatic content searches on Wikipedia and Youtube to get you jumpstarted.
 </p>
 <%= form_tag({:controller => "sections", :action => "research"}, { :method => "get" }) %>
 <%= hidden_field_tag :m, "create" %>
+<label>Settings</label>
+  <div class="input">
+    <ul class="inputs-list" style="margin-bottom: 15px;">
+      <li>
+        <label>
+          <%= check_box_tag :main_topic %>
+          <span>The main topic is the same as the section name</span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</label>
 <div class="field clearfix">
 	<%= label_tag :topics %>
 	<div class="input">
-		<textarea name="topics" id="topics" class="xxlarge" rows="6"><%= @answers %></textarea>
+		<textarea name="topics" id="topics" class="xxlarge" rows="4" placeholder="List any others topics you want to cover in this section here, seperated by commas..."><%= @answers %></textarea>
 	</div>
 </div>
-<label>Sources</label>
+<label>Auto-search topics</label>
   <div class="input">
     <ul class="inputs-list">
       <li>
@@ -27,15 +37,9 @@
           <span>Youtube</span>
         </label>
       </li>
-      <li>
-        <label>
-          <%= check_box_tag :use_google_images %>
-          <span>Google Images</span>
-        </label>
-      </li>
     </ul>
   </div>
 </label>
 <div class="actions">
-	<%= submit_tag "Submit", :class => "btn primary" %>
+	<%= submit_tag "Next", :class => "btn primary" %>
 </div>

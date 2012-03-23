@@ -30,6 +30,7 @@ class User < ActiveRecord::Base
 	
 	before_save :encrypt_password, :only => [:create]
 	before_save :set_tokens
+  before_save :check_image_url
 	
 	def send_invitation_email
 		email_details = { :email => self.email, :token1 => self.signup_token }
@@ -149,6 +150,12 @@ class User < ActiveRecord::Base
   end
 	
 	private
+    def check_image_url
+      unless self.image_url.nil?
+        self.image_url = nil if self.image_url.length < 9
+      end
+    end
+  
 		def encrypt_password
 			if new_record?
 				self.salt = make_salt

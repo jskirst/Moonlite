@@ -65,11 +65,6 @@ function edit_article(article_id){
 	display_settings_editor(topic, article_id);
 }
 
-function add_text(article_id){
-  topic = $("#"+article_id+" h1").text();
-  display_text_editor(topic, article_id);
-}
-
 function remove_article(article_id){
   var remove = confirm("Are you sure you want to remove this article from the section?")
   if(remove){
@@ -232,7 +227,6 @@ function display_settings_editor(title, article_id){
 }
 
 function update_text(){
-  console.log("UPDATING TEXT");
   var article_id = $("#last_article_text").val();
   var $article = $("#"+article_id);
   
@@ -240,12 +234,13 @@ function update_text(){
   $("#new_text").val("");
   
   if(new_text){
-    console.log("ADDING to "+article_id+":"+new_text);
-    var new_p = $("<p>"+new_text+"</p>").appendTo($article.find("div.wiki_content"));
+    var $article_wiki = $article.find("div.wiki_content");
+    if($article_wiki.length == 0){
+      $article_wiki = $("<div>").attr({"class":"wiki_content"}).appendTo($article);
+    }
+    var new_p = $("<p>"+new_text+"</p>").appendTo($article_wiki);
     save();
     add_events(new_p);
-  } else {
-    console.log("ADDING: NOTHING");
   }
 }
 
@@ -260,6 +255,11 @@ function display_text_editor(title, article_id){
      show: true
   });
   $("#new_text").focus();
+}
+
+function add_text(article_id){
+  topic = $("#"+article_id+" h1").text();
+  display_text_editor(topic, article_id);
 }
 
 function update_topics(){

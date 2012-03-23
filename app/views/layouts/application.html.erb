@@ -5,23 +5,14 @@
 <%= csrf_meta_tag %>
 <%= javascript_include_tag :defaults %>
 <%= render "layouts/stylesheets" %>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
-<script type="text/javascript" src="/javascripts/markitup/jquery.markitup.js"></script>
-<script type="text/javascript" src="/javascripts/markitup/markitup.init.js"></script>
-<script type="text/javascript" src="/javascripts/markitup/set.js"></script>
-<script type="text/javascript" src="/javascripts/bootstrap-modal.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
-<link rel="stylesheet" type="text/css" href="/stylesheets/markitup/style.css" />
-<link rel="stylesheet" type="text/css" href="/stylesheets/markitup/skin/style.css" />
-<link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui-1.8.17.custom.css" />
+<%= render "layouts/scripts" %>
 </head>
 <body>
 <div class="container">
 	<%= render "layouts/header" %>
 	<section id="content">
 		<% flash.each do |key, value| %>
-			<%= content_tag(:div, value, :class => "flash #{key}") %>
+			<%= content_tag(:div, value, :class => "alert-message #{key}") %>
 		<% end %>
 		<%= yield %>
 	</section>
