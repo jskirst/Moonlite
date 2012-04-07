@@ -61,20 +61,7 @@ class Task < ActiveRecord::Base
     end
     
     def record_phrases
-      answers = answers_to_array
-      phrases = []
-      answers.each do |a|
-        phrases << Phrase.find_or_create_by_content(a.downcase)
-      end
-      phrases.each do |p|
-        phrases.each do |pp|
-          unless pp == p
-            pairing = PhrasePairing.find_or_create_by_phrase_id_and_paired_phrase_id(p.id, pp.id)
-            pairing.strength += 1
-            pairing.save
-          end
-        end
-      end
+      PhrasePairing.create_phrase_pairings(answers_to_array)
     end
     
     def set_position

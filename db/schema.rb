@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(:version => 20120306211505) do
 
   create_table "paths", :force => true do |t|
     t.string   "name"
-    t.string   "description",       :default => ""
+    t.text     "description",       :default => ""
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"

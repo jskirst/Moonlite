@@ -1,7 +1,7 @@
 {
   "RSpec": {
     "coverage": {
-      "C:/Users/JC/Moonlite/config/environment.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/environment.rb": [
         null,
         1,
         null,
@@ -19,7 +19,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/config/application.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/application.rb": [
         1,
         null,
         1,
@@ -63,7 +63,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/config/boot.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/boot.rb": [
         1,
         null,
         null,
@@ -78,7 +78,7 @@
         0,
         1
       ],
-      "C:/Users/JC/Moonlite/config/environments/test.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/environments/test.rb": [
         1,
         null,
         null,
@@ -117,7 +117,7 @@
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/config/initializers/backtrace_silencers.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/initializers/backtrace_silencers.rb": [
         null,
         null,
         null,
@@ -126,7 +126,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/config/initializers/inflections.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/initializers/inflections.rb": [
         null,
         null,
         null,
@@ -138,21 +138,21 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/config/initializers/json_patch.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/initializers/json_patch.rb": [
         1,
         1,
         0,
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/config/initializers/mime_types.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/initializers/mime_types.rb": [
         null,
         null,
         null,
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/config/initializers/secret_token.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/initializers/secret_token.rb": [
         null,
         null,
         null,
@@ -161,7 +161,7 @@
         null,
         1
       ],
-      "C:/Users/JC/Moonlite/config/initializers/session_store.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/initializers/session_store.rb": [
         null,
         null,
         1,
@@ -171,7 +171,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/achievements_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/achievements_controller.rb": [
         1,
         1,
         1,
@@ -269,13 +269,13 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/application_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/application_controller.rb": [
         1,
         1,
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/application_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/application_helper.rb": [
         1,
         1,
         401,
@@ -287,15 +287,15 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/comments_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/comments_helper.rb": [
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/leaderboards_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/leaderboards_helper.rb": [
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/order_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/order_helper.rb": [
         1,
         null,
         null,
@@ -418,11 +418,11 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/pages_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/pages_helper.rb": [
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/sessions_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/sessions_helper.rb": [
         1,
         1,
         437,
@@ -494,7 +494,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/upload_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/upload_helper.rb": [
         1,
         1,
         1,
@@ -740,12 +740,12 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/helpers/users_helper.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/helpers/users_helper.rb": [
         1,
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/comments_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/comments_controller.rb": [
         1,
         1,
         1,
@@ -810,7 +810,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/companies_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/companies_controller.rb": [
         1,
         1,
         1,
@@ -885,7 +885,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/completed_tasks_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/completed_tasks_controller.rb": [
         1,
         1,
         1,
@@ -944,7 +944,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/enrollments_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/enrollments_controller.rb": [
         1,
         1,
         1,
@@ -973,7 +973,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/info_resources_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/info_resources_controller.rb": [
         1,
         1,
         1,
@@ -1045,7 +1045,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/leaderboards_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/leaderboards_controller.rb": [
         1,
         1,
         1,
@@ -1081,7 +1081,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/pages_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/pages_controller.rb": [
         1,
         1,
         null,
@@ -1158,7 +1158,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/paths_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/paths_controller.rb": [
         1,
         1,
         1,
@@ -1430,7 +1430,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/reports_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/reports_controller.rb": [
         1,
         1,
         1,
@@ -1569,7 +1569,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/rewards_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/rewards_controller.rb": [
         1,
         1,
         1,
@@ -1680,7 +1680,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/sections_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/sections_controller.rb": [
         1,
         1,
         null,
@@ -1978,7 +1978,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/sessions_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/sessions_controller.rb": [
         1,
         1,
         30,
@@ -2006,7 +2006,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/tasks_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/tasks_controller.rb": [
         1,
         1,
         1,
@@ -2085,7 +2085,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/tours_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/tours_controller.rb": [
         1,
         1,
         null,
@@ -2115,7 +2115,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/user_achievements_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/user_achievements_controller.rb": [
         1,
         1,
         null,
@@ -2132,7 +2132,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/user_transactions_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/user_transactions_controller.rb": [
         1,
         1,
         1,
@@ -2176,7 +2176,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/controllers/users_controller.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/controllers/users_controller.rb": [
         1,
         1,
         1,
@@ -2294,7 +2294,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/mailers/mailer.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/mailers/mailer.rb": [
         1,
         1,
         null,
@@ -2310,7 +2310,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/achievement.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/achievement.rb": [
         1,
         1,
         null,
@@ -2344,7 +2344,7 @@
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/comment.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/comment.rb": [
         1,
         1,
         null,
@@ -2368,7 +2368,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/company.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/company.rb": [
         1,
         1,
         null,
@@ -2389,7 +2389,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/completed_task.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/completed_task.rb": [
         1,
         1,
         null,
@@ -2413,7 +2413,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/enrollment.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/enrollment.rb": [
         1,
         1,
         null,
@@ -2441,7 +2441,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/info_resource.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/info_resource.rb": [
         1,
         1,
         null,
@@ -2484,7 +2484,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/leaderboard.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/leaderboard.rb": [
         1,
         1,
         null,
@@ -2508,7 +2508,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/path.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/path.rb": [
         1,
         1,
         null,
@@ -2614,7 +2614,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/phrase.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/phrase.rb": [
         1,
         1,
         1,
@@ -2638,7 +2638,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/phrase_pairing.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/phrase_pairing.rb": [
         1,
         1,
         null,
@@ -2651,7 +2651,7 @@
         1,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/reward.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/reward.rb": [
         1,
         1,
         null,
@@ -2679,7 +2679,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/section.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/section.rb": [
         1,
         1,
         null,
@@ -2792,7 +2792,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/task.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/task.rb": [
         1,
         1,
         1,
@@ -2908,7 +2908,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/user.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/user.rb": [
         1,
         1,
         1,
@@ -3104,7 +3104,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/user_achievement.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/user_achievement.rb": [
         1,
         1,
         null,
@@ -3127,7 +3127,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/app/models/user_transaction.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/app/models/user_transaction.rb": [
         1,
         1,
         null,
@@ -3171,7 +3171,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/factories.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/factories.rb": [
         1,
         1,
         null,
@@ -3270,7 +3270,7 @@
         120,
         null
       ],
-      "C:/Users/JC/Moonlite/config/routes.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/config/routes.rb": [
         1,
         1,
         null,
@@ -3402,7 +3402,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/comments_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/comments_controller_spec.rb": [
         1,
         null,
         1,
@@ -3524,7 +3524,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/companies_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/companies_controller_spec.rb": [
         1,
         null,
         1,
@@ -3893,7 +3893,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/completed_tasks_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/completed_tasks_controller_spec.rb": [
         1,
         null,
         1,
@@ -4072,7 +4072,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/enrollment_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/enrollment_controller_spec.rb": [
         1,
         null,
         1,
@@ -4172,7 +4172,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/info_resources_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/info_resources_controller_spec.rb": [
         1,
         null,
         1,
@@ -4398,7 +4398,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/leaderboards_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/leaderboards_controller_spec.rb": [
         1,
         null,
         1,
@@ -4567,7 +4567,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/pages_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/pages_controller_spec.rb": [
         1,
         null,
         1,
@@ -4663,7 +4663,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/paths_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/paths_controller_spec.rb": [
         1,
         null,
         1,
@@ -5358,7 +5358,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/reports_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/reports_controller_spec.rb": [
         1,
         null,
         1,
@@ -5579,7 +5579,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/rewards_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/rewards_controller_spec.rb": [
         1,
         null,
         1,
@@ -6124,7 +6124,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/sections_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/sections_controller_spec.rb": [
         1,
         null,
         1,
@@ -6471,7 +6471,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/sessions_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/sessions_controller_spec.rb": [
         1,
         null,
         1,
@@ -6540,7 +6540,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/tasks_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/tasks_controller_spec.rb": [
         1,
         null,
         1,
@@ -6818,7 +6818,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/tours_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/tours_controller_spec.rb": [
         1,
         null,
         1,
@@ -6891,7 +6891,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/users_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/users_controller_spec.rb": [
         1,
         null,
         1,
@@ -7296,7 +7296,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/controllers/user_transactions_controller_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/controllers/user_transactions_controller_spec.rb": [
         1,
         null,
         1,
@@ -7538,7 +7538,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/mailers/mailer_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/mailers/mailer_spec.rb": [
         1,
         null,
         1,
@@ -7562,7 +7562,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/achievement_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/achievement_spec.rb": [
         1,
         null,
         1,
@@ -7647,7 +7647,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/comment_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/comment_spec.rb": [
         1,
         null,
         1,
@@ -7720,7 +7720,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/company_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/company_spec.rb": [
         1,
         null,
         1,
@@ -7784,7 +7784,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/completed_task_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/completed_task_spec.rb": [
         1,
         null,
         null,
@@ -7854,7 +7854,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/enrollment_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/enrollment_spec.rb": [
         1,
         null,
         1,
@@ -7915,7 +7915,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/info_resource_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/info_resource_spec.rb": [
         1,
         null,
         1,
@@ -7990,7 +7990,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/leaderboard_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/leaderboard_spec.rb": [
         1,
         null,
         1,
@@ -8052,7 +8052,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/path_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/path_spec.rb": [
         1,
         null,
         1,
@@ -8186,7 +8186,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/reward_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/reward_spec.rb": [
         1,
         null,
         1,
@@ -8278,7 +8278,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/section_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/section_spec.rb": [
         1,
         null,
         1,
@@ -8410,7 +8410,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/task_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/task_spec.rb": [
         1,
         null,
         1,
@@ -8531,7 +8531,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/user_achievement_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/user_achievement_spec.rb": [
         1,
         null,
         null,
@@ -8586,7 +8586,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/user_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/user_spec.rb": [
         1,
         null,
         1,
@@ -8904,7 +8904,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/models/user_transaction_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/models/user_transaction_spec.rb": [
         1,
         null,
         1,
@@ -9017,7 +9017,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/completed_tasks_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/completed_tasks_spec.rb": [
         1,
         null,
         1,
@@ -9097,7 +9097,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/enrollments_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/enrollments_spec.rb": [
         1,
         null,
         1,
@@ -9135,7 +9135,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/friendly_forwardings_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/friendly_forwardings_spec.rb": [
         1,
         null,
         1,
@@ -9150,7 +9150,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/pages_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/pages_spec.rb": [
         1,
         null,
         1,
@@ -9246,7 +9246,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/paths_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/paths_spec.rb": [
         1,
         null,
         1,
@@ -9311,7 +9311,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/sections_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/sections_spec.rb": [
         1,
         null,
         1,
@@ -9355,7 +9355,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/tasks_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/tasks_spec.rb": [
         1,
         null,
         1,
@@ -9417,7 +9417,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/tours_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/tours_spec.rb": [
         1,
         null,
         1,
@@ -9536,7 +9536,7 @@
         null,
         null
       ],
-      "C:/Users/JC/Moonlite/spec/requests/users_spec.rb": [
+      "C:/Users/EV4/Dropbox/rails/moonlite/spec/requests/users_spec.rb": [
         1,
         null,
         1,
@@ -9544,6 +9544,6 @@
         null
       ]
     },
-    "timestamp": 1332531283
+    "timestamp": 1332962744
   }
 }

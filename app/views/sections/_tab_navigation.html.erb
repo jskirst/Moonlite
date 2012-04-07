@@ -15,6 +15,9 @@
       <li <% if @mode == "settings" %> class="active" <% end %>>
         <%= link_to "Settings", edit_section_path(@section.id, :m => "settings") %>
       </li>
+      <li style="float:right;">
+        <%= link_to "Back to Path", edit_path_path(@section.path.id, :m => "sections") %>
+      </li>
     </ul>
   </div>
 </section>
