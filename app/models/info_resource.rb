@@ -5,9 +5,8 @@ class InfoResource < ActiveRecord::Base
   belongs_to :section
   belongs_to :task
 	
-	validates :description, 
-		:presence 		=> true,
-		:length			=> { :within => 1..255 }
+	validates :description,
+		:length			=> { :maximum => 255 }
 
 	validates :link,
 		:length			=> { :within => 1..255 }
@@ -20,7 +19,7 @@ class InfoResource < ActiveRecord::Base
     
   private
     def has_path_or_section_or_task
-      error = "Transaction requires one of the following: Path, Section or Task."
+      error = "Info resource requires one of the following: Path, Section or Task."
 			if path.nil? && section.nil? && task.nil?
 				errors[:base] << error
 			elsif !path.nil? && !(section.nil? && task.nil?)

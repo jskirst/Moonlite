@@ -73,7 +73,7 @@ class SectionsController < ApplicationController
 	end
 	
 	def update
-    if params[:section][:is_published]
+    if params[:section][:is_published] == "1"
       if @section.tasks.size.zero?
         flash[:error] = "You need to create at least 1 task for this section before you can make it publicly available."
         @mode = "settings"

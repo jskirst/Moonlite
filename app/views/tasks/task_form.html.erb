@@ -57,7 +57,15 @@ $(function(){
           <%= f.text_field :answer4, :maxlength => 255, :size => 75, :class => a_class.downcase.gsub(" ","_") %>
         </div>
       </div>
-      <span style="font-style: italic; padding-left: 70px; padding-top: 6px">*Required</span>
+      <% if @info_resource %>
+      <div class="field clearfix">
+        <%= f.label "Resource" %>
+        <div class="input">
+          <%= image_tag(@info_resource.link, :width => "100") %>
+        </div>
+      </div>
+      <% end %>
+      <span style="font-style: italic; padding-left: 70px; padding-top: 6px">*Required</span><br>
     </div>
     <div class="span8 suggestions">
       <p class="not_found_message" style="padding-top:10px; display: none;">No suggestions found.</p>

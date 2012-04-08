@@ -39,6 +39,7 @@ class TasksController < ApplicationController
 		@title = "Edit Task"
 		@form_title = "Edit Task"
 		@task = Task.find(params[:id])
+    @info_resource = InfoResource.find_by_task_id(@task.id)
     @ca = @task.correct_answer
 		@section_id = @task.section_id
 		render "task_form"

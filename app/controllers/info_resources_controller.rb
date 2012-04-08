@@ -11,7 +11,7 @@ class InfoResourcesController < ApplicationController
 		@info_resource = InfoResource.new(params[:info_resource])
 		if @info_resource.save
 			flash[:success] = "Resource created."
-			redirect_to root_path
+      redirect_to edit_section_path(@info_resource.task.section, :m => "tasks")
 		else
 			@title = "New"
       get_parent_type_and_id

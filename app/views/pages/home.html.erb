@@ -1,7 +1,5 @@
 <section style="margin-bottom:20px">
-  <%= link_to "Create", new_path_path, :class => "btn secondary", :style => "float: right; margin: 6px 3px 0 0;" %>
-  <%= link_to "Explore", explore_path, :class => "btn primary", :style => "float: right; margin: 6px 10px 0 0;" %>
-  <h2 style="margin-bottom: 15px;">My Paths</h2>
+ <h2 style="margin-bottom: 15px;">My Paths</h2>
 <% if @enrolled_paths.empty? && @completed_paths.empty? %>
   <p>You are not currently enrolled in any paths.</p>
   <%= link_to "Get started!", explore_path, :class => "btn primary" %>
