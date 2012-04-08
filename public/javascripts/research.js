@@ -145,6 +145,7 @@ function search_wikipedia(topic, original_topic, article_id){
       }
       
       content = $(content).find("table").remove().end();
+      content = $(content).find("hr").remove().end();
       content = $(content).find("ol.references").remove().end();
       content = $(content).find("#References").remove().end();
       content = $(content).find("#External_links").remove().end();

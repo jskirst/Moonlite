@@ -1,6 +1,7 @@
 class LeaderboardsController < ApplicationController
   before_filter :authenticate
 	before_filter :admin_or_company_admin, :only => [:new, :create]
+  before_filter :is_enabled
 
   def index
     previous_board = Leaderboard.first
@@ -31,4 +32,11 @@ class LeaderboardsController < ApplicationController
 		def admin_or_company_admin
 			redirect_to(root_path) unless (current_user.admin? || current_user.company_admin?)
 		end
+    
+    def is_enabled
+      unless current_user.company.enable_leaderboard
+        flash[:error] = "This feature is not currently enabled for your use."
+        redirect_to root_path
+      end
+    end
 end

@@ -97,6 +97,9 @@ class PathsController < ApplicationController
     end
     redirect_to edit_path_path(@path, :m => "sections")
   end
+  
+  def divide
+  end
 
   def destroy
 		@path.destroy

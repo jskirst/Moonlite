@@ -1,7 +1,7 @@
 class RewardsController < ApplicationController
 	before_filter :authenticate
 	before_filter :company_admin, :except => [:show, :index, :review, :purchase]
-	before_filter :check_store_enabled
+	before_filter :is_enabled
 	before_filter :correct_company
 	
 	def new
@@ -76,7 +76,7 @@ class RewardsController < ApplicationController
 	end
 	
 	private
-		def check_store_enabled
+		def is_enabled
 			if !current_user.company.enable_company_store
 				flash[:error] = "The Company Store has been disabled for your account."
 				redirect_to root_path

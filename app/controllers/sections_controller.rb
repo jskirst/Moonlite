@@ -163,7 +163,7 @@ class SectionsController < ApplicationController
           sentences = []
         end
       end
-      unless sentences.empty?
+      unless sentences.join(" ").length < 80
         @split_paragraphs << sentences.join(" ")
       end
     end

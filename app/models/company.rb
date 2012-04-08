@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-	attr_accessible :name, :enable_company_store
+	attr_accessible :name, :enable_company_store, :enable_leaderboard, :enable_tour, :enable_dashboard
 	
 	has_many :users
 	has_many :rewards

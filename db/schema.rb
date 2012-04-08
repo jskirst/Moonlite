@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306211505) do
+ActiveRecord::Schema.define(:version => 20120407203626) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -39,6 +39,9 @@ ActiveRecord::Schema.define(:version => 20120306211505) do
     t.datetime "updated_at"
     t.boolean  "enable_company_store", :default => true
     t.integer  "owner_id"
+    t.boolean  "enable_leaderboard",   :default => true
+    t.boolean  "enable_dashboard",     :default => true
+    t.boolean  "enable_tour",          :default => true
   end
 
   create_table "company_users", :force => true do |t|

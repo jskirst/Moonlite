@@ -1,21 +1,27 @@
 function add_events(obj){
   if(obj){
     $(obj).find("p").dblclick(function(){ transform(this); });
-    $(obj).hover(add_delete_button, remove_delete_button);
+    $(obj).hover(add_buttons, remove_buttons);
   } else {
     $("li").each(function(){
       $(this).dblclick(function(){ 
         $(obj).find("p").dblclick(function(){ transform(this); });
       });
-      $(this).hover(add_delete_button, remove_delete_button);
+      $(this).hover(add_buttons, remove_buttons);
     });
   }
 }
 
-function add_delete_button(){
+function add_buttons(){
   if($(this).find("span").length == 0){
+    var $edit_link = $("<span class='btn primary edit'>Edit</span>").prependTo(this);
     var $del_link = $("<span class='btn secondary delete'>Remove</span>").prependTo(this);
     $del_link.click(function(){
+      var question_id = $(this).parent().attr("id");
+      $("#"+question_id+"_input").remove();
+      $(this).parent().remove();
+    });
+    $edit_link.click(function(){
       var question_id = $(this).parent().attr("id");
       $("#"+question_id+"_input").remove();
       $(this).parent().remove();
@@ -23,8 +29,9 @@ function add_delete_button(){
   }
 }
 
-function remove_delete_button(){
+function remove_buttons(){
   $(this).find(".delete").remove();
+  $(this).find(".edit").remove();
 }
 
 function transform(obj){

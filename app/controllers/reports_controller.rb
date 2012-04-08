@@ -1,7 +1,8 @@
 class ReportsController < ApplicationController
 	before_filter :authenticate
 	before_filter :company_admin
-
+  before_filter :is_enabled
+  
 	def dashboard
 		if !params[:time]
 			@time = 7
@@ -134,4 +135,13 @@ class ReportsController < ApplicationController
 			:select => "count(*) as count, tasks.id"
 		)
 	end
+  
+  private
+    
+    def is_enabled
+      unless current_user.company.enable_dashboard
+        flash[:error] = "This feature is not currently enabled for your use."
+        redirect_to root_path
+      end
+    end
 end
