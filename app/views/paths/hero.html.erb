@@ -37,26 +37,3 @@
   </div>
 </section>
 <hr>
-<section class="path">
-	<div style="float:left; margin: 0px 15px 5px 0px;"><%= image_tag(@path.path_pic, :size=>"100x100") %></div>
-	<div>
-		<h1>
-			<%= @path.name %>
-		</h1>
-	</div>
-	<div style="padding:0px 0px 10px 10px;">
-		<div class="description"><%= @path.description.html_safe %></div>
-	</div>
-	<div>
-    <h3>Sections</h3>
-    <ul class="media-grid">
-      <% @sections.each do |s| %>
-      <li>
-        <a href="<%= section_path(s) %>">
-          <img class="thumbnail" src="<%= s.pic %>" height="150" width="210" title="<%= s.name %>">
-        </a>
-      </li>
-      <% end %>
-    </ul>
-  </div>
-</section>

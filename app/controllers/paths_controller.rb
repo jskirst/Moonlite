@@ -116,8 +116,8 @@ class PathsController < ApplicationController
     end
     if @section.nil? || @section.is_published == false
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
-      @similar_paths = @path.similar_paths
-      @suggested_paths = @path.suggested_paths(current_user)
+      @similar_paths = Path.similar_paths(@path)
+      @suggested_paths = Path.suggested_paths(current_user, @path.id)
       render "completion"
     else
       redirect_to @section

@@ -14,7 +14,7 @@ class PagesController < ApplicationController
           @enrolled_paths << p
         end
       end
-      @suggested_paths = Path.all(:limit => 4)
+      @suggested_paths = Path.suggested_paths(current_user)
       @user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
 				:conditions => ["users.company_id = ?", current_user.company_id], :limit => 15)
 		else

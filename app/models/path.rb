@@ -25,12 +25,8 @@ class Path < ActiveRecord::Base
 	
 	#default_scope :order => 'paths.created_at DESC'
   
-  def self.with_category_type(type, excluded_id = -1, order = nil)
-    if order
-      return Path.where("is_published = ? and category_type = ? and id != ?", true, "#{type}", excluded_id).all(:order => order)
-    else
-      return Path.where("is_published = ? and category_type = ? and id != ?", true, "#{type}", excluded_id)
-    end
+  def self.with_category_type(type, excluded_id = -1, order = "id DESC")
+    return Path.where("is_published = ? and category_type = ? and id != ?", true, "#{type}", excluded_id).all(:order => order)
   end
   
   def self.with_name_like(name)
@@ -48,12 +44,16 @@ class Path < ActiveRecord::Base
     return nil
   end
   
-  def similar_paths
-    return Path.with_category_type(self.category_type, self.id, "id DESC")
+  def self.similar_paths(path)
+    unless path.nil?
+      return Path.with_category_type(path.category_type, path.id, "id DESC")
+    else
+      return Path.with_category_type(0)
+    end
   end
   
-  def suggested_paths(user)
-    return Path.with_category_type(0, self.id, "id ASC")
+  def self.suggested_paths(user, excluded_path_id = -1)
+    return Path.with_category_type(0, excluded_path_id, "id ASC")
   end
   
   def current_section(current_user)
