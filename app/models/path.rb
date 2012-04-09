@@ -34,7 +34,7 @@ class Path < ActiveRecord::Base
   end
   
   def self.category_types
-    return ["Professional", "Just for fun"]
+    return ["Professional", "Just for fun", "Periodicals"]
   end
   
   def self.get_category_type_id(str)
