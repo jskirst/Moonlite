@@ -25,12 +25,13 @@
     <ul class="media-grid">
     <% all_paths.each_index do |pp| %>
       <% if pp >= 12 && @display_all then break end %>
+      <% path = all_paths[pp] %>
       <li>
-        <a href="<%= path_path(all_paths[pp]) %>" id="<%= all_paths[pp].name.gsub(" ", "_") %>">
+        <a href="<%= path_path(path) %>" id="<%= path.name.gsub(" ", "_") %>">
           <div class="path-caption">
-            <span class="caption-title"><%= truncate(all_paths[pp].name, :length => 35) %></span><br>
-            <span style="font-size: 10px; float: left;">237 Enrolled</span>
-            <span style="font-size: 10px; float: right;">Rating: 97%</span>
+            <span class="caption-title"><%= truncate(path.name, :length => 35) %></span><br>
+            <span style="font-size: 10px; float: left;"><%= path.enrolled_user_count %> users enrolled.</span>
+            <span style="font-size: 10px; float: right;"><%= path.difficulty_rating %></span>
           </div>
           <img class="thumbnail" src="<%= all_paths[pp].path_pic %>" height="150" width="210">
         </a>

@@ -95,6 +95,17 @@ class Path < ActiveRecord::Base
 		end
 	end
   
+  def enrolled_user_count
+    return enrollments.count
+  end
+  
+  def difficulty_rating
+    task_count = tasks.count
+    return "Easy" if task_count < 50
+    return "Medium" if task_count < 150
+    return "Hard"
+  end
+  
   private
     def check_image_url
       unless self.image_url.nil?
