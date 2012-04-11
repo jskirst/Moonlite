@@ -1,19 +1,12 @@
 <section class="tab_content">
 	<h2><%= @section.name %></h2>
+	<% unless @section.instructions.blank? %>
 	<div style="padding: 20px"><%= @section.instructions.html_safe %></div>
+	<% end %>
   <% @info_resources.each do |r| %>
-    <% if r.info_type == "video" %>
-      <% r.link = r.link.gsub("watch?v=", "embed/") %>
-      <div style="margin: 20px 0px 20px 150px;">
-      <iframe width="560" height="315" src="<%= r.link %>" frameborder="0" allowfullscreen></iframe>
-      </div>
-    <% elsif r.info_type == "slideshow" %>
-      <div style="margin: 20px 0px 20px 150px;">
-        <div style="width:425px" id="__ss_1245987"> 
-          <iframe src="http://www.slideshare.net/slideshow/embed_code/1245987" width="600" height="500"></iframe> 
-        </div>
-      </div>
-    <% end %>
+		<div>
+			<iframe src="http://docs.google.com/viewer?url=<%=u r.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
+		</div>
   <% end %>
 </section>
 <div class="actions">

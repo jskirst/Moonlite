@@ -46,9 +46,27 @@ class InfoResourcesController < ApplicationController
 		end
 	end
 	
+	def retrieve
+		uri = URI.parse(params[:url])
+    http = Net::HTTP.new(uri.host, uri.port)
+
+    request = Net::HTTP::Get.new(uri.request_uri)
+    resp, @data = http.request(request)
+    
+    unless @data.nil?
+      logger.debug @data
+			send_data(@data, :filename => "original.pdf")
+    end
+	end
+	
 	def destroy
+		@info_resource = InfoResource.find(params[:id])
 		@info_resource.destroy
-		redirect_back_or_to @info_resource.path
+		if @info_resource.section_id
+			redirect_to edit_section_path(@info_resource.section)
+		elsif @info_resource.task_id
+			redirect_to edit_section_path(@info_resource.section, :m => "tasks")
+		end
 	end
 	
 	private

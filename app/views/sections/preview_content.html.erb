@@ -1,0 +1,13 @@
+<style>
+.embedded_viewer { margin: auto; text-align: center; width: 100%; }
+</style>
+<div class="embedded_viewer">
+	<div style="margin-bottom: 15px;">
+		<h2 style="margin-bottom:20px;">Document Preview</h2>
+		<%= link_to "Retry", import_content_section_path(@section, :previous => @info_resource.id), :class => "btn secondary", :style=> "margin-right: 20px" %>
+		<%= link_to "Finish", edit_section_path(@section, :m => "instructions"), :class => "btn primary" %>
+	</div>
+	<div>
+		<iframe src="http://docs.google.com/viewer?url=<%=u @info_resource.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
+	</div>
+</div>

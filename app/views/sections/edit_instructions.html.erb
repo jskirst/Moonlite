@@ -1,34 +1,35 @@
 <%= render "tab_navigation" %>
 <section class="tab_content">
-  <% if @section.instructions.nil? || @section.instructions.blank? %>
+  <% if @section.instructions.blank? & @info_resources.empty? %>
   <div style="padding: 20px;">
     <p>You have not added any content for this section yet. Start by doing one of the following:</p>
     <ul>
       <li style="padding:5px">Find relevent <%= link_to "Wikipedia articles or Youtube videos", research_section_path(@section, :m => "topics") %>.</li>
-      <li style="padding:5px">Import a <%= link_to "PDF document", import_content_section_path(@section, :source => "pdf") %>.</li>
+      <li style="padding:5px">Import a <%= link_to "PDF, Microsoft Word document, or Powerpoint", import_content_section_path(@section) %>.</li>
       <li style="padding:5px">Start with a <%= link_to "blank HTML editor", html_editor_section_path(@section) %>.</li>
     </ul>
   </div>
-  <% else %>
-  <div style="float:right;">
-    <% if @section.content_type == "pdf" %>
-      <%= link_to "Edit", import_content_section_path(@section, :source => "pdf"), :class => "btn primary" %>
-    <% elsif @section.content_type == "html" %>
-      <%= link_to "Edit", html_editor_section_path(@section, :source => "html"), :class => "btn primary" %>
-    <% else %>
-      <%= link_to "Edit", research_section_path(@section, :m => "edit"), :class => "btn primary" %>
+	<% else %>
+		<% if !@section.instructions.blank? %>
+		<div style="float:right; margin-bottom: 20px;">
+			<%= link_to "Edit", research_section_path(@section, :m => "edit"), :class => "btn primary" %>
       <%= link_to "Advanced Edit", html_editor_section_path(@section, :source => "html"), :class => "btn primary" %>
-    <% end %>
-  </div>
-  <% end %>
-  <div style="padding: 30px;">
-    <% if @section.content_type == "pdf" %>
-      <%= render "pdf_viewer", { :file_path => @section.instructions } %>
+		</div>
+		<div style="padding: 30px;">
+      <%= @section.instructions.html_safe %>
+		</div>
     <% else %>
-      <%= @section.instructions.html_safe unless (@section.instructions.nil? || @section.instructions.blank?) %>
+			<% @info_resources.each do |r| %>
+			<div style="margin-top:20px;">
+				<div style="float:right; margin-bottom: 20px;">
+					<%= link_to "Delete", r, :method => :delete, :confirm => "Are you sure you want to delete this document?", :class => "btn secondary" %>
+				</div>
+				<div>
+					<iframe src="http://docs.google.com/viewer?url=<%=u r.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
+				</div>
+			</div>
+			<% end %>
     <% end %>
-  </div>
+		<%= link_to "Add Document", import_content_section_path(@section), :class => "btn primary", :style => "margin-top: 20px;" %>
+	<% end %>
 </section>
-<div class="actions">
-  <%= link_to "Back to Path", edit_path_path(@section.path, :m => "sections"), :class => "btn primary" %>
-</div>

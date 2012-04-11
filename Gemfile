@@ -10,6 +10,8 @@ gem 'activerecord', '= 3.1.2'
 gem 'activemodel', '= 3.1.2'
 gem 'activesupport', '= 3.1.2'
 gem 'zip', '~> 2.0.2'
+gem 'paperclip', '= 2.7'
+gem 'aws-sdk'
 
 group :production do
 	gem 'pg'

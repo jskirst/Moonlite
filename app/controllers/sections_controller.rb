@@ -13,7 +13,7 @@ class SectionsController < ApplicationController
 		@path_name = @section.path.name
 		@title = @section.name
     @section_started = current_user.section_started?(@section)
-    @info_resources = @section.info_resources
+    @info_resources = @section.info_resources.all
 	end
 
 # Begin Section Creation  
@@ -71,6 +71,7 @@ class SectionsController < ApplicationController
       @tasks = @section.tasks
 			render "edit_tasks"
 		else
+			@info_resources = @section.info_resources.all
       render "edit_instructions"
     end
 	end
@@ -116,42 +117,23 @@ class SectionsController < ApplicationController
 # Begin Section Construction
 
   def import_content
-    if params[:source] == "pdf"
-      render "import_pdf"
-    else
-      raise "Unknown file type."
-    end
+		if params[:previous]
+			InfoResource.delete(params[:previous])
+		end
+    render "import_content"
   end
   
   def preview_content
-    if params[:source] == "pdf"
-      unless params[:section][:file].nil?
-        @file_path = save_temp_file(params[:section][:file], "pdf")
-        render "preview_pdf"
-      else
-        raise "No file found"
-      end
-    else
-      raise "Unknown file type."
-    end
-  end
-  
-  def save_content
-    if params[:source] == "pdf"
-      unless params[:file_path].nil?
-        @file_path = save_final_file(params[:file_path])
-        @section.instructions = @file_path
-        @section.content_type = "pdf"
-        if @section.save
-          flash[:success] = "PDF file saved successfully."
-          redirect_to edit_section_path(@section, :m => "instructions")
-        else
-          raise "Could not save file location."
-        end
-      end
-    else
-      raise "Unknown file type."
-    end
+		@info_resource = InfoResource.new
+		@info_resource.obj = params[:section][:file]
+		@info_resource.info_type = "unknown"
+		@info_resource.section_id = @section.id
+		if @info_resource.save
+			render "preview_content"
+		else
+			flash[:error] = "Could not load content. Please try again."
+			render "import_content"
+		end
   end
   
   def html_editor
@@ -330,33 +312,6 @@ class SectionsController < ApplicationController
     def random_alphanumeric(size=15)
 			(1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
 		end
-    
-    def save_temp_file(file, expected_extension)
-      filename = file.original_filename
-      extension = filename.split('.').last
-      unless extension.downcase == expected_extension
-        raise "File not expected type: " + expected_extension
-      end
-      new_file_name = random_alphanumeric(15) + "." + extension
-      file_path = "/tmp/" + new_file_name
-      full_file_path = "#{Rails.root}/public" + file_path
-      
-      File.open(full_file_path, 'wb') do |f|
-        f.write file.read
-      end
-      return file_path
-    end
-    
-    def save_final_file(file_path)
-      full_file_path = "#{Rails.root}/public/#{file_path}"
-      full_file_path = full_file_path.gsub("//","/")
-      
-      new_file_path = "/misc/content/#{file_path.split("/").last}"
-      full_new_file_path = "#{Rails.root}/public#{new_file_path}"
-
-      FileUtils.mv(full_file_path, full_new_file_path)
-      return new_file_path
-    end
     
     def split_and_clean_text(text)
       paragraphs = text.split("<p>")

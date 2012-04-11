@@ -1,7 +1,7 @@
 <h1>New Resource</h1>
 <p>You can add resources for paths, sections and tasks. The resource will be displayed according to its content type. 
 For example, if its type is a video and the link is for Youtube, the resource will be displayed inside a Youtube video player.</p>
-<%= form_for @info_resource do |f| %>
+<%= form_for @info_resource, :html => { :multipart => true }  do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
 	<input name="info_resource[<%= @parent_type+"_id" %>" type="hidden" value="<%= @parent_id %>" />
 	<div class="field clearfix">
@@ -14,6 +14,13 @@ For example, if its type is a video and the link is for Youtube, the resource wi
 		<%= f.label :link %>
 		<div class="input">
 			<%= f.text_field :link, :class => "xxlarge" %>
+		</div>
+	</div>
+	<p> - OR - </p>
+	<div class="field">
+		<%= f.label "Upload File" %>
+		<div class="input">
+			<%= f.file_field :obj %>
 		</div>
 	</div>
   <div class="field clearfix">

@@ -79,6 +79,8 @@ SampleApp::Application.routes.draw do
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'
 	match '/marketplace',:to => 'paths#marketplace'
+	
+	match '/retrieve', :to => 'info_resources#retrieve'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411011251) do
+ActiveRecord::Schema.define(:version => 20120411181936) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -89,6 +89,10 @@ ActiveRecord::Schema.define(:version => 20120411011251) do
     t.integer  "section_id"
     t.integer  "task_id"
     t.string   "info_type"
+    t.string   "obj_file_name"
+    t.string   "obj_content_type"
+    t.integer  "obj_file_size"
+    t.datetime "obj_updated_at"
   end
 
   add_index "info_resources", ["path_id"], :name => "index_info_resources_on_path_id"
