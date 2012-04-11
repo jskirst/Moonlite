@@ -38,6 +38,10 @@ SampleApp::Application.routes.draw do
       post :generate
       post :review
       post :bulk_tasks
+      get :import_content
+      post :preview_content
+      post :save_content
+      get :html_editor
 		end
 	end
 	resources :enrollments

@@ -1,16 +1,32 @@
 <%= render "tab_navigation" %>
 <section class="tab_content">
-  <% if @section.instructions.nil? %>
+  <% if @section.instructions.nil? || @section.instructions.blank? %>
   <div style="padding: 20px;">
-    <p>You have not added any content for this section's instructions yet. Start by <%= link_to "adding some topics", research_section_path(@section, :m => "topics") %>.</p>
+    <p>You have not added any content for this section yet. Start by doing one of the following:</p>
+    <ul>
+      <li style="padding:5px">Find relevent <%= link_to "Wikipedia articles or Youtube videos", research_section_path(@section, :m => "topics") %>.</li>
+      <li style="padding:5px">Import a <%= link_to "PDF document", import_content_section_path(@section, :source => "pdf") %>.</li>
+      <li style="padding:5px">Start with a <%= link_to "blank HTML editor", html_editor_section_path(@section) %>.</li>
+    </ul>
   </div>
   <% else %>
   <div style="float:right;">
-    <%= link_to "Edit", research_section_path(@section, :m => "edit"), :class => "btn primary" %>
+    <% if @section.content_type == "pdf" %>
+      <%= link_to "Edit", import_content_section_path(@section, :source => "pdf"), :class => "btn primary" %>
+    <% elsif @section.content_type == "html" %>
+      <%= link_to "Edit", html_editor_section_path(@section, :source => "html"), :class => "btn primary" %>
+    <% else %>
+      <%= link_to "Edit", research_section_path(@section, :m => "edit"), :class => "btn primary" %>
+      <%= link_to "Advanced Edit", html_editor_section_path(@section, :source => "html"), :class => "btn primary" %>
+    <% end %>
   </div>
   <% end %>
-  <div style="padding: 20px;">
-    <%= @section.instructions.html_safe unless @section.instructions.nil? %>
+  <div style="padding: 30px;">
+    <% if @section.content_type == "pdf" %>
+      <%= render "pdf_viewer", { :file_path => @section.instructions } %>
+    <% else %>
+      <%= @section.instructions.html_safe unless (@section.instructions.nil? || @section.instructions.blank?) %>
+    <% end %>
   </div>
 </section>
 <div class="actions">

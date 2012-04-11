@@ -1,5 +1,6 @@
 require 'net/http'
 require 'uri'
+require 'fileutils.rb'
 
 class SectionsController < ApplicationController
   include OrderHelper
@@ -58,6 +59,8 @@ class SectionsController < ApplicationController
 			render "edit_tasks"
 		elsif @mode == "settings"
 			render "edit_settings"
+    elsif @mode == "hidden_content"
+      render "edit_hidden_content"
 		elsif @mode == "randomize"
       if @section.randomize_tasks
         flash[:success] = "Tasks randomly reordered."
@@ -81,7 +84,10 @@ class SectionsController < ApplicationController
         return
       end
     end
-		if @section.update_attributes(params[:section])
+    if params[:section][:hidden_content]
+      @section.update_attribute(:hidden_content, params[:section][:hidden_content])
+      redirect_to questions_section_path(@section, :hidden_content => true)
+    elsif @section.update_attributes(params[:section])
 			flash.now[:success] = "Section successfully updated."
       @mode = "instructions"
 			redirect_to edit_section_path(@section, :m => "instructions")
@@ -107,7 +113,49 @@ class SectionsController < ApplicationController
 		redirect_to edit_path_path(@section.path, :m => "sections")
 	end
 
-# Begin Section Construction 
+# Begin Section Construction
+
+  def import_content
+    if params[:source] == "pdf"
+      render "import_pdf"
+    else
+      raise "Unknown file type."
+    end
+  end
+  
+  def preview_content
+    if params[:source] == "pdf"
+      unless params[:section][:file].nil?
+        @file_path = save_temp_file(params[:section][:file], "pdf")
+        render "preview_pdf"
+      else
+        raise "No file found"
+      end
+    else
+      raise "Unknown file type."
+    end
+  end
+  
+  def save_content
+    if params[:source] == "pdf"
+      unless params[:file_path].nil?
+        @file_path = save_final_file(params[:file_path])
+        @section.instructions = @file_path
+        @section.content_type = "pdf"
+        if @section.save
+          flash[:success] = "PDF file saved successfully."
+          redirect_to edit_section_path(@section, :m => "instructions")
+        else
+          raise "Could not save file location."
+        end
+      end
+    else
+      raise "Unknown file type."
+    end
+  end
+  
+  def html_editor
+  end
   
   def research
     @mode = params[:m]
@@ -146,27 +194,12 @@ class SectionsController < ApplicationController
     @title = "Generate Questions"
     @url = "http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate"
     @limit = params[:limit]
-    text = clean_text(@section.instructions)
-    
-    paragraphs = text.split("<p>")
-    @split_paragraphs = []
-    paragraphs.each do |p|
-      split_paragraph = p.split(". ")
-      sentences = []
-      split_paragraph.each_index do |si|
-        sentence = split_paragraph[si].chomp + "."
-        if sentence.length > 35 
-          sentences << sentence
-        end
-        if sentence.length > 160 || sentences.length >= 3
-          @split_paragraphs << sentences.join(" ")
-          sentences = []
-        end
-      end
-      unless sentences.join(" ").length < 80
-        @split_paragraphs << sentences.join(" ")
-      end
+    if params[:hidden_content]
+      text = clean_text(@section.hidden_content)
+    else
+      text = clean_text(@section.instructions)
     end
+    @split_paragraphs = split_and_clean_text(text)
     @quoted_paragraphs = @split_paragraphs.map {|t| '"'+t+'"'}
   end
   
@@ -292,5 +325,59 @@ class SectionsController < ApplicationController
       end
       text = text.gsub(" .", ".").gsub(" ,", ",")
       return text.strip.chomp
+    end
+    
+    def random_alphanumeric(size=15)
+			(1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+		end
+    
+    def save_temp_file(file, expected_extension)
+      filename = file.original_filename
+      extension = filename.split('.').last
+      unless extension.downcase == expected_extension
+        raise "File not expected type: " + expected_extension
+      end
+      new_file_name = random_alphanumeric(15) + "." + extension
+      file_path = "/tmp/" + new_file_name
+      full_file_path = "#{Rails.root}/public" + file_path
+      
+      File.open(full_file_path, 'wb') do |f|
+        f.write file.read
+      end
+      return file_path
+    end
+    
+    def save_final_file(file_path)
+      full_file_path = "#{Rails.root}/public/#{file_path}"
+      full_file_path = full_file_path.gsub("//","/")
+      
+      new_file_path = "/misc/content/#{file_path.split("/").last}"
+      full_new_file_path = "#{Rails.root}/public#{new_file_path}"
+
+      FileUtils.mv(full_file_path, full_new_file_path)
+      return new_file_path
+    end
+    
+    def split_and_clean_text(text)
+      paragraphs = text.split("<p>")
+      split_paragraphs = []
+      paragraphs.each do |p|
+        split_paragraph = p.split(". ")
+        sentences = []
+        split_paragraph.each_index do |si|
+          sentence = split_paragraph[si].chomp + "."
+          if sentence.length > 35 
+            sentences << sentence
+          end
+          if sentence.length > 160 || sentences.length >= 3
+            split_paragraphs << sentences.join(" ")
+            sentences = []
+          end
+        end
+        unless sentences.join(" ").length < 80
+          split_paragraphs << sentences.join(" ")
+        end
+      end
+      return split_paragraphs
     end
 end

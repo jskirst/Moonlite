@@ -1,0 +1,18 @@
+<section>
+<h4>Hidden Content</h4>
+<h1><%= @section.name %></h1>
+<p>Enter your hidden section content below. This content will never be shown to users - you can use this as text for Moonlite to automatically generate questions from.</p>
+<hr>
+<%= form_for(@section) do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+  <style>
+  .markitup { margin: auto; }
+  .markitup { width: 800px; }
+  </style>
+  <%= f.text_area :hidden_content, :rows => "15", :style => "width:800px;", :placeholder => "Enter text here..." %>
+	<div class="actions">
+		<%= f.submit "Save and Generate Questions", :class => "btn primary" %>
+		<%= link_to "Cancel", edit_section_path(@section, :m => "instructions"), :class => "btn secondary" %>
+	</div>
+<% end %>
+</section>

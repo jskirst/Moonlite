@@ -7,7 +7,7 @@
   <div>
     <ul class="tabs">
       <li <% if @mode == "instructions" %> class="active" <% end %>>
-        <%= link_to "Instructions", edit_section_path(@section.id, :m => "instructions") %>
+        <%= link_to "Content", edit_section_path(@section.id, :m => "instructions") %>
       </li>
       <li <% if @mode == "tasks" %> class="active" <% end %>>
         <%= link_to "Tasks", edit_section_path(@section.id, :m => "tasks") %>

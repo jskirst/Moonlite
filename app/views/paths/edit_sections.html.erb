@@ -23,7 +23,6 @@
         <h3>
            <%= link_to s.name, edit_section_path(s, :m => "instructions") %>
         </h3>
-        <p><%= truncate(strip_tags(s.instructions), :length => 255) %></p>
         <div style="float:left;display:inline;">
           <% if s.is_published %>
           <span class="label"><%= link_to "published", edit_section_path(s, :m => "settings"), :style => "color:white;" %></span>

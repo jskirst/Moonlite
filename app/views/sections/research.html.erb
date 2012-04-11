@@ -1,6 +1,6 @@
 <script src="/javascripts/research.js"></script>
 <script>
-<% if @section.instructions.nil? %>
+<% if @section.instructions.nil? || @section.instructions.blank? %>
 $(function(){
   var topics = [<%= @quoted_topics.join(",").html_safe %>];
   var use_wikipedia = <%= @use_wikipedia %>;
@@ -44,7 +44,7 @@ $(function(){
   /*ondragstart="return false" onselectstart="return false" var message="Sorry! To prevent cheating, the path author has chosen to disable copy and paste on this page."; function clickIE4(){ if (event.button==2){ alert(message); return false; } } function clickNS4(e){ if (document.layers||document.getElementById&&!document.all){ if (e.which==2||e.which==3){ alert(message); return false; } } } if (document.layers){ document.captureEvents(Event.MOUSEDOWN); document.onmousedown=clickNS4; } else if (document.all&&!document.getElementById){ document.onmousedown=clickIE4; } document.oncontextmenu=new Function("alert(message);return false") */ 
 </script>
 <%= render "research_editors" %>
-<% if @section.instructions.nil? %>
+<% if @section.instructions.nil? || @section.instructions.blank? %>
 <section id="doc_root">
   <section>
     <h1>Section <%= @section.position %>: <%= @section.name %></h1>
@@ -65,6 +65,7 @@ $(function(){
 <% end %>
 <%= form_for @section do |f| %>
   <%= f.hidden_field :instructions %>
+  <%= f.hidden_field :content_type, :value => "auto" %>
   <div class="actions">
 		<%= f.submit "Finish", :confirm => "Warning: This will overwrite any previous material you had for this section.", :class => "btn primary" %>
 		<a onclick="display_topic_editor();" class="btn secondary">Add Topic</a>

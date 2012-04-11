@@ -1,0 +1,13 @@
+<h1>Upload PDF File</h1>
+<p style="padding:20px">To upload a PDF, submit it below. You will have a chance to preview the PDF before itis saved.</p>
+<%= form_for @section, :url=>{:controller => "sections", :action => "preview_content", :source => "pdf"}, :html => { :method => "post", :multipart => true } do |f| %>
+<div class="field clearfix">
+	<%= f.label :file %>
+	<div class="input">
+		<%= f.file_field :file %>
+	</div>
+</div>
+<div class="actions">
+	<%= f.submit "Submit", :class => "btn primary" %>
+</div>
+<% end %>
