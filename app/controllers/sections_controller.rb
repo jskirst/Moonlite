@@ -181,8 +181,13 @@ class SectionsController < ApplicationController
     else
       text = clean_text(@section.instructions)
     end
-    @split_paragraphs = split_and_clean_text(text)
-    @quoted_paragraphs = @split_paragraphs.map {|t| '"'+t+'"'}
+		if text.nil?
+			flash[:info] = "You need to add some content to your section before we can automatically generate tasks for you."
+			redirect_to edit_section_path(@section, :m => "instructions")
+		else
+			@split_paragraphs = split_and_clean_text(text)
+			@quoted_paragraphs = @split_paragraphs.map {|t| '"'+t+'"'}
+		end
   end
   
   def generate
@@ -285,6 +290,7 @@ class SectionsController < ApplicationController
     end
     
     def clean_text(text)
+			return nil if text.nil?
       text = text.gsub("This section will include questions on the following topics", "")
         .gsub("<b>","  ")
         .gsub("</b>","  ")
@@ -314,6 +320,7 @@ class SectionsController < ApplicationController
 		end
     
     def split_and_clean_text(text)
+			return nil if text.nil?
       paragraphs = text.split("<p>")
       split_paragraphs = []
       paragraphs.each do |p|
