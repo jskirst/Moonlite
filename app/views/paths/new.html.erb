@@ -8,11 +8,11 @@
 		</div>
 	</div>
   <div class="field clearfix">
-		<%= f.label :category_type %>
+		<%= f.label :category %>
 		<div class="input">
-			<select id="path_category_type" name="path[category_type]">
-				<% @category_types.each_index do |ci| %>
-          <option value="<%= ci %>"><%= @category_types[ci] %></option>
+			<select id="path_category_id" name="path[category_id]">
+				<% @categories.each do |c| %>
+          <option value="<%= c.id %>"><%= c.name %></option>
         <% end %>
 			</select>
 		</div>

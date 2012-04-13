@@ -26,6 +26,7 @@ Factory.define :path do |path|
 	path.name Faker::Lorem.sentence(1) + "[Ruby]"
 	path.description Faker::Lorem.sentence(12)
 	path.association :user
+	path.association :category
 	path.is_published "t"
 	path.is_public "t"
 	path.is_purchaseable "t"
@@ -86,6 +87,11 @@ Factory.define :comment do |c|
 	c.association :user
 	c.association :task
 	c.content Faker::Lorem.sentence(2)
+end
+
+Factory.define :category do |c|
+	c.association :company
+	c.name Faker::Lorem.sentence(1)
 end
 
 Factory.sequence :email do |n|

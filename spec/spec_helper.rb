@@ -38,6 +38,20 @@ Spork.prefork do
 		def test_sign_in(user)
 			controller.sign_in(user)
 		end
+		
+		def standard_setup(build_user = true, build_path = true, build_section = true)
+			if build_user
+				@user = Factory(:user)
+				@user.set_company_admin(true)
+			end
+			if build_path
+				@category = Factory(:category, :company => @user.company)
+				@path = Factory(:path, :user => @user, :company => @user.company, :category => @category)
+			end
+			if build_section
+				@section = Factory(:section, :path => @path)
+			end
+		end
     
     class Fixnum
       def to_json(options = nil)

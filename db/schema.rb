@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411181936) do
+ActiveRecord::Schema.define(:version => 20120413175047) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -23,6 +23,17 @@ ActiveRecord::Schema.define(:version => 20120411181936) do
     t.datetime "updated_at"
     t.integer  "owner_id"
     t.string   "image_url"
+  end
+
+  create_table "categories", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "category_pic_file_name"
+    t.string   "category_pic_content_type"
+    t.integer  "category_pic_file_size"
+    t.datetime "category_pic_updated_at"
   end
 
   create_table "comments", :force => true do |t|
@@ -118,7 +129,7 @@ ActiveRecord::Schema.define(:version => 20120411181936) do
     t.boolean  "is_published",      :default => false
     t.boolean  "is_purchaseable",   :default => false
     t.integer  "owner_id"
-    t.integer  "category_type",     :default => 0
+    t.integer  "category_id",       :default => 0
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"

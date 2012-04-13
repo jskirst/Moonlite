@@ -29,7 +29,7 @@ class PathsController < ApplicationController
 	
 	def new
 		@path = Path.new
-    @category_types = Path.category_types
+    @categories = current_user.company.categories
 		@title = "New Path"
 	end
 
@@ -41,7 +41,7 @@ class PathsController < ApplicationController
 			redirect_to edit_path_path(@path, :m => "start")
 		else
 			@title = "New Path"
-      @category_types = Path.category_types
+      @categories = current_user.company.categories
 			render 'new'
 		end
 	end

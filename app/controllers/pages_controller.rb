@@ -40,9 +40,9 @@ class PagesController < ApplicationController
       end
     else
       @display_all = true
-      categories = Path.category_types
-      categories.each_index do |type|
-        @path_sections << [categories[type], Path.with_category_type(type)]
+      categories = Category.find_all_by_company_id(current_user.company_id)
+      categories.each do |c|
+        @path_sections << [c.name, Path.with_category(c.id)]
       end
       
       unpublished_paths = current_user.paths.where("is_published = ?", false)

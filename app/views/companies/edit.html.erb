@@ -44,6 +44,21 @@
 					</ul>
 				</div>
 			</div>
+			<div class="field clearfix">
+				<%= f.label :categories %>
+				<div class="input">
+					<% if @categories.empty? %>
+					<p>You have not created any Path categories yet for your company.</p>
+					<% else %>
+					<ul>
+					<% @categories.each do |c| %>
+						<li><%= c.name %></li>
+					<% end %>
+					</ul>
+					<% end %>
+					<%= link_to "Add a Path category", new_category_path, :class => "btn secondary" %>
+				</div>
+			</div>
 			<div class="actions">
 				<%= f.submit "Save", :class => "btn primary" %>
 			</div>

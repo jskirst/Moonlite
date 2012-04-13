@@ -4,6 +4,7 @@ class Company < ActiveRecord::Base
 	has_many :users
 	has_many :rewards
 	has_many :paths
+	has_many :categories
 	
 	after_create :set_owner
 	

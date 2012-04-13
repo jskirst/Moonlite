@@ -5,8 +5,7 @@ describe "CompletedTasks" do
 		@password = "current_password"
 		@user = Factory(:user, :password => @password, :password_confirmation => @password)
 		@user.set_company_admin(true)
-		@path = Factory(:path, :user => @user, :company => @user.company)
-		@section = Factory(:section, :path => @path)
+		standard_setup(false)
 		@task1 = Factory(:task, :section => @section)
 		@task2 = Factory(:task, :section => @section)
 		@task3 = Factory(:task, :section => @section)

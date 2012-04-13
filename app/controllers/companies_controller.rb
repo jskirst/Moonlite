@@ -29,6 +29,7 @@ class CompaniesController < ApplicationController
 	
 	def edit
 		@title = "Company Settings"
+		@categories = @company.categories.all
 	end
 	
 	def update

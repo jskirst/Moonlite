@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe "Tasks" do
 	before(:each) do
-		@user = Factory(:user)
-		@user.set_company_admin(true)
-		@path = Factory(:path, :user => @user, :company => @user.company)
-		@section = Factory(:section, :path => @path)
+		standard_setup(true)
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password

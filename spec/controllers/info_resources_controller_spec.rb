@@ -4,9 +4,7 @@ describe InfoResourcesController do
 	render_views
 	
 	before(:each) do
-    @user = Factory(:user)
-    @path = Factory(:path, :user => @user, :company => @user.company)
-    @section = Factory(:section, :path => @path)
+    standard_setup
 		@attr = { :description => "New description", :link => "http://www.testlink.com",  :section_id => @section.id, :info_type => "text" }
     @info_resource = InfoResource.create!(@attr)
 	end

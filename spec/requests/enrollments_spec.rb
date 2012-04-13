@@ -3,9 +3,7 @@ require 'spec_helper'
 describe "Enrollments" do
 	before(:each) do
 		#Sign in
-		@user = Factory(:user)
-		@user.set_company_admin(true)
-		@path = Factory(:path, :user => @user, :company => @user.company)
+		standard_setup
 		visit signin_path
 		fill_in :email, :with => @user.email
 		fill_in :password, :with => @user.password

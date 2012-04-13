@@ -1,8 +1,9 @@
 class Path < ActiveRecord::Base
-	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, :is_public, :is_published, :is_purchaseable, :category_type
+	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, :is_public, :is_published, :is_purchaseable, :category_id
 	
 	belongs_to :user
 	belongs_to :company
+	belongs_to :category
 	has_many :sections, :dependent => :destroy
 	has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
 	has_many :achievements, :dependent => :destroy
@@ -25,35 +26,24 @@ class Path < ActiveRecord::Base
 	
 	#default_scope :order => 'paths.created_at DESC'
   
-  def self.with_category_type(type, excluded_id = -1, order = "id DESC")
-    return Path.where("is_published = ? and category_type = ? and id != ?", true, "#{type}", excluded_id).all(:order => order)
+  def self.with_category(type, excluded_id = -2, order = "id DESC")
+    return Path.where("is_published = ? and category_id = ? and id != ?", true, "#{type}", excluded_id).all(:order => order)
   end
   
   def self.with_name_like(name)
     return Path.where("is_published = ? and name LIKE ?", true, "%#{name}%")
   end
   
-  def self.category_types
-    return ["Professional", "Just for fun", "Periodicals"]
-  end
-  
-  def self.get_category_type_id(str)
-    types = category_types
-    i = types.index(str)
-    return i unless i < 0
-    return nil
-  end
-  
   def self.similar_paths(path)
     unless path.nil?
-      return Path.with_category_type(path.category_type, path.id, "id DESC")
+      return Path.with_category(path.category_id, path.id, "id DESC")
     else
-      return Path.with_category_type(0)
+      return Path.with_category(0)
     end
   end
   
   def self.suggested_paths(user, excluded_path_id = -1)
-    return Path.with_category_type(0, excluded_path_id, "id ASC")
+    return Path.with_category(0, excluded_path_id, "id ASC")
   end
   
   def current_section(current_user)
