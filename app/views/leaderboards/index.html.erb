@@ -1,27 +1,27 @@
-<h1>Moonlite Leaderboard</h1>
+<script>
+$(function (){
+	$("#leaderboard_overall").show().addClass("active_board");
+});
 
-<table>
-  <tr>
-    <th>Rank</th>
-    <th>User</th>
-    <th>Completed tasks</th>
-    <th>Score</th>
-  </tr>
-
-<% counter = 1 %>
-<% @leaderboards.each do |leaderboard| %>
-  <tr>
-    <td><%= counter.to_s %></td>
-    <td class="user-name"><%= leaderboard.user.name %></td>
-    <td class="user-completed-tasks"><%= leaderboard.completed_tasks %></td>
-    <td class="user-score"><%= leaderboard.score %></td>
-  </tr>
-  <% counter += 1 %>
+function change_leaderboard(new_board_id){
+	var old_board_id = $(".active_board").attr("id").replace("leaderboard_","");
+	$(".active_board").hide().removeClass("active_board");
+	$("#leaderboard_"+new_board_id).show().addClass("active_board");
+	$("#leaderboard_header_"+old_board_id).removeClass("active");
+	$("#leaderboard_header_"+new_board_id).addClass("active");
+}
+</script>
+<h1>Bright<sub>e</sub>st Leaderboard</h1>
+<ul class="tabs">
+	<li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
+	<% @categories.each do |s| %>
+	<li id="leaderboard_header_<%= s.id.to_s %>"><a onclick="change_leaderboard('<%= s.id.to_s %>')"><%= s.name %></a></li>
+	<% end %>
+</ul>
+<% @leaderboards.each do |l| %>
+	<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1]} %>
 <% end %>
-</table>
-
 <br />
-
 <% if current_user.company_admin? %>
   <%= link_to "Refresh Leaderboard", new_leaderboard_path, :class => "btn primary" %>
 <% end %>

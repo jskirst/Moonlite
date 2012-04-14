@@ -76,6 +76,7 @@ SampleApp::Application.routes.draw do
 
   match '/all_paths',	:to => 'pages#explore'
   match '/explore',:to => 'pages#explore'
+  match '/create',:to => 'pages#create'
   
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'

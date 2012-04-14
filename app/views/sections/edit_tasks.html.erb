@@ -4,7 +4,7 @@
 	<% if @tasks.empty? %>
   <div style="padding: 20px;">
 		<p><strong>Tasks</strong> are used to verify someone's <strong>progress</strong> through a section. A task can be something the user must do or a picture they must identify, or simply a multiple choice question.</p>
-    <p>You have not created any tasks for this Path yet. You can get started by:</p>
+    <p>You have not created any tasks for this challenge yet. You can get started by:</p>
     <ul>
       <li style="padding:5px;">Creating a <%= link_to "new task manually", new_task_path(:section_id => @section) %>.</li>
       <li style="padding:5px;">Let Moonlite automatically generate questions from <%= link_to "your section content", questions_section_path(@section) %>.</li>
@@ -68,6 +68,6 @@
   <%= submit_tag "Save", :class => "btn primary" %>
   <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
 <% else %>
-  <%= link_to "Back to Path", edit_path_path(@section.path.id), :class => "btn primary" %>
+  <%= link_to "Back to Challenge", edit_path_path(@section.path.id), :class => "btn primary" %>
 <% end %>
 </div>

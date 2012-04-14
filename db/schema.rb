@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120413175047) do
+ActiveRecord::Schema.define(:version => 20120413192708) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -114,6 +114,9 @@ ActiveRecord::Schema.define(:version => 20120413175047) do
     t.integer  "score",           :default => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
+    t.integer  "path_id"
+    t.integer  "section_id"
   end
 
   create_table "paths", :force => true do |t|

@@ -23,7 +23,7 @@ class Category < ActiveRecord::Base
 		
 		def reassign_paths
 			paths.all.each do |p|
-				p.category_id = -1
+				p.category_id = 0
 				p.save
 			end
 		end

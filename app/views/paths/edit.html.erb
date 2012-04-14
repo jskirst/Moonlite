@@ -1,4 +1,4 @@
-<h1>Edit Path</h1>
+<h1>Edit Challenge</h1>
 <ul class="tabs">
 	<li class="active"><a href="#">Content</a></li>
 	<li><%= link_to "Settings", edit_path_path(@path, :m=>"settings") %></li>
@@ -22,7 +22,7 @@
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "Back to Path", @path, :class => "btn secondary" %>
+		<%= link_to "Back to Challenge", @path, :class => "btn secondary" %>
 		<% if @file_upload_possible %>
       <%= link_to "Upload Setup File", file_path_path(@path), :class => "btn secondary" %>
     <% end %>

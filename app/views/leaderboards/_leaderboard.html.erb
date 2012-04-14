@@ -1,0 +1,29 @@
+<table class="learderboard" style="display: none;" id="leaderboard_<%= leaderboard_id.to_s %>">
+  <tr>
+    <th>Rank</th>
+    <th>User</th>
+    <th>Completed tasks</th>
+    <th>Score</th>
+  </tr>
+<% counter = 1 %>
+<% leaderboard_entries.each do |entry| %>
+  <tr>
+    <td><%= counter.to_s %></td>
+    <td class="user-name"><%= link_to entry.user.name, entry.user %></td>
+    <td class="user-completed-tasks"><%= entry.completed_tasks %></td>
+    <td class="user-score"><%= entry.score %></td>
+  </tr>
+  <% counter += 1 %>
+<% end %>
+<% unless counter >= 10 %>
+	<% (counter..10).each do |i| %>
+	<tr>
+    <td><%= counter.to_s %></td>
+    <td class="user-name">AAA</td>
+    <td class="user-completed-tasks">0</td>
+    <td class="user-score">0</td>
+  </tr>
+	<% counter += 1 %>
+	<% end %>
+<% end %>
+</table>

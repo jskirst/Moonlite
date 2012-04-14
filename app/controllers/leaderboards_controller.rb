@@ -4,10 +4,14 @@ class LeaderboardsController < ApplicationController
   before_filter :is_enabled
 
   def index
-    previous_board = Leaderboard.first
-    latest_date = previous_board.nil? ? Time.now : previous_board.created_at
-    @leaderboards = Leaderboard.find(:all, :conditions => ["leaderboards.created_at = ?", latest_date], :order => "score DESC")
-  end
+			@leaderboards = []
+			@leaderboards << ["overall", Leaderboard.get_overall_leaderboard(current_user.company)]
+			
+			@categories = current_user.company.categories
+			@categories.each do |c|
+				@leaderboards << [c.id, Leaderboard.get_leaderboard_for_category(c)]
+			end
+	end
   
   def new
   end
@@ -18,13 +22,7 @@ class LeaderboardsController < ApplicationController
       render "new" and return
     end
     
-    date ||= Time.now
-    users = User.all
-    users.each do |u|
-      completed_tasks = u.completed_tasks.size
-      score = u.earned_points
-      Leaderboard.create!(:user_id => u.id, :completed_tasks => completed_tasks, :score => score, :created_at => date)
-    end
+    Leaderboard.reset_leaderboard
     render "finished"
   end
   

@@ -10,10 +10,12 @@ class PathsController < ApplicationController
   
   def show
 		@title = @path.name
-		#@info_resources = @path.info_resources(:limit => 5)
-		@achievements = @path.achievements.all(:limit => 20)
-    @enrolled_users = @path.enrolled_users.all(:limit => 20)
+		#@achievements = @path.achievements.all(:limit => 20)
+    #@enrolled_users = @path.enrolled_users.all(:limit => 20)
 		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+		
+		@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
+		
     @current_position = @path.current_section(current_user).position unless @sections.empty?
     @enrolled = current_user.enrolled?(@path)
     if current_user.path_started?(@path)
@@ -50,6 +52,7 @@ class PathsController < ApplicationController
   
 	def edit
 		@title = "Edit"
+		@categories = current_user.company.categories
     @file_upload_possible = @path.sections.size == 0 ? true : false
     @mode = params[:m]
 		if params[:m] == "settings"

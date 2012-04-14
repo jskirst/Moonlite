@@ -5,6 +5,7 @@ class CompletedTask < ActiveRecord::Base
 	belongs_to :task
 	has_one :section, :through => :task
 	has_one :path, :through => :section
+	has_one :category, :through => :path
 	
 	validates :user_id, :presence => true
 	validates :task_id, :presence => true

@@ -5,7 +5,7 @@
   <div class="span12" style="margin-top: 15px;">
     <h1>Congratulations!</h1>
     <div>
-      <h4>You have successfully completed this path. You earned <%= @total_points_earned %> points for this path.</h4>
+      <h4>You have successfully completed this challenge. You earned <%= @total_points_earned %> points.</h4>
       <br>
       <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%= hero_path_path(@path.id, :hero => current_user.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
       <a href="http://www.facebook.com/sharer.php?u=<%= hero_path_path(@path.id, :hero => current_user.id) %>"><img src="/images/facebook-connect.gif" width="150" height="55"></a>

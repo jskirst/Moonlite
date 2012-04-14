@@ -24,32 +24,31 @@ class PagesController < ApplicationController
   
   def explore
 		@title = "Explore"
-    @path_sections = []
+    @path_categories = []
     @display_all = false
     if params[:search]
       @query = params[:search]
       @path_sections << ["Search Results", Path.with_name_like(@query)]
-    elsif params[:m]
-      type_name = params[:m]
-      type = Path.get_category_type_id(type_name)
-      if type.nil?
-        flash[:error] = "Invalid Path category type."
+    elsif params[:c]
+      category = current_user.company.categories.find(params[:c])
+      if category.nil?
+        flash[:error] = "Invalid Path category."
         redirect_to explore_path and return
       else
-        @path_sections << [type_name, Path.with_category_type(type)]
+        @path_categories << [category, Path.with_category(category.id)]
       end
     else
       @display_all = true
       categories = Category.find_all_by_company_id(current_user.company_id)
       categories.each do |c|
-        @path_sections << [c.name, Path.with_category(c.id)]
-      end
-      
-      unpublished_paths = current_user.paths.where("is_published = ?", false)
-      unless unpublished_paths.empty?
-        @path_sections << ["Unpublished Paths", unpublished_paths]
+        @path_categories << [c, Path.with_category(c.id)]
       end
     end
+	end
+	
+	def create
+		@published_paths = current_user.paths.where("is_published = ?", true)
+		@unpublished_paths = current_user.paths.where("is_published = ?", false)
 	end
   
 	def about

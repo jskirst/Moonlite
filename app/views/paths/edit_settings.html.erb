@@ -3,7 +3,7 @@
 <%= form_for(@path) do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
 	<div class="field clearfix">
-		<%= f.label "Path Name" %>
+		<%= f.label "Challenge Name" %>
 		<div class="input">
 			<%= f.text_field :name %>
 		</div>
@@ -11,7 +11,17 @@
 	<div class="field clearfix">
 		<%= f.label :description %>
 		<div class="input">
-			<%= f.text_area :description, :class=>"markitup", :rows => "15", :placeholder => "Try to describe this path to others in a couple paragraphs or less..." %>
+			<%= f.text_area :description, :class=>"markitup", :rows => "15", :placeholder => "Try to describe this challenge to others in a couple paragraphs or less..." %>
+		</div>
+	</div>
+	<div class="field clearfix">
+		<%= f.label :category %>
+		<div class="input">
+			<select id="path_category_id" name="path[category_id]">
+				<% @categories.each do |c| %>
+          <option value="<%= c.id %>"><%= c.name %></option>
+        <% end %>
+			</select>
 		</div>
 	</div>
   <hr/>
@@ -21,16 +31,12 @@
 			<ul class="inputs-list">
 				<li>
 					<label>
-						<%= f.check_box :is_published, :confirm => "This will publish the path so all users in your account can access it. Are you sure you want to publish this now?" %>
-						<span>Publish this Path to your Moonlite account.</span>
+						<%= f.check_box :is_published, :confirm => "This will publish the challenge so all users in your account can access it. Are you sure you want to publish this now?" %>
+						<span>Publish this challenge to your Moonlite account.</span>
 					</label>
 					<label>
-						<%= f.check_box :is_public, :confirm => "This will publish the path so all users in your account can access it. Are you sure you want to publish this now?" %>
-						<span>Allow users to post this Path to their public profile</span>
-					</label>
-					<label>
-						<%= f.check_box :is_purchaseable, :confirm => "This will publish the Path to the Path Marketplace where any Moonlite account can purchase it. Are you sure you want to publish this to the Marketplace right now?" %>
-						<span>List this Path Marketplace for purchase</span>
+						<%= f.check_box :is_public, :confirm => "This will publish the challenge so all users in your account can access it. Are you sure you want to publish this now?" %>
+						<span>Allow users to post this challenge to their public profile</span>
 					</label>
 				</li>
 			</ul>
@@ -51,7 +57,7 @@
 	</div>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "View Path", @path, :class => "btn secondary" %>
+		<%= link_to "View Challenge", @path, :class => "btn secondary" %>
 	</div>
 <% end %>
 </section>

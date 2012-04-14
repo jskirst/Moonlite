@@ -1,5 +1,5 @@
 <h1>Upload File</h1>
-<p style="padding:20px">To upload a path, package your path file into a zip and submit it below. You will have a chance to preview the path before its submitted for creation. For more details and help on how to properly create a path file for submission, see the tutorial on <a href="/tours/3/admin_tour">path creation</a>.</p>
+<p style="padding:20px">To upload a challenge, package your challenge file into a zip and submit it below. You will have a chance to preview the challenge before its submitted for creation. For more details and help on how to properly create a challenge file for submission, see the tutorial on <a href="/tours/3/admin_tour">challenge creation</a>.</p>
 <%= form_for @path, :url=>{:controller => "paths", :action => "preview"}, :html => { :method => "post", :multipart => true } do |f| %>
 <div class="field clearfix">
 	<%= f.label :file %>
