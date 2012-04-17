@@ -77,7 +77,8 @@ class PagesController < ApplicationController
 		end
 		
 		def user_creation_enabled?
-			unless current_user.admin && @enable_user_creation
+			unless (current_user.admin? || current_user.company_admin? || @enable_user_creation)
+				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path
 			end
 		end

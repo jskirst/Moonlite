@@ -11,7 +11,7 @@ function change_leaderboard(new_board_id){
 	$("#leaderboard_header_"+new_board_id).addClass("active");
 }
 </script>
-<h1>Bright<sub>e</sub>st Leaderboard</h1>
+<h1><%= company_logo %> Leaderboard</h1>
 <ul class="tabs">
 	<li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
 	<% @categories.each do |s| %>
