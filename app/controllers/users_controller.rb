@@ -128,7 +128,7 @@ class UsersController < ApplicationController
 	private
 		def company_admin_or_admin_only
 			company_id = params[:company_id] || params[:user][:company_id]
-			unless (current_user.admin? || (current_user.company_admin? && current_user.company.id == company_id))
+			unless (current_user.admin? || (current_user.company_admin? && current_user.company.id == company_id.to_i))
 				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path 
 			end
