@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :except => [:accept, :join]
-	before_filter :company_admin, :except => [:accept, :join, :show, :edit, :update]
+	before_filter :company_admin_or_admin_only, :only => [:new, :create]
+	before_filter :user_only,	:only => [:edit, :update]
+	before_filter :admin_only, :only => [:adminize]
 	
 	def new
 		@company = Company.find(params[:company_id])
@@ -13,16 +15,16 @@ class UsersController < ApplicationController
 		error_message = "Something bad happened and a new invitation could not be sent."
 		success_message = "Successfully invited."
 		
-		@company = Company.find_by_id(params[:user][:company_id])
+		@company = Company.find(params[:user][:company_id])
 		if @company.nil?
 			flash[:error] = nil_company_message
 			redirect_to root_path
 		else
-			params[:user].delete("company_id")
-			params[:user][:name] = "pending"
-			params[:user][:password] = "pending"
-			params[:user][:password_confirmation] = "pending"
-			@user = @company.users.build(params[:user])
+			@user = @company.users.new
+			@user.name = "pending"
+			@user.password = "pending"
+			@user.password_confirmation = "pending"
+			@user.email = params[:user][:email]
 			if @user.save
 				@user.send_invitation_email
 				flash[:success] = success_message
@@ -39,17 +41,18 @@ class UsersController < ApplicationController
 		if @user.nil?
 			redirect_to root_path
 		else
-			@title = @user.company.name
+			if @user.name == "pending"
+				@user.name = nil
+				@title = @user.company.name
+			else
+				redirect_to root_path
+			end
 		end
 	end
 	
 	def join
-		if params[:user].nil?
-			redirect_to root_path and return
-		end
-		
 		@user = User.find_by_signup_token(params[:user][:signup_token])
-		if @user.nil?
+		if @user.nil? || @user.name != "pending"
 			redirect_to root_path and return
 		end
 		
@@ -97,6 +100,19 @@ class UsersController < ApplicationController
 		end
 	end
 	
+	def adminize
+		@user = User.find(params[:id])
+		unless @user.admin == true
+			@user.toggle(:admin)
+			if @user.save
+				flash[:success] = "User is now an admin."
+			else
+				flash[:error] = "User could not be made an admin."
+			end
+		end
+		redirect_to users_path
+	end
+	
 	def destroy
 		@user = User.find_by_id(params[:id])
 		if @user.nil?
@@ -109,8 +125,17 @@ class UsersController < ApplicationController
 		end
 	end
 	
-	private		
-		def admin_user
+	private
+		def company_admin_or_admin_only
+			company_id = params[:company_id] || params[:user][:company_id]
+			redirect_to root_path unless (current_user.admin? || (current_user.company_admin? && current_user.company.id == company_id))
+		end
+	
+		def user_only
+			redirect_to root_path unless current_user.id == params[:id]
+		end
+	
+		def admin_only
 			redirect_to(root_path) unless current_user.admin?
 		end
 end

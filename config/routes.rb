@@ -7,6 +7,7 @@ SampleApp::Application.routes.draw do
 		member do
 			get :accept
 			put :join
+			get :adminize
 		end
 	end
 	resources :tours do

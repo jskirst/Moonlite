@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
 	before_filter :authenticate, :only => [:explore]
+	before_filter :user_creation_enabled?, :only => [:create]
   
 	def home
 		@title = "Home"
@@ -14,7 +15,9 @@ class PagesController < ApplicationController
           @enrolled_paths << p
         end
       end
-      @suggested_paths = Path.suggested_paths(current_user)
+			if @enable_recommendations
+				@suggested_paths = Path.suggested_paths(current_user)				
+			end
       @user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
 				:conditions => ["users.company_id = ?", current_user.company_id], :limit => 15)
 		else
@@ -23,6 +26,7 @@ class PagesController < ApplicationController
 	end
   
   def explore
+		redirect_to root_path unless current_user.company.enable_browsing
 		@title = "Explore"
     @path_categories = []
     @display_all = false
@@ -70,5 +74,11 @@ class PagesController < ApplicationController
 	private
 		def send_invitation_alert(email)
 			Mailer.invitation_alert(email).deliver
+		end
+		
+		def user_creation_enabled?
+			unless current_user.admin && @enable_user_creation
+				redirect_to root_path
+			end
 		end
 end

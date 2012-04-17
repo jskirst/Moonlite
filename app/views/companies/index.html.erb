@@ -1,10 +1,16 @@
 <h1>All companies</h1>
-<p><%= link_to "Add a new company", new_company_path %></p>
 
 <%= will_paginate %>
-
 <ul class='companies'>
-	<%= render @companies %>
+	<% @companies.each do |company| %>
+	<li>
+	<%= link_to company.name, company %> | 
+	<%= link_to "delete", company, :method => :delete, :confirm => "You sure?" %>
+	</li>
+	<% end %>
 </ul>
-
 <%= will_paginate %>
+
+<div class="actions">
+<%= link_to "New Company", new_company_path, :class => "btn primary" %>
+</div>

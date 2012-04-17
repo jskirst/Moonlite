@@ -7,8 +7,14 @@
   <p>Congratulations! You've completed all your enrolled paths.</p>
 <% end %>
   <%= render "pages/user_progress", { :paths_list => @enrolled_paths } %>
-  <%= render "pages/suggested_paths", {:paths_title => "Recommended for you", :paths_list => @suggested_paths} %>
+  
+	<% if @enable_recommendations %>
+		<%= render "pages/suggested_paths", {:paths_title => "Recommended for you", :paths_list => @suggested_paths} %>
+	<% end %>
 </section>
+
+
+<% if @enable_news %>
 <section>
   <h2>News</h2>
 <% if @user_achievements.empty? %>
@@ -17,3 +23,4 @@
   <%= render "pages/user_news", { :user_news => @user_achievements } %>
 <% end %>
 </section>
+<% end %>

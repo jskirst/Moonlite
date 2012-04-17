@@ -58,6 +58,7 @@ class Leaderboard < ActiveRecord::Base
 	end
 	
 	def self.get_user_stats(user, date)
+		return nil if user.name == "pending"
 		completed_tasks = user.completed_tasks.size
     score = user.earned_points
     Leaderboard.create!(:user_id => user.id, :completed_tasks => completed_tasks, :score => score, :created_at => date)
@@ -87,6 +88,5 @@ class Leaderboard < ActiveRecord::Base
 			Leaderboard.create!(:user_id => user.id, :category_id => c.id, :completed_tasks => total_category_tasks, :score => total_category_tasks * 10, :created_at => date)
 			total_tasks += total_category_tasks
 		end
-		Leaderboard.create!(:user_id => user.id, :completed_tasks => total_tasks, :score => total_tasks * 10, :created_at => date, :path_id => nil, :category_id => nil, :section_id => nil)
 	end
 end

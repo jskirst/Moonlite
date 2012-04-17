@@ -10,10 +10,11 @@
     </div>
     <div style="height: 100px">
       <h1><%= @user.name %></h1>
-      <p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points. Current Ranking: <strong>#<%= @rank %></strong></p>
+      <p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points. 
+			<% if @enable_leaderboard %><Current Ranking: <strong>#<%= @rank %></strong></p><% end %>
     </div>
   </div>
-	<% if !@user_achievements.empty? %>
+	<% if @enable_achievements && !@user_achievements.empty? %>
 	<section>
 		<h3>Achievements</h3>
 		<ul class="media-grid" style="margin: 10px 0 10px 0px;">

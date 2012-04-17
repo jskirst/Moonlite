@@ -9,9 +9,11 @@
       <li <% if @mode == "sections" %> class="active" <% end %>>
         <%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %>
       </li>
+			<% if @enable_achievements %>
       <li <% if @mode == "achievements" %> class="active" <% end %>>
         <%= link_to "Achievements", edit_path_path(@path.id, :m=>"achievements") %>
       </li>
+			<% end %>
       <li <% if @mode == "settings" %> class="active" <% end %>>
         <%= link_to "Settings", edit_path_path(@path.id, :m=>"settings") %>
       </li>

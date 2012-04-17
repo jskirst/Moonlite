@@ -24,35 +24,47 @@
     </div>
 	</div>
 	<%= render "path_sections", { :sections => @sections } %>
+	
+	
+	
+	<% if @enable_leaderboard %>
 	<section class="tab_header">
-  <div>
-    <h3>Leaderboards</h4>
-  </div>
-  <div>
-		<script>
-		$(function (){
-			$("#leaderboard_overall").show().addClass("active_board");
-		});
-		
-		function change_leaderboard(new_board_id){
-			var old_board_id = $(".active_board").attr("id").replace("leaderboard_","");
-			$(".active_board").hide().removeClass("active_board");
-			$("#leaderboard_"+new_board_id).show().addClass("active_board");
-			$("#leaderboard_header_"+old_board_id).removeClass("active");
-			$("#leaderboard_header_"+new_board_id).addClass("active");
-		}
-		</script>
-    <ul class="tabs">
-      <li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
-      <% @sections.each do |s| %>
-			<li id="leaderboard_header_<%= s.id.to_s %>"><a onclick="change_leaderboard('<%= s.id.to_s %>')"><%= s.name %></a></li>
-			<% end %>
-    </ul>
-  </div>
-	<% @leaderboards.each do |l| %>
-		<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1]} %>
+		<div>
+			<h3>Leaderboards</h4>
+		</div>
+		<div>
+			<script>
+			$(function (){
+				$("#leaderboard_overall").show().addClass("active_board");
+			});
+			
+			function change_leaderboard(new_board_id){
+				var old_board_id = $(".active_board").attr("id").replace("leaderboard_","");
+				$(".active_board").hide().removeClass("active_board");
+				$("#leaderboard_"+new_board_id).show().addClass("active_board");
+				$("#leaderboard_header_"+old_board_id).removeClass("active");
+				$("#leaderboard_header_"+new_board_id).addClass("active");
+			}
+			</script>
+			<ul class="tabs">
+				<li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
+				<% @sections.each do |s| %>
+				<li id="leaderboard_header_<%= s.id.to_s %>"><a onclick="change_leaderboard('<%= s.id.to_s %>')"><%= s.name %></a></li>
+				<% end %>
+			</ul>
+		</div>
+		<% @leaderboards.each do |l| %>
+			<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1]} %>
+		<% end %>
+	</section>
 	<% end %>
-  <%= render "facebook_like" %>
+	
+	
+	<% if @enable_comments %>
+		<%= render "facebook_like" %>
+	<% end %>
+	
+	
 	<% if current_user.company_admin? %>
   <div class="actions">
     <% unless @path.is_published %>

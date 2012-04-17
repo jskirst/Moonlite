@@ -3,8 +3,12 @@ class Mailer < ActionMailer::Base
 
 	def welcome(details)
 		@user_email = details[:email]
-		@accept_url = "http://moonlite.heroku.com/users/#{details[:token1]}/accept"
-		mail(:to => details[:email], :subject => "Hello World")
+		if Rails.env.production?
+			@accept_url = "http://www.projectmoonlite.com/users/#{details[:token1]}/accept"
+		else
+			@accept_url = "http://localhost:3000/users/#{details[:token1]}/accept"
+		end
+		mail(:to => details[:email], :subject => "Welcome to Moonlite!")
 	end
 	
 	def invitation_alert(email)

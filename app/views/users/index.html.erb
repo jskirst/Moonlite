@@ -7,11 +7,10 @@
 	<li>
 		<%= image_tag(user.profile_pic, :size =>"50x50", :class => "profile_pic") %>
 		<%= link_to user.name, user %> | 
-		<%= link_to "delete", 
-			user, 
-			:method => :delete,
-			:confirm => "You sure?",
-			:title => "Delete #{user.name}" %>
+		<%= link_to "delete", user, :method => :delete, :confirm => "You sure?", :title => "Delete #{user.name}" %>
+		<% unless user.admin? %>
+			 | <%= link_to "admin", adminize_user_path(user), :confirm => "Are you sure you want to make this user an admin?" %>
+		<% end %>
 	</li>
 <% end %>
 </ul>

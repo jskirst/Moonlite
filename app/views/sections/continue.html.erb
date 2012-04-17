@@ -102,7 +102,7 @@ $(function(){
       </div>
     </div>
   </div>
-  <% if @comments_on %>
+  <% if @enable_feedback && @comments_on %>
   <div class="span6">
     <div class="task-comments">
       <% unless @comments.empty? %>
@@ -124,9 +124,9 @@ $(function(){
   <div class="actions" style="margin-top:50px">
     <input type="hidden" id="listless" name="listless" value="true">
     <%= submit_tag "Submit", :class => "btn primary", :style=>"margin-top: 10px;" %>
-    <% if @comments_on %>
+    <% if @enable_feedback && @comments_on %>
     <%= link_to "Hide Discussion", continue_section_path(@task.section), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
-    <% else %>
+    <% elsif @enable_feedback %>
     <%= link_to "View Discussion", continue_section_path(@task.section, :comments_on => "1"), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
     <% end %>
     <%= link_to "Continue Later", root_path, :class => "btn secondary", :style => "float:right;" %>

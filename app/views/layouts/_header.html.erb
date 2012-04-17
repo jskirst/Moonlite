@@ -1,41 +1,29 @@
-<style>
-#top_nav_bar {
-	font-size: 15px;
-	padding-top:4px;
-}
-</style>
 <header>
 	<nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown">
 		<div class="fill">
 			<div class="container">
-				<h3><a style="font-size: 26px;" href="/">bright<sub>e</sub>st</a></h3>
+				<h3><a style="font-size: 26px;" href="/"><%= company_logo.html_safe %></a></h3>
 				<% if signed_in? %>
-				<ul id="top_nav_bar">
-					<li><%= link_to "Browse", explore_path %></li>
-          <li><%= link_to "Create", create_path %></li>
+				<ul class="top_nav_bar">
+					<% if @enable_browsing %><li><%= link_to "Browse", explore_path %></li><% end %>
+					<% if @enable_browsing %><li><%= link_to "Create", create_path %></li><% end %>
 					<li>
             <a href="<%= user_url(current_user) %>">
               <%= image_tag current_user.profile_pic, :size => "18x18", :style => "display:inline; float:left; margin-right: 5px;" %>
               <%= current_user.name %>
             </a>
           </li>
-					<% if current_user.company.enable_company_store %>
-						<li><%= link_to "Rewards", rewards_path %></li>
-					<% end %>
+					<% if @enable_company_store %><li><%= link_to "Rewards", rewards_path %></li><% end %>
 					<% if current_user.company_admin? %>
 						<li><%= link_to "Administration", current_user.company %></li>
-            <% if current_user.company.enable_dashboard %>
-						<li><%= link_to "Dashboard", dashboard_path %></li>
-            <% end %>
+            <% if @enable_dashboard %><li><%= link_to "Dashboard", dashboard_path %></li><% end %>
 					<% end %>
-          <% if current_user.company.enable_leaderboard %>
-            <li><%= link_to "Leaderboard", leaderboards_path %></li>
-          <% end %>
+          <% if @enable_leaderboard %><li><%= link_to "Leaderboard", leaderboards_path %></li><% end %>
 				</ul>
 				<% end %>
-				<ul class="nav secondary-nav" id="top_nav_bar">
+				<ul class="nav secondary-nav top_nav_bar">
 					<% if signed_in? %>
-            <% if current_user.company.enable_tour %>
+            <% if @enable_tour %>
             <li>
               <% if current_user.company_admin? %>
               <%= link_to "Take the tour", tours_path %>
@@ -50,7 +38,7 @@
 					<% end %>
 				</ul>
 				<% if signed_in? && current_user.admin? %>
-				<ul class="nav secondary-nav">
+				<ul class="nav secondary-nav top_nav_bar">
 					<li class="menu">
 						<a href="#" class="dropdown-toggle">Admin</a>
 						<ul class="dropdown-menu">

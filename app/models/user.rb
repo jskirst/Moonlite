@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-	attr_accessor :password
-	attr_accessible :name, :email, :password, :password_confirmation, :earned_points, :spent_points, :image_url, :signup_token, :company_admin
+	attr_protected :admin
+	attr_accessor :password, :password_confirmation
+	attr_accessible :name, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin
 	
 	belongs_to :company
 	has_many :paths, :dependent => :destroy
@@ -10,6 +11,7 @@ class User < ActiveRecord::Base
 	has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
 	has_many :user_achievements, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+	has_many :leaderboards, :dependent => :destroy
 	
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -26,11 +28,22 @@ class User < ActiveRecord::Base
 	validates :password,
 		:presence	=> true,
 		:confirmation => true,
-		:length		=> { :within => 6..40 }
+		:length		=> { :within => 6..40 },
+		:on => :create
+		
+	validates :password,
+		:confirmation => true,
+		:length		=> { :within => 6..40 },
+		:on => :update,
+		:if => :validate_password?
 	
 	before_save :encrypt_password, :only => [:create]
 	before_save :set_tokens
   before_save :check_image_url
+	
+	def validate_password?
+		password.present?
+	end
 	
 	def send_invitation_email
 		email_details = { :email => self.email, :token1 => self.signup_token }

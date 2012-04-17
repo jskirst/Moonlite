@@ -7,6 +7,7 @@ class PathsController < ApplicationController
 	before_filter :get_path_from_id, :except => [:index, :new, :create, :marketplace]
 	before_filter :unpublished_not_for_purchase, :only => [:review, :purchase]
 	before_filter :unpublished_for_admins_only, :only => [:show, :continue]
+	before_filter :user_creation_enabled?, :except => [:show, :continue, :hero]
   
   def show
 		@title = @path.name
@@ -14,7 +15,9 @@ class PathsController < ApplicationController
     #@enrolled_users = @path.enrolled_users.all(:limit => 20)
 		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
 		
-		@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
+		if @enable_leaderboard
+			@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
+		end
 		
     @current_position = @path.current_section(current_user).position unless @sections.empty?
     @enrolled = current_user.enrolled?(@path)
@@ -57,7 +60,7 @@ class PathsController < ApplicationController
     @mode = params[:m]
 		if params[:m] == "settings"
 			render "edit_settings"
-		elsif params[:m] == "achievements"
+		elsif params[:m] == "achievements" && @enable_achievements
 			@achievements = @path.achievements
 			render "edit_achievements"
 		else
@@ -270,6 +273,12 @@ class PathsController < ApplicationController
 		def unpublished_for_admins_only
 			if !@path.is_published && !current_user.company_admin?
 				flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
+				redirect_to root_path
+			end
+		end
+		
+		def user_creation_enabled?
+			unless current_user.admin && @enable_user_creation
 				redirect_to root_path
 			end
 		end

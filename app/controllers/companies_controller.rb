@@ -13,6 +13,7 @@ class CompaniesController < ApplicationController
 	def create
 		@company = Company.new(params[:company])
 		if @company.save
+			create_first_admin(@company, params[:admin_email])
 			flash[:success] = "Welcome to your company account!"
 			redirect_to @company
 		else
@@ -66,9 +67,17 @@ class CompaniesController < ApplicationController
 		end
 		
 		def verify_owner
-			unless @owner_id == current_user.company_id
-				flash[:error] = "You do not have access to this data."
-				redirect_to root_path
+			unless current_user.admin?
+				unless @owner_id == current_user.company_id
+					flash[:error] = "You do not have access to this data."
+					redirect_to root_path
+				end
 			end
+		end
+		
+		def create_first_admin(company, email)
+			tmp = "pending"
+			new_admin = company.users.build({:name => tmp, :email => email, :password => tmp, :password_confirmation => tmp})
+			return new_admin.save
 		end
 end

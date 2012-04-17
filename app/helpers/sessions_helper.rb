@@ -47,6 +47,14 @@ module SessionsHelper
 		clear_return_to
 	end
 	
+	def company_logo
+		unless current_user.nil?
+			return current_user.company.name
+		else
+			return "Moonlite"
+		end
+	end
+	
 	# def verify_ownership
 		# if @owner_id != current_user.company.id
 			# flash[:error] = "You do not have access to this data."
