@@ -37,12 +37,12 @@ class User < ActiveRecord::Base
 		:on => :update,
 		:if => :validate_password?
 	
-	before_save :encrypt_password, :only => [:create]
+	before_save :encrypt_password
 	before_save :set_tokens
   before_save :check_image_url
 	
 	def validate_password?
-		password.present?
+		return self.password.present?
 	end
 	
 	def send_invitation_email
@@ -176,7 +176,7 @@ class User < ActiveRecord::Base
     end
   
 		def encrypt_password
-			if new_record?
+			if self.password.present?
 				self.salt = make_salt
 				self.encrypted_password = encrypt(password)
 			end

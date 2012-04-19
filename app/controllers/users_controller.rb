@@ -95,8 +95,15 @@ class UsersController < ApplicationController
 	
 	def update
 		@user = User.find(params[:id])
-		if @user.update_attributes(params[:user])
+		@user.name = params[:user][:name] if params[:user][:name] 
+		@user.email = params[:user][:email] if params[:user][:email] 
+		@user.img_url = params[:user][:img_url] if params[:user][:img_url] 
+		@user.password = params[:user][:password] if params[:user][:password] 
+		@user.password_confirmation = params[:user][:password_confirmation] if params[:user][:password_confirmation] 
+		if @user.save
 			flash[:success] = "Profile successfully updated."
+			@user.reload
+			sign_in(@user)
 			redirect_to @user
 		else
 			@title = "Settings"
@@ -139,7 +146,7 @@ class UsersController < ApplicationController
 		end
 	
 		def user_only
-			redirect_to root_path unless current_user.id == params[:id]
+			redirect_to root_path unless current_user.id == params[:id].to_i
 		end
 	
 		def admin_only
