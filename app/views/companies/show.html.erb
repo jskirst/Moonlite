@@ -50,6 +50,7 @@
 		</table>
 		<% end %>
 		<p><%= link_to "Add user", new_user_path(:company_id => @company), :class => "btn primary" %></p>
+		<hr/>
 		<h3>Awaiting reply from:</h3>
 		<% if @unregistered_users.empty? %>
 			<p>There are no outstanding user invitations.</p>

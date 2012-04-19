@@ -14,6 +14,14 @@ class Leaderboard < ActiveRecord::Base
 	validates :score, 
     :presence => true,
     :numericality	=> true
+		
+	def self.get_all_excluded_users(company)
+		excluded_emails = ""
+		company.paths.each do |p|
+			excluded_emails += p.excluded_from_leaderboards.to_s
+		end
+		return excluded_emails
+	end
 				
 	def self.get_overall_leaderboard(company, date = nil)
 		date = get_most_recent_board_date if date.nil?
@@ -58,7 +66,10 @@ class Leaderboard < ActiveRecord::Base
 	end
 	
 	def self.get_user_stats(user, date)
+		excluded_emails = get_all_excluded_users(user.company)
+		return nil if excluded_emails.include?(user.email)
 		return nil if user.name == "pending"
+		
 		completed_tasks = user.completed_tasks.size
     score = user.earned_points
     Leaderboard.create!(:user_id => user.id, :completed_tasks => completed_tasks, :score => score, :created_at => date)
