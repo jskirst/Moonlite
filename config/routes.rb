@@ -16,7 +16,12 @@ SampleApp::Application.routes.draw do
 			get :user_tour
 		end
 	end
-	resources :companies
+	resources :companies do
+		member do
+			get :join
+			put :accept
+		end
+	end
   resources :paths do
 		member do
 			get :review

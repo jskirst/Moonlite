@@ -1,0 +1,32 @@
+<h1>Join <%= @company.name %> on Moonlite</h1>
+<%= form_for @user, :url => { :controller => "companies", :action => "accept" }, :method => "put" do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :signup_token, :value => @company.signup_token %>
+	<div class="field">
+		<%= f.label :name %>
+		<div class="input">
+			<%= f.text_field :name %>
+		</div>
+	</div>
+		<div class="field">
+		<%= f.label :email %>
+		<div class="input">
+			<%= f.text_field :email %>
+		</div>
+	</div>
+	<div class="field">
+		<%= f.label :password %>
+		<div class="input">
+			<%= f.password_field :password %>
+		</div>
+	</div>
+	<div class="field">
+		<%= f.label :password_confirmation, "Confirm password" %>
+		<div class="input">
+			<%= f.password_field :password_confirmation %>
+		</div>
+	</div>
+	<div class="actions">
+		<%= f.submit "Sign up", :class => "btn primary" %>
+	</div>
+<% end %>

@@ -2,7 +2,7 @@
   <tr>
     <th>Rank</th>
     <th>User</th>
-    <th>Completed tasks</th>
+    <th>Completed Questions</th>
     <th>Score</th>
   </tr>
 <% counter = 1 %>
@@ -27,3 +27,6 @@
 	<% end %>
 <% end %>
 </table>
+<% unless leaderboard_entries.empty? %>
+	<p>Last leaderboard update: <%= leaderboard_entries.first.created_at %></p>
+<% end %>

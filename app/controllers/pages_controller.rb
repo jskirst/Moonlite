@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
 	before_filter :authenticate, :only => [:explore]
 	before_filter :user_creation_enabled?, :only => [:create]
+	before_filter :browsing_enabled?, :only => [:explore]
   
 	def home
 		@title = "Home"
@@ -26,7 +27,6 @@ class PagesController < ApplicationController
 	end
   
   def explore
-		redirect_to root_path unless current_user.company.enable_browsing
 		@title = "Explore"
     @path_categories = []
     @display_all = false
@@ -78,6 +78,13 @@ class PagesController < ApplicationController
 		
 		def user_creation_enabled?
 			unless (current_user.admin? || current_user.company_admin? || @enable_user_creation)
+				flash[:error] = "You do not have access to this functionality."
+				redirect_to root_path
+			end
+		end
+		
+		def browsing_enabled?
+			unless (current_user.admin? || current_user.company_admin? || @enable_browsing)
 				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path
 			end

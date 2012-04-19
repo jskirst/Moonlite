@@ -78,7 +78,9 @@ class User < ActiveRecord::Base
 	end
 	
 	def enroll!(path)
-		enrollments.create!(:path_id => path.id)
+		if enrollments.find_by_path_id(path.id).nil?
+			enrollments.create!(:path_id => path.id)
+		end
 	end
 	
 	def unenroll!(path)

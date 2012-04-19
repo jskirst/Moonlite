@@ -56,7 +56,11 @@ class UsersController < ApplicationController
 			redirect_to root_path and return
 		end
 		
-		if @user.update_attributes(params[:user])
+		@user.name = params[:user]
+		@user.password = params[:user][:password]
+		@user.password_confirmation = params[:user][:password_confirmation]
+		
+		if @user.save
 			@user.reload
 			sign_in @user
 			flash[:success] = "Welcome to the Moonlite!"

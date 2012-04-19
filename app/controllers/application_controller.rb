@@ -18,7 +18,11 @@ class ApplicationController < ActionController::Base
 				@enable_feedback = company.enable_feedback
 				@enable_achievements = company.enable_achievements
 				@enable_recommendations = company.enable_recommendations
+				@enable_printer_friendly = company.enable_printer_friendly
 				@enable_user_creation = company.enable_user_creation
+				@enable_auto_enroll = company.enable_auto_enroll
+				@enable_one_signup = company.enable_one_signup
+				@enable_collaboration = company.enable_collaboration
 			end
 		end
 end

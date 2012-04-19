@@ -58,7 +58,13 @@
 								<%= f.check_box :enable_news %>
 								<span>Enable news feed</span>
 							</label>
-						</li>            
+						</li>
+						<li>
+							<label>
+								<%= f.check_box :enable_printer_friendly %>
+								<span>Enable emails to administrators when users complete challenges</span>
+							</label>
+						</li>  						
 						<li>
 							<label>
 								<%= f.check_box :enable_feedback %>
@@ -83,6 +89,18 @@
 								<span>Enable non-admin user content creation</span>
 							</label>
 						</li>
+						<li>
+							<label>
+								<%= f.check_box :enable_collaboration %>
+								<span>Enable all company admins to view and edit company challenges</span>
+							</label>
+						</li>
+						<li>
+							<label>
+								<%= f.check_box :enable_auto_enroll %>
+								<span>Enable auto-enrollment of new users in any published challenge</span>
+							</label>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -99,6 +117,13 @@
 					</ol>
 					<% end %>
 					<%= link_to "Add a Path category", new_category_path, :class => "btn secondary" %>
+				</div>
+			</div>
+			<div class="field clearfix">
+				<%= f.label "One-step signup" %>
+				<div class="input">
+					<%= f.check_box :enable_one_signup %>
+					<span><%= @signup_url %></span>
 				</div>
 			</div>
 			<div class="actions">

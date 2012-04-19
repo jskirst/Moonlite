@@ -4,7 +4,7 @@
   <p>You are not currently enrolled in any paths.</p>
   <%= link_to "Get started!", explore_path, :class => "btn primary" %>
 <% elsif @enrolled_paths.empty? && !@completed_paths.empty? %>
-  <p>Congratulations! You've completed all your enrolled paths.</p>
+  <p>Congratulations! You've completed all your enrolled challenges.</p>
 <% end %>
   <%= render "pages/user_progress", { :paths_list => @enrolled_paths } %>
   

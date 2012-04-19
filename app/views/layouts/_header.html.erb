@@ -5,7 +5,7 @@
 				<h3><a style="font-size: 26px;" href="/"><%= company_logo.html_safe %></a></h3>
 				<% if signed_in? %>
 				<ul class="top_nav_bar">
-					<% if (@enable_browsing || current_user.company_admin?) %><li><%= link_to "Browse", explore_path %></li><% end %>
+					<% if (@enable_browsing || current_user.company_admin?) %><li><%= link_to "Explore", explore_path %></li><% end %>
 					<% if (@enable_user_creation || current_user.company_admin?) %><li><%= link_to "Create", create_path %></li><% end %>
 					<li>
             <a href="<%= user_url(current_user) %>">

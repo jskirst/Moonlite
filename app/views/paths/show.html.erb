@@ -1,5 +1,5 @@
 <section class="path">
-  <% if @start_mode == "Get Started" %>
+  <% if @start_mode == "Get Started" && !@enable_auto_enroll %>
     <%= render "paths/popups/get_started" %>
   <% end %>
 	<div style="min-height: 120px;">
@@ -23,8 +23,11 @@
       <div class="description"><%= @path.description.html_safe %></div>
     </div>
 	</div>
-	<%= render "path_sections", { :sections => @sections } %>
 	
+	
+	<% if @path.enable_section_display %>
+		<%= render "path_sections", { :sections => @sections } %>
+	<% end %>
 	
 	
 	<% if @enable_leaderboard %>

@@ -1,5 +1,5 @@
 class CompaniesController < ApplicationController
-	before_filter :authenticate
+	before_filter :authenticate, :except => [:accept, :join]
 	before_filter :admin_only, :only => [:new, :create, :index]
 	before_filter :admin_or_company_admin, :only => [:show, :edit, :update]
 	before_filter :get_company_from_id, :only => [:show, :edit, :update]
@@ -31,6 +31,11 @@ class CompaniesController < ApplicationController
 	def edit
 		@title = "Company Settings"
 		@categories = @company.categories.all
+		if Rails.env.production?
+			@signup_url = "http://www.projectmoonlite.com/companies/#{@company.signup_token}/join"
+		else
+			@signup_url = "http://localhost:3000/companies/#{@company.signup_token}/join"
+		end
 	end
 	
 	def update
@@ -46,6 +51,47 @@ class CompaniesController < ApplicationController
 	def index
 		@companies = Company.paginate(:page => params[:page])
 		@title = "All companies"
+	end
+	
+	def join
+		@company = Company.where("signup_token = ?", params[:id]).first
+		if @company.nil?
+			redirect_to root_path
+		else
+			@user = @company.users.new
+		end
+	end
+	
+	def accept
+		redirect_to root_path if params[:user][:password].nil?
+		@company = Company.where("signup_token = ?", params[:user][:signup_token]).first
+		if @company.nil?
+			redirect_to root_path
+		else
+			@user = @company.users.build(params[:user])
+			@user.password = params[:user][:password]
+			@user.password_confirmation = params[:user][:password_confirmation]
+			if @user.save
+				flash[:success] = "Welcome, stranger!"
+				@user.reload
+				sign_in @user
+				
+				logger.debug "BEGINNING ATTACK RUN."
+				logger.debug @company.enable_auto_enroll
+				if @company.enable_auto_enroll
+					company_paths = @company.paths.where("is_published = ?", true)
+					logger.debug company_paths
+					company_paths.each do |p|
+						@user.enroll!(p)
+					end
+				end
+				
+				redirect_to root_path
+			else
+				flash[:error] = "There was a problem with your signup."
+				render "join"
+			end
+		end
 	end
 	
 	private
