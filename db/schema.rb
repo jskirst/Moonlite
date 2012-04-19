@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120419190502) do
+ActiveRecord::Schema.define(:version => 20120419201913) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -133,20 +133,21 @@ ActiveRecord::Schema.define(:version => 20120419190502) do
 
   create_table "paths", :force => true do |t|
     t.string   "name"
-    t.text     "description",            :default => ""
+    t.text     "description",                :default => ""
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "company_id"
     t.string   "image_url"
-    t.boolean  "is_public",              :default => false
+    t.boolean  "is_public",                  :default => false
     t.integer  "purchased_path_id"
-    t.boolean  "is_published",           :default => false
-    t.boolean  "is_purchaseable",        :default => false
+    t.boolean  "is_published",               :default => false
+    t.boolean  "is_purchaseable",            :default => false
     t.integer  "owner_id"
-    t.integer  "category_id",            :default => 0
-    t.boolean  "enable_section_display", :default => true
-    t.integer  "default_timer",          :default => 30
+    t.integer  "category_id",                :default => 0
+    t.boolean  "enable_section_display",     :default => true
+    t.integer  "default_timer",              :default => 30
+    t.string   "excluded_from_leaderboards"
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"

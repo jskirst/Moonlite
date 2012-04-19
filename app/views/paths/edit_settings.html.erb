@@ -51,9 +51,15 @@
 				</li>
 			</ul>
 		</div>
+		<br>
 		<%= f.label "Question Timer (secs)" %>
 		<div class="input">
 			<%= f.text_field :default_timer %>
+		</div>
+		<br>
+		<%= f.label "Exclude from leaderboards" %>
+		<div class="input">
+			<%= f.text_area :excluded_from_leaderboards, :rows => 3, :style => "width: 400px;" %>
 		</div>
 	</div>
   <hr/>

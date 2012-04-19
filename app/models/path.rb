@@ -1,7 +1,7 @@
 class Path < ActiveRecord::Base
 	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
 		:is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
-		:default_timer
+		:default_timer, :excluded_from_leaderboards
 	
 	belongs_to :user
 	belongs_to :company

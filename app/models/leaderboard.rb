@@ -70,6 +70,9 @@ class Leaderboard < ActiveRecord::Base
 			paths = c.paths
 			paths.each do |p|
 				next unless user.enrolled?(p)
+				unless p.excluded_from_leaderboards.blank?
+					next if p.excluded_from_leaderboards.include?(user.email)
+				end
 				total_path_tasks = 0
 				logger.debug p.name
 				path_sections = p.sections
