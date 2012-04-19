@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120419201913) do
+ActiveRecord::Schema.define(:version => 20120419205150) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -48,23 +48,24 @@ ActiveRecord::Schema.define(:version => 20120419201913) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "enable_company_store",    :default => true
+    t.boolean  "enable_company_store",         :default => true
     t.integer  "owner_id"
-    t.boolean  "enable_leaderboard",      :default => true
-    t.boolean  "enable_dashboard",        :default => true
-    t.boolean  "enable_tour",             :default => true
-    t.boolean  "enable_comments",         :default => true
-    t.boolean  "enable_feedback",         :default => true
-    t.boolean  "enable_news",             :default => true
-    t.boolean  "enable_achievements",     :default => true
-    t.boolean  "enable_recommendations",  :default => true
-    t.boolean  "enable_printer_friendly", :default => true
-    t.boolean  "enable_browsing",         :default => true
-    t.boolean  "enable_user_creation",    :default => true
-    t.boolean  "enable_auto_enroll",      :default => true
-    t.boolean  "enable_collaboration",    :default => true
-    t.boolean  "enable_one_signup",       :default => true
+    t.boolean  "enable_leaderboard",           :default => true
+    t.boolean  "enable_dashboard",             :default => true
+    t.boolean  "enable_tour",                  :default => true
+    t.boolean  "enable_comments",              :default => true
+    t.boolean  "enable_feedback",              :default => true
+    t.boolean  "enable_news",                  :default => true
+    t.boolean  "enable_achievements",          :default => true
+    t.boolean  "enable_recommendations",       :default => true
+    t.boolean  "enable_printer_friendly",      :default => true
+    t.boolean  "enable_browsing",              :default => true
+    t.boolean  "enable_user_creation",         :default => true
+    t.boolean  "enable_auto_enroll",           :default => true
+    t.boolean  "enable_collaboration",         :default => true
+    t.boolean  "enable_one_signup",            :default => true
     t.string   "signup_token"
+    t.string   "default_profile_picture_link"
   end
 
   create_table "company_users", :force => true do |t|

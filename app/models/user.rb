@@ -54,7 +54,11 @@ class User < ActiveRecord::Base
 		if self.image_url != nil
 			return self.image_url
 		else
-			return "/images/default_profile_pic.jpg"
+			if company.default_profile_picture_link.blank?
+				return "/images/default_profile_pic.jpg"
+			else
+				return company.default_profile_picture_link
+			end
 		end
 	end
 	

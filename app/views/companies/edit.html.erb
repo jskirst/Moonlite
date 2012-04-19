@@ -126,6 +126,12 @@
 					<span><%= @signup_url %></span>
 				</div>
 			</div>
+			<div class="field clearfix">
+				<%= f.label "Default User Profile Picture" %>
+				<div class="input">
+					<%= f.text_field :default_profile_picture_link %>
+				</div>
+			</div>
 			<div class="actions">
 				<%= f.submit "Save", :class => "btn primary" %>
 			</div>

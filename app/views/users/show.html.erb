@@ -1,6 +1,6 @@
 <section style="float:right;">
 <% if @user.id == current_user.id %>
-	<%= link_to "Edit", edit_user_path(current_user), :class => "btn primary" %>
+	<%= link_to "Edit Profile", edit_user_path(current_user), :class => "btn primary" %>
 <% end %>
 </section>
 <section class="user_profile">
@@ -10,8 +10,7 @@
     </div>
     <div style="height: 100px">
       <h1><%= @user.name %></h1>
-      <p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points. 
-			<% if @enable_leaderboard %><Current Ranking: <strong>#<%= @rank %></strong></p><% end %>
+      <p style="font-size:15px;"><%= @user.name %> has earned <strong><%= @user.earned_points %></strong> total points.
     </div>
   </div>
 	<% if @enable_achievements && !@user_achievements.empty? %>
@@ -35,7 +34,7 @@
       <% @enrolled_paths.each do |path| %>
         <% if path.completed?(current_user) %>
 				<tr>
-					<td style="vertical-align: middle;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
+					<td style="vertical-align: middle; width:70px;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
 					<td class="path">
 						<h3 class="name"><%= link_to path.name, path %><span class="label" style="margin: 0 0 0 10px; background-color: #468847;">Completed</span></h3>
 						<p class="description"><%= truncate(strip_tags(path.description), :length => 255) %></p>
