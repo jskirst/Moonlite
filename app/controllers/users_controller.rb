@@ -97,7 +97,7 @@ class UsersController < ApplicationController
 		@user = User.find(params[:id])
 		@user.name = params[:user][:name] if params[:user][:name] 
 		@user.email = params[:user][:email] if params[:user][:email] 
-		@user.img_url = params[:user][:img_url] if params[:user][:img_url] 
+		@user.image_url = params[:user][:image_url] if params[:user][:image_url] 
 		@user.password = params[:user][:password] if params[:user][:password] 
 		@user.password_confirmation = params[:user][:password_confirmation] if params[:user][:password_confirmation] 
 		if @user.save
