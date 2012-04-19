@@ -17,6 +17,7 @@ class PathsController < ApplicationController
 		
 		if @enable_leaderboard
 			@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
+			@last_update = Leaderboard.get_most_recent_board_date
 		end
 		
     @current_position = @path.current_section(current_user).position unless @sections.empty?

@@ -59,6 +59,9 @@
 		<% @leaderboards.each do |l| %>
 			<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1]} %>
 		<% end %>
+		<% unless @leaderboards.empty? %>
+			<p>Last leaderboard update: <%= time_ago_in_words(@last_update) %> ago</p>
+		<% end %>
 	</section>
 	<% end %>
 	

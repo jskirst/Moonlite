@@ -21,6 +21,7 @@ function change_leaderboard(new_board_id){
 <% @leaderboards.each do |l| %>
 	<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1]} %>
 <% end %>
+<p>Last leaderboard update: <%= time_ago_in_words(@last_update) %> ago</p>
 <br />
 <% if current_user.company_admin? %>
   <%= link_to "Refresh Leaderboard", new_leaderboard_path, :class => "btn primary" %>

@@ -11,6 +11,7 @@ class LeaderboardsController < ApplicationController
 			@categories.each do |c|
 				@leaderboards << [c.id, Leaderboard.get_leaderboard_for_category(c)]
 			end
+			@last_update = Leaderboard.get_most_recent_board_date
 	end
   
   def new

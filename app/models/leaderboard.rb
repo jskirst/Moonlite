@@ -14,7 +14,7 @@ class Leaderboard < ActiveRecord::Base
 	validates :score, 
     :presence => true,
     :numericality	=> true
-		
+				
 	def self.get_overall_leaderboard(company, date = nil)
 		date = get_most_recent_board_date if date.nil?
 		return Leaderboard.joins(:user).where("users.company_id = ? and leaderboards.created_at = ? and category_id is ? and path_id is ? and section_id is ?", company.id, date, nil, nil, nil).all(:order => "score DESC")
