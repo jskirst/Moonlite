@@ -44,7 +44,13 @@
 							<td><%= truncate(enrolled_paths, :length => 80) %></td>
 						<% end %>
 						<td><%= u.earned_points.to_s %></td>
-						<td><%= link_to "Delete", u, :method => "delete", :confirm => "Are you sure you want to delete this user?", :class => "btn secondary" %></td>
+						<td>
+						<% if current_user == u %>
+							<%= link_to "Delete", "#", :class => "btn secondary disabled" %>
+						<% else %>
+							<%= link_to "Delete", u, :method => "delete", :confirm => "Are you sure you want to delete this user?", :class => "btn secondary" %>
+						<% end %>
+						</td>
 					</tr>
 					<% user_counter += 1 %>
 				<% end %>
