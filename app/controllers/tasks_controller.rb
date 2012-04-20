@@ -51,7 +51,7 @@ class TasksController < ApplicationController
 	
 	def update
 		@task = Task.find(params[:id])
-		if params[:task][:section_id] != @task.id
+		if params[:task][:section_id].to_i != @task.section.id
 			old_section = @task.section
 			path = old_section.path
 			new_section = path.sections.find(params[:task][:section_id])
