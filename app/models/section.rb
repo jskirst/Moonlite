@@ -1,5 +1,6 @@
 class Section < ActiveRecord::Base
-	attr_accessible :name, :instructions, :position, :is_published, :image_url, :content_type, :hidden_content
+	attr_accessible :name, :instructions, :position, :is_published, :image_url,
+		:content_type, :hidden_content, :enable_skip_content
 	
 	before_create :set_position
 	

@@ -127,7 +127,7 @@ class PathsController < ApplicationController
       @suggested_paths = Path.suggested_paths(current_user, @path.id)
       render "completion"
     else
-			if @section.instructions.blank?
+			if @section.enable_skip_content
 				redirect_to continue_section_path(@section)
 			else
 				redirect_to @section

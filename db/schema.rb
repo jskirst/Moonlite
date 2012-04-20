@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120419205150) do
+ActiveRecord::Schema.define(:version => 20120420000733) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -190,10 +190,11 @@ ActiveRecord::Schema.define(:version => 20120419205150) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "owner_id"
-    t.boolean  "is_published",   :default => false
+    t.boolean  "is_published",        :default => false
     t.string   "image_url"
     t.string   "content_type"
     t.text     "hidden_content"
+    t.boolean  "enable_skip_content", :default => false
   end
 
   create_table "tasks", :force => true do |t|
