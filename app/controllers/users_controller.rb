@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_filter :authenticate, :except => [:accept, :join]
-	before_filter :company_admin_or_admin_only, :only => [:new, :create]
+	before_filter :company_admin_or_admin_only, :only => [:new, :create, :destroy]
 	before_filter :user_only,	:only => [:edit, :update]
 	before_filter :admin_only, :only => [:adminize]
 	
@@ -126,8 +126,8 @@ class UsersController < ApplicationController
 	
 	def destroy
 		@user = User.find_by_id(params[:id])
-		if @user.nil?
-			flash[:error] = "No such user exists."
+		if @user == current_user
+			flash[:error] = "You cannot remove yourself from the equation."
 			redirect_to current_user.company
 		else
 			@user.destroy
@@ -138,7 +138,12 @@ class UsersController < ApplicationController
 	
 	private
 		def company_admin_or_admin_only
-			company_id = params[:company_id] || params[:user][:company_id]
+			if params[:id]
+				company_id = User.find(params[:id]).company.id
+			else
+				company_id = params[:company_id] || params[:user][:company_id]
+			end
+			
 			unless (current_user.admin? || (current_user.company_admin? && current_user.company.id == company_id.to_i))
 				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path 
