@@ -50,13 +50,21 @@ $(function(){
           <%= f.text_field :answer3, :maxlength => 255, :size => 75, :class => a_class.downcase.gsub(" ","_") %>
         </div>
       </div>
-        <div class="field clearfix">
+      <div class="field clearfix">
         <% a_class = (@ca == 4 ? "Correct answer" : "Wrong answer") %>
         <%= f.label a_class %>
         <div class="input">
           <%= f.text_field :answer4, :maxlength => 255, :size => 75, :class => a_class.downcase.gsub(" ","_") %>
         </div>
       </div>
+			<% if @sections && @sections.size > 1 %>
+			<div class="field clearfix">
+        <%= f.label "Section" %>
+        <div class="input">
+					<%= f.select :section_id, @sections.map {|s| [s.name,s.id]} %>
+        </div>
+      </div>
+			<% end %>
       <% if @info_resource %>
       <div class="field clearfix">
         <%= f.label "Resource" %>

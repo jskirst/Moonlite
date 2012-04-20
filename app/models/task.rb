@@ -1,4 +1,5 @@
 class Task < ActiveRecord::Base
+	attr_protected :section_id
 	attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position
 	before_create :set_position
   before_create :randomize_answers
@@ -14,9 +15,8 @@ class Task < ActiveRecord::Base
 		:presence 		=> true,
 		:length			=> { :within => 1..255 }
 	
-	validates :answer1, 
-		:presence 		=> true,
-		:length			=> { :within => 1..255 }
+	validates :answer1,
+		:length			=> { :maximum => 255 }
 		
 	validates :answer2,
 		:length			=> { :maximum => 255 }
