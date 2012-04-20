@@ -25,6 +25,7 @@
 					<%= link_to "Delete", r, :method => :delete, :confirm => "Are you sure you want to delete this document?", :class => "btn secondary" %>
 				</div>
 				<div>
+					<p>If you have trouble seeing this document, you can <%= link_to "download it here", r.obj.url %>.</p>
 					<iframe src="http://docs.google.com/viewer?url=<%=u r.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
 				</div>
 			</div>

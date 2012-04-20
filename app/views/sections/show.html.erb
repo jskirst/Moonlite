@@ -1,10 +1,12 @@
 <section class="tab_content">
-	<h2><%= @section.name %></h2>
+	<h2 style="margin-bottom: 20px;"><%= @section.name %></h2>
+	<p style='font-weight:bold;'>Review the content below before you begin the challenge.</p>
 	<% unless @section.instructions.blank? %>
 	<div style="padding: 20px"><%= @section.instructions.html_safe %></div>
 	<% end %>
 	<% @info_resources.each do |r| %>
 		<div>
+			<p>If you have trouble seeing content below, you can <%= link_to "download it here", r.obj.url %>.</p>
 			<iframe src="http://docs.google.com/viewer?url=<%=u r.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
 		</div>
 	<% end %>
