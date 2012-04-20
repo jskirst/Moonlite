@@ -23,7 +23,7 @@ class PathsController < ApplicationController
     @current_position = @path.current_section(current_user).position unless @sections.empty?
     @enrolled = current_user.enrolled?(@path)
     if current_user.path_started?(@path)
-      @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Path"
+      @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Challenge"
     elsif current_user.enrolled?(@path)
       @start_mode = "Get Started"
     else

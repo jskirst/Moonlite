@@ -71,6 +71,14 @@ class PagesController < ApplicationController
 		end
 	end
 	
+	def tutorial
+		@path = Path.find(params[:p])
+		unless current_user.enrolled?(@path)
+			flash[:info] = "You must first enroll in challenge before you can start it."
+			redirect_to root_path and return
+		end
+	end
+	
 	private
 		def send_invitation_alert(email)
 			Mailer.invitation_alert(email).deliver
