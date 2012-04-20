@@ -7,7 +7,7 @@ class TasksController < ApplicationController
     @ca = 1
 		@title = "New Question"
 		@section_id = params[:section_id]
-		@form_title = "New Task"
+		@form_title = "New Question"
 		render "tasks/task_form"
 	end
 	

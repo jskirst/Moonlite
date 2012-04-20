@@ -26,9 +26,9 @@
 	</section>
 	<% end %>
 	<section>
-		<h3>Enrolled Paths</h3>
+		<h3>Enrolled Challenges</h3>
 		<% if @enrolled_paths.empty? %>
-		<p><%= @user.name %> is not currently enrolled in any publically accessible paths.</p>
+		<p><%= @user.name %> is not currently enrolled in any publically accessible challenges.</p>
 		<% else %>
 		<table>
       <% @enrolled_paths.each do |path| %>
