@@ -7,25 +7,23 @@ class CompletedTasksController < ApplicationController
     resp = params[:completed_task]
 		status_id = (Integer(resp[:answer]) == Integer(@task.correct_answer) ? 1 : 0)
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))
-		if @completed_task.save
-			if status_id == 1
-        points = 10
-        if params[:listless] == "true"
-          streak = @task.section.user_streak(current_user)
-          unless streak == 0
-            streak -= 1
-          end
-          points += streak
-        end
-        achievement = current_user.award_points_and_achievements(@task, points)
-        if achievement
-          flash[:success] = "Congrats! You unlocked the #{achievement.name} achievement!"
-        end
+		if status_id == 1
+			points = 10
+			if params[:listless] == "true"
+				streak = @task.section.user_streak(current_user)
+				#unless streak == 0
+					#streak -= 1
+				#end
+				points += streak
 			end
-			redirect_to continue_section_path :id => @completed_task.task.section, :previous => status_id
-		else
-			redirect_to root_path
+			@completed_task.points_awarded = points
+			@completed_task.save
+			achievement = current_user.award_points_and_achievements(@task, points)
+			if achievement
+				flash[:success] = "Congrats! You unlocked the #{achievement.name} achievement!"
+			end
 		end
+		redirect_to continue_section_path :id => @completed_task.task.section, :previous => status_id
 	end
 	
 	private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120420000733) do
+ActiveRecord::Schema.define(:version => 20120423194307) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -85,9 +85,10 @@ ActiveRecord::Schema.define(:version => 20120420000733) do
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status_id",    :default => 0
+    t.integer  "status_id",      :default => 0
     t.datetime "quiz_session"
     t.integer  "owner_id"
+    t.integer  "points_awarded"
   end
 
   create_table "enrollments", :force => true do |t|
