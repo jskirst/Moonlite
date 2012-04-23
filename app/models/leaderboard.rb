@@ -70,10 +70,6 @@ class Leaderboard < ActiveRecord::Base
 		return nil if excluded_emails.include?(user.email)
 		return nil if user.name == "pending"
 		
-		completed_tasks = user.completed_tasks.size
-    score = user.earned_points
-    Leaderboard.create!(:user_id => user.id, :completed_tasks => completed_tasks, :score => score, :created_at => date)
-		
 		total_tasks = 0
 		total_points = 0
 		categories = user.company.categories
@@ -104,9 +100,10 @@ class Leaderboard < ActiveRecord::Base
 				total_category_tasks += total_path_tasks
 				total_category_points += total_path_points
 			end
-			Leaderboard.create!(:user_id => user.id, :category_id => c.id, :completed_tasks => total_category_tasks, :score => total_category_tasks * 10, :created_at => date)
+			Leaderboard.create!(:user_id => user.id, :category_id => c.id, :completed_tasks => total_category_tasks, :score => total_category_points, :created_at => date)
 			total_tasks += total_category_tasks
-			total_tasks += total_category_points
+			total_points += total_category_points
 		end
+		Leaderboard.create!(:user_id => user.id, :completed_tasks => total_tasks, :score => total_points, :created_at => date)
 	end
 end
