@@ -54,6 +54,7 @@ class CompaniesController < ApplicationController
 	end
 	
 	def join
+		redirect_to root_path if signed_in?
 		@company = Company.where("signup_token = ?", params[:id]).first
 		if @company.nil?
 			redirect_to root_path
