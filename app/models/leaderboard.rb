@@ -75,9 +75,11 @@ class Leaderboard < ActiveRecord::Base
     Leaderboard.create!(:user_id => user.id, :completed_tasks => completed_tasks, :score => score, :created_at => date)
 		
 		total_tasks = 0
+		total_points = 0
 		categories = user.company.categories
 		categories.each do |c|
 			total_category_tasks = 0
+			total_category_points = 0
 			paths = c.paths
 			paths.each do |p|
 				next unless user.enrolled?(p)
@@ -89,18 +91,22 @@ class Leaderboard < ActiveRecord::Base
 				path_sections = p.sections
 				path_sections.each do |s|
 					total_section_tasks = 0
-					tasks = user.completed_tasks.includes(:section).where("sections.id = ?", s.id)
+					tasks = user.completed_tasks.includes(:section).where("sections.id = ? and status_id = 1", s.id)
 					total_section_tasks = tasks.size
 					logger.debug s.name
 					logger.debug tasks.size
 					Leaderboard.create!(:user_id => user.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_tasks * 10, :created_at => date)
 					total_path_tasks += total_section_tasks
 				end
-				Leaderboard.create!(:user_id => user.id, :path_id => p.id, :completed_tasks => total_path_tasks, :score => total_path_tasks * 10, :created_at => date)
+				enrollment = user.enrollments.where("path_id = ?", p.id).first
+				total_path_points = enrollment.total_points
+				Leaderboard.create!(:user_id => user.id, :path_id => p.id, :completed_tasks => total_path_tasks, :score => total_path_points, :created_at => date)
 				total_category_tasks += total_path_tasks
+				total_category_points += total_path_points
 			end
 			Leaderboard.create!(:user_id => user.id, :category_id => c.id, :completed_tasks => total_category_tasks, :score => total_category_tasks * 10, :created_at => date)
 			total_tasks += total_category_tasks
+			total_tasks += total_category_points
 		end
 	end
 end
