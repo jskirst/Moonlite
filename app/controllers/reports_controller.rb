@@ -110,7 +110,7 @@ class ReportsController < ApplicationController
 		@title = "Details"
 		section_ids = []
 		@path.sections.each do |s|
-			section_ids << s.id.to_s
+			section_ids << s.id.to_s if s.is_published
 		end
 		section_ids = section_ids.join(",")
 		if section_ids == ""
