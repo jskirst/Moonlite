@@ -4,7 +4,10 @@ class CompletedTasksController < ApplicationController
   before_filter :post_comment
 	
 	def create
-		last_answer_date = current_user.completed_tasks.last.created_at
+		previous_task = current_user.completed_tasks.last
+		unless previous_task.nil?
+			last_answer_date = previous_task.created_at
+		end
     resp = params[:completed_task]
 		status_id = (Integer(resp[:answer]) == Integer(@task.correct_answer) ? 1 : 0)
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))
