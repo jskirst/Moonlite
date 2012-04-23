@@ -129,10 +129,10 @@ class ReportsController < ApplicationController
 		@most_correct_tasks = CompletedTask.all(
 			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
-			:conditions => "tasks.section_id IN (#{section_ids}) and status_id = 1",
-			:order => "1 desc",
+			:conditions => "tasks.section_id IN (#{section_ids})",
+			:order => "1 asc",
 			:limit => "10",
-			:select => "count(*) as count, tasks.id"
+			:select => "((sum(status_id)-count(*))*-1) as count, tasks.id"
 		)
 	end
   
