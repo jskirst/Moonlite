@@ -4,17 +4,22 @@ class CompletedTasksController < ApplicationController
   before_filter :post_comment
 	
 	def create
+		last_answer_date = current_user.completed_tasks.last.created_at
     resp = params[:completed_task]
 		status_id = (Integer(resp[:answer]) == Integer(@task.correct_answer) ? 1 : 0)
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))
 		if status_id == 1
 			points = 10
 			if params[:listless] == "true"
-				streak = @task.section.user_streak(current_user)
-				#unless streak == 0
-					#streak -= 1
-				#end
-				points += streak
+				streak = @task.section.user_streak(current_user)				
+				unless streak < 1
+					sixty_seconds_ago = 60.seconds.ago
+					logger.debug last_answer_date
+					logger.debug sixty_seconds_ago
+					if last_answer_date > sixty_seconds_ago
+						points += streak
+					end
+				end
 			end
 			@completed_task.points_awarded = points
 			@completed_task.save
