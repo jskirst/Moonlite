@@ -1,0 +1,16 @@
+<ul class="media-grid">
+<% paths.each_index do |pp| %>
+	<% if pp >= 12 && !display_all then break end %>
+	<% path = paths[pp] %>
+	<li>
+		<a href="<%= path_path(path) %>" id="<%= path.name.gsub(" ", "_") %>">
+			<div class="path-caption">
+				<span class="caption-title"><%= truncate(path.name, :length => 35) %></span><br>
+				<span style="font-size: 10px; float: left;"><%= path.enrolled_user_count %> users enrolled.</span>
+				<span style="font-size: 10px; float: right;"><%= path.difficulty_rating %></span>
+			</div>
+			<img class="thumbnail" src="<%= paths[pp].path_pic %>" height="200" width="210">
+		</a>
+	</li>
+<% end %>
+</ul>

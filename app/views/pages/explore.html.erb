@@ -9,34 +9,18 @@
 </section>
 <section id="path_explore">
   <% @path_categories.each do |c| %>
-    <% category = c[0] %>
-    <% all_paths = c[1] %>
-    <% if !@query.nil? %>
-      <p>Your search for <strong><%= @query %></strong> returned <%= all_paths.size.to_s %> results.</p>
-    <% else %>
-    <hr/>
-    <div class="row" style="padding-left: 20px;">
+		<hr/>
+		<% category = c[0] %>
+		<% paths = c[1] %>
+    
+		<div class="row" style="padding-left: 20px;">
       <h2><%= category.name %></h2>
-      <% if @display_all %>
+      <% unless @display_all %>
         <%= link_to "View All", explore_path(:c => category.id), :style=> "float: right; padding-top: 10px;" %>
       <% end %>
     </div>
-    <% end %>
-    <ul class="media-grid">
-    <% all_paths.each_index do |pp| %>
-      <% if pp >= 12 && @display_all then break end %>
-      <% path = all_paths[pp] %>
-      <li>
-        <a href="<%= path_path(path) %>" id="<%= path.name.gsub(" ", "_") %>">
-          <div class="path-caption">
-            <span class="caption-title"><%= truncate(path.name, :length => 35) %></span><br>
-            <span style="font-size: 10px; float: left;"><%= path.enrolled_user_count %> users enrolled.</span>
-            <span style="font-size: 10px; float: right;"><%= path.difficulty_rating %></span>
-          </div>
-          <img class="thumbnail" src="<%= all_paths[pp].path_pic %>" height="200" width="210">
-        </a>
-      </li>
-    <% end %>
-    </ul>
+    
+		<%= render "path_grid", {:paths => paths, :display_all => @display_all} %>
+		
 	<% end %>
 </section>

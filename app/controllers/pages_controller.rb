@@ -29,10 +29,10 @@ class PagesController < ApplicationController
   def explore
 		@title = "Explore"
     @path_categories = []
-    @display_all = false
+    @display_all = true
     if params[:search]
       @query = params[:search]
-      @path_sections << ["Search Results", Path.with_name_like(@query)]
+      @path_categories << [Category.new(:name => "Search Results"), Path.with_name_like(@query)]
     elsif params[:c]
       category = current_user.company.categories.find(params[:c])
       if category.nil?
@@ -42,12 +42,13 @@ class PagesController < ApplicationController
         @path_categories << [category, Path.with_category(category.id)]
       end
     else
-      @display_all = true
+      @display_all = false
       categories = Category.find_all_by_company_id(current_user.company_id)
       categories.each do |c|
         @path_categories << [c, Path.with_category(c.id)]
       end
     end
+		logger.debug @path_categories
 	end
 	
 	def create
