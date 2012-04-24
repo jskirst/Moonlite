@@ -18,7 +18,7 @@
     <%= submit_tag "Save", :class => "btn primary" %>
     <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
   <% else %>
-    <%= link_to "New Task", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
+    <%= link_to "New Question", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
     <%= link_to "Reorder", edit_section_path(@section.id, :m => "tasks", :a => "reorder"), :class=>"btn secondary" %>
     <%= link_to "Generate", questions_section_path(@section), :class=>"btn secondary" %>
   <% end %>

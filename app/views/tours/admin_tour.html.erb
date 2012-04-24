@@ -13,8 +13,8 @@
 	</div>
 	<div class="row">
 		<div class="span6 columns">
-			<p>Welcome to your Home page! You can reach this page at any time by clicking the <strong>Moonlite</strong> logo at the top left of the navigation bar.</p>
-			<p>All of the Paths you are currently enrolled in are displayed at the top. Moonlite news from around your company is just below, and will feature stories about every user's achievements and path progress.</p>
+			<p>Welcome to your Home page! You can reach this page at any time by clicking your company logo (<strong><%= company_logo %></strong>) at the top left of the navigation bar.</p>
+			<p>All of the challenges you are currently enrolled in are displayed at the top. Moonlite news from around your company is just below, and will feature stories about every user's achievements and challenge progress.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/home.PNG", :size=>"600x400"%>
@@ -22,36 +22,39 @@
 	</div>
 	<% elsif @page == 2 %>
 	<div class="page-header">
-		<h2>Paths</h2>
+		<h2>Challenges</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
-			<p>The Paths page is the heart of every Moonlite account.</p>
-			<p>You can access each of the Paths that your organization has made or purchased from the <strong>Path Marketplace</strong> (top right).</p>
+			<p>The <strong>Explore</strong> page is the heart of every Moonlite account, and can be accessed by clicking the Explore link next to your company logo on the nav bar.</p>
+			<p>Here you can view and access each of the challenges that your organization has made or purchased.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/all_paths.PNG", :size=>"600x400"%>
 		</div>
 	</div>
 	<div class="page-header">
-		<h2>Viewing & Enrolling in a Path</h2>
+		<h2>Enrolling in a challenge</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
-			<p>You can view the details of a Path by clicking on its name from the Paths page.</p>
-			<p>Unlockable <strong>Achievements</strong> for the Path are displayed along with a detailed description of what the user can expect to learn by taking it.</p>
-			<p>Once here, you can enroll in the Path by clicking the <strong>Enroll</strong> button at the bottom.</p>
+			<p>You can view the details of a challenge by clicking on its name from the Explore page or your home page.</p>
+			<p>To enroll in a challenge that sounds interesting, just click the <strong>Enroll</strong> button at the top right. You can then begin or come back to the challenge at anytime.</p>
+			<% if @enable_auto_enroll %>
+			<p><strong>NOTE:</strong> Your organization is setup for auto enrollment, which means all members of your organization are automatically enrolled in all published paths. You can change that from the <%= link_to "company settings", edit_company_path(current_user.company) %> page.</p>
+			<% end %>
+			<p></p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/enroll_path.PNG", :size=>"600x400"%>
 		</div>
 	</div>
 	<div class="page-header">
-		<h2>Continuing a Path</h2>
+		<h2>Continuing a challenge</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
-			<p>Once you've enrolled in a path, you can click the <strong>Continue</strong> button at the bottom to start a short quiz session.</p>
+			<p>Once you've enrolled in a challenge, you can click the <strong>Continue Challenge</strong> button at the top right to start a short quiz session.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/continue_path.PNG", :size=>"600x500"%>
@@ -62,9 +65,10 @@
 	</div>
 	<div class="row">
 		<div class="span6 columns">
-			<p>Each quiz session is meant to take 5-10 minutes and will present you with some of the questions you haven't yet answered.</p>
-			<p>You will gain points for each question you answer correctly and get access to harder and harder questions until you have completed the Path.</p>
-			<p>Later on in the tour we'll talk about how you can spend your hard earned points at the <strong>Company Store</strong>.</p>
+			<p>Each quiz session is meant to take <strong>5-10 minutes</strong> and will present you with some of the questions you haven't yet answered.</p>
+			<p>You will gain points for each question you answer correctly as well as <strong>bonus points</strong> equal to the number of questions you get correct in a row.</p>
+			<p>Answer the question before the timer or else you'll lose any bonus points you might have gotten for your correct answer streak.</p>
+			<p>Remember though, there's no reason to stress! The <strong>timer starts over</strong> after each question and every question you get wrong will simply be recycled for you to <strong>try again at the end</strong> of the quiz.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/continue_answer_path.PNG", :size=>"600x300"%>
@@ -73,18 +77,19 @@
 	</div>
 	<% elsif @page == 3 %>
 	<div class="page-header">
-		<h2>Creating Paths</h2>
+		<h2>Creating challenges</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
-			<p>From the Paths page, click the <strong>Create new Path</strong> link at the bottom left.</p>
+			<p>To create a new challenge or modify an existing one, click the <strong>Create</strong> link on the top nav bar.</p>
+			<p>From here you can see all your organizations published and published challenges. To make a new one, click the button titled <strong>Build new challenge</strong>.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/all_paths.PNG", :size=>"600x400"%>
 		</div>
 	</div>
 	<div class="page-header">
-		<h2>New Path</h2>
+		<h2>New Challenge</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
@@ -97,7 +102,7 @@
 		</div>
 	</div>
 	<div class="page-header">
-		<h2>Editing a Path</h2>
+		<h2>Editing a Challenge</h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
@@ -106,108 +111,6 @@
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/create_path_edit.PNG", :size=>"600x300"%>
-		</div>
-	</div>
-	<div class="page-header">
-		<h2>Uploading Questions</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>Once you click <strong>Upload Questions</strong>, you be able to choose a .CSV file from your computer.</p>
-			<p>The file should follow a specific format, with columns structured as follows:</p>
-			<ol>
-				<li>question</li>
-				<li>correct answer</li>
-				<li>wrong answer</li>
-				<li>wrong answer</li>
-				<li>wrong answer</li>
-				<li>points</li>
-			</ol>
-			<p>Click <strong>Submit</strong> and your file will be processed and a question created for each row in the file. Simple as pie.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/create_path_file.PNG", :size=>"600x200", :style => "margin-bottom: 40px;"%>
-			<%= image_tag "/images/tour/create_path_upload.PNG", :size=>"600x200", :style => "margin-bottom: 40px;"%>
-			<%= image_tag "/images/tour/create_path_upload_finish.PNG", :size=>"600x200"%>
-		</div>
-	</div>
-	<% elsif @page == 4 %>
-	<div class="page-header">
-		<h2>Path Marketplace</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>The Path Marketplace is where you can find pre-built Paths to purchase for your Moonlite account. Once purchased, you can modify your new Path as you see fit and redistribute to your team members.</p>
-			<p>To access the market, go back to the Paths page and click <strong>Path Marketplace</strong> at the top right corner of the page.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/all_paths.PNG", :size=>"600x400"%>
-		</div>
-	</div>
-	<div class="page-header">
-		<h2>Searching the Marketplace</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>From the Marketplace home page, you can either select one of the categories or search by keywords.</p>
-			<p>Searching by the keyword "Salesforce", we can see that there is one result. Clicking on it will show us details about the Path and give us an option to purchase it.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/path_market_all.PNG", :size=>"600x400", :style => "margin-bottom: 40px;"%>
-			<%= image_tag "/images/tour/path_market_search.PNG", :size=>"500x200"%>
-		</div>
-	</div>
-	<div class="page-header">
-		<h2>Purchasing a Path</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>From the Marketplace home page, you can either select one of the categories or search by keywords.</p>
-			<p>Searching by the keyword "Salesforce", we can see that there is one result. Clicking on it will show us details about the Path and give us an option to purchase it.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/path_market_confirm.PNG", :size=>"500x200", :style => "margin-bottom: 40px;"%>
-			<%= image_tag "/images/tour/path_market_purchased.PNG", :size=>"600x300"%>
-		</div>
-	</div>
-	<% elsif @page == 5 %>
-	<div class="page-header">
-		<h2>Company Store</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>You can access the Company Store from the middle of the navigation bar. The Company Stores allows users to spend their hard earned points on anything an employer is willing to list - small gifts, gift cards, perks, etc.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/company_store_all.PNG", :size=>"600x400", :style => "margin-bottom: 40px;"%>
-		</div>
-	</div>
-	<div class="page-header">
-		<h2>Purchasing Items</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>If you have the points available, you can purchase any of the items listed. Just confirm your purchase and the item will be delivered directly to your office in just a few business days.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/company_store_review.PNG", :size=>"500x300", :style => "margin-bottom: 40px;"%>
-			<%= image_tag "/images/tour/company_store_confirm.PNG", :size=>"500x300"%>
-		</div>
-	</div>
-	<div class="page-header">
-		<h2>Adding Items to the Store</h2>
-	</div>
-	<div class="row">
-		<div class="span6 columns">
-			<p>The Company Store is meant to be different for every Moonlite account. You can select what you want in the store and how many points it should cost.</p>
-			<p>When a user purchases an item you added to the store, depending on your account type, we can either handle the purchase order and mail it to your company or route the purchase notification directly to you.</p>
-			<p>To add an item to the store, click the <strong>Add new store item</strong> link at the top.</p>
-			<p>Enter in the required information and click <strong>Save</strong>.</p>
-			<p>You can edit the item at any time by navigating to the item you want to change from the selection screen and clicking <strong>Edit</strong>.</p>
-		</div>
-		<div class="span10 columns">
-			<%= image_tag "/images/tour/company_store_all.PNG", :size=>"500x300", :style => "margin-bottom: 40px;"%>
-			<%= image_tag "/images/tour/company_store_new.PNG", :size=>"500x300"%>
 		</div>
 	</div>
 	<% elsif @page == 6 %>

@@ -2,11 +2,9 @@
 <ul class="tabs">
 	<% active = "class='active'" %>
 	<li <%= active if @page == 1 %>><%= link_to "Home", admin_tour_tour_path(1) %></li>
-	<li <%= active if @page == 2 %>><%= link_to "Paths", admin_tour_tour_path(2) %></li>
-	<li <%= active if @page == 3 %>><%= link_to "Creating Paths", admin_tour_tour_path(3) %></li>
-	<li <%= active if @page == 4 %>><%= link_to "Path Marketplace", admin_tour_tour_path(4) %></li>
-	<li <%= active if @page == 5 %>><%= link_to "Company Store", admin_tour_tour_path(5) %></li>
-	<li <%= active if @page == 6 %>><%= link_to "My Company", admin_tour_tour_path(6) %></li>
+	<li <%= active if @page == 2 %>><%= link_to "Challenges", admin_tour_tour_path(2) %></li>
+	<li <%= active if @page == 3 %>><%= link_to "Creating Challenges", admin_tour_tour_path(3) %></li>
+	<li <%= active if @page == 6 %>><%= link_to "Administration", admin_tour_tour_path(6) %></li>
 	<li <%= active if @page == 7 %>><%= link_to "Dashboard", admin_tour_tour_path(7) %></li>
 	<li <%= active if @page == 8 %>><%= link_to "Bon Voyage!", admin_tour_tour_path(8) %></li>
 </ul>

@@ -43,10 +43,10 @@ class PathsController < ApplicationController
 		params[:path][:company_id] = current_user.company.id
 		@path = current_user.paths.build(params[:path])
 		if @path.save
-			flash[:success] = "Path created."
+			flash[:success] = "Challenge created."
 			redirect_to edit_path_path(@path, :m => "start")
 		else
-			@title = "New Path"
+			@title = "New Challenge"
       @categories = current_user.company.categories
 			render 'new'
 		end
@@ -81,7 +81,7 @@ class PathsController < ApplicationController
 		end
     if params[:path][:is_published] == "1"
       if @path.sections.where(["is_published = ?", true]).count.zero?
-        flash[:error] = "You need to publish at least one section before you can make your path publicly available."
+        flash[:error] = "You need to publish at least one section before you can make your challenge publicly available."
         render 'edit' 
         return
       end
@@ -90,7 +90,7 @@ class PathsController < ApplicationController
 			flash[:success] = "Changes saved."
 			redirect_to edit_path_path(@path)
 		else
-			@title = "Edit Path"
+			@title = "Edit Challenge"
 			render 'edit'
 		end
 	end
