@@ -11,28 +11,9 @@ For example, if its type is a video and the link is for Youtube, the resource wi
 		</div>
 	</div>
 	<div class="field">
-		<%= f.label :link %>
-		<div class="input">
-			<%= f.text_field :link, :class => "xxlarge" %>
-		</div>
-	</div>
-	<p> - OR - </p>
-	<div class="field">
 		<%= f.label "Upload File" %>
 		<div class="input">
 			<%= f.file_field :obj %>
-		</div>
-	</div>
-  <div class="field clearfix">
-		<%= f.label :info_type %>
-		<div class="input">
-			<select id="info_resource_info_type" name="info_resource[info_type]">
-				<option value="text">Text</option>
-				<option value="video">Video</option>
-				<option value="action">Action</option>
-				<option value="picture">Picture</option>
-				<option value="slideshow">Slideshow</option>
-			</select>
 		</div>
 	</div>
 	<div class="actions">

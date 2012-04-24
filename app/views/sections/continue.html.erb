@@ -55,13 +55,9 @@ $(function(){
         </p>
       </blockquote>
       <% if @info_resource %>
-        <% if @info_resource.info_type == "video" %>
-          <div style="margin: 20px 0px 20px 150px;">
-          <iframe width="560" height="315" src="<%= @info_resource.link %>" frameborder="0" allowfullscreen></iframe>
-          </div>
-        <% elsif @info_resource.info_type == "picture" %>
-          <img src="<%= @info_resource.link %>" height="400" style="margin-left: 150px; margin-bottom: 30px;">
-        <% end %>
+				<% if @info_resource.obj.content_type.include?("image") %>
+					<img src="<%= @info_resource.obj.url %>" height="250" style="margin-left: 150px; margin-bottom: 30px;">
+				<% end %>
       <% end %>
     </div>
     <div class="answer">
