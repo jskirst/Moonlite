@@ -52,8 +52,13 @@ class PagesController < ApplicationController
 	end
 	
 	def create
-		@published_paths = current_user.paths.where("is_published = ?", true)
-		@unpublished_paths = current_user.paths.where("is_published = ?", false)
+		if @enable_collaboration
+			@published_paths = current_user.company.paths.where("is_published = ?", true)
+			@unpublished_paths = current_user.company.paths.where("is_published = ?", false)
+		else
+			@published_paths = current_user.paths.where("is_published = ?", true)
+			@unpublished_paths = current_user.paths.where("is_published = ?", false)
+		end
 	end
   
 	def about

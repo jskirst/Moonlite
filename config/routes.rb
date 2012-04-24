@@ -8,6 +8,8 @@ SampleApp::Application.routes.draw do
 			get :accept
 			put :join
 			get :adminize
+			get :request_reset
+			put :reset_password
 		end
 	end
 	resources :tours do
@@ -90,6 +92,9 @@ SampleApp::Application.routes.draw do
 	match '/marketplace',:to => 'paths#marketplace'
 	
 	match '/retrieve', :to => 'info_resources#retrieve'
+	
+	match '/password_reset', :to => 'users#request_send'
+	match '/send_reset', :to => 'users#send_reset'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

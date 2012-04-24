@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :authenticate, :except => [:accept, :join]
+	before_filter :authenticate, :except => [:accept, :join, :request_send, :send_reset, :request_reset, :reset_password]
 	before_filter :company_admin_or_admin_only, :only => [:new, :create, :destroy]
 	before_filter :user_only,	:only => [:edit, :update]
 	before_filter :admin_only, :only => [:adminize]
@@ -122,6 +122,41 @@ class UsersController < ApplicationController
 			end
 		end
 		redirect_to users_path
+	end
+	
+	def request_send
+	end
+	
+	def send_reset
+		@user = User.find_by_email(params[:email])
+		if @user.nil?
+			flash[:error] = "No such user exists."
+		else
+			if @user.send_password_reset
+				flash[:success] = "Please check your email for your password reset link."
+			else
+				flash[:error] = "There was an error trying to send your reset your password. Please try again."
+			end
+		end
+		redirect_to root_path
+	end
+	
+	def request_reset
+		@user = User.find(:first, :conditions => ["signup_token = ?", params[:id]])
+		redirect_to root_path if @user.nil?
+	end
+	
+	def reset_password
+		@user = User.find_by_signup_token(params[:user][:signup_token])
+		@user.password = params[:user][:password]
+		@user.password_confirmation = params[:user][:password_confirmation]
+		if @user.save
+			flash[:success] = "Your password has been successfully reset."
+			redirect_to root_path
+		else
+			flash[:error] = "There was an error saving your new password. Please try again."
+			render "request_reset"
+		end
 	end
 	
 	def destroy

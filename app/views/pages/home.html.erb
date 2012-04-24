@@ -15,12 +15,5 @@
 
 
 <% if @enable_news %>
-<section>
-  <h2>News</h2>
-<% if @user_achievements.empty? %>
-  <p>No news yet today! <%= link_to "Go make some!", explore_path %></p>
-<% else %>
   <%= render "pages/user_news", { :user_news => @user_achievements } %>
-<% end %>
-</section>
 <% end %>

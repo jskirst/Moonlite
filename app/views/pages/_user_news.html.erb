@@ -1,3 +1,8 @@
+<section>
+  <h2>News</h2>
+<% if user_news.empty? %>
+  <p>No news yet today! <%= link_to "Go make some!", explore_path %></p>
+<% else %>
 <table>
   <% user_news.each do |un| %>
   <tr>
@@ -9,3 +14,5 @@
   </tr>	
   <% end %>
 </table>
+<% end %>
+</section>

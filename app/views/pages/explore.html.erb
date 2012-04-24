@@ -8,7 +8,10 @@
 	<div><a><h1><%= company_logo %> Challenges</h1></a></div>
 </section>
 <section id="path_explore">
-  <% @path_categories.each do |c| %>
+<% if @path_categories.empty? %>
+	<p style="padding:30px 20px 300px 20px;">No challenges have been listed for your organization yet. Please check with your administrator to see if your Moonlite instance has been properly configured.</p>
+<% else %>
+	<% @path_categories.each do |c| %>
 		<hr/>
 		<% category = c[0] %>
 		<% paths = c[1] %>
@@ -23,4 +26,5 @@
 		<%= render "path_grid", {:paths => paths, :display_all => @display_all} %>
 		
 	<% end %>
+<% end %>
 </section>

@@ -1,0 +1,20 @@
+<h1>Enter new password</h1>
+<%= form_for @user, :url => { :action => "reset_password" }, :method => "put" do |f| %>
+	<%= render "shared/error_messages", :object => f.object %>
+	<%= f.hidden_field :signup_token, :value => @user.signup_token %>
+	<div class="field">
+		<%= f.label :password %>
+		<div class="input">
+			<%= f.password_field :password %>
+		</div>
+	</div>
+	<div class="field">
+		<%= f.label :password_confirmation, "Confirm password" %>
+		<div class="input">
+			<%= f.password_field :password_confirmation %>
+		</div>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save Password", :class => "btn primary" %>
+	</div>
+<% end %>

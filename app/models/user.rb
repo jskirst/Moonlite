@@ -50,6 +50,11 @@ class User < ActiveRecord::Base
 		Mailer.welcome(email_details).deliver
 	end
 	
+	def send_password_reset
+		email_details = { :email => self.email, :token1 => self.signup_token }
+		Mailer.reset(email_details).deliver
+	end
+	
 	def profile_pic
 		if self.image_url != nil
 			return self.image_url
