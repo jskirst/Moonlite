@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423194307) do
+ActiveRecord::Schema.define(:version => 20120423215417) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -150,6 +150,7 @@ ActiveRecord::Schema.define(:version => 20120423194307) do
     t.boolean  "enable_section_display",     :default => true
     t.integer  "default_timer",              :default => 30
     t.string   "excluded_from_leaderboards"
+    t.boolean  "enable_nonlinear_sections",  :default => false
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"

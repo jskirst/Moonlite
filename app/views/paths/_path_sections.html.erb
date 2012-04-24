@@ -7,12 +7,12 @@
     <% previous_completed = false %>
     <% first_path = true %>
     <% sections.each do |s| %>
-      <% section_open = true if (s.position <= @current_position || previous_completed || !@enrolled)%>
+      <% section_open = true if (@path.enable_nonlinear_sections || s.position <= @current_position || previous_completed || !@enrolled)%>
       <% section_opacity = section_open ? "1.0" : "0.5" %>
       <% section_link = section_open ? section_path(s) : "#" %>
       <li>
         <a href="<%= section_link %>" style="opacity: <%= section_opacity %>;">
-          <% if @enrolled %>   
+          <% if @enrolled && !@path.enable_nonlinear_sections %>   
             <% if s.remaining_tasks(current_user) <= 0 %>
               <span class="section-caption">COMPLETED</span>
               <% previous_completed = true %>

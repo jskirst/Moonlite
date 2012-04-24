@@ -10,10 +10,14 @@ class SectionsController < ApplicationController
   before_filter :verify_enrollment, :only => [:continue]
 
 	def show
-		@path_name = @section.path.name
-		@title = @section.name
-    @section_started = current_user.section_started?(@section)
-    @info_resources = @section.info_resources.all
+		if current_user.enrolled?(@section.path) && @section.enable_skip_content
+			redirect_to continue_section_path(@section)
+		else
+			@path_name = @section.path.name
+			@title = @section.name
+			@section_started = current_user.section_started?(@section)
+			@info_resources = @section.info_resources.all
+		end
 	end
 
 # Begin Section Creation  
