@@ -19,7 +19,8 @@
 		<div class="input">
 			<select id="path_category_id" name="path[category_id]">
 				<% @categories.each do |c| %>
-          <option value="<%= c.id %>"><%= c.name %></option>
+					<% selected_value = c.id == @path.category_id ? "selected='selected'" : "" %>
+          <option value="<%= c.id %>" <%= selected_value %>><%= c.name %></option>
         <% end %>
 			</select>
 		</div>

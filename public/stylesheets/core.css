@@ -54,7 +54,7 @@ div.field, div.action { margin-bottom: 10px; }
 #error_explanation ul li { font-size: 12px; list-style: square; }
 
 /* Dashboard */
-#dashboard ul { list-style-type: none; }
+#dashboard ul { list-style-type: none; margin-left: 0px; }
 #dashboard h1 { font-size:28px; }
 #dashboard h2 { font-size:22px; }		
 #dashboard h3 { font-size:18px; }
