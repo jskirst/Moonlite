@@ -89,9 +89,9 @@ class Leaderboard < ActiveRecord::Base
 					total_section_tasks = 0
 					tasks = user.completed_tasks.includes(:section).where("sections.id = ? and status_id = 1", s.id)
 					total_section_tasks = tasks.size
-					logger.debug s.name
-					logger.debug tasks.size
-					Leaderboard.create!(:user_id => user.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_tasks * 10, :created_at => date)
+					total_section_points = 0
+					tasks.each {|t| total_section_points += t.points_awarded}
+					Leaderboard.create!(:user_id => user.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_points, :created_at => date)
 					total_path_tasks += total_section_tasks
 				end
 				enrollment = user.enrollments.where("path_id = ?", p.id).first
