@@ -11,12 +11,13 @@ class Phrase < ActiveRecord::Base
   def associated_phrases
     associated_phrases = []
     phrase_pairings.each do |p|
-      associated_phrases << Phrase.find_by_id(p.paired_phrase_id).content
+      associated_phrases << Phrase.find_by_id(p.paired_phrase_id).original_content
     end
     return associated_phrases
   end
   
   def downcase
+		self.original_content = self.content
     self.content = self.content.downcase
   end
 end
