@@ -45,6 +45,10 @@ class Task < ActiveRecord::Base
 		answers = [nil,answer1,answer2,answer3,answer4]
 		return answers[correct_answer]
 	end
+	
+	def question_type
+		return answers_to_array.size == 1 ? "single" : "multiple"
+	end
   
   private
     def randomize_answers

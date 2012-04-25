@@ -12,6 +12,7 @@ class PhrasePairing < ActiveRecord::Base
 	def self.create_phrase_pairings(new_phrases)
     phrases = []
     new_phrases.each do |np|
+			next if np.blank?
       p = Phrase.find_by_content(np.downcase)
 			p = Phrase.create!(:content => np) if p.nil?
 			phrases << p

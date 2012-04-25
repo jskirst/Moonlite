@@ -1,0 +1,5 @@
+<% if info_resource %>
+	<% if info_resource.obj.content_type.include?("image") %>
+		<img src="<%= info_resource.obj.url %>" height="250" style="margin-left: 150px; margin-bottom: 30px;">
+	<% end %>
+<% end %>

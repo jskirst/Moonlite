@@ -259,6 +259,8 @@ class SectionsController < ApplicationController
       @final_section = true if @path.next_section(@section).nil?
       render "results"
     else
+			@question_type = @task.question_type
+		
       if params[:previous]
         @correct = (params[:previous] == "1" ? true : false)
       end
