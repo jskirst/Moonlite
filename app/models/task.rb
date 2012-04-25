@@ -41,6 +41,18 @@ class Task < ActiveRecord::Base
 	
 	default_scope :order => 'tasks.position ASC'
 	
+	def is_correct?(user_answer, type)
+		if type == "text"
+			answers = describe_correct_answer.downcase.split(",")
+			answers.each do |answer|
+				return true if close_enough?(user_answer, answer)
+			end
+			return false
+		else
+			return Integer(user_answer) == Integer(self.correct_answer)
+		end
+	end
+	
 	def describe_correct_answer
 		answers = [nil,answer1,answer2,answer3,answer4]
 		return answers[correct_answer]
@@ -51,6 +63,10 @@ class Task < ActiveRecord::Base
 	end
   
   private
+		def close_enough? (user_answer, answer)
+			return user_answer.strip.downcase == answer.strip.downcase
+		end
+	
     def randomize_answers
       answers = answers_to_array
       if answers.size > 1
@@ -82,10 +98,11 @@ class Task < ActiveRecord::Base
     
     def answers_to_array
       answers = []
-      answers << self.answer1.chomp unless self.answer1.nil?
-      answers << self.answer2.chomp unless self.answer2.nil?
-      answers << self.answer3.chomp unless self.answer3.nil?
-      answers << self.answer4.chomp unless self.answer4.nil?
+      answers << self.answer1.chomp unless self.answer1.blank?
+      answers << self.answer2.chomp unless self.answer2.blank?
+      answers << self.answer3.chomp unless self.answer3.blank?
+      answers << self.answer4.chomp unless self.answer4.blank?
+			return answers
     end
     
     def answers_to_hash_array

@@ -8,8 +8,13 @@ class CompletedTasksController < ApplicationController
 		unless previous_task.nil?
 			last_answer_date = previous_task.created_at
 		end
+		
     resp = params[:completed_task]
-		status_id = (Integer(resp[:answer]) == Integer(@task.correct_answer) ? 1 : 0)
+		unless resp[:text_answer].nil?
+			status_id = @task.is_correct?(resp[:text_answer], "text") ? 1 : 0
+		else
+			status_id = @task.is_correct?(resp[:answer], "multiple") ?  1 : 0
+		end
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))
 		if status_id == 1
 			points = 10
@@ -27,9 +32,9 @@ class CompletedTasksController < ApplicationController
 			@completed_task.points_awarded = points
 			@completed_task.save
 			achievement = current_user.award_points_and_achievements(@task, points)
-			if achievement
-				flash[:success] = "Congrats! You unlocked the #{achievement.name} achievement!"
-			end
+		else
+			@completed_task.points_awarded = 0
+			@completed_task.save
 		end
 		redirect_to continue_section_path :id => @completed_task.task.section, :previous => status_id
 	end

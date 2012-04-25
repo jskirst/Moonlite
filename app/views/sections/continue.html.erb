@@ -24,7 +24,11 @@ $(function(){
     <div class="answer">
       <input type="hidden" name="completed_task[task_id]" value="<%= @task.id %>">
       <input type="hidden" name="completed_task[quiz_session]" value="<%= @quiz_session %>">
-			<%= render "multiple_choice_answer", { :task => @task } %>
+			<% if @question_type == "single" %>
+				<%= render "single_answer", { :task => @task } %>
+			<% else %>
+				<%= render "multiple_choice_answer", { :task => @task } %>
+			<% end %>
     </div>
   
 	</div>
