@@ -1,5 +1,5 @@
 <section style="float:right;">
-<% if @user.id == current_user.id %>
+<% if current_user && @user.id == current_user.id %>
 	<%= link_to "Edit Profile", edit_user_path(current_user), :class => "btn primary" %>
 <% end %>
 </section>
@@ -32,7 +32,7 @@
 		<% else %>
 		<table>
       <% @enrolled_paths.each do |path| %>
-        <% if path.completed?(current_user) %>
+        <% if path.completed?(@user) %>
 				<tr>
 					<td style="vertical-align: middle; width:70px;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
 					<td class="path">
@@ -43,7 +43,7 @@
         <% end %>
 			<% end %>
 			<% @enrolled_paths.each do |path| %>
-         <% unless path.completed?(current_user) %>
+         <% unless path.completed?(@user) %>
 				<tr>
 					<td style="vertical-align: middle;"><%= image_tag(path.path_pic, :size=>"70x70", :class=> "thumbnail") %>
 					<td class="path">

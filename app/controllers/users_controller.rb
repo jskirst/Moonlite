@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :authenticate, :except => [:accept, :join, :request_send, :send_reset, :request_reset, :reset_password]
+	before_filter :authenticate, :except => [:accept, :join, :request_send, :send_reset, :request_reset, :reset_password, :show]
 	before_filter :company_admin_or_admin_only, :only => [:new, :create, :destroy]
 	before_filter :user_only,	:only => [:edit, :update]
 	before_filter :admin_only, :only => [:adminize]
@@ -78,7 +78,7 @@ class UsersController < ApplicationController
 		else
 			@enrolled_paths = @user.enrolled_paths.find(:all, :conditions => ["paths.is_public = ?", true])
 			@user_achievements = @user.user_achievements.joins(:achievement)
-      @rank = Leaderboard.get_rank(current_user)
+      @rank = Leaderboard.get_rank(@user)
 			@title = @user.name
 		end
 	end
