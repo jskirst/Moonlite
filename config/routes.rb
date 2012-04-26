@@ -72,6 +72,7 @@ SampleApp::Application.routes.draw do
   resources :comments
   resources :leaderboards
 	resources :categories
+	resources :phrases
 	
 	root 				:to => "pages#home"
 	

@@ -67,7 +67,7 @@ $(function(){
 			<% end %>
       <% if @info_resource %>
       <div class="field clearfix">
-        <%= f.label "Resource" %>
+        <%= f.label "Image" %>
         <div class="input">
           <%= image_tag(@info_resource.obj.url, :width => "100") %>
         </div>
@@ -86,7 +86,7 @@ $(function(){
 		<% if @task.new_record? %>
 			<%= f.submit "Save and New", :class => "btn secondary" %>
 		<% else %>
-      <%= link_to "Add Resource", new_info_resource_path(:task_id => @task.id), :class => "btn secondary" %>
+      <%= link_to "Add Image", new_info_resource_path(:task_id => @task.id), :class => "btn secondary" %>
     <% end %>
 		<%= link_to "Cancel", edit_section_path(@section_id, :m => "tasks"), :class => "btn secondary" %>
 	</div>

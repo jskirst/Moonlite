@@ -1,0 +1,13 @@
+<h2>Welcome, human<h2>
+<p style="margin:25px;">Provide me with your phrases and they shall be recorded.</p>
+<%= form_for @phrase do |p| %>
+	<div class="fields clearfix">
+		<label>Phrases</label>
+		<div class="input">
+			<%= p.text_area :content, :rows => 4, :style => "width:600px;", :placeholder => "Enter phrases with comma seperation..." %>
+		</div>
+	</div>
+<div class="actions">
+	<%= p.submit "Submit", :class => "btn primary" %>
+</div>
+<% end %>
