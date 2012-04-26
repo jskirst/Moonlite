@@ -31,6 +31,9 @@
 						<%= t.question %>
 					</p>
 				</blockquote>
+				<% if t.info_resource %>
+					<%= image_tag t.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
+				<% end %>
 				<ol>
           <% ca = t.correct_answer %>
 					<% if !t.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= t.answer1 %></li><% end %>
