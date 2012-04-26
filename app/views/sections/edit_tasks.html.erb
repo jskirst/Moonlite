@@ -12,6 +12,7 @@
     </ul>
   </div>
 	<% else %>
+	<span class="label" style="font-size: 13px; vertical-align:middle;"><%= @tasks.size %> questions</span>
   <div style="float: right; margin-bottom:10px;">
   <% if @reorder %>
     <%= link_to "Randomize", edit_section_path(@section.id, :m => "randomize"), :class => "btn primary" %>
@@ -41,9 +42,6 @@
 					<% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
 					<% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
 				</ol>
-        <div style="float:left;display:inline;">
-          <span class="label"><%= link_to t.points.to_s + " points", edit_task_path(t), :style => "color:white;" %></span>
-        </div>
         <div style="float:right;display:inline">
           <% if @reorder %>
           <div class="field clearfix">
@@ -68,9 +66,12 @@
 </section>
 <div class="actions">
 <% if @reorder %>
-  <%= submit_tag "Save", :class => "btn primary" %>
-  <%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
+	<%= link_to "Randomize", edit_section_path(@section.id, :m => "randomize"), :class => "btn primary" %>
+	<%= submit_tag "Save", :class => "btn primary" %>
+	<%= link_to "Cancel", edit_section_path(@section.id, :m => "tasks"), :class=> "btn secondary" %>
 <% else %>
-  <%= link_to "Back to Challenge", edit_path_path(@section.path.id), :class => "btn primary" %>
+	<%= link_to "New Question", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
+	<%= link_to "Reorder", edit_section_path(@section.id, :m => "tasks", :a => "reorder"), :class=>"btn secondary" %>
+	<%= link_to "Generate", questions_section_path(@section), :class=>"btn secondary" %>
 <% end %>
 </div>
