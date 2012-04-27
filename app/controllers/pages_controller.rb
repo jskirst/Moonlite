@@ -53,11 +53,11 @@ class PagesController < ApplicationController
 	
 	def create
 		if @enable_collaboration
-			@published_paths = current_user.company.paths.where("is_published = ?", true)
-			@unpublished_paths = current_user.company.paths.where("is_published = ?", false)
+			@published_paths = current_user.company.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
+			@unpublished_paths = current_user.company.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
 		else
-			@published_paths = current_user.paths.where("is_published = ?", true)
-			@unpublished_paths = current_user.paths.where("is_published = ?", false)
+			@published_paths = current_user.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
+			@unpublished_paths = current_user.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
 		end
 	end
   

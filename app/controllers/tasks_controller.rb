@@ -80,11 +80,13 @@ class TasksController < ApplicationController
 	end
   
   def suggest
-    phrase = params[:id]
-    phrase = Phrase.find_by_content(phrase.downcase)
+    @phrase = params[:id]
+		logger.debug "SUGGEST: searching for phrase: '#{@phrase}'"
+    @phrase = Phrase.search(@phrase.downcase)
+		logger.debug "SUGGEST: search result: '#{@phrase}'"
     @associated_phrases = []
-    unless phrase.nil?
-      @associated_phrases = phrase.associated_phrases
+    unless @phrase.nil?
+      @associated_phrases = @phrase.associated_phrases
     end
     respond_to do |format|
       format.json  

@@ -7,6 +7,11 @@ class Phrase < ActiveRecord::Base
 	validates :content, 
 		:presence 	=> true,
 		:length			=> { :within => 1..255 }
+		
+	def self.search(str)
+		#return Phrase.where(["content LIKE :str", {:str => str}]).first
+		return Phrase.find(:first, :conditions => ['content LIKE ?', "%#{str}%"])
+	end
     
   def associated_phrases
     associated_phrases = []

@@ -32,6 +32,14 @@ function get_suggestions($answer, $suggestions){
     success: function(resp){
       loading_status($suggestions, false);
       phrases = $.parseJSON(resp).phrases;
+      suggested_phrase = $.parseJSON(resp).phrase;
+			
+			if(suggested_phrase != "" && suggested_phrase != phrase){
+				$(".did_you_mean").html("Did you mean: <strong>"+suggested_phrase+"</strong>")
+					.show().dblclick(function(){
+						$(".correct_answer").val(suggested_phrase);
+					});
+			}
       
       if(phrases.length > 0){
         $suggestions.find(".found_message").show();

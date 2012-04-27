@@ -76,9 +76,6 @@ class Section < ActiveRecord::Base
 				end
 			else
 				user_completed_tasks.each do |t|
-					logger.debug t.task_id
-					logger.debug current_task_id
-					logger.debug t.status_id
 					unless t.status_id == 0 && t.task_id == current_task_id
 						break;
 					else
