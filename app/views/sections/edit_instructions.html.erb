@@ -1,3 +1,11 @@
+<!--[IF IE]>
+    <script type="text/javascript">
+			$(function(){
+				console.log("##########################RUNNING IE SCRIPT##########################");
+				$(".ie_warning").show();
+			});
+    </script>
+<![endif]-->
 <%= render "tab_navigation" %>
 <section class="tab_content">
   <% if @section.instructions.blank? & @info_resources.empty? %>
