@@ -10,7 +10,9 @@ class Phrase < ActiveRecord::Base
 		
 	def self.search(str)
 		#return Phrase.where(["content LIKE :str", {:str => str}]).first
-		return Phrase.find(:first, :conditions => ['content LIKE ?', "%#{str}%"])
+		phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "#{str}%"])
+		phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "%#{str}%"]) if phrase.nil?
+		return phrase
 	end
     
   def associated_phrases
