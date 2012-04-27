@@ -5,10 +5,8 @@ class CompletedTasksController < ApplicationController
 	
 	def create
 		previous_task = current_user.completed_tasks.last
-		unless previous_task.nil?
-			last_answer_date = previous_task.created_at
-		end
-		
+		last_answer_date = previous_task.created_at unless previous_task.nil?
+
     resp = params[:completed_task]
 		unless resp[:text_answer].nil?
 			status_id = @task.is_correct?(resp[:text_answer], "text") ? 1 : 0
@@ -16,10 +14,11 @@ class CompletedTasksController < ApplicationController
 			status_id = @task.is_correct?(resp[:answer], "multiple") ?  1 : 0
 		end
 		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))
+		
+		streak = @task.section.user_streak(current_user)
 		if status_id == 1
 			points = 10
-			if params[:listless] == "true"
-				streak = @task.section.user_streak(current_user)				
+			if params[:listless] == "true"				
 				unless streak < 1
 					sixty_seconds_ago = 60.seconds.ago
 					logger.debug last_answer_date
@@ -36,7 +35,7 @@ class CompletedTasksController < ApplicationController
 			@completed_task.points_awarded = 0
 			@completed_task.save
 		end
-		redirect_to continue_section_path :id => @completed_task.task.section, :previous => status_id
+		redirect_to continue_section_path :id => @completed_task.task.section, :p => status_id
 	end
 	
 	private

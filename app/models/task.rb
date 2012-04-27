@@ -39,7 +39,7 @@ class Task < ActiveRecord::Base
 	
 	validates :section_id, :presence => true
 	
-	default_scope :order => 'tasks.position ASC'
+	#default_scope :order => 'tasks.position ASC'
 	
 	def is_correct?(user_answer, type)
 		if type == "text"
@@ -59,7 +59,7 @@ class Task < ActiveRecord::Base
 	end
 	
 	def question_type
-		return answers_to_array.size == 1 ? "single" : "multiple"
+		return answers_to_array.size == 1 ? "text" : "multiple"
 	end
   
   private

@@ -261,14 +261,21 @@ class SectionsController < ApplicationController
     else
 			@question_type = @task.question_type
 		
-      if params[:previous]
-        @correct = (params[:previous] == "1" ? true : false)
+      if params[:p]
+        @correct = (params[:p] == "1" ? true : false)
       end
       @progress = @path.percent_complete(current_user) + 1
       @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
       @possible_points = 10
-      @streak_points = @section.user_streak(current_user)
-      
+      streak = @section.user_streak(current_user)
+      @streak_points = streak <= 0 ? 0 : streak
+			
+			if @question_type == "text" && streak < -1
+				answer = @task.describe_correct_answer.to_s
+				streak = ((streak+2)*-1) #converting it so it can be used in a range
+				@hint = "Answer starts with '" + answer.slice(0..streak) + "'"
+			end
+			
       @info_resource = @task.info_resource
       @title = @section.name
       unless params[:comments_on].nil?
