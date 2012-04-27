@@ -23,7 +23,13 @@
       <% answer_class = answer.status_id == 1 ? "success" : "error" %>
       <li class="alert-message block-message <%= answer_class %>">
         <p><%= counter %>. Question: <%= answer.task.question %></p>
-        <p style="padding-left: 20px;">Answer: <%= answer.task.describe_correct_answer %></p>
+        <p style="padding-left: 20px;">Answer: 
+					<% if answer.status_id == 0 %>
+						<%= answer.answer.to_s %>
+					<% else %>
+						<%= answer.task.describe_correct_answer %>
+					<% end %>
+					</p>
       </li>
       <% counter += 1 %>
     <% end %>

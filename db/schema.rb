@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120425163942) do
+ActiveRecord::Schema.define(:version => 20120427024318) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20120425163942) do
     t.datetime "quiz_session"
     t.integer  "owner_id"
     t.integer  "points_awarded"
+    t.string   "answer"
   end
 
   create_table "enrollments", :force => true do |t|

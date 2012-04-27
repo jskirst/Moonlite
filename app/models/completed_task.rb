@@ -1,5 +1,5 @@
 class CompletedTask < ActiveRecord::Base
-	attr_accessible :task_id, :status_id, :quiz_session, :updated_at, :points_awarded
+	attr_accessible :task_id, :status_id, :quiz_session, :updated_at, :points_awarded, :answer
 	
 	belongs_to :user
 	belongs_to :task

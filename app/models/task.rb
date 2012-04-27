@@ -53,6 +53,11 @@ class Task < ActiveRecord::Base
 		end
 	end
 	
+	def describe_answer(answer)
+		answers = [nil,answer1,answer2,answer3,answer4]
+		return answers[Integer(answer)]
+	end
+	
 	def describe_correct_answer
 		answers = [nil,answer1,answer2,answer3,answer4]
 		return answers[correct_answer]

@@ -10,10 +10,12 @@ class CompletedTasksController < ApplicationController
     resp = params[:completed_task]
 		unless resp[:text_answer].nil?
 			status_id = @task.is_correct?(resp[:text_answer], "text") ? 1 : 0
+			answer = resp[:text_answer]
 		else
 			status_id = @task.is_correct?(resp[:answer], "multiple") ?  1 : 0
+			answer = @task.describe_answer(resp[:answer])
 		end
-		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id))
+		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id, :answer => answer))
 		
 		streak = @task.section.user_streak(current_user)
 		if status_id == 1
