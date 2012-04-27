@@ -1,6 +1,6 @@
 <ul class="media-grid">
 <% paths.each_index do |pp| %>
-	<% if pp >= 12 && !display_all then break end %>
+	<% if pp >= 4 && !display_all then break end %>
 	<% path = paths[pp] %>
 	<li>
 		<a href="<%= path_path(path) %>" id="<%= path.name.gsub(" ", "_") %>">
