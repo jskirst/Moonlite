@@ -4,7 +4,7 @@ class Company < ActiveRecord::Base
 		:enable_recommendations, :enable_comments, :enable_printer_friendly, :enable_feedback, 
 		:enable_achievements, :enable_browsing, :enable_news, :enable_user_creation,
 		:enable_auto_enroll, :enable_collaboration, :enable_one_signup, :signup_token,
-		:default_profile_picture_link
+		:default_profile_picture_link, :enable_auto_generate
 	
 	has_many :users
 	has_many :rewards

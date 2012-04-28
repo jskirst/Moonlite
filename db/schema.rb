@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427024318) do
+ActiveRecord::Schema.define(:version => 20120428000148) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20120427024318) do
     t.boolean  "enable_one_signup",            :default => true
     t.string   "signup_token"
     t.string   "default_profile_picture_link"
+    t.boolean  "enable_auto_generate",         :default => false
   end
 
   create_table "company_users", :force => true do |t|

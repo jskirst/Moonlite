@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
 				@enable_auto_enroll = company.enable_auto_enroll
 				@enable_one_signup = company.enable_one_signup
 				@enable_collaboration = company.enable_collaboration
+				@enable_auto_generate = company.enable_auto_generate
 			end
 		end
 end

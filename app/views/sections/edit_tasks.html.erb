@@ -7,9 +7,11 @@
     <p>You have not created any questions for this challenge yet. You can get started by:</p>
     <ul>
       <li style="padding:5px;">Creating a <%= link_to "new question manually", new_task_path(:section_id => @section) %>.</li>
-      <li style="padding:5px;">Let Moonlite automatically generate questions from <%= link_to "your section content", questions_section_path(@section) %>.</li>
+      <% if @enable_auto_generate %>
+			<li style="padding:5px;">Let Moonlite automatically generate questions from <%= link_to "your section content", questions_section_path(@section) %>.</li>
       <li style="padding:5px;">Let Moonlite automatically generate questions from <%= link_to "text outside of your section content", edit_section_path(@section, :m => "hidden_content") %>.</li>
-    </ul>
+			<% end %>
+		</ul>
   </div>
 	<% else %>
 	<span class="label" style="font-size: 13px; vertical-align:middle;"><%= @tasks.size %> questions</span>
@@ -21,7 +23,9 @@
   <% else %>
     <%= link_to "New Question", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
     <%= link_to "Reorder", edit_section_path(@section.id, :m => "tasks", :a => "reorder"), :class=>"btn secondary" %>
-    <%= link_to "Generate", questions_section_path(@section), :class=>"btn secondary" %>
+    <% if @enable_auto_generate %>
+		<%= link_to "Generate", questions_section_path(@section), :class=>"btn secondary" %>
+		<% end %>
   <% end %>
 	</div>
 		<table>
