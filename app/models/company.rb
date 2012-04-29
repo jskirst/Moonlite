@@ -10,6 +10,7 @@ class Company < ActiveRecord::Base
 	has_many :rewards
 	has_many :paths
 	has_many :categories
+	has_many :user_rolls
 	
 	before_create :set_signup_token
 	

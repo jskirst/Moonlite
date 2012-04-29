@@ -1,0 +1,20 @@
+<h4>Edit user roll</h4>
+<h1><%= @user.name %><h1>
+<%= form_tag({:controller => "users", :action => "update_roll"}, :method => :put) %>
+<p>Please select a new user roll.</p>
+<div class="cleafix fields">
+	<label>User roll</label>
+	<div class="input">
+		<select id="user_user_roll_id" name="user[user_roll_id]">
+			<% @user_rolls.each do |u| %>
+				<% selected_value = u.id == @user.user_roll_id ? "selected='selected'" : "" %>
+				<option value="<%= u.id %>" <%= selected_value %>><%= u.name %></option>
+			<% end %>
+		</select>
+	</div>
+</div>
+
+<div class="actions">
+	<%= submit_tag "Save", :class => "btn primary" %>
+	<%= link_to "Cancel", company_path(current_user.company), :class => "btn secondary" %>
+</div>

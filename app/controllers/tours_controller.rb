@@ -29,7 +29,7 @@ class ToursController < ApplicationController
   private
   
     def is_enabled
-      unless current_user.company.enable_tour
+      unless @enable_tour
         flash[:error] = "This feature is not currently enabled for your use."
         redirect_to root_path
       end

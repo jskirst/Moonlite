@@ -139,7 +139,7 @@ class ReportsController < ApplicationController
   private
     
     def is_enabled
-      unless current_user.company.enable_dashboard
+      unless @enable_dashboard
         flash[:error] = "This feature is not currently enabled for your use."
         redirect_to root_path
       end

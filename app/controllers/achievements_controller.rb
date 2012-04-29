@@ -5,6 +5,7 @@ class AchievementsController < ApplicationController
 	before_filter :get_path_from_id, :only => [:new]
   before_filter :get_path_from_params, :only => [:create]
   before_filter :authorized, :except => [:show]
+	before_filter :is_enabled?
 	
 	def new
 		if @path.nil?
@@ -64,6 +65,13 @@ class AchievementsController < ApplicationController
 	end
 	
 	private
+		def is_enabled?
+			unless @enable_achievements
+				flash[:error] = "This functionality has not been enabled for you."
+				redirect_to root_path
+			end
+		end
+	
 		def get_from_id
       @achievement = Achievement.find_by_id(params[:id])
 			if @achievement.nil?

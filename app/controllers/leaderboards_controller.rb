@@ -29,11 +29,11 @@ class LeaderboardsController < ApplicationController
   
   private
 		def admin_or_company_admin
-			redirect_to(root_path) unless (current_user.admin? || current_user.company_admin?)
+			redirect_to(root_path) unless (current_user.admin? || @enable_administration)
 		end
     
     def is_enabled
-      unless current_user.company.enable_leaderboard
+      unless @enable_leaderboard
         flash[:error] = "This feature is not currently enabled for your use."
         redirect_to root_path
       end

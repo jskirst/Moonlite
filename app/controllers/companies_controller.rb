@@ -1,8 +1,8 @@
 class CompaniesController < ApplicationController
 	before_filter :authenticate, :except => [:accept, :join]
 	before_filter :admin_only, :only => [:new, :create, :index]
-	before_filter :admin_or_company_admin, :only => [:show, :edit, :update]
-	before_filter :get_company_from_id, :only => [:show, :edit, :update]
+	before_filter :has_access?, :only => [:show, :edit, :update]
+	before_filter :get_company_from_id, :only => [:show, :edit, :edit_rolls, :update]
 	before_filter :verify_owner, :only => [:show, :edit, :update]
 	
 	def new
@@ -23,7 +23,7 @@ class CompaniesController < ApplicationController
 	end
   
 	def show
-		@users = @company.users.find(:all, :conditions => ["company_id = ? AND name != ?", @company.id, "pending"])
+		@users = @company.users.includes(:user_roll).find(:all, :conditions => ["company_id = ? AND name != ?", @company.id, "pending"])
 		@unregistered_users =  @company.users.find(:all, :conditions => ["company_id = ? AND name = ?", @company.id, "pending"])
 		@title = @company.name
 	end
@@ -36,6 +36,11 @@ class CompaniesController < ApplicationController
 		else
 			@signup_url = "http://localhost:3000/companies/#{@company.signup_token}/join"
 		end
+	end
+	
+	def edit_rolls
+		@title = "User Rolls"
+		@user_rolls = @company.user_rolls.all
 	end
 	
 	def update
@@ -100,8 +105,8 @@ class CompaniesController < ApplicationController
 			redirect_to(root_path) unless (current_user.admin?)
 		end
 	
-		def admin_or_company_admin
-			redirect_to(root_path) unless (current_user.admin? || current_user.company_admin?)
+		def has_access?
+			redirect_to(root_path) unless (current_user.admin? || @enable_administration)
 		end
 		
 		def get_company_from_id

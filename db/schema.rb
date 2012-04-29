@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428000148) do
+ActiveRecord::Schema.define(:version => 20120428221014) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -228,6 +228,39 @@ ActiveRecord::Schema.define(:version => 20120428000148) do
     t.integer  "owner_id"
   end
 
+  create_table "user_events", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "path_id"
+    t.string   "content"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "user_rolls", :force => true do |t|
+    t.string   "name"
+    t.integer  "company_id"
+    t.boolean  "enable_leaderboard",      :default => false
+    t.boolean  "enable_dashboard",        :default => false
+    t.boolean  "enable_tour",             :default => false
+    t.boolean  "enable_comments",         :default => false
+    t.boolean  "enable_feedback",         :default => false
+    t.boolean  "enable_news",             :default => false
+    t.boolean  "enable_achievements",     :default => false
+    t.boolean  "enable_recommendations",  :default => false
+    t.boolean  "enable_printer_friendly", :default => false
+    t.boolean  "enable_browsing",         :default => false
+    t.boolean  "enable_user_creation",    :default => false
+    t.boolean  "enable_auto_enroll",      :default => false
+    t.boolean  "enable_collaboration",    :default => false
+    t.boolean  "enable_one_signup",       :default => false
+    t.boolean  "enable_company_store",    :default => false
+    t.boolean  "enable_auto_generate",    :default => false
+    t.string   "signup_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "enable_administration",   :default => false
+  end
+
   create_table "user_transactions", :force => true do |t|
     t.integer  "user_id"
     t.integer  "reward_id"
@@ -255,6 +288,7 @@ ActiveRecord::Schema.define(:version => 20120428000148) do
     t.string   "signup_token"
     t.integer  "company_id"
     t.boolean  "company_admin",      :default => false
+    t.integer  "user_roll_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

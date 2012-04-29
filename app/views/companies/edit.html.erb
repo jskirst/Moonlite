@@ -3,111 +3,16 @@
 	<ul class="tabs">
 		<li><%= link_to "Users", @company %></li>
 		<li class="active"><a href="#">Settings</a></li>
+		<li><%= link_to "User Rolls", user_rolls_path %></li>
 	</ul>
 	<section id="settings">
+		<h2 style="margin-bottom:15px;">Settings</h2>
 		<%= form_for(@company) do |f| %>
 			<%= render "shared/error_messages", :object => f.object %>
 			<div class="field clearfix">
 				<%= f.label :name %>
 				<div class="input">
 					<%= f.text_field :name %>
-				</div>
-			</div>
-			<div class="field clearfix">
-				<label>Settings</label>
-				<div class="input">
-					<ul class="inputs-list">
-						<li>
-							<label>
-								<%= f.check_box :enable_company_store %>
-								<span>Enable Rewards</span>
-							</label>
-						</li>
-            <li>
-							<label>
-								<%= f.check_box :enable_leaderboard %>
-								<span>Enable Leaderboard</span>
-							</label>
-						</li>
-            <li>
-							<label>
-								<%= f.check_box :enable_dashboard %>
-								<span>Enable Dashboard</span>
-							</label>
-						</li>
-            <li>
-							<label>
-								<%= f.check_box :enable_tour %>
-								<span>Enable Tour</span>
-							</label>
-						</li>            
-						<li>
-							<label>
-								<%= f.check_box :enable_browsing %>
-								<span>Enable challenge browsing</span>
-							</label>
-						</li>            
-						<li>
-							<label>
-								<%= f.check_box :enable_comments %>
-								<span>Enable comments on challenges</span>
-							</label>
-						</li>            
-						<li>
-							<label>
-								<%= f.check_box :enable_news %>
-								<span>Enable news feed</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<%= f.check_box :enable_printer_friendly %>
-								<span>Enable emails to administrators when users complete challenges</span>
-							</label>
-						</li>  						
-						<li>
-							<label>
-								<%= f.check_box :enable_feedback %>
-								<span>Enable feedback on questions</span>
-							</label>
-						</li>            
-						<li>
-							<label>
-								<%= f.check_box :enable_achievements %>
-								<span>Enable achievements</span>
-							</label>
-						</li>						
-						<li>
-							<label>
-								<%= f.check_box :enable_recommendations %>
-								<span>Enable challenge recommendations</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<%= f.check_box :enable_user_creation %>
-								<span>Enable non-admin user content creation</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<%= f.check_box :enable_collaboration %>
-								<span>Enable all company admins to view and edit company challenges</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<%= f.check_box :enable_auto_enroll %>
-								<span>Enable auto-enrollment of new users in any published challenge</span>
-							</label>
-						</li>
-						<li>
-							<label>
-								<%= f.check_box :enable_auto_generate %>
-								<span>Enable automatic question generator</span>
-							</label>
-						</li>
-					</ul>
 				</div>
 			</div>
 			<hr/>

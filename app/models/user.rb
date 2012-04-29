@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
-	attr_protected :admin
+	attr_protected :admin, :user_roll
 	attr_accessor :password, :password_confirmation
 	attr_accessible :name, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin
 	
 	belongs_to :company
+	belongs_to :user_roll
 	has_many :paths, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
 	has_many :enrolled_paths, :through => :enrollments, :source => :path
@@ -12,6 +13,7 @@ class User < ActiveRecord::Base
 	has_many :user_achievements, :dependent => :destroy
   has_many :comments, :dependent => :destroy
 	has_many :leaderboards, :dependent => :destroy
+	has_many :user_events, :dependent => :destroy
 	
 	
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i

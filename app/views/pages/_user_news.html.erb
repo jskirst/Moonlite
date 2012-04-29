@@ -1,15 +1,15 @@
 <section>
   <h2>News</h2>
-<% if user_news.empty? %>
+<% if user_events.empty? %>
   <p>No news yet today! <%= link_to "Go make some!", explore_path %></p>
 <% else %>
 <table>
-  <% user_news.each do |un| %>
+  <% user_events.each do |uv| %>
   <tr>
-    <td style="width: 70px; padding: 5px;"><%= image_tag un.user.profile_pic, :size => "60x60" %>
+    <td style="width: 65px; padding: 5px;"><%= image_tag uv.path.path_pic, :size => "60x60" %>
     </td>
     <td>
-      <p><strong><%= link_to un.user.name, un.user %></strong> unlocked the <%= link_to un.achievement.name, un %> achievement. +<%= un.achievement.points %></p>
+      <p><%= translate_user_event(uv).html_safe %></p>
     </td>
   </tr>	
   <% end %>

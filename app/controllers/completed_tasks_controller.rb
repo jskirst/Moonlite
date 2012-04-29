@@ -56,7 +56,7 @@ class CompletedTasksController < ApplicationController
     
     def post_comment
       if params[:commit] == "Post Comment"
-				if current_user.company.enable_feedback
+				if @enable_feedback
 					@comment = current_user.comments.new(params[:comment])
 					if @comment.save
 						flash[:success] = "Comment added."

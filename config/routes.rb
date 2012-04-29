@@ -10,6 +10,8 @@ SampleApp::Application.routes.draw do
 			get :adminize
 			get :request_reset
 			put :reset_password
+			get :edit_roll
+			put :update_roll
 		end
 	end
 	resources :tours do
@@ -22,6 +24,7 @@ SampleApp::Application.routes.draw do
 		member do
 			get :join
 			put :accept
+			get :edit_rolls
 		end
 	end
   resources :paths do
@@ -73,6 +76,7 @@ SampleApp::Application.routes.draw do
   resources :leaderboards
 	resources :categories
 	resources :phrases
+	resources :user_rolls
 	
 	root 				:to => "pages#home"
 	

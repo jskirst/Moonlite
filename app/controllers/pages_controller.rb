@@ -19,8 +19,7 @@ class PagesController < ApplicationController
 			if @enable_recommendations
 				@suggested_paths = Path.suggested_paths(current_user)				
 			end
-      @user_achievements = UserAchievement.find(:all, :joins => "JOIN users on user_achievements.user_id = users.id JOIN achievements on achievements.id = user_achievements.achievement_id", 
-				:conditions => ["users.company_id = ?", current_user.company_id], :limit => 15)
+      @user_events = UserEvent.includes(:user, :company, :path).where("companies.id = ?", current_user.company_id).all(:limit => 20, :order => "user_events.created_at DESC")
 		else
 			render "landing"
 		end
@@ -91,14 +90,14 @@ class PagesController < ApplicationController
 		end
 		
 		def user_creation_enabled?
-			unless (current_user.admin? || current_user.company_admin? || @enable_user_creation)
+			unless (current_user.admin? || @enable_administration || @enable_user_creation)
 				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path
 			end
 		end
 		
 		def browsing_enabled?
-			unless (current_user.admin? || current_user.company_admin? || @enable_browsing)
+			unless (current_user.admin? || @enable_administration || @enable_browsing)
 				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path
 			end

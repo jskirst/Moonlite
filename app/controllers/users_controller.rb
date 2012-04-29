@@ -93,13 +93,48 @@ class UsersController < ApplicationController
 		@title = "Settings"
 	end
 	
+	def edit_roll
+		@user = User.find(params[:id])
+		unless @user.company == current_user.company
+			flash[:error] = "You are not allowed access to that data. This has been reported."
+			redirect_to root_path
+		end
+		@user_rolls = @user.company.user_rolls
+		@title = "Edit user roll"
+	end
+	
+	def update_roll
+		@user = User.find(params[:id])
+		unless @user.company == current_user.company
+			flash[:error] = "You are not allowed access to that data. This has been reported."
+			redirect_to root_path
+			return
+		end
+		
+		@user_roll = current_user.company.user_rolls.find(params[:user][:user_roll_id])
+		unless @user_roll
+			flash[:error] = "User roll does not exist."
+			redirect_to current_user.company
+			return
+		end
+		
+		@user.user_roll_id = @user_roll.id
+		if @user.save
+			flash[:success] = "User roll changed successfully."
+			redirect_to current_user.company
+		else
+			@user_rolls = @user.company.user_rolls
+			render "edit_roll"
+		end
+	end
+	
 	def update
 		@user = User.find(params[:id])
 		@user.name = params[:user][:name] if params[:user][:name] 
 		@user.email = params[:user][:email] if params[:user][:email] 
 		@user.image_url = params[:user][:image_url] if params[:user][:image_url] 
 		@user.password = params[:user][:password] if params[:user][:password] 
-		@user.password_confirmation = params[:user][:password_confirmation] if params[:user][:password_confirmation] 
+		@user.password_confirmation = params[:user][:password_confirmation] if params[:user][:password_confirmation]
 		if @user.save
 			flash[:success] = "Profile successfully updated."
 			@user.reload
@@ -179,7 +214,7 @@ class UsersController < ApplicationController
 				company_id = params[:company_id] || params[:user][:company_id]
 			end
 			
-			unless (current_user.admin? || (current_user.company_admin? && current_user.company.id == company_id.to_i))
+			unless (current_user.admin? || (@enable_administration && current_user.company.id == company_id.to_i))
 				flash[:error] = "You do not have access to this functionality."
 				redirect_to root_path 
 			end

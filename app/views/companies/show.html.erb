@@ -3,9 +3,10 @@
 	<ul class="tabs">
 		<li class="active"><a href="#">Users</a></li>
 		<li><%= link_to "Settings", edit_company_path(@company) %></li>
+		<li><%= link_to "User Rolls", user_rolls_path %></li>
 	</ul>
 	<section id="users">
-		<h2>Registered Users</h2>
+		<h2 style="margin-bottom:15px;">Registered Users</h2>
 		<% if @users.empty? %>
 			<p>You do not have any users for your organization yet.</p>
 		<% else %>
@@ -14,7 +15,7 @@
 				<tr>
 					<th>#</th>
 					<th>Name</th>
-					<th>User Type</th>
+					<th>User Roll</th>
 					<th>Enrolled Challenges</th>
 					<th>Points Earned</th>
 					<th>Status</th>
@@ -26,11 +27,7 @@
 					<tr>
 						<td><%= user_counter.to_s %></td>
 						<td><%= link_to u.name, u %></td>
-						<% if u.company_admin %>
-							<td>Admin</td>
-						<% else %>
-							<td>User</td>
-						<% end %>
+						<td><%= link_to u.user_roll.name, edit_roll_user_path(u) %></td>
 						<%
 							enrolled_paths = []
 							u.enrolled_paths.each do |p|
@@ -41,7 +38,7 @@
 						<% if enrolled_paths.blank? %>
 							<td>None</td>
 						<% else %>
-							<td><%= truncate(enrolled_paths, :length => 80) %></td>
+							<td><%= truncate(enrolled_paths, :length => 60) %></td>
 						<% end %>
 						<td><%= u.earned_points.to_s %></td>
 						<td>

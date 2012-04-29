@@ -30,7 +30,7 @@ module SessionsHelper
 	end
 	
 	def company_admin
-		unless current_user.company_admin?
+		unless @enable_administration
 			flash[:error] = "You do not have access rights to that resource. Please contact your administrator."
 			redirect_to(root_path)
 		end

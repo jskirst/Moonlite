@@ -1,0 +1,38 @@
+<section id="company-settings">
+	<h1><%= @company.name %></h1>
+	<ul class="tabs">
+		<li><%= link_to "Users", @company %></li>
+		<li><%= link_to "Settings", edit_company_path(@company) %></li>
+		<li class="active"><a href="#">User Rolls</a></li>
+	</ul>
+	<section style="min-height: 300px;">
+		<h2 style="margin-bottom:15px;">User Rolls</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>User Type</th>
+					<th>Num. of Users</th>
+					<th>Status</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% counter = 0 %>
+				<% @user_rolls.each do |ur| %>
+					<tr>
+						<td><%= counter.to_s %></td>
+						<td><%= link_to ur.name, edit_user_roll_path(ur) %></td>
+						<td><%= ur.enable_administration ? "Admin" : "User" %></td>
+						<td><%= ur.users.count %></td>
+						<td>
+						<%= link_to "Delete", ur, :method => "delete", :confirm => "Are you sure you want to delete this user roll?", :class => "btn secondary" %>
+						</td>
+					</tr>
+					<% counter += 1 %>
+				<% end %>
+			</tbody>
+		</table>
+		<%= link_to "New Roll", new_user_roll_path, :class => "btn primary" %>
+	</section>
+</section>

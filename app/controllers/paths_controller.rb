@@ -125,6 +125,10 @@ class PathsController < ApplicationController
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
       @similar_paths = Path.similar_paths(@path)
       @suggested_paths = Path.suggested_paths(current_user, @path.id)
+			if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
+				event = "<%u%> completed the <%p%> challenge with a score of #{@total_points_earned.to_s}."
+				current_user.user_events.create!(:path_id => @path.id, :content => event)
+			end
       render "completion"
     else
 			if @section.enable_skip_content
