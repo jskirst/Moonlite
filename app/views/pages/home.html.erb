@@ -1,10 +1,11 @@
 <section style="margin-bottom:20px">
  <h1 style="margin-bottom: 15px;">My Challenges</h1>
- <hr/>
 <% if @enrolled_paths.empty? && @completed_paths.empty? %>
+	<hr/>
   <p>You are not currently enrolled in any paths.</p>
   <%= link_to "Get started!", explore_path, :class => "btn primary" %>
 <% elsif @enrolled_paths.empty? && !@completed_paths.empty? %>
+	<hr/>
   <p>Congratulations! You've completed all your enrolled challenges.</p>
 <% end %>
   <%= render "pages/user_progress", { :paths_list => @enrolled_paths } %>

@@ -1,11 +1,11 @@
-<section id="company-settings">
+<section id="company-settings" style="min-height: 500px;">
 	<h1><%= @company.name %></h1>
 	<ul class="tabs">
 		<li><%= link_to "Users", @company %></li>
 		<li><%= link_to "Settings", edit_company_path(@company) %></li>
 		<li class="active"><a href="#">User Rolls</a></li>
 	</ul>
-	<section style="min-height: 300px;">
+	<section>
 		<h2 style="margin-bottom:15px;">User Rolls</h2>
 		<table>
 			<thead>
@@ -35,4 +35,8 @@
 		</table>
 		<%= link_to "New Roll", new_user_roll_path, :class => "btn primary" %>
 	</section>
+	<div style="margin-top:30px;">
+		<h4>Note: Adding Users</h4>
+		<p>Users must be added to a specific user roll. To invite new users, click on one of the user rolls in the table above. From there, you'll find a link to use to invite new users to your organization.</p>
+	</div>
 </section>

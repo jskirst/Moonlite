@@ -54,17 +54,8 @@
 			</tbody>
 		</table>
 		<% end %>
-		<p><%= link_to "Add user", new_user_path(:company_id => @company), :class => "btn primary" %></p>
+		<h4>Note: Adding Users</h4>
+		<p>Users must be added to a specific user roll. To invite new users, click on the <strong>User Rolls</strong> tab above, then click on one of the user rolls in the table. From there, you'll find a link to use to invite new users to your organization.</p>
 		<hr/>
-		<h3>Awaiting reply from:</h3>
-		<% if @unregistered_users.empty? %>
-			<p>There are no outstanding user invitations.</p>
-		<% else %>
-		<ol>
-			<% @unregistered_users.each do |u| %>
-			<li><%= u.email %></li>
-			<% end %>
-		</ol>
-		<% end %>
 	</section>
 </section>

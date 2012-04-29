@@ -60,7 +60,8 @@ class CompaniesController < ApplicationController
 	
 	def join
 		redirect_to root_path if signed_in?
-		@company = Company.where("signup_token = ?", params[:id]).first
+		@user_roll = UserRoll.where("signup_token = ?", params[:id]).first
+		@company = @user_roll.company
 		if @company.nil?
 			redirect_to root_path
 		else
@@ -69,16 +70,17 @@ class CompaniesController < ApplicationController
 	end
 	
 	def accept
-		redirect_to root_path if params[:user][:password].nil?
-		@company = Company.where("signup_token = ?", params[:user][:signup_token]).first
+		@user_roll = UserRoll.where("signup_token = ?", params[:id]).first
+		@company = @user_roll.company
 		if @company.nil?
 			redirect_to root_path
 		else
 			@user = @company.users.build(params[:user])
 			@user.password = params[:user][:password]
 			@user.password_confirmation = params[:user][:password_confirmation]
+			@user.user_roll_id = @user_roll.id
 			if @user.save
-				flash[:success] = "Welcome, stranger!"
+				flash[:success] = "Welcome to Moonlite!"
 				@user.reload
 				sign_in @user
 				
