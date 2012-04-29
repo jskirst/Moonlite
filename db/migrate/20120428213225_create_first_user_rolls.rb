@@ -2,6 +2,7 @@ class CreateFirstUserRolls < ActiveRecord::Migration
  def change
 		admin_roll = {
 			:name => "Admin",
+			:enable_administration => true,
 			:enable_rewards => false,
 			:enable_leaderboard => true,
 			:enable_dashboard => true,
@@ -22,6 +23,7 @@ class CreateFirstUserRolls < ActiveRecord::Migration
 		
 		default_roll = {
 			:name => "Default",
+			:enable_administration => false,
 			:enable_rewards => false,
 			:enable_leaderboard => true,
 			:enable_dashboard => false,

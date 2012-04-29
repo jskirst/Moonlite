@@ -3,9 +3,11 @@ class CreateUserRolesTable < ActiveRecord::Migration
 		create_table :user_rolls do |t|
 			t.string :name
 			t.integer :company_id
+			t.boolean  "enable_administration",        :default => false
 			t.boolean  "enable_leaderboard",           :default => false
 			t.boolean  "enable_dashboard",             :default => false
 			t.boolean  "enable_tour",                  :default => false
+			t.boolean  "enable_rewards",               :default => false
 			t.boolean  "enable_comments",              :default => false
 			t.boolean  "enable_feedback",              :default => false
 			t.boolean  "enable_news",                  :default => false

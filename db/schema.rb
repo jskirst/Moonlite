@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428221014) do
+ActiveRecord::Schema.define(:version => 20120428213225) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -239,9 +239,11 @@ ActiveRecord::Schema.define(:version => 20120428221014) do
   create_table "user_rolls", :force => true do |t|
     t.string   "name"
     t.integer  "company_id"
+    t.boolean  "enable_administration",   :default => false
     t.boolean  "enable_leaderboard",      :default => false
     t.boolean  "enable_dashboard",        :default => false
     t.boolean  "enable_tour",             :default => false
+    t.boolean  "enable_rewards",          :default => false
     t.boolean  "enable_comments",         :default => false
     t.boolean  "enable_feedback",         :default => false
     t.boolean  "enable_news",             :default => false
@@ -258,7 +260,6 @@ ActiveRecord::Schema.define(:version => 20120428221014) do
     t.string   "signup_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "enable_administration",   :default => false
   end
 
   create_table "user_transactions", :force => true do |t|
