@@ -11,14 +11,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120430225344) do
+ActiveRecord::Schema.define(:version => 20120430225738) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
     t.string   "description"
     t.string   "criteria"
     t.integer  "points"
-    t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_url"
@@ -131,7 +130,7 @@ ActiveRecord::Schema.define(:version => 20120430225344) do
 
   create_table "paths", :force => true do |t|
     t.string   "name"
-    t.text     "description",                :default => ""
+    t.string   "description",                :default => ""
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -190,6 +189,7 @@ ActiveRecord::Schema.define(:version => 20120430225344) do
     t.string   "image_url"
     t.string   "content_type"
     t.text     "hidden_content"
+    t.boolean  "skip_content",        :default => false
     t.boolean  "enable_skip_content", :default => false
   end
 
@@ -221,8 +221,8 @@ ActiveRecord::Schema.define(:version => 20120430225344) do
     t.integer  "user_id"
     t.integer  "path_id"
     t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "user_rolls", :force => true do |t|
@@ -247,8 +247,8 @@ ActiveRecord::Schema.define(:version => 20120430225344) do
     t.boolean  "enable_company_store",    :default => false
     t.boolean  "enable_auto_generate",    :default => false
     t.string   "signup_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "user_transactions", :force => true do |t|
