@@ -8,7 +8,7 @@ describe Mailer do
 		end
 
 		it 'renders the subject' do
-		  @mail.subject.should == 'Hello World'
+		  @mail.subject.should == 'Welcome to Moonlite!'
 		end
 
 		it 'renders the receiver email' do

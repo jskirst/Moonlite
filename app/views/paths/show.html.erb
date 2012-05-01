@@ -75,7 +75,7 @@
 	<% end %>
 	
 	
-	<% if current_user.company_admin? %>
+	<% if can_edit_path(@path) %>
   <div class="actions">
     <% unless @path.is_published %>
       <%= link_to "Publish", edit_path_path(@path, :m => "settings"), :class => "btn primary" %>

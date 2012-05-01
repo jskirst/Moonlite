@@ -50,24 +50,12 @@ describe "Info Resources" do
 			InfoResource.new(@attr.merge(:section_id => "")).should_not be_valid
 		end
 		
-		it "should require non-blank description" do
-			InfoResource.new(@attr.merge(:description => "")).should_not be_valid
-		end
-		
-		it "should require non-blank link" do
-			InfoResource.new(@attr.merge(:link => "")).should_not be_valid
-		end
-		
 		it "should reject long descriptions" do
 			InfoResource.new(@attr.merge(:description => "a"*256)).should_not be_valid
 		end
 		
 		it "should reject long links" do
 			InfoResource.new(@attr.merge(:link => "a"*256)).should_not be_valid
-		end
-    
-    it "should reject a non-standard info type" do
-			InfoResource.new(@attr.merge(:info_type => "aaa")).should_not be_valid
 		end
 	end
 end

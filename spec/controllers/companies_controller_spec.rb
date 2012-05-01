@@ -4,39 +4,25 @@ describe CompaniesController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
-		@company = @user.company
-		@attr = {:name => "New company", :enable_company_store => "t"}
+		@company = Factory(:company)
+		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f")
+		@admin_user_roll = Factory(:user_roll, :company => @company)
+		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
 	end
 	
 	describe "access controller" do
 		describe "when not signed in" do
-			it "should deny access to 'new'" do
+			it "should deny access to all functionality" do
 				get :new
 				response.should redirect_to signin_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'index'" do
 				get :index
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'show'" do
 				get :show, :id => @company
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'edit'" do
 				get :edit, :id => @company
 				response.should redirect_to signin_path
-			end
-
-			it "should deny access to 'update'" do
 				put :update, :id => @company, :company => @attr
 				response.should redirect_to signin_path
 			end
@@ -47,136 +33,91 @@ describe CompaniesController do
 				test_sign_in(@user)
 			end
 			
-			it "should deny access to 'new'" do
+			it "should deny access to all functionality" do
 				get :new
 				response.should redirect_to root_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'index'" do
 				get :index
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'show'" do
 				get :show, :id => @company
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'edit'" do
 				get :edit, :id => @company
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'update'" do
-				put :update, :id => @company, :company => @attr
+				put :update, :id => @company, :company => { :name => "company name" }
 				response.should redirect_to root_path
 			end
 		end
 		
 		describe "when signed in as admin" do
 			before(:each) do
+				@user.user_roll = @admin_user_roll
 				@user.toggle!(:admin)
 				@attr = {:name => "Changed"}
 				test_sign_in(@user)
 			end
 			
-			it "should allow access to 'new'" do
+			it "should allow access to all functionality" do
 				get :new
 				response.should be_success
-			end
-		
-			it "should allow access to 'create'" do
 				post :create, :company => @attr
 				response.should redirect_to Company.last
-			end
-			
-			it "should allow access to 'index'" do
 				get :index
 				response.should be_success
-			end
-			
-			it "should allow access to 'show'" do
 				get :show, :id => 1
 				response.should be_success
-			end
-			
-			it "should allow access to 'edit'" do
 				get :edit, :id => 1
 				response.should be_success
-			end
-			
-			it "should allow access to 'update'" do
-				put :update, :id => @company, :company => @attr
+				put :update, :id => @company, :company => { :name => "company name" }
 				response.should redirect_to @company
 			end
 		end
 		
 		describe "when signed in as company admin of another company" do
 			before(:each) do
-				@other_user = Factory(:user)
-				@other_user.set_company_admin(true)
-				@attr = {:name => "Changed"}
+				@other_company = Factory(:company)
+				@other_admin_user_roll = Factory(:user_roll, :company => @other_company)
+				@other_user = Factory(:user, :company => @other_company, :user_roll => @other_admin_user_roll)
 				test_sign_in(@other_user)
 			end
 			
-			it "should deny access to 'show'" do
-				get :show, :id => 1
+			it "should deny access to all functionality" do
+				get :new
 				response.should redirect_to root_path
-				flash[:error].should =~ /do not have access/i
-			end
-			
-			it "should deny access to 'edit'" do
-				get :edit, :id => 1
+				post :create
 				response.should redirect_to root_path
-				flash[:error].should =~ /do not have access/i
-			end
-			
-			it "should deny access to 'update'" do
-				put :update, :id => @company, :company => @attr
+				get :index
 				response.should redirect_to root_path
-				flash[:error].should =~ /do not have access/i
+				get :show, :id => @company
+				response.should redirect_to root_path
+				get :edit, :id => @company
+				response.should redirect_to root_path
+				put :update, :id => @company, :company => { :name => "company name" }
+				response.should redirect_to root_path
 			end
 		end
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.set_company_admin(true)
-				@attr = {:name => "Changed"}
+				@user.user_roll = @admin_user_roll
 				test_sign_in(@user)
 			end
 			
-			it "should deny access to 'new'" do
+			it "should deny access to :new, :create, :index" do
 				get :new
 				response.should redirect_to root_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'index'" do
 				get :index
 				response.should redirect_to root_path
 			end
 			
-			it "should allow access to 'show'" do
-				get :show, :id => 1
+			it "should allow access to :show, :edit, :update" do
+				get :show, :id => @company
 				response.should be_success
-			end
-			
-			it "should allow access to 'edit'" do
-				get :edit, :id => 1
+				get :edit, :id => @company
 				response.should be_success
-			end
-			
-			it "should allow access to 'update'" do
-				put :update, :id => @company, :company => @attr
+				put :update, :id => @company, :company => { :name => "company name" }
 				response.should redirect_to @company
 			end
 		end
@@ -185,7 +126,7 @@ describe CompaniesController do
 	describe "actions" do
 		before(:each) do
 			@user.toggle!(:admin)
-			@user.set_company_admin(true)
+			@user.user_roll = @admin_user_roll
 			test_sign_in(@user)
 		end
 
@@ -242,7 +183,7 @@ describe CompaniesController do
 				
 				it "should have a welcome message" do
 					post :create, :company => @attr
-					flash[:success].should =~ /Welcome to your company account/i
+					flash[:success].should =~ /new account created/i
 				end
 			end
 		end
@@ -275,13 +216,6 @@ describe CompaniesController do
 						@other_user2 = Factory(:user, :company => @company)
 						@other_user3 = Factory(:user, :company => @company)
 						@users = [@other_user1, @other_user2, @other_user3]
-					
-						@unreg_user = Factory(:user, :name => "pending", :company => @company)
-					end
-					
-					it "should list unregistered users" do
-						get :show, :id => @company
-						response.should have_selector("li", :content => @unreg_user.email)
 					end
 					
 					it "should list registered users" do
@@ -309,19 +243,19 @@ describe CompaniesController do
 		describe "PUT 'update'" do
 			describe "failure" do
 				it "should redirect back to edit when bad attributes supplied" do
-					put :update, :id => @company, :company => @attr.merge(:name => "a"*500)
+					put :update, :id => @company, :company => { :name => "a"*500 }
 					response.should render_template "edit"
 				end
 			end
 			
 			describe "success" do
 				it "should redirect to show company" do
-					put :update, :id => @company, :company => @attr
+					put :update, :id => @company, :company => { :name => "company name" }
 					response.should redirect_to @company
 				end
 				
 				it "should have a success message" do
-					put :update, :id => @company, :company => @attr
+					put :update, :id => @company, :company => { :name => "company name" }
 					flash[:success].should =~ /update successful/i
 				end
 			end

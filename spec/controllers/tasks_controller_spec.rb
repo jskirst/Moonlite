@@ -4,8 +4,13 @@ describe TasksController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
+		@company = Factory(:company)
+		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
+		@admin_user_roll = Factory(:user_roll, :company => @company)
+		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		
+		@category = Factory(:category, :company => @company)
+		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
 		@section = Factory(:section, :path => @path)
 		@task = Factory(:task, :section => @section)
 	
@@ -13,10 +18,6 @@ describe TasksController do
 			:question => "Replacement question", 
 			:answer1 => "Replacement answer", 
 			:answer2 => "Replacement answer",
-			:answer3 => "Replacement answer",
-			:answer4 => "Replacement answer",
-			:resource => "fake", 
-			:points => 5,
 			:correct_answer => 1,
 			:section_id => 1
 		}
@@ -24,32 +25,15 @@ describe TasksController do
 	
 	describe "access controller" do
 		describe "when not signed in" do
-			it "should deny access to 'new'" do
+			it "should deny access to all functionality" do
 				get :new, :section_id => @section.id
 				response.should redirect_to signin_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create, :task => @attr
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'show'" do
-				get :show, :id => @task
-				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'edit'" do
 				get :edit, :id => @task
 				response.should redirect_to signin_path
-			end			
-			
-			it "should deny access to 'update'" do
 				put :update, :id => @task, :task => @attr
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'destroy'" do
 				delete :destroy, :id => @task
 				response.should redirect_to signin_path
 			end
@@ -60,32 +44,15 @@ describe TasksController do
 				test_sign_in(@user)
 			end
 			
-			it "should deny access to 'new'" do
+			it "should deny access to :new, :create, :show, :edit, :update, :destroy" do
 				get :new, :section_id => @section.id
 				response.should redirect_to root_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create, :task => @attr
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'show'" do
-				get :show, :id => @task
-				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'edit'" do
 				get :edit, :id => @task
 				response.should redirect_to root_path
-			end			
-			
-			it "should deny access to 'update'" do
 				put :update, :id => @task, :task => @attr
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'destroy'" do
 				delete :destroy, :id => @task
 				response.should redirect_to root_path
 			end
@@ -93,36 +60,19 @@ describe TasksController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.set_company_admin(true)
+				@user.user_roll = @admin_user_roll
 				test_sign_in(@user)
 			end
 			
-			it "should allow access to 'new'" do
+			it "should allow access to all functionality" do
 				get :new, :section_id => @section.id
 				response.should be_success
-			end
-		
-			it "should allow access to 'create' and redirect to section" do
 				post :create, :task => @attr
 				response.should redirect_to edit_section_path(@section, :m => "tasks")
-			end
-			
-			it "should allow access to 'show'" do
-				get :show, :id => @task
-				response.should be_success
-			end
-			
-			it "should allow access to 'edit'" do
 				get :edit, :id => @task
 				response.should be_success
-			end
-			
-			it "should allow access to 'update' and redirect to updated task" do
-				put :update, :id => @task, :task => @attr.delete("section_id")
+				put :update, :id => @task, :task => @attr
 				response.should redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
-			end
-			
-			it "should allow access to 'destroy'" do
 				delete :destroy, :id => @task
 				response.should redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
 			end
@@ -131,7 +81,7 @@ describe TasksController do
 	
 	describe "actions" do
 		before(:each) do
-			@user.set_company_admin(true)
+			@user.user_roll = @admin_user_roll
 			test_sign_in(@user)
 		end
 		
@@ -174,30 +124,8 @@ describe TasksController do
 				
 				it "should have a flash message" do
 					post :create, :task => @attr
-					flash[:success].should =~ /task created/i
+					flash[:success].should =~ /question created/i
 				end
-			end
-		end
-		
-		describe "Get 'show'" do
-			it "should find the right task" do
-				get :show, :id => @task
-				assigns(:task).should == @task
-			end
-			
-			it "should have the section's name in the title" do
-				get :show, :id => @task
-				response.should have_selector("title", :content => @section.name)
-			end
-			
-			it "should display the question" do
-				get :show, :id => @task
-				response.should have_selector("p", :content => @task.question)
-			end
-			
-			it "should display the answer" do
-				get :show, :id => @task
-				response.should have_selector("li", :content => @task.answer1)
 			end
 		end
 		

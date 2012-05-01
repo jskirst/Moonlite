@@ -24,18 +24,29 @@ class Section < ActiveRecord::Base
 	default_scope :order => 'sections.position ASC'
   
   def randomize_tasks
-    task_array = []
-    tasks.each do |t|
-      task_array << t
-    end
-    task_array = task_array.shuffle
-    task_array.each_index do |ti|
-      t = task_array[ti]
-      t.position = ti
-      t.save
-    end
+		old_task_array = tasks_to_array
+		unless old_task_array.size == 1
+			new_task_array = old_task_array.shuffle
+			until new_task_array != old_task_array
+				new_task_array = old_task_array.shuffle
+			end
+			
+			new_task_array.each_index do |ti|
+				t = new_task_array[ti]
+				t.position = ti
+				t.save
+			end
+		end
   end
   
+	def tasks_to_array
+		ary = []
+		tasks.all(:order => "position ASC").each do |t|
+			ary << t
+		end
+		return ary
+	end
+	
   def pic
 		if self.image_url != nil
 			return self.image_url

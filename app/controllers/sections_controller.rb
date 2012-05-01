@@ -4,10 +4,13 @@ require 'fileutils.rb'
 
 class SectionsController < ApplicationController
   include OrderHelper
+	include GeneratorHelper
+	
 	before_filter :authenticate
-	before_filter :company_admin, :except => [:continue, :show]
-  before_filter :get_section_from_id, :except => [:new, :create, :continue, :generate]
-  before_filter :verify_enrollment, :only => [:continue]
+	before_filter :has_edit_access?, :except => [:show, :continue]
+  before_filter :get_section_from_id, :except => [:new, :create, :generate]
+	before_filter :can_edit?, :except => [:show, :continue, :new, :create, :generate] 
+  before_filter :enrolled?, :only => [:continue]
 
 	def show
 		if current_user.enrolled?(@section.path) && @section.enable_skip_content
@@ -26,14 +29,26 @@ class SectionsController < ApplicationController
 		@section = Section.new
 		@title = "New section"
 		@path_id = params[:path_id]
+		@path = Path.find(@path_id)
+		unless can_edit_path(@path)
+			flash[:error] = "You cannot add tasks to this path."
+			redirect_to root_path
+			return
+		end
 	end
 	
 	def create
-		@path = Path.find_by_id(params[:section][:path_id])
+		@path_id = params[:section][:path_id]
+		@path = Path.find_by_id(@path_id)
 		if @path.nil?
 			flash[:error] = "No Path selected for section."
 			redirect_to root_path and return
-		else			
+		else
+			unless can_edit_path(@path)
+				flash[:error] = "You cannot add tasks to this path."
+				redirect_to root_path
+				return
+			end
 			@section = @path.sections.build(params[:section])
 			if @section.save
 				flash[:success] = "Section created."
@@ -287,12 +302,15 @@ class SectionsController < ApplicationController
 	end
   
   private
-    def verify_enrollment
-      if @section.nil?
-        get_section_from_id
-      end
-      @path = @section.path
-      unless current_user.enrolled?(@path)
+		def has_edit_access?
+			unless @enable_user_creation
+				flash[:error] = "You do not have access to this functionality."
+				redirect_to root_path
+			end
+		end
+	
+    def enrolled?
+      unless current_user.enrolled?(@section.path)
         flash[:warning] = "You must be enrolled in a path before you can begin."
         redirect_to root_path
       end
@@ -300,59 +318,13 @@ class SectionsController < ApplicationController
     
     def get_section_from_id
       @section = Section.find(params[:id], :include => :path)
+			@path = @section.path
     end
-    
-    def clean_text(text)
-			return nil if text.nil?
-      text = text.gsub("This section will include questions on the following topics", "")
-        .gsub("<b>","  ")
-        .gsub("</b>","  ")
-        .gsub("<sub>","")
-        .gsub("</sub>","  ")
-        .gsub(/<a[^>]*>/im,"  ")
-        .gsub(/<\/a>/im,"  ")
-        .gsub(/<li\b[^>]*>(.*?)<\/li>/im," ")
-        .gsub(/<!--[^>]*-->/im,"")
-        .gsub(/<[\/a-z123456]{2}[^>]*>/im," ")
-        .gsub(/<[\/bi][^>]*>/im," ")
-        .gsub(/\[[^\]]+\]/im," ")
-        .gsub(/\([^\)]+\)/im," ")
-        .gsub("&nbsp;"," ")
-        .gsub("&quot;","")
-        .gsub(/\r\n/," ")
-        .gsub(/"/,"'")
-      until text.gsub!(/\s\s/,"").nil?
-        text = text.gsub(/\s\s/, " ")
-      end
-      text = text.gsub(" .", ".").gsub(" ,", ",")
-      return text.strip.chomp
-    end
-    
-    def random_alphanumeric(size=15)
-			(1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+		
+		def can_edit?
+			unless can_edit_path(@section.path)
+				flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
+				redirect_to root_path
+			end
 		end
-    
-    def split_and_clean_text(text)
-			return nil if text.nil?
-      paragraphs = text.split("<p>")
-      split_paragraphs = []
-      paragraphs.each do |p|
-        split_paragraph = p.split(". ")
-        sentences = []
-        split_paragraph.each_index do |si|
-          sentence = split_paragraph[si].chomp + "."
-          if sentence.length > 35 
-            sentences << sentence
-          end
-          if sentence.length > 160 || sentences.length >= 3
-            split_paragraphs << sentences.join(" ")
-            sentences = []
-          end
-        end
-        unless sentences.join(" ").length < 80
-          split_paragraphs << sentences.join(" ")
-        end
-      end
-      return split_paragraphs
-    end
 end

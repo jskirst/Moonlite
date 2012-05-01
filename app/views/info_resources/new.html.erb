@@ -1,13 +1,12 @@
-<h1>New Resource</h1>
-<p>You can add resources for paths, sections and tasks. The resource will be displayed according to its content type. 
-For example, if its type is a video and the link is for Youtube, the resource will be displayed inside a Youtube video player.</p>
+<h1>New Picture</h1>
+<p>You can upload a picture for any task and have it displayed just below the question. You can use this for "identify this" type questions or just for some added visuals.</p>
 <%= form_for @info_resource, :html => { :multipart => true }  do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
-	<input name="info_resource[<%= @parent_type+"_id" %>" type="hidden" value="<%= @parent_id %>" />
+	<%= f.hidden_field :task_id %>
 	<div class="field clearfix">
 		<%= f.label :description %>
 		<div class="input">
-			<%= f.text_area :description, :class => "xxlarge", :rows => "3", :placeholder => "optional..." %>
+			<%= f.text_area :description, :class => "xxlarge", :rows => "2", :placeholder => "optional..." %>
 		</div>
 	</div>
 	<div class="field">

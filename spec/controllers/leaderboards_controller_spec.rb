@@ -5,9 +5,10 @@ describe LeaderboardsController do
   
   before(:each) do
     @company = Factory(:company)
-		@user1 = Factory(:user, :company => @company)
-		@user2 = Factory(:user, :company => @company)
-		@user3 = Factory(:user, :company => @company)
+		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => false)
+		@user1 = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@user2 = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@user3 = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
     @users = [@user1, @user2, @user3]
     
 		@password = "alltheaboveplease"
@@ -15,17 +16,11 @@ describe LeaderboardsController do
   
   describe "access controller" do
 		describe "when not signed in" do
-			it "should deny access to 'new'" do
+			it "should deny access to all functionality" do
 				get :new
 				response.should redirect_to(signin_path)
-			end
-		
-			it "should deny access to 'create'" do
 				post :create, :leaderboard => @attr
 				response.should redirect_to(signin_path)
-			end	
-      
-      it "should deny access to 'index'" do
 				get :index
 				response.should redirect_to(signin_path)
 			end
@@ -36,17 +31,14 @@ describe LeaderboardsController do
 				test_sign_in(@user1)
 			end
 			
-			it "should deny access to 'new'" do
+			it "should deny access to :new, :create" do
 				get :new
 				response.should redirect_to root_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create, :achievement => @attr
 				response.should redirect_to root_path
 			end
       
-      it "should deny access to 'index'" do
+      it "should allow access to 'index'" do
 				get :index
 				response.should be_success
 			end
@@ -58,17 +50,11 @@ describe LeaderboardsController do
 				test_sign_in(@user1)
 			end
 			
-			it "should allow access to 'new'" do
+			it "should allow access to all functionality" do
 				get :new
 				response.should be_success
-			end
-		
-			it "should allow access to 'create'" do
 				post :create, :password => @password
         response.should be_success
-			end
-      
-      it "should allow access to 'index'" do
 				get :index
 				response.should be_success
 			end
@@ -80,30 +66,31 @@ describe LeaderboardsController do
       @user1.toggle!(:admin)
       test_sign_in(@user1)
       
-      @path = Factory(:path, :company => @company, :user => @user1)
+			@category = Factory(:category, :company => @company)
+      @path = Factory(:path, :company => @company, :user => @user1, :category => @category)
       @section = Factory(:section, :path => @path)
       @task1 = Factory(:task, :section => @section)
       @task2 = Factory(:task, :section => @section)
       @task3 = Factory(:task, :section => @section)
       
       @user1.enroll!(@path)
-      Factory(:completed_task, :task => @task1, :user => @user1)
-      Factory(:completed_task, :task => @task2, :user => @user1)
-      Factory(:completed_task, :task => @task3, :user => @user1)
-      @user1.award_points(@task1, @task1.points)
-      @user1.award_points(@task2, @task2.points)
-      @user1.award_points(@task3, @task3.points)
+      Factory(:completed_task, :task => @task1, :user => @user1, :points_awarded => 10)
+      Factory(:completed_task, :task => @task2, :user => @user1, :points_awarded => 11)
+      Factory(:completed_task, :task => @task3, :user => @user1, :points_awarded => 12)
+      @user1.award_points(@task1, 10)
+      @user1.award_points(@task2, 11)
+      @user1.award_points(@task3, 12)
       
       @user2.enroll!(@path)
-      Factory(:completed_task, :task => @task1, :user => @user2)
-      Factory(:completed_task, :task => @task2, :user => @user2)
-      @user2.award_points(@task1, @task1.points)
-      @user2.award_points(@task2, @task2.points)
+      Factory(:completed_task, :task => @task1, :user => @user2, :points_awarded => 10)
+      Factory(:completed_task, :task => @task2, :user => @user2, :points_awarded => 11)
+      @user2.award_points(@task1, 10)
+      @user2.award_points(@task2, 11)
     end
     
     describe "GET index" do
       before(:each) do
-        post :create, :password => @password
+        Leaderboard.reset_leaderboard
       end
       
       it "should be a success" do
@@ -111,13 +98,12 @@ describe LeaderboardsController do
 				response.should be_success
 			end
       
-      it "should correctly list the name of each user" 
-      # do
-				# get :index
-        # @users.each do |u|
-          # response.should have_selector("tr .user-name", :content => u.name)
-        # end
-			# end
+      it "should correctly list the name of each user" do
+				get :index
+        @users.each do |u|
+          response.should have_selector("tr .user-name", :content => u.name)
+        end
+			end
       
       it "should correctly list the number of completed task for each user" do
 				get :index
@@ -126,10 +112,10 @@ describe LeaderboardsController do
         response.should have_selector("tr .user-completed-tasks", :content => "0")
 			end
       
-      it "should correctly list the number of completed task for each user" do
+      it "should correctly list the score (plus streak bonus) for each user" do
 				get :index
-        response.should have_selector("tr .user-score", :content => "30")
-        response.should have_selector("tr .user-score", :content => "20")
+        response.should have_selector("tr .user-score", :content => "33")
+        response.should have_selector("tr .user-score", :content => "21")
         response.should have_selector("tr .user-score", :content => "0")
 			end
     end
@@ -146,7 +132,7 @@ describe LeaderboardsController do
         it "creates a new set of Leaderboards" do
           lambda do
             post :create, :password => @password
-          end.should change(Leaderboard, :count).by(3)
+          end.should change(Leaderboard, :count).by(11)
         end
       end
 

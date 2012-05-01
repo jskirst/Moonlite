@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	attr_protected :admin, :user_roll
 	attr_accessor :password, :password_confirmation
-	attr_accessible :name, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin
+	attr_accessible :name, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation
 	
 	belongs_to :company
 	belongs_to :user_roll

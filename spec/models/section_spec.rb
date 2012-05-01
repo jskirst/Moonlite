@@ -36,6 +36,15 @@ describe "Section" do
       s2 = @path.sections.create(@attr)
       s2.position.should == 2
     end
+		
+		it "should return the default section pic if image_url not provided" do
+			@section.pic.should =~ /default/i
+		end
+		
+		it "should return the default section pic if image_url not provided" do
+			@section = @path.sections.create(@attr.merge(:image_url => "hello.jpg"))
+			@section.pic.should =~ /hello/i
+		end
 	end
 	
 	describe "path associations" do
@@ -91,7 +100,7 @@ describe "Section" do
 			end
 		end
 		
-		describe "next task" do
+		describe "next_task" do
 			before(:each) do
 				Factory(:completed_task, :user => @user, :task => @task1)
         @section.reload
@@ -101,30 +110,74 @@ describe "Section" do
 				@section.should respond_to(:next_task)
 			end
 			
-			it "should return the next uncompleted task for a user" 
-      # do
-				# @section.next_task(@user).should == @task2
-			# end
-			
 			it "should return nil if there are no more incomplete tasks" do
 				Factory(:completed_task, :user => @user, :task => @task2)
 				@section.next_task(@user).should == nil
 			end
-		end		
+		end
 		
-		describe "remaining tasks" do
-			before(:each) do
-				@completed_task = Factory(:completed_task, :user => @user, :task => @task1)
+		describe "randomize_tasks" do
+			it "should not randomize if only one task" do
+				@task2.destroy
+				@old_task_array = @section.tasks_to_array
+				@section.randomize_tasks
+				@section.tasks_to_array.should == @old_task_array
 			end
 		
-			it "should have a next task method" do
-				@section.should respond_to(:remaining_tasks)
+			it "should randomize task order" do
+				@task3 = Factory(:task, :section => @section)
+				@old_task_array = @section.tasks_to_array
+				@section.randomize_tasks
+				@section.tasks_to_array.should_not == @old_task_array
+			end
+		end
+		
+		describe "completed?" do
+			it "should return false if remaining tasks is not 0" do
+				Factory(:completed_task, :user => @user, :task => @task1)
+				Factory(:completed_task, :user => @user, :task => @task2, :status_id => 0)
+				@section.completed?(@user).should be_false
+			end			
+			
+			it "should return false if remaining tasks is not 0" do
+				Factory(:completed_task, :user => @user, :task => @task1)
+				Factory(:completed_task, :user => @user, :task => @task2)
+				@section.completed?(@user).should be_true
 			end
 			
-			it "should return the next the correct number of incomplete tasks"
-			# do
-				# @section.remaining_tasks(@user).should == @path.tasks.count - @user.completed_tasks.count
-			# end
+			it "should return appropriate number of remaining tasks" do
+				Factory(:completed_task, :user => @user, :task => @task1)
+				Factory(:completed_task, :user => @user, :task => @task2, :status_id => 0)
+				@section.remaining_tasks(@user).should == 1
+			end	
 		end
+		
+		describe "user_streak" do
+			before(:each) do
+				@task3 = Factory(:task, :section => @section)
+			end
+		
+			describe "for positive streak" do
+				it "should return appropriate user streak" do
+					Factory(:completed_task, :user => @user, :task => @task1, :status_id => 0)
+					Factory(:completed_task, :user => @user, :task => @task1)
+					Factory(:completed_task, :user => @user, :task => @task2)
+					Factory(:completed_task, :user => @user, :task => @task3)
+					@section.user_streak(@user).should == 3
+				end
+			end
+			
+			describe "for negative streak" do
+				it "should return appropriate user streak" do
+					Factory(:completed_task, :user => @user, :task => @task1)
+					Factory(:completed_task, :user => @user, :task => @task2)
+					Factory(:completed_task, :user => @user, :task => @task3, :status_id => 0)
+					Factory(:completed_task, :user => @user, :task => @task3, :status_id => 0)
+					Factory(:completed_task, :user => @user, :task => @task3, :status_id => 0)
+					@section.user_streak(@user).should == -3
+				end
+			end
+		end
+		
 	end
 end

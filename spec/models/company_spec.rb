@@ -29,11 +29,6 @@ describe "Company" do
 			c = Company.create!(@attr)
 			c.enable_company_store.should be_true
 		end
-		
-		it "should have an owner_id after creation" do
-			c = Company.create!(@attr)
-			c.owner_id.should == c.id
-		end
 	end
 	
 	describe "paths" do

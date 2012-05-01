@@ -3,11 +3,13 @@ require 'spec_helper'
 describe "User" do
 	before(:each) do
 		@company = Factory(:company)
+		@user_roll = Factory(:user_roll, :company => @company)
 		@attr = { 
 			:name => "Example User", 
 			:email => "user@example.com",
 			:password => "foobar",
-			:password_confirmation => "foobar"
+			:password_confirmation => "foobar",
+			:user_roll_id => @user_roll.id
 		}
 	end
 	

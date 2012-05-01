@@ -4,8 +4,16 @@ describe PathsController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
+		@company = Factory(:company)
+		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
+		@admin_user_roll = Factory(:user_roll, :company => @company)
+		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		
+		@category = Factory(:category, :company => @company)
+		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
+		@section = Factory(:section, :path => @path)
+		@task = Factory(:task, :section => @section)
+		
 		@other_user = Factory(:user)
 		
 		@attr = {
@@ -19,33 +27,14 @@ describe PathsController do
 	
 	describe "access controller" do
 		describe "when not signed in" do
-			it "should deny access to 'new'" do
+			it "should deny access to all functionality" do
 				get :new
 				response.should redirect_to signin_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create, :path => @path
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'edit'" do
 				get :edit, :id => @path.id
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'delete'" do
 				delete :destroy, :id => @path.id
-				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'file'" do
-				get :file, :id => @path
-				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'upload'" do
-				post :upload, :id => @path
 				response.should redirect_to signin_path
 			end
 		end
@@ -55,75 +44,40 @@ describe PathsController do
 				test_sign_in(@user)
 			end
 			
-			it "should deny access to 'new'" do
+			it "should deny access to all editing functionality" do
 				get :new
 				response.should redirect_to root_path
-			end
-		
-			it "should deny access to 'create'" do
 				post :create, :path => @attr
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'edit'" do
 				get :edit, :id => @path
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'delete'" do
 				delete :destroy, :id => @path
-				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'file'" do
-				get :file, :id => 1
-				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'upload'" do
-				post :upload, :id => 1
 				response.should redirect_to root_path
 			end
 		end
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.set_company_admin(true)
+				@user.user_roll = @admin_user_roll
 				test_sign_in(@user)
 			end
 			
-			it "should allow access to 'new'" do
+			it "should allow access to all functionality" do
 				get :new
 				response.should be_success
-			end
-		
-			it "should allow access to 'create'" do
 				post :create, :path => @attr
-				response.should redirect_to edit_path_path(Path.find(2), :m => "start")
-			end
-			
-			it "should allow access to 'edit'" do
+				response.should redirect_to edit_path_path(Path.last, :m => "start")
 				get :edit, :id => @path
 				response.should be_success
-			end
-			
-			it "should allow access to 'delete'" do
 				delete :destroy, :id => @path
 				response.should redirect_to root_path
 			end
-			
-			it "should allow access to 'file'" do
-				get :file, :id => @path
-				response.should be_success
-			end
-			
-			it "should allow access to 'upload'"
 		end
 	end
 	
 	describe "actions" do
 		before(:each) do
-			@user.set_company_admin(true)
+			@user.user_roll = @admin_user_roll
 			test_sign_in(@user)
 		end
 		
@@ -180,17 +134,18 @@ describe PathsController do
 				
 				it "should redirect to the path page" do
 					post :create, :path => @attr
-					response.should redirect_to edit_path_path(Path.find(2), :m => "start")
+					response.should redirect_to edit_path_path(Path.last, :m => "start")
 				end
 				
 				it "should have a flash message" do
 					post :create, :path => @attr
-					flash[:success].should =~ /path created/i
+					flash[:success].should =~ /challenge created/i
 				end			
 				
 				it "should return path pic set in image_url" do
+					@attr = @attr.merge(:name => "Image url test")
 					post :create, :path => @attr
-					Path.find(2).path_pic.should == @attr[:image_url]
+					Path.find_by_name(@attr[:name]).path_pic.should == @attr[:image_url]
 				end
 			end
 		end
@@ -300,394 +255,14 @@ describe PathsController do
 			end
       
       it "should not show any unpublished sections" do
-				s = Factory(:section, :path => @path, :is_published => false)
+				@section.is_published = false
+				@section.save
+				@path.reload
 				get :show, :id => @path
-				response.should_not have_selector("a", :content => s.name)
-			end
-      
-		end
-
-		describe "GET 'file'" do
-			before(:each) do
-				@path = Factory(:path, :user => @user, :company => @user.company)
-				@other_user = Factory(:user, :email => "other@t.com")
-			end
-			
-			it "should be successful" do
-				test_sign_in(@user)
-				get :file, :id => @path
-				response.should be_success
-			end
-			
-			it "should have right title" do
-				test_sign_in(@user)
-				get :file, :id => @path
-				response.should have_selector("title", :content => "File")
-			end
-		end
-    
-    describe "POST 'preview'" do
-			before(:each) do
-				@path = Factory(:path, :user => @user, :company => @user.company)
-				test_sign_in(@user)
-			end
-			
-			describe "failure" do
-				before(:each) do
-					@attr = { :file => nil }
-				end
-			
-				it "should redirect to the file upload page" do
-					post :preview, :id => @path.id, :path => @attr
-          response.should redirect_to file_path_path(@path)
-				end
-			end
-      
-      describe "success" do
-        before(:each) do
-          @file = fixture_file_upload('files/test.zip', 'application/zip')
-          @attr = { :file => @file }
-        end
-      
-        it "should load preview successfully." do
-          post :preview, :id => @path.id, :path => @attr
-          response.should be_success
-        end
-        
-        it "should preview the path description." do
-          post :preview, :id => @path.id, :path => @attr
-          response.should have_selector("p", :content => "Test description")
-        end
-        
-        it "should preview all the section names." do
-          post :preview, :id => @path.id, :path => @attr
-          response.should have_selector("h2", :content => "First")
-          response.should have_selector("h2", :content => "Second")
-          response.should have_selector("h2", :content => "Third")
-          response.should have_selector("h2", :content => "Fourth")
-        end
-        
-        it "should preview all the section instructions." do
-          post :preview, :id => @path.id, :path => @attr
-          response.should have_selector("p", :content => "First instructions")
-          response.should have_selector("p", :content => "Second instructions")
-          response.should have_selector("p", :content => "Third instructions")
-          response.should have_selector("p", :content => "Fourth instructions")
-        end
-        
-        it "should preview all the questions." do
-          post :preview, :id => @path.id, :path => @attr
-          response.should have_selector("blockquote", :content => "First section first question")
-          response.should have_selector("blockquote", :content => "First section second question")
-          response.should have_selector("blockquote", :content => "Second section first question")
-          response.should have_selector("blockquote", :content => "Second section second question")          
-          response.should have_selector("blockquote", :content => "Third section first question")
-          response.should have_selector("blockquote", :content => "Third section second question")
-          response.should have_selector("blockquote", :content => "Fourth section first question")
-          response.should have_selector("blockquote", :content => "Fourth section second question")
-        end
-        
-        it "should preview all the answers." do
-          post :preview, :id => @path.id, :path => @attr
-          response.should have_selector("li", :content => "First section first question first answer")
-          response.should have_selector("li", :content => "First section first question second answer")
-          response.should have_selector("li", :content => "First section second question first answer")
-          response.should have_selector("li", :content => "First section second question second answer")
-          response.should have_selector("li", :content => "Second section first question first answer")
-          response.should have_selector("li", :content => "Second section first question second answer")
-          response.should have_selector("li", :content => "Second section second question first answer")
-          response.should have_selector("li", :content => "Second section second question second answer")
-          response.should have_selector("li", :content => "Third section first question first answer")
-          response.should have_selector("li", :content => "Third section first question second answer")
-          response.should have_selector("li", :content => "Third section second question first answer")
-          response.should have_selector("li", :content => "Third section second question second answer")
-          response.should have_selector("li", :content => "Fourth section first question first answer")
-          response.should have_selector("li", :content => "Fourth section first question second answer")
-          response.should have_selector("li", :content => "Fourth section second question first answer")
-          response.should have_selector("li", :content => "Fourth section second question second answer")
-        end
-      end
-		end
-		
-		describe "POST 'upload'" do
-			before(:each) do
-				@path = Factory(:path, :user => @user, :company => @user.company)
-				test_sign_in(@user)
-			end
-			
-			describe "failure" do
-				before(:each) do
-					@attr = {}
-				end
-			
-				it "should not add questions to a path" do
-					lambda do
-						post :upload, :id => @path.id, :path => @attr
-					end.should change(Task, :count).by(0)	
-				end
-				
-				it "should redirect to the file page" do
-					post :upload, :id => @path.id, :path => @attr
-					response.should redirect_to file_path_path(@path)
-				end
-			end
-      
-      describe "success" do
-				before(:each) do
-          @attr = { "description" => "Upload test description",
-            "sections" => {
-              "0" => { :name => "First section name",
-                :instructions => "First section instructions.",
-                :tasks => {
-                  "0" => { :question => "First section question",
-                    :answer1 => "First section first answer",
-                    :correct_answer => "1",
-                    :points => "1"
-                  }
-                }
-              }
-            }
-          }
-				end
-			
-				# it "should change the path description" do
-          # post :upload, :id => @path.id, :path => @attr
-          # @path.reload
-          # @path.description.should == @attr["description"]
-				# end
-        
-        # it "should add sections to the path" do
-        	# lambda do
-						# post :upload, :id => @path.id, :path => @attr
-					# end.should change(Section, :count).by(1)	
-        # end
-        
-        # it "should add sections with the correct task details" do
-          # post :upload, :id => @path.id, :path => @attr
-          # @path.reload
-          # @path.sections.first.name.should == "First section name"
-          # @path.sections.first.instructions.should == "First section instructions."
-        # end
-        
-        # it "should add tasks to each section" do
-          # lambda do
-						# post :upload, :id => @path.id, :path => @attr
-					# end.should change(Task, :count).by(1)	
-        # end
-        
-        # it "should add tasks with the correct task details" do
-          # post :upload, :id => @path.id, :path => @attr
-          # @path.reload
-          # @path.sections.first.tasks.first.question.should == "First section question"
-          # @path.sections.first.tasks.first.answer1.should == "First section first answer"
-          # @path.sections.first.tasks.first.correct_answer.should == 1
-          # @path.sections.first.tasks.first.points.should == 1
-        # end
-				
-				# it "should redirect to the edit page" do
-					# post :upload, :id => @path.id, :path => @attr
-					# response.should redirect_to edit_path_path(@path)
-				# end
+				response.should_not have_selector("a", :content => @section.name)
 			end
 		end
 		
-		describe "GET 'marketplace'" do
-			before(:each) do
-				@purchaseable_paths = []
-				3.times do
-					@purchaseable_paths << Factory(:path, :company => @other_user.company, :user => @other_user)
-				end
-			end
-
-			describe "without search terms" do
-				it "should be successful" do
-					get :marketplace
-					response.should be_success
-				end
-			end
-			
-			describe "with search terms" do
-				describe "that do not have results" do
-					it "should be successful" do
-						get :marketplace, :search => "ABCDEFGHIJK123"
-						response.should be_success
-					end
-					
-					it "should state that there are no results" do
-						get :marketplace, :search => "ABCDEFGHIJK123"
-						response.should have_selector("p", :content => "returned 0 results.")
-					end
-				end
-				
-				describe "that do have results" do
-					it "should be successful" do
-						get :marketplace, :search => "Ruby"
-						response.should be_success
-					end
-					
-					it "should have right header" do
-						get :marketplace, :search => "Ruby"
-						response.should have_selector("h1", :content => "Path Marketplace")
-					end
-					
-					it "should have listings for each result by name" do
-						get :marketplace, :search => "Ruby"
-						@purchaseable_paths.each do |p|
-							response.should have_selector("span", :content => p.name)
-						end
-					end
-					
-					it "should not list unpurchaseable paths" do
-						unpurchaseable = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => true, :is_purchaseable => false)
-						get :marketplace, :search => "Ruby"
-						response.should_not have_selector("a", :href => "/paths/#{unpurchaseable.id}/review")
-					end
-					
-					it "should not list unpublished paths" do
-						unpurchaseable = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => false, :is_purchaseable => true)
-						get :marketplace, :search => "Ruby"
-						response.should_not have_selector("a", :href => "/paths/#{unpurchaseable.id}/review")
-					end
-				end
-			end
-		end
-		
-		describe "GET 'review'" do
-			before(:each) do
-				@purchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_public => true)
-			end
-			
-			describe "failure" do					
-				it "should redirect bad path id to root_path" do
-					get :review, :id => "abc"
-					response.should redirect_to root_path
-				end
-				
-				it "should redirect unpublished path request to root_path" do
-					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => false)
-					get :review, :id => unpurchaseable_path
-					response.should redirect_to root_path
-				end
-				
-				it "should redirect unpurchaseable path request to root_path" do
-					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_purchaseable => false)
-					get :review, :id => unpurchaseable_path
-					response.should redirect_to root_path
-				end
-			end
-		
-			describe "success" do
-				it "should be successful" do
-					get :review, :id => @purchaseable_path
-					response.should be_success
-				end
-
-				it "should have right title" do
-					get :review, :id => @purchaseable_path
-					response.should have_selector("title", :content => "Review purchase")
-				end
-				
-				it "should have the right name" do
-					get :review, :id => @purchaseable_path
-					response.should have_selector("h2", :content => @purchaseable_path.name)
-				end
-			end
-		end
-		
-		describe "GET 'purchase'" do
-			before(:each) do
-				@purchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_public => true)
-			end
-			
-			describe "failure" do				
-				it "should redirect bad path id to root_path" do
-					get :purchase, :id => "abc"
-					response.should redirect_to root_path
-				end
-				
-				it "should redirect unpublished path request to root_path" do
-					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_published => false)
-					get :purchase, :id => unpurchaseable_path
-					response.should redirect_to root_path
-				end
-				
-				it "should redirect unpurchaseable path request to root_path" do
-					unpurchaseable_path = Factory(:path, :company => @other_user.company, :user => @other_user, :is_purchaseable => false)
-					get :purchase, :id => unpurchaseable_path
-					response.should redirect_to root_path
-				end
-			end
-			
-			describe "success" do
-				it "should display success message" do
-					get :purchase, :id => @purchaseable_path
-					flash[:success].should =~ /purchase successful/i
-				end
-
-				it "should have right title" do
-					get :purchase, :id => @purchaseable_path
-					response.should have_selector("title", :content => "Purchase successful")
-				end
-				
-				it "should have the right path name" do
-					get :purchase, :id => @purchaseable_path
-					response.should have_selector("h2", :content => @purchaseable_path.name)
-				end
-				
-				it "should create a new path" do
-					lambda do
-						get :purchase, :id => @purchaseable_path
-					end.should change(Path, :count).by(1)
-				end
-				
-				it "should set the purchased path for the new path" do
-					get :purchase, :id => @purchaseable_path
-					purchased_path = Path.find(:first, :conditions => ["company_id = ? and purchased_path_id = ?", @user.company.id, @purchaseable_path.id])
-					purchased_path.name.should == @purchaseable_path.name
-				end
-				
-				it "should create a new transaction" do
-					lambda do
-						get :purchase, :id => @purchaseable_path
-					end.should change(UserTransaction, :count).by(1)
-				end
-				
-				it "should have point transaction with correct path" do
-					get :purchase, :id => @purchaseable_path
-					ut = UserTransaction.find(:first, :conditions => ["path_id = ? and user_id = ?", @purchaseable_path.id, @user.id])
-					ut.path_id.should == @purchaseable_path.id
-					ut.path.should == @purchaseable_path
-				end
-				
-				it "should have point transaction with the correct points" do
-					get :purchase, :id => @purchaseable_path
-					ut = UserTransaction.find(:first, :conditions => ["path_id = ? and user_id = ?", @purchaseable_path.id, @user.id])
-					ut.amount.should == 15.00
-				end
-				
-				it "should create and associate all the sections and tasks for the purchased path" do
-					@tasks = []
-					@sections = []
-					3.times do
-						section = Factory(:section, :path => @purchaseable_path)
-						@sections << section
-						3.times do
-							@tasks << Factory(:task, :section => section)
-						end
-					end
-					
-					get :purchase, :id => @purchaseable_path
-					purchased_path = Path.find(:first, :conditions => ["company_id = ? and purchased_path_id = ?", @user.company.id, @purchaseable_path.id])
-					3.times do |n|
-						purchased_section = purchased_path.sections[n]
-						purchased_section.name.should == @sections[n].name
-						3.times do |n|
-							purchased_section.tasks[n].question.should == @tasks[n].question
-						end
-					end
-				end
-			end
-		end
 	end
 end
 	

@@ -2,13 +2,18 @@ require 'spec_helper'
 
 describe UserTransaction do
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
+		@company = Factory(:company)
+		@user_roll = Factory(:user_roll, :company => @company)
+		@user = Factory(:user, :company => @company, :user_roll => @user_roll)
+		
+		@category = Factory(:category, :company => @company)
+		@path = Factory(:path, :user => @user, :category => @category, :company => @user.company)
 		@section = Factory(:section, :path => @path)
 		@task = Factory(:task, :section => @section)
+		
 		@reward = Factory(:reward, :company => @user.company)
     @user.enroll!(@path)
-		@attr = { :user_id => @user, :amount => 15, :status => 1 }
+		@attr = { :user_id => @user.id, :amount => 15, :status => 1 }
 	end
 	
 	describe "validation" do
@@ -94,7 +99,7 @@ describe UserTransaction do
 		
 		describe "for paths" do
 			before(:each) do
-				@attr = @attr.merge(:path_id => @path)
+				@attr = { :user_id => @user.id, :amount => 15, :status => 1, :path_id => @path.id }
 				@transaction = UserTransaction.create!(@attr)
 			end
 		

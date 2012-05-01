@@ -1,36 +1,13 @@
 class PathsController < ApplicationController
   include OrderHelper
-  include UploadHelper
   
 	before_filter :authenticate, :except => [:hero]
-	before_filter :company_admin, :except => [:hero, :index, :show, :continue, :marketplace, :review, :purchase]
-	before_filter :get_path_from_id, :except => [:index, :new, :create, :marketplace]
-	before_filter :unpublished_not_for_purchase, :only => [:review, :purchase]
-	before_filter :unpublished_for_admins_only, :only => [:show, :continue]
-	before_filter :user_creation_enabled?, :except => [:show, :continue, :hero]
+	before_filter :get_path_from_id, :except => [:index, :new, :create]
+	before_filter :can_create?, :only => [:new, :create]
+	before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy]
+	before_filter :can_view?, :only => [:show]
+	before_filter :can_continue?, :only => [:continue]
   
-  def show
-		@title = @path.name
-		#@achievements = @path.achievements.all(:limit => 20)
-    #@enrolled_users = @path.enrolled_users.all(:limit => 20)
-		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
-		
-		if @enable_leaderboard
-			@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
-			@last_update = Leaderboard.get_most_recent_board_date
-		end
-		
-    @current_position = @path.current_section(current_user).position unless @sections.empty?
-    @enrolled = current_user.enrolled?(@path)
-    if current_user.path_started?(@path)
-      @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Challenge"
-    elsif current_user.enrolled?(@path)
-      @start_mode = "Get Started"
-    else
-      @start_mode = "Enroll"
-    end
-	end
-
 # Begin Path Creation
 	
 	def new
@@ -104,9 +81,6 @@ class PathsController < ApplicationController
     end
     redirect_to edit_path_path(@path, :m => "sections")
   end
-  
-  def divide
-  end
 
   def destroy
 		@path.destroy
@@ -115,6 +89,28 @@ class PathsController < ApplicationController
 	end
 
 # Begin Path Journey
+
+  def show
+		@title = @path.name
+		#@achievements = @path.achievements.all(:limit => 20)
+    #@enrolled_users = @path.enrolled_users.all(:limit => 20)
+		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
+		
+		if @enable_leaderboard
+			@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
+			@last_update = Leaderboard.get_most_recent_board_date
+		end
+		
+    @current_position = @path.current_section(current_user).position unless @sections.empty?
+    @enrolled = current_user.enrolled?(@path)
+    if current_user.path_started?(@path)
+      @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Challenge"
+    elsif current_user.enrolled?(@path)
+      @start_mode = "Get Started"
+    else
+      @start_mode = "Enroll"
+    end
+	end
   
 	def continue
 		@section = current_user.most_recent_section_for_path(@path)
@@ -148,121 +144,6 @@ class PathsController < ApplicationController
 		@achievements = @path.achievements.all(:limit => 5)
     @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
   end
-  
-# Begin Path File Upload
-	
-	def file
-		@title = "File"
-	end
-	
-	def preview
-    begin
-      logger.debug 
-      read_file(params[:path][:file])
-      @collected_answers = params[:collected_answers]
-      @tab_delimited = params[:tab_delimited]
-      @path_description = get_path_description
-      @sections = []
-      details = get_section(@sections.size + 1)
-      until details.nil? || !flash[:error].nil?
-        s = @path.sections.build(details)
-        if s.valid?
-          tasks = get_section_tasks(@sections.size + 1)
-          unless tasks.nil?
-            valid_tasks = []
-            tasks.each do |task|
-              t = s.tasks.build(task)
-              valid_tasks << t
-              #There will alway be one error for section blank
-              flash[:error] =  t.errors.full_messages.join(". ") if t.errors.count > 1
-            end
-            if flash[:error].nil?
-              @sections << [s, valid_tasks]
-              details = get_section(@sections.size + 1)
-            end
-          else
-            flash[:error] = "There were no tasks found for section: " + s.name
-            break
-          end
-        else
-          flash[:error] = s.errors.full_messages.join(". ")
-        end
-      end
-    rescue
-     flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
-     logger.debug $!.to_s
-     redirect_to file_path_path(@path)
-    end
-	end
-  
-  def upload
-    begin
-      sections = params[:path][:sections]
-      @path.update_attribute("description", params[:path][:description])
-      sections.each do |id, s|
-        section = @path.sections.create!(:name => s[:name], :instructions => s[:instructions])
-        s[:tasks].each { |id, t| section.tasks.create!(t) }
-      end
-      redirect_to edit_path_path(@path)
-    rescue Exception => e
-      logger.debug e.to_s
-      flash[:error] = "An error occurred while processing your file. Please check your file for any errors and try to upload it again."
-      redirect_to file_path_path(@path)
-    end
-  end
-
-# Begin Corporate Path Marketplace #
-	
-	def marketplace
-		@title = "Marketplace"
-		if !params[:search].nil?
-			@query = params[:search]
-			@paths = Path.find(:all, :conditions => ["is_purchaseable = ? and is_published = ? and name LIKE ?", true, true, "%#{@query}%"])
-		end
-	end
-	
-	def review
-		@title = "Review purchase"
-	end
-	
-	def purchase
-		UserTransaction.create!({
-			:user_id => current_user.id,
-			:path_id => @path.id,
-			:amount => 15.00,
-			:status => 0})
-
-		purchased_path = current_user.paths.create!({
-			:user_id => current_user.id,
-			:company_id => @current_user.company.id,
-			:purchased_path_id => @path.id,
-			:name => @path.name,
-			:description => @path.description,
-			:amount => 15.00,
-			:status => 0})
-		
-		@path.sections.each do |s|
-			purchased_section = purchased_path.sections.create!(
-				:name => s.name,
-				:instructions => s.instructions,
-				:position => s.position
-			)
-			s.tasks.each do |t|				
-				purchased_section.tasks.create!(
-					:question => t.question,
-					:answer1 => t.answer1,
-					:answer2 => t.answer2,
-					:answer3 => t.answer3,
-					:answer4 => t.answer4,
-					:correct_answer => t.correct_answer,
-					:points => t.points,
-					:resource => t.resource
-				)
-			end
-		end
-		@title = "Purchase successful"
-		flash[:success] = "Purchase successful. Enjoy!."
-	end
 	
 	private
 		def get_path_from_id
@@ -272,24 +153,25 @@ class PathsController < ApplicationController
 			end
 		end
 		
-		def unpublished_not_for_purchase
-			if !(@path.is_published && @path.is_purchaseable)
-				flash[:error] = "This path is not available for access."
-				redirect_to root_path and return
+		def can_create?
+			unless @enable_user_creation
+				flash[:error] = "You do not have the ability to create new challenges."
+				redirect_to root_path
 			end
 		end
 		
-		def unpublished_for_admins_only
-			if !@path.is_published && !current_user.company_admin?
+		def can_edit?
+			unless can_edit_path(@path)
 				flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
 				redirect_to root_path
 			end
 		end
 		
-		def user_creation_enabled?
-			unless (current_user.admin? || current_user.company_admin? || @enable_user_creation)
-				flash[:error] = "You do not have access to this functionality."
-				redirect_to root_path
-			end
+		def can_view?
+			redirect_to root_path unless @path.is_published && @path.company_id == current_user.company_id
+		end
+		
+		def can_continue?
+			redirect_to root_path unless current_user.enrolled?(@path)
 		end
 end

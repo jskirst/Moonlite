@@ -7,6 +7,10 @@ class UserEvent < ActiveRecord::Base
 	
 	validates :user_id, :presence => true
 	validates :path_id, :presence => true
+	
+	validates :content, 
+		:presence 		=> true,
+		:length			=> { :within => 1..140 }
   
   validate :user_enrolled_in_path
   

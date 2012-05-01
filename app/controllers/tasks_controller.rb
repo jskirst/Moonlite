@@ -1,18 +1,34 @@
 class TasksController < ApplicationController
 	before_filter :authenticate
-	before_filter :company_admin
+	before_filter :has_access?
+	before_filter :get_task_from_id, :only => [:edit, :update, :destroy]
+	before_filter :can_edit?, :only => [:edit, :update, :destroy]
 	
 	def new
+		@section_id = params[:section_id]
+		@section = Section.find(@section_id)
+		unless can_edit_path(@section.path)
+			flash[:error] = "You cannot add tasks to this path."
+			redirect_to root_path
+			return
+		end
+		
 		@task = Task.new
     @ca = 1
 		@title = "New Question"
-		@section_id = params[:section_id]
+		
 		@form_title = "New Question"
 		render "tasks/task_form"
 	end
 	
 	def create
 		@section = Section.find(params[:task][:section_id])
+		unless can_edit_path(@section.path)
+			flash[:error] = "You cannot add tasks to this path."
+			redirect_to root_path
+			return
+		end
+		
 		@task = @section.tasks.build(params[:task])
     @task.points = 10
 		if @task.save
@@ -30,17 +46,11 @@ class TasksController < ApplicationController
 		end
 	end
 	
-	def show
-		@task = Task.find(params[:id])
-		@title = @task.section.name
-	end
-	
 	def edit
 		@title = "Edit Question"
 		@form_title = "Edit Question"
 		
-		@task = Task.find(params[:id])
-    @info_resource = InfoResource.find_by_task_id(@task.id)
+		@info_resource = InfoResource.find_by_task_id(@task.id)
     @ca = @task.correct_answer
 		@section_id = @task.section_id
 		
@@ -50,7 +60,6 @@ class TasksController < ApplicationController
 	end
 	
 	def update
-		@task = Task.find(params[:id])
 		if params[:task][:section_id].to_i != @task.section.id
 			old_section = @task.section
 			path = old_section.path
@@ -94,9 +103,31 @@ class TasksController < ApplicationController
   end
 	
 	def destroy
-		@task = Task.find(params[:id])
 		@task.destroy
     flash[:success] = "Question deleted."
 		redirect_to edit_section_path(@task.section, :m => "tasks")
 	end
+	
+	private
+		def get_task_from_id
+			@task = Task.find(params[:id])
+			unless @task
+				flash[:error] = "Task could not be found."
+				redirect_to root_path
+			end
+		end
+		
+		def has_access?
+			unless @enable_user_creation
+				flash[:error] = "You do not have access to this functionality."
+				redirect_to root_path
+			end
+		end
+	
+		def can_edit?
+			unless can_edit_path(@task.path)
+				flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
+				redirect_to root_path
+			end
+		end
 end

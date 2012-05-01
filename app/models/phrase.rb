@@ -1,5 +1,5 @@
 class Phrase < ActiveRecord::Base
-	attr_accessible :content
+	attr_accessible :content, :original_content
 	before_create :downcase
   
   has_many :phrase_pairings

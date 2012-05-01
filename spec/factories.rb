@@ -1,17 +1,40 @@
 TASK_POINTS = 10
 SEARCH_TERM = "Ruby"
 
+Factory.define :company do |company|
+	company.name					"Solyndra"
+end
+
+Factory.define :user_roll do |r|
+	r.association :company
+	r.name	"Admin"
+	r.enable_administration	"t"
+	r.enable_rewards	"t"
+	r.enable_leaderboard	"t"
+	r.enable_dashboard	"t"
+	r.enable_tour	"t"
+	r.enable_browsing	"t"
+	r.enable_comments	"t"
+	r.enable_news	"t"
+	r.enable_feedback	"t"
+	r.enable_achievements	"t"
+	r.enable_recommendations	"t"
+	r.enable_printer_friendly	"t"
+	r.enable_user_creation	"t"
+	r.enable_auto_enroll	"t"
+	r.enable_one_signup	"t"
+	r.enable_collaboration	"t"
+	r.enable_auto_generate	"t"
+end
+
 Factory.define :user do |user|
 	user.name					"Jonathan Dudearino"
 	user.email					{ Faker::Internet.email }
 	user.password				"testpassword"
 	user.password_confirmation	"testpassword"
 	user.association :company
+	user.association :user_roll
 	user.company_admin			"f"
-end
-
-Factory.define :company do |company|
-	company.name					"Solyndra"
 end
 
 Factory.define :reward do |reward|
@@ -64,7 +87,8 @@ Factory.define :enrollment do |enrollment|
 end
 
 Factory.define :info_resource do |info_resource|
-	info_resource.association :path
+	info_resource.section_id	nil
+	info_resource.task_id	nil
 	info_resource.description "This is a description of the resource."
 	info_resource.link "http://www.testlink.com"
 end

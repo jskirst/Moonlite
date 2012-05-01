@@ -36,6 +36,10 @@ module SessionsHelper
 		end
 	end
 	
+	def can_edit_path(path)
+		return (@enable_user_creation) && ((path.user == current_user) || (path.company_id = current_user.company_id && @enable_collaboration))
+	end
+	
 	def deny_access
 		store_location
 		flash[:notice] = "Please sign in to access this page."

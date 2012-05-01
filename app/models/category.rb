@@ -14,17 +14,17 @@ class Category < ActiveRecord::Base
 	has_many :paths
 	belongs_to :company
 	
-	validates :name,
-	:length			=> { :within => 1..255 }
+	validates :company_id,
+	:presence			=> true
 	
-	before_destroy :reassign_paths
+	validates :name,
+	:length			=> { :within => 1..80 }
+	
+	before_destroy :any_paths_left?
 	
 	private
 		
-		def reassign_paths
-			paths.all.each do |p|
-				p.category_id = 0
-				p.save
-			end
+		def any_paths_left?
+			return paths.empty?
 		end
 end

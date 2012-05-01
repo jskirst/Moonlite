@@ -1,5 +1,6 @@
 class UserRollsController < ApplicationController
 	before_filter :authenticate
+	before_filter :get_user_roll_from_id, :except => [:index, :new, :create]
 	before_filter :has_access?
   
 	def index
@@ -27,8 +28,6 @@ class UserRollsController < ApplicationController
 	end
 	
 	def edit
-		@user_roll = current_user.company.user_rolls.find(params[:id])
-		redirect_to root_path unless @user_roll
 		@users = @user_roll.users
 		@title = "Edit user roll"
 		@form_mode = "edit"
@@ -36,7 +35,6 @@ class UserRollsController < ApplicationController
 	end
 	
 	def update
-		@user_roll = current_user.company.user_rolls.find(params[:id])
 		if @user_roll.update_attributes(params[:user_roll])
 			flash[:success] = "User Roll updated."
 			redirect_to user_rolls_path
@@ -48,8 +46,6 @@ class UserRollsController < ApplicationController
 	end
 	
 	def destroy
-		@user_roll = current_user.company.user_rolls.find(params[:id])
-		redirect_to root_path unless @user_roll
 		unless @user_roll.users.empty?
 			redirect_to user_rolls_path
 			flash[:error] = "You cannot delete a user roll until all users have been removed from it."
@@ -59,16 +55,32 @@ class UserRollsController < ApplicationController
 		if @user_roll.destroy
 			flash[:success] = "User roll successfully removed."
 		else
-			flash[:success] = "User roll could not be deleted. Please try again."
+			flash[:error] = "User roll could not be deleted. Please try again."
 		end
 		redirect_to user_rolls_path
 	end
 	
-	private		
+	private
+		def get_user_roll_from_id
+			@user_roll = current_user.company.user_rolls.find(params[:id])
+			if @user_roll.nil?
+				flash[:error] = "This is not a valid company."
+				redirect_to root_path
+			else
+				@company = @user_roll.company
+			end
+		end
+	
 		def has_access?
 			unless @enable_administration
 				flash[:error] = "You do not have access to this functionality."
-				redirect_to root_path unless @enable_administration
+				redirect_to root_path
+				return
+			end
+			
+			if @company && @company != current_user.company
+				flash[:error] = "You do not have access to this organizations data."
+				redirect_to root_path
 			end
 		end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428213225) do
+ActiveRecord::Schema.define(:version => 20120430225344) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -21,7 +21,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner_id"
     t.string   "image_url"
   end
 
@@ -49,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "enable_company_store",         :default => true
-    t.integer  "owner_id"
     t.boolean  "enable_leaderboard",           :default => true
     t.boolean  "enable_dashboard",             :default => true
     t.boolean  "enable_tour",                  :default => true
@@ -78,7 +76,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_admin"
-    t.integer  "owner_id"
   end
 
   create_table "completed_tasks", :force => true do |t|
@@ -88,7 +85,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.datetime "updated_at"
     t.integer  "status_id",      :default => 0
     t.datetime "quiz_session"
-    t.integer  "owner_id"
     t.integer  "points_awarded"
     t.string   "answer"
   end
@@ -99,7 +95,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "total_points", :default => 0
-    t.integer  "owner_id"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -112,7 +107,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner_id"
     t.integer  "section_id"
     t.integer  "task_id"
     t.string   "info_type"
@@ -147,7 +141,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.integer  "purchased_path_id"
     t.boolean  "is_published",               :default => false
     t.boolean  "is_purchaseable",            :default => false
-    t.integer  "owner_id"
     t.integer  "category_id",                :default => 0
     t.boolean  "enable_section_display",     :default => true
     t.integer  "default_timer",              :default => 30
@@ -184,7 +177,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner_id"
   end
 
   create_table "sections", :force => true do |t|
@@ -194,7 +186,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner_id"
     t.boolean  "is_published",        :default => false
     t.string   "image_url"
     t.string   "content_type"
@@ -214,7 +205,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.string   "answer3"
     t.string   "answer4"
     t.integer  "correct_answer", :default => 1
-    t.integer  "owner_id"
     t.integer  "position"
   end
 
@@ -225,7 +215,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "owner_id"
   end
 
   create_table "user_events", :force => true do |t|
@@ -271,7 +260,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "path_id"
-    t.integer  "owner_id"
   end
 
   create_table "users", :force => true do |t|
@@ -285,7 +273,6 @@ ActiveRecord::Schema.define(:version => 20120428213225) do
     t.integer  "earned_points",      :default => 0
     t.integer  "spent_points",       :default => 0
     t.string   "image_url"
-    t.integer  "owner_id"
     t.string   "signup_token"
     t.integer  "company_id"
     t.boolean  "company_admin",      :default => false

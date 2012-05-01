@@ -8,17 +8,17 @@ describe UsersController do
 		@attr = {:email => "test@t.com", :company_id => @company.id}
 	end
 	
-	describe "GET 'new'" do
-		before(:each) do
-			@user = Factory(:user, :company_admin => true)
-			test_sign_in @user
-		end
+	# describe "GET 'new'" do
+		# before(:each) do
+			# @user = Factory(:user, :company_admin => true)
+			# test_sign_in @user
+		# end
 	
-		it "should be successful" do
-			get :new, :company_id => @company.id
-			response.should be_success
-		end
-	end
+		# it "should be successful" do
+			# get :new, :company_id => @company.id
+			# response.should be_success
+		# end
+	# end
 	
 	describe "POST 'create'" do
 		before(:each) do
@@ -91,112 +91,112 @@ describe UsersController do
 		end
 	end
 	
-	describe "GET 'accept'" do
-		before(:each) do
-			@user = Factory(:user, :name => "pending")
-		end
+	# describe "GET 'accept'" do
+		# before(:each) do
+			# @user = Factory(:user, :name => "pending")
+		# end
 	
-		describe "with invalid token" do
-			it "should redirect to root" do
-				get :accept, :id => "XYZ"
-				response.should redirect_to root_path
-			end
-		end
+		# describe "with invalid token" do
+			# it "should redirect to root" do
+				# get :accept, :id => "XYZ"
+				# response.should redirect_to root_path
+			# end
+		# end
 		
-		describe "with valid token" do
-			it "should be successful" do
-				get :accept, :id => @user.signup_token
-				response.should be_success
-			end
+		# describe "with valid token" do
+			# it "should be successful" do
+				# get :accept, :id => @user.signup_token
+				# response.should be_success
+			# end
 			
-			it "should render new" do
-				get :accept, :id => @user.signup_token
-				response.should render_template("accept")
-			end
+			# it "should render new" do
+				# get :accept, :id => @user.signup_token
+				# response.should render_template("accept")
+			# end
 
-			it "should have right title" do
-				get :accept, :id => @user.signup_token
-				response.should have_selector("title", :content => @company.name)
-			end
-		end
-	end
+			# it "should have right title" do
+				# get :accept, :id => @user.signup_token
+				# response.should have_selector("title", :content => @company.name)
+			# end
+		# end
+	# end
 	
-	describe "PUT 'join'" do
-		before(:each) do
-			@user = Factory(:user, :company => @company, :name => "pending")
-		end
+	# describe "PUT 'join'" do
+		# before(:each) do
+			# @user = Factory(:user, :company => @company, :name => "pending")
+		# end
 	
-		describe "failure" do
-			before(:each) do
-				@attr = {:name => "", 
-					:password => "", 
-					:password_confirmation => "", 
-					:image_url => "", 
-					:signup_token => @user.signup_token}
-			end
+		# describe "failure" do
+			# before(:each) do
+				# @attr = {:name => "", 
+					# :password => "", 
+					# :password_confirmation => "", 
+					# :image_url => "", 
+					# :signup_token => @user.signup_token}
+			# end
 			
-			describe "because of invalid token" do
-				it "should not be successful" do
-					put :join, :id => @user.signup_token, :user => @attr.delete("signup_token")
-					response.should_not be_success
-				end
+			# describe "because of invalid token" do
+				# it "should not be successful" do
+					# put :join, :id => @user.signup_token, :user => @attr.delete("signup_token")
+					# response.should_not be_success
+				# end
 				
-				it "should should redirect to root" do
-					put :join, :id => @user.signup_token, :user => @attr.delete("signup_token")
-					response.should redirect_to root_path
-				end
-			end
+				# it "should should redirect to root" do
+					# put :join, :id => @user.signup_token, :user => @attr.delete("signup_token")
+					# response.should redirect_to root_path
+				# end
+			# end
 			
-			describe "because of blank fields" do
-				it "should not create a user" do
-					lambda do
-						put :join, :id => @user.signup_token, :user => @attr
-					end.should_not change(User, :count)
-				end
+			# describe "because of blank fields" do
+				# it "should not create a user" do
+					# lambda do
+						# put :join, :id => @user.signup_token, :user => @attr
+					# end.should_not change(User, :count)
+				# end
 				
-				it "should have the right title" do
-					put :join, :id => @user.signup_token, :user => @attr
-					response.should have_selector("title", :content => "Accept invite")
-				end
+				# it "should have the right title" do
+					# put :join, :id => @user.signup_token, :user => @attr
+					# response.should have_selector("title", :content => "Accept invite")
+				# end
 				
-				it "should render the new page" do
-						put :join, :id => @user.signup_token, :user => @attr
-					response.should render_template("accept")
-				end
-			end
-		end
+				# it "should render the new page" do
+						# put :join, :id => @user.signup_token, :user => @attr
+					# response.should render_template("accept")
+				# end
+			# end
+		# end
 		
-		describe "success" do
-			before(:each) do
-				@attr = {:name => "Test", 
-					:password => "testing", 
-					:password_confirmation => "testing",
-					:signup_token => @user.signup_token}
-			end
+		# describe "success" do
+			# before(:each) do
+				# @attr = {:name => "Test", 
+					# :password => "testing", 
+					# :password_confirmation => "testing",
+					# :signup_token => @user.signup_token}
+			# end
 			
-			it "should redirect to profile page" do
-				put :join, :id => @user.signup_token, :user => @attr
-				response.should redirect_to @user
-			end
+			# it "should redirect to profile page" do
+				# put :join, :id => @user.signup_token, :user => @attr
+				# response.should redirect_to @user
+			# end
 			
-			it "should have a welcome message" do
-				put :join, :id => @user.signup_token, :user => @attr
-				flash[:success].should =~ /welcome to/i
-			end
+			# it "should have a welcome message" do
+				# put :join, :id => @user.signup_token, :user => @attr
+				# flash[:success].should =~ /welcome to/i
+			# end
 			
-			it "should sign the user in" do
-				put :join, :id => @user.signup_token, :user => @attr
-				controller.should be_signed_in
-			end
+			# it "should sign the user in" do
+				# put :join, :id => @user.signup_token, :user => @attr
+				# controller.should be_signed_in
+			# end
 			
-			it "should change name to proper name" do
-				lambda do
-					put :join, :id => @user.signup_token, :user => @attr
-					@user.reload
-				end.should change(@user, :name)
-			end
-		end
-	end
+			# it "should change name to proper name" do
+				# lambda do
+					# put :join, :id => @user.signup_token, :user => @attr
+					# @user.reload
+				# end.should change(@user, :name)
+			# end
+		# end
+	# end
 	
 	describe "Get 'show'" do
 		before(:each) do

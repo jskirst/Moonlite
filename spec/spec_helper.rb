@@ -39,16 +39,29 @@ Spork.prefork do
 			controller.sign_in(user)
 		end
 		
-		def standard_setup(build_user = true, build_path = true, build_section = true)
-			if build_user
-				@user = Factory(:user)
-				@user.set_company_admin(true)
+		def standard_setup(params)
+			unless params[:build_user] == false
+				@company = Factory(:company)
+				
+				if params[:user_type] == "admin" || params[:user_type] == "company_admin"
+					@admin_user_roll = Factory(:user_roll, :company => @company)
+				else
+					@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => false)
+				end
+				
+				@user = Factory(:user, :company => @company, :user_roll => @user_roll)
+				
+				if params[:user_type] == "admin"
+					@user.toggle!(:admin)
+				end
 			end
-			if build_path
+			
+			unless params[:build_path] == false
 				@category = Factory(:category, :company => @user.company)
 				@path = Factory(:path, :user => @user, :company => @user.company, :category => @category)
 			end
-			if build_section
+			
+			unless params[:build_section] == false
 				@section = Factory(:section, :path => @path)
 			end
 		end

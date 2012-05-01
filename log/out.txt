@@ -1,46 +1,16 @@
-....................................................................................*..*.*..*................................*.................................*.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................*..*......................................................***...............................*.....................................*
+....F.....
 
-Pending:
-  CompletedTasksController POST 'create' as an enrolled user with an incorrect answer should take you to the next question
-    # Not Yet Implemented
-    # ./spec/controllers/completed_tasks_controller_spec.rb:74
-  CompletedTasksController POST 'create' as an enrolled user with a correct answer should take you to the next question
-    # Not Yet Implemented
-    # ./spec/controllers/completed_tasks_controller_spec.rb:101
-  CompletedTasksController POST 'create' as an enrolled user CompletedTasksController POST 'create' as an enrolled user with a correct answer with an invalid achievement should still take you to the next question
-    # Not Yet Implemented
-    # ./spec/controllers/completed_tasks_controller_spec.rb:120
-  CompletedTasksController POST 'create' as an enrolled user CompletedTasksController POST 'create' as an enrolled user with a correct answer with valid achievements for completing all tasks for the path should not change the user's encrypted password
-    # Not Yet Implemented
-    # ./spec/controllers/completed_tasks_controller_spec.rb:154
-  LeaderboardsController actions GET index should correctly list the name of each user
-    # Not Yet Implemented
-    # ./spec/controllers/leaderboards_controller_spec.rb:114
-  PathsController access controller when signed in as company admin should allow access to 'upload'
-    # Not Yet Implemented
-    # ./spec/controllers/paths_controller_spec.rb:120
-  Section task associations next task should return the next uncompleted task for a user
-    # Not Yet Implemented
-    # ./spec/models/section_spec.rb:104
-  Section task associations remaining tasks should return the next the correct number of incomplete tasks
-    # Not Yet Implemented
-    # ./spec/models/section_spec.rb:124
-  User completed tasks should respond with all completed tasks
-    # Not Yet Implemented
-    # ./spec/models/user_spec.rb:159
-  User User completed tasks completed? should respond with false if task not completed
-    # Not Yet Implemented
-    # ./spec/models/user_spec.rb:162
-  User User completed tasks completed? should respond with true if the task is completed
-    # Not Yet Implemented
-    # ./spec/models/user_spec.rb:164
-  UserTransaction validation for tasks should reject a task that the user is not enrolled in
-    # Not Yet Implemented
-    # ./spec/models/user_transaction_spec.rb:67
-  Users should successfully change password from the edit page
-    # Not Yet Implemented
-    # ./spec/requests/users_spec.rb:4
+Failures:
 
-Finished in 226.54 seconds
-756 examples, 0 failures, 13 pending
-Coverage report generated for RSpec to C:/Users/JC/Moonlite/coverage. 4872 / 5303 LOC (91.87%) covered.
+  1) InfoResourcesController access controller when signed-in as path creator should allow access to :destroy
+     Failure/Error: response.should redirect_to edit_section_path(@section, :m => "tasks")
+       Expected response to be a redirect to <http://test.host/sections/1/edit?m=tasks> but was a redirect to <http://test.host/sections/2/edit?m=tasks>
+     # ./spec/controllers/info_resources_controller_spec.rb:69:in `block (4 levels) in <top (required)>'
+
+Finished in 39.16 seconds
+10 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/controllers/info_resources_controller_spec.rb:66 # InfoResourcesController access controller when signed-in as path creator should allow access to :destroy
+Coverage report generated for RSpec to C:/Users/EV4/Dropbox/rails/moonlite/coverage. 962 / 2317 LOC (41.52%) covered.

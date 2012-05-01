@@ -1,3 +1,7 @@
+ENV['AWS_ACCESS_KEY_ID'] 			= "AKIAJQGM5NKT235MHP3A"
+ENV['AWS_SECRET_ACCESS_KEY']  = "R68x1nER9r0rrpmg2kYEz5m5HOQ1NY9ih5Gbf2Qf"
+ENV['S3_BUCKET_NAME']					=	"moonlite-test"
+
 SampleApp::Application.configure do
 	# Settings specified here will take precedence over those in config/environment.rb
 

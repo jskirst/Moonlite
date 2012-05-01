@@ -88,10 +88,6 @@ describe "Tasks" do
 			@section.tasks.build(@attr.merge(:question => "")).should_not be_valid
 		end
 		
-		it "should require non-blank answer1" do
-			@section.tasks.build(@attr.merge(:answer1 => "")).should_not be_valid
-		end
-		
 		it "should require non-nil points" do
 			@section.tasks.build(@attr.merge(:points => nil)).should_not be_valid
 		end		

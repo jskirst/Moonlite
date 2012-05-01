@@ -4,12 +4,17 @@ describe SectionsController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company, :is_published => true)
-		@section = Factory(:section, :path => @path, :position => 0, :is_published => true)
-		@task1 = Factory(:task, :section => @section)
-    @task2 = Factory(:task, :section => @section)
-    @task3 = Factory(:task, :section => @section)
+		@company = Factory(:company)
+		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
+		@admin_user_roll = Factory(:user_roll, :company => @company)
+		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		
+		@category = Factory(:category, :company => @company)
+		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
+		@section = Factory(:section, :path => @path)
+		@task1 = Factory(:task, :section => @section, :position => 1)
+    @task2 = Factory(:task, :section => @section, :position => 2)
+    @task3 = Factory(:task, :section => @section, :position => 3)
 		@user.enroll!(@path)
 		
 		@attr = {
@@ -22,37 +27,25 @@ describe SectionsController do
 	
 	describe "access controller" do
 		describe "when not signed in" do
-			it "should deny access to 'new'" do
+			it "should deny access to all functionality" do
 				get :new, :path_id => @path.id
 				response.should redirect_to signin_path
-			end
-		
-			it "should deny access to 'create'" do
+				
 				post :create, :section => @attr
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'show'" do
+				
 				get :show, :id => @section
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'edit'" do
+				
 				get :edit, :id => @section
 				response.should redirect_to signin_path
-			end			
-			
-			it "should deny access to 'update'" do
+				
 				put :update, :id => @section, :section => @attr
 				response.should redirect_to signin_path
-			end
-
-			it "should deny access to 'destroy'" do
+				
 				delete :destroy, :id => @section
 				response.should redirect_to signin_path
-			end
-			
-			it "should deny access to 'continue'" do
+				
 				get :continue, :id => @section
 				response.should redirect_to signin_path
 			end
@@ -63,37 +56,27 @@ describe SectionsController do
 				test_sign_in(@user)
 			end
 			
-			it "should deny access to 'new'" do
+			it "should deny access to all editing functionality" do
 				get :new, :path_id => @path.id
 				response.should redirect_to root_path
-			end
-		
-			it "should deny access to 'create'" do
+				
 				post :create, :section => @attr
 				response.should redirect_to root_path
-			end
-			
-			it "should allow access to 'show'" do
-				get :show, :id => @section
-				response.should be_success
-			end
-			
-			it "should deny access to 'edit'" do
+				
 				get :edit, :id => @section
 				response.should redirect_to root_path
-			end			
-			
-			it "should deny access to 'update'" do
+				
 				put :update, :id => @section, :section => @attr
 				response.should redirect_to root_path
-			end
-			
-			it "should deny access to 'destroy'" do
+				
 				delete :destroy, :id => @section
 				response.should redirect_to root_path
 			end
-			
-			it "should allow access to 'continue'" do
+		
+			it "should allow access to :show and :continue" do
+				get :show, :id => @section
+				response.should be_success
+				
 				get :continue, :id => @section
 				response.should_not redirect_to root_path
 				response.should be_success
@@ -102,51 +85,39 @@ describe SectionsController do
 		
 		describe "when signed in as company admin" do
 			before(:each) do
-				@user.set_company_admin(true)
+				@user.user_roll = @admin_user_roll
 				test_sign_in(@user)
 			end
 			
-			it "should allow access to 'new'" do
-				get :new, :path_id => @path.id
-				response.should be_success
-			end
-		
-			it "should allow access to 'create'" do
-				post :create, :section => @attr
-				response.should redirect_to edit_section_path(Section.last, :m => "instructions")
-			end
-			
-			it "should allow access to 'show'" do
+			it "should allow access to all functionality" do
 				get :show, :id => @section
 				response.should be_success
-			end
-			
-			it "should allow access to 'edit'" do
+				
 				get :edit, :id => @section
 				response.should be_success
-			end
-			
-			it "should allow access to 'update'" do
+				
 				put :update, :id => @section, :section => @attr.merge(:path_id => nil)
 				response.should redirect_to edit_section_path(Section.last, :m => "instructions")
-			end
-			
-			it "should allow access to 'destroy'" do
-				delete :destroy, :id => @section
-				response.should redirect_to edit_path_path(@path, :m => "sections")
-			end
-			
-			it "should allow access to 'continue'" do
+				
 				get :continue, :id => @section
 				response.should_not redirect_to root_path
 				response.should be_success
+				
+				delete :destroy, :id => @section
+				response.should redirect_to edit_path_path(@path, :m => "sections")
+				
+				get :new, :path_id => @path.id
+				response.should be_success
+				
+				post :create, :section => @attr
+				response.should redirect_to edit_section_path(Section.last, :m => "instructions")
 			end
 		end
 	end
 	
 	describe "actions" do
 		before(:each) do
-			@user.set_company_admin(true)
+			@user.user_roll = @admin_user_roll
 			test_sign_in(@user)
 		end
 		
@@ -217,14 +188,29 @@ describe SectionsController do
 		end
 		
 		describe "GET 'edit'" do
-			it "should be successful" do
-				get :edit, :id => @section
-				response.should be_success
+			it "should respond to tasks mode" do
+				get :edit, :id => @section, :m => "tasks"
+				response.should render_template("edit_tasks")
+			end
+			
+			it "should respond to settings mode" do
+				get :edit, :id => @section, :m => "settings"
+				response.should render_template("edit_settings")
+			end
+			
+						it "should respond to hidden_content mode" do
+				get :edit, :id => @section, :m => "hidden_content"
+				response.should render_template("edit_hidden_content")
+			end
+			
+			it "should respond to randomize mode" do
+				get :edit, :id => @section, :m => "randomize"
+				response.should render_template("edit_tasks")
 			end
 
-			it "should have right title" do
+			it "should have default mode of instructions" do
 				get :edit, :id => @section
-				response.should have_selector("title", :content => "Edit")
+				response.should render_template("edit_instructions")
 			end
 		end
 		
@@ -248,6 +234,12 @@ describe SectionsController do
 					put :update, :id => @section, :section => @attr
 					response.should have_selector("p", :content => "The were problems with the following fields")
 				end
+				
+				it "should not allow section to be published without 1 task" do
+					new_section = Factory(:section, :path => @path)
+					put :update, :id => new_section, :section => {:name => "Good name", :instructions => "Good instructions", :is_published => 1}
+					response.should be_succes
+				end
 			end
 			
 			describe "Success" do
@@ -267,6 +259,52 @@ describe SectionsController do
 					put :update, :id => @section, :section => @attr
 					flash[:success].should =~ /updated/i
 				end
+			end
+		end
+		
+		describe "GET :import_content" do
+			before(:each) do
+				@info_resource = Factory(:info_resource, :section_id => @section.id)
+			end
+			
+			it "should respond successfully" do
+				get :import_content, :id => @section, :previous => @info_resource.id
+				response.should be_success
+			end
+		end
+		
+		describe "GET :preview_content" do
+			before(:each) do
+				@file = fixture_file_upload('files/test_pic.jpg', 'image/jpg')
+			end
+			
+			it "should be successful" do
+				put :preview_content, :id => @section, :section => {:file => @file}
+				response.should be_success
+			end
+			
+			it "should create info_resource" do
+				lambda do
+					put :preview_content, :id => @section, :section => {:file => @file}
+				end.should change(InfoResource, :count).by(1)
+			end
+		end
+		
+		describe "GET :research" do
+			it "should clear instructions on clear mode" do
+				get :research, :id => @section, :m => "clear"
+				@section.reload
+				@section.instructions.should == nil
+			end
+			
+			it "should respond to create mode" do
+				get :research, :id => @section, :m => "create", :topics => "vitamin d, vitamin c"
+				response.should be_success
+			end
+			
+			it "should respond to topics mode" do
+				get :research, :id => @section, :m => "topics"
+				response.should render_template("research_settings")
 			end
 		end
 		
