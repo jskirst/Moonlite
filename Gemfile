@@ -1,7 +1,6 @@
 source 'http://rubygems.org'
 
 gem 'rails'
-gem 'pg'
 gem 'gravatar_image_tag'
 gem 'will_paginate'
 gem 'jquery-rails'
@@ -13,6 +12,7 @@ gem 'activesupport'
 gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'pg'
 
 group :development do
 	gem 'rspec-rails'
