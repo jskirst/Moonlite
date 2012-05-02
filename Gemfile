@@ -12,20 +12,15 @@ gem 'activesupport'
 gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
-
-group :production do
-	gem 'pg'
-end
+gem 'pg'
 
 group :development do
-	gem 'sqlite3-ruby', :require => 'sqlite3'
 	gem 'rspec-rails'
 	gem 'annotate'
 	gem 'faker'
 end
 
 group :test do
-	gem 'sqlite3-ruby', :require => 'sqlite3'
 	gem 'spork'
 	gem 'webrat'
 	gem 'rspec-rails'
