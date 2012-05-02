@@ -14,7 +14,7 @@ gem 'paperclip'
 gem 'aws-sdk'
 
 group :production do
-	gem 'pg'
+	gem 'activerecord-postgresql-adapter'
 end
 
 group :development do
