@@ -12,6 +12,7 @@ gem 'activesupport'
 gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
+gem 'pg'
 
 group :development do
 	gem 'rspec-rails'
