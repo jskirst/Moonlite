@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-
 gem 'rails'
 gem 'gravatar_image_tag'
 gem 'will_paginate'
