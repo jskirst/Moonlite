@@ -5,7 +5,7 @@ class RemoveOwnerIdFromTables < ActiveRecord::Migration
 		remove_column :company_users, :owner_id
 		remove_column :completed_tasks, :owner_id
 		remove_column :enrollments, :owner_id
-		remove_column :info_resources
+		remove_column :info_resources, :owner_id
 		remove_column :paths, :owner_id
 		remove_column :rewards, :owner_id
 		remove_column :sections, :owner_id
