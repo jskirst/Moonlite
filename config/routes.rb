@@ -12,6 +12,7 @@ SampleApp::Application.routes.draw do
 			put :reset_password
 			get :edit_roll
 			put :update_roll
+			get :puzzle
 		end
 	end
 	resources :tours do

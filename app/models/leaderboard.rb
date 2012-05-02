@@ -25,23 +25,24 @@ class Leaderboard < ActiveRecord::Base
 				
 	def self.get_overall_leaderboard(company, date = nil)
 		date = get_most_recent_board_date if date.nil?
-		return Leaderboard.joins(:user).where("users.company_id = ? and leaderboards.created_at = ? and category_id is ? and path_id is ? and section_id is ?", company.id, date, nil, nil, nil).all(:order => "score DESC")
+		return Leaderboard.joins(:user).where("users.company_id = ? and category_id is ? and path_id is ? and section_id is ?", company.id, nil, nil, nil).all(:order => "score DESC")
 	end
 	
 	def self.get_leaderboard_for_category(category, date = nil)
 		date = get_most_recent_board_date if date.nil?
-		return Leaderboard.includes(:user).where("created_at = ? and category_id = ?", date, category.id).all(:order => "score DESC")
+		return Leaderboard.includes(:user).where("category_id = ?", category.id).all(:order => "score DESC")
 	end
 	
-	def self.get_leaderboards_for_path(path, date = nil)
+	def self.get_leaderboards_for_path(path, get_sections = true)
 		sections = path.sections
-		date = get_most_recent_board_date if date.nil?
 		leaderboards = []
-		overall_leaderboard = Leaderboard.includes(:user).where("created_at = ? and path_id = ?", date, path.id).all(:order => "score DESC")
+		overall_leaderboard = Leaderboard.includes(:user).where("path_id = ?", path.id).all(:order => "score DESC")
 		leaderboards << ["overall", overall_leaderboard]
-		sections.each do |s|
-			sl = Leaderboard.includes(:user).where("created_at = ? and section_id = ?", date, s.id).all(:order => "score DESC")
-			leaderboards << [s.id, sl]
+		if get_sections
+			sections.each do |s|
+				sl = Leaderboard.includes(:user).where("section_id = ?", s.id).all(:order => "score DESC")
+				leaderboards << [s.id, sl]
+			end
 		end
 		return leaderboards
 	end
@@ -62,6 +63,33 @@ class Leaderboard < ActiveRecord::Base
 		date = Time.now
 		User.all.each do |u|
 			get_user_stats(u, date)
+		end
+	end
+	
+	def self.reset_for_path(path)
+		date = Time.now
+		excluded_users = path.excluded_from_leaderboards
+		path.enrolled_users.each do |u|
+			l = u.leaderboards.find_by_path_id(path.id)
+			l.destroy unless l.nil?
+			unless excluded_users.blank?
+				next if excluded_users.include?(u.email)
+			end
+			total_path_tasks = 0
+			total_path_points = 0
+			path.sections.each do |s|
+				total_section_tasks = 0
+				total_section_points = 0
+				tasks = u.completed_tasks.includes(:section).where("sections.id = ? and status_id = 1", s.id)
+				total_section_tasks = tasks.size
+				tasks.each {|t| total_section_points += t.points_awarded}
+				l = u.leaderboards.find_by_section_id(s.id)
+				l.destroy unless l.nil?
+				Leaderboard.create!(:user_id => u.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_points, :created_at => date)
+				total_path_tasks += total_section_tasks
+				total_path_points += total_section_points
+			end
+			Leaderboard.create!(:user_id => u.id, :path_id => path.id, :completed_tasks => total_path_tasks, :score => total_path_points, :created_at => date)
 		end
 	end
 	

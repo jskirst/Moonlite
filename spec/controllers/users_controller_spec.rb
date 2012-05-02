@@ -4,13 +4,13 @@ describe UsersController do
 	render_views
 
 	before(:each) do
-		@company = Factory(:company)
+		@company = FactoryGirl.create(:company)
 		@attr = {:email => "test@t.com", :company_id => @company.id}
 	end
 	
 	# describe "GET 'new'" do
 		# before(:each) do
-			# @user = Factory(:user, :company_admin => true)
+			# @user = FactoryGirl.create(:user, :company_admin => true)
 			# test_sign_in @user
 		# end
 	
@@ -22,7 +22,7 @@ describe UsersController do
 	
 	describe "POST 'create'" do
 		before(:each) do
-			@user = Factory(:user, :company => @company, :company_admin => true)
+			@user = FactoryGirl.create(:user, :company => @company, :company_admin => true)
 			test_sign_in @user
 		end
 		
@@ -93,7 +93,7 @@ describe UsersController do
 	
 	# describe "GET 'accept'" do
 		# before(:each) do
-			# @user = Factory(:user, :name => "pending")
+			# @user = FactoryGirl.create(:user, :name => "pending")
 		# end
 	
 		# describe "with invalid token" do
@@ -123,7 +123,7 @@ describe UsersController do
 	
 	# describe "PUT 'join'" do
 		# before(:each) do
-			# @user = Factory(:user, :company => @company, :name => "pending")
+			# @user = FactoryGirl.create(:user, :company => @company, :name => "pending")
 		# end
 	
 		# describe "failure" do
@@ -200,7 +200,7 @@ describe UsersController do
 	
 	describe "Get 'show'" do
 		before(:each) do
-			@user = Factory(:user)
+			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
 		end
 		
@@ -248,32 +248,32 @@ describe UsersController do
 		
 			# describe "when they exist" do
 				# before(:each) do
-					# @path1 = Factory(:path, :user => @other_user, :name => "Name1")
-					# @path2 = Factory(:path, :user => @other_user, :name => "Name2")
+					# @path1 = FactoryGirl.create(:path, :user => @other_user, :name => "Name1")
+					# @path2 = FactoryGirl.create(:path, :user => @other_user, :name => "Name2")
 					
-					# @enrollment1 = Factory(:enrollment, :path => @path1, :user => @user)
-					# @enrollment2 = Factory(:enrollment, :path => @path2, :user => @user)
+					# @enrollment1 = FactoryGirl.create(:enrollment, :path => @path1, :user => @user)
+					# @enrollment2 = FactoryGirl.create(:enrollment, :path => @path2, :user => @user)
 					
-					# @task1_path1 = Factory(:task, :path => @path1, :points => 2)
+					# @task1_path1 = FactoryGirl.create(:task, :path => @path1, :points => 2)
 					# @user.award_points(@task1_path1)
-					# @task2_path1 = Factory(:task, :path => @path1, :points => 2)
+					# @task2_path1 = FactoryGirl.create(:task, :path => @path1, :points => 2)
 					# @user.award_points(@task2_path1)
-					# @task3_path1 = Factory(:task, :path => @path1, :points => 2)
+					# @task3_path1 = FactoryGirl.create(:task, :path => @path1, :points => 2)
 					# @user.award_points(@task3_path1)
 					# @path1_earned_points = 6
 					
-					# @task1_path2 = Factory(:task, :path => @path2, :points => 7)
+					# @task1_path2 = FactoryGirl.create(:task, :path => @path2, :points => 7)
 					# @user.award_points(@task1_path2)
-					# @task2_path2 = Factory(:task, :path => @path2, :points => 7)
+					# @task2_path2 = FactoryGirl.create(:task, :path => @path2, :points => 7)
 					# @user.award_points(@task2_path2)
-					# @task3_path2 = Factory(:task, :path => @path2, :points => 7)
+					# @task3_path2 = FactoryGirl.create(:task, :path => @path2, :points => 7)
 					# @user.award_points(@task3_path2)
 					# @path2_earned_points = 21
 					
-					# @completed_task1_path1 = Factory(:completed_task, :task => @task1_path1, :user => @user)
-					# @completed_task2_path1 = Factory(:completed_task, :task => @task2_path1, :user => @user)
-					# @completed_task1_path2 = Factory(:completed_task, :task => @task1_path2, :user => @user)
-					# @completed_task2_path2 = Factory(:completed_task, :task => @task2_path2, :user => @user)
+					# @completed_task1_path1 = FactoryGirl.create(:completed_task, :task => @task1_path1, :user => @user)
+					# @completed_task2_path1 = FactoryGirl.create(:completed_task, :task => @task2_path1, :user => @user)
+					# @completed_task1_path2 = FactoryGirl.create(:completed_task, :task => @task1_path2, :user => @user)
+					# @completed_task2_path2 = FactoryGirl.create(:completed_task, :task => @task2_path2, :user => @user)
 					
 					# @total_earned_points = @path1_earned_points + @path2_earned_points
 				# end
@@ -300,7 +300,7 @@ describe UsersController do
 	
 	describe "GET 'edit'" do
 		before(:each) do
-			@user = Factory(:user)
+			@user = FactoryGirl.create(:user)
 			test_sign_in @user
 		end
 		
@@ -317,7 +317,7 @@ describe UsersController do
 	
 	describe "PUT 'update'" do
 		before(:each) do
-			@user = Factory(:user)
+			@user = FactoryGirl.create(:user)
 			test_sign_in(@user)
 		end
 		
@@ -333,11 +333,6 @@ describe UsersController do
 			it "should render the edit page" do
 				put :update, :id => @user,  :user => @attr
 				response.should render_template('edit')
-			end
-			
-			it "should have the right title" do
-				put :update, :id => @user,  :user => @attr
-				response.should have_selector("title", :content => "Settings")
 			end
 			
 			it "should have an error message" do
@@ -383,9 +378,9 @@ describe UsersController do
 	
 	describe "DELETE 'destroy'" do
 		before(:each) do
-			@user = Factory(:user)
+			@user = FactoryGirl.create(:user)
 			@user.toggle!(:company_admin)
-			@other_user = Factory(:user, :company => @user.company)
+			@other_user = FactoryGirl.create(:user, :company => @user.company)
 			test_sign_in(@user)
 		end
 		

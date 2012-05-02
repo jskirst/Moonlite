@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "Achievement" do
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user)
+		@user = FactoryGirl.create(:user)
+		@path = FactoryGirl.create(:path, :user => @user)
 		@attr = { :name => "This is an achievement",
 			:description => "This is description of an achivement.",
 			:criteria => "all",

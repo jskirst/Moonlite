@@ -3,9 +3,9 @@ require 'spec_helper'
 
 describe UserAchievement do
 	before(:each) do
-		@user = Factory(:user)
-    @path = Factory(:path, :user => @user, :company => @user.company)
-    @achievement = Factory(:achievement, :path => @path)
+		@user = FactoryGirl.create(:user)
+    @path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+    @achievement = FactoryGirl.create(:achievement, :path => @path)
     @user.enroll!(@path)
 		
 		@attr = { :achievement_id => @achievement.id }

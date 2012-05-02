@@ -3,10 +3,10 @@ require 'spec_helper'
 
 describe CompletedTask do
   	before(:each) do
-		@user = Factory(:user)
-    @path = Factory(:path, :user => @user, :company => @user.company)
-		@section = Factory(:section, :path => @path)
-		@task = Factory(:task, :section => @section)
+		@user = FactoryGirl.create(:user)
+    @path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+		@section = FactoryGirl.create(:section, :path => @path)
+		@task = FactoryGirl.create(:task, :section => @section)
     @user.enroll!(@path)
 		@quiz_session = DateTime.now
 		@attr = { :task_id => @task.id, :status_id => 0, :quiz_session => @quiz_session }

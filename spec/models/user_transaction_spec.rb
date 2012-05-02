@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe UserTransaction do
 	before(:each) do
-		@company = Factory(:company)
-		@user_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @user_roll)
+		@company = FactoryGirl.create(:company)
+		@user_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @user_roll)
 		
-		@category = Factory(:category, :company => @company)
-		@path = Factory(:path, :user => @user, :category => @category, :company => @user.company)
-		@section = Factory(:section, :path => @path)
-		@task = Factory(:task, :section => @section)
+		@category = FactoryGirl.create(:category, :company => @company)
+		@path = FactoryGirl.create(:path, :user => @user, :category => @category, :company => @user.company)
+		@section = FactoryGirl.create(:section, :path => @path)
+		@task = FactoryGirl.create(:task, :section => @section)
 		
-		@reward = Factory(:reward, :company => @user.company)
+		@reward = FactoryGirl.create(:reward, :company => @user.company)
     @user.enroll!(@path)
 		@attr = { :user_id => @user.id, :amount => 15, :status => 1 }
 	end
@@ -71,7 +71,7 @@ describe UserTransaction do
       
       it "should reject a task that the user is not enrolled in" 
       # do
-				# @other_user = Factory(:user, :company => @user.company)
+				# @other_user = FactoryGirl.create(:user, :company => @user.company)
         # transaction = UserTransaction.create(@attr.merge(:user_id => @other_user.id))
         # transaction.should_not be_valid
 			# end

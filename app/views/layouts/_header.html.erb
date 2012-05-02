@@ -10,7 +10,7 @@
 					<li>
             <a href="<%= user_url(current_user) %>">
               <%= image_tag current_user.profile_pic, :size => "18x18", :style => "display:inline; float:left; margin-right: 5px;" %>
-              <%= current_user.name %>
+              <span id="user_name_in_header"><%= current_user.name %></span>
             </a>
           </li>
 					<% if @enable_company_store %><li><%= link_to "Rewards", rewards_path %></li><% end %>

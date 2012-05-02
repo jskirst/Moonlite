@@ -2,12 +2,12 @@ require 'spec_helper'
 
 describe "UserEvent" do
 	before(:each) do
-		@company = Factory(:company)
-		@default_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @default_roll)
+		@company = FactoryGirl.create(:company)
+		@default_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @default_roll)
 		
-		@category = Factory(:category, :company => @company)
-		@path = Factory(:path, :company => @company, :user => @user, :category => @category)
+		@category = FactoryGirl.create(:category, :company => @company)
+		@path = FactoryGirl.create(:path, :company => @company, :user => @user, :category => @category)
 		
 		@attr = { :content => "Content is wack", :path_id => @path.id }
 	end

@@ -4,15 +4,15 @@ describe UserRollsController do
 	render_views
 	
 	before(:each) do
-		@company = Factory(:company)
-		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f")
-		@admin_user_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@company = FactoryGirl.create(:company)
+		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => "f")
+		@admin_user_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
 		
-		@category = Factory(:category, :company => @company)
-		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
-		@section = Factory(:section, :path => @path)
-		@task1 = Factory(:task, :section => @section, :position => 1)
+		@category = FactoryGirl.create(:category, :company => @company)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company, :category => @categoy)
+		@section = FactoryGirl.create(:section, :path => @path)
+		@task1 = FactoryGirl.create(:task, :section => @section, :position => 1)
 		
 		@attr = {
 			:name => "New Role", 

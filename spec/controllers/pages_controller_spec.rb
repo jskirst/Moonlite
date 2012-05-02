@@ -23,7 +23,7 @@ describe PagesController do
 		
 		describe "when signed in" do
 			before(:each) do
-				@user = Factory(:user, :email => "test@user.com")
+				@user = FactoryGirl.create(:user, :email => "test@user.com")
 				@user.set_company_admin(true)
 				test_sign_in(@user)
 			end
@@ -31,13 +31,13 @@ describe PagesController do
 			describe "incomplete enrolled paths" do
 				describe "when they exist" do
 					before(:each) do
-						@path1 = Factory(:path, :name => "Path1", :user => @user, :company => @user.company)
-            section = Factory(:section, :path => @path1)
-            Factory(:task, :section => section)
-						@path2 = Factory(:path, :name => "Path2", :user => @user, :company => @user.company)
-            section = Factory(:section, :path => @path2)
-            Factory(:task, :section => section)
-						@path3 = Factory(:path, :name => "Path I'm not enrolled in", :user => @user, :company => @user.company)
+						@path1 = FactoryGirl.create(:path, :name => "Path1", :user => @user, :company => @user.company)
+            section = FactoryGirl.create(:section, :path => @path1)
+            FactoryGirl.create(:task, :section => section)
+						@path2 = FactoryGirl.create(:path, :name => "Path2", :user => @user, :company => @user.company)
+            section = FactoryGirl.create(:section, :path => @path2)
+            FactoryGirl.create(:task, :section => section)
+						@path3 = FactoryGirl.create(:path, :name => "Path I'm not enrolled in", :user => @user, :company => @user.company)
             @user.enroll!(@path1)
             @user.enroll!(@path2)
 					end

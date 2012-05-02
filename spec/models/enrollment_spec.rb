@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Enrollment do
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
+		@user = FactoryGirl.create(:user)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
 		@attr = { :path_id => @path.id }
 		@enrollment = @user.enrollments.build(@attr)
 	end
@@ -42,14 +42,14 @@ describe Enrollment do
 		end
     
     it "should reject a path not owned by the company" do
-      @other_user = Factory(:user)
-      @other_path = Factory(:path, :user => @other_user, :company => @other_user.company)
+      @other_user = FactoryGirl.create(:user)
+      @other_path = FactoryGirl.create(:path, :user => @other_user, :company => @other_user.company)
       @enrollment.path_id = @other_path.id
       @enrollment.should_not be_valid
     end
 		
 		it "should reject a duplicate enrollment" do
-			en1 = Factory(:enrollment, :user => @user, :path => @path)
+			en1 = FactoryGirl.create(:enrollment, :user => @user, :path => @path)
 			en2 = Enrollment.new
 			en2.path_id = @path.id
 			en2.user_id = @user.id

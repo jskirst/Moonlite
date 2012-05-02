@@ -9,13 +9,14 @@
   <p>Congratulations! You've completed all your enrolled challenges.</p>
 <% end %>
   <%= render "pages/user_progress", { :paths_list => @enrolled_paths } %>
-  
 	<% if @enable_recommendations %>
+		<hr/>
 		<%= render "pages/suggested_paths", {:paths_title => "Recommended for you", :paths_list => @suggested_paths} %>
 	<% end %>
 </section>
 
 
 <% if @enable_news %>
-  <%= render "pages/user_news", { :user_events => @user_events } %>
+  <hr/>
+	<%= render "pages/user_news", { :user_events => @user_events } %>
 <% end %>

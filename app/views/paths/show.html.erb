@@ -61,7 +61,7 @@
 			</ul>
 		</div>
 		<% @leaderboards.each do |l| %>
-			<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1]} %>
+			<%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1], :display => false, :disable_filler => false, :limit => 10 } %>
 		<% end %>
 		<% unless @leaderboards.empty? %>
 			<p>Last leaderboard update: <%= time_ago_in_words(@last_update) %> ago</p>

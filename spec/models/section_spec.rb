@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "Section" do
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
+		@user = FactoryGirl.create(:user)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
 		@attr = { :name => "In the beginning", :instructions => "DO THINGSSSS!!!!", :position => 0 }
 	end
 	
@@ -79,9 +79,9 @@ describe "Section" do
 	describe "task associations" do
 		before(:each) do
       @user.enroll!(@path)
-			@section = Factory(:section, :path => @path)
-			@task1 = Factory(:task, :section => @section, :position => 1)
-			@task2 = Factory(:task, :section => @section, :position => 2)
+			@section = FactoryGirl.create(:section, :path => @path)
+			@task1 = FactoryGirl.create(:task, :section => @section, :position => 1)
+			@task2 = FactoryGirl.create(:task, :section => @section, :position => 2)
       @section.reload
 		end
 		
@@ -102,7 +102,7 @@ describe "Section" do
 		
 		describe "next_task" do
 			before(:each) do
-				Factory(:completed_task, :user => @user, :task => @task1)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task1)
         @section.reload
 			end
 		
@@ -111,7 +111,7 @@ describe "Section" do
 			end
 			
 			it "should return nil if there are no more incomplete tasks" do
-				Factory(:completed_task, :user => @user, :task => @task2)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task2)
 				@section.next_task(@user).should == nil
 			end
 		end
@@ -125,7 +125,7 @@ describe "Section" do
 			end
 		
 			it "should randomize task order" do
-				@task3 = Factory(:task, :section => @section)
+				@task3 = FactoryGirl.create(:task, :section => @section)
 				@old_task_array = @section.tasks_to_array
 				@section.randomize_tasks
 				@section.tasks_to_array.should_not == @old_task_array
@@ -134,46 +134,46 @@ describe "Section" do
 		
 		describe "completed?" do
 			it "should return false if remaining tasks is not 0" do
-				Factory(:completed_task, :user => @user, :task => @task1)
-				Factory(:completed_task, :user => @user, :task => @task2, :status_id => 0)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task1)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task2, :status_id => 0)
 				@section.completed?(@user).should be_false
 			end			
 			
 			it "should return false if remaining tasks is not 0" do
-				Factory(:completed_task, :user => @user, :task => @task1)
-				Factory(:completed_task, :user => @user, :task => @task2)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task1)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task2)
 				@section.completed?(@user).should be_true
 			end
 			
 			it "should return appropriate number of remaining tasks" do
-				Factory(:completed_task, :user => @user, :task => @task1)
-				Factory(:completed_task, :user => @user, :task => @task2, :status_id => 0)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task1)
+				FactoryGirl.create(:completed_task, :user => @user, :task => @task2, :status_id => 0)
 				@section.remaining_tasks(@user).should == 1
 			end	
 		end
 		
 		describe "user_streak" do
 			before(:each) do
-				@task3 = Factory(:task, :section => @section)
+				@task3 = FactoryGirl.create(:task, :section => @section)
 			end
 		
 			describe "for positive streak" do
 				it "should return appropriate user streak" do
-					Factory(:completed_task, :user => @user, :task => @task1, :status_id => 0)
-					Factory(:completed_task, :user => @user, :task => @task1)
-					Factory(:completed_task, :user => @user, :task => @task2)
-					Factory(:completed_task, :user => @user, :task => @task3)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task1, :status_id => 0)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task1)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task2)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task3)
 					@section.user_streak(@user).should == 3
 				end
 			end
 			
 			describe "for negative streak" do
 				it "should return appropriate user streak" do
-					Factory(:completed_task, :user => @user, :task => @task1)
-					Factory(:completed_task, :user => @user, :task => @task2)
-					Factory(:completed_task, :user => @user, :task => @task3, :status_id => 0)
-					Factory(:completed_task, :user => @user, :task => @task3, :status_id => 0)
-					Factory(:completed_task, :user => @user, :task => @task3, :status_id => 0)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task1)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task2)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task3, :status_id => 0)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task3, :status_id => 0)
+					FactoryGirl.create(:completed_task, :user => @user, :task => @task3, :status_id => 0)
 					@section.user_streak(@user).should == -3
 				end
 			end

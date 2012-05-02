@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe Comment do
 	before(:each) do
-    @user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
-		@section = Factory(:section, :path => @path)
-		@task = Factory(:task, :section => @section)
+    @user = FactoryGirl.create(:user)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+		@section = FactoryGirl.create(:section, :path => @path)
+		@task = FactoryGirl.create(:task, :section => @section)
     @user.enroll!(@path)
     @attr = {:task_id => @task.id, :content => "Comment content"}
 	end
@@ -42,13 +42,13 @@ describe Comment do
       end
       
       it "should reject association to un-owned tasks" do
-        @other_task = Factory(:task)
+        @other_task = FactoryGirl.create(:task)
         @user.comments.new(@attr.merge(:task_id => @other_task.id)).should_not be_valid
       end
       
       it "should reject association to unenrolled tasks" do
-        other_path = Factory(:path, :user => @user, :company => @user.company)
-        other_task = Factory(:task, :path => other_path)
+        other_path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+        other_task = FactoryGirl.create(:task, :path => other_path)
         @user.comments.new(@attr.merge(:task_id => other_task.id)).should_not be_valid
       end
     end

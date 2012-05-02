@@ -5,7 +5,7 @@
 	
 	# before(:each) do
 		# @reward_points = 1000
-		# @user = Factory(:user, :earned_points => @reward_points + 10, :spent_points => 10)
+		# @user = FactoryGirl.create(:user, :earned_points => @reward_points + 10, :spent_points => 10)
 		# @company = @user.company
 		# @attr = { :company_id => @company.id,
 			# :name => "Fubar",
@@ -259,7 +259,7 @@
 		# before(:each) do
 			# @user.set_company_admin(true)
 			# @reward_points = 1000
-			# @reward = Factory(:reward, :company => @company, :points => @reward_points)
+			# @reward = FactoryGirl.create(:reward, :company => @company, :points => @reward_points)
 			# test_sign_in(@user)
 		# end
 	
@@ -274,8 +274,8 @@
 				
 				# describe "because reward does not belong to user's company" do
 					# it "should redirect to root path" do
-						# other_company = Factory(:company)
-						# other_reward = Factory(:reward, :company => other_company)
+						# other_company = FactoryGirl.create(:company)
+						# other_reward = FactoryGirl.create(:reward, :company => other_company)
 						# get :show, :id => other_reward.id
 						# response.should redirect_to @user
 					# end
@@ -330,7 +330,7 @@
 				
 				# describe "because reward does not belong to user's company" do
 					# it "should redirect to root path" do
-						# other_company = Factory(:company)
+						# other_company = FactoryGirl.create(:company)
 						# post :create, :reward => @attr.merge(:company_id => other_company.id)
 						# response.should redirect_to @user
 					# end

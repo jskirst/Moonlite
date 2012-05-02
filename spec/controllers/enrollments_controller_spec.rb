@@ -17,8 +17,8 @@ describe EnrollmentsController do
 	
 	describe "POST 'create'" do
 		before(:each) do
-			@user = Factory(:user)
-			@path = Factory(:path, :user => @user, :company => @user.company)
+			@user = FactoryGirl.create(:user)
+			@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
 			test_sign_in(@user)
 		end
 		
@@ -65,11 +65,11 @@ describe EnrollmentsController do
 	describe "DELETE 'destroy'" do
 		describe "as an unauthorized user" do
 			before(:each) do
-				@user = Factory(:user)
-				@path = Factory(:path, :user => @user, :company => @user.company)
-				@enrollment = Factory(:enrollment, :path => @path, :user => @user)
+				@user = FactoryGirl.create(:user)
+				@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+				@enrollment = FactoryGirl.create(:enrollment, :path => @path, :user => @user)
 				
-				@other_user = Factory(:user, :email => "o@o.com")
+				@other_user = FactoryGirl.create(:user, :email => "o@o.com")
 				test_sign_in(@other_user)
 			end
 			
@@ -81,9 +81,9 @@ describe EnrollmentsController do
 		
 		describe "as an authorized user" do
 			before(:each) do
-				@user = test_sign_in(Factory(:user))
-				@path = Factory(:path, :user => @user, :company => @user.company)
-				@enrollment = Factory(:enrollment, :path => @path, :user => @user)
+				@user = test_sign_in(FactoryGirl.create(:user))
+				@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+				@enrollment = FactoryGirl.create(:enrollment, :path => @path, :user => @user)
 				test_sign_in(@user)
 			end
 			

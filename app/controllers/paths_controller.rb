@@ -118,8 +118,29 @@ class PathsController < ApplicationController
       @section = @path.next_section(@section)
     end
     if @section.nil? || @section.is_published == false
+			@must_register = current_user.must_register?
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
-      @similar_paths = Path.similar_paths(@path)
+			
+			Leaderboard.reset_for_path(@path)
+			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, false).first
+			counter = 1
+			previous = nil
+      @leaderboards[1].each do |l|
+				if l.user_id == current_user.id
+					if counter == 1
+						@next_rank_points = 0
+					else
+						@next_rank_points = previous.score - l.score + 1
+					end
+					@user_rank = ActiveSupport::Inflector::ordinalize(counter)
+					break
+				else
+					previous = l
+					counter += 1
+				end
+			end
+			
+			@similar_paths = Path.similar_paths(@path)
       @suggested_paths = Path.suggested_paths(current_user, @path.id)
 			if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
 				event = "<%u%> completed the <%p%> challenge with a score of #{@total_points_earned.to_s}."
@@ -152,6 +173,7 @@ class PathsController < ApplicationController
     if !signed_in?
       @user = User.create_anonymous_user(@company, @user_roll)
       sign_in(@user)
+			current_user.enrollments.create(:path_id => @path.id)
     end
     redirect_to continue_path_path(@path)
   end

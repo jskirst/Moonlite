@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "User" do
 	before(:each) do
-		@company = Factory(:company)
-		@user_roll = Factory(:user_roll, :company => @company)
+		@company = FactoryGirl.create(:company)
+		@user_roll = FactoryGirl.create(:user_roll, :company => @company)
 		@attr = { 
 			:name => "Example User", 
 			:email => "user@example.com",
@@ -151,7 +151,7 @@ describe "User" do
 		end
 		
 		# it "should respond with true if user is company admin" do
-			# user = Factory(:user)
+			# user = FactoryGirl.create(:user)
 			# user.company_user.toggle!(:is_admin)
 			# user.company_admin?.should be_true
 		# end
@@ -170,8 +170,8 @@ describe "User" do
 	describe "paths" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path1 = Factory(:path, :user => @user, :company => @user.company, :created_at => 1.day.ago)
-			@path2 = Factory(:path, :user => @user, :company => @user.company, :created_at => 1.hour.ago)
+			@path1 = FactoryGirl.create(:path, :user => @user, :company => @user.company, :created_at => 1.day.ago)
+			@path2 = FactoryGirl.create(:path, :user => @user, :company => @user.company, :created_at => 1.hour.ago)
 		end
 		
 		it "should have a paths attribute" do
@@ -194,7 +194,7 @@ describe "User" do
 	describe "enrollments" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path = Factory(:path, :user => @user, :company => @user.company)
+			@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
 		end
 		
 		it "should have a paths attribute" do
@@ -229,7 +229,7 @@ describe "User" do
 		end
 		
 		it "should unenroll from a path" do
-			Factory(:enrollment, :path => @path, :user => @user)
+			FactoryGirl.create(:enrollment, :path => @path, :user => @user)
 			@user.unenroll!(@path)
 			Enrollment.find(:all, :conditions => ["path_id = ? and user_id = ?", @path.id, @user.id]).should be_empty
 		end
@@ -238,7 +238,7 @@ describe "User" do
 	describe "enrolled paths" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path = Factory(:path, :user => @user, :company => @user.company)
+			@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
 		end
 		
 		it "should have a paths attribute" do
@@ -249,12 +249,12 @@ describe "User" do
 	describe "completed tasks" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-      @path = Factory(:path, :user => @user, :company => @user.company)
+      @path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
       @user.enroll!(@path)
-      @section = Factory(:section, :path => @path)
-			@task1 = Factory(:task, :section => @section)
-			@task2 = Factory(:task, :section => @section)
-			@completed_task = Factory(:completed_task, :task => @task1, :user => @user)
+      @section = FactoryGirl.create(:section, :path => @path)
+			@task1 = FactoryGirl.create(:task, :section => @section)
+			@task2 = FactoryGirl.create(:task, :section => @section)
+			@completed_task = FactoryGirl.create(:completed_task, :task => @task1, :user => @user)
 		end
 		
 		it "should have a completed tasks attribute" do
@@ -279,10 +279,10 @@ describe "User" do
 	describe "points" do
 		before(:each) do
 			@user = @company.users.create!(@attr)
-			@path = Factory(:path, :company => @company, :user => @user)
-			@section = Factory(:section, :path => @path)
-			@task = Factory(:task, :section => @section)
-			@reward = Factory(:reward, :company => @user.company)
+			@path = FactoryGirl.create(:path, :company => @company, :user => @user)
+			@section = FactoryGirl.create(:section, :path => @path)
+			@task = FactoryGirl.create(:task, :section => @section)
+			@reward = FactoryGirl.create(:reward, :company => @user.company)
 			@user.enroll!(@path)
 		end
 		

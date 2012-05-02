@@ -4,14 +4,14 @@ describe ReportsController do
 	render_views
 	
 	before(:each) do
-		@company = Factory(:company)
-		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f")
-		@admin_user_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@company = FactoryGirl.create(:company)
+		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => "f")
+		@admin_user_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
 		
-		@category = Factory(:category, :company => @company)
-		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
-		@section = Factory(:section, :path => @path)
+		@category = FactoryGirl.create(:category, :company => @company)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company, :category => @categoy)
+		@section = FactoryGirl.create(:section, :path => @path)
 	end
 	
 	describe "access controller" do
@@ -113,20 +113,20 @@ describe ReportsController do
 				describe "correctly and incorrectly answered question table" do
 					before(:each) do
 						@user.enroll!(@path)
-						@task1 = Factory(:task, :section => @section)
-						@task2 = Factory(:task, :section => @section)
-						@task3 = Factory(:task, :section => @section)
+						@task1 = FactoryGirl.create(:task, :section => @section)
+						@task2 = FactoryGirl.create(:task, :section => @section)
+						@task3 = FactoryGirl.create(:task, :section => @section)
 						
 						3.times do |n|
-							Factory(:completed_task, :task => @task1, :user => @user, :status_id => 0)
+							FactoryGirl.create(:completed_task, :task => @task1, :user => @user, :status_id => 0)
 						end
 						
 						2.times do |n|
-							Factory(:completed_task, :task => @task2, :user => @user, :status_id => 0)
+							FactoryGirl.create(:completed_task, :task => @task2, :user => @user, :status_id => 0)
 						end
 						
 						1.times do |n|
-							Factory(:completed_task, :task => @task3, :user => @user, :status_id => 0)
+							FactoryGirl.create(:completed_task, :task => @task3, :user => @user, :status_id => 0)
 						end
 					end
 					

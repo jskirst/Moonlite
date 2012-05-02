@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe :Category do
 	before(:each) do
-		@company = Factory(:company)
+		@company = FactoryGirl.create(:company)
 		@attr = { :name => "Test name" }
 	end
 	
@@ -42,8 +42,8 @@ describe :Category do
 	describe "paths associations" do
 		before(:each) do
 			@category = @company.categories.create!(@attr)
-			@path1 = Factory(:path, :category => @category)
-			@path2 = Factory(:path, :category => @category)
+			@path1 = FactoryGirl.create(:path, :category => @category)
+			@path2 = FactoryGirl.create(:path, :category => @category)
       @category.reload
 		end
 		

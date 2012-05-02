@@ -4,10 +4,10 @@ describe CompaniesController do
 	render_views
 	
 	before(:each) do
-		@company = Factory(:company)
-		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f")
-		@admin_user_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@company = FactoryGirl.create(:company)
+		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => "f")
+		@admin_user_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
 	end
 	
 	describe "access controller" do
@@ -75,9 +75,9 @@ describe CompaniesController do
 		
 		describe "when signed in as company admin of another company" do
 			before(:each) do
-				@other_company = Factory(:company)
-				@other_admin_user_roll = Factory(:user_roll, :company => @other_company)
-				@other_user = Factory(:user, :company => @other_company, :user_roll => @other_admin_user_roll)
+				@other_company = FactoryGirl.create(:company)
+				@other_admin_user_roll = FactoryGirl.create(:user_roll, :company => @other_company)
+				@other_user = FactoryGirl.create(:user, :company => @other_company, :user_roll => @other_admin_user_roll)
 				test_sign_in(@other_user)
 			end
 			
@@ -212,9 +212,9 @@ describe CompaniesController do
 			describe "associated users" do
 				describe "when they exist" do
 					before(:each) do
-						@other_user1 = Factory(:user, :company => @company)
-						@other_user2 = Factory(:user, :company => @company)
-						@other_user3 = Factory(:user, :company => @company)
+						@other_user1 = FactoryGirl.create(:user, :company => @company)
+						@other_user2 = FactoryGirl.create(:user, :company => @company)
+						@other_user3 = FactoryGirl.create(:user, :company => @company)
 						@users = [@other_user1, @other_user2, @other_user3]
 					end
 					
@@ -263,13 +263,13 @@ describe CompaniesController do
 		
 		describe "GET 'index'" do
 			before(:each) do
-				company1 = Factory(:company, :name => "Company1")
-				company2 = Factory(:company, :name => "Company2")
-				company3 = Factory(:company, :name => "Company3")
+				company1 = FactoryGirl.create(:company, :name => "Company1")
+				company2 = FactoryGirl.create(:company, :name => "Company2")
+				company3 = FactoryGirl.create(:company, :name => "Company3")
 				@companies = [company1, company2, company3]
 				
 				30.times do
-					@companies << Factory(:company, :name => Factory.next(:name))
+					@companies << FactoryGirl.create(:company, :name => FactoryGirl.generate(:name))
 				end
 			end
 			

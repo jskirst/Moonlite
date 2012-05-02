@@ -41,15 +41,15 @@ Spork.prefork do
 		
 		def standard_setup(params)
 			unless params[:build_user] == false
-				@company = Factory(:company)
+				@company = FactoryGirl.create(:company)
 				
 				if params[:user_type] == "admin" || params[:user_type] == "company_admin"
-					@admin_user_roll = Factory(:user_roll, :company => @company)
+					@admin_user_roll = FactoryGirl.create(:user_roll, :company => @company)
 				else
-					@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => false)
+					@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => false)
 				end
 				
-				@user = Factory(:user, :company => @company, :user_roll => @user_roll)
+				@user = FactoryGirl.create(:user, :company => @company, :user_roll => @user_roll)
 				
 				if params[:user_type] == "admin"
 					@user.toggle!(:admin)
@@ -57,12 +57,12 @@ Spork.prefork do
 			end
 			
 			unless params[:build_path] == false
-				@category = Factory(:category, :company => @user.company)
-				@path = Factory(:path, :user => @user, :company => @user.company, :category => @category)
+				@category = FactoryGirl.create(:category, :company => @user.company)
+				@path = FactoryGirl.create(:path, :user => @user, :company => @user.company, :category => @category)
 			end
 			
 			unless params[:build_section] == false
-				@section = Factory(:section, :path => @path)
+				@section = FactoryGirl.create(:section, :path => @path)
 			end
 		end
     

@@ -274,6 +274,11 @@ class SectionsController < ApplicationController
       @final_section = true if @path.next_section(@section).nil?
       render "results"
     else
+			if current_user.still_anonymous?
+				@jumpstart = true
+				@leaderboards = Leaderboard.get_leaderboards_for_path(@path).first[1].first(3)
+			end
+			
 			@question_type = @task.question_type
 		
       if params[:p]

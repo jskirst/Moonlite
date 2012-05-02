@@ -1,0 +1,49 @@
+<style>
+	#puzzle tr { margin:0px; border:0px;}
+	#puzzle td { padding: 5px 0 0 0;min-width: 5px; margin:0px; border:0px;background-color:white;}
+	#puzzle { background-image:url(/images/back1.jpg); }
+</style>
+<script>
+$(function(){
+	make_puzzle(.6);
+	$("#small").click(function(){
+		make_puzzle(.7);
+	});	
+	$("#medium").click(function(){
+		make_puzzle(.4);
+	});	
+	$("#large").click(function(){
+		make_puzzle(-.1);
+	});	
+	$("#almost").click(function(){
+		make_puzzle(-.7);
+	});	
+	$("#complete").click(function(){
+		make_puzzle(-.95);
+	});
+});
+
+function make_puzzle(progress){
+	$("#puzzle_container").html("");
+	$("#puzzle_container").html("<table id='puzzle' style='border:0px;'></table>");
+
+	var $puzzle = $("#puzzle");
+	
+	for(i=0;i<100;i++){
+		$puzzle.append("<tr id='tr_"+i+"'></tr>");
+		var $tr = $("#tr_"+i);
+		for(j=0;j<100;j++){
+			var opacity = ((.01 * i)+progress) + (.01 * j)
+			$tr.append("<td style='opacity:"+opacity+"'></td>")
+		}
+	}
+}
+</script>
+<div id="puzzle_container"></div>
+<div class="actions" style="margin:auto">
+	<a href="#" id="small" class="btn secondary">Small</a>
+	<a href="#" id="medium" class="btn secondary">medium</a>
+	<a href="#" id="large" class="btn secondary">large</a>
+	<a href="#" id="almost" class="btn secondary">Almost complete</a>
+	<a href="#" id="complete" class="btn secondary">complete</a>
+</div>

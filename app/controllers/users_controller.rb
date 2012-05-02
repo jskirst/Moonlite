@@ -136,13 +136,33 @@ class UsersController < ApplicationController
 		@user.password = params[:user][:password] if params[:user][:password] 
 		@user.password_confirmation = params[:user][:password_confirmation] if params[:user][:password_confirmation]
 		if @user.save
-			flash[:success] = "Profile successfully updated."
-			@user.reload
-			sign_in(@user)
-			redirect_to @user
+			respond_to do |format|
+				format.html do
+					if request.xhr?
+						render :json => {:status => "success"}
+					elsif params[:user][:path_id]
+						flash[:success] = "Profile successfully updated."
+						@user.reload
+						sign_in(@user)
+						redirect_to continue_path_path(current_user.company.paths.find(params[:user][:path_id]))
+					else
+						flash[:success] = "Profile successfully updated."
+						@user.reload
+						sign_in(@user)
+						redirect_to @user
+					end
+				end
+      end
 		else
-			@title = "Settings"
-			render 'edit'
+			respond_to do |format|
+				format.html do
+					if request.xhr?
+						render :json => @user.errors
+					else
+						render 'edit'
+					end
+				end
+			end
 		end
 	end
 	

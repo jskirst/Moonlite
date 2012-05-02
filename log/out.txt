@@ -1,16 +1,3 @@
-....F.....
 
-Failures:
-
-  1) InfoResourcesController access controller when signed-in as path creator should allow access to :destroy
-     Failure/Error: response.should redirect_to edit_section_path(@section, :m => "tasks")
-       Expected response to be a redirect to <http://test.host/sections/1/edit?m=tasks> but was a redirect to <http://test.host/sections/2/edit?m=tasks>
-     # ./spec/controllers/info_resources_controller_spec.rb:69:in `block (4 levels) in <top (required)>'
-
-Finished in 39.16 seconds
-10 examples, 1 failure
-
-Failed examples:
-
-rspec ./spec/controllers/info_resources_controller_spec.rb:66 # InfoResourcesController access controller when signed-in as path creator should allow access to :destroy
-Coverage report generated for RSpec to C:/Users/EV4/Dropbox/rails/moonlite/coverage. 962 / 2317 LOC (41.52%) covered.
+Quitting...
+Terminate batch job (Y/N)? 

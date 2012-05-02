@@ -4,7 +4,7 @@ describe ToursController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
+		@user = FactoryGirl.create(:user)
 	end
 	
 	describe "access controller" do

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Leaderboard do
   before(:each) do
-		@user = Factory(:user)
+		@user = FactoryGirl.create(:user)
     @attr = {:user_id => @user.id, :completed_tasks => 0, :points => 0}
 	end
 	

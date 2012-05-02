@@ -4,17 +4,17 @@ describe SectionsController do
 	render_views
 	
 	before(:each) do
-		@company = Factory(:company)
-		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
-		@admin_user_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@company = FactoryGirl.create(:company)
+		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
+		@admin_user_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
 		
-		@category = Factory(:category, :company => @company)
-		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
-		@section = Factory(:section, :path => @path)
-		@task1 = Factory(:task, :section => @section, :position => 1)
-    @task2 = Factory(:task, :section => @section, :position => 2)
-    @task3 = Factory(:task, :section => @section, :position => 3)
+		@category = FactoryGirl.create(:category, :company => @company)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company, :category => @categoy)
+		@section = FactoryGirl.create(:section, :path => @path)
+		@task1 = FactoryGirl.create(:task, :section => @section, :position => 1)
+    @task2 = FactoryGirl.create(:task, :section => @section, :position => 2)
+    @task3 = FactoryGirl.create(:task, :section => @section, :position => 3)
 		@user.enroll!(@path)
 		
 		@attr = {
@@ -236,7 +236,7 @@ describe SectionsController do
 				end
 				
 				it "should not allow section to be published without 1 task" do
-					new_section = Factory(:section, :path => @path)
+					new_section = FactoryGirl.create(:section, :path => @path)
 					put :update, :id => new_section, :section => {:name => "Good name", :instructions => "Good instructions", :is_published => 1}
 					response.should be_succes
 				end
@@ -264,7 +264,7 @@ describe SectionsController do
 		
 		describe "GET :import_content" do
 			before(:each) do
-				@info_resource = Factory(:info_resource, :section_id => @section.id)
+				@info_resource = FactoryGirl.create(:info_resource, :section_id => @section.id)
 			end
 			
 			it "should respond successfully" do
@@ -333,22 +333,22 @@ describe SectionsController do
 			end
 			
 			it "should display the next lowest positioned task that is not yet completed (2/3)" do
-				Factory(:completed_task, :task => @task1, :user => @user)
+				FactoryGirl.create(:completed_task, :task => @task1, :user => @user)
 				get :continue, :id => @section
 				response.should have_selector("p", :content => @task2.question)
 			end
 			
 			it "should display the next lowest positioned task that is not yet completed (3/3)" do
-				Factory(:completed_task, :task => @task1, :user => @user)
-				Factory(:completed_task, :task => @task2, :user => @user)
+				FactoryGirl.create(:completed_task, :task => @task1, :user => @user)
+				FactoryGirl.create(:completed_task, :task => @task2, :user => @user)
 				get :continue, :id => @section
 				response.should have_selector("p", :content => @task3.question)
 			end
 			
 			it "should render results when the max questions are reached." do
-				Factory(:completed_task, :task => @task1, :user => @user)
-				Factory(:completed_task, :task => @task2, :user => @user)
-				Factory(:completed_task, :task => @task3, :user => @user)
+				FactoryGirl.create(:completed_task, :task => @task1, :user => @user)
+				FactoryGirl.create(:completed_task, :task => @task2, :user => @user)
+				FactoryGirl.create(:completed_task, :task => @task3, :user => @user)
 				get :continue, :id => @section
 				response.should render_template("results")
 			end
@@ -359,20 +359,20 @@ describe SectionsController do
 				end
 			
 				it "should be 3/6 when all answers are incorrect and then answered correctly" do
-					@completed_task1 = Factory(:completed_task, :task => @task1, :user => @user, :quiz_session => @quiz_session, :status_id => 0)
-					@completed_task2 = Factory(:completed_task, :task => @task2, :user => @user, :quiz_session => @quiz_session, :status_id => 0)
-					@completed_task3 = Factory(:completed_task, :task => @task3, :user => @user, :quiz_session => @quiz_session, :status_id => 0)
-          @completed_task1 = Factory(:completed_task, :task => @task1, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
-					@completed_task2 = Factory(:completed_task, :task => @task2, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
-					@completed_task3 = Factory(:completed_task, :task => @task3, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
+					@completed_task1 = FactoryGirl.create(:completed_task, :task => @task1, :user => @user, :quiz_session => @quiz_session, :status_id => 0)
+					@completed_task2 = FactoryGirl.create(:completed_task, :task => @task2, :user => @user, :quiz_session => @quiz_session, :status_id => 0)
+					@completed_task3 = FactoryGirl.create(:completed_task, :task => @task3, :user => @user, :quiz_session => @quiz_session, :status_id => 0)
+          @completed_task1 = FactoryGirl.create(:completed_task, :task => @task1, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
+					@completed_task2 = FactoryGirl.create(:completed_task, :task => @task2, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
+					@completed_task3 = FactoryGirl.create(:completed_task, :task => @task3, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
 					get :continue, :id => @section
 					response.should have_selector("h4", :content => "3/6")
 				end
 				
 				it "should be 3/3 when all answers are correct" do
-					@completed_task1 = Factory(:completed_task, :task => @task1, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
-					@completed_task2 = Factory(:completed_task, :task => @task2, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
-					@completed_task2 = Factory(:completed_task, :task => @task3, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
+					@completed_task1 = FactoryGirl.create(:completed_task, :task => @task1, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
+					@completed_task2 = FactoryGirl.create(:completed_task, :task => @task2, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
+					@completed_task2 = FactoryGirl.create(:completed_task, :task => @task3, :user => @user, :quiz_session => @quiz_session, :status_id => 1)
 					get :continue, :id => @section
 					response.should have_selector("h4", :content => "3/3")
 				end

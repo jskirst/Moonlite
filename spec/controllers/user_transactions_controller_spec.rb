@@ -4,13 +4,13 @@ describe UserTransactionsController do
 	render_views
 	
 	before(:each) do
-		@user = Factory(:user)
-    @path = Factory(:path, :user => @user, :company => @user.company)
-    @section = Factory(:section, :path => @path)
-    @task = Factory(:task, :section => @section)
-		@other_user = Factory(:user, :company => @user.company)
+		@user = FactoryGirl.create(:user)
+    @path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+    @section = FactoryGirl.create(:section, :path => @path)
+    @task = FactoryGirl.create(:task, :section => @section)
+		@other_user = FactoryGirl.create(:user, :company => @user.company)
     @other_user.enroll!(@path)
-		@user_transaction = Factory(:user_transaction, :task => @task, :user => @other_user)
+		@user_transaction = FactoryGirl.create(:user_transaction, :task => @task, :user => @other_user)
 	end
 	
 	describe "access controller" do
@@ -128,13 +128,13 @@ describe UserTransactionsController do
 	
 		describe "GET 'index'" do
 			before(:each) do
-				pt1 = Factory(:user_transaction, :user => @other_user)
-				pt2 = Factory(:user_transaction, :user => @other_user)
-				pt3 = Factory(:user_transaction, :user => @other_user)
+				pt1 = FactoryGirl.create(:user_transaction, :user => @other_user)
+				pt2 = FactoryGirl.create(:user_transaction, :user => @other_user)
+				pt3 = FactoryGirl.create(:user_transaction, :user => @other_user)
 				@user_transactions = [pt1, pt2, pt3]
 				
 				30.times do
-					@user_transactions << Factory(:user_transaction, :user => @other_user)
+					@user_transactions << FactoryGirl.create(:user_transaction, :user => @other_user)
 				end
 			end
 			

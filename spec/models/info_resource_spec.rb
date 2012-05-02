@@ -2,9 +2,9 @@ require 'spec_helper'
 
 describe "Info Resources" do
 	before(:each) do
-		@user = Factory(:user)
-		@path = Factory(:path, :user => @user, :company => @user.company)
-    @section = Factory(:section, :path => @path)
+		@user = FactoryGirl.create(:user)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+    @section = FactoryGirl.create(:section, :path => @path)
 		@attr = { :section_id => @section.id, :info_type => "text", :description => "resource description", :link => "http://www.wikipedia.com" }
 	end
 	

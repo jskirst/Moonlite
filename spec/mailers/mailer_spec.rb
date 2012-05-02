@@ -3,7 +3,7 @@ require "spec_helper"
 describe Mailer do
 	describe 'welcome' do
 		before(:each) do
-			@user = Factory(:user)
+			@user = FactoryGirl.create(:user)
 			@mail = Mailer.welcome({:email => @user.email, :signup_token => @user.signup_token})
 		end
 

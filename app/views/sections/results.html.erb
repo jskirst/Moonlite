@@ -38,7 +38,7 @@
 </section>
 <div class="actions">
   <% if @final_section %>
-  <%= link_to "Finish", continue_path_path(@path), :class => "btn primary" %>
+  <%= link_to "View Score", continue_path_path(@path), :class => "btn primary" %>
   <% else %>
   <%= link_to "Next Section", continue_path_path(@path), :class => "btn primary" %>
   <%= link_to "Continue Later", root_path, :class => "btn secondary" %>

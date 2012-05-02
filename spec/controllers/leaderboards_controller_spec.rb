@@ -4,11 +4,11 @@ describe LeaderboardsController do
   render_views
   
   before(:each) do
-    @company = Factory(:company)
-		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => false)
-		@user1 = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
-		@user2 = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
-		@user3 = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+    @company = FactoryGirl.create(:company)
+		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => false)
+		@user1 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
+		@user2 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
+		@user3 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
     @users = [@user1, @user2, @user3]
     
 		@password = "alltheaboveplease"
@@ -66,24 +66,24 @@ describe LeaderboardsController do
       @user1.toggle!(:admin)
       test_sign_in(@user1)
       
-			@category = Factory(:category, :company => @company)
-      @path = Factory(:path, :company => @company, :user => @user1, :category => @category)
-      @section = Factory(:section, :path => @path)
-      @task1 = Factory(:task, :section => @section)
-      @task2 = Factory(:task, :section => @section)
-      @task3 = Factory(:task, :section => @section)
+			@category = FactoryGirl.create(:category, :company => @company)
+      @path = FactoryGirl.create(:path, :company => @company, :user => @user1, :category => @category)
+      @section = FactoryGirl.create(:section, :path => @path)
+      @task1 = FactoryGirl.create(:task, :section => @section)
+      @task2 = FactoryGirl.create(:task, :section => @section)
+      @task3 = FactoryGirl.create(:task, :section => @section)
       
       @user1.enroll!(@path)
-      Factory(:completed_task, :task => @task1, :user => @user1, :points_awarded => 10)
-      Factory(:completed_task, :task => @task2, :user => @user1, :points_awarded => 11)
-      Factory(:completed_task, :task => @task3, :user => @user1, :points_awarded => 12)
+      FactoryGirl.create(:completed_task, :task => @task1, :user => @user1, :points_awarded => 10)
+      FactoryGirl.create(:completed_task, :task => @task2, :user => @user1, :points_awarded => 11)
+      FactoryGirl.create(:completed_task, :task => @task3, :user => @user1, :points_awarded => 12)
       @user1.award_points(@task1, 10)
       @user1.award_points(@task2, 11)
       @user1.award_points(@task3, 12)
       
       @user2.enroll!(@path)
-      Factory(:completed_task, :task => @task1, :user => @user2, :points_awarded => 10)
-      Factory(:completed_task, :task => @task2, :user => @user2, :points_awarded => 11)
+      FactoryGirl.create(:completed_task, :task => @task1, :user => @user2, :points_awarded => 10)
+      FactoryGirl.create(:completed_task, :task => @task2, :user => @user2, :points_awarded => 11)
       @user2.award_points(@task1, 10)
       @user2.award_points(@task2, 11)
     end

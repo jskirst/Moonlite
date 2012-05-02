@@ -1,4 +1,4 @@
-<table class="learderboard" style="display: none;" id="leaderboard_<%= leaderboard_id.to_s %>">
+<table class="learderboard" <% unless display %>style="display: none;"<% end %> id="leaderboard_<%= leaderboard_id.to_s %>">
   <tr>
     <th>Rank</th>
     <th>User</th>
@@ -7,6 +7,7 @@
   </tr>
 <% counter = 1 %>
 <% leaderboard_entries.each do |entry| %>
+	<% if (counter > limit) then break end %>
   <tr>
     <td><%= counter.to_s %></td>
     <td class="user-name"><%= link_to entry.user.name, entry.user %></td>
@@ -15,15 +16,17 @@
   </tr>
   <% counter += 1 %>
 <% end %>
-<% unless counter >= 10 %>
-	<% (counter..10).each do |i| %>
-	<tr>
-    <td><%= counter.to_s %></td>
-    <td class="user-name">AAA</td>
-    <td class="user-completed-tasks">0</td>
-    <td class="user-score">0</td>
-  </tr>
-	<% counter += 1 %>
+<% unless disable_filler %>
+	<% unless counter >= 10 %>
+		<% (counter..10).each do |i| %>
+		<tr>
+			<td><%= counter.to_s %></td>
+			<td class="user-name">AAA</td>
+			<td class="user-completed-tasks">0</td>
+			<td class="user-score">0</td>
+		</tr>
+		<% counter += 1 %>
+		<% end %>
 	<% end %>
 <% end %>
 </table>

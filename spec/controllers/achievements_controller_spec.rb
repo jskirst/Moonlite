@@ -4,12 +4,12 @@
 	# render_views
 	
 	# before(:each) do
-		# @user = Factory(:user)
-		# @path = Factory(:path, :company => @user.company, :user => @user)
-    # @section = Factory(:section, :path => @path)
-    # @task1 = Factory(:task, :section => @section)
-    # @task2 = Factory(:task, :section => @section)
-		# @achievement = Factory(:achievement, :path => @path)
+		# @user = FactoryGirl.create(:user)
+		# @path = FactoryGirl.create(:path, :company => @user.company, :user => @user)
+    # @section = FactoryGirl.create(:section, :path => @path)
+    # @task1 = FactoryGirl.create(:task, :section => @section)
+    # @task2 = FactoryGirl.create(:task, :section => @section)
+		# @achievement = FactoryGirl.create(:achievement, :path => @path)
 		
 		# @attr = {
 			# :name => "Replacement question", 
@@ -69,7 +69,7 @@
 		
 		# describe "when signed in as other company admin" do
 			# before(:each) do
-				# @other_user = Factory(:user)
+				# @other_user = FactoryGirl.create(:user)
 				# @other_user.toggle!(:admin)
 				# test_sign_in(@other_user)
 			# end

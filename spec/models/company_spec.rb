@@ -33,9 +33,9 @@ describe "Company" do
 	
 	describe "paths" do
 		before(:each) do
-			@user = Factory(:user)
-			@path1 = Factory(:path, :user => @user, :company => @user.company)
-			@path2 = Factory(:path, :user => @user, :company => @user.company)
+			@user = FactoryGirl.create(:user)
+			@path1 = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+			@path2 = FactoryGirl.create(:path, :user => @user, :company => @user.company)
 		end
 		
 		it "should have a paths attribute" do

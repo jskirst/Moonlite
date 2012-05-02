@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe "Tasks" do
 	before(:each) do
-		@user = Factory(:user)
-		@section = Factory(:section)
+		@user = FactoryGirl.create(:user)
+		@section = FactoryGirl.create(:section)
 		@attr = { :question => "This is a question",
 			:answer1 => "This is an answer.",
 			:answer2 => "This is an answer2.",

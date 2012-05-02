@@ -1,0 +1,69 @@
+<script>
+  $(function(){
+    $('#username_modal').modal({
+         keyboard: true,
+         backdrop: 'static',
+         show: true
+     });
+		
+		$('#change_name_form').submit(function(){
+			if ($("#user_name").val() == ""){
+				$(".form_errors").text("Username must be at least 3 letters.");
+				return false;
+			} else {
+				$("#user_name_in_header").text($("#user_name").val());
+				$('#username_modal').modal('hide');
+				$('#start_modal').modal({
+					keyboard: true,
+					backdrop: 'static',
+					show: true
+				});
+				var count = 5;
+				countdown = setInterval(function(){
+					$("#starting_timer").html("<strong>00:0"+count+"</strong>");
+					
+					if(count==0){
+						$('#start_modal').modal('hide');
+						start_question_timer();
+						return;
+					}count --;
+				}, 1000);
+			}
+		});
+  });
+</script>
+<div id="username_modal" class="modal hide fade">
+  <%= form_for(current_user, :remote => true, :html => {:id => "change_name_form"}) do |f| %>
+	<%= f.hidden_field :path_id, :value => path.id %>
+	<div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>Welcome to <span style="color:green"><%= company_logo %>!</span></h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size: 16px; padding:0 7px 5px 10px;"><strong style="color:green"><%= company_logo %></strong> lets you prove your knowledge for the stuff you like. Show off your smarts and connect with other fans.</p>
+		<div style="margin-top:20px; margin-bottom:20px;">
+			<p style="font-size: 16px; padding:0 7px 5px 10px;">Top 3 high scores for <strong><%= path.name %></strong>:</p>
+			<%= render "leaderboards/leaderboard", { :leaderboard_entries => leaderboards, :leaderboard_id => "Overall", :display => true, :disable_filler => true, :limit => 3 } %>
+		</div>
+		<p style="font-size: 16px; padding:0 7px 5px 10px;">Are you up to the Challenge? Make a name for yourself and see where you rank.</p>
+		<p class="form_errors" style="color:red; margin-bottom: 15px;"></p>
+		<div class="clearfix">
+			<label style="font-size: 16px;">Enter username:</label>
+			<div class="input">
+				<%= f.text_field :name, :value => "", :style => "width:175px; margin-right: 15px;" %>
+				<%= f.submit "Start Challenge!", :class => "btn primary" %>
+			</div>
+		</div>
+  </div>
+	<% end %>
+</div>
+<div id="start_modal" class="modal hide fade">
+	<div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>Good Luck!</h3>
+  </div>
+	<div class="modal-body">
+    <p style="font-size: 16px; padding:0 7px 5px 10px;">Challenge starts in...</p>
+		<p style="font-size: 22px; padding:0 7px 5px 30px;" id="starting_timer"></p>
+	</div>
+</div>

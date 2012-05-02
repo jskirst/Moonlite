@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Rewards" do
 	before(:each) do
-		@company = Factory(:company)
+		@company = FactoryGirl.create(:company)
 		@attr = { :name => "Think Geek Rhyme Vigilante",
 			:description => "Its a wonderful nigh, you gotta take it from me.",
 			:image_url => "http://www.google.com/fuckyou",

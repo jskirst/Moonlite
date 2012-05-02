@@ -1,9 +1,13 @@
+<% if @jumpstart %>
+	<%= render "jumpstart", { :path => @path, :leaderboards => @leaderboards } %>
+<% end %>
+
 <script src="/javascripts/challenge.js"></script>
 <script>
 $(function(){
 	<% unless @correct.nil? %> set_answer_status(<%= @correct %>); <% end %>
+	<% unless @jumpstart %> start_question_timer(); <% end %>
 	$("#progressbar").progressbar({ value: <%= @progress %> });
-	start_question_timer();
 });
 </script>
 <%= render "progress_box", { :earned_points => @earned_points, :possible_points => @possible_points, :streak_points => @streak_points } %>

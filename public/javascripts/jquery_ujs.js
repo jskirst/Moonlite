@@ -364,5 +364,5 @@
   $(rails.formSubmitSelector).live('ajax:complete.rails', function(event) {
     if (this == event.target) rails.enableFormElements($(this));
   });
-
+	console.log("IN JQUERYUJS");
 })( jQuery );

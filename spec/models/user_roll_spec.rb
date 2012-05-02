@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "UserRoll" do
 	before(:each) do
-		@company = Factory(:company)
+		@company = FactoryGirl.create(:company)
 		@attr = { :name => "Think Geek Rhyme Vigilante" }
 	end
 	
@@ -38,8 +38,8 @@ describe "UserRoll" do
 	describe "users association" do
 		before(:each) do
 			@user_roll = @company.user_rolls.create(@attr)
-			@user = Factory(:user, :company => @company, :user_roll => @user_roll)
-			@user2 = Factory(:user, :company => @company, :user_roll => @user_roll)
+			@user = FactoryGirl.create(:user, :company => @company, :user_roll => @user_roll)
+			@user2 = FactoryGirl.create(:user, :company => @company, :user_roll => @user_roll)
 		end
 		
 		it "should have a company attribute" do

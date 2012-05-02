@@ -4,17 +4,17 @@ describe PathsController do
 	render_views
 	
 	before(:each) do
-		@company = Factory(:company)
-		@regular_user_roll = Factory(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
-		@admin_user_roll = Factory(:user_roll, :company => @company)
-		@user = Factory(:user, :company => @company, :user_roll => @regular_user_roll)
+		@company = FactoryGirl.create(:company)
+		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => "f", :enable_user_creation => "f", :enable_collaboration => "f")
+		@admin_user_roll = FactoryGirl.create(:user_roll, :company => @company)
+		@user = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
 		
-		@category = Factory(:category, :company => @company)
-		@path = Factory(:path, :user => @user, :company => @user.company, :category => @categoy)
-		@section = Factory(:section, :path => @path)
-		@task = Factory(:task, :section => @section)
+		@category = FactoryGirl.create(:category, :company => @company)
+		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company, :category => @categoy)
+		@section = FactoryGirl.create(:section, :path => @path)
+		@task = FactoryGirl.create(:task, :section => @section)
 		
-		@other_user = Factory(:user)
+		@other_user = FactoryGirl.create(:user)
 		
 		@attr = {
 			:name => "Path name", 
@@ -218,7 +218,7 @@ describe PathsController do
 		describe "GET 'show'" do
       it "should not show any unpublished paths" do
 				@user.set_company_admin(false)
-				unpublished_path = Factory(:path, :company => @user.company, :user => @user, :is_published => false)
+				unpublished_path = FactoryGirl.create(:path, :company => @user.company, :user => @user, :is_published => false)
 				get :show, :id => unpublished_path
 				response.should redirect_to root_path
 			end
@@ -246,7 +246,7 @@ describe PathsController do
 			it "should show all the published sections" do
 				@sections = []
 				3.times do 
-					@sections << Factory(:section, :path => @path, :is_published => true)
+					@sections << FactoryGirl.create(:section, :path => @path, :is_published => true)
 				end
 				get :show, :id => @path
 				@sections.each do |s| 

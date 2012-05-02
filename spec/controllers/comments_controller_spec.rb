@@ -4,13 +4,13 @@
   # render_views
   
   # before(:each) do
-    # @user = Factory(:user)
-    # @path = Factory(:path, :user => @user, :company => @user.company)
-    # @section = Factory(:section, :path => @path)
-    # @task = Factory(:task, :section => @section)
+    # @user = FactoryGirl.create(:user)
+    # @path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+    # @section = FactoryGirl.create(:section, :path => @path)
+    # @task = FactoryGirl.create(:task, :section => @section)
     # @user.enroll!(@path)
     
-    # @comment = Factory(:comment, :task => @task, :user => @user)
+    # @comment = FactoryGirl.create(:comment, :task => @task, :user => @user)
     # @attr = { :task_id => @task, :content => "Comment content" }
   # end
   
@@ -29,7 +29,7 @@
     
     # describe "when signed in as an unenrolled user" do
 			# before(:each) do
-        # @other_user = Factory(:user, :company => @user.company)
+        # @other_user = FactoryGirl.create(:user, :company => @user.company)
 				# test_sign_in(@other_user)
 			# end
 			
@@ -60,9 +60,9 @@
 			# end
       
       # it "should deny access to 'destroy' if user did not create comment" do
-				# @other_company_user = Factory(:user, :company => @user.company)
+				# @other_company_user = FactoryGirl.create(:user, :company => @user.company)
         # @other_company_user.enroll!(@path)
-        # @other_comment = Factory(:comment, :task => @task, :user => @other_company_user)
+        # @other_comment = FactoryGirl.create(:comment, :task => @task, :user => @other_company_user)
         # delete :destroy, :id => @other_comment
 				# response.should redirect_to root_path
 			# end

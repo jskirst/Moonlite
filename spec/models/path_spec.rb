@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Paths" do
 	before(:each) do
-		@user = Factory(:user)
+		@user = FactoryGirl.create(:user)
 		@attr = { :name => "Test name", :description => "Test description", :created_at => 1.day.ago }
 	end
 	
@@ -82,7 +82,7 @@ describe "Paths" do
 	describe "company association" do
 		before(:each) do
 			@path = @user.paths.build(@attr)
-			@other_company = Factory(:company, :name => "Other Company")
+			@other_company = FactoryGirl.create(:company, :name => "Other Company")
 		end
 		
 		it "should have a company attribute" do
@@ -107,9 +107,9 @@ describe "Paths" do
 	
 	describe "section associations" do
 		before(:each) do
-			@path = Factory(:path, :user => @user)
-			@section1 = Factory(:section, :path => @path)
-			@section2 = Factory(:section, :path => @path)
+			@path = FactoryGirl.create(:path, :user => @user)
+			@section1 = FactoryGirl.create(:section, :path => @path)
+			@section2 = FactoryGirl.create(:section, :path => @path)
       @path.reload
 		end
 		

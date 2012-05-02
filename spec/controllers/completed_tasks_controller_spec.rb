@@ -17,12 +17,12 @@ describe CompletedTasksController do
 	describe "POST 'create'" do
 		before(:each) do
 			@password = "current_password"
-			@user = Factory(:user, :password => @password, :password_confirmation => @password)
+			@user = FactoryGirl.create(:user, :password => @password, :password_confirmation => @password)
 			@user.set_company_admin(true)
-			@path = Factory(:path, :user => @user, :company => @user.company)
-			@section = Factory(:section, :path => @path)
-			@task = Factory(:task, :section => @section)
-			@task2 = Factory(:task, :section => @section)
+			@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+			@section = FactoryGirl.create(:section, :path => @path)
+			@task = FactoryGirl.create(:task, :section => @section)
+			@task2 = FactoryGirl.create(:task, :section => @section)
 			test_sign_in(@user)
 			@attr = { :user_id => @user.id, :task_id => @task.id, :answer => @task.correct_answer, :quiz_session => @quiz_session }
 		end
@@ -106,7 +106,7 @@ describe CompletedTasksController do
 				
 				describe "with an invalid achievement" do
 					before(:each) do
-						@achievement = Factory(:achievement, :path => @path, :criteria => "abcd")
+						@achievement = FactoryGirl.create(:achievement, :path => @path, :criteria => "abcd")
 					end
 					
 					it "should still create a completed task with status 1" do
@@ -132,15 +132,15 @@ describe CompletedTasksController do
 				
 				describe "with valid achievements" do
 					before(:each) do
-						@old_task1 = Factory(:task, :path => @path)
-						@old_task2 = Factory(:task, :path => @path)
+						@old_task1 = FactoryGirl.create(:task, :path => @path)
+						@old_task2 = FactoryGirl.create(:task, :path => @path)
 					end
 					
 					describe "for completing all tasks for the path" do
 						before(:each) do
-							Factory(:completed_task, :task => @old_task1, :user => @user)
-							Factory(:completed_task, :task => @old_task2, :user => @user)
-							@achievement = Factory(:achievement, :path => @path, :criteria => "#{@old_task1.id},#{@old_task2.id}")
+							FactoryGirl.create(:completed_task, :task => @old_task1, :user => @user)
+							FactoryGirl.create(:completed_task, :task => @old_task2, :user => @user)
+							@achievement = FactoryGirl.create(:achievement, :path => @path, :criteria => "#{@old_task1.id},#{@old_task2.id}")
 						end
 					
 						it "should award the achievement" do
@@ -157,8 +157,8 @@ describe CompletedTasksController do
 					
 					describe "for completing tasks specified in achievement criteria" do
 						before(:each) do
-							Factory(:completed_task, :task => @old_task1, :user => @user)
-							@achievement = Factory(:achievement, :path => @path, :criteria => @old_task1.id.to_s + "," + @task.id.to_s)
+							FactoryGirl.create(:completed_task, :task => @old_task1, :user => @user)
+							@achievement = FactoryGirl.create(:achievement, :path => @path, :criteria => @old_task1.id.to_s + "," + @task.id.to_s)
 						end
 						
 						it "should award the achievement" do

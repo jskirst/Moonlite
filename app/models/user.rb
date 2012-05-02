@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	attr_protected :admin, :user_roll
 	attr_accessor :password, :password_confirmation
-	attr_accessible :name, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation
+	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation
 	
 	belongs_to :company
 	belongs_to :user_roll
@@ -44,17 +44,27 @@ class User < ActiveRecord::Base
   before_save :check_image_url
 	
   def self.create_anonymous_user(company, user_roll)
-    p = "aodsjflaskdjf"
-    e = "anonymous"+"alskdfkadshf"+"@moonlite.com"
+    p = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+		e = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+    e = "anonymous"+e+"@moonlite.com"
     user_details = {
       :name => "anonymous",
       :email => e,
       :password => p,
       :password_confirmation => p,
+			:company_id => company.id
     }
     @user = user_roll.users.create(user_details)
     return @user
   end
+	
+	def still_anonymous?
+		return self.name.include?("anonymous")
+	end
+	
+	def must_register?
+		return self.email.include?("anonymous")
+	end
   
 	def validate_password?
 		return self.password.present?
