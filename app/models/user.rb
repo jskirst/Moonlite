@@ -43,6 +43,19 @@ class User < ActiveRecord::Base
 	before_save :set_tokens
   before_save :check_image_url
 	
+  def self.create_anonymous_user(company, user_roll)
+    p = "aodsjflaskdjf"
+    e = "anonymous"+"alskdfkadshf"+"@moonlite.com"
+    user_details = {
+      :name => "anonymous",
+      :email => e,
+      :password => p,
+      :password_confirmation => p,
+    }
+    @user = user_roll.users.create(user_details)
+    return @user
+  end
+  
 	def validate_password?
 		return self.password.present?
 	end

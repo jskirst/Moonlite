@@ -27,7 +27,7 @@
 					<tr>
 						<td><%= user_counter.to_s %></td>
 						<td><%= link_to u.name, u %></td>
-						<td><%= link_to u.user_roll.name, edit_roll_user_path(u) %></td>
+						<td><%= link_to u.user_roll.name, edit_roll_user_path(u) unless u.user_roll.nil?%></td>
 						<%
 							enrolled_paths = []
 							u.enrolled_paths.each do |p|

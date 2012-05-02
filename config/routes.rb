@@ -37,7 +37,7 @@ SampleApp::Application.routes.draw do
 			post :upload
       put :reorder_sections
       get :hero
-      get :divide
+      get :jumpstart
 		end
 	end
 	resources :sections do

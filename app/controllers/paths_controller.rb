@@ -1,7 +1,7 @@
 class PathsController < ApplicationController
   include OrderHelper
   
-	before_filter :authenticate, :except => [:hero]
+	before_filter :authenticate, :except => [:hero, :jumpstart]
 	before_filter :get_path_from_id, :except => [:index, :new, :create]
 	before_filter :can_create?, :only => [:new, :create]
 	before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy]
@@ -144,7 +144,18 @@ class PathsController < ApplicationController
 		@achievements = @path.achievements.all(:limit => 5)
     @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
   end
-	
+  
+  def jumpstart
+    @company = Company.find(1)
+    @path = @company.paths.find(params[:id])
+    @user_roll = @company.user_rolls.find(2)
+    if !signed_in?
+      @user = User.create_anonymous_user(@company, @user_roll)
+      sign_in(@user)
+    end
+    redirect_to continue_path_path(@path)
+  end
+
 	private
 		def get_path_from_id
 			if !@path = Path.find_by_id(params[:id])
