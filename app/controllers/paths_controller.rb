@@ -169,9 +169,8 @@ class PathsController < ApplicationController
   def jumpstart
     @company = Company.find(1)
     @path = @company.paths.find(params[:id])
-    @user_roll = @company.user_rolls.find(2)
     if !signed_in?
-      @user = User.create_anonymous_user(@company, @user_roll)
+      @user = User.create_anonymous_user(@company)
       sign_in(@user)
 			current_user.enrollments.create(:path_id => @path.id)
     end

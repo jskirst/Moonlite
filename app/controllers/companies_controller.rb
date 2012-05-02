@@ -29,11 +29,7 @@ class CompaniesController < ApplicationController
 	def edit
 		@title = "Company Settings"
 		@categories = @company.categories.all
-		if Rails.env.production?
-			@signup_url = "http://www.projectmoonlite.com/companies/#{@company.signup_token}/join"
-		else
-			@signup_url = "http://localhost:3000/companies/#{@company.signup_token}/join"
-		end
+		@user_rolls = @company.user_rolls.all
 	end
 	
 	def update

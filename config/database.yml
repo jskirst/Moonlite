@@ -1,14 +1,18 @@
 development:
   adapter: postgresql
-  database: db/development.postgresql
+  database: db/development
   pool: 5
-  timeout: 5000
+  timeout: 5432
+  username: postgres
+  password: disrupt11
 
 test:
   adapter: postgresql
-  database: db/test.postgresql
+  database: db/test
   pool: 5
-  timeout: 5000
+  timeout: 5432
+  username: postgres
+  password: disrupt11	
 
 production:
   adapter: postgresql

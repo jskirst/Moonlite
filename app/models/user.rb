@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 	before_save :set_tokens
   before_save :check_image_url
 	
-  def self.create_anonymous_user(company, user_roll)
+  def self.create_anonymous_user(company)
     p = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
 		e = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
     e = "anonymous"+e+"@moonlite.com"
@@ -54,7 +54,7 @@ class User < ActiveRecord::Base
       :password_confirmation => p,
 			:company_id => company.id
     }
-    @user = user_roll.users.create(user_details)
+    @user = company.user_roll.users.create(user_details)
     return @user
   end
 	
@@ -145,18 +145,20 @@ class User < ActiveRecord::Base
 	end
 	
 	def award_achievements(task)
-		potential_achievements = task.path.achievements
-		potential_achievements.each do |pa|
-      unless pa.criteria.nil?
-				task_ids = pa.criteria.split(",")
-        cps = completed_tasks.find_all_by_task_id(task_ids, :conditions => ["status_id = ?", 1])
-        if cps.size == task_ids.size && !self.has_achievement?(pa.id)
-					user_achievements.create!(:achievement_id => pa.id)
-					update_attribute('earned_points', self.earned_points + pa.points)
-          return pa
-				end
-			end
-		end
+		# potential_achievements = task.path.achievements
+		# if potential_achievements
+			# potential_achievements.each do |pa|
+				# unless pa.criteria.nil?
+					# task_ids = pa.criteria.split(",")
+					# cps = completed_tasks.find_all_by_task_id(task_ids, :conditions => ["status_id = ?", 1])
+					# if cps.size == task_ids.size && !self.has_achievement?(pa.id)
+						# user_achievements.create!(:achievement_id => pa.id)
+						# update_attribute('earned_points', self.earned_points + pa.points)
+						# return pa
+					# end
+				# end
+			# end
+		# end
     return false
 	end
   

@@ -4,13 +4,14 @@ class Company < ActiveRecord::Base
 		:enable_recommendations, :enable_comments, :enable_printer_friendly, :enable_feedback, 
 		:enable_achievements, :enable_browsing, :enable_news, :enable_user_creation,
 		:enable_auto_enroll, :enable_collaboration, :enable_one_signup, :signup_token,
-		:default_profile_picture_link, :enable_auto_generate
+		:default_profile_picture_link, :enable_auto_generate, :user_roll_id
 	
 	has_many :users
 	has_many :rewards
 	has_many :paths
 	has_many :categories
 	has_many :user_rolls
+	has_one :user_roll
 	
 	before_create :set_signup_token
 	
