@@ -6,8 +6,14 @@ class CompletedTasksController < ApplicationController
 	def create
 		previous_task = current_user.completed_tasks.last
 		last_answer_date = previous_task.created_at unless previous_task.nil?
-
+		
     resp = params[:completed_task]
+		if resp[:text_answer].nil? && resp[:answer].nil?
+			flash[:info] = "Please enter an answer to continue."
+			redirect_to continue_section_path :id => Task.find(resp[:task_id]).section
+			return
+		end
+		
 		unless resp[:text_answer].nil?
 			status_id = @task.is_correct?(resp[:text_answer], "text") ? 1 : 0
 			answer = resp[:text_answer]

@@ -1,7 +1,4 @@
 <section class="path">
-  <% if @start_mode == "Get Started" && !@enable_auto_enroll %>
-    <%= render "paths/popups/get_started" %>
-  <% end %>
 	<div style="min-height: 120px;">
     <div style="float:left; margin: 0px 15px 0px 0px;">
       <%= image_tag(@path.path_pic, :size=>"100x100") %>

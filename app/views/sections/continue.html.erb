@@ -11,7 +11,7 @@ $(function(){
 });
 </script>
 <%= render "progress_box", { :earned_points => @earned_points, :possible_points => @possible_points, :streak_points => @streak_points } %>
-<%= form_tag({ :controller => :completed_tasks }, :method => :post) %>
+<%= form_tag({ :controller => :completed_tasks }, :method => :post, :id => "challenge_form") %>
 <div class="task row">
   <div class="<%= @comments_on ? "span10" : "span16" %>">
     
@@ -44,7 +44,7 @@ $(function(){
 <div class="row">
   <div class="actions" style="margin-top:50px">
     <input type="hidden" id="listless" name="listless" value="true">
-    <%= submit_tag "Submit", :class => "btn primary", :style=>"margin-top: 10px;" %>
+    <%= submit_tag "Submit", :class => "btn primary", :style=>"margin-top: 10px;", :id => "submit_button" %>
     <% if @enable_feedback && @comments_on %>
     <%= link_to "Hide Discussion", continue_section_path(@task.section), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
     <% elsif @enable_feedback %>
