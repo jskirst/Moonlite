@@ -37,7 +37,7 @@
 				<div class="input">
 					<select id="company_user_roll_id" name="company[user_roll_id]">
 						<% @user_rolls.each do |u| %>
-							<option value="<%= u.id %>"><%= u.name %></option>
+							<option value="<%= u.id %>" <%= "selected='selected'" if @company.user_roll_id == u.id %>><%= u.name %></option>
 						<% end %>
 					</select>
 				</div>

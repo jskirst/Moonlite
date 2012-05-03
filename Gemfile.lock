@@ -159,7 +159,7 @@ DEPENDENCIES
   gravatar_image_tag
   jquery-rails
   paperclip
-  pg
+  pg (>= 0.13.2)
   rails
   rspec-rails
   simplecov
