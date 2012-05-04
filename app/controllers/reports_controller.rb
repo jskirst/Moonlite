@@ -20,7 +20,7 @@ class ReportsController < ApplicationController
 		@company = current_user.company
 		@company_id = @company.id.to_s
 		@users = @company.users
-		@paths = @company.paths
+		@paths = @company.paths.where("is_published = ?", true)
 		
 		
 		completed_tasks = User.count(

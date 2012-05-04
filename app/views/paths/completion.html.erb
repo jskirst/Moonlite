@@ -1,7 +1,5 @@
 <% if @must_register %>
 <script>
-
-
 $(function(){
 	$("a").attr("href", "#");
 	
@@ -14,7 +12,6 @@ $(function(){
 	});
 });
 </script>
-
 <%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
 <section class="completion row">
@@ -38,14 +35,14 @@ $(function(){
   </div>
 </section>
 <section style="padding: 30px 20px 0px 20px;">
-	<%= render "leaderboards/leaderboard", 
-		{ :leaderboard_entries => @leaderboards[1], 
-			:leaderboard_id => "Overall", 
-			:display => true, 
-			:disable_filler => true, 
-			:highlight => current_user.id,
-			:limit => 5
-	} %>
+<%= render "leaderboards/leaderboard", 
+	{ :leaderboard_entries => @leaderboards[1], 
+		:leaderboard_id => "Overall", 
+		:display => true, 
+		:disable_filler => true, 
+		:highlight => current_user.id,
+		:limit => 5
+} %>
 </section>
 <% if @enable_recommendations %>
 	<hr/>
