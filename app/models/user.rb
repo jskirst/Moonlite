@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 	attr_protected :admin, :user_roll
 	attr_accessor :password, :password_confirmation
 	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation, :catch_phrase
-	
+
 	belongs_to :company
 	belongs_to :user_roll
 	has_many :paths, :dependent => :destroy
@@ -11,25 +11,25 @@ class User < ActiveRecord::Base
 	has_many :completed_tasks, :dependent => :destroy
 	has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
 	has_many :user_achievements, :dependent => :destroy
-  has_many :comments, :dependent => :destroy
+	has_many :comments, :dependent => :destroy
 	has_many :leaderboards, :dependent => :destroy
 	has_many :user_events, :dependent => :destroy
-	
-	
+
+
 	email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-	
+
 	validates :name, 		
 		:presence 	=> true,
 		:length		=> { :maximum => 50 }
 		
 	validates :catch_phrase,
 		:length		=> { :maximum => 25 }
-	
+
 	validates :email,		
 		:presence 	=> true,
 		:format		=> { :with => email_regex },
 		:uniqueness => { :case_sensitive => false }
-	
+
 	validates :password,
 		:presence	=> true,
 		:confirmation => true,
@@ -41,10 +41,10 @@ class User < ActiveRecord::Base
 		:length		=> { :within => 6..40 },
 		:on => :update,
 		:if => :validate_password?
-	
+
 	before_save :encrypt_password
 	before_save :set_tokens
-  before_save :check_image_url
+	before_save :check_image_url
 	
   def self.create_anonymous_user(company)
     p = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
@@ -57,8 +57,8 @@ class User < ActiveRecord::Base
       :password_confirmation => p,
 			:company_id => company.id
     }
-    @user = company.user_roll.users.create!(user_details)
-		@user.user_roll = company.user_roll
+    @user = company.users.create!(user_details)
+		@user.user_roll_id = company.user_roll_id
 		@user.save
     return @user
   end
