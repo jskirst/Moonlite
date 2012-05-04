@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120502224329) do
+ActiveRecord::Schema.define(:version => 20120503215655) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -146,6 +146,7 @@ ActiveRecord::Schema.define(:version => 20120502224329) do
     t.integer  "default_timer",              :default => 30
     t.string   "excluded_from_leaderboards"
     t.boolean  "enable_nonlinear_sections",  :default => false
+    t.boolean  "is_locked",                  :default => false
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
@@ -278,6 +279,7 @@ ActiveRecord::Schema.define(:version => 20120502224329) do
     t.integer  "company_id"
     t.boolean  "company_admin",      :default => false
     t.integer  "user_roll_id"
+    t.string   "catch_phrase"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

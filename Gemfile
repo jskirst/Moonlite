@@ -1,5 +1,6 @@
 source 'http://rubygems.org'
 
+gem 'pg', '>= 0.13.2'
 gem 'rails'
 gem 'gravatar_image_tag'
 gem 'will_paginate'
@@ -12,7 +13,6 @@ gem 'activesupport'
 gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
-gem 'pg', '>= 0.13.2'
 
 group :development do
 	gem 'rspec-rails'

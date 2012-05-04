@@ -82,7 +82,7 @@ class Leaderboard < ActiveRecord::Base
 				total_section_points = 0
 				tasks = u.completed_tasks.includes(:section).where("sections.id = ? and status_id = 1", s.id)
 				total_section_tasks = tasks.size
-				tasks.each {|t| total_section_points += t.points_awarded}
+				tasks.each {|t| total_section_points += t.points_awarded.to_i}
 				l = u.leaderboards.find_by_section_id(s.id)
 				l.destroy unless l.nil?
 				Leaderboard.create!(:user_id => u.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_points, :created_at => date)
@@ -118,7 +118,7 @@ class Leaderboard < ActiveRecord::Base
 					tasks = user.completed_tasks.includes(:section).where("sections.id = ? and status_id = 1", s.id)
 					total_section_tasks = tasks.size
 					total_section_points = 0
-					tasks.each {|t| total_section_points += t.points_awarded}
+					tasks.each {|t| total_section_points += t.points_awarded.to_i}
 					Leaderboard.create!(:user_id => user.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_points, :created_at => date)
 					total_path_tasks += total_section_tasks
 				end

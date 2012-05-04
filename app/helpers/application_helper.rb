@@ -1,6 +1,6 @@
 module ApplicationHelper
 	def title
-		base_title = "Project Moonlite"
+		base_title = company_logo || "MetaBright"
 		if @title.nil?
 			base_title
 		else

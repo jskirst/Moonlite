@@ -1,5 +1,21 @@
 <% if @must_register %>
-	<%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
+<script>
+
+
+$(function(){
+	$("a").attr("href", "#");
+	
+	$("#save_score, a").click(function(){
+		$('#startmodal').modal({
+			keyboard: true,
+			backdrop: 'static',
+			show: true
+		});
+	});
+});
+</script>
+
+<%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
 <section class="completion row">
   <div class="span4">

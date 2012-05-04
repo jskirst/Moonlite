@@ -135,6 +135,7 @@ class UsersController < ApplicationController
 		@user.image_url = params[:user][:image_url] if params[:user][:image_url] 
 		@user.password = params[:user][:password] if params[:user][:password] 
 		@user.password_confirmation = params[:user][:password_confirmation] if params[:user][:password_confirmation]
+		@user.catch_phrase = params[:user][:catch_phrase] if params[:user][:catch_phrase]
 		if @user.save
 			respond_to do |format|
 				format.html do

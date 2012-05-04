@@ -1,14 +1,18 @@
 class Path < ActiveRecord::Base
+	def to_param
+		"#{id} #{name}".parameterize
+	end
+	
 	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
 		:is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
-		:default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections
+		:default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
+		:is_locked
 	
 	belongs_to :user
 	belongs_to :company
 	belongs_to :category
 	has_many :sections, :dependent => :destroy
 	has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
-	has_many :achievements, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
   has_many :enrolled_users, :through => :enrollments, :source => :user
 	has_many :info_resources, :dependent => :destroy

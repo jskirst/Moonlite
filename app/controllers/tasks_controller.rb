@@ -39,7 +39,8 @@ class TasksController < ApplicationController
 				redirect_to edit_section_path(@section, :m => "tasks")
 			end
 		else
-			@title = "Edit Question"
+			@title = "New Question"
+			@ca = @task.correct_answer
 			@form_title = @title
 			@section_id = @section.id
 			render "tasks/task_form"

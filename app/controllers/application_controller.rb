@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 		def determine_enabled_features
 			unless current_user.nil?
 				roll = current_user.user_roll
+				@is_consumer = (current_user.company_id == 1)
 				@enable_administration = roll.enable_administration
 				@enable_rewards = roll.enable_company_store
 				@enable_leaderboard = roll.enable_leaderboard

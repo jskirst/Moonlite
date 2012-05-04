@@ -41,7 +41,7 @@ class PagesController < ApplicationController
         @path_categories << [category, Path.with_category(category.id)]
       end
     else
-      @display_all = false
+      @display_all = true
       categories = Category.find_all_by_company_id(current_user.company_id)
       categories.each do |c|
         @path_categories << [c, Path.with_category(c.id)]

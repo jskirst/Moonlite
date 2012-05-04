@@ -148,7 +148,7 @@ class PathsController < ApplicationController
 			end
       render "completion"
     else
-			if @section.enable_skip_content
+			if @section.enable_skip_content || (@section.instructions.blank? && @section.info_resources.empty?)
 				redirect_to continue_section_path(@section)
 			else
 				redirect_to @section
@@ -169,10 +169,10 @@ class PathsController < ApplicationController
   def jumpstart
     @company = Company.find(1)
     @path = @company.paths.find(params[:id])
-    if !signed_in?
+    unless signed_in?
       @user = User.create_anonymous_user(@company)
       sign_in(@user)
-			current_user.enrollments.create(:path_id => @path.id)
+			@user.enrollments.create!(:path_id => @path.id)
     end
     redirect_to continue_path_path(@path)
   end

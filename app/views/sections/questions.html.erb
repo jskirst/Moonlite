@@ -44,5 +44,6 @@ $(function(){
 <div id="hidden_inputs"></div>
 <div class="actions">
   <%= submit_tag "Next", :class => "btn primary" %>
+  <%= link_to "Pause", "#", :class => "btn secondary", :id => "pause_button" %>
   <%= link_to "Back", edit_section_path(@section, :m=>"tasks"), :class => "btn secondary" %>
 </div>

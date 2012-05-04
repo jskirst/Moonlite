@@ -1,14 +1,6 @@
 <div class="alert-message success hide registration-message">Registration complete!</div>
 <script>
 $(function(){
-	$("#save_score").click(function(){
-		$('#startmodal').modal({
-			keyboard: true,
-			backdrop: 'static',
-			show: true
-		});
-	});
-	
 	$('#change_credentials_form').submit(function(){
 		var reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if (!reg.test($("#user_email").val())){
@@ -28,7 +20,7 @@ $(function(){
 });
 </script>
 <div id="startmodal" class="modal hide fade">
-  <%= form_for(user, :html => {:id => "change_credentials_form"}, :style => "margin-bottom:0px;") do |f| %>
+  <%= form_for(user, :html => {:id => "change_credentials_form", :style => "margin-bottom:0px;"}) do |f| %>
 	<%= f.hidden_field :path_id, :value => @path.id %>
 	<div class="modal-header">
     <a href="#" class="close"></a>

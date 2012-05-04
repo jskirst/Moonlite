@@ -24,6 +24,7 @@ function start_question_timer(){
   }, 1000);
 }
 
+/*
 $(document).ready(function() {
   $('form').submit(function() {
     if(typeof jQuery.data(this, "disabledOnSubmit") == 'undefined') {
@@ -39,3 +40,4 @@ $(document).ready(function() {
     }
   });
 });
+*/

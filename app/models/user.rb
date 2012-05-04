@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	attr_protected :admin, :user_roll
 	attr_accessor :password, :password_confirmation
-	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation
+	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation, :catch_phrase
 	
 	belongs_to :company
 	belongs_to :user_roll
@@ -21,6 +21,9 @@ class User < ActiveRecord::Base
 	validates :name, 		
 		:presence 	=> true,
 		:length		=> { :maximum => 50 }
+		
+	validates :catch_phrase,
+		:length		=> { :maximum => 25 }
 	
 	validates :email,		
 		:presence 	=> true,
@@ -54,7 +57,9 @@ class User < ActiveRecord::Base
       :password_confirmation => p,
 			:company_id => company.id
     }
-    @user = company.user_roll.users.create(user_details)
+    @user = company.user_roll.users.create!(user_details)
+		@user.user_roll = company.user_roll
+		@user.save
     return @user
   end
 	
