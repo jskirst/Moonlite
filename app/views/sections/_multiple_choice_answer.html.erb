@@ -1,3 +1,7 @@
+<style>
+.already_guessed { text-decoration: line-through; color:lightgray;}
+</style>
+
 <div class="field clearfix">
 	<label>Answer:</label>
 	<div class="input">
@@ -5,26 +9,26 @@
 			<li>
 				<% unless task.answer1.blank? %>
 				<label>
-					<input id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1">
-					<span><%= task.answer1 %></span>
+					<input <%= @hints.include?(task.answer1) ? "disabled='disabled'" : "" %> id="completed_task_answer1" name="completed_task[answer]" type="radio" value="1">
+					<span class="<%= @hints.include?(task.answer1) ? "already_guessed" : "" %>"><%= task.answer1 %></span>
 				</label>
 				<% end %>
 				<% unless task.answer2.blank? %>
 				<label>
-					<input id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2">
-					<span><%= task.answer2 %></span>
+					<input <%= @hints.include?(task.answer2) ? "disabled='disabled'" : "" %> id="completed_task_answer2" name="completed_task[answer]" type="radio" value="2">
+					<span class="<%= @hints.include?(task.answer2) ? "already_guessed" : "" %>"><%= task.answer2 %></span>
 				</label>
 				<% end %>
 				<% unless task.answer3.blank? %>
 				<label>
-					<input id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3">
-					<span><%= task.answer3 %></span>
+					<input <%= @hints.include?(task.answer3) ? "disabled='disabled'" : "" %> id="completed_task_answer3" name="completed_task[answer]" type="radio" value="3">
+					<span class="<%= @hints.include?(task.answer3) ? "already_guessed" : "" %>"><%= task.answer3 %></span>
 				</label>
 				<% end %>
 				<% unless task.answer4.blank? %>
 				<label>
-					<input id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4">
-					<span><%= task.answer4 %></span>
+					<input <%= @hints.include?(task.answer4) ? "disabled='disabled'" : "" %> id="completed_task_answer4" name="completed_task[answer]" type="radio" value="4">
+					<span class="<%= @hints.include?(task.answer4) ? "already_guessed" : "" %>"><%= task.answer4 %></span>
 				</label>
 				<% end %>
 			</li>

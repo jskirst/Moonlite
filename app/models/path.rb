@@ -6,7 +6,7 @@ class Path < ActiveRecord::Base
 	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
 		:is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
 		:default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-		:is_locked
+		:is_locked, :enable_retakes
 	
 	belongs_to :user
 	belongs_to :company
@@ -92,15 +92,19 @@ class Path < ActiveRecord::Base
 	end
   
   def completed?(user)
-    total_tasks = tasks.size
-    completed_tasks = user.completed_tasks.includes(:path).where(["paths.id = ? and status_id = 1", self.id]).count
-    return completed_tasks >= total_tasks
-  end
+		return total_remaining_tasks(user) <= 0
+	end
+	
+	def total_remaining_tasks(user)
+		remaining_tasks = 0
+		sections.each {|s| remaining_tasks += s.remaining_tasks(user) }
+		return remaining_tasks
+	end
   
   def percent_complete(user)
     total_tasks = tasks.size
-    completed_tasks = user.completed_tasks.includes(:path).where(["paths.id = ? and status_id = 1", self.id]).count
-    return ((completed_tasks.to_f / total_tasks.to_f) * 100).to_i
+    total_remaining = total_remaining_tasks(user)
+    return (((total_tasks - total_remaining.to_f) / total_tasks.to_f) * 100).to_i
   end
 	
 	def user_belongs_to_company

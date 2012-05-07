@@ -56,8 +56,12 @@ class Section < ActiveRecord::Base
 	end
 		
 	def next_task(user)
-    next_task = get_next_unfinished_task(user)
-    next_task = get_next_incorrectly_finished_task(user) if next_task.nil?
+		if path.enable_retakes
+			next_task = get_next_incorrectly_finished_task(user)
+			next_task = get_next_unfinished_task(user) if next_task.nil?
+		else
+			next_task = get_next_unfinished_task(user)
+		end
     return next_task
 	end
   
@@ -67,10 +71,12 @@ class Section < ActiveRecord::Base
   end
 	
 	def remaining_tasks(user)
-    number_of_completed_tasks = completed_tasks.where(["completed_tasks.user_id = ? and status_id = 1", user.id]).count(:distinct => "completed_tasks.task_id")
-    number_of_remaining_tasks = tasks.size - number_of_completed_tasks
-    return number_of_remaining_tasks
-	end
+		if path.enable_retakes
+			return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 1)", user.id]).count
+    else
+			return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
+		end
+  end
   
   def user_streak(user)
     user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all.reverse

@@ -4,15 +4,15 @@ class CompletedTasksController < ApplicationController
   before_filter :post_comment
 	
 	def create
-		previous_task = current_user.completed_tasks.last
-		last_answer_date = previous_task.created_at unless previous_task.nil?
-		
-    resp = params[:completed_task]
+		resp = params[:completed_task]
 		if resp[:text_answer].nil? && resp[:answer].nil?
 			flash[:info] = "Please enter an answer to continue."
 			redirect_to continue_section_path :id => Task.find(resp[:task_id]).section
 			return
 		end
+		
+		previous_task = current_user.completed_tasks.last
+		last_answer_date = previous_task.created_at unless previous_task.nil?
 		
 		unless resp[:text_answer].nil?
 			status_id = @task.is_correct?(resp[:text_answer], "text") ? 1 : 0
@@ -21,17 +21,14 @@ class CompletedTasksController < ApplicationController
 			status_id = @task.is_correct?(resp[:answer], "multiple") ?  1 : 0
 			answer = @task.describe_answer(resp[:answer])
 		end
-		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id, :answer => answer))
 		
+		@completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id, :answer => answer))
 		streak = @task.section.user_streak(current_user)
 		if status_id == 1
 			points = 10
 			if params[:listless] == "true"				
 				unless streak < 1
-					sixty_seconds_ago = 60.seconds.ago
-					logger.debug last_answer_date
-					logger.debug sixty_seconds_ago
-					if last_answer_date > sixty_seconds_ago
+					if last_answer_date > 35.seconds.ago
 						points += streak
 					end
 				end
@@ -43,6 +40,7 @@ class CompletedTasksController < ApplicationController
 			@completed_task.points_awarded = 0
 			@completed_task.save
 		end
+		
 		redirect_to continue_section_path :id => @completed_task.task.section, :p => status_id
 	end
 	

@@ -74,6 +74,7 @@ class CompaniesController < ApplicationController
 				@user.reload
 				sign_in @user
 				
+				determine_enabled_features
 				if @enable_auto_enroll
 					company_paths = @company.paths.where("is_published = ?", true)
 					logger.debug company_paths

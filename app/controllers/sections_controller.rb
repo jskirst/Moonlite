@@ -280,20 +280,30 @@ class SectionsController < ApplicationController
 			end
 			
 			@question_type = @task.question_type
-		
+			
       if params[:p]
         @correct = (params[:p] == "1" ? true : false)
       end
+			
       @progress = @path.percent_complete(current_user) + 1
       @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
       @possible_points = 10
       streak = @section.user_streak(current_user)
       @streak_points = streak <= 0 ? 0 : streak
+			@hints = []
 			
-			if @question_type == "text" && streak < -1
-				answer = @task.describe_correct_answer.to_s
-				streak = ((streak+2)*-1) #converting it so it can be used in a range
-				@hint = "Answer starts with '" + answer.slice(0..streak) + "'"
+			if @path.enable_retakes
+				if @question_type == "text" && streak < -1
+					answer = @task.describe_correct_answer.to_s
+					streak = ((streak+2)*-1) #converting it so it can be used in a range
+					@hint = "Answer starts with '" + answer.slice(0..streak) + "'"
+				else
+					previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
+					previous_wrong_answers.each do |p|
+						@hints << p.answer
+					end
+					logger.debug @hints
+				end
 			end
 			
       @info_resource = @task.info_resource
