@@ -21,7 +21,7 @@ $(function(){
   <div class="span12" style="margin-top: 15px;">
     <h1>Congratulations!</h1>
 		<div>
-      <p style="font-size:16px; font-weight: bold; margin-bottom: 25px; line-height:25px;">You have successfully completed this challenge. You're now ranked <%= @user_rank.to_s %> with <%= @total_points_earned.to_s %> points. <% if @next_rank_points.to_s > 0 %>You only need <%= @next_rank_points.to_s %> points to move up to the next rank!<% end %></p>
+      <p style="font-size:16px; font-weight: bold; margin-bottom: 25px; line-height:25px;">You have successfully completed this challenge. You're now ranked <%= @user_rank %> with <%= @total_points_earned.to_i %> points. <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %></p>
 			<% if @must_register %>
 				<%= link_to "Save Score", "#", :id => "save_score", :class => "btn primary large" %>
 			<% else %>
