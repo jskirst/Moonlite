@@ -1,11 +1,11 @@
 <h4><%= @title %></h4>
-<h1><%= @user_roll.name || "Untitled" %></h1>
+<h1><%= @user_role.name || "Untitled" %></h1>
 <% if @form_mode == "new" %>
-<p style="padding:10px; width:700px;">Create your new user roll below by giving it a name and checking or unchecking each box to give any users with this roll access to the respective functionality.</p>
+<p style="padding:10px; width:700px;">Create your new user role below by giving it a name and checking or unchecking each box to give any users with this roll access to the respective functionality.</p>
 <% else %>
-<p style="padding:10px;">Edit user roll access below. Note that access priviledge changes will take effect immediately after you save your changes.</p>
+<p style="padding:10px;">Edit user role access below. Note that access priviledge changes will take effect immediately after you save your changes.</p>
 <% end %>
-<%= form_for @user_roll do |f| %>
+<%= form_for @user_role do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
 	<div class="field">
 		<%= f.label :name %>
@@ -113,13 +113,13 @@
 	<% if @form_mode == "edit" %>
 	<div>
 		<h3>Adding Users</h3>
-		<p style="padding:10px 10px 0px 10px;">Send the following link to invite new users. These new users will automatically belong to the <% @user_roll.name %> user roll type.</p>
-		<p style="padding:10px; font-weight:bold;"><%= @user_roll.signup_link %></p>
+		<p style="padding:10px 10px 0px 10px;">Send the following link to invite new users. These new users will automatically belong to the <% @user_role.name %> user role type.</p>
+		<p style="padding:10px; font-weight:bold;"><%= @user_role.signup_link %></p>
 	<% end %>
 	<div class="actions">
 		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "Delete", @user_roll, :method => :delete, :confirm => "Are you sure you want to delete this user roll?", :class => "btn danger" %>
-		<%= link_to "Cancel", user_rolls_path, :class => "btn secondary" %>
+		<%= link_to "Delete", @user_role, :method => :delete, :confirm => "Are you sure you want to delete this user role?", :class => "btn danger" %>
+		<%= link_to "Cancel", user_roles_path, :class => "btn secondary" %>
 		
 	</div>
 <% end %>

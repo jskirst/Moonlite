@@ -93,17 +93,17 @@ class UsersController < ApplicationController
 		@title = "Settings"
 	end
 	
-	def edit_roll
+	def edit_role
 		@user = User.find(params[:id])
 		unless @user.company == current_user.company
 			flash[:error] = "You are not allowed access to that data. This has been reported."
 			redirect_to root_path
 		end
-		@user_rolls = @user.company.user_rolls
+		@user_roles = @user.company.user_roles
 		@title = "Edit user roll"
 	end
 	
-	def update_roll
+	def update_role
 		@user = User.find(params[:id])
 		unless @user.company == current_user.company
 			flash[:error] = "You are not allowed access to that data. This has been reported."
@@ -111,20 +111,20 @@ class UsersController < ApplicationController
 			return
 		end
 		
-		@user_roll = current_user.company.user_rolls.find(params[:user][:user_roll_id])
-		unless @user_roll
-			flash[:error] = "User roll does not exist."
+		@user_role = current_user.company.user_roles.find(params[:user][:user_role_id])
+		unless @user_role
+			flash[:error] = "User role does not exist."
 			redirect_to current_user.company
 			return
 		end
 		
-		@user.user_roll_id = @user_roll.id
+		@user.user_role_id = @user_role.id
 		if @user.save
 			flash[:success] = "User roll changed successfully."
 			redirect_to current_user.company
 		else
-			@user_rolls = @user.company.user_rolls
-			render "edit_roll"
+			@user_roles = @user.company.user_roles
+			render "edit_role"
 		end
 	end
 	

@@ -1,0 +1,48 @@
+<script>
+function start_point_countdown(){
+	count = 100;
+	progress = 100;
+	$raw_number = $("#raw_number");
+	continue_countdown = true;
+	countdown = setInterval(function(){
+		if(count % 200 == 0 && count > 200){
+			console.log("DO IT");
+			points = parseInt($raw_number.text());
+			console.log(points);
+			points --;
+			if(points == 1){
+				$("#raw_number").animate({opacity: 0.25}, 250);
+				$("#raw_number").text("+" + points);
+				continue_countdown = false;
+			} else if (points > 1) {
+				$("#raw_number").text("+" + points);
+			}
+		}
+		if(count % 2 == 0 && count > 200 && continue_countdown == true){
+			$("#raw_number_progressbar").progressbar({ value: progress });
+			progress --;
+			if (progress == 0){
+				progress = 100;
+			}
+		}
+		count ++;
+	}, 50);
+}
+$(function(){
+	start_point_countdown();
+	$("#raw_number_progressbar").progressbar({ value: 100 });
+});
+</script>
+<style>
+	#game_container { margin-top: 75px; width:230px; }
+	#raw_number_container { border: 5px solid green; width:230px; border-radius: 5px;}
+	#raw_number { font-size: 120px; color: green;  padding: 10px; }
+	#raw_number_progressbar { width: 240px; margin-top: 15px; border-radius: 5px;}
+</style>
+<% raw_number = @possible_points - @hints.size %>
+<div id="game_container">
+	<div id="raw_number_container">
+		<span id="raw_number"><%= raw_number >= 0 ? "+" : "-" %><%= raw_number %></span>
+	</div>
+	<div id="raw_number_progressbar" alt="Progress Bar"></div>
+</div>

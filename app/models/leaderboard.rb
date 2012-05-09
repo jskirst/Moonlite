@@ -23,24 +23,24 @@ class Leaderboard < ActiveRecord::Base
 		return excluded_emails
 	end
 				
-	def self.get_overall_leaderboard(company, date = nil)
+	def self.get_overall_leaderboard(user, date = nil)
 		date = get_most_recent_board_date if date.nil?
-		return Leaderboard.joins(:user).where("users.company_id = ? and category_id is ? and path_id is ? and section_id is ?", company.id, nil, nil, nil).all(:order => "score DESC")
+		return Leaderboard.joins(:user).where("users.company_id = ? and users.user_role_id = ? and category_id is ? and path_id is ? and section_id is ?", user.company_id, user.user_role_id, nil, nil, nil).all(:order => "score DESC")
 	end
 	
-	def self.get_leaderboard_for_category(category, date = nil)
+	def self.get_leaderboard_for_category(category, user, date = nil)
 		date = get_most_recent_board_date if date.nil?
-		return Leaderboard.includes(:user).where("category_id = ?", category.id).all(:order => "score DESC")
+		return Leaderboard.includes(:user).where("category_id = ? and users.user_role_id = ?", category.id, user.user_role_id).all(:order => "score DESC")
 	end
 	
-	def self.get_leaderboards_for_path(path, get_sections = true)
+	def self.get_leaderboards_for_path(path, user, get_sections = true)
 		sections = path.sections
 		leaderboards = []
-		overall_leaderboard = Leaderboard.includes(:user).where("path_id = ?", path.id).all(:order => "score DESC")
+		overall_leaderboard = Leaderboard.includes(:user).where("path_id = ? and users.user_role_id = ?", path.id, user.user_role_id).all(:order => "score DESC")
 		leaderboards << ["overall", overall_leaderboard]
 		if get_sections
 			sections.each do |s|
-				sl = Leaderboard.includes(:user).where("section_id = ?", s.id).all(:order => "score DESC")
+				sl = Leaderboard.includes(:user).where("section_id = ? and users.user_role_id = ?", s.id, user.user_role_id).all(:order => "score DESC")
 				leaderboards << [s.id, sl]
 			end
 		end

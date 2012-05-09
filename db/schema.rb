@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120505235800) do
+ActiveRecord::Schema.define(:version => 20120509005556) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(:version => 20120505235800) do
     t.string   "signup_token"
     t.string   "default_profile_picture_link"
     t.boolean  "enable_auto_generate",         :default => false
-    t.integer  "user_roll_id"
+    t.integer  "user_role_id"
   end
 
   create_table "company_users", :force => true do |t|
@@ -129,6 +129,15 @@ ActiveRecord::Schema.define(:version => 20120505235800) do
     t.integer  "section_id"
   end
 
+  create_table "path_user_roles", :force => true do |t|
+    t.integer  "user_role_id"
+    t.integer  "path_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "path_user_roles", ["user_role_id", "path_id"], :name => "index_path_user_roles_on_user_role_id_and_path_id"
+
   create_table "paths", :force => true do |t|
     t.string   "name"
     t.string   "description",                :default => ""
@@ -148,6 +157,7 @@ ActiveRecord::Schema.define(:version => 20120505235800) do
     t.boolean  "enable_nonlinear_sections",  :default => false
     t.boolean  "is_locked",                  :default => false
     t.boolean  "enable_retakes",             :default => true
+    t.string   "game_type",                  :default => "basic"
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
@@ -228,7 +238,7 @@ ActiveRecord::Schema.define(:version => 20120505235800) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "user_rolls", :force => true do |t|
+  create_table "user_roles", :force => true do |t|
     t.string   "name"
     t.integer  "company_id"
     t.boolean  "enable_administration",   :default => false
@@ -279,7 +289,7 @@ ActiveRecord::Schema.define(:version => 20120505235800) do
     t.string   "signup_token"
     t.integer  "company_id"
     t.boolean  "company_admin",      :default => false
-    t.integer  "user_roll_id"
+    t.integer  "user_role_id"
     t.string   "catch_phrase"
   end
 

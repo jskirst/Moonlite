@@ -79,16 +79,17 @@ class Section < ActiveRecord::Base
   end
   
   def user_streak(user)
-    user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all.reverse
+    user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all(:order => "id DESC")
     streak = 0
 		unless user_completed_tasks.empty?
 			current_task_id = user_completed_tasks.first.task_id
 			if user_completed_tasks.first.status_id == 1
 				user_completed_tasks.each do |t|
-					unless t.status_id == 1
-						break;
-					else
+					first_task_id ||= t.task_id
+					if t.id != first_task_id && t.status_id == 1
 						streak += 1
+					elsif t.status_id == 0
+						break
 					end
 				end
 			else

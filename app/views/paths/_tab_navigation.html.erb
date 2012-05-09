@@ -7,15 +7,18 @@
   <div>
     <ul class="tabs">
       <li <% if @mode == "sections" %> class="active" <% end %>>
-        <%= link_to "Sections", edit_path_path(@path.id, :m=>"sections") %>
+        <%= link_to "Sections", edit_path_path(@path.id, :m => "sections") %>
       </li>
 			<% if @enable_achievements %>
       <li <% if @mode == "achievements" %> class="active" <% end %>>
-        <%= link_to "Achievements", edit_path_path(@path.id, :m=>"achievements") %>
+        <%= link_to "Achievements", edit_path_path(@path.id, :m => "achievements") %>
       </li>
 			<% end %>
       <li <% if @mode == "settings" %> class="active" <% end %>>
-        <%= link_to "Settings", edit_path_path(@path.id, :m=>"settings") %>
+        <%= link_to "Settings", edit_path_path(@path.id, :m => "settings") %>
+      </li>
+			<li <% if @mode == "access_control" %> class="active" <% end %>>
+        <%= link_to "Access Control", edit_path_path(@path.id, :m => "access_control") %>
       </li>
       <li style="float:right;">
         <%= link_to "View Challenge", @path, :style => "background-color:whitesmoke;" %>

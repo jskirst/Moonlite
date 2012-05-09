@@ -1,19 +1,38 @@
+<% if @correct %>
+
+<div id="correct_modal" class="modal hide fade">
+	<div class="modal-body">
+		<p style="font-size: 30px; padding: 20px; font-weight: bold; color:#57A957; margin-left: 75px;">Correct!</strong></p>
+	</div>
+</div>
+
+<script>
+$('#correct_modal').modal({
+	keyboard: true,
+	backdrop: 'static',
+	show: true
+});
+
+setTimeout(function(){
+	$('#correct_modal').modal('hide');
+}, 1500);
+</script>
+
+<% end %>
+
 <% if @jumpstart %>
 	<%= render "jumpstart", { :path => @path, :leaderboards => @leaderboards } %>
 <% end %>
 
 <script src="/javascripts/challenge.js"></script>
-<script>
-$(function(){
-	<% unless @correct.nil? %> set_answer_status(<%= @correct %>); <% end %>
-	<% unless @jumpstart %> start_question_timer(); <% end %>
-	$("#progressbar").progressbar({ value: <%= @progress %> });
-});
-</script>
-<%= render "progress_box", { :earned_points => @earned_points, :possible_points => @possible_points, :streak_points => @streak_points } %>
+
+<% if @path.game_type == "basic" %>
+	<%= render "progress_box", { :earned_points => @earned_points, :possible_points => @possible_points, :streak_points => @streak_points } %>
+<% end %>
+
 <%= form_tag({ :controller => :completed_tasks }, :method => :post, :id => "challenge_form") %>
 <div class="task row">
-  <div class="<%= @comments_on ? "span10" : "span16" %>">
+  <div class="span10">
     
 		<div class="question">
       <h2>Section <%= @section.position.to_s %>. <%= @section.name %></h2>
@@ -37,19 +56,20 @@ $(function(){
     </div>
   
 	</div>
-  <% if @enable_feedback && @comments_on %>
-		<%= render "feedback", { :comments => @comments, :task => @task } %>
-  <% end %>
+	<div class="span6">
+  <% if @path.game_type == "picture" %>
+		<%= render "picture_game", { :picture => "", :progress => @progress } %>
+	<% elsif @path.game_type == "raw numbers" %>
+		<%= render "raw_numbers" %>
+	<% elsif @path.game_type == "raw streak" %>
+		<%= render "raw_streak" %>
+	<% end %>
+	</div>
 </div>
 <div class="row">
   <div class="actions" style="margin-top:50px">
     <input type="hidden" id="listless" name="listless" value="true">
-    <%= submit_tag "Submit", :class => "btn primary", :style=>"margin-top: 10px;", :id => "submit_button" %>
-    <% if @enable_feedback && @comments_on %>
-    <%= link_to "Hide Discussion", continue_section_path(@task.section), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
-    <% elsif @enable_feedback %>
-    <%= link_to "View Discussion", continue_section_path(@task.section, :comments_on => "1"), :class => "btn secondary", :style => "float:right; margin-left: 10px;" %>
-    <% end %>
+    <%= submit_tag "Submit", :class => "btn primary", :id => "submit_button" %>
     <%= link_to "Continue Later", root_path, :class => "btn secondary", :style => "float:right;" %>
   </div>
 </div>

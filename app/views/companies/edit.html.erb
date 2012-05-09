@@ -3,7 +3,7 @@
 	<ul class="tabs">
 		<li><%= link_to "Users", @company %></li>
 		<li class="active"><a href="#">Settings</a></li>
-		<li><%= link_to "User Rolls", user_rolls_path %></li>
+		<li><%= link_to "User Roles", user_roles_path %></li>
 	</ul>
 	<section id="settings">
 		<h2 style="margin-bottom:15px;">Settings</h2>
@@ -33,11 +33,11 @@
 			</div>
 			<hr/>
 			<div class="field clearfix">
-				<%= f.label "Default User Roll" %>
+				<%= f.label "Default User Role" %>
 				<div class="input">
-					<select id="company_user_roll_id" name="company[user_roll_id]">
-						<% @user_rolls.each do |u| %>
-							<option value="<%= u.id %>" <%= "selected='selected'" if @company.user_roll_id == u.id %>><%= u.name %></option>
+					<select id="company_user_role_id" name="company[user_role_id]">
+						<% @user_roles.each do |u| %>
+							<option value="<%= u.id %>" <%= "selected='selected'" if @company.user_role_id == u.id %>><%= u.name %></option>
 						<% end %>
 					</select>
 				</div>

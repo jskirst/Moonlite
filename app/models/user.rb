@@ -1,10 +1,10 @@
 class User < ActiveRecord::Base
-	attr_protected :admin, :user_roll
+	attr_protected :admin, :user_role_id
 	attr_accessor :password, :password_confirmation
 	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation, :catch_phrase
 
 	belongs_to :company
-	belongs_to :user_roll
+	belongs_to :user_role
 	has_many :paths, :dependent => :destroy
 	has_many :enrollments, :dependent => :destroy
 	has_many :enrolled_paths, :through => :enrollments, :source => :path
@@ -58,7 +58,7 @@ class User < ActiveRecord::Base
 			:company_id => company.id
     }
     @user = company.users.create!(user_details)
-		@user.user_roll_id = company.user_roll_id
+		@user.user_role_id = company.user_role_id
 		@user.save
     return @user
   end

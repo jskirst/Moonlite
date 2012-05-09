@@ -1,73 +1,73 @@
-class UserRollsController < ApplicationController
+class UserRolesController < ApplicationController
 	before_filter :authenticate
-	before_filter :get_user_roll_from_id, :except => [:index, :new, :create]
+	before_filter :get_user_role_from_id, :except => [:index, :new, :create]
 	before_filter :has_access?
   
 	def index
-		@user_rolls = current_user.company.user_rolls.all
+		@user_roles = current_user.company.user_roles.all
 		@company = current_user.company
 	end
 	
 	def new
-		@title = "New user roll"
+		@title = "New user role"
 		@form_mode = "new"
-		@user_roll = UserRoll.new
+		@user_role = UserRole.new
 		render "form"
 	end
 	
 	def create
-		@user_roll = current_user.company.user_rolls.new(params[:user_roll])
-		if @user_roll.save
-			flash[:success] = "User roll created."
-			redirect_to user_rolls_path
+		@user_role = current_user.company.user_roles.new(params[:user_role])
+		if @user_role.save
+			flash[:success] = "User role created."
+			redirect_to user_roles_path
 		else
-			@title = "New user roll"
+			@title = "New user role"
 			@form_mode = "new"
 			render "form"
 		end
 	end
 	
 	def edit
-		@users = @user_roll.users
-		@title = "Edit user roll"
+		@users = @user_role.users
+		@title = "Edit user role"
 		@form_mode = "edit"
 		render "form"
 	end
 	
 	def update
-		if @user_roll.update_attributes(params[:user_roll])
-			flash[:success] = "User Roll updated."
-			redirect_to user_rolls_path
+		if @user_role.update_attributes(params[:user_role])
+			flash[:success] = "User Role updated."
+			redirect_to user_roles_path
 		else
-			@title = "Edit User Roll"
+			@title = "Edit User Role"
 			@form_mode = "edit"
 			render "form"
 		end
 	end
 	
 	def destroy
-		unless @user_roll.users.empty?
-			redirect_to user_rolls_path
+		unless @user_role.users.empty?
+			redirect_to user_roles_path
 			flash[:error] = "You cannot delete a user roll until all users have been removed from it."
 			return
 		end
 		
-		if @user_roll.destroy
+		if @user_role.destroy
 			flash[:success] = "User roll successfully removed."
 		else
 			flash[:error] = "User roll could not be deleted. Please try again."
 		end
-		redirect_to user_rolls_path
+		redirect_to user_roles_path
 	end
 	
 	private
-		def get_user_roll_from_id
-			@user_roll = current_user.company.user_rolls.find(params[:id])
-			if @user_roll.nil?
+		def get_user_role_from_id
+			@user_role = current_user.company.user_roles.find(params[:id])
+			if @user_role.nil?
 				flash[:error] = "This is not a valid company."
 				redirect_to root_path
 			else
-				@company = @user_roll.company
+				@company = @user_role.company
 			end
 		end
 	

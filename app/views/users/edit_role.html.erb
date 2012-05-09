@@ -1,13 +1,13 @@
 <h4>Edit user roll</h4>
 <h1><%= @user.name %><h1>
-<%= form_tag({:controller => "users", :action => "update_roll"}, :method => :put) %>
+<%= form_tag({:controller => "users", :action => "update_role"}, :method => :put) %>
 <p>Please select a new user roll.</p>
 <div class="cleafix fields">
 	<label>User roll</label>
 	<div class="input">
 		<select id="user_user_roll_id" name="user[user_roll_id]">
-			<% @user_rolls.each do |u| %>
-				<% selected_value = u.id == @user.user_roll_id ? "selected='selected'" : "" %>
+			<% @user_roles.each do |u| %>
+				<% selected_value = u.id == @user.user_role_id ? "selected='selected'" : "" %>
 				<option value="<%= u.id %>" <%= selected_value %>><%= u.name %></option>
 			<% end %>
 		</select>

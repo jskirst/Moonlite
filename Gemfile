@@ -12,7 +12,6 @@ gem 'activesupport'
 gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
-
 gem 'pg', '>= 0.13.2'
 
 group :development do

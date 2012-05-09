@@ -19,7 +19,7 @@ class PagesController < ApplicationController
 			if @enable_recommendations
 				@suggested_paths = Path.suggested_paths(current_user)				
 			end
-      @user_events = UserEvent.includes(:user, :company, :path).where("companies.id = ?", current_user.company_id).all(:limit => 20, :order => "user_events.created_at DESC")
+      @user_events = UserEvent.includes(:user, :company, :path).where("companies.id = ? and users.user_role_id = ?", current_user.company_id, current_user.user_role_id).all(:limit => 20, :order => "user_events.created_at DESC")
 		else
 			render "landing"
 		end
@@ -31,20 +31,20 @@ class PagesController < ApplicationController
     @display_all = true
     if params[:search]
       @query = params[:search]
-      @path_categories << [Category.new(:name => "Search Results"), Path.with_name_like(@query)]
+      @path_categories << [Category.new(:name => "Search Results"), Path.with_name_like(@query, current_user)]
     elsif params[:c]
       category = current_user.company.categories.find(params[:c])
       if category.nil?
         flash[:error] = "Invalid Path category."
         redirect_to explore_path and return
       else
-        @path_categories << [category, Path.with_category(category.id)]
+        @path_categories << [category, Path.with_category(c.id, current_user)]
       end
     else
       @display_all = true
       categories = Category.find_all_by_company_id(current_user.company_id)
       categories.each do |c|
-        @path_categories << [c, Path.with_category(c.id)]
+        @path_categories << [c, Path.with_category(c.id, current_user)]
       end
     end
 		logger.debug @path_categories

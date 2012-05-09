@@ -266,17 +266,24 @@ class SectionsController < ApplicationController
     if @task.nil?
       last_task = current_user.completed_tasks.includes(:section).where(["sections.id = ?", @section.id]).first(:order => "completed_tasks.id DESC")
       @answers = current_user.completed_tasks.joins(:task).where(["section_id = ?", last_task.task.section_id]).all
-      if !@answers.empty?
-        @total_answers = @answers.size
-        @correct_answers = 0
-        @answers.each {|a| @correct_answers += a.status_id}
+      @total_questions = last_task.task.section.tasks.size
+			@correct_answers = 0
+			@incorrect_answers = 0
+			@total_points = 0
+			if !@answers.empty?
+        @answers.each do |a|
+					@total_points += a.points_awarded.to_i
+					@correct_answers += 1 if a.status_id == 1
+					@incorrect_answers += 1 if a.status_id == 0
+				end
       end
+			@percent_correct = ((@correct_answers.to_f / (@correct_answers + @incorrect_answers).to_f) * 100)
       @final_section = true if @path.next_section(@section).nil?
       render "results"
     else
 			if current_user.still_anonymous?
 				@jumpstart = true
-				@leaderboards = Leaderboard.get_leaderboards_for_path(@path).first[1].first(3)
+				@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
 			end
 			
 			@question_type = @task.question_type

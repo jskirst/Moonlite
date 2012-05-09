@@ -10,8 +10,8 @@ SampleApp::Application.routes.draw do
 			get :adminize
 			get :request_reset
 			put :reset_password
-			get :edit_roll
-			put :update_roll
+			get :edit_role
+			put :update_role
 			get :puzzle
 		end
 	end
@@ -25,7 +25,7 @@ SampleApp::Application.routes.draw do
 		member do
 			get :join
 			put :accept
-			get :edit_rolls
+			get :edit_roles
 		end
 	end
   resources :paths do
@@ -39,6 +39,7 @@ SampleApp::Application.routes.draw do
       put :reorder_sections
       get :hero
       get :jumpstart
+			put :update_roles
 		end
 	end
 	resources :sections do
@@ -77,7 +78,7 @@ SampleApp::Application.routes.draw do
   resources :leaderboards
 	resources :categories
 	resources :phrases
-	resources :user_rolls
+	resources :user_roles
 	
 	root 				:to => "pages#home"
 	

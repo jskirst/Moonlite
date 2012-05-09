@@ -21,7 +21,7 @@ class CompaniesController < ApplicationController
 	end
   
 	def show
-		@users = @company.users.includes(:user_roll).find(:all, :conditions => ["company_id = ? AND name != ?", @company.id, "pending"])
+		@users = @company.users.includes(:user_role).find(:all, :conditions => ["company_id = ? AND name != ?", @company.id, "pending"])
 		@unregistered_users =  @company.users.find(:all, :conditions => ["company_id = ? AND name = ?", @company.id, "pending"])
 		@title = @company.name
 	end
@@ -29,7 +29,7 @@ class CompaniesController < ApplicationController
 	def edit
 		@title = "Company Settings"
 		@categories = @company.categories.all
-		@user_rolls = @company.user_rolls.all
+		@user_roles = @company.user_roles.all
 	end
 	
 	def update
@@ -50,8 +50,8 @@ class CompaniesController < ApplicationController
 	
 	def join
 		redirect_to root_path if signed_in?
-		@user_roll = UserRoll.where("signup_token = ?", params[:id]).first
-		@company = @user_roll.company
+		@user_role = UserRole.where("signup_token = ?", params[:id]).first
+		@company = @user_role.company
 		if @company.nil?
 			redirect_to root_path
 		else
@@ -60,15 +60,15 @@ class CompaniesController < ApplicationController
 	end
 	
 	def accept
-		@user_roll = UserRoll.where("signup_token = ?", params[:id]).first
-		@company = @user_roll.company
+		@user_role = UserRole.where("signup_token = ?", params[:id]).first
+		@company = @user_role.company
 		if @company.nil?
 			redirect_to root_path
 		else
 			@user = @company.users.build(params[:user])
 			@user.password = params[:user][:password]
 			@user.password_confirmation = params[:user][:password_confirmation]
-			@user.user_roll_id = @user_roll.id
+			@user.user_role_id = @user_role.id
 			if @user.save
 				flash[:success] = "Welcome to Moonlite!"
 				@user.reload

@@ -6,7 +6,7 @@ class Path < ActiveRecord::Base
 	attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
 		:is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
 		:default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-		:is_locked, :enable_retakes
+		:is_locked, :enable_retakes, :game_type
 	
 	belongs_to :user
 	belongs_to :company
@@ -16,6 +16,8 @@ class Path < ActiveRecord::Base
 	has_many :enrollments, :dependent => :destroy
 	has_many :enrolled_users, :through => :enrollments, :source => :user
 	has_many :info_resources, :dependent => :destroy
+	has_many :path_user_roles, :dependent => :destroy
+	has_many :user_roles, :through => :path_user_roles
 	
 	validates :name, 
 		:presence => true,
@@ -32,23 +34,23 @@ class Path < ActiveRecord::Base
 	
 	#default_scope :order => 'paths.created_at DESC'
   
-  def self.with_category(type, excluded_ids = -2, order = "id DESC")
+  def self.with_category(type, user, excluded_ids = -2, order = "id DESC")
 		if excluded_ids.is_a?(Integer)
-			return Path.where("is_published = ? and category_id = ? and id != ?", true, "#{type}", excluded_ids).all(:order => order)
+			return Path.joins(:path_user_roles).where("path_user_roles.user_role_id = ? and is_published = ? and category_id = ? and paths.id != ?", user.user_role_id, true, "#{type}", excluded_ids).all(:order => order)
 		else
 			return Path.where("is_published = ? and category_id = ? and id NOT IN (?)", true, "#{type}", excluded_ids).all(:order => order)
 		end
   end
   
-  def self.with_name_like(name)
-    return Path.where("is_published = ? and name LIKE ?", true, "%#{name}%")
+  def self.with_name_like(name, user)
+    return Path.joins(:path_user_roles).where("path_user_roles.user_role_id = ? and is_published = ? and name LIKE ?", user.user_role_id, true, "%#{name}%")
   end
   
-  def self.similar_paths(path)
+  def self.similar_paths(path, user)
     unless path.nil?
-      return Path.with_category(path.category_id, path.id, "id DESC")
+      return Path.with_category(path.category_id, user, path.id, "id DESC")
     else
-      return Path.with_category(0)
+      return Path.with_category(0, user)
     end
   end
   
@@ -68,7 +70,7 @@ class Path < ActiveRecord::Base
 			category_counter = category_counter
 			logger.debug category_counter.to_a
 			logger.debug category_counter.to_a[-1]
-			return Path.with_category(category_counter.to_a[-1][0].to_i, enrolled_path_ids)
+			return Path.with_category(category_counter.to_a[-1][0].to_i, user, enrolled_path_ids)
 		end
   end
   

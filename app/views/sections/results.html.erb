@@ -13,9 +13,9 @@
 }
 </style>
 <section class="answer-list">
-  <h2>Section <%= @section.position.to_s %>. <%= @section.name %>: Complete!</h2>
+  <h2><%= @section.name %>: Complete!</h2>
   <% if !@answers.empty? %>
-    <h4>Your score was <%= @correct_answers.to_s + "/" + @total_answers.to_s %></h4>
+    <h4>You got <%= @percent_correct %>% of your answers correct and earned <%= @total_points %> points.</h4>
     <p>Your provided the following answers:</p>
     <ul>
     <% counter = 1 %>

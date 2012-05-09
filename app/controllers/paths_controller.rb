@@ -36,11 +36,16 @@ class PathsController < ApplicationController
 		@categories = current_user.company.categories
     @file_upload_possible = @path.sections.size == 0 ? true : false
     @mode = params[:m]
-		if params[:m] == "settings"
+		if @mode == "settings"
 			render "edit_settings"
-		elsif params[:m] == "achievements" && @enable_achievements
+		elsif @mode == "achievements" && @enable_achievements
 			@achievements = @path.achievements
 			render "edit_achievements"
+		elsif @mode == "access_control"
+			@user_roles = @path.company.user_roles
+			@path_user_roles = [] 
+			@path.user_roles.each { |pur| @path_user_roles << pur.id }
+			render "edit_roles"
 		else
       @start_mode = true if @mode == "start"
       @mode = "sections"
@@ -81,6 +86,25 @@ class PathsController < ApplicationController
     end
     redirect_to edit_path_path(@path, :m => "sections")
   end
+	
+	def update_roles
+		@path = current_user.company.paths.find(params[:id])
+		params[:path][:user_roles].each do |id, status|
+			user_roll = @path.company.user_roles.find(id)
+			if user_roll.nil?
+				flash[:error] = "You do not have access to that data. This action has been reported."
+				redirect_to root_path
+				return
+			elsif status == "on" && @path.path_user_roles.where("user_role_id = ?", id).empty?
+				if @path.path_user_roles.create!(:user_role_id => id)
+					flash[:success] = "Access granted to user role(s)."
+				else
+					flash[:error] = "Oops! Unknown error encountered. Please try again."
+				end
+			end
+		end
+		redirect_to edit_path_path(:id => @path, :m => "access_control")
+	end
 
   def destroy
 		@path.destroy
@@ -97,7 +121,7 @@ class PathsController < ApplicationController
 		@sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
 		
 		if @enable_leaderboard
-			@leaderboards = Leaderboard.get_leaderboards_for_path(@path)
+			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user)
 			@last_update = Leaderboard.get_most_recent_board_date
 		end
 		
@@ -122,7 +146,7 @@ class PathsController < ApplicationController
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
 			
 			Leaderboard.reset_for_path(@path)
-			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, false).first
+			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first
 			counter = 1
 			previous = nil
       @leaderboards[1].each do |l|
@@ -140,7 +164,7 @@ class PathsController < ApplicationController
 				end
 			end
 			
-			@similar_paths = Path.similar_paths(@path)
+			@similar_paths = Path.similar_paths(@path, current_user)
       @suggested_paths = Path.suggested_paths(current_user, @path.id)
 			if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
 				event = "<%u%> completed the <%p%> challenge with a score of #{@total_points_earned.to_s}."
@@ -200,7 +224,7 @@ class PathsController < ApplicationController
 		end
 		
 		def can_view?
-			redirect_to root_path unless (@path.is_published && @path.company_id == current_user.company_id) || (@path.user_id = current_user.id) || (@path.company_id == current_user.company_id && @enable_collaboration)
+			redirect_to root_path unless (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id)) || (@path.user_id = current_user.id) || (@path.company_id == current_user.company_id && @enable_collaboration)
 		end
 		
 		def can_continue?

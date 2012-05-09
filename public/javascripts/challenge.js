@@ -19,14 +19,13 @@ function start_question_timer(){
     if(count==0){
       $(".timer").removeClass("timer").addClass("expired-timer");
       $(".streak").animate({opacity: 0.25}, 250);
-      $("#listless").val(false)
+      $("#listless").val(false);
     }count --;
   }, 1000);
 }
 
-/*
 $(document).ready(function() {
-  $('form').submit(function() {
+  $('form#challenge_form').submit(function() {
     if(typeof jQuery.data(this, "disabledOnSubmit") == 'undefined') {
       jQuery.data(this, "disabledOnSubmit", { submited: true });
       $('input[type=submit], input[type=button]', this).each(function() {
@@ -40,4 +39,3 @@ $(document).ready(function() {
     }
   });
 });
-*/

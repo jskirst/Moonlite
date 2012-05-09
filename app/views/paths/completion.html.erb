@@ -1,9 +1,9 @@
 <% if @must_register %>
 <script>
 $(function(){
-	$("a").attr("href", "#");
+	$('a[id != "signout_link"]').attr("href", "#");
 	
-	$("#save_score, a").click(function(){
+	$('#save_score, a[id != "signout_link"]').click(function(){
 		$('#startmodal').modal({
 			keyboard: true,
 			backdrop: 'static',

@@ -1,0 +1,23 @@
+<%= render "tab_navigation" %>
+<section class="tab_content">
+	<p style="padding: 10px 0 10px 20px;">Select each of the user roles listed below that you would like to allow access to this challenge.</p>
+	<%= form_tag({ :controller => :paths, :action => :update_roles }, :method => :put ) %>
+	<div class="field clearfix">
+		<label>User Roles</label>
+		<div class="input">
+			<ul class="inputs-list">
+			<% @user_roles.each do |ur| %>
+			<li>
+				<label>
+					<input type="checkbox" name="path[user_roles][<%= ur.id %>]" id="path[user_roles][<%= ur.id %>]" <%= @path_user_roles.include?(ur.id) ? "checked='checked'" : "" %>>
+					<span><%= ur.name %></span>
+				</label>
+			</li>
+			<% end %>
+			</ul>
+		</div>
+	</div>
+</section>
+<div class="actions">
+	<%= submit_tag "Save", :class => "btn primary" %>
+</div>

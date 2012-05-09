@@ -1,4 +1,4 @@
-class UserRoll < ActiveRecord::Base
+class UserRole < ActiveRecord::Base
 	attr_accessible :company_id, 
 		:name,	
 		:enable_administration,
