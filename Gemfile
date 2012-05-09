@@ -12,8 +12,6 @@ gem 'activesupport'
 gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
-
-
 gem 'pg', '>= 0.13.2'
 
 group :development do
@@ -29,5 +27,4 @@ group :test do
 	gem 'factory_girl_rails'
 	gem 'faker'
 	gem 'simplecov', :require => false
-
 end
