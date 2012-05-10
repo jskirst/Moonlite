@@ -1,9 +1,13 @@
+<style>
+.locked_challenge { opacity: .3; }
+</style>
+
 <ul class="media-grid">
 <% paths.each_index do |pp| %>
 	<% if pp >= 4 && !display_all then break end %>
 	<% path = paths[pp] %>
 	<li>
-		<a href="<%= path_path(path) %>" id="<%= path.name.gsub(" ", "_") %>">
+		<a href="<%= path_path(path) %>" id="<%= path.name.gsub(" ", "_") %>" class="<%= "locked_challenge" if path.is_locked %>">
 			<div class="path-caption">
 				<span class="caption-title" style="font-size:18px;line-height:30px;"><%= truncate(path.name, :length => 22) %></span><br>
 			</div>

@@ -224,7 +224,7 @@ class PathsController < ApplicationController
 		end
 		
 		def can_view?
-			redirect_to root_path unless (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id)) || (@path.user_id = current_user.id) || (@path.company_id == current_user.company_id && @enable_collaboration)
+			redirect_to root_path unless (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id) && !@path.is_locked) || (@path.user_id = current_user.id) || (@path.company_id == current_user.company_id && @enable_collaboration)
 		end
 		
 		def can_continue?
