@@ -55,7 +55,7 @@ module SessionsHelper
 		unless current_user.nil?
 			return current_user.company.name
 		else
-			return "Moonlite"
+			return "Metabright"
 		end
 	end
 	
