@@ -42,9 +42,9 @@ PATH_SECTIONS = [["Introduction", "/images/default_section_pic_1.PNG"],
   ["Advanced", "/images/default_section_pic_3.PNG"],
   ["Final test", "/images/default_section_pic_4.PNG"]]
 
-def create_user(company,user_roll,name,email,image_url)
+def create_user(company,user_role,name,email,image_url)
 	u = company.users.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10)
-	u.user_roll = user_roll
+	u.user_role = user_role
 	u.save
 	return u
 end
@@ -54,20 +54,18 @@ namespace :db do
 	task :genesis => :environment do
 		Rake::Task['db:reset'].invoke
 		moonlite_company = Company.create!(:name => "Moonlite")
-		default_roll = moonlite_company.user_rolls.create!(:name => "Admin")
-		default_cat = moonlite_company.categories.create!(:name => "Everything", :enable_administration => true)
-		moonlite_admin = create_user(moonlite_company, default_roll, "Jonathan Kirst", "jc@moonlite.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
-		create_user(moonlite_company, default_roll, "Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg")
-		create_user(moonlite_company, default_roll, "Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg")
-		create_user(moonlite_company, default_roll, "Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg")
+		default_role = moonlite_company.user_roles.create!(:name => "Admin", :enable_administration => true)
+		moonlite_company.user_role_id = default_role.id
+		moonlite_company.save
+		default_cat = moonlite_company.categories.create!(:name => "Everything")
+		moonlite_admin = create_user(moonlite_company, default_role, "Jonathan Kirst", "jc@moonlite.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
+		create_user(moonlite_company, default_role, "Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg")
+		create_user(moonlite_company, default_role, "Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg")
+		create_user(moonlite_company, default_role, "Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg")
 		
     PHRASE_PAIRINGS.each do |pp|
       PhrasePairing.create_phrase_pairings(pp)
     end
-    
-		REWARDS.each do |r|
-			moonlite_company.rewards.create!(:name => r[0], :description => r[1], :image_url => r[2], :points => r[3])
-		end
 			
 		PATHS.each do |p|
 			moonlite_admin.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :company_id => moonlite_company.id, :is_published => true, :is_public => true, :category_id => default_cat.id)
@@ -98,7 +96,7 @@ namespace :db do
 				email = name.gsub(" ",".") + "@moonlite.com"
 				image_url = fake_user[1]
 				if User.find_by_email(email).nil?
-					new_user = create_user(moonlite_company, default_roll, name, email, image_url)
+					new_user = create_user(moonlite_company, default_role, name, email, image_url)
 				end
 			end
 			
