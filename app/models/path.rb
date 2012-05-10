@@ -50,7 +50,7 @@ class Path < ActiveRecord::Base
     unless path.nil?
       return Path.with_category(path.category_id, user, path.id, "id DESC")
     else
-      return Path.with_category(0, user)
+      return Path.with_category(user.company.categories.first, user)
     end
   end
   
@@ -58,7 +58,7 @@ class Path < ActiveRecord::Base
     paths = user.enrolled_paths
 		enrolled_path_ids = []
 		if paths.empty?
-			return Path.with_category(1)
+			return Path.with_category(user.company.categories.first, user)
 		else
 			category_counter = {}
 			paths.each do |p|
