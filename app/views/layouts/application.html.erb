@@ -10,6 +10,30 @@
 <body>
 <div id="fb-root"></div>
 <script>
+$(function(){
+	$('.locked_challenge').removeAttr("href");
+	$('.locked_challenge').click(function(){
+		$('#locked_modal').modal({
+			 keyboard: true,
+			 backdrop: 'static',
+			 show: true
+		});
+	});
+});
+</script>
+<div id="locked_modal" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>Locked Challenges</span></h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size: 16px; padding:0 7px 5px 10px;">You must complete at least 8 challenges to unlock this challenge.</p>
+	</div>
+	<div class="modal-footer">
+		<%= link_to "Okay", "#", :class => "btn primary", :onclick => "$('#locked_modal').modal('hide');" %>
+	</div>
+</div>
+<script>
 (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
