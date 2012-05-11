@@ -21,7 +21,13 @@ class PagesController < ApplicationController
 			end
       @user_events = UserEvent.includes(:user, :company, :path).where("companies.id = ? and users.user_role_id = ?", current_user.company_id, current_user.user_role_id).all(:limit => 20, :order => "user_events.created_at DESC")
 		else
-			render "landing"
+			unless params[:m]
+				render "landing"
+			else
+				@first_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).first(4)
+				@last_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).last(4)
+				render "consumer_landing"
+			end
 		end
 	end
   
