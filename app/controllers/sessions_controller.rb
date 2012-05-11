@@ -18,6 +18,10 @@ class SessionsController < ApplicationController
 	
 	def destroy
 		sign_out
-		redirect_to root_path
+		if @is_consumer
+			redirect_to root_path(:m => "c")
+		else
+			redirect_to root_path
+		end
 	end
 end
