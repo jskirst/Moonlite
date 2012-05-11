@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509005556) do
+ActiveRecord::Schema.define(:version => 20120511014236) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(:version => 20120509005556) do
     t.string   "default_profile_picture_link"
     t.boolean  "enable_auto_generate",         :default => false
     t.integer  "user_role_id"
+    t.integer  "seat_limit",                   :default => 50
   end
 
   create_table "company_users", :force => true do |t|
