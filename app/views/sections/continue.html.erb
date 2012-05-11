@@ -8,10 +8,6 @@
 
 <script src="/javascripts/challenge.js"></script>
 
-<% if @path.game_type == "basic" %>
-	<%= render "progress_box", { :earned_points => @earned_points, :possible_points => @possible_points, :streak_points => @streak_points } %>
-<% end %>
-
 <%= form_tag({ :controller => :completed_tasks }, :method => :post, :id => "challenge_form") %>
 <div class="task row">
   <div class="span10">
@@ -30,7 +26,9 @@
     <div class="answer">
       <input type="hidden" name="completed_task[task_id]" value="<%= @task.id %>">
       <input type="hidden" name="completed_task[quiz_session]" value="<%= @quiz_session %>">
-			<% if @question_type == "text" %>
+			<% if @question_type == "text" && @path.game_type == "character guess" %>
+				<%= render "character_guess", { :answer => @task.answer1 } %>
+			<% elsif @question_type == "text" %>
 				<%= render "single_answer", { :task => @task } %>
 			<% else %>
 				<%= render "multiple_choice_answer", { :task => @task } %>
@@ -45,6 +43,8 @@
 		<%= render "raw_numbers" %>
 	<% elsif @path.game_type == "raw streak" %>
 		<%= render "raw_streak" %>
+	<% else %>
+		<%= render "progress_box", { :earned_points => @earned_points, :possible_points => @possible_points, :streak_points => @streak_points } %>
 	<% end %>
 	</div>
 </div>

@@ -1,0 +1,28 @@
+<style>
+	.character_guess_container { width:280px; margin: 40px;}
+	.character { width: 13px; padding: 6px 2px 8px 6px; border: 1px solid gray; margin: 6px; float: left; border-radius: 2px;}
+
+	.character:hover { background: lightgray; border: 1px solid black; }
+	.selected_char { background: lightgray; border: 1px solid black; }
+</style>
+<script>
+function select_character(obj){
+	if($(obj).hasClass('selected_char')){
+		$(obj).removeClass('selected_char');
+		$('#completed_task_answer').val($('#completed_task_answer').val().replace($(obj).text(),""));
+	} else {
+		$(obj).addClass('selected_char');
+		$('#completed_task_answer').val($('#completed_task_answer').val() + $(obj).text());
+	}
+}
+</script>
+<% selection_script = "" %>
+<% added_characters = Array.new(16 - answer.length) { ((rand(122-97) + 97).chr).to_s.upcase } %>
+<% characters = (answer.upcase.split(//) + added_characters).shuffle %>
+<div class="character_guess_container" %>
+	<input type="hidden" name="completed_task[text_answer]" id="completed_task_answer" />
+	<% characters.each_index do |ci| %>
+		<div class="character" onclick="select_character(this)"><%= characters[ci] %></div>
+		<% if ci == 7 %><br/><% end %>
+	<% end %>
+</div>

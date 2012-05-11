@@ -45,7 +45,7 @@ class Task < ActiveRecord::Base
 		if type == "text"
 			answers = describe_correct_answer.downcase.split(",")
 			answers.each do |answer|
-				return true if close_enough?(user_answer, answer)
+				return true if same_letters?(user_answer, answer)
 			end
 			return false
 		else
@@ -68,8 +68,15 @@ class Task < ActiveRecord::Base
 	end
   
   private
-		def close_enough? (user_answer, answer)
-			return user_answer.strip.downcase == answer.strip.downcase
+		def same_letters?(word, str)
+			word = word.downcase
+			str = str.downcase
+			
+			return false unless word.size == str.size
+			str.split(//).each do |s|
+				return false unless word.include?(s)
+			end
+			return true
 		end
 	
     def randomize_answers
