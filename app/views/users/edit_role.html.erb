@@ -5,7 +5,7 @@
 <div class="cleafix fields">
 	<label>User roll</label>
 	<div class="input">
-		<select id="user_user_roll_id" name="user[user_roll_id]">
+		<select id="user_user_role_id" name="user[user_role_id]">
 			<% @user_roles.each do |u| %>
 				<% selected_value = u.id == @user.user_role_id ? "selected='selected'" : "" %>
 				<option value="<%= u.id %>" <%= selected_value %>><%= u.name %></option>
