@@ -4,7 +4,7 @@ class Mailer < ActionMailer::Base
 	def welcome(details)
 		@user_email = details[:email]
 		if Rails.env.production?
-			@accept_url = "http://www.projectmoonlite.com/users/#{details[:token1]}/accept"
+			@accept_url = "http://www.metabright.com/users/#{details[:token1]}/accept"
 		else
 			@accept_url = "http://localhost:3000/users/#{details[:token1]}/accept"
 		end
@@ -14,7 +14,7 @@ class Mailer < ActionMailer::Base
 	def reset(details)
 		@user_email = details[:email]
 		if Rails.env.production?
-			@reset_url = "http://www.projectmoonlite.com/users/#{details[:token1]}/request_reset"
+			@reset_url = "http://www.metabright.com/users/#{details[:token1]}/request_reset"
 		else
 			@reset_url = "http://localhost:3000/users/#{details[:token1]}/request_reset"
 		end

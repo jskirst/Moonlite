@@ -7,10 +7,10 @@ SampleApp::Application.initialize!
 ActionMailer::Base.smtp_settings = { 
 	:enable_starttls_auto => true,
 	:address => "smtp.gmail.com",
-	:domain => "projectmoonlite.com",
+	:domain => "metabright.com",
 	:port => 587, 
-	:user_name => "registration@projectmoonlite.com", 
-	:password => "hfpkN8tf",
+	:user_name => "jskirst@metabright.com", 
+	:password => "disrupt11",
 	:authentication => :plain
 }
 
