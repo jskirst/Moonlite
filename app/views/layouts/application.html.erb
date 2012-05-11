@@ -17,6 +17,8 @@
   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=276612745757646";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+$.fn.exists = function(){return this.length>0;}
 </script>
 <div class="container">
 	<%= render "layouts/header" %>

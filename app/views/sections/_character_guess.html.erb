@@ -1,7 +1,19 @@
+<div id="help_modal" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>Help</h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size: 16px; padding:0 7px 5px 10px;">To answer the question, select the letters from the list by clicking them to form the word that you believe is the answer. You do not have to select the letters in the correct order.</p>
+	</div>
+	<div class="modal-footer">
+		<div class="btn primary" id="help_close_button">Close</div>
+	</div>
+</div>
+
 <style>
 	.character_guess_container { width:280px; margin: 40px;}
 	.character { width: 13px; padding: 6px 2px 8px 6px; border: 1px solid gray; margin: 6px; float: left; border-radius: 2px;}
-
 	.character:hover { background: lightgray; border: 1px solid black; }
 	.selected_char { background: lightgray; border: 1px solid black; }
 </style>
@@ -16,6 +28,7 @@ function select_character(obj){
 	}
 }
 </script>
+
 <% selection_script = "" %>
 <% added_characters = Array.new(16 - answer.length) { ((rand(122-97) + 97).chr).to_s.upcase } %>
 <% characters = (answer.upcase.split(//) + added_characters).shuffle %>

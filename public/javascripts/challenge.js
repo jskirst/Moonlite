@@ -38,4 +38,13 @@ $(document).ready(function() {
       return false;
     }
   });
+	
+	if($("#help_modal").exists()){
+		$("#help_button").click(function(){
+			$('#help_modal').modal({ keyboard: true, backdrop: 'static', show: true });
+			$("#help_close_button").click(function(){ $("#help_modal").modal("hide"); });
+		});
+	} else {
+		$("#help_button").hide();
+	}
 });
