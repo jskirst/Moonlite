@@ -93,7 +93,7 @@ class Leaderboard < ActiveRecord::Base
 		end
 	end
 	
-	def self.get_user_stats(user, date)
+	def self.get_user_stats(user, date = Time.now)
 		excluded_emails = get_all_excluded_users(user.company)
 		return nil if excluded_emails.include?(user.email)
 		return nil if user.name == "pending"

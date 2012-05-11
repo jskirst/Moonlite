@@ -1,6 +1,5 @@
 DEFAULT_PASSWORD = "a1b2c3"
 NUMBER_OF_USERS = 15
-NUMBER_OF_TASKS = 5
 TIME_PERIOD = 7
 AVG_SCORE = 9
 
@@ -46,7 +45,7 @@ namespace :db do
 		end
 		
 		new_users.each do |user|
-			moonlite_company.paths.all.each do |p|
+			moonlite_company.paths.where("is_published = ?", true).each do |p|
 				user.enrollments.create!(:path_id => p.id)
 				date = rand(TIME_PERIOD).days.ago
 				p.sections.each do |s|
