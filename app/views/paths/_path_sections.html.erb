@@ -1,7 +1,7 @@
 <div>
   <h3>Sections</h3>
   <% if sections.empty? %>
-  <p>No sections have been published for this challenge yet. Check back later to see if any have been posted!</p>
+  <p>No sections have been published for this <%= name_for_paths %> yet. Check back later to see if any have been posted!</p>
   <% else %>
     <ul class="media-grid">
     <% previous_completed = false %>

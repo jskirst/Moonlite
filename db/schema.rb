@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120511014236) do
+ActiveRecord::Schema.define(:version => 20120514195623) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(:version => 20120511014236) do
     t.boolean  "enable_auto_generate",         :default => false
     t.integer  "user_role_id"
     t.integer  "seat_limit",                   :default => 50
+    t.string   "name_for_paths",               :default => "certification"
   end
 
   create_table "company_users", :force => true do |t|

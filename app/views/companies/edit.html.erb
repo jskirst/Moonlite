@@ -28,7 +28,7 @@
 						<% end %>
 					</ol>
 					<% end %>
-					<%= link_to "Add a Path category", new_category_path, :class => "btn secondary" %>
+					<%= link_to "Add a "+name_for_paths+" category", new_category_path, :class => "btn secondary" %>
 				</div>
 			</div>
 			<hr/>
@@ -46,6 +46,13 @@
 				<%= f.label "Default User Profile Picture" %>
 				<div class="input">
 					<%= f.text_field :default_profile_picture_link %>
+				</div>
+			</div>
+			<div class="field clearfix">
+				<%= f.label "Term for 'certification'", :placeholder => "e.g. 'challenge', 'path', 'test', 'quiz'." %>
+				<div class="input">
+					<p><%= f.text_field :name_for_paths %></p>
+					<p><strong>NOTE:</strong> Please provide the singular version of the word.</p>
 				</div>
 			</div>
 			<div class="actions">

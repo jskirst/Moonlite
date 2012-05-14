@@ -5,7 +5,7 @@
 	</div>
 	<h2><%= @path.name %></h2>
 	<% if @achievements.empty? %>
-		<p style="margin: 30px 0px 200px 0px;">You have not yet created any achievements for this challenge.</p>
+		<p style="margin: 30px 0px 200px 0px;">You have not yet created any achievements for this <%= name_for_paths %>.</p>
 	<% else %>
 		<table>
 		<% @achievements.each do |a| %>

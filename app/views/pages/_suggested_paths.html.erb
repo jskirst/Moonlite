@@ -1,7 +1,7 @@
 <section class="suggested-paths">
 	<h3><%= paths_title %></h3>
 	<% if paths_list.empty? %>
-	<p>Sorry, we don't have any recommended challenges for you yet. Check back in later!</p>
+	<p>Sorry, we don't have any recommended <%= name_for_paths.pluralize %> for you yet. Check back in later!</p>
 	<% else %>
   <ul class="media-grid">
     <% paths_list.each_index do |p| %>

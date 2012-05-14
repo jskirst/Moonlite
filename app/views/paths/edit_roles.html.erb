@@ -1,6 +1,6 @@
 <%= render "tab_navigation" %>
 <section class="tab_content">
-	<p style="padding: 10px 0 10px 20px;">Select each of the user roles listed below that you would like to allow access to this challenge.</p>
+	<p style="padding: 10px 0 10px 20px;">Select each of the user roles listed below that you would like to allow access to this <%= name_for_paths %>.</p>
 	<%= form_tag({ :controller => :paths, :action => :update_roles }, :method => :put ) %>
 	<div class="field clearfix">
 		<label>User Roles</label>

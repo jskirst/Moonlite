@@ -2,6 +2,6 @@
 		:html => { :method => :delete } do |f| %>
 	<%= f.hidden_field :path_id %>
 	<div class="actions">
-		<%= f.submit "Leave Challenge", :class=> "btn primary" %>
+		<%= f.submit "Leave <%= name_for_paths %>", :class=> "btn primary" %>
 	</div>
 <% end %>

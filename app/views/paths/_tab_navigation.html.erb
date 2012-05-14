@@ -1,6 +1,6 @@
 <section class="tab_header">
   <div>
-    <h4 style="margin-top:-15px;">Challenge Builder</h4>
+    <h4 style="margin-top:-15px;"><%= name_for_paths %> Builder</h4>
     <%= image_tag @path.path_pic %>
     <h1><%= @path.name %></h1>
   </div>
@@ -21,7 +21,7 @@
         <%= link_to "Access Control", edit_path_path(@path.id, :m => "access_control") %>
       </li>
       <li style="float:right;">
-        <%= link_to "View Challenge", @path, :style => "background-color:whitesmoke;" %>
+        <%= link_to "View "+name_for_paths, @path, :style => "background-color:whitesmoke;" %>
       </li>
     </ul>
   </div>

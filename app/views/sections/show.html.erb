@@ -8,7 +8,7 @@
 <![endif]-->
 <section class="tab_content">
 	<h2 style="margin-bottom: 20px;"><%= @section.name %></h2>
-	<p style='font-weight:bold;'>Review the content below before you begin the challenge.</p>
+	<p style='font-weight:bold;'>Review the content below before you begin the <%= name_for_paths %>.</p>
 	<% unless @section.instructions.blank? %>
 	<div style="padding: 20px"><%= @section.instructions.html_safe %></div>
 	<% end %>

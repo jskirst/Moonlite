@@ -59,6 +59,14 @@ module SessionsHelper
 		end
 	end
 	
+	def name_for_paths
+		unless current_user.nil?
+			return current_user.company.name_for_paths.capitalize
+		else
+			return "Challenge"
+		end
+	end
+	
 	def determine_enabled_features
 		unless current_user.nil?
 			role = current_user.user_role

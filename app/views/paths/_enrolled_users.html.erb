@@ -1,7 +1,7 @@
 <div>
   <h3>Enrolled Users</h3>
   <% if users.empty? %>
-  <p>Be the first to take this challenge!</p>
+  <p>Be the first to take this <%= name_for_paths %>!</p>
   <% else %>
     <ul class="media-grid">
     <% users.each do |u| %>

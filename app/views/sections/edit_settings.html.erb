@@ -27,7 +27,7 @@
 				<li>
 					<label>
 						<%= f.check_box :is_published, :confirm => "This will publish the section so all users in your account can access it. Are you sure you want to publish this now?" %>
-						<span>Publish this section to your challenge so it is visible to everyone</span>
+						<span>Publish this section to your <%= name_for_paths %> so it is visible to everyone</span>
 					</label>
 				</li>
 				<li>
@@ -42,6 +42,6 @@
 </section>
 <div class="actions">
   <%= f.submit "Save", :class => "btn primary" %>
-  <%= link_to "Back to Challenge", edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
+  <%= link_to "Back to "+name_for_paths, edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
 </div>
 <% end %>

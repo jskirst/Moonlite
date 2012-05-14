@@ -11,7 +11,7 @@
     <% end %>
   </div>
   <% if @sections.empty? %>
-    <p style="padding:25px;">Challenges are broken down into individual sections. Get started by creating your <%= link_to "first section!", new_section_path(:path_id => @path.id) %></p>
+    <p style="padding:25px;"><%= name_for_paths.pluralize %> are broken down into individual sections. Get started by creating your <%= link_to "first section!", new_section_path(:path_id => @path.id) %></p>
   <% else %>
     <table>
     <% @sections.each do |s| %>
@@ -54,5 +54,5 @@
   <% end %>
 </section>
 <div class="actions">
-  <%= link_to "View Challenge", @path, :class => "btn primary" %>
+  <%= link_to "View "+name_for_paths.pluralize, @path, :class => "btn primary" %>
 </div>

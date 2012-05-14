@@ -14,7 +14,7 @@
 	<div class="row">
 		<div class="span6 columns">
 			<p>Welcome to your Home page! You can reach this page at any time by clicking your company logo (<strong><%= company_logo %></strong>) at the top left of the navigation bar.</p>
-			<p>All of the challenges you are currently enrolled in are displayed at the top. Moonlite news from around your company is just below, and will feature stories about every user's achievements and challenge progress.</p>
+			<p>All of the <%= name_for_paths.pluralize %> you are currently enrolled in are displayed at the top. Moonlite news from around your company is just below, and will feature stories about every user's achievements and <%= name_for_paths %> progress.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/home.PNG", :size=>"600x400"%>
@@ -22,19 +22,19 @@
 	</div>
 	<% elsif @page == 2 %>
 	<div class="page-header">
-		<h2>Challenges</h2>
+		<h2><%= name_for_paths.pluralize %></h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">
 			<p>The <strong>Explore</strong> page is the heart of every Moonlite account, and can be accessed by clicking the Explore link next to your company logo on the nav bar.</p>
-			<p>Here you can view and access each of the challenges that your organization has made or purchased.</p>
+			<p>Here you can view and access each of the <%= name_for_paths.pluralize %> that your organization has made or purchased.</p>
 		</div>
 		<div class="span10 columns">
 			<%= image_tag "/images/tour/all_paths.PNG", :size=>"600x400"%>
 		</div>
 	</div>
 	<div class="page-header">
-		<h2>Enrolling in a challenge</h2>
+		<h2>Enrolling in a <%= name_for_paths %></h2>
 	</div>
 	<div class="row">
 		<div class="span6 columns">

@@ -44,13 +44,13 @@
 				<li>
 					<label>
 						<%= f.check_box :enable_browsing %>
-						<span>Enable challenge browsing</span>
+						<span>Enable <%= name_for_paths %> browsing</span>
 					</label>
 				</li>            
 				<li>
 					<label>
 						<%= f.check_box :enable_comments %>
-						<span>Enable comments on challenges</span>
+						<span>Enable comments on <%= name_for_paths.pluralize %></span>
 					</label>
 				</li>            
 				<li>
@@ -74,7 +74,7 @@
 				<li>
 					<label>
 						<%= f.check_box :enable_recommendations %>
-						<span>Enable challenge recommendations</span>
+						<span>Enable <%= name_for_paths %> recommendations</span>
 					</label>
 				</li>
 			</ul>
