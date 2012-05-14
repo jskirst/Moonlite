@@ -81,7 +81,7 @@ class Task < ActiveRecord::Base
 	
     def randomize_answers
       answers = answers_to_array
-      if answers.size > 1
+      if self.correct_answer == 1 && answers.size > 1
         answers = answers.shuffle
         self.correct_answer = answers.index(self.answer1.chomp) + 1
         self.points = 10
