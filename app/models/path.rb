@@ -127,6 +127,26 @@ class Path < ActiveRecord::Base
     return "Medium" if task_count < 150
     return "Hard"
   end
+	
+	def deep_clone(company)
+		cloned_path = self.dup
+		cloned_path.company_id = company.id
+		cloned_path.user_id = company.users.first.id
+		cloned_path.category_id = nil
+		cloned_path.save
+		
+		sections.each do |s|
+			cloned_section = s.dup
+			cloned_section.path_id = cloned_path.id
+			cloned_section.save
+			s.tasks.each do |t|
+				cloned_task = t.dup
+				cloned_task.section_id = cloned_section.id
+				cloned_task.save
+			end
+		end
+		return cloned_path
+	end
   
   private
     def check_image_url
