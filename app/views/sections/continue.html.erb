@@ -4,7 +4,7 @@
 
 <% if @jumpstart %>
 	<%= render "jumpstart", { :path => @path, :leaderboards => @leaderboards } %>
-<% elsif @earned_points == 0 %>
+<% elsif @earned_points == 0 && @correct.nil? %>
 <div id="start_modal" class="modal hide fade">
 	<div class="modal-header">
 		<a href="#" class="close"></a>
