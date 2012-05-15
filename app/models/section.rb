@@ -72,10 +72,14 @@ class Section < ActiveRecord::Base
   end
 	
 	def remaining_tasks(user)
-		if path.enable_retakes
-			return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 1)", user.id]).count
-    else
-			return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
+		unless self.is_published
+			if path.enable_retakes
+				return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 1)", user.id]).count
+			else
+				return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
+			end
+		else
+			return 0
 		end
   end
   
