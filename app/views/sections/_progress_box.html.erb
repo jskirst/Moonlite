@@ -1,7 +1,7 @@
 <script>
 $(function(){
 	<% unless @correct.nil? %> set_answer_status(<%= @correct %>); <% end %>
-	<% unless @jumpstart %> start_question_timer(); <% end %>
+	<% unless @jumpstart || @earned_points == 0 %> start_question_timer(); <% end %>
 	$("#progressbar").progressbar({ value: <%= @progress %> });
 });
 </script>
