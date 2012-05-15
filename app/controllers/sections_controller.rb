@@ -292,6 +292,10 @@ class SectionsController < ApplicationController
         @correct = (params[:p] == "1" ? true : false)
       end
 			
+			last_question = current_user.completed_tasks.includes(:task).where(["tasks.section_id = ?", @task.section_id]).first(:order => "completed_tasks.id DESC")
+			unless last_question.nil?
+				@last_points = last_question.points_awarded
+			end
       @progress = @path.percent_complete(current_user) + 1
       @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
       @possible_points = 10

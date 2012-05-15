@@ -10,7 +10,7 @@
 
 <%= form_tag({ :controller => :completed_tasks }, :method => :post, :id => "challenge_form") %>
 <div class="task row">
-  <div class="span10">
+  <div class="span9">
     
 		<div class="question">
       <h2>Section <%= @section.position.to_s %>. <%= @section.name %></h2>
@@ -36,7 +36,7 @@
     </div>
   
 	</div>
-	<div class="span6">
+	<div class="span7">
   <% if @path.game_type == "picture" %>
 		<%= render "picture_game", { :picture => "", :progress => @progress } %>
 	<% elsif @path.game_type == "raw numbers" %>

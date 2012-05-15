@@ -34,6 +34,7 @@ class CompletedTasksController < ApplicationController
 				end
 			end
 			@completed_task.points_awarded = points
+			logger.debug "AWARDING POINTS:" + points.to_s
 			@completed_task.save
 			achievement = current_user.award_points_and_achievements(@task, points)
 		else
