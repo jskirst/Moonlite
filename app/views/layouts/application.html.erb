@@ -6,6 +6,12 @@
 <%= javascript_include_tag :defaults %>
 <%= render "layouts/stylesheets" %>
 <%= render "layouts/scripts" %>
+<% unless current_user.nil? || current_user.company.custom_styles.first.nil? %>
+	<style>
+	<%= current_user.company.custom_styles.first.core_layout_styles.html_safe %>
+	<%= current_user.company.custom_styles.first.add_on_styles.html_safe %>
+	</style>
+<% end %>
 </head>
 <body>
 <div id="fb-root"></div>

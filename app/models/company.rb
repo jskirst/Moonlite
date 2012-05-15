@@ -12,6 +12,7 @@ class Company < ActiveRecord::Base
 	has_many :paths
 	has_many :categories
 	has_many :user_roles
+	has_many :custom_styles
 	has_one :user_role
 	
 	before_create :set_signup_token

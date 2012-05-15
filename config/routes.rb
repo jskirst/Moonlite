@@ -28,6 +28,7 @@ SampleApp::Application.routes.draw do
 			get :edit_roles
 		end
 	end
+	resources :custom_styles, :only => [:index, :create, :edit, :update, :destroy]
   resources :paths do
 		member do
 			get :review
@@ -92,7 +93,6 @@ SampleApp::Application.routes.draw do
   match '/all_paths',	:to => 'pages#explore'
   match '/explore',:to => 'pages#explore'
   match '/create',:to => 'pages#create'
-	match '/tutorial',:to => 'pages#tutorial'
   
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'

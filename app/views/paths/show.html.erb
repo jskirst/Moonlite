@@ -10,11 +10,7 @@
           <%= f.submit "Enroll", :class=> "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;" %>
         <% end %>
       <% else %>
-				<% if @start_mode == "Get Started" %>
-					<%= link_to @start_mode, tutorial_path(:p => @path.id), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
-				<% else %>
-					<%= link_to @start_mode, continue_path_path(@path), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
-				<% end %>
+				<%= link_to @start_mode, continue_path_path(@path), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
 			<% end %>
     </div>
     <div>

@@ -1,4 +1,4 @@
-#content { padding-top: 75px; }
+#content { padding-top: 75px; min-height: 400px; }
 .tab_header h1 { padding: 4px 0px 0px 0px; margin-left: 50px; }
 .tab_header img { float:left; width: 40px; height: 40px; }
 .tab_content { min-height: 300px; }
