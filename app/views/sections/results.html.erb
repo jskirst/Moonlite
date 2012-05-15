@@ -13,15 +13,20 @@
 }
 </style>
 <section class="answer-list">
+	<% if @final_section %>
+		<%= link_to "View Overall Score", continue_path_path(@path), :class => "btn primary", :style => "float:right; margin-top:10px;" %>
+  <% else %>
+		<%= link_to "Next Section", continue_path_path(@path), :class => "btn primary", :style => "float:right;margin-top:10px;" %>
+	<% end %>
   <h2><%= @section.name %>: Complete!</h2>
   <% if !@answers.empty? %>
-    <h4>You got <%= @percent_correct %>% of your answers correct and earned <%= @total_points %> points.</h4>
+    <h4>You got <%= @percent_correct %>% of the questions correct on the first try and earned <%= @total_points %> points.</h4>
     <p>Your provided the following answers:</p>
     <ul>
     <% counter = 1 %>
     <% @answers.each do |answer| %>
       <% answer_class = answer.status_id == 1 ? "success" : "error" %>
-      <li class="alert-message block-message <%= answer_class %>">
+      <li class="alert-message block-message <%= answer_class %>" style="border-radius: 0; moz-border-radius: 0; webkit-border-radius: 0px;">
         <p><%= counter %>. Question: <%= answer.task.question %></p>
         <p style="padding-left: 20px;">Answer: 
 					<% if answer.status_id == 0 %>
@@ -38,7 +43,7 @@
 </section>
 <div class="actions">
   <% if @final_section %>
-  <%= link_to "View Score", continue_path_path(@path), :class => "btn primary" %>
+  <%= link_to "View Overall Score", continue_path_path(@path), :class => "btn primary" %>
   <% else %>
   <%= link_to "Next Section", continue_path_path(@path), :class => "btn primary" %>
   <%= link_to "Continue Later", root_path, :class => "btn secondary" %>

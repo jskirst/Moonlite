@@ -120,7 +120,7 @@ class UsersController < ApplicationController
 		
 		@user.user_role_id = @user_role.id
 		if @user.save
-			flash[:success] = "User roll changed successfully."
+			flash[:success] = "User role changed successfully."
 			redirect_to current_user.company
 		else
 			@user_roles = @user.company.user_roles

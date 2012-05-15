@@ -82,6 +82,14 @@ class Section < ActiveRecord::Base
 			return 0
 		end
   end
+	
+	def percentage_correct(user)
+		number_of_tasks = tasks.size
+		logger.debug number_of_tasks
+		number_of_tasks_without_incorrect_answer = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)", user.id]).count
+		logger.debug number_of_tasks_without_incorrect_answer
+		return ((number_of_tasks_without_incorrect_answer.to_f / number_of_tasks.to_f) * 100).to_i
+	end
   
   def user_streak(user)
     user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all(:order => "id DESC")
@@ -94,6 +102,7 @@ class Section < ActiveRecord::Base
 					if t.id != first_task_id && t.status_id == 1
 						streak += 1
 					elsif t.status_id == 0
+						streak -= 1 unless streak == 0
 						break
 					end
 				end

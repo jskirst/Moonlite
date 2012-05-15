@@ -273,11 +273,9 @@ class SectionsController < ApplicationController
 			if !@answers.empty?
         @answers.each do |a|
 					@total_points += a.points_awarded.to_i
-					@correct_answers += 1 if a.status_id == 1
-					@incorrect_answers += 1 if a.status_id == 0
 				end
       end
-			@percent_correct = ((@correct_answers.to_f / (@correct_answers + @incorrect_answers).to_f) * 100)
+			@percent_correct = last_task.task.section.percentage_correct(current_user)
       @final_section = true if @path.next_section(@section).nil?
       render "results"
     else

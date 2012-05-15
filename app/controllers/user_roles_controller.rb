@@ -48,14 +48,14 @@ class UserRolesController < ApplicationController
 	def destroy
 		unless @user_role.users.empty?
 			redirect_to user_roles_path
-			flash[:error] = "You cannot delete a user roll until all users have been removed from it."
+			flash[:error] = "You cannot delete a user role until all users have been removed from it."
 			return
 		end
 		
 		if @user_role.destroy
-			flash[:success] = "User roll successfully removed."
+			flash[:success] = "User role successfully removed."
 		else
-			flash[:error] = "User roll could not be deleted. Please try again."
+			flash[:error] = "User role could not be deleted. Please try again."
 		end
 		redirect_to user_roles_path
 	end
