@@ -71,7 +71,6 @@ class PathsController < ApplicationController
 		begin
 			@path.update_attributes(params[:path])
 			flash[:success] = "Changes saved."
-			redirect_to edit_path_path(@path)
 		rescue
 			flash[:error] = "An error prevented your changes from being saved. Please try again."
 		end
