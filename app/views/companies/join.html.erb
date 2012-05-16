@@ -1,5 +1,5 @@
-<h2>Join <%= @company.name %> on Moonlite</h2>
-<p style="margin: 20px 0px 30px 0px;">Welcome to Moonlite! Fill out the form below to create an account and join your company.</p>
+<h2>Join <%= @company.name %> on <%= company_logo %></h2>
+<p style="margin: 20px 0px 30px 0px;">Welcome to <%= company_logo %>! Fill out the form below to create an account and join your company.</p>
 <%= form_for @user, :url => { :controller => "companies", :action => "accept" }, :method => "put" do |f| %>
 	<%= render "shared/error_messages", :object => f.object %>
 	<%= f.hidden_field :signup_token, :value => @company.signup_token %>
@@ -29,7 +29,7 @@
 	</div>
 	<div class="field">
 		<div class="input">
-			<p>Already have a Moonlite account? <%= link_to "Login here.", signin_path %></p>
+			<p>Already have an account? <%= link_to "Login here.", signin_path %></p>
 		</div>
 	</div>
 	<div class="actions">
