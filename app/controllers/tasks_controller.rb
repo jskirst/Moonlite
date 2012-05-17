@@ -4,6 +4,8 @@ class TasksController < ApplicationController
 	before_filter :get_task_from_id, :only => [:edit, :update, :destroy]
 	before_filter :can_edit?, :only => [:edit, :update, :destroy]
 	
+	respond_to :json
+	
 	def new
 		@section_id = params[:section_id]
 		@section = Section.find(@section_id)
@@ -21,32 +23,6 @@ class TasksController < ApplicationController
 		render "tasks/task_form"
 	end
 	
-	def create
-		@section = Section.find(params[:task][:section_id])
-		unless can_edit_path(@section.path)
-			flash[:error] = "You cannot add tasks to this path."
-			redirect_to root_path
-			return
-		end
-		
-		@task = @section.tasks.build(params[:task])
-    @task.points = 10
-		if @task.save
-			flash[:success] = "Question created."
-			if params[:commit] == "Save and New"
-				redirect_to new_task_path(:section_id => @section.id)
-			else
-				redirect_to edit_section_path(@section, :m => "tasks")
-			end
-		else
-			@title = "New Question"
-			@ca = @task.correct_answer
-			@form_title = @title
-			@section_id = @section.id
-			render "tasks/task_form"
-		end
-	end
-	
 	def edit
 		@title = "Edit Question"
 		@form_title = "Edit Question"
@@ -60,32 +36,31 @@ class TasksController < ApplicationController
 		render "task_form"
 	end
 	
-	def update
-		if params[:task][:section_id].to_i != @task.section.id
-			old_section = @task.section
-			path = old_section.path
-			new_section = path.sections.find(params[:task][:section_id])
-			if new_section.nil?
-				flash[:error] = "The section you tried to reassign to does not belong to this path."
-				redirect_to root_path
-			else
-				@task.section_id = new_section.id
-				if @task.save
-					flash[:success] = "Task successfully reasigned to section '#{new_section.name}'."
-					redirect_to edit_section_path(old_section, :m => "tasks")
-				else
-					flash[:error] = "Could not reassign task due to unknown error. Please try again."
-					@sections = path.sections
-					render "tasks/task_form"
-				end
-			end
-		elsif @task.update_attributes(params[:task])
-			flash[:success] = "Question updated."
-			redirect_to edit_section_path(:id => @task.section.id, :m => "tasks")
+	def create
+		@section = Section.find(params[:task][:section_id])
+		unless can_edit_path(@section.path)
+			respond_with({ :error => "You do not have access to that object." })
+		end
+		
+		@task = @section.tasks.new(params[:task])
+		if @task.save
+			respond_with(@task)
 		else
-			@title = "Edit Question"
-			@form_title = @title
-			render "tasks/task_form"
+			respond_with({ :errors => @task.errors.full_messages }, :location => nil)
+		end
+	end
+	
+	def update
+		section = @task.path.sections.find(params[:task][:section_id])
+		if section.nil?
+			respond_to { |f| f.json { render :json => { :errors => "Section does not exist." } } }
+			return
+		end
+		
+		if @task.update_attributes(params[:task])
+			respond_to { |f| f.json { render :json => @task } }
+		else
+			respond_to { |f| f.json { render :json => { :errors => @task.errors.full_messages } } }
 		end
 	end
   
