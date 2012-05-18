@@ -60,7 +60,7 @@ module SessionsHelper
 	end
 	
 	def name_for_paths
-		unless current_user.nil?
+		unless current_user.nil? || current_user.company.name_for_paths.nil?
 			return current_user.company.name_for_paths.capitalize
 		else
 			return "Challenge"

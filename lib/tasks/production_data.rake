@@ -26,14 +26,7 @@ FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt
 		["John Crichton","http://images.wikia.com/farscape/images/f/fa/John_aeryn.jpg"],
 		["Atticus Finch","http://i699.photobucket.com/albums/vv354/Jude714/Gregory-Peck-as-Atticus-Finch.jpg"],
 		["Dak Ralter","http://porkins.home.insightbb.com/Rebel/Pilots/DakRalter.jpg"]]
-
-REWARDS = [["$10 iTunes Gift Card", "iTunes Gift Card worth 10 Dollars.", "http://cultofmac.cultofmaccom.netdna-cdn.com/wp-content/uploads/2011/10/itunes_giftcard.jpg", 500],
-		["$20 Amazon Gift Card", "Amazon Gift Card worth 20 Dollars.", "http://news.cnet.com/i/tim/2011/01/19/Amazon_gift_card.jpg", 1000],
-		["$40 Apple Store Gift Card", "Apple Store Gift Card worth 40 Dollars.", "http://images.apple.com/gift-cards/images/apple_card20100217.png", 2000],
-		["2 Days of Paid-Time-Off", "You've worked pretty hard. Take a day off or two on the company.", "http://static1.itsuxtobefat.com/uploads/vacation.jpg", 3000],
-		["2 Southwest Tickets", "2 Roundtrip Southwest tickets to anywhere in the U.S.", "http://www.nawbo.org/imageuploads/video_southwest.jpg", 10000],
-		["2% Pay Increase", "You are a valuable and knowledgeable member of our team, so heres a little extra moula to keep you around.", "http://www.wpclipart.com/money/bag_of_money.png", 20000]]
-
+    
 PATHS = [["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
 		["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
 ]

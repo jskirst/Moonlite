@@ -12,12 +12,13 @@
 <% if @path_categories.empty? %>
 	<p style="padding:30px 20px 300px 20px;">No <%= name_for_paths.pluralize %> have been listed for your organization yet. Please check with your administrator to see if your Moonlite instance has been properly configured.</p>
 <% else %>
+  <% empty = true %>
 	<% @path_categories.each do |c| %>
 		
 		<% category = c[0] %>
 		<% paths = c[1] %>
 		<% next if paths.empty? %>
-    
+    <% empty = false %>
 		<div class="row" style="padding-left: 20px;">
       <h2><%= category.name %></h2>
       <% unless @display_all %>
@@ -28,5 +29,6 @@
 		<%= render "path_grid", {:paths => paths, :display_all => @display_all} %>
 		
 	<% end %>
+  <% if empty %><p>No <%= name_for_paths.downcase.pluralize %> have been created yet. <%= link_to "Create one!", new_path_path %></p><% end %>
 <% end %>
 </section>
