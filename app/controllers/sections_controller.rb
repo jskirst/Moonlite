@@ -73,7 +73,8 @@ class SectionsController < ApplicationController
 		@path_id = @section.path_id
     @mode = params[:m]
 		if @mode == "tasks"
-			@tasks = @section.tasks.includes(:info_resource)
+			@task = @section.tasks.new
+			@tasks = @section.tasks.includes(:info_resource).all(:order => "position ASC")
       @reorder = true if params[:a] == "reorder"
 			render "edit_tasks"
 		elsif @mode == "settings"

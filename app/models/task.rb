@@ -4,6 +4,7 @@ class Task < ActiveRecord::Base
 	before_create :set_position
   before_create :randomize_answers
   before_create :record_phrases
+	before_validation :set_point_value
   
 	belongs_to 	:section
 	has_one 	:path, :through => :section
@@ -68,6 +69,10 @@ class Task < ActiveRecord::Base
 	end
   
   private
+		def set_point_value
+			self.points = 10 if self.points.nil? || self.points == 0
+		end
+		
 		def same_letters?(word, str)
 			word = word.downcase
 			str = str.downcase

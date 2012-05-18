@@ -1,0 +1,82 @@
+<script src="/javascripts/suggestions.js"></script>
+<script>
+var std_url = "<%= root_url %>";
+
+function clear_form(){
+	$("#task_question").val("");
+	$("#task_answer1").val("");
+	$("#task_answer2").val("");
+	$("#task_answer3").val("");
+	$("#task_answer4").val("");
+}
+
+function embolden(id){
+	$("#"+id).css("border", "1px solid #5F5F5F");
+	setTimeout(function(){
+		$("#"+id).css("border", "1px solid #CCC");
+	},50);
+}
+
+$(function($) {
+    // Callback for rendering via JSON
+    $('#new_task').on('ajax:success', function(event, data, status, xhr) {
+      if(data.errors){
+				$("#add_task_form").prepend("<div class='alert-message error'>"+data.errors[0].join(" ")+"</div>");
+			} else {
+				$("#add_task_form").prepend("<div class='alert-message success'>Task add successfully.</div>");
+				clear_form();
+				$new_question = $(".task:first").clone().hide();
+				$new_question.find("blockquote p").text(data.task.question);
+				$new_question.find("ol").html("");
+				$new_question.find("ol").append("<li>"+data.task.answer1+"</li>");
+				$new_question.find("ol").append("<li>"+data.task.answer2+"</li>");
+				$new_question.find("ol").append("<li>"+data.task.answer3+"</li>");
+				$new_question.find("ol").append("<li>"+data.task.answer4+"</li>");
+				$("#task_list").prepend($new_question);
+				$(".task:first").show("slow");
+			}
+    });
+});
+</script>
+<%= form_for(task, :remote => true) do |f| %>
+<div style="margin-bottom:20px;">
+	<span class="label" style="font-size: 13px; vertical-align:middle;"><%= @tasks.size %> questions</span>
+	<div style="float: right;">
+		<span id="new_question_button" class="btn primary" onclick="$('#add_task_form,#close_question_button,#save_question_button').show();$('#new_question_button').hide();">New Question</span>
+		<%= f.submit "Save", :id => "save_question_button", :class => "btn primary", :style => "display:none;" %>
+		<span id="close_question_button" class="btn secondary" style="display:none;" onclick="$('#add_task_form,#close_question_button,#save_question_button').hide();$('#new_question_button').show();$('.alert-message').remove();">Close</span>
+	</div>
+</div>
+<div id="add_task_form" <% if display == true %>style="display:none;"<% end %>>
+	<h3 style="margin-left:70px;">Add Task</h3>
+		<%= f.hidden_field :section_id, :value => @section.id %><br/>
+		<div class="field clearfix">
+			<%= f.label :question %>
+			<div class="input">
+				<%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span8 answers">
+				<% (1..4).each do |i| %>
+				 <div class="field clearfix">
+					<% status = (task.correct_answer == i ? "Correct answer" : "Wrong answer") %>
+					<%= f.label status %>
+					<div class="input">
+						<%= f.text_field "answer"+i.to_s, :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") %>
+						<% if task.correct_answer == i %>
+							<%= image_tag "suggest.png", :size => "15x15", :id => "suggest_icon", :onclick => "embolden('suggest_icon');" %>
+						<% end %>
+					</div>
+				</div>
+				<% end %>
+			</div>
+			<div class="span8 suggestions" style="padding-top:10px;">
+				<p class="not_found_message" style="display: none;">No suggestions found.</p>
+				<p class="did_you_mean" style="display: none;">Did you mean...?</p>
+				<p class="found_message" style="display: none;">Suggestions (doubleclick):</p>
+				<ol style="margin-top:10px; display: none;"></ol>
+			</div>
+		</div>
+</div>
+<% end %>
