@@ -2,29 +2,88 @@
 <section class="tab_content">
 <% display = !@tasks.empty? %>
 <%= render "tasks/new_task_form", { :task => @task, :display => display } %>
+<script>
+function bind_delete_task(obj){
+  $(obj).on('ajax:success',
+    function(event, data, textStatus, jqXHR){
+      console.log(data);
+      if(data.errors){
+        $(obj).parents("td").prepend("<div class='alert-message error'>"+data.error+"</div>");
+      } else if(data.success){
+        $(obj).parents("tr").replaceWith("<div class='alert-message success'>"+data.success+"</div>");
+        $('.alert-message').fadeOut(3000);
+      } else {
+        alert("Unknown error occurred");
+      }
+    }
+  );
+}
+
+function bind_edit_task(obj){
+  var $row = $(obj).parents("td");
+  $(obj).on('ajax:success',
+    function(event, data, textStatus, jqXHR){
+      $row.find(".question_display").hide();
+      $row.append(data);
+      $row.find(".correct_answer").each(function(){
+        var $ca = $(this).parent().parent().remove();
+        $ca.prependTo(".answers");
+      });
+      bind_update_task($row.find("form:first"));
+    }
+  );
+}
+
+function bind_update_task(obj){
+  $(obj).on('ajax:success',
+    function(event, data, textStatus, jqXHR){
+    
+    }
+  );
+}
+
+$(function(){
+  $('.delete_button').each(function(){
+    bind_delete_task(this);
+  });
+  $('.edit_button').each(function(){
+    console.log("Binding exit button");
+    bind_edit_task(this);
+  });
+});
+</script>
 	<table id="task_list">
 	<% @tasks.each do |t| %>
 		<tr class="task">
-			<td>	
-				<blockquote>
-					<p>
-						<%= t.question %>
-					</p>
-				</blockquote>
-				<% if t.info_resource %>
-					<%= image_tag t.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
-				<% end %>
-				<ol>
-					<% ca = t.correct_answer %>
-					<% if !t.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= t.answer1 %></li><% end %>
-					<% if !t.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= t.answer2 %></li><% end %>
-					<% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
-					<% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
-				</ol>
-				<div style="float:right;display:inline;">
-					<%= link_to "Delete", t, :method => :delete, :confirm => "You sure?", :title => "Delete task", :class => "btn secondary" %>
-					<%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
-				</div>
+			<td>
+        <div class="question_display">
+          <div style="float:right; margin-top:-30px;">
+            <%= link_to "Delete", t,
+              :method => :delete, 
+              :remote => true,
+              :confirm => "Are you sure you want to delete this question?", 
+              "data-type" => "json",
+              :class => "btn secondary delete_button" %>
+            <%= link_to "Edit", edit_task_path(t),
+              :remote => true,
+              :class => "btn secondary edit_button" %>
+          </div>
+          <blockquote>
+            <p>
+              <%= t.question %>
+            </p>
+          </blockquote>
+          <% if t.info_resource %>
+            <%= image_tag t.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
+          <% end %>
+          <ol>
+            <% ca = t.correct_answer %>
+            <% if !t.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= t.answer1 %></li><% end %>
+            <% if !t.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= t.answer2 %></li><% end %>
+            <% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
+            <% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
+          </ol>
+        </div>
 			</td>
 		</tr>
 	<% end %>

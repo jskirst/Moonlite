@@ -1,3 +1,16 @@
+<script>
+$('a[data-method="delete"]').on('ajax:success',
+  function(data, textStatus, jqXHR){
+    if(data.error){
+      $(this).parent(2).replaceWith("<div class='alert-message error'>"+data.error+"</div>");
+    } else if(data.success){
+      $(this).parent(2).replaceWith("<div class='alert-message success'>"+data.success+"</div>");
+    } else {
+      alert("Unknown error occurred");
+    }
+  }
+);
+</script>
 <section>
 	<h2><%= @section.name %></h2>
 	<table>
@@ -16,7 +29,12 @@
 			</ol>
 			<p style="float: left;">Correct Answer: <%= t.correct_answer %></p>
 			<%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
-			<%= link_to "Delete", t, :method => :delete, :confirm => "You sure?", :title => "Delete task", :class => "btn secondary" %>
+			<%= link_to "Delete", t,
+        :method => :delete, 
+        "data-remote" => true,
+        :confirm => "Are you sure you want to delete this question?", 
+        "data-type" => "json",
+        :class => "btn secondary" %>
 		</tr></td>
 	<% end %>
 	</table>

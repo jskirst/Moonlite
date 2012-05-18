@@ -1,0 +1,34 @@
+<%= form_for(@task, :action => :update, :remote => true) do |f| %>
+<div style="margin-bottom:20px; float:right;">
+  <%= f.submit "Save", :id => "save_question_button", :class => "btn primary" %>
+  <span class="btn secondary" onclick="$(this).parents('td').find('div.question_display').show(); $(this).parents('td').find('.edit_task').remove();">Close</span>
+</div>
+<div>
+  <h3 style="margin-left:70px;" id="form_title">Edit Question</h3>
+	<div class="field clearfix">
+		<%= f.label :question %>
+		<div class="input">
+			<%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
+		</div>
+	</div>
+  <div class="row">
+    <div class="span8 answers">
+			<% (1..4).each do |i| %>
+			 <div class="field clearfix">
+        <% status = (@task.correct_answer == i ? "Correct answer" : "Wrong answer") %>
+        <%= f.label status %>
+        <div class="input">
+          <%= f.text_field "answer"+i.to_s, :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") %>
+        </div>
+      </div>
+			<% end %>
+    </div>
+    <div class="span8 suggestions" style="padding-top:10px;">
+      <p class="not_found_message" style="display: none;">No suggestions found.</p>
+      <p class="did_you_mean" style="display: none;">Did you mean...?</p>
+      <p class="found_message" style="display: none;">Suggestions (doubleclick):</p>
+      <ol style="margin-top:10px; display: none;"></ol>
+    </div>
+  </div>
+</div>
+<% end %>

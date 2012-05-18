@@ -4,8 +4,8 @@ class TasksController < ApplicationController
 	before_filter :get_task_from_id, :only => [:edit, :update, :destroy]
 	before_filter :can_edit?, :only => [:edit, :update, :destroy]
 	
-	respond_to :json
-	
+  respond_to :json
+  
 	def new
 		@section_id = params[:section_id]
 		@section = Section.find(@section_id)
@@ -24,16 +24,7 @@ class TasksController < ApplicationController
 	end
 	
 	def edit
-		@title = "Edit Question"
-		@form_title = "Edit Question"
-		
-		@info_resource = InfoResource.find_by_task_id(@task.id)
-    @ca = @task.correct_answer
-		@section_id = @task.section_id
-		
-		@path = @task.section.path
-		@sections = @path.sections
-		render "task_form"
+    respond_to {|f| f.html { render :partial => "edit_task_form" } }
 	end
 	
 	def create
@@ -44,19 +35,13 @@ class TasksController < ApplicationController
 		
 		@task = @section.tasks.new(params[:task])
 		if @task.save
-			respond_with(@task)
+			respond_to {|f| f.json { render :json => @task } }
 		else
-			respond_with({ :errors => @task.errors.full_messages }, :location => nil)
+			respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages } } }
 		end
 	end
 	
 	def update
-		section = @task.path.sections.find(params[:task][:section_id])
-		if section.nil?
-			respond_to { |f| f.json { render :json => { :errors => "Section does not exist." } } }
-			return
-		end
-		
 		if @task.update_attributes(params[:task])
 			respond_to { |f| f.json { render :json => @task } }
 		else
@@ -79,9 +64,11 @@ class TasksController < ApplicationController
   end
 	
 	def destroy
-		@task.destroy
-    flash[:success] = "Question deleted."
-		redirect_to edit_section_path(@task.section, :m => "tasks")
+		if @task.destroy
+      respond_to { |f| f.json { render :json => { :success => "Question deleted." } } }
+    else
+      respond_to { |f| f.json { render :json => { :errors => "Question could not be deleted." } } }
+    end
 	end
 	
 	private
