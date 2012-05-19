@@ -1,6 +1,5 @@
 class ReportsController < ApplicationController
 	before_filter :authenticate
-	before_filter :company_admin
   before_filter :is_enabled
   
 	def dashboard
@@ -20,13 +19,13 @@ class ReportsController < ApplicationController
 		@company = current_user.company
 		@company_id = @company.id.to_s
 		@users = @company.users
-		@paths = @company.paths.where("is_published = ?", true)
+		@paths = @company.paths.where("is_published = ? and is_locked = ?", true, false)
 		
 		
 		completed_tasks = User.count(
 			:group => "users.id",
 			:joins => "LEFT JOIN completed_tasks on users.id = completed_tasks.user_id and completed_tasks.updated_at > '#{time_sql}'",
-			:conditions => "users.company_id = #{@company_id}"
+			:conditions => ["users.company_id = ? and users.is_fake_user = ?", @company_id, false]
 		)
 		completed_tasks.each do |cp|
 			if cp[1] == 1
@@ -41,7 +40,7 @@ class ReportsController < ApplicationController
 		@tasks_completed = CompletedTask.count(
 			:group => "Date(completed_tasks.updated_at)",
 			:joins => "JOIN users on users.id = completed_tasks.user_id",
-			:conditions => "users.company_id = #{@company_id} and completed_tasks.updated_at > '#{time_sql}'"
+			:conditions => ["users.company_id = ? and completed_tasks.updated_at > ? and users.is_fake_user = ?", @company_id, time_sql, false]
 		)
 		
 		@user_points = {"0-50" => 0, "51-100" => 0, "101-500" => 0, "501-2000" => 0, "2000+" => 0 }
@@ -63,11 +62,7 @@ class ReportsController < ApplicationController
 		@paths.each do |p|
 			section_ids = []
 			p.sections.each do |s|
-				section_ids << s.id.to_s
-			end
-			section_ids = section_ids.join(",")
-			if section_ids == ""
-				redirect_to root_path and return
+				section_ids << s.id
 			end
 		
 			enrolled = 0
@@ -84,13 +79,13 @@ class ReportsController < ApplicationController
 			path_activity = CompletedTask.count(
 				:group => "Date(completed_tasks.updated_at)",
 				:joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN users on users.id = completed_tasks.user_id",
-				:conditions => "users.company_id = #{@company_id} and tasks.section_id IN (#{section_ids}) and completed_tasks.updated_at > '#{time_sql}'"
+				:conditions => ["users.company_id = ? and tasks.section_id IN (?) and completed_tasks.updated_at > ? and users.is_fake_user = ?", @company_id, section_ids, time_sql, false]
 			)
 			
 			path_score = CompletedTask.average("status_id",
 				{ :joins => "JOIN tasks on tasks.id = completed_tasks.task_id JOIN users on users.id = completed_tasks.user_id",
-				:conditions => "users.company_id = #{@company_id} and tasks.section_id IN (#{section_ids}) and completed_tasks.updated_at > '#{time_sql}'" }
-			)
+				:conditions => ["users.company_id = ? and tasks.section_id IN (?) and completed_tasks.updated_at > ? and users.is_fake_user = ?", @company_id, section_ids, time_sql, false] }
+      )
 			if !path_score.nil?
 				path_score = Integer(path_score * 100)
 			end
@@ -110,17 +105,13 @@ class ReportsController < ApplicationController
 		@title = "Details"
 		section_ids = []
 		@path.sections.each do |s|
-			section_ids << s.id.to_s if s.is_published
-		end
-		section_ids = section_ids.join(",")
-		if section_ids == ""
-			redirect_to root_path and return
+			section_ids << s.id if s.is_published
 		end
 		
 		@most_incorrect_tasks = CompletedTask.all(
 			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
-			:conditions => "tasks.section_id IN (#{section_ids}) and status_id = 0",
+			:conditions => ["tasks.section_id IN (?) and status_id = 0", section_ids],
 			:order => "1 desc",
 			:limit => "10",
 			:select => "count(*) as count, tasks.id"
@@ -129,7 +120,7 @@ class ReportsController < ApplicationController
 		@most_correct_tasks = CompletedTask.all(
 			:group => "tasks.id",
 			:joins => "JOIN tasks on tasks.id = completed_tasks.task_id",
-			:conditions => "tasks.section_id IN (#{section_ids})",
+			:conditions => ["tasks.section_id IN (?)", section_ids],
 			:order => "1 asc",
 			:limit => "10",
 			:select => "((sum(status_id)-count(*))*-1) as count, tasks.id"

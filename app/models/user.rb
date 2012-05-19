@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
 	attr_protected :admin
 	attr_accessor :password, :password_confirmation
-	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation, :catch_phrase,:user_role_id
+	attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user
 
 	belongs_to :company
 	belongs_to :user_role
