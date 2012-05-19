@@ -1,4 +1,4 @@
-<%= form_for(@task, :action => :update, :remote => true) do |f| %>
+<%= form_for(@task, :action => :update, :remote => true, "data-type" => "html") do |f| %>
 <div style="margin-bottom:20px; float:right;">
   <%= f.submit "Save", :id => "save_question_button", :class => "btn primary" %>
   <span class="btn secondary" onclick="$(this).parents('td').find('div.question_display').show(); $(this).parents('td').find('.edit_task').remove();">Close</span>

@@ -20,6 +20,7 @@ function bind_delete_task(obj){
 }
 
 function bind_edit_task(obj){
+  console.log("Binding edit.");
   var $row = $(obj).parents("td");
   $(obj).on('ajax:success',
     function(event, data, textStatus, jqXHR){
@@ -35,9 +36,16 @@ function bind_edit_task(obj){
 }
 
 function bind_update_task(obj){
+  var $row = $(obj).parents("td");
   $(obj).on('ajax:success',
     function(event, data, textStatus, jqXHR){
-    
+      $row.html(data);
+      $row.find('.delete_button').each(function(){
+        bind_delete_task(this);
+      });
+      $row.find('.edit_button').each(function(){
+        bind_edit_task(this);
+      });
     }
   );
 }
@@ -53,42 +61,12 @@ $(function(){
 });
 </script>
 	<table id="task_list">
-	<% @tasks.each do |t| %>
+	<% @tasks.each do |task| %>
 		<tr class="task">
-			<td>
-        <div class="question_display">
-          <div style="float:right; margin-top:-30px;">
-            <%= link_to "Delete", t,
-              :method => :delete, 
-              :remote => true,
-              :confirm => "Are you sure you want to delete this question?", 
-              "data-type" => "json",
-              :class => "btn secondary delete_button" %>
-            <%= link_to "Edit", edit_task_path(t),
-              :remote => true,
-              :class => "btn secondary edit_button" %>
-          </div>
-          <blockquote>
-            <p>
-              <%= t.question %>
-            </p>
-          </blockquote>
-          <% if t.info_resource %>
-            <%= image_tag t.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
-          <% end %>
-          <ol>
-            <% ca = t.correct_answer %>
-            <% if !t.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= t.answer1 %></li><% end %>
-            <% if !t.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= t.answer2 %></li><% end %>
-            <% if !t.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= t.answer3 %></li><% end %>
-            <% if !t.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= t.answer4 %></li><% end %>
-          </ol>
-        </div>
+			<td width="100%">
+        <%= render "tasks/task", { :task => task } %>
 			</td>
 		</tr>
 	<% end %>
 	</table>
 </section>
-<div class="actions">
-	<%= link_to "New Question", new_task_path(:section_id => @section.id), :class=>"btn primary" %>
-</div>

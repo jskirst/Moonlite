@@ -4,7 +4,7 @@ class TasksController < ApplicationController
 	before_filter :get_task_from_id, :only => [:edit, :update, :destroy]
 	before_filter :can_edit?, :only => [:edit, :update, :destroy]
 	
-  respond_to :json
+  respond_to :json, :html
   
 	def new
 		@section_id = params[:section_id]
@@ -43,7 +43,10 @@ class TasksController < ApplicationController
 	
 	def update
 		if @task.update_attributes(params[:task])
-			respond_to { |f| f.json { render :json => @task } }
+			respond_to do |f|
+        f.html { render :partial => "task", :locals => {:task => @task} }
+        f.json { render :json => @task }
+      end
 		else
 			respond_to { |f| f.json { render :json => { :errors => @task.errors.full_messages } } }
 		end

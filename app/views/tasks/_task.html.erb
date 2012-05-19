@@ -1,17 +1,28 @@
-<li>
-	<span class="task-question">
-		<%= link_to task.question, task %>
-	</span></br>
-	<span class="task-answer">
-		<%= task.answer1 %>
-	</span>
-	<span class="task-answer">
-		<%= task.answer2 %>
-	</span>
-	<span class="task-answer">
-		<%= task.answer3 %>
-	</span>
-	<span class="task-answer">
-		<%= task.answer4 %>
-	</span>
-</li>
+<div class="question_display">
+  <div style="float:right; margin-top:-30px;">
+    <%= link_to "Delete", task,
+      :method => :delete, 
+      :remote => true,
+      :confirm => "Are you sure you want to delete this question?", 
+      "data-type" => "json",
+      :class => "btn secondary delete_button" %>
+    <%= link_to "Edit", edit_task_path(task),
+      :remote => true,
+      :class => "btn secondary edit_button" %>
+  </div>
+  <blockquote>
+    <p>
+      <%= task.question %>
+    </p>
+  </blockquote>
+  <% if task.info_resource %>
+    <%= image_tag task.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
+  <% end %>
+  <ol>
+    <% ca = task.correct_answer %>
+    <% if !task.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= task.answer1 %></li><% end %>
+    <% if !task.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= task.answer2 %></li><% end %>
+    <% if !task.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= task.answer3 %></li><% end %>
+    <% if !task.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= task.answer4 %></li><% end %>
+  </ol>
+</div>
