@@ -1,11 +1,13 @@
 class Task < ActiveRecord::Base
 	attr_protected :section_id
+	attr_accessor :randomize
 	attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position
+	
 	before_create :set_position
-  before_create :randomize_answers
   before_create :record_phrases
 	before_validation :set_point_value
-  
+  before_save :randomize_answers
+	
 	belongs_to 	:section
 	has_one 	:path, :through => :section
   has_one   :info_resource
@@ -64,6 +66,13 @@ class Task < ActiveRecord::Base
 		return answers[correct_answer]
 	end
 	
+	def describe_answers
+		answers = [answer1,answer2,answer3,answer4]
+		answers = answers.unshift(describe_correct_answer).unshift(nil)
+		answers = answers.uniq
+		return answers
+	end
+	
 	def question_type
 		return answers_to_array.size == 1 ? "text" : "multiple"
 	end
@@ -86,7 +95,7 @@ class Task < ActiveRecord::Base
 	
     def randomize_answers
       answers = answers_to_array
-      if self.correct_answer == 1 && answers.size > 1
+      if answers.size > 1
         answers = answers.shuffle
         self.correct_answer = answers.index(self.answer1.chomp) + 1
         self.points = 10

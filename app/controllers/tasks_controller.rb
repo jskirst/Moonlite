@@ -24,6 +24,7 @@ class TasksController < ApplicationController
 	end
 	
 	def edit
+		@answers = @task.describe_answers
     respond_to {|f| f.html { render :partial => "edit_task_form" } }
 	end
 	
@@ -35,7 +36,10 @@ class TasksController < ApplicationController
 		
 		@task = @section.tasks.new(params[:task])
 		if @task.save
-			respond_to {|f| f.json { render :json => @task } }
+			respond_to do |f|
+				f.html { render :partial => "task", :locals => {:task => @task } }
+				f.json { render :json => @task }
+			end
 		else
 			respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages } } }
 		end

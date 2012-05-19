@@ -1,3 +1,10 @@
+function embolden(id){
+	$("#"+id).css("border", "1px solid #5F5F5F");
+	setTimeout(function(){
+		$("#"+id).css("border", "1px solid #CCC");
+	},50);
+}
+
 function get_first_open_answer(first_answer){
   var $answers = $(first_answer).parent().parent().parent().find("input");
   var open_answer = null;

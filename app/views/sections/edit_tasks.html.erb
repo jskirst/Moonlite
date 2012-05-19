@@ -1,65 +1,11 @@
 <%= render "tab_navigation" %>
+
 <section class="tab_content">
-<% display = !@tasks.empty? %>
-<%= render "tasks/new_task_form", { :task => @task, :display => display } %>
-<script>
-function bind_delete_task(obj){
-  $(obj).on('ajax:success',
-    function(event, data, textStatus, jqXHR){
-      console.log(data);
-      if(data.errors){
-        $(obj).parents("td").prepend("<div class='alert-message error'>"+data.error+"</div>");
-      } else if(data.success){
-        $(obj).parents("tr").replaceWith("<div class='alert-message success'>"+data.success+"</div>");
-        $('.alert-message').fadeOut(3000);
-      } else {
-        alert("Unknown error occurred");
-      }
-    }
-  );
-}
-
-function bind_edit_task(obj){
-  console.log("Binding edit.");
-  var $row = $(obj).parents("td");
-  $(obj).on('ajax:success',
-    function(event, data, textStatus, jqXHR){
-      $row.find(".question_display").hide();
-      $row.append(data);
-      $row.find(".correct_answer").each(function(){
-        var $ca = $(this).parent().parent().remove();
-        $ca.prependTo(".answers");
-      });
-      bind_update_task($row.find("form:first"));
-    }
-  );
-}
-
-function bind_update_task(obj){
-  var $row = $(obj).parents("td");
-  $(obj).on('ajax:success',
-    function(event, data, textStatus, jqXHR){
-      $row.html(data);
-      $row.find('.delete_button').each(function(){
-        bind_delete_task(this);
-      });
-      $row.find('.edit_button').each(function(){
-        bind_edit_task(this);
-      });
-    }
-  );
-}
-
-$(function(){
-  $('.delete_button').each(function(){
-    bind_delete_task(this);
-  });
-  $('.edit_button').each(function(){
-    console.log("Binding exit button");
-    bind_edit_task(this);
-  });
-});
-</script>
+	
+	<%= render "tasks/new_task_form", { :task => @task, :display => @display_new_task_form } %>
+	
+	<script src="/javascripts/editor.js"></script>
+	
 	<table id="task_list">
 	<% @tasks.each do |task| %>
 		<tr class="task">
