@@ -26,6 +26,7 @@ function bind_edit_task(obj){
     function(event, data, textStatus, jqXHR){
 			var $row = $(this).parents("td:first");
       $row.children(".question_display").hide();
+			$row.find(".edit_button").removeAttr("disabled");
       $row.append(data);
       bind_update_task($row.find("form:first"));
 			console.log($row);
@@ -57,4 +58,40 @@ function bind_answer_suggestion(obj){
 	$answer.change(function(){
 		bind_answer_suggestion(this);
 	});
+}
+
+function add_new_task(event, data) {
+	$('.alert-message').remove();
+	if(data.errors){
+		$("#task_form").prepend("<div class='alert-message error'>"+data.errors[0]+"</div>");
+	} else {
+		$("#task_form").prepend("<div class='alert-message success'>Task added successfully.</div>");
+		clear_form();
+		var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo("#task_list");
+		$(".task:first").show();
+		$(".alert-message").fadeOut(5000);
+		var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
+		bind_delete_task($new_question.find(".delete_button"));
+		bind_edit_task($new_question.find(".edit_button"));
+		unblock_form_submit($("#new_task"));
+	}
+}
+
+function block_form_submit(){
+	console.log("BLOCKING");
+	console.log($(this).data("disabledOnSubmit"));
+	if(typeof $(this).data("disabledOnSubmit") == 'undefined' || $(this).data("disabledOnSubmit") == false) {
+		$(this).data("disabledOnSubmit", true);
+		$('input[type=submit], input[type=button]', this).each(function() {
+			$(this).attr("disabled", "disabled");
+		});
+		return true;
+	} else {
+		return false;
+	}
+}
+
+function unblock_form_submit($form){
+	$form.data("disabledOnSubmit", false);
+	$('input[type=submit], input[type=button]').removeAttr("disabled");
 }
