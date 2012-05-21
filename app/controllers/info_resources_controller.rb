@@ -42,7 +42,7 @@ class InfoResourcesController < ApplicationController
 		elsif @info_resource.task && @info_resource.task.section.path.company == current_user.company
 			@info_resource.destroy
 			flash[:success] = "Resource deleted."
-			redirect_to edit_section_path(@info_resource.section, :m => "tasks")
+			redirect_to edit_section_path(@info_resource.task.section, :m => "tasks")
 		else
 			flash[:error] = "You do not have access to that data. Your actions have been reported."
 			redirect_to root_path

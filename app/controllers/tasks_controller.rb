@@ -24,6 +24,7 @@ class TasksController < ApplicationController
 	end
 	
 	def edit
+		@info_resource = @task.info_resource
 		@answers = @task.describe_answers
     respond_to {|f| f.html { render :partial => "edit_task_form" } }
 	end
