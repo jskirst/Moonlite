@@ -1,10 +1,39 @@
+<script>
+$(function($) {
+    $('#new_task').on('ajax:success', function(event, data, status, xhr) {
+      if(data.errors){
+				$("#task_form").prepend("<div class='alert-message error'>"+data.errors[0]+"</div>");
+			} else {
+				$("#task_form").prepend("<div class='alert-message success'>Task added successfully.</div>");
+				clear_form();
+				var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo("#task_list");
+				$(".task:first").show();
+        $(".alert-message").fadeOut(5000);
+        var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
+        bind_delete_task($new_question.find(".delete_button"));
+				bind_edit_task($new_question.find(".edit_button"));
+			}
+    });
+});
+
+$(function(){
+  $('.delete_button').each(function(){
+    bind_delete_task(this);
+  });
+  $('.edit_button').each(function(){
+    bind_edit_task(this);
+  });
+	$(".correct_answer").change(function(){
+		bind_answer_suggestion(this);
+	});
+});
+</script>
+
 <%= render "tab_navigation" %>
 
 <section class="tab_content">
 	
 	<%= render "tasks/new_task_form", { :task => @task, :display => @display_new_task_form } %>
-	
-	<script src="/javascripts/editor.js"></script>
 	
 	<table id="task_list">
 	<% @tasks.each do |task| %>

@@ -28,14 +28,17 @@ function bind_edit_task(obj){
       $row.children(".question_display").hide();
       $row.append(data);
       bind_update_task($row.find("form:first"));
+			console.log($row);
+			console.log($row.find(".correct_answer:first"));
+			bind_answer_suggestion($row.find(".correct_answer:first"));
     }
   );
 }
 
 function bind_update_task(obj){
-  var $row = $(obj).parents("td");
   $(obj).on('ajax:success',
     function(event, data, textStatus, jqXHR){
+			var $row = $(obj).parents("td");
       $row.html(data);
       $row.find('.delete_button').each(function(){
         bind_delete_task(this);
@@ -47,28 +50,11 @@ function bind_update_task(obj){
   );
 }
 
-$(function($) {
-    $('#new_task').on('ajax:success', function(event, data, status, xhr) {
-      if(data.errors){
-				$("#task_form").prepend("<div class='alert-message error'>"+data.errors[0]+"</div>");
-			} else {
-				$("#task_form").prepend("<div class='alert-message success'>Task added successfully.</div>");
-				clear_form();
-				var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo("#task_list");
-				$(".task:first").show();
-        $(".alert-message").fadeOut(5000);
-        var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
-        bind_delete_task($new_question.find(".delete_button"));
-				bind_edit_task($new_question.find(".edit_button"));
-			}
-    });
-});
-
-$(function(){
-  $('.delete_button').each(function(){
-    bind_delete_task(this);
-  });
-  $('.edit_button').each(function(){
-    bind_edit_task(this);
-  });
-});
+function bind_answer_suggestion(obj){
+	var $answer = $(obj);
+	var $suggestions = $answer.parents(".row:first").children(".suggestions:first");
+	get_suggestions($answer, $suggestions);
+	$answer.change(function(){
+		bind_answer_suggestion(this);
+	});
+}

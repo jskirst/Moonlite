@@ -24,9 +24,6 @@
         <%= f.label status %>
         <div class="input">
           <%= f.text_field "answer"+i.to_s, :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") %>
-          <% if i == 1 %>
-            <%= image_tag "suggest.png", :size => "15x15", :id => "suggest_icon", :onclick => "embolden('suggest_icon');" %>
-          <% end %>
         </div>
       </div>
       <% end %>
