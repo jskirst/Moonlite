@@ -1,13 +1,13 @@
 <% if correct %>
-	<%= render "modals/correct_modal" %>
+	<%= render "sections/modals/correct_modal" %>
 <% end %>
 <% if jumpstart %>
-	<%= render "modals/jumpstart", { :path => path, :leaderboards => leaderboards } %>
+	<%= render "sections/modals/jumpstart", { :path => path, :leaderboards => leaderboards } %>
 <% elsif earned_points == 0 && correct.nil? %>
-	<%= render "modals/countdown" %>
+	<%= render "sections/modals/countdown_modal" %>
 <% end %>
 
-<%= form_tag({ :controller => :sections, :action => :continue }, :method => :post, :id => "challenge_form") %>
+<%= form_tag({ :controller => :sections, :action => "continue" }, :remote => true, :method => "get", "data-type" => "html", :id => "challenge_form") %>
 <div class="task row">
   <div class="span9">
 		<div class="question">
@@ -21,8 +21,7 @@
 			<%= render "info_resource", { :info_resource => info_resource } %>
     </div>
     <div class="answer">
-      <input type="hidden" name="completed_task[task_id]" value="<%= task.id %>">
-      <input type="hidden" name="completed_task[quiz_session]" value="<%= quiz_session %>">
+      <input type="hidden" name="task_id" value="<%= task.id %>">
 			<% if question_type == "text" && path.game_type == "character guess" %>
 				<%= render "character_guess", { :answer => task.answer1 } %>
 			<% elsif question_type == "text" %>
@@ -34,13 +33,13 @@
 	</div>
 	<div class="span7">
   <% if path.game_type == "picture" %>
-		<%= render "games/picture_game", { :picture => "", :progress => progress } %>
+		<%= render "sections/games/picture_game", { :picture => "", :progress => progress } %>
 	<% elsif path.game_type == "raw numbers" %>
-		<%= render "games/raw_numbers" %>
+		<%= render "sections/games/raw_numbers" %>
 	<% elsif path.game_type == "raw streak" %>
-		<%= render "games/raw_streak" %>
+		<%= render "sections/games/raw_streak" %>
 	<% else %>
-		<%= render "games/progress_box", { :earned_points => earned_points, :possible_points => possible_points, :streak_points => streak_points } %>
+		<%= render "sections/games/progress_box", { :earned_points => earned_points, :possible_points => possible_points, :streak_points => streak_points } %>
 	<% end %>
 	</div>
 </div>

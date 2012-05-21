@@ -46,6 +46,7 @@ SampleApp::Application.routes.draw do
 	resources :sections do
 		member do
 			get :continue
+      get :results
       put :reorder_tasks
       get :research
       get :questions

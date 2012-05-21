@@ -265,13 +265,22 @@ class SectionsController < ApplicationController
   
   def continue
 		if params[:task_id] && (params[:answer] || params[:text_answer])
-			last_question = create_completed_task(params)
+			last_question = create_completed_task
 			@last_points = last_question.points_awarded
-		end
+    end
 			
 		@task = @section.next_task(current_user)
-    redirect_to results_section_path(@section) and return if @task.nil?
-		
+    if @task.nil?
+      if params[:task_id]
+        respond_to do |f|
+          f.html { render :text => "Redirecting to results:#{results_section_url(@section).to_s}" }
+        end
+      else
+        redirect_to results_section_path(@section)
+      end
+      return
+    end
+    
 		@progress = @path.percent_complete(current_user) + 1
 		@earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
 		@possible_points = 10
@@ -301,10 +310,19 @@ class SectionsController < ApplicationController
 			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
 		end
 		
-		respond_to do |f|
-			f.html { render :partial => "continue", :locals => {:task => @task} }
-			f.json { render :json => @task }
-		end
+    @locals = { :path => @path, :section => @section, :task => @task, :progress => @progress, :earned_points => @earned_points,
+      :possible_points => @possible_points, :streak_points => @streak_points, :hints => @hints, :question_type => @question_type, :info_resource => @info_resource, :correct => @correct, :jumpstart => @jumpstart, :leaderboards => @leaderboards, :hint => @hint }
+    
+    if params[:task_id]
+      respond_to do |f|
+        f.html { render :partial => "continue", :locals => @locals }
+        f.json { render :json => @locals }
+      end
+    else
+      respond_to do |f|
+        f.html { render "start" }
+      end
+    end
 	end
 	
 	def results
@@ -341,7 +359,7 @@ class SectionsController < ApplicationController
 				answer = task.describe_answer(answer)
 			end
 			
-			completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id, :answer => answer))
+			completed_task = current_user.completed_tasks.build(params.merge(:status_id => status_id, :answer => answer))
 			streak = task.section.user_streak(current_user)
 			if status_id == 1
 				points = 10

@@ -1,3 +1,17 @@
+function get_next_task(event, data){
+  console.log("GETNEXTTASK");
+  console.log(data);
+  if(data.indexOf("Redirecting to results:")){
+    alert("You are being redirected.")
+  } else if (data.errors){
+    alert("You have an error.");
+  } else {
+    $("section#content").html(data);
+    $('#challenge_form').submit(block_form_submit);
+    $('#challenge_form').on('ajax:success', get_next_task);
+  }
+}
+
 function set_answer_status(previously_correct){
   var $correct_status = $("#correct_status");
   if(previously_correct){
@@ -47,4 +61,6 @@ $(document).ready(function() {
 	} else {
 		$("#help_button").hide();
 	}
+  
+	$('#challenge_form').on('ajax:success', get_next_task);
 });
