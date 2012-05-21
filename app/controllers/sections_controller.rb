@@ -264,70 +264,104 @@ class SectionsController < ApplicationController
 # Begin Section Journey
   
   def continue
-    @task = @section.next_task(current_user)
-    if @task.nil?
-      last_task = current_user.completed_tasks.includes(:section).where(["sections.id = ?", @section.id]).first(:order => "completed_tasks.id DESC")
-      @answers = current_user.completed_tasks.joins(:task).where(["section_id = ?", last_task.task.section_id]).all
-      @total_questions = last_task.task.section.tasks.size
-			@correct_answers = 0
-			@incorrect_answers = 0
-			@total_points = 0
-			if !@answers.empty?
-        @answers.each do |a|
-					@total_points += a.points_awarded.to_i
-				end
-      end
-			@percent_correct = last_task.task.section.percentage_correct(current_user)
-      @final_section = true if @path.next_section(@section).nil?
-      render "results"
-    else
-			if current_user.still_anonymous?
-				@jumpstart = true
-				@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
-			end
+		if params[:task_id] && (params[:answer] || params[:text_answer])
+			last_question = create_completed_task(params)
+			@last_points = last_question.points_awarded
+		end
 			
-			@question_type = @task.question_type
-			
-      if params[:p]
-        @correct = (params[:p] == "1" ? true : false)
-      end
-			
-			last_question = current_user.completed_tasks.includes(:task).where(["tasks.section_id = ?", @task.section_id]).first(:order => "completed_tasks.id DESC")
-			unless last_question.nil?
-				@last_points = last_question.points_awarded
-			end
-      @progress = @path.percent_complete(current_user) + 1
-      @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
-      @possible_points = 10
-      streak = @section.user_streak(current_user)
-      @streak_points = streak <= 0 ? 0 : streak
-			@hints = []
-			
-			if @path.enable_retakes
-				if @question_type == "text" && streak < -1
-					answer = @task.describe_correct_answer.to_s
-					streak = ((streak+2)*-1) #converting it so it can be used in a range
-					@hint = "Answer starts with '" + answer.slice(0..streak) + "'"
-				else
-					previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
-					previous_wrong_answers.each do |p|
-						@hints << p.answer
-					end
-					logger.debug @hints
+		@task = @section.next_task(current_user)
+    redirect_to results_section_path(@section) and return if @task.nil?
+		
+		@progress = @path.percent_complete(current_user) + 1
+		@earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
+		@possible_points = 10
+		streak = @section.user_streak(current_user)
+		@streak_points = streak <= 0 ? 0 : streak
+		
+		@hints = []
+		@question_type = @task.question_type
+		if @path.enable_retakes
+			if @question_type == "text" && streak < -1
+				answer = @task.describe_correct_answer.to_s
+				streak = ((streak+2)*-1) #converting it so it can be used in a range
+				@hint = "Answer starts with '" + answer.slice(0..streak) + "'"
+			else
+				previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
+				previous_wrong_answers.each do |p|
+					@hints << p.answer
 				end
 			end
-			
-      @info_resource = @task.info_resource
-      @title = @section.name
-      unless params[:comments_on].nil?
-        @comments_on = true
-        @comments = @task.comments.all
-        @comment = @task.comments.new
-      end
     end
+		
+		@info_resource = @task.info_resource
+    @title = @section.name
+		@correct = (params[:p] == "1" ? true : false) if params[:p]
+		if current_user.still_anonymous?
+			@jumpstart = true
+			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
+		end
+		
+		respond_to do |f|
+			f.html { render :partial => "continue", :locals => {:task => @task} }
+			f.json { render :json => @task }
+		end
+	end
+	
+	def results
+		last_task = current_user.completed_tasks.includes(:section).where(["sections.id = ?", @section.id]).first(:order => "completed_tasks.id DESC")
+		@answers = current_user.completed_tasks.joins(:task).where(["section_id = ?", last_task.task.section_id]).all
+		@total_questions = last_task.task.section.tasks.size
+		@correct_answers = 0
+		@incorrect_answers = 0
+		@total_points = 0
+		if !@answers.empty?
+			@answers.each do |a|
+				@total_points += a.points_awarded.to_i
+			end
+		end
+		@percent_correct = last_task.task.section.percentage_correct(current_user)
+		@final_section = true if @path.next_section(@section).nil?
+		render "results"
 	end
   
   private
+		def create_completed_task
+			answer = params[:answer]
+			text_answer = params[text_answer]
+			task = Task.find(params[:task_id])
+			
+			previous_task = current_user.completed_tasks.last
+			last_answer_date = previous_task.created_at unless previous_task.nil?
+			
+			unless text_answer.nil?
+				status_id = task.is_correct?(text_answer, "text") ? 1 : 0
+				answer = text_answer
+			else
+				status_id = task.is_correct?(answer, "multiple") ?  1 : 0
+				answer = task.describe_answer(answer)
+			end
+			
+			completed_task = current_user.completed_tasks.build(resp.merge(:status_id => status_id, :answer => answer))
+			streak = task.section.user_streak(current_user)
+			if status_id == 1
+				points = 10
+				if params[:listless] == "true"				
+					unless streak < 1
+						if last_answer_date > 35.seconds.ago
+							points += streak
+						end
+					end
+				end
+				completed_task.points_awarded = points
+				completed_task.save
+				current_user.award_points_and_achievements(task, points)
+			else
+				completed_task.points_awarded = 0
+				completed_task.save
+			end
+			return completed_task
+		end
+	
 		def has_edit_access?
 			unless @enable_user_creation
 				flash[:error] = "You do not have access to this functionality."

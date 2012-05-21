@@ -49,7 +49,7 @@ class TasksController < ApplicationController
 	def update
 		if @task.update_attributes(params[:task])
 			respond_to do |f|
-        f.html { render :partial => "task", :locals => {:task => @task} }
+        f.html { render :partial => "continue", :locals => {:task => @task} }
         f.json { render :json => @task }
       end
 		else
