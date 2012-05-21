@@ -84,7 +84,7 @@ class UsersController < ApplicationController
 	end
 	
 	def index
-		@users = User.paginate(:page => params[:page])
+		@users = User.paginate(:page => params[:page], :conditions => ["users.is_fake_user = ?", false], :order => "created_at DESC")
 		@title = "All users"
 	end
 	
