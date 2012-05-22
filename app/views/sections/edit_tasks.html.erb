@@ -6,10 +6,10 @@ $(function(){
     bind_delete_task(this);
   });
   $('.edit_button').each(function(){
-    bind_edit_task(this);
-		$(this).click(function(){
+    $(this).click(function(){
 			$(this).attr("disabled","disabled");
 		});
+    bind_edit_task(this);
   });
 	$(".correct_answer").change(function(){
 		bind_answer_suggestion(this);

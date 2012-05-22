@@ -8,7 +8,7 @@ function clear_form(){
 
 function bind_delete_task(obj){
   $(obj).on('ajax:success',
-    function(event, data, textStatus, jqXHR){
+    function(event, data){
       if(data.errors){
         $(obj).parents("td").prepend("<div class='alert-message error'>"+data.error+"</div>");
       } else if(data.success){
@@ -23,7 +23,7 @@ function bind_delete_task(obj){
 
 function bind_edit_task(obj){
   $(obj).on('ajax:success',
-    function(event, data, textStatus, jqXHR){
+    function(event, data){
 			var $row = $(this).parents("td:first");
       $row.children(".question_display").hide();
 			$row.find(".edit_button").removeAttr("disabled");
@@ -38,7 +38,7 @@ function bind_edit_task(obj){
 
 function bind_update_task(obj){
   $(obj).on('ajax:success',
-    function(event, data, textStatus, jqXHR){
+    function(event, data){
 			var $row = $(obj).parents("td");
       $row.html(data);
       $row.find('.delete_button').each(function(){
@@ -62,6 +62,7 @@ function bind_answer_suggestion(obj){
 
 function add_new_task(event, data) {
 	$('.alert-message').remove();
+	unblock_form_submit($("#new_task"));
 	if(data.errors){
 		$("#task_form").prepend("<div class='alert-message error'>"+data.errors[0]+"</div>");
 	} else {
@@ -73,25 +74,5 @@ function add_new_task(event, data) {
 		var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
 		bind_delete_task($new_question.find(".delete_button"));
 		bind_edit_task($new_question.find(".edit_button"));
-		unblock_form_submit($("#new_task"));
 	}
-}
-
-function block_form_submit(){
-	console.log("BLOCKING");
-	console.log($(this).data("disabledOnSubmit"));
-	if(typeof $(this).data("disabledOnSubmit") == 'undefined' || $(this).data("disabledOnSubmit") == false) {
-		$(this).data("disabledOnSubmit", true);
-		$('input[type=submit], input[type=button]', this).each(function() {
-			$(this).attr("disabled", "disabled");
-		});
-		return true;
-	} else {
-		return false;
-	}
-}
-
-function unblock_form_submit($form){
-	$form.data("disabledOnSubmit", false);
-	$('input[type=submit], input[type=button]').removeAttr("disabled");
 }
