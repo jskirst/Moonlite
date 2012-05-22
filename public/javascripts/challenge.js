@@ -7,9 +7,9 @@ function get_next_task(event, data){
   console.log("GETNEXTTASK");
   console.log(data);
   if(data.indexOf("Redirecting to results:") >= 0){
-		data = data.split(":");
-		redirect_url = data[1];
-    window.location = redirect_url;
+		redirect_url = data.substring(data.indexOf(":")+1);
+    confirm(redirect_url);
+		window.location = redirect_url;
   } else if (data.errors){
     alert("You have an error.");
   } else {

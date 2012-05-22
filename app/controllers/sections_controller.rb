@@ -268,12 +268,15 @@ class SectionsController < ApplicationController
 			last_question = create_completed_task
 			@last_points = last_question.points_awarded
     end
-			
+		
 		@task = @section.next_task(current_user)
     if @task.nil?
       if params[:task_id]
-        respond_to do |f|
-          f.html { render :text => "Redirecting to results:#{results_section_url(@section).to_s}" }
+        redirect_url = "Redirecting to results:#{results_section_url(@section)}"
+				logger.debug "REDIRECT URL IS HEREEEE"
+				logger.debug redirect_url
+				respond_to do |f|
+          f.html { render :text => redirect_url }
         end
       else
         redirect_to results_section_path(@section)
