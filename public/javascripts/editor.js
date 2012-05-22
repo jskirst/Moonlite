@@ -62,6 +62,7 @@ function bind_answer_suggestion(obj){
 
 function add_new_task(event, data) {
 	$('.alert-message').remove();
+	unblock_form_submit($("#new_task"));
 	if(data.errors){
 		$("#task_form").prepend("<div class='alert-message error'>"+data.errors[0]+"</div>");
 	} else {
@@ -73,6 +74,5 @@ function add_new_task(event, data) {
 		var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
 		bind_delete_task($new_question.find(".delete_button"));
 		bind_edit_task($new_question.find(".edit_button"));
-		unblock_form_submit($("#new_task"));
 	}
 }

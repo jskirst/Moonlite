@@ -1,26 +1,3 @@
-<script>
-$(function(){
-	$('#start_modal').modal({
-		keyboard: true,
-		backdrop: 'static',
-		show: true
-	});
-	var count = 15;
-	countdown = setInterval(function(){
-		if(count > 10){
-			$("#starting_timer").html("<strong>00:"+count+"</strong>");
-		} else {
-			$("#starting_timer").html("<strong>00:0"+count+"</strong>");
-		}
-		if(count==0){
-			$('#start_modal').modal('hide');
-			start_question_timer();
-			return;
-		}count --;
-	}, 1000);
-});
-</script>
-
 <div id="start_modal" class="modal hide fade">
 	<div class="modal-header">
 		<a href="#" class="close"></a>

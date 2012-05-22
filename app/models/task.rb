@@ -42,6 +42,8 @@ class Task < ActiveRecord::Base
 	
 	validates :section_id, :presence => true
 	
+	validate  :unique_answers
+	
 	#default_scope :order => 'tasks.position ASC'
 	
 	def is_correct?(user_answer, type)
@@ -144,5 +146,12 @@ class Task < ActiveRecord::Base
         end
       end
       return answer_list
+    end
+		
+		def unique_answers
+			answers = answers_to_array
+      unless answers.uniq!.nil?
+        errors[:base] << "All answers must be different."
+      end
     end
 end

@@ -33,7 +33,7 @@ function select_character(obj){
 <% added_characters = Array.new(16 - answer.length) { ((rand(122-97) + 97).chr).to_s.upcase } %>
 <% characters = (answer.upcase.split(//) + added_characters).shuffle %>
 <div class="character_guess_container" %>
-	<input type="hidden" name="completed_task[text_answer]" id="completed_task_answer" />
+	<input type="hidden" name="text_answer" id="completed_task_answer" />
 	<% characters.each_index do |ci| %>
 		<div class="character" onclick="select_character(this)"><%= characters[ci] %></div>
 		<% if ci == 7 %><br/><% end %>

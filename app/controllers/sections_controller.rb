@@ -304,19 +304,30 @@ class SectionsController < ApplicationController
 		
 		@info_resource = @task.info_resource
     @title = @section.name
-		@correct = (params[:p] == "1" ? true : false) if params[:p]
+		@correct = (last_question.status_id == 1) if last_question
 		if current_user.still_anonymous?
 			@jumpstart = true
 			@leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
 		end
 		
-    @locals = { :path => @path, :section => @section, :task => @task, :progress => @progress, :earned_points => @earned_points,
-      :possible_points => @possible_points, :streak_points => @streak_points, :hints => @hints, :question_type => @question_type, :info_resource => @info_resource, :correct => @correct, :jumpstart => @jumpstart, :leaderboards => @leaderboards, :hint => @hint }
+    @locals = { :path => @path, 
+			:section => @section, 
+			:task => @task, 
+			:progress => @progress, 
+			:earned_points => @earned_points,
+      :possible_points => @possible_points, 
+			:streak_points => @streak_points, 
+			:hints => @hints, 
+			:question_type => @question_type, 
+			:info_resource => @info_resource, 
+			:correct => @correct, 
+			:jumpstart => @jumpstart, 
+			:leaderboards => @leaderboards, 
+			:hint => @hint }
     
     if params[:task_id]
       respond_to do |f|
         f.html { render :partial => "continue", :locals => @locals }
-        f.json { render :json => @locals }
       end
     else
       respond_to do |f|
@@ -345,7 +356,7 @@ class SectionsController < ApplicationController
   private
 		def create_completed_task
 			answer = params[:answer]
-			text_answer = params[text_answer]
+			text_answer = params[:text_answer]
 			task = Task.find(params[:task_id])
 			
 			previous_task = current_user.completed_tasks.last
