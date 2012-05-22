@@ -7,10 +7,10 @@
 <%= render "layouts/stylesheets" %>
 <%= render "layouts/scripts" %>
 <% unless current_user.nil? || current_user.company.custom_styles.first.nil? %>
-	<style>
-	<%= current_user.company.custom_styles.first.core_layout_styles.html_safe %>
-	<%= current_user.company.custom_styles.first.add_on_styles.html_safe %>
-	</style>
+  <style>
+  <%= current_user.company.custom_styles.first.core_layout_styles.html_safe %>
+  <%= current_user.company.custom_styles.first.add_on_styles.html_safe %>
+  </style>
 <% end %>
 </head>
 <body>
@@ -18,14 +18,14 @@
 <script>
 var std_url = '<%= root_url %>';
 $(function(){
-	$('.locked_challenge').removeAttr("href");
-	$('.locked_challenge').click(function(){
-		$('#locked_modal').modal({
-			 keyboard: true,
-			 backdrop: 'static',
-			 show: true
-		});
-	});
+  $('.locked_challenge').removeAttr("href");
+  $('.locked_challenge').click(function(){
+    $('#locked_modal').modal({
+       keyboard: true,
+       backdrop: 'static',
+       show: true
+    });
+  });
 });
 
 (function(d, s, id) {
@@ -44,21 +44,21 @@ $.fn.exists = function(){return this.length>0;}
   </div>
   <div class="modal-body">
     <p style="font-size: 16px; padding:0 7px 5px 10px;">You must complete at least 8 <%= name_for_paths.pluralize %> to unlock this <%= name_for_paths %>.</p>
-	</div>
-	<div class="modal-footer">
-		<%= link_to "Okay", "#", :class => "btn primary", :onclick => "$('#locked_modal').modal('hide');" %>
-	</div>
+  </div>
+  <div class="modal-footer">
+    <%= link_to "Okay", "#", :class => "btn primary", :onclick => "$('#locked_modal').modal('hide');" %>
+  </div>
 </div>
 <div class="container">
-	<%= render "layouts/header" %>
-	<section id="content">
-		<% flash.each do |key, value| %>
-			<%= content_tag(:div, value, :class => "alert-message #{key}") %>
-		<% end %>
-		<%= yield %>
-	</section>
-	<%= render "layouts/footer" %>
-	<%= debug(params) if Rails.env.development? %>
+  <%= render "layouts/header" %>
+  <section id="content">
+    <% flash.each do |key, value| %>
+      <%= content_tag(:div, value, :class => "alert-message #{key}") %>
+    <% end %>
+    <%= yield %>
+  </section>
+  <%= render "layouts/footer" %>
+  <%= debug(params) if Rails.env.development? %>
 </div>
 </body>
 </html>

@@ -1,32 +1,32 @@
 <style>
-	#puzzle tr { margin:0px; border:0px; }
-	#puzzle td { padding: 20px 0 0 0;min-width: 20px; margin:0px; border:0px;background-color:white; }
-	#puzzle { background-image:url(/images/back1.jpg); width: 300px; height: 200px;}
-	#puzzle_container {width: 300px; height: 200px; margin-top: 100px; border: 2px solid black;}
+  #puzzle tr { margin:0px; border:0px; }
+  #puzzle td { padding: 20px 0 0 0;min-width: 20px; margin:0px; border:0px;background-color:white; }
+  #puzzle { background-image:url(/images/back1.jpg); width: 300px; height: 200px;}
+  #puzzle_container {width: 300px; height: 200px; margin-top: 100px; border: 2px solid black;}
 </style>
 <script>
 $(function(){
-	make_puzzle(<%= @progress.to_i %>);
+  make_puzzle(<%= @progress.to_i %>);
 });
 
 function make_puzzle(progress){
-	var $puzzle = $("#puzzle");
-	
-	for(i=0;i<10;i++){
-		$puzzle.append("<tr id='tr_"+i+"'></tr>");
-		var $tr = $("#tr_"+i);
-		for(j=0;j<10;j++){
-			var opacity;
-			if((i*10)+j + 1) < progress){
-				opacity = 0;
-			} else {
-				opacity = 1;
-			}
-			$tr.append("<td style='opacity:"+opacity+"'></td>")
-		}
-	}
+  var $puzzle = $("#puzzle");
+  
+  for(i=0;i<10;i++){
+    $puzzle.append("<tr id='tr_"+i+"'></tr>");
+    var $tr = $("#tr_"+i);
+    for(j=0;j<10;j++){
+      var opacity;
+      if((i*10)+j + 1) < progress){
+        opacity = 0;
+      } else {
+        opacity = 1;
+      }
+      $tr.append("<td style='opacity:"+opacity+"'></td>")
+    }
+  }
 }
 </script>
 <div id="puzzle_container">
-	<table id='puzzle'></table>
+  <table id='puzzle'></table>
 </div>

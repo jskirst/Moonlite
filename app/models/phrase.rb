@@ -1,19 +1,19 @@
 class Phrase < ActiveRecord::Base
-	attr_accessible :content, :original_content
-	before_create :downcase
+  attr_accessible :content, :original_content
+  before_create :downcase
   
   has_many :phrase_pairings
-	
-	validates :content, 
-		:presence 	=> true,
-		:length			=> { :within => 1..255 }
-		
-	def self.search(str)
-		#return Phrase.where(["content LIKE :str", {:str => str}]).first
-		phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "#{str}%"])
-		phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "%#{str}%"]) if phrase.nil?
-		return phrase
-	end
+  
+  validates :content, 
+    :presence   => true,
+    :length      => { :within => 1..255 }
+    
+  def self.search(str)
+    #return Phrase.where(["content LIKE :str", {:str => str}]).first
+    phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "#{str}%"])
+    phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "%#{str}%"]) if phrase.nil?
+    return phrase
+  end
     
   def associated_phrases
     associated_phrases = []
@@ -24,7 +24,7 @@ class Phrase < ActiveRecord::Base
   end
   
   def downcase
-		self.original_content = self.content
+    self.original_content = self.content
     self.content = self.content.downcase
   end
 end

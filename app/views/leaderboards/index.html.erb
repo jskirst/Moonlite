@@ -1,25 +1,25 @@
 <script>
 $(function (){
-	$("#leaderboard_overall").show().addClass("active_board");
+  $("#leaderboard_overall").show().addClass("active_board");
 });
 
 function change_leaderboard(new_board_id){
-	var old_board_id = $(".active_board").attr("id").replace("leaderboard_","");
-	$(".active_board").hide().removeClass("active_board");
-	$("#leaderboard_"+new_board_id).show().addClass("active_board");
-	$("#leaderboard_header_"+old_board_id).removeClass("active");
-	$("#leaderboard_header_"+new_board_id).addClass("active");
+  var old_board_id = $(".active_board").attr("id").replace("leaderboard_","");
+  $(".active_board").hide().removeClass("active_board");
+  $("#leaderboard_"+new_board_id).show().addClass("active_board");
+  $("#leaderboard_header_"+old_board_id).removeClass("active");
+  $("#leaderboard_header_"+new_board_id).addClass("active");
 }
 </script>
 <h1><%= company_logo %> Leaderboard</h1>
 <ul class="tabs">
-	<li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
-	<% @categories.each do |s| %>
-	<li id="leaderboard_header_<%= s.id.to_s %>"><a onclick="change_leaderboard('<%= s.id.to_s %>')"><%= s.name %></a></li>
-	<% end %>
+  <li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
+  <% @categories.each do |s| %>
+  <li id="leaderboard_header_<%= s.id.to_s %>"><a onclick="change_leaderboard('<%= s.id.to_s %>')"><%= s.name %></a></li>
+  <% end %>
 </ul>
 <% @leaderboards.each do |l| %>
-	<%= render "leaderboards/leaderboard", { :leaderboard_id => l[0], :leaderboard_entries => l[1], :display => false, :disable_filler => false, :limit => 10 } %>
+  <%= render "leaderboards/leaderboard", { :leaderboard_id => l[0], :leaderboard_entries => l[1], :display => false, :disable_filler => false, :limit => 10 } %>
 <% end %>
 <p>Last leaderboard update: <%= time_ago_in_words(@last_update) %> ago</p>
 <br />

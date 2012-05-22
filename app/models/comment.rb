@@ -5,18 +5,18 @@ class Comment < ActiveRecord::Base
   belongs_to :task
 
   validates :user_id, 
-	  :presence => true
+    :presence => true
   validates :task_id, 
-	  :presence => true
+    :presence => true
   validates :content, 
-	  :presence => true,
+    :presence => true,
     :length => { :within => 1..255 }
   validate :user_enrolled_in_path
   
   private
     def user_enrolled_in_path
-			unless task.nil? || user.enrolled?(task.path)
-				errors[:base] << "User must be enrolled in the path."
+      unless task.nil? || user.enrolled?(task.path)
+        errors[:base] << "User must be enrolled in the path."
       end
     end
 end

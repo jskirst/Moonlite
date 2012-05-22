@@ -5,45 +5,45 @@
 
 <table class='users'>
 <% @users.each do |user| %>
-	<tr>
-		<td style="width:60px;"><%= image_tag(user.profile_pic, :size =>"50x50", :class => "profile_pic") %></td>
-		<td>
-			<p>Name: <%= link_to user.name, user %></p>
-			<p>Email: <%= user.email %></p>
-			<p>Motto: <%= user.catch_phrase %></p>
-			<p>User Role: <%= user.user_role.name %></p>
-		</td>
-		<td>
-		<td style="width:250px;">
-			<p># Enrolled <%= name_for_paths.pluralize %>: <%= user.enrolled_paths.count %></p>
-			<%
-				enrolled_paths = []
-				user.enrolled_paths.each do |p|
-					enrolled_paths << p.name
-				end
-				enrolled_paths = enrolled_paths.join(", ")						
-			%>
-			<p><%= name_for_paths.pluralize %>: <%= enrolled_paths.to_s %></p>
-			<p>Correct Answers: <%= user.completed_tasks.where("status_id = ?", 1).count %></p>
-			<p>Wrong Answers: <%= user.completed_tasks.where("status_id = ?", 0).count %></p>
-		</td>
-		<td>
-			<p>Created At: <%= time_ago_in_words(user.created_at) %> ago</p>
-			<% if user.completed_tasks.size > 1 %>
-				<p>Last Action: <%= time_ago_in_words(user.completed_tasks.last.created_at) %> ago</p>
-				<p>Active Period: <%= (user.completed_tasks.last.created_at - user.completed_tasks.first.created_at).to_i/60 %> minutes</p>
-			<% else %>
-				<p>Last Action: N/A</p>
-				<p>Active Period: N/A</p>
-			<% end %>
-		</td>
-		<td>
-			<%= link_to "Delete", user, :method => :delete, :confirm => "You sure?", :title => "Delete #{user.name}", :class => "btn secondary" %>
-			<% unless user.admin? %>
-				<%= link_to "Adminize", adminize_user_path(user), :confirm => "Are you sure you want to make this user an admin?", :class => "btn secondary" %>
-			<% end %>
-		</td>
-	</tr>
+  <tr>
+    <td style="width:60px;"><%= image_tag(user.profile_pic, :size =>"50x50", :class => "profile_pic") %></td>
+    <td>
+      <p>Name: <%= link_to user.name, user %></p>
+      <p>Email: <%= user.email %></p>
+      <p>Motto: <%= user.catch_phrase %></p>
+      <p>User Role: <%= user.user_role.name %></p>
+    </td>
+    <td>
+    <td style="width:250px;">
+      <p># Enrolled <%= name_for_paths.pluralize %>: <%= user.enrolled_paths.count %></p>
+      <%
+        enrolled_paths = []
+        user.enrolled_paths.each do |p|
+          enrolled_paths << p.name
+        end
+        enrolled_paths = enrolled_paths.join(", ")            
+      %>
+      <p><%= name_for_paths.pluralize %>: <%= enrolled_paths.to_s %></p>
+      <p>Correct Answers: <%= user.completed_tasks.where("status_id = ?", 1).count %></p>
+      <p>Wrong Answers: <%= user.completed_tasks.where("status_id = ?", 0).count %></p>
+    </td>
+    <td>
+      <p>Created At: <%= time_ago_in_words(user.created_at) %> ago</p>
+      <% if user.completed_tasks.size > 1 %>
+        <p>Last Action: <%= time_ago_in_words(user.completed_tasks.last.created_at) %> ago</p>
+        <p>Active Period: <%= (user.completed_tasks.last.created_at - user.completed_tasks.first.created_at).to_i/60 %> minutes</p>
+      <% else %>
+        <p>Last Action: N/A</p>
+        <p>Active Period: N/A</p>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to "Delete", user, :method => :delete, :confirm => "You sure?", :title => "Delete #{user.name}", :class => "btn secondary" %>
+      <% unless user.admin? %>
+        <%= link_to "Adminize", adminize_user_path(user), :confirm => "Are you sure you want to make this user an admin?", :class => "btn secondary" %>
+      <% end %>
+    </td>
+  </tr>
 <% end %>
 </table>
 

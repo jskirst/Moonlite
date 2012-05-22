@@ -3,42 +3,42 @@
 <%= render "shared/error_messages", :object => f.object %>
 <section class="tab_content">
   <div class="field clearfix">
-		<%= f.label :name %>
-		<div class="input">
-			<%= f.text_field :name, :class => "xlarge" %>
-		</div>
-	</div>
+    <%= f.label :name %>
+    <div class="input">
+      <%= f.text_field :name, :class => "xlarge" %>
+    </div>
+  </div>
   <div class="field clearfix">
-		<%= f.label "Section Picture URL" %>
-		<div class="input">
-			<%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge" %>
+    <%= f.label "Section Picture URL" %>
+    <div class="input">
+      <%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge" %>
       <a class="btn secondary" style="margin-left:10px;">Preview</a>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<div class="input">
-			<%= image_tag(@section.pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 10px") %>
-		</div>
-	</div>
+    </div>
+  </div>
   <div class="field clearfix">
-		<label>Settings</label>
-		<div class="input">
-			<ul class="inputs-list">
-				<li>
-					<label>
-						<%= f.check_box :is_published, :confirm => "This will publish the section so all users in your account can access it. Are you sure you want to publish this now?" %>
-						<span>Publish this section to your <%= name_for_paths %> so it is visible to everyone</span>
-					</label>
-				</li>
-				<li>
-					<label>
-						<%= f.check_box :enable_skip_content %>
-						<span>Skip content section and go straight to quiz</span>
-					</label>
-				</li>
-			</ul>
-		</div>
-	</div>
+    <div class="input">
+      <%= image_tag(@section.pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 10px") %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <label>Settings</label>
+    <div class="input">
+      <ul class="inputs-list">
+        <li>
+          <label>
+            <%= f.check_box :is_published, :confirm => "This will publish the section so all users in your account can access it. Are you sure you want to publish this now?" %>
+            <span>Publish this section to your <%= name_for_paths %> so it is visible to everyone</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <%= f.check_box :enable_skip_content %>
+            <span>Skip content section and go straight to quiz</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
 </section>
 <div class="actions">
   <%= f.submit "Save", :class => "btn primary" %>

@@ -1,18 +1,18 @@
 require 'spec_helper'
 
 describe Comment do
-	before(:each) do
+  before(:each) do
     @user = FactoryGirl.create(:user)
-		@path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
-		@section = FactoryGirl.create(:section, :path => @path)
-		@task = FactoryGirl.create(:task, :section => @section)
+    @path = FactoryGirl.create(:path, :user => @user, :company => @user.company)
+    @section = FactoryGirl.create(:section, :path => @path)
+    @task = FactoryGirl.create(:task, :section => @section)
     @user.enroll!(@path)
     @attr = {:task_id => @task.id, :content => "Comment content"}
-	end
+  end
   
   it "should create a new instance given valid attributes" do
-		@user.comments.create!(@attr)
-	end
+    @user.comments.create!(@attr)
+  end
 
   describe "validation" do
     it "should require at task id" do
@@ -67,5 +67,5 @@ describe Comment do
         @comment.user.should == @user
       end
     end
-	end
+  end
 end

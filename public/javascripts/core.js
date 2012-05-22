@@ -20,20 +20,20 @@ $('#topbar').scrollSpy();
 $('#topbar').dropdown();
 
 function block_form_submit(){
-	console.log("BLOCKING");
-	console.log($(this).data("disabledOnSubmit"));
-	if(typeof $(this).data("disabledOnSubmit") == 'undefined' || $(this).data("disabledOnSubmit") == false) {
-		$(this).data("disabledOnSubmit", true);
-		$('input[type=submit], input[type=button]', this).each(function() {
-			$(this).attr("disabled", "disabled");
-		});
-		return true;
-	} else {
-		return false;
-	}
+  console.log("BLOCKING");
+  console.log($(this).data("disabledOnSubmit"));
+  if(typeof $(this).data("disabledOnSubmit") == 'undefined' || $(this).data("disabledOnSubmit") == false) {
+    $(this).data("disabledOnSubmit", true);
+    $('input[type=submit], input[type=button]', this).each(function() {
+      $(this).attr("disabled", "disabled");
+    });
+    return true;
+  } else {
+    return false;
+  }
 }
 
 function unblock_form_submit($form){
-	$form.data("disabledOnSubmit", false);
-	$('input[type=submit], input[type=button]').removeAttr("disabled");
+  $form.data("disabledOnSubmit", false);
+  $('input[type=submit], input[type=button]').removeAttr("disabled");
 }

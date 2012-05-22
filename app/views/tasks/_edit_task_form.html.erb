@@ -1,57 +1,57 @@
 <%= form_for(@task, :action => :update, :remote => true, "data-type" => "html") do |f| %>
-	<%= f.hidden_field :correct_answer, :value => 1 %>
-	<%= f.hidden_field :randomize, :value => true %>
-	<div style="margin-bottom:20px; float:right;">
-		<%= f.submit "Save", :id => "save_question_button", :class => "btn primary" %>
-		<span class="btn secondary" onclick="$(this).parents('td').find('div.question_display').show(); $(this).parents('td').find('.edit_task').remove();">Close</span>
-	</div>
-	<div>
-		<h3 style="margin-left:70px;" id="form_title">Edit Question</h3>
-		<div class="field clearfix">
-			<%= f.label :question %>
-			<div class="input">
-				<%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="span8 answers">
-				<div class="field clearfix">
-					<%= f.label "Correct answer" %>
-					<div class="input">
-						<%= f.text_field "answer1", :value => @answers[1], :maxlength => 255, :size => 75, :class => "correct_answer" %>
-					</div>
-				</div>
-				<div class="field clearfix">
-					<%= f.label "Wrong answer" %>
-					<div class="input">
-						<%= f.text_field "answer2", :value => @answers[2], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
-					</div>
-				</div>
-				<div class="field clearfix">
-					<%= f.label "Wrong answer" %>
-					<div class="input">
-						<%= f.text_field "answer3", :value => @answers[3], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
-					</div>
-				</div>
-				<div class="field clearfix">
-					<%= f.label "Wrong answer" %>
-					<div class="input">
-						<%= f.text_field "answer4", :value => @answers[4], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
-					</div>
-				</div>
-				<% if @info_resource %>
-					<%= image_tag @task.info_resource.obj.url, :style => "height: 100px; margin: 20px 0px 0px 150px;" %>
-					<%= link_to "Remove Attachment", @info_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?", :style => "margin:10px 0 0 150px;" %>
-				<% else %>
-					<%= link_to "Attachments", new_info_resource_path(:task_id => @task.id), :class => "btn secondary edit_button", :style => "margin: 20px 0px 0px 40px;" %>
-				<% end %>
-			</div>
-			<div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
-				<p class="not_found_message" style="display: none;">No suggestions found.</p>
-				<p class="did_you_mean" style="display: none;">Did you mean...?</p>
-				<p class="found_message" style="display: none;">Suggestions (doubleclick):</p>
-				<ol style="margin-top:10px; display: none;"></ol>
-			</div>
-		</div>
-	</div>
+  <%= f.hidden_field :correct_answer, :value => 1 %>
+  <%= f.hidden_field :randomize, :value => true %>
+  <div style="margin-bottom:20px; float:right;">
+    <%= f.submit "Save", :id => "save_question_button", :class => "btn primary" %>
+    <span class="btn secondary" onclick="$(this).parents('td').find('div.question_display').show(); $(this).parents('td').find('.edit_task').remove();">Close</span>
+  </div>
+  <div>
+    <h3 style="margin-left:70px;" id="form_title">Edit Question</h3>
+    <div class="field clearfix">
+      <%= f.label :question %>
+      <div class="input">
+        <%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span8 answers">
+        <div class="field clearfix">
+          <%= f.label "Correct answer" %>
+          <div class="input">
+            <%= f.text_field "answer1", :value => @answers[1], :maxlength => 255, :size => 75, :class => "correct_answer" %>
+          </div>
+        </div>
+        <div class="field clearfix">
+          <%= f.label "Wrong answer" %>
+          <div class="input">
+            <%= f.text_field "answer2", :value => @answers[2], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
+          </div>
+        </div>
+        <div class="field clearfix">
+          <%= f.label "Wrong answer" %>
+          <div class="input">
+            <%= f.text_field "answer3", :value => @answers[3], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
+          </div>
+        </div>
+        <div class="field clearfix">
+          <%= f.label "Wrong answer" %>
+          <div class="input">
+            <%= f.text_field "answer4", :value => @answers[4], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
+          </div>
+        </div>
+        <% if @info_resource %>
+          <%= image_tag @task.info_resource.obj.url, :style => "height: 100px; margin: 20px 0px 0px 150px;" %>
+          <%= link_to "Remove Attachment", @info_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?", :style => "margin:10px 0 0 150px;" %>
+        <% else %>
+          <%= link_to "Attachments", new_info_resource_path(:task_id => @task.id), :class => "btn secondary edit_button", :style => "margin: 20px 0px 0px 40px;" %>
+        <% end %>
+      </div>
+      <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
+        <p class="not_found_message" style="display: none;">No suggestions found.</p>
+        <p class="did_you_mean" style="display: none;">Did you mean...?</p>
+        <p class="found_message" style="display: none;">Suggestions (doubleclick):</p>
+        <ol style="margin-top:10px; display: none;"></ol>
+      </div>
+    </div>
+  </div>
 <% end %>

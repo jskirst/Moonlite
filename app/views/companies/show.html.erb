@@ -1,63 +1,63 @@
 <section id="company-profile">
-	<h1><%= @company.name %></h1>
-	<ul class="tabs">
-		<li class="active"><a href="#">Users</a></li>
-		<li><%= link_to "Settings", edit_company_path(@company) %></li>
-		<li><%= link_to "User Roles", user_roles_path %></li>
-		<li><%= link_to "Custom Styles", custom_styles_path %></li>
-	</ul>
-	<section id="users">
-		<h2 style="margin-bottom:15px;">Registered Users</h2>
-		<% if @users.empty? %>
-			<p>You do not have any users for your organization yet.</p>
-		<% else %>
-		<span style="float:right;padding-bottom:10px; font-size: 16px; font-weight: bold;">Available seats: <%= @company.seat_limit - @company.users.size %></span>
-		<table>
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Name</th>
-					<th>User Role</th>
-					<th>Enrolled <%= name_for_paths.pluralize %></th>
-					<th>Points Earned</th>
-					<th>Status</th>
-				</tr>
-			</thead>
-			<tbody>
-				<% user_counter = 0 %>
-				<% @users.each do |u| %>
-					<tr>
-						<td><%= user_counter.to_s %></td>
-						<td><%= link_to u.name, u %></td>
-						<td><%= link_to u.user_role.name, edit_role_user_path(u) unless u.user_role.nil?%></td>
-						<%
-							enrolled_paths = []
-							u.enrolled_paths.each do |p|
-								enrolled_paths << p.name
-							end
-							enrolled_paths = enrolled_paths.join(", ")						
-						%>
-						<% if enrolled_paths.blank? %>
-							<td>None</td>
-						<% else %>
-							<td><%= truncate(enrolled_paths, :length => 60) %></td>
-						<% end %>
-						<td><%= u.earned_points.to_s %></td>
-						<td>
-						<% if current_user == u %>
-							<%= link_to "Delete", "#", :class => "btn secondary disabled" %>
-						<% else %>
-							<%= link_to "Delete", u, :method => "delete", :confirm => "Are you sure you want to delete this user?", :class => "btn secondary" %>
-						<% end %>
-						</td>
-					</tr>
-					<% user_counter += 1 %>
-				<% end %>
-			</tbody>
-		</table>
-		<% end %>
-		<h4>Note: Adding Users</h4>
-		<p>Users must be added to a specific user role. To invite new users, click on the <strong>User Roles</strong> tab above, then click on one of the user roles in the table. From there, you'll find a link to use to invite new users to your organization.</p>
-		<hr/>
-	</section>
+  <h1><%= @company.name %></h1>
+  <ul class="tabs">
+    <li class="active"><a href="#">Users</a></li>
+    <li><%= link_to "Settings", edit_company_path(@company) %></li>
+    <li><%= link_to "User Roles", user_roles_path %></li>
+    <li><%= link_to "Custom Styles", custom_styles_path %></li>
+  </ul>
+  <section id="users">
+    <h2 style="margin-bottom:15px;">Registered Users</h2>
+    <% if @users.empty? %>
+      <p>You do not have any users for your organization yet.</p>
+    <% else %>
+    <span style="float:right;padding-bottom:10px; font-size: 16px; font-weight: bold;">Available seats: <%= @company.seat_limit - @company.users.size %></span>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>User Role</th>
+          <th>Enrolled <%= name_for_paths.pluralize %></th>
+          <th>Points Earned</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user_counter = 0 %>
+        <% @users.each do |u| %>
+          <tr>
+            <td><%= user_counter.to_s %></td>
+            <td><%= link_to u.name, u %></td>
+            <td><%= link_to u.user_role.name, edit_role_user_path(u) unless u.user_role.nil?%></td>
+            <%
+              enrolled_paths = []
+              u.enrolled_paths.each do |p|
+                enrolled_paths << p.name
+              end
+              enrolled_paths = enrolled_paths.join(", ")            
+            %>
+            <% if enrolled_paths.blank? %>
+              <td>None</td>
+            <% else %>
+              <td><%= truncate(enrolled_paths, :length => 60) %></td>
+            <% end %>
+            <td><%= u.earned_points.to_s %></td>
+            <td>
+            <% if current_user == u %>
+              <%= link_to "Delete", "#", :class => "btn secondary disabled" %>
+            <% else %>
+              <%= link_to "Delete", u, :method => "delete", :confirm => "Are you sure you want to delete this user?", :class => "btn secondary" %>
+            <% end %>
+            </td>
+          </tr>
+          <% user_counter += 1 %>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <h4>Note: Adding Users</h4>
+    <p>Users must be added to a specific user role. To invite new users, click on the <strong>User Roles</strong> tab above, then click on one of the user roles in the table. From there, you'll find a link to use to invite new users to your organization.</p>
+    <hr/>
+  </section>
 </section>

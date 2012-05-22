@@ -2,10 +2,10 @@
 <p style="padding:20px">To upload a <%= name_for_paths %>, package your <%= name_for_paths %> file into a zip and submit it below. You will have a chance to preview the <%= name_for_paths %> before its submitted for creation. For more details and help on how to properly create a <%= name_for_paths %> file for submission, see the tutorial on <a href="/tours/3/admin_tour"><%= name_for_paths %> creation</a>.</p>
 <%= form_for @path, :url=>{:controller => "paths", :action => "preview"}, :html => { :method => "post", :multipart => true } do |f| %>
 <div class="field clearfix">
-	<%= f.label :file %>
-	<div class="input">
-		<%= f.file_field :file %>
-	</div>
+  <%= f.label :file %>
+  <div class="input">
+    <%= f.file_field :file %>
+  </div>
 </div>
 <label>Settings</label>
   <div class="input">
@@ -27,6 +27,6 @@
   </div>
 </label>
 <div class="actions">
-	<%= f.submit "Submit", :class => "btn primary" %>
+  <%= f.submit "Submit", :class => "btn primary" %>
 </div>
 <% end %>

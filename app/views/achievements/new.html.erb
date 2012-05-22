@@ -1,84 +1,84 @@
 <h1>New Achievement</h1>
 <%= form_for @achievement do |f| %>
-	<%= render "shared/error_messages", :object => f.object %>
-	<%= f.hidden_field :path_id, :value => @path.id %><br/>
-	<div class="field clearfix">
-		<%= f.label :name %>
-		<div class="input">
-			<%= f.text_field :name, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label :description %>
-		<div class="input">
-			<%= f.text_field :description, :maxlength => 255, :size => 75 %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<%= f.label :points %>
-		<div class="input">
-			<select id="achievement_points" name="achievement[points]">
-				<option value="5">5</option>
-				<option value="10">10</option>
-				<option value="15">15</option>
-				<option value="20">20</option>
-				<option value="25">25</option>
-			</select>
-		</div>
-	</div>
-	<div>
-		<script>
-			$(document).ready(function(){
-				$('.section_check').change(function(){
-					var state = $(this).prop("checked");
-					var this_id = $(this).val();
-					this_id = this_id.replace("section_", "");
-					$(".section_task_"+this_id).each(function(){
-						if(state==true){
-							$(this).find("input").prop("checked", true);
-							$(this).find("input").prop("disabled", true);
-						} else {
-							$(this).find("input").prop("checked", false);
-							$(this).find("input").prop("disabled", false);
-						}
-					});
-				});
-			});
-		</script>
-		<h2>Criteria</h2>
-		<% if @sections.empty? %>
-			<p style="margin: 20px 0px 20px 20px;">You have not yet created any sections for this Path. You need to create at least one section to create an achievement.</p>
-		<% else %>
+  <%= render "shared/error_messages", :object => f.object %>
+  <%= f.hidden_field :path_id, :value => @path.id %><br/>
+  <div class="field clearfix">
+    <%= f.label :name %>
+    <div class="input">
+      <%= f.text_field :name, :maxlength => 255, :size => 75 %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :description %>
+    <div class="input">
+      <%= f.text_field :description, :maxlength => 255, :size => 75 %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :points %>
+    <div class="input">
+      <select id="achievement_points" name="achievement[points]">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+        <option value="25">25</option>
+      </select>
+    </div>
+  </div>
+  <div>
+    <script>
+      $(document).ready(function(){
+        $('.section_check').change(function(){
+          var state = $(this).prop("checked");
+          var this_id = $(this).val();
+          this_id = this_id.replace("section_", "");
+          $(".section_task_"+this_id).each(function(){
+            if(state==true){
+              $(this).find("input").prop("checked", true);
+              $(this).find("input").prop("disabled", true);
+            } else {
+              $(this).find("input").prop("checked", false);
+              $(this).find("input").prop("disabled", false);
+            }
+          });
+        });
+      });
+    </script>
+    <h2>Criteria</h2>
+    <% if @sections.empty? %>
+      <p style="margin: 20px 0px 20px 20px;">You have not yet created any sections for this Path. You need to create at least one section to create an achievement.</p>
+    <% else %>
       <p style="margin: 20px 0px 20px 20px;">Select which tasks, or which sections, must be completed for the user to unlock the achievement.</p>
-			<table>
-			<% @sections.each do |s| %>
-				<% if !s.tasks.empty? %>
-				<tr><td>	
-					<h3>
-						<input type="checkbox" style="display:inline;" class="section_check" value="section_<%= s.id.to_s %>"/>
-						<%= s.name %>
-					</h3>
-					<ul style="list-style-type: none;">
-					<% s.tasks.each do |t| %>
-						<li class="section_task_<%= s.id.to_s %>">
-							<h4>
-								<input id="achievement[tasks][<%= t.id.to_s %>]" name="achievement[tasks][<%= t.id.to_s %>]" type="checkbox" style="margin-right:10px;"/>
-								<%= t.question %>
-							</h4>
-						</li>
-					<% end %>
-					</ul>
-				<% end %>
-				</tr></td>
-			<% end %>
-			</table>
-		<% end %>
-	</div>
-	<div class="actions">
+      <table>
+      <% @sections.each do |s| %>
+        <% if !s.tasks.empty? %>
+        <tr><td>  
+          <h3>
+            <input type="checkbox" style="display:inline;" class="section_check" value="section_<%= s.id.to_s %>"/>
+            <%= s.name %>
+          </h3>
+          <ul style="list-style-type: none;">
+          <% s.tasks.each do |t| %>
+            <li class="section_task_<%= s.id.to_s %>">
+              <h4>
+                <input id="achievement[tasks][<%= t.id.to_s %>]" name="achievement[tasks][<%= t.id.to_s %>]" type="checkbox" style="margin-right:10px;"/>
+                <%= t.question %>
+              </h4>
+            </li>
+          <% end %>
+          </ul>
+        <% end %>
+        </tr></td>
+      <% end %>
+      </table>
+    <% end %>
+  </div>
+  <div class="actions">
   <% if @sections.empty? %>
     <%= link_to "Back", edit_path_path(@path, :m => "achievements"), :class => "btn primary"  %>
   <% else %>
-		<%= f.submit "Save", :class => "btn primary" %>
+    <%= f.submit "Save", :class => "btn primary" %>
   <% end %>
-	</div>
+  </div>
 <% end %>

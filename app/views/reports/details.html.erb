@@ -1,57 +1,57 @@
 <section id="dashboard">
-	<h1>Report - <%= @path.name %></h1>
-	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-	<section>
-		<h2>Most incorrectly answered questions</h2>
-		<% if @most_incorrect_tasks.empty? %>
-			<p style="margin-bottom: 30px">There is not enough useage information for this Path yet to create a report.</p>
-		<% else %>
-		<table>
-			<thead>
-				<tr>
-					<th>Rank</th>
-					<th>Question</th>
-					<th>Wrong Answers</th>
-				</tr>
-			</thead>
-			<tbody>
-			<% task_counter = 1 %>
-			<% @most_incorrect_tasks.each do |t| %>
-				<tr>
-					<td id="incorrect_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
-					<td id="incorrect_question_<%= t.id.to_s %>"><%= Task.find(t.id).question %></td>
-					<td id="incorrect_count_<%= t.id.to_s %>"><%= t.count %></td>
-				</tr>
-			<% task_counter += 1 %>
-			<% end %>
-			</tbody>
-		</table>
-		<% end %>
-		<h2>Most correctly answered questions</h2>
-		<% if @most_correct_tasks.empty? %>
-			<p>There is not enough useage information for this Path yet to create a report.</p>
-		<% else %>
-		<table>
-			<thead>
-				<tr>
-					<th>Rank</th>
-					<th>Question</th>
-					<th>Incorrect Answers</th>
-				</tr>
-			</thead>
-			<tbody>
-			<% task_counter = 1 %>
-			<% @most_correct_tasks.each do |t| %>
-				<tr>
-					<td id="correct_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
-					<td id="correct_question_<%= t.id.to_s %>"><%= Task.find(t.id).question %></td>
-					<td id="correct_count_<%= t.id.to_s %>"><%= t.count %></td>
-				</tr>
-			<% task_counter += 1 %>
-			<% end %>
-			</tbody>
-		</table>
-		<% end %>
-	</section>
+  <h1>Report - <%= @path.name %></h1>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <section>
+    <h2>Most incorrectly answered questions</h2>
+    <% if @most_incorrect_tasks.empty? %>
+      <p style="margin-bottom: 30px">There is not enough useage information for this Path yet to create a report.</p>
+    <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Question</th>
+          <th>Wrong Answers</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% task_counter = 1 %>
+      <% @most_incorrect_tasks.each do |t| %>
+        <tr>
+          <td id="incorrect_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
+          <td id="incorrect_question_<%= t.id.to_s %>"><%= Task.find(t.id).question %></td>
+          <td id="incorrect_count_<%= t.id.to_s %>"><%= t.count %></td>
+        </tr>
+      <% task_counter += 1 %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+    <h2>Most correctly answered questions</h2>
+    <% if @most_correct_tasks.empty? %>
+      <p>There is not enough useage information for this Path yet to create a report.</p>
+    <% else %>
+    <table>
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Question</th>
+          <th>Incorrect Answers</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% task_counter = 1 %>
+      <% @most_correct_tasks.each do |t| %>
+        <tr>
+          <td id="correct_rank_<%= t.id.to_s %>"><%= task_counter.to_s %></td>
+          <td id="correct_question_<%= t.id.to_s %>"><%= Task.find(t.id).question %></td>
+          <td id="correct_count_<%= t.id.to_s %>"><%= t.count %></td>
+        </tr>
+      <% task_counter += 1 %>
+      <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </section>
 </section>
-				
+        

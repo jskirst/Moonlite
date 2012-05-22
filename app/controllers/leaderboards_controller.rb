@@ -1,18 +1,18 @@
 class LeaderboardsController < ApplicationController
   before_filter :authenticate
-	before_filter :admin_or_company_admin, :only => [:new, :create]
+  before_filter :admin_or_company_admin, :only => [:new, :create]
   before_filter :is_enabled
 
   def index
-			@leaderboards = []
-			@leaderboards << ["overall", Leaderboard.get_overall_leaderboard(current_user)]
-			
-			@categories = current_user.company.categories
-			@categories.each do |c|
-				@leaderboards << [c.id, Leaderboard.get_leaderboard_for_category(c, current_user)]
-			end
-			@last_update = Leaderboard.get_most_recent_board_date
-	end
+      @leaderboards = []
+      @leaderboards << ["overall", Leaderboard.get_overall_leaderboard(current_user)]
+      
+      @categories = current_user.company.categories
+      @categories.each do |c|
+        @leaderboards << [c.id, Leaderboard.get_leaderboard_for_category(c, current_user)]
+      end
+      @last_update = Leaderboard.get_most_recent_board_date
+  end
   
   def new
   end
@@ -28,9 +28,9 @@ class LeaderboardsController < ApplicationController
   end
   
   private
-		def admin_or_company_admin
-			redirect_to(root_path) unless (current_user.admin? || @enable_administration)
-		end
+    def admin_or_company_admin
+      redirect_to(root_path) unless (current_user.admin? || @enable_administration)
+    end
     
     def is_enabled
       unless @enable_leaderboard

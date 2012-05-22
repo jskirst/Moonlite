@@ -1,34 +1,34 @@
 <section>
-	<div class="input" style="float:right; margin-top: 5px">
-	<%= form_tag explore_path, :method => "get" do %>
-		<%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
-		<%= submit_tag "Search", :class => "btn primary" %>
-	<% end %>
-	</div>
-	<div><a><h1><%= company_logo %> <%= name_for_paths.pluralize %></h1></a></div>
+  <div class="input" style="float:right; margin-top: 5px">
+  <%= form_tag explore_path, :method => "get" do %>
+    <%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
+    <%= submit_tag "Search", :class => "btn primary" %>
+  <% end %>
+  </div>
+  <div><a><h1><%= company_logo %> <%= name_for_paths.pluralize %></h1></a></div>
 </section>
 <hr/>
 <section id="path_explore">
 <% if @path_categories.empty? %>
-	<p style="padding:30px 20px 300px 20px;">No <%= name_for_paths.pluralize %> have been listed for your organization yet. Please check with your administrator to see if your Moonlite instance has been properly configured.</p>
+  <p style="padding:30px 20px 300px 20px;">No <%= name_for_paths.pluralize %> have been listed for your organization yet. Please check with your administrator to see if your Moonlite instance has been properly configured.</p>
 <% else %>
   <% empty = true %>
-	<% @path_categories.each do |c| %>
-		
-		<% category = c[0] %>
-		<% paths = c[1] %>
-		<% next if paths.empty? %>
+  <% @path_categories.each do |c| %>
+    
+    <% category = c[0] %>
+    <% paths = c[1] %>
+    <% next if paths.empty? %>
     <% empty = false %>
-		<div class="row" style="padding-left: 20px;">
+    <div class="row" style="padding-left: 20px;">
       <h2><%= category.name %></h2>
       <% unless @display_all %>
         <%= link_to "View All", explore_path(:c => category.id), :style=> "float: right; padding-top: 10px;" %>
       <% end %>
     </div>
     
-		<%= render "path_grid", {:paths => paths, :display_all => @display_all} %>
-		
-	<% end %>
+    <%= render "path_grid", {:paths => paths, :display_all => @display_all} %>
+    
+  <% end %>
   <% if empty %><p>No <%= name_for_paths.downcase.pluralize %> have been created yet. <%= link_to "Create one!", new_path_path %></p><% end %>
 <% end %>
 </section>

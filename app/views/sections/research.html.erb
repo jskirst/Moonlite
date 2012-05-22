@@ -67,8 +67,8 @@ $(function(){
   <%= f.hidden_field :instructions %>
   <%= f.hidden_field :content_type, :value => "auto" %>
   <div class="actions">
-		<%= f.submit "Finish", :confirm => "Warning: This will overwrite any previous material you had for this section.", :class => "btn primary" %>
-		<a onclick="display_topic_editor();" class="btn secondary">Add Topic</a>
+    <%= f.submit "Finish", :confirm => "Warning: This will overwrite any previous material you had for this section.", :class => "btn primary" %>
+    <a onclick="display_topic_editor();" class="btn secondary">Add Topic</a>
     <%= link_to "Back", edit_section_path(@section, :m=>"instructions"), :class => "btn secondary" %>
     <%= link_to "Clear", 
       research_section_path(@section, :m => "clear"), 
@@ -76,5 +76,5 @@ $(function(){
       :class => "btn danger",
       :style => "float:right;"
     %>
-	</div>
+  </div>
 <% end %>

@@ -1,55 +1,55 @@
 <%= render "sections/modals/start_modal" %>
 <% if correct == true %>
-	<%= render "sections/modals/correct_modal" %>
+  <%= render "sections/modals/correct_modal" %>
 <% end %>
 
 <% if jumpstart %>
-	<%= render "sections/modals/jumpstart", { :path => path, :leaderboards => leaderboards } %>
-	<script>
-		$(function(){
-			$('#username_modal').modal({ keyboard: true, backdrop: 'static', show: true });
-			bind_change_name_form();
-		});
-	</script>
+  <%= render "sections/modals/jumpstart", { :path => path, :leaderboards => leaderboards } %>
+  <script>
+    $(function(){
+      $('#username_modal').modal({ keyboard: true, backdrop: 'static', show: true });
+      bind_change_name_form();
+    });
+  </script>
 <% elsif earned_points == 0 && correct.nil? %>
-	<script>$(function(){ show_start_modal(); });</script>
+  <script>$(function(){ show_start_modal(); });</script>
 <% end %>
 
 <%= form_tag({ :controller => :sections, :action => "continue" }, :remote => true, :method => "get", "data-type" => "html", :id => "challenge_form") %>
 <div class="task row">
   <div class="span9">
-		<div class="question">
+    <div class="question">
       <h2>Section <%= section.position.to_s %>. <%= section.name %></h2>
       <blockquote>
         <p>
           <%= task.question %>
         </p>
-				<% if hint %><p style="font-style:italic; font-size: 14px;"><%= hint %></p><% end %>
+        <% if hint %><p style="font-style:italic; font-size: 14px;"><%= hint %></p><% end %>
       </blockquote>
-			<%= render "info_resource", { :info_resource => info_resource } %>
+      <%= render "info_resource", { :info_resource => info_resource } %>
     </div>
     <div class="answer">
       <input type="hidden" name="task_id" value="<%= task.id %>">
-			<% if question_type == "text" && path.game_type == "character guess" %>
-				<%= render "character_guess", { :answer => task.answer1 } %>
-			<% elsif question_type == "text" %>
-				<%= render "single_answer", { :task => task } %>
-			<% else %>
-				<%= render "multiple_choice_answer", { :task => task } %>
-			<% end %>
+      <% if question_type == "text" && path.game_type == "character guess" %>
+        <%= render "character_guess", { :answer => task.answer1 } %>
+      <% elsif question_type == "text" %>
+        <%= render "single_answer", { :task => task } %>
+      <% else %>
+        <%= render "multiple_choice_answer", { :task => task } %>
+      <% end %>
     </div>
-	</div>
-	<div class="span7">
+  </div>
+  <div class="span7">
   <% if path.game_type == "picture" %>
-		<%= render "sections/games/picture_game", { :picture => "", :progress => progress } %>
-	<% elsif path.game_type == "raw numbers" %>
-		<%= render "sections/games/raw_numbers" %>
-	<% elsif path.game_type == "raw streak" %>
-		<%= render "sections/games/raw_streak" %>
-	<% else %>
-		<%= render "sections/games/progress_box", { :earned_points => earned_points, :possible_points => possible_points, :streak_points => streak_points } %>
-	<% end %>
-	</div>
+    <%= render "sections/games/picture_game", { :picture => "", :progress => progress } %>
+  <% elsif path.game_type == "raw numbers" %>
+    <%= render "sections/games/raw_numbers" %>
+  <% elsif path.game_type == "raw streak" %>
+    <%= render "sections/games/raw_streak" %>
+  <% else %>
+    <%= render "sections/games/progress_box", { :earned_points => earned_points, :possible_points => possible_points, :streak_points => streak_points } %>
+  <% end %>
+  </div>
 </div>
 <div class="row">
   <div class="actions" style="margin-top:50px">

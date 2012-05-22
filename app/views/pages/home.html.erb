@@ -1,22 +1,22 @@
 <section style="margin-bottom:20px">
  <h1 style="margin-bottom: 15px;">My <%= name_for_paths.pluralize %></h1>
 <% if @enrolled_paths.empty? && @completed_paths.empty? %>
-	<hr/>
+  <hr/>
   <p>You are not currently enrolled in any <%= name_for_paths.pluralize %>.</p>
   <%= link_to "Get started!", explore_path, :class => "btn primary" %>
 <% elsif @enrolled_paths.empty? && !@completed_paths.empty? %>
-	<hr/>
+  <hr/>
   <p>Congratulations! You've completed all your enrolled <%= name_for_paths.pluralize %>.</p>
 <% end %>
   <%= render "pages/user_progress", { :paths_list => @enrolled_paths } %>
-	<% if @enable_recommendations %>
-		<hr/>
-		<%= render "pages/suggested_paths", {:paths_title => "Recommended for you", :paths_list => @suggested_paths} %>
-	<% end %>
+  <% if @enable_recommendations %>
+    <hr/>
+    <%= render "pages/suggested_paths", {:paths_title => "Recommended for you", :paths_list => @suggested_paths} %>
+  <% end %>
 </section>
 
 
 <% if @enable_news %>
   <hr/>
-	<%= render "pages/user_news", { :user_events => @user_events } %>
+  <%= render "pages/user_news", { :user_events => @user_events } %>
 <% end %>

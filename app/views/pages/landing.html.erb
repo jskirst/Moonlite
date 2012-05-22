@@ -1,13 +1,13 @@
 <section style="float:left; margin-right: 60px;">
-	<img src="https://s3-us-west-1.amazonaws.com/moonlite/static/logo.png" width="200" height="250"/>
+  <img src="https://s3-us-west-1.amazonaws.com/moonlite/static/logo.png" width="200" height="250"/>
 </section>
 <section>
   <h1 style="font-size: 100px; margin-top:50px;">Meta<span style="color:green">Bright</span></h1>
-	<h3>Knowledge is an asset. Track it.</h3>
+  <h3>Knowledge is an asset. Track it.</h3>
   <br>
   <p style="font-size: 16px;"><strong>MetaBright</strong> helps companies ensure their employees have the knowledge they need to perform their best.</p>
   <br>
-	<%= form_for(:pages, :url => invitation_path, :method => "GET") do |f| %>
-	<%= f.text_field :email, :autofocus => true, :placeholder => "Enter your email address..." %> <%= f.submit "Request an Invite", :class => "btn primary",  %>
-	<% end %>
+  <%= form_for(:pages, :url => invitation_path, :method => "GET") do |f| %>
+  <%= f.text_field :email, :autofocus => true, :placeholder => "Enter your email address..." %> <%= f.submit "Request an Invite", :class => "btn primary",  %>
+  <% end %>
 </section>

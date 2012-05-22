@@ -13,34 +13,34 @@ label.unselected_answer { border: 2px solid white; background: white;}
 <% selection_script = "$('.selected_answer').removeClass('selected_answer').addClass('unselected_answer');$(this).removeClass('unselected_answer').addClass('selected_answer');" %>
 
 <div class="field clearfix">
-	<div class="input">
-		<ul class="inputs-list">
-			<li>
-				<% unless task.answer1.blank? %>
-				<label class="<%= @hints.include?(task.answer1) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer1) %>">
-					<input <%= @hints.include?(task.answer1) ? "disabled='disabled'" : "" %> id="completed_task_answer1" name="answer" type="radio" value="1">
-					<span class="<%= @hints.include?(task.answer1) ? "already_guessed" : "" %>"><%= task.answer1 %></span>
-				</label>
-				<% end %>
-				<% unless task.answer2.blank? %>
-				<label class="<%= @hints.include?(task.answer2) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer2) %>">
-					<input <%= @hints.include?(task.answer2) ? "disabled='disabled'" : "" %> id="completed_task_answer2" name="answer" type="radio" value="2">
-					<span class="<%= @hints.include?(task.answer2) ? "already_guessed" : "" %>"><%= task.answer2 %></span>
-				</label>
-				<% end %>
-				<% unless task.answer3.blank? %>
-				<label class="<%= @hints.include?(task.answer3) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer3) %>">
-					<input <%= @hints.include?(task.answer3) ? "disabled='disabled'" : "" %> id="completed_task_answer3" name="answer" type="radio" value="3">
-					<span class="<%= @hints.include?(task.answer3) ? "already_guessed" : "" %>"><%= task.answer3 %></span>
-				</label>
-				<% end %>
-				<% unless task.answer4.blank? %>
-				<label class="<%= @hints.include?(task.answer4) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer4) %>">
-					<input <%= @hints.include?(task.answer4) ? "disabled='disabled'" : "" %> id="completed_task_answer4" name="answer" type="radio" value="4">
-					<span class="<%= @hints.include?(task.answer4) ? "already_guessed" : "" %>"><%= task.answer4 %></span>
-				</label>
-				<% end %>
-			</li>
-	</ul>
-	</div>
+  <div class="input">
+    <ul class="inputs-list">
+      <li>
+        <% unless task.answer1.blank? %>
+        <label class="<%= @hints.include?(task.answer1) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer1) %>">
+          <input <%= @hints.include?(task.answer1) ? "disabled='disabled'" : "" %> id="completed_task_answer1" name="answer" type="radio" value="1">
+          <span class="<%= @hints.include?(task.answer1) ? "already_guessed" : "" %>"><%= task.answer1 %></span>
+        </label>
+        <% end %>
+        <% unless task.answer2.blank? %>
+        <label class="<%= @hints.include?(task.answer2) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer2) %>">
+          <input <%= @hints.include?(task.answer2) ? "disabled='disabled'" : "" %> id="completed_task_answer2" name="answer" type="radio" value="2">
+          <span class="<%= @hints.include?(task.answer2) ? "already_guessed" : "" %>"><%= task.answer2 %></span>
+        </label>
+        <% end %>
+        <% unless task.answer3.blank? %>
+        <label class="<%= @hints.include?(task.answer3) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer3) %>">
+          <input <%= @hints.include?(task.answer3) ? "disabled='disabled'" : "" %> id="completed_task_answer3" name="answer" type="radio" value="3">
+          <span class="<%= @hints.include?(task.answer3) ? "already_guessed" : "" %>"><%= task.answer3 %></span>
+        </label>
+        <% end %>
+        <% unless task.answer4.blank? %>
+        <label class="<%= @hints.include?(task.answer4) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(task.answer4) %>">
+          <input <%= @hints.include?(task.answer4) ? "disabled='disabled'" : "" %> id="completed_task_answer4" name="answer" type="radio" value="4">
+          <span class="<%= @hints.include?(task.answer4) ? "already_guessed" : "" %>"><%= task.answer4 %></span>
+        </label>
+        <% end %>
+      </li>
+  </ul>
+  </div>
 </div>

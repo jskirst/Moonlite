@@ -2,11 +2,11 @@
 <p style="margin: 25px 0px 25px 0px;">If you have an account on Moonlite, we'll send link to the email you provide below.</p>
 <%= form_tag({:controller => :users, :action => :send_reset}, :method => :post) %>
 <div class="field">
-	<%= label_tag :email %>
-	<div class="input">
-		<%= text_field_tag :email %>
-	</div>
+  <%= label_tag :email %>
+  <div class="input">
+    <%= text_field_tag :email %>
+  </div>
 </div>
 <div class="actions">
-	<%= submit_tag "Submit", :class => "btn primary" %>
+  <%= submit_tag "Submit", :class => "btn primary" %>
 </div>

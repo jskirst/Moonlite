@@ -3,7 +3,7 @@
 <p>Enter your section content below. You can use the Editor to add HTML syntax to your content or enter HTML directly.</p>
 <hr>
 <%= form_for(@section) do |f| %>
-	<%= render "shared/error_messages", :object => f.object %>
+  <%= render "shared/error_messages", :object => f.object %>
   <style>
   .markitup { margin: auto; }
   .markitup { width: 800px; }
@@ -12,9 +12,9 @@
     <%= f.hidden_field :content_type, :value => "html" %>
   <% end %>
   <%= f.text_area :instructions, :class=>"markitup", :rows => "15" %>
-	<div class="actions">
-		<%= f.submit "Save", :class => "btn primary" %>
-		<%= link_to "Cancel", edit_section_path(@section, :m => "instructions"), :class => "btn secondary" %>
-	</div>
+  <div class="actions">
+    <%= f.submit "Save", :class => "btn primary" %>
+    <%= link_to "Cancel", edit_section_path(@section, :m => "instructions"), :class => "btn secondary" %>
+  </div>
 <% end %>
 </section>

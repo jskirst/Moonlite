@@ -1,82 +1,82 @@
 <style>
-	.caption {
-		display: inline;
-		z-index: 1000;
-		float: left;
-		position: absolute;
-		width: 194px;
-		background-color: white;
-		font-size: 20px;
-		color: black;
-		padding: 8px;
-		margin-top: 60px;
-	}
+  .caption {
+    display: inline;
+    z-index: 1000;
+    float: left;
+    position: absolute;
+    width: 194px;
+    background-color: white;
+    font-size: 20px;
+    color: black;
+    padding: 8px;
+    margin-top: 60px;
+  }
 </style>
 <section>
-	<div class="input" style="float:right; margin-top: 5px">
-	<%= form_tag marketplace_path, :method => "get" do %>
-		<%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
-		<%= submit_tag "Search", :class => "btn primary" %>
-	<% end %>
-	</div>
-	<div>
-		<a href="/marketplace"><h1>Path Marketplace</h1></a>
-	</div>
+  <div class="input" style="float:right; margin-top: 5px">
+  <%= form_tag marketplace_path, :method => "get" do %>
+    <%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
+    <%= submit_tag "Search", :class => "btn primary" %>
+  <% end %>
+  </div>
+  <div>
+    <a href="/marketplace"><h1>Path Marketplace</h1></a>
+  </div>
 </section>
 <section>
-	<% if !@query.nil? %>
-	<p>Your search for <strong><%= @query %></strong> returned <%= @paths.size.to_s %> results.</p>
-		<% if !@paths.empty? %>
-		<ul class="media-grid">
-			<% @paths.each do |p| %>
-			<li>
-				<a href="paths/<%= p.id %>/review">
-					<span class="caption"><%= p.name %></span>
-					<img class="thumbnail" src="<%= p.path_pic %>" height="150" width="210">
-				</a>
-			</li>
-			<% end %>
-		</ul>
-		<% end %>
-	<% else %>	
-	<ul class="media-grid">
-		<li>
-			<a href="/marketplace?search=networks"><span class="caption">networks & IT</span><img class="thumbnail" src="/images/paths/rsz_network.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=development"><span class="caption">web development</span><img class="thumbnail" src="/images/paths/rsz_software.png" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=design"><span class="caption">visual design</span><img class="thumbnail" src="/images/paths/design.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=management"><span class="caption">project management</span><img class="thumbnail" src="/images/paths/management.png" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=sales"><span class="caption">sales</span><img class="thumbnail" src="/images/paths/sales.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=marketing"><span class="caption">marketing</span><img class="thumbnail" src="/images/paths/marketing.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=productivity"><span class="caption">productivity</span><img class="thumbnail" src="/images/paths/rsz_productivity.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=communications"><span class="caption">communications</span><img class="thumbnail" src="/images/paths/communications.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=biotechnology"><span class="caption">biotechnology</span><img class="thumbnail" src="/images/paths/rsz_biotech.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=medicine"><span class="caption">medicine</span><img class="thumbnail" src="/images/paths/medicine.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=education"><span class="caption">education</span><img class="thumbnail" src="/images/paths/education.jpg" height="150" width="210"></a>
-		</li>
-		<li>
-			<a href="/marketplace?search=languages"><span class="caption">languages</span><img class="thumbnail" src="/images/paths/languages.jpg" height="150" width="210"></a>
-		</li>
-	</ul>
-	<% end %>
+  <% if !@query.nil? %>
+  <p>Your search for <strong><%= @query %></strong> returned <%= @paths.size.to_s %> results.</p>
+    <% if !@paths.empty? %>
+    <ul class="media-grid">
+      <% @paths.each do |p| %>
+      <li>
+        <a href="paths/<%= p.id %>/review">
+          <span class="caption"><%= p.name %></span>
+          <img class="thumbnail" src="<%= p.path_pic %>" height="150" width="210">
+        </a>
+      </li>
+      <% end %>
+    </ul>
+    <% end %>
+  <% else %>  
+  <ul class="media-grid">
+    <li>
+      <a href="/marketplace?search=networks"><span class="caption">networks & IT</span><img class="thumbnail" src="/images/paths/rsz_network.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=development"><span class="caption">web development</span><img class="thumbnail" src="/images/paths/rsz_software.png" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=design"><span class="caption">visual design</span><img class="thumbnail" src="/images/paths/design.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=management"><span class="caption">project management</span><img class="thumbnail" src="/images/paths/management.png" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=sales"><span class="caption">sales</span><img class="thumbnail" src="/images/paths/sales.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=marketing"><span class="caption">marketing</span><img class="thumbnail" src="/images/paths/marketing.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=productivity"><span class="caption">productivity</span><img class="thumbnail" src="/images/paths/rsz_productivity.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=communications"><span class="caption">communications</span><img class="thumbnail" src="/images/paths/communications.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=biotechnology"><span class="caption">biotechnology</span><img class="thumbnail" src="/images/paths/rsz_biotech.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=medicine"><span class="caption">medicine</span><img class="thumbnail" src="/images/paths/medicine.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=education"><span class="caption">education</span><img class="thumbnail" src="/images/paths/education.jpg" height="150" width="210"></a>
+    </li>
+    <li>
+      <a href="/marketplace?search=languages"><span class="caption">languages</span><img class="thumbnail" src="/images/paths/languages.jpg" height="150" width="210"></a>
+    </li>
+  </ul>
+  <% end %>
 </section>
-		
+    

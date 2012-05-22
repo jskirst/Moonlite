@@ -62,7 +62,7 @@ function get_article_id(topic){
 
 function edit_article(article_id){
   topic = $("#"+article_id+" h1").text();
-	display_settings_editor(topic, article_id);
+  display_settings_editor(topic, article_id);
 }
 
 function remove_article(article_id){

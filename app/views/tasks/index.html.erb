@@ -12,33 +12,33 @@ $('a[data-method="delete"]').on('ajax:success',
 );
 </script>
 <section>
-	<h2><%= @section.name %></h2>
-	<table>
-	<% @tasks.each do |t| %>
-		<tr class="task"><td>	
-			<blockquote>
-				<p>
-					<%= t.question %>
-				</p>
-			</blockquote>
-			<ol>
-				<% if !t.answer1.blank? %><li><%= t.answer1 %></li><% end %>
-				<% if !t.answer2.blank? %><li><%= t.answer2 %></li><% end %>
-				<% if !t.answer3.blank? %><li><%= t.answer3 %></li><% end %>
-				<% if !t.answer4.blank? %><li><%= t.answer4 %></li><% end %>
-			</ol>
-			<p style="float: left;">Correct Answer: <%= t.correct_answer %></p>
-			<%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
-			<%= link_to "Delete", t,
+  <h2><%= @section.name %></h2>
+  <table>
+  <% @tasks.each do |t| %>
+    <tr class="task"><td>  
+      <blockquote>
+        <p>
+          <%= t.question %>
+        </p>
+      </blockquote>
+      <ol>
+        <% if !t.answer1.blank? %><li><%= t.answer1 %></li><% end %>
+        <% if !t.answer2.blank? %><li><%= t.answer2 %></li><% end %>
+        <% if !t.answer3.blank? %><li><%= t.answer3 %></li><% end %>
+        <% if !t.answer4.blank? %><li><%= t.answer4 %></li><% end %>
+      </ol>
+      <p style="float: left;">Correct Answer: <%= t.correct_answer %></p>
+      <%= link_to "Edit", edit_task_path(t), :class => "btn secondary" %>
+      <%= link_to "Delete", t,
         :method => :delete, 
         "data-remote" => true,
         :confirm => "Are you sure you want to delete this question?", 
         "data-type" => "json",
         :class => "btn secondary" %>
-		</tr></td>
-	<% end %>
-	</table>
-	<div class="actions">
-		<%= link_to "Back", @section, :class => "btn primary" %>
-	</div>
+    </tr></td>
+  <% end %>
+  </table>
+  <div class="actions">
+    <%= link_to "Back", @section, :class => "btn primary" %>
+  </div>
 </section>

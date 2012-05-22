@@ -15,58 +15,58 @@
   # end
   
   # describe "access controller" do
-		# describe "when not signed in" do
-			# it "should deny access to 'create'" do
-				# post :create, :comment => @attr
-				# response.should redirect_to signin_path
-			# end
+    # describe "when not signed in" do
+      # it "should deny access to 'create'" do
+        # post :create, :comment => @attr
+        # response.should redirect_to signin_path
+      # end
 
-			# it "should deny access to 'destroy'" do
-				# delete :destroy, :id => @comment
-				# response.should redirect_to signin_path
-			# end				
-		# end
+      # it "should deny access to 'destroy'" do
+        # delete :destroy, :id => @comment
+        # response.should redirect_to signin_path
+      # end        
+    # end
     
     # describe "when signed in as an unenrolled user" do
-			# before(:each) do
+      # before(:each) do
         # @other_user = FactoryGirl.create(:user, :company => @user.company)
-				# test_sign_in(@other_user)
-			# end
-			
-			# it "should deny access to 'create'" do
-				# post :create, :comment => @attr
-				# response.should redirect_to root_path
-			# end
+        # test_sign_in(@other_user)
+      # end
       
-			# it "should deny access to 'destroy'" do
-				# delete :destroy, :id => @comment
-				# response.should redirect_to root_path
-			# end	
-		# end
-		
-		# describe "when signed in as a user" do
-			# before(:each) do
-				# test_sign_in(@user)
-			# end
-			
-			# it "should allow access to 'create'" do
-				# post :create, :comment => @attr
-				# response.should redirect_to @task
-			# end
+      # it "should deny access to 'create'" do
+        # post :create, :comment => @attr
+        # response.should redirect_to root_path
+      # end
       
-			# it "should allow access to 'destroy' if user created comment" do
-				# delete :destroy, :id => @comment
-				# response.should redirect_to @task
-			# end
+      # it "should deny access to 'destroy'" do
+        # delete :destroy, :id => @comment
+        # response.should redirect_to root_path
+      # end  
+    # end
+    
+    # describe "when signed in as a user" do
+      # before(:each) do
+        # test_sign_in(@user)
+      # end
+      
+      # it "should allow access to 'create'" do
+        # post :create, :comment => @attr
+        # response.should redirect_to @task
+      # end
+      
+      # it "should allow access to 'destroy' if user created comment" do
+        # delete :destroy, :id => @comment
+        # response.should redirect_to @task
+      # end
       
       # it "should deny access to 'destroy' if user did not create comment" do
-				# @other_company_user = FactoryGirl.create(:user, :company => @user.company)
+        # @other_company_user = FactoryGirl.create(:user, :company => @user.company)
         # @other_company_user.enroll!(@path)
         # @other_comment = FactoryGirl.create(:comment, :task => @task, :user => @other_company_user)
         # delete :destroy, :id => @other_comment
-				# response.should redirect_to root_path
-			# end
-		# end
+        # response.should redirect_to root_path
+      # end
+    # end
   # end
 
   # describe "POST create" do

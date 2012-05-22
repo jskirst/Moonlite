@@ -24,9 +24,9 @@
     <%= image_tag(@user_hero.profile_pic, :size => "100x100") %>
   </div>
   <div style="width: 845px; margin-bottom: 0px;">
-		<h1><strong><%= @user_hero.name %></strong> completed the <strong><%= @path.name %></strong> <%= name_for_paths %> with a score of <%= @hero_score %>. Can you beat that?</h1>
+    <h1><strong><%= @user_hero.name %></strong> completed the <strong><%= @path.name %></strong> <%= name_for_paths %> with a score of <%= @hero_score %>. Can you beat that?</h1>
       <%= link_to "Begin", path_path(@path), :class => "btn primary", :style => "float:right; margin: 15px 5px 0px 0px;"%>
-	</div>
+  </div>
   <div>
     <p>Other completed <%= name_for_paths.pluralize %>:</p>
     <div>

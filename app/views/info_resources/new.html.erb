@@ -2,20 +2,20 @@
 <p>You can upload a picture for any task and have it displayed just below the question. You can use this for "identify this" type questions or just for some added visuals.</p>
 <%= form_for @info_resource, :html => { :multipart => true }  do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
-	<%= f.hidden_field :task_id %>
-	<div class="field clearfix">
-		<%= f.label :description %>
-		<div class="input">
-			<%= f.text_area :description, :class => "xxlarge", :rows => "2", :placeholder => "optional..." %>
-		</div>
-	</div>
-	<div class="field">
-		<%= f.label "Upload File" %>
-		<div class="input">
-			<%= f.file_field :obj %>
-		</div>
-	</div>
-	<div class="actions">
-		<%= f.submit "Save", :class => "btn primary" %>
-	</div>
+  <%= f.hidden_field :task_id %>
+  <div class="field clearfix">
+    <%= f.label :description %>
+    <div class="input">
+      <%= f.text_area :description, :class => "xxlarge", :rows => "2", :placeholder => "optional..." %>
+    </div>
+  </div>
+  <div class="field">
+    <%= f.label "Upload File" %>
+    <div class="input">
+      <%= f.file_field :obj %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit "Save", :class => "btn primary" %>
+  </div>
 <% end %>

@@ -1,12 +1,12 @@
 class PagesController < ApplicationController
-	before_filter :authenticate, :only => [:explore]
-	before_filter :user_creation_enabled?, :only => [:create]
-	before_filter :browsing_enabled?, :only => [:explore]
+  before_filter :authenticate, :only => [:explore]
+  before_filter :user_creation_enabled?, :only => [:create]
+  before_filter :browsing_enabled?, :only => [:explore]
   
-	def home
-		@title = "Home"
-		if signed_in?
-			@paths = current_user.enrolled_paths
+  def home
+    @title = "Home"
+    if signed_in?
+      @paths = current_user.enrolled_paths
       @enrolled_paths = []
       @completed_paths = []
       @paths.each do |p|
@@ -16,23 +16,23 @@ class PagesController < ApplicationController
           @enrolled_paths << p
         end
       end
-			if @enable_recommendations
-				@suggested_paths = Path.suggested_paths(current_user)				
-			end
+      if @enable_recommendations
+        @suggested_paths = Path.suggested_paths(current_user)        
+      end
       @user_events = UserEvent.includes(:user, :company, :path).where("companies.id = ? and users.user_role_id = ?", current_user.company_id, current_user.user_role_id).all(:limit => 20, :order => "user_events.created_at DESC")
-		else
-			unless params[:m]
-				render "landing"
-			else
-				@first_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).first(4)
-				@last_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).last(4)
-				render "consumer_landing"
-			end
-		end
-	end
+    else
+      unless params[:m]
+        render "landing"
+      else
+        @first_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).first(4)
+        @last_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).last(4)
+        render "consumer_landing"
+      end
+    end
+  end
   
   def explore
-		@title = "Explore"
+    @title = "Explore"
     @path_categories = []
     @display_all = true
     if params[:search]
@@ -53,51 +53,51 @@ class PagesController < ApplicationController
         @path_categories << [c, Path.with_category(c.id, current_user)]
       end
     end
-		logger.debug @path_categories
-	end
-	
-	def create
-		if @enable_collaboration
-			@published_paths = current_user.company.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
-			@unpublished_paths = current_user.company.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
-		else
-			@published_paths = current_user.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
-			@unpublished_paths = current_user.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
-		end
-	end
+    logger.debug @path_categories
+  end
   
-	def about
-		@title = "About"
-	end
-	
-	def help
-		@title = "Help"
-	end
-	
-	def invitation
-		@title = "Request an invite"
-		if params[:pages] && params[:pages][:email]
-			send_invitation_alert(params[:pages][:email])
-			render "invitation_sent"
-		end
-	end
-	
-	private
-		def send_invitation_alert(email)
-			Mailer.invitation_alert(email).deliver
-		end
-		
-		def user_creation_enabled?
-			unless @enable_user_creation
-				flash[:error] = "You do not have access to this functionality."
-				redirect_to root_path
-			end
-		end
-		
-		def browsing_enabled?
-			unless @enable_browsing
-				flash[:error] = "You do not have access to this functionality."
-				redirect_to root_path
-			end
-		end
+  def create
+    if @enable_collaboration
+      @published_paths = current_user.company.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
+      @unpublished_paths = current_user.company.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
+    else
+      @published_paths = current_user.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
+      @unpublished_paths = current_user.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
+    end
+  end
+  
+  def about
+    @title = "About"
+  end
+  
+  def help
+    @title = "Help"
+  end
+  
+  def invitation
+    @title = "Request an invite"
+    if params[:pages] && params[:pages][:email]
+      send_invitation_alert(params[:pages][:email])
+      render "invitation_sent"
+    end
+  end
+  
+  private
+    def send_invitation_alert(email)
+      Mailer.invitation_alert(email).deliver
+    end
+    
+    def user_creation_enabled?
+      unless @enable_user_creation
+        flash[:error] = "You do not have access to this functionality."
+        redirect_to root_path
+      end
+    end
+    
+    def browsing_enabled?
+      unless @enable_browsing
+        flash[:error] = "You do not have access to this functionality."
+        redirect_to root_path
+      end
+    end
 end

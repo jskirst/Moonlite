@@ -2,66 +2,66 @@ var streak_countdown;
 var start_modal_countdown;
 
 function get_next_task(event, data){
-	console.log("AND:");
-	console.log($correct_modal);
+  console.log("AND:");
+  console.log($correct_modal);
   console.log("GETNEXTTASK");
   console.log(data);
   if(data.indexOf("Redirecting to results:") >= 0){
-		redirect_url = data.substring(data.indexOf(":")+1);
+    redirect_url = data.substring(data.indexOf(":")+1);
     confirm(redirect_url);
-		window.location = redirect_url;
+    window.location = redirect_url;
   } else if (data.errors){
     alert("You have an error.");
   } else {
     $("section#content").html(data);
     
-		$('#challenge_form').submit(block_form_submit);
+    $('#challenge_form').submit(block_form_submit);
     $('#challenge_form').on('ajax:success', get_next_task);
-		
-		var $correct_modal = $("#correct_modal");
-		if($correct_modal.length > 0){
-			$correct_modal.modal({keyboard: true, show: true });
-			$correct_modal.on('hidden', function(){ $(this).remove(); });
-			setTimeout(function(){$correct_modal.modal('hide'); start_question_timer();},1000);
-		} else {
-			start_question_timer();
-		}
+    
+    var $correct_modal = $("#correct_modal");
+    if($correct_modal.length > 0){
+      $correct_modal.modal({keyboard: true, show: true });
+      $correct_modal.on('hidden', function(){ $(this).remove(); });
+      setTimeout(function(){$correct_modal.modal('hide'); start_question_timer();},1000);
+    } else {
+      start_question_timer();
+    }
   }
 }
 
 function show_start_modal(){
-	clearInterval(start_modal_countdown);
-	$('#start_modal').modal({
-		keyboard: true,
-		backdrop: 'static',
-		show: true
-	});
-	var count = 10;
-	start_modal_countdown = setInterval(function(){
-		$("#starting_timer").html("<strong>00:0"+count+"</strong>");
-		if(count==0){
-			$('#start_modal').modal('hide');
-			clearInterval(start_modal_countdown);
-			start_question_timer();
-			return;
-		}count --;
-	}, 1000);
+  clearInterval(start_modal_countdown);
+  $('#start_modal').modal({
+    keyboard: true,
+    backdrop: 'static',
+    show: true
+  });
+  var count = 10;
+  start_modal_countdown = setInterval(function(){
+    $("#starting_timer").html("<strong>00:0"+count+"</strong>");
+    if(count==0){
+      $('#start_modal').modal('hide');
+      clearInterval(start_modal_countdown);
+      start_question_timer();
+      return;
+    }count --;
+  }, 1000);
 }
 
 function bind_change_name_form(){
-	$('#change_name_form').submit(function(){
-		if ($("#user_name").val() == ""){
-			$(".form_errors").text("Username must be at least 3 letters.");
-			return false;
-		} else if ($("#user_catch_phrase").val() == ""){
-			$(".form_errors").text("Motto must be at least 3 letters.");
-			return false;
-		} else {
-			$("#user_name_in_header").text($("#user_name").val());
-			$('#username_modal').modal('hide');
-			show_start_modal();
-		}
-	});
+  $('#change_name_form').submit(function(){
+    if ($("#user_name").val() == ""){
+      $(".form_errors").text("Username must be at least 3 letters.");
+      return false;
+    } else if ($("#user_catch_phrase").val() == ""){
+      $(".form_errors").text("Motto must be at least 3 letters.");
+      return false;
+    } else {
+      $("#user_name_in_header").text($("#user_name").val());
+      $('#username_modal').modal('hide');
+      show_start_modal();
+    }
+  });
 }
 
 function set_answer_status(previously_correct){
@@ -74,8 +74,8 @@ function set_answer_status(previously_correct){
 }
 
 function start_question_timer(){
-	clearInterval(streak_countdown);
-	var count = 30;
+  clearInterval(streak_countdown);
+  var count = 30;
   streak_countdown = setInterval(function(){
     if(count >= 10){
       $(".timer").html("00:"+count);
@@ -86,7 +86,7 @@ function start_question_timer(){
       $(".timer").removeClass("timer").addClass("expired-timer");
       $(".streak").animate({opacity: 0.25}, 250);
       $("#listless").val(false);
-			clearInterval(streak_countdown);
+      clearInterval(streak_countdown);
     } count --;
   }, 1000);
 }
@@ -105,15 +105,15 @@ $(document).ready(function() {
       return false;
     }
   });
-	
-	if($("#help_modal").exists()){
-		$("#help_button").click(function(){
-			$('#help_modal').modal({ keyboard: true, backdrop: 'static', show: true });
-			$("#help_close_button").click(function(){ $("#help_modal").modal("hide"); });
-		});
-	} else {
-		$("#help_button").hide();
-	}
   
-	$('#challenge_form').on('ajax:success', get_next_task);
+  if($("#help_modal").exists()){
+    $("#help_button").click(function(){
+      $('#help_modal').modal({ keyboard: true, backdrop: 'static', show: true });
+      $("#help_close_button").click(function(){ $("#help_modal").modal("hide"); });
+    });
+  } else {
+    $("#help_button").hide();
+  }
+  
+  $('#challenge_form').on('ajax:success', get_next_task);
 });

@@ -1,37 +1,37 @@
 <div id="username_modal" class="modal hide fade">
   <%= form_for(current_user, :remote => true, :html => {:id => "change_name_form", :style=>"margin-bottom:0px;"}) do |f| %>
-	<%= f.hidden_field :path_id, :value => path.id %>
-	<div class="modal-header">
+  <%= f.hidden_field :path_id, :value => path.id %>
+  <div class="modal-header">
     <a href="#" class="close"></a>
     <h3>Welcome to <span style="color:green"><%= company_logo %>!</span></h3>
   </div>
   <div class="modal-body">
     <p style="font-size: 16px; padding:0 7px 5px 10px;"><strong style="color:green"><%= company_logo %></strong> lets you prove your knowledge for the stuff you like. Show off your smarts and connect with other fans.</p>
-		<div style="margin-top:20px; margin-bottom:20px;">
-			<p style="font-size: 16px; padding:0 7px 5px 10px;">Top 3 high scores for <strong><%= path.name %>:</strong></p>
-			<div style="padding:0 7px 5px 10px;">
-				<%= render "leaderboards/leaderboard", { :leaderboard_entries => leaderboards, :leaderboard_id => "Overall", :display => true, :disable_filler => true, :limit => 3, :table_class => "jumpstart_leaderboard"} %>
-			</div>
-		</div>
-		<p style="font-size: 16px; padding:0 7px 5px 10px;">Are you up to the Challenge? Make a name for yourself and see where you rank.</p>
-		<p class="form_errors" style="color:red; padding:0 7px 0px 10px;"></p>
-		<div style="padding:10px;">
-			<div class="clearfix">
-				<label style="font-size: 16px;">Enter a username:</label>
-				<div class="input">
-					<%= f.text_field :name, :value => "", :style => "width:235px;" %>
-				</div>
-			</div>
-			<div class="clearfix">
-				<label style="font-size: 16px;">Enter a motto:</label>
-				<div class="input">
-					<%= f.text_field :catch_phrase, :value => "", :style => "width:235px;" %>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<%= f.submit "Start Challenge!", :class => "btn primary" %>
-	</div>
-	<% end %>
+    <div style="margin-top:20px; margin-bottom:20px;">
+      <p style="font-size: 16px; padding:0 7px 5px 10px;">Top 3 high scores for <strong><%= path.name %>:</strong></p>
+      <div style="padding:0 7px 5px 10px;">
+        <%= render "leaderboards/leaderboard", { :leaderboard_entries => leaderboards, :leaderboard_id => "Overall", :display => true, :disable_filler => true, :limit => 3, :table_class => "jumpstart_leaderboard"} %>
+      </div>
+    </div>
+    <p style="font-size: 16px; padding:0 7px 5px 10px;">Are you up to the Challenge? Make a name for yourself and see where you rank.</p>
+    <p class="form_errors" style="color:red; padding:0 7px 0px 10px;"></p>
+    <div style="padding:10px;">
+      <div class="clearfix">
+        <label style="font-size: 16px;">Enter a username:</label>
+        <div class="input">
+          <%= f.text_field :name, :value => "", :style => "width:235px;" %>
+        </div>
+      </div>
+      <div class="clearfix">
+        <label style="font-size: 16px;">Enter a motto:</label>
+        <div class="input">
+          <%= f.text_field :catch_phrase, :value => "", :style => "width:235px;" %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <%= f.submit "Start Challenge!", :class => "btn primary" %>
+  </div>
+  <% end %>
 </div>

@@ -1,8 +1,8 @@
 function embolden(id){
-	$("#"+id).css("border", "1px solid #5F5F5F");
-	setTimeout(function(){
-		$("#"+id).css("border", "1px solid #CCC");
-	},50);
+  $("#"+id).css("border", "1px solid #5F5F5F");
+  setTimeout(function(){
+    $("#"+id).css("border", "1px solid #CCC");
+  },50);
 }
 
 function get_first_open_answer(first_answer){
@@ -40,13 +40,13 @@ function get_suggestions($answer, $suggestions){
       loading_status($suggestions, false);
       phrases = $.parseJSON(resp).phrases;
       suggested_phrase = $.parseJSON(resp).phrase;
-			
-			if(suggested_phrase != "" && suggested_phrase != phrase){
-				$(".did_you_mean").html("Did you mean: <strong>"+suggested_phrase+"</strong>")
-					.show().dblclick(function(){
-						$(".correct_answer").val(suggested_phrase);
-					});
-			}
+      
+      if(suggested_phrase != "" && suggested_phrase != phrase){
+        $(".did_you_mean").html("Did you mean: <strong>"+suggested_phrase+"</strong>")
+          .show().dblclick(function(){
+            $(".correct_answer").val(suggested_phrase);
+          });
+      }
       
       if(phrases.length > 0){
         $suggestions.find(".found_message").show();

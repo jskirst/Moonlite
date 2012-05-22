@@ -1,64 +1,64 @@
 <section id="company-settings">
-	<h1><%= @company.name %></h1>
-	<ul class="tabs">
-		<li><%= link_to "Users", @company %></li>
-		<li class="active"><a href="#">Settings</a></li>
-		<li><%= link_to "User Roles", user_roles_path %></li>
-		<li><%= link_to "Custom Styles", custom_styles_path %></li>
-	</ul>
-	<section id="settings">
-		<h2 style="margin-bottom:15px;">Settings</h2>
-		<%= form_for(@company) do |f| %>
-			<%= render "shared/error_messages", :object => f.object %>
-			<div class="field clearfix">
-				<%= f.label :name %>
-				<div class="input">
-					<%= f.text_field :name %>
-				</div>
-			</div>
-			<hr/>
-			<div class="field clearfix">
-				<%= f.label :categories %>
-				<div class="input">
-					<% if @categories.empty? %>
-					<p>You have not created any Path categories yet for your company.</p>
-					<% else %>
-					<ol class="inputs-list">
-						<% @categories.each do |c| %>
-						<li><%= c.name %> - <%= link_to "Delete", c, :method => :delete, :confirm => "You sure?", :title => "Delete Category" %></li>
-						<% end %>
-					</ol>
-					<% end %>
-					<%= link_to "Add a "+name_for_paths+" category", new_category_path, :class => "btn secondary" %>
-				</div>
-			</div>
-			<hr/>
-			<div class="field clearfix">
-				<%= f.label "Default User Role" %>
-				<div class="input">
-					<select id="company_user_role_id" name="company[user_role_id]">
-						<% @user_roles.each do |u| %>
-							<option value="<%= u.id %>" <%= "selected='selected'" if @company.user_role_id == u.id %>><%= u.name %></option>
-						<% end %>
-					</select>
-				</div>
-			</div>
-			<div class="field clearfix">
-				<%= f.label "Default User Profile Picture" %>
-				<div class="input">
-					<%= f.text_field :default_profile_picture_link %>
-				</div>
-			</div>
-			<div class="field clearfix">
-				<%= f.label "Term for 'certification'", :placeholder => "e.g. 'challenge', 'path', 'test', 'quiz'." %>
-				<div class="input">
-					<p><%= f.text_field :name_for_paths %></p>
-					<p><strong>NOTE:</strong> Please provide the singular version of the word.</p>
-				</div>
-			</div>
-			<div class="actions">
-				<%= f.submit "Save", :class => "btn primary" %>
-			</div>
-		<% end %>
-	</section>
+  <h1><%= @company.name %></h1>
+  <ul class="tabs">
+    <li><%= link_to "Users", @company %></li>
+    <li class="active"><a href="#">Settings</a></li>
+    <li><%= link_to "User Roles", user_roles_path %></li>
+    <li><%= link_to "Custom Styles", custom_styles_path %></li>
+  </ul>
+  <section id="settings">
+    <h2 style="margin-bottom:15px;">Settings</h2>
+    <%= form_for(@company) do |f| %>
+      <%= render "shared/error_messages", :object => f.object %>
+      <div class="field clearfix">
+        <%= f.label :name %>
+        <div class="input">
+          <%= f.text_field :name %>
+        </div>
+      </div>
+      <hr/>
+      <div class="field clearfix">
+        <%= f.label :categories %>
+        <div class="input">
+          <% if @categories.empty? %>
+          <p>You have not created any Path categories yet for your company.</p>
+          <% else %>
+          <ol class="inputs-list">
+            <% @categories.each do |c| %>
+            <li><%= c.name %> - <%= link_to "Delete", c, :method => :delete, :confirm => "You sure?", :title => "Delete Category" %></li>
+            <% end %>
+          </ol>
+          <% end %>
+          <%= link_to "Add a "+name_for_paths+" category", new_category_path, :class => "btn secondary" %>
+        </div>
+      </div>
+      <hr/>
+      <div class="field clearfix">
+        <%= f.label "Default User Role" %>
+        <div class="input">
+          <select id="company_user_role_id" name="company[user_role_id]">
+            <% @user_roles.each do |u| %>
+              <option value="<%= u.id %>" <%= "selected='selected'" if @company.user_role_id == u.id %>><%= u.name %></option>
+            <% end %>
+          </select>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Default User Profile Picture" %>
+        <div class="input">
+          <%= f.text_field :default_profile_picture_link %>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Term for 'certification'", :placeholder => "e.g. 'challenge', 'path', 'test', 'quiz'." %>
+        <div class="input">
+          <p><%= f.text_field :name_for_paths %></p>
+          <p><strong>NOTE:</strong> Please provide the singular version of the word.</p>
+        </div>
+      </div>
+      <div class="actions">
+        <%= f.submit "Save", :class => "btn primary" %>
+      </div>
+    <% end %>
+  </section>
 </section>

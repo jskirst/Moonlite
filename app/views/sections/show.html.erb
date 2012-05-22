@@ -1,24 +1,24 @@
 <!--[IF IE]>
     <script type="text/javascript">
-			$(function(){
-				console.log("##########################RUNNING IE SCRIPT##########################");
-				$(".ie_warning").show();
-			});
+      $(function(){
+        console.log("##########################RUNNING IE SCRIPT##########################");
+        $(".ie_warning").show();
+      });
     </script>
 <![endif]-->
 <section class="tab_content">
-	<h2 style="margin-bottom: 20px;"><%= @section.name %></h2>
-	<p style='font-weight:bold;'>Review the content below before you begin the <%= name_for_paths %>.</p>
-	<% unless @section.instructions.blank? %>
-	<div style="padding: 20px"><%= @section.instructions.html_safe %></div>
-	<% end %>
-	<% @info_resources.each do |r| %>
-		<div>
-			<p>If you have trouble seeing content below, you can <%= link_to "download it here", r.obj.url %>.</p>
-			<p class="ie_warning" style="display:none;"><strong>NOTE:</strong> If you are using Microsoft Internet Explore, you will need to add <i>http://docs.google.com</i> to your list of trusted sites. <a href="http://windows.microsoft.com/en-us/windows-vista/Security-zones-adding-or-removing-websites" target="_blank">Instructions here.</a></p>
-			<iframe src="http://docs.google.com/viewer?url=<%=u r.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
-		</div>
-	<% end %>
+  <h2 style="margin-bottom: 20px;"><%= @section.name %></h2>
+  <p style='font-weight:bold;'>Review the content below before you begin the <%= name_for_paths %>.</p>
+  <% unless @section.instructions.blank? %>
+  <div style="padding: 20px"><%= @section.instructions.html_safe %></div>
+  <% end %>
+  <% @info_resources.each do |r| %>
+    <div>
+      <p>If you have trouble seeing content below, you can <%= link_to "download it here", r.obj.url %>.</p>
+      <p class="ie_warning" style="display:none;"><strong>NOTE:</strong> If you are using Microsoft Internet Explore, you will need to add <i>http://docs.google.com</i> to your list of trusted sites. <a href="http://windows.microsoft.com/en-us/windows-vista/Security-zones-adding-or-removing-websites" target="_blank">Instructions here.</a></p>
+      <iframe src="http://docs.google.com/viewer?url=<%=u r.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
+    </div>
+  <% end %>
 </section>
 <div class="actions">
   <% if current_user.enrolled?(@section.path) %>

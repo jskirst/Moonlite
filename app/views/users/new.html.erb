@@ -1,35 +1,35 @@
 <h1>Invite New User</h1>
 <%= form_for @user do |f| %>
-	<%= render "shared/error_messages", :object => f.object %>
-	<%= f.hidden_field :company_id, {:value => @company.id} %>
-	<div class="field clearfix">
-		<%= f.label :email %>
-		<div class="input">
-			<%= f.text_field :email %>
-		</div>
-	</div>
-	<div class="field clearfix">
-		<label>Settings</label>
-		<div class="input">
-			<ul class="inputs-list">
-				<li>
-					<label>
-						<%= f.check_box :company_admin %>
-						<span>User can add new users</span>
-					</label>
-					<label>
-						<input type="checkbox">
-						<span>User can create new Paths</span>
-					</label>
-					<label>
-						<input type="checkbox">
-						<span>User can add items to the Store</span>
-					</label>
-				</li>
-			</ul>
-		</div>
-	</div>
-	<div class="actions">
-		<%= f.submit "Submit", :class => "btn primary" %>
-	</div>
+  <%= render "shared/error_messages", :object => f.object %>
+  <%= f.hidden_field :company_id, {:value => @company.id} %>
+  <div class="field clearfix">
+    <%= f.label :email %>
+    <div class="input">
+      <%= f.text_field :email %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <label>Settings</label>
+    <div class="input">
+      <ul class="inputs-list">
+        <li>
+          <label>
+            <%= f.check_box :company_admin %>
+            <span>User can add new users</span>
+          </label>
+          <label>
+            <input type="checkbox">
+            <span>User can create new Paths</span>
+          </label>
+          <label>
+            <input type="checkbox">
+            <span>User can add items to the Store</span>
+          </label>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit "Submit", :class => "btn primary" %>
+  </div>
 <% end %>

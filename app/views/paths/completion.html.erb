@@ -1,15 +1,15 @@
 <% if @must_register %>
 <script>
 $(function(){
-	$('a[id != "signout_link"]').attr("href", "#");
-	
-	$('#save_score, a[id != "signout_link"]').click(function(){
-		$('#startmodal').modal({
-			keyboard: true,
-			backdrop: 'static',
-			show: true
-		});
-	});
+  $('a[id != "signout_link"]').attr("href", "#");
+  
+  $('#save_score, a[id != "signout_link"]').click(function(){
+    $('#startmodal').modal({
+      keyboard: true,
+      backdrop: 'static',
+      show: true
+    });
+  });
 });
 </script>
 <%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
@@ -20,31 +20,31 @@ $(function(){
   </div>
   <div class="span12" style="margin-top: 15px;">
     <h1>Congratulations!</h1>
-		<div>
+    <div>
       <p style="font-size:16px; font-weight: bold; margin-bottom: 25px; line-height:25px;">You have successfully completed this <%= name_for_paths.downcase %>. You're now ranked <%= @user_rank %> with <%= @total_points_earned.to_i %> points. <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %></p>
-			<% if @must_register %>
-				<%= link_to "Save Score", "#", :id => "save_score", :class => "btn primary large" %>
-			<% else %>
-				<% if @enable_comments %>
-					<a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
-					<a href="http://www.facebook.com/sharer.php?u=<%=u hero_path_url(@path.id, :hero => current_user.id) %>" target="_blank"><img src="/images/facebook-connect.gif" width="150" height="55"></a>
-					<a href="https://twitter.com/intent/tweet?url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
-				<% end %>
-			<% end %>
-		</div>
+      <% if @must_register %>
+        <%= link_to "Save Score", "#", :id => "save_score", :class => "btn primary large" %>
+      <% else %>
+        <% if @enable_comments %>
+          <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
+          <a href="http://www.facebook.com/sharer.php?u=<%=u hero_path_url(@path.id, :hero => current_user.id) %>" target="_blank"><img src="/images/facebook-connect.gif" width="150" height="55"></a>
+          <a href="https://twitter.com/intent/tweet?url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </section>
 <section style="padding: 30px 20px 0px 20px;">
 <%= render "leaderboards/leaderboard", 
-	{ :leaderboard_entries => @leaderboards[1], 
-		:leaderboard_id => "Overall", 
-		:display => true, 
-		:disable_filler => true, 
-		:highlight => current_user.id,
-		:limit => 5
+  { :leaderboard_entries => @leaderboards[1], 
+    :leaderboard_id => "Overall", 
+    :display => true, 
+    :disable_filler => true, 
+    :highlight => current_user.id,
+    :limit => 5
 } %>
 </section>
 <% if @enable_recommendations %>
-	<hr/>
-	<%= render "pages/suggested_paths", {:paths_title => "Similar paths", :paths_list => @similar_paths} %>
+  <hr/>
+  <%= render "pages/suggested_paths", {:paths_title => "Similar paths", :paths_list => @similar_paths} %>
 <% end %>

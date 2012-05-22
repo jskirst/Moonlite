@@ -5,68 +5,68 @@ describe LeaderboardsController do
   
   before(:each) do
     @company = FactoryGirl.create(:company)
-		@regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => false)
-		@user1 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
-		@user2 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
-		@user3 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
+    @regular_user_roll = FactoryGirl.create(:user_roll, :company => @company, :enable_administration => false)
+    @user1 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
+    @user2 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
+    @user3 = FactoryGirl.create(:user, :company => @company, :user_roll => @regular_user_roll)
     @users = [@user1, @user2, @user3]
     
-		@password = "alltheaboveplease"
-	end
+    @password = "alltheaboveplease"
+  end
   
   describe "access controller" do
-		describe "when not signed in" do
-			it "should deny access to all functionality" do
-				get :new
-				response.should redirect_to(signin_path)
-				post :create, :leaderboard => @attr
-				response.should redirect_to(signin_path)
-				get :index
-				response.should redirect_to(signin_path)
-			end
-		end
-		
-		describe "when signed in as a regular user" do
-			before(:each) do
-				test_sign_in(@user1)
-			end
-			
-			it "should deny access to :new, :create" do
-				get :new
-				response.should redirect_to root_path
-				post :create, :achievement => @attr
-				response.should redirect_to root_path
-			end
+    describe "when not signed in" do
+      it "should deny access to all functionality" do
+        get :new
+        response.should redirect_to(signin_path)
+        post :create, :leaderboard => @attr
+        response.should redirect_to(signin_path)
+        get :index
+        response.should redirect_to(signin_path)
+      end
+    end
+    
+    describe "when signed in as a regular user" do
+      before(:each) do
+        test_sign_in(@user1)
+      end
+      
+      it "should deny access to :new, :create" do
+        get :new
+        response.should redirect_to root_path
+        post :create, :achievement => @attr
+        response.should redirect_to root_path
+      end
       
       it "should allow access to 'index'" do
-				get :index
-				response.should be_success
-			end
-		end
-		
-		describe "when signed in as admin" do
-			before(:each) do
-				@user1.toggle!(:admin)
-				test_sign_in(@user1)
-			end
-			
-			it "should allow access to all functionality" do
-				get :new
-				response.should be_success
-				post :create, :password => @password
+        get :index
         response.should be_success
-				get :index
-				response.should be_success
-			end
-		end
-	end
+      end
+    end
+    
+    describe "when signed in as admin" do
+      before(:each) do
+        @user1.toggle!(:admin)
+        test_sign_in(@user1)
+      end
+      
+      it "should allow access to all functionality" do
+        get :new
+        response.should be_success
+        post :create, :password => @password
+        response.should be_success
+        get :index
+        response.should be_success
+      end
+    end
+  end
   
   describe "actions" do
     before(:each) do
       @user1.toggle!(:admin)
       test_sign_in(@user1)
       
-			@category = FactoryGirl.create(:category, :company => @company)
+      @category = FactoryGirl.create(:category, :company => @company)
       @path = FactoryGirl.create(:path, :company => @company, :user => @user1, :category => @category)
       @section = FactoryGirl.create(:section, :path => @path)
       @task1 = FactoryGirl.create(:task, :section => @section)
@@ -94,37 +94,37 @@ describe LeaderboardsController do
       end
       
       it "should be a success" do
-				get :index
-				response.should be_success
-			end
+        get :index
+        response.should be_success
+      end
       
       it "should correctly list the name of each user" do
-				get :index
+        get :index
         @users.each do |u|
           response.should have_selector("tr .user-name", :content => u.name)
         end
-			end
+      end
       
       it "should correctly list the number of completed task for each user" do
-				get :index
+        get :index
         response.should have_selector("tr .user-completed-tasks", :content => "3")
         response.should have_selector("tr .user-completed-tasks", :content => "2")
         response.should have_selector("tr .user-completed-tasks", :content => "0")
-			end
+      end
       
       it "should correctly list the score (plus streak bonus) for each user" do
-				get :index
+        get :index
         response.should have_selector("tr .user-score", :content => "33")
         response.should have_selector("tr .user-score", :content => "21")
         response.should have_selector("tr .user-score", :content => "0")
-			end
+      end
     end
 
     describe "GET new" do
       it "should be a success" do
-				get :index
-				response.should be_success
-			end
+        get :index
+        response.should be_success
+      end
     end
 
     describe "POST create" do

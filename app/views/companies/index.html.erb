@@ -2,12 +2,12 @@
 
 <%= will_paginate %>
 <ul class='companies'>
-	<% @companies.each do |company| %>
-	<li>
-	<%= link_to company.name, company %> | 
-	<%= link_to "delete", company, :method => :delete, :confirm => "You sure?" %>
-	</li>
-	<% end %>
+  <% @companies.each do |company| %>
+  <li>
+  <%= link_to company.name, company %> | 
+  <%= link_to "delete", company, :method => :delete, :confirm => "You sure?" %>
+  </li>
+  <% end %>
 </ul>
 <%= will_paginate %>
 
