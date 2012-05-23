@@ -1,0 +1,73 @@
+<%= render "settings_modal", { :path => @path, :categories => @categories } %>
+<script>
+$(function(){
+  $('.edit_section_questions_pill').each(function(){
+    $(this).on('ajax:success', function(event, data){
+      console.log("bind_edit_section_questions success");
+      var $row = $(this).parents("td:first");
+      $row.find(".edit_section_overview_pill").parent().removeClass("active");
+      $row.find(".edit_section_settings_pill").parent().removeClass("active");
+      $row.find(".edit_section_questions_pill").parent().addClass("active");
+      $row.find(".section_container").html(data).show();
+    });
+  });
+  $('.edit_section_settings_pill').each(function(){
+    $(this).on('ajax:success', function(event, data){
+      console.log("bind_edit_section_settings succcess");
+      var $row = $(this).parents("td:first");
+      $row.find(".edit_section_overview_pill").parent().removeClass("active");
+      $row.find(".edit_section_settings_pill").parent().addClass("active");
+      $row.find(".edit_section_questions_pill").parent().removeClass("active");
+      $row.find(".section_container").html(data).show();
+    });
+  });
+});
+</script>
+<div class="row" style="margin-bottom:20px;">
+  <div class="span2">
+    <%= image_tag(@path.path_pic, :style=> "width:90px;") %>
+  </div>
+  <div style="float:right;">
+    <%= link_to "Publish", publish_path_path(@path), :confirm => "You sure homes?", :class => "btn primary", :style => "margin:10px 0 10px 10px;" %>
+    <span class="btn secondary edit_path_settings_button" style="margin:10px;" onclick="$('#settings_modal').modal({show: true, keyboard: true, static: true});">Settings</span>
+  </div>
+  <div style="padding:5px;">
+    <h1><%= @path.name %></h1>
+    <p><%= @path.description.empty? ? "Click here." : @path.description %></p>
+  </div>
+</div>
+<section class="tab_content">
+  <h2>Sections</h2>
+  <% if @sections.empty? %>
+    <p style="padding:25px;"><%= name_for_paths.pluralize %> are broken down into individual sections. Get started by creating your <%= link_to "first section!", new_section_path(:path_id => @path.id) %></p>
+  <% else %>
+    <table>
+    <% @sections.each do |s| %>
+      <tr>
+        <td>
+          <div class="row">
+            <div style="float:right;">
+              <ul class="pills">
+                <li class="active"><a class="edit_section_overview_pill" onclick="close_section_container(this);">Overview</a></li>
+                <li><%= link_to "Questions", edit_section_path(s, :m => "tasks"), :remote => true, "data-type" => "html", :class => "edit_section_questions_pill" %></li>
+                <li><%= link_to "Settings", edit_section_path(s, :m => "settings"), :remote => true, "data-type" => "html", :class => "edit_section_settings_pill" %></li>
+              </ul>
+            </div>
+            <div class="span2">
+              <%= image_tag(s.pic, :size => "60x60") %>
+            </div>
+            <div class="span14">
+              <h3 style="display:inline;"><%= link_to s.name, edit_section_path(s, :m => "instructions") %></h3>
+              <div>
+                <span class="label" style="font-size: 13px; vertical-align:middle;"><span id="question_counter"><%= s.tasks.size %></span> questions</span>
+              </div>
+            </div>
+          </div>
+          <div class="section_container row" style="margin: 10px 0px 0px 0px;"></div>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+  <% end %>
+  <%= link_to "New Section", new_section_path(:path_id => @path.id), :class=>"btn primary" %>
+</section>

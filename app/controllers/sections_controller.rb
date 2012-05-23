@@ -11,6 +11,8 @@ class SectionsController < ApplicationController
   before_filter :get_section_from_id, :except => [:new, :create, :generate]
   before_filter :can_edit?, :except => [:show, :continue, :new, :create, :generate] 
   before_filter :enrolled?, :only => [:continue]
+  
+  respond_to :json, :html
 
   def show
     if current_user.enrolled?(@section.path) && @section.enable_skip_content
@@ -31,7 +33,7 @@ class SectionsController < ApplicationController
     @path_id = params[:path_id]
     @path = Path.find(@path_id)
     unless can_edit_path(@path)
-      flash[:error] = "You cannot add tasks to this path."
+      flash[:error] = "You cannot add sections to this #{name_for_paths}."
       redirect_to root_path
       return
     end
@@ -41,22 +43,18 @@ class SectionsController < ApplicationController
     @path_id = params[:section][:path_id]
     @path = Path.find_by_id(@path_id)
     if @path.nil?
-      flash[:error] = "No Path selected for section."
+      flash[:error] = "No #{name_for_paths} selected for section."
       redirect_to root_path and return
     else
       unless can_edit_path(@path)
-        flash[:error] = "You cannot add tasks to this path."
+        flash[:error] = "You cannot add tasks to this #{name_for_paths}."
         redirect_to root_path
         return
       end
       @section = @path.sections.build(params[:section])
       if @section.save
         flash[:success] = "Section created."
-        if params[:commit] == "Save and New"
-          redirect_to new_section_path(:path_id => @path.id)
-        else
-          redirect_to edit_section_path(:id => @section, :m => "instructions")
-        end
+        redirect_to edit_path_path(@path)
       else
         @title = "New section"
         @form_title = @title
@@ -72,16 +70,35 @@ class SectionsController < ApplicationController
     @title = "Edit section"
     @path_id = @section.path_id
     @mode = params[:m]
+    
     if @mode == "tasks"
       @task = @section.tasks.new
       @tasks = @section.tasks.includes(:info_resource).all(:order => "id DESC")
-      @reorder = true if params[:a] == "reorder"
-      @display_new_task_form = (@tasks.empty?)
-      render "edit_tasks"
+      @display = (@tasks.empty?)
+      if request.xhr?
+        respond_to do |f|
+          f.html { render :partial => "edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks } }
+        end
+      else
+        respond_to do |f|
+          f.html { render "_edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks } }
+        end
+      end
+      
     elsif @mode == "settings"
-      render "edit_settings"
+      if request.xhr?
+        respond_to do |f|
+          f.html { render :partial => "edit_settings", :locals => { :section => @section } }
+        end
+      else
+        respond_to do |f|
+          f.html { render "_edit_settings", :locals => { :section => @section } }
+        end
+      end
+    
     elsif @mode == "hidden_content"
       render "edit_hidden_content"
+    
     elsif @mode == "randomize"
       if @section.randomize_tasks
         flash[:success] = "Tasks randomly reordered."
@@ -91,6 +108,7 @@ class SectionsController < ApplicationController
       @section.reload
       @tasks = @section.tasks
       render "edit_tasks"
+    
     else
       @info_resources = @section.info_resources.all
       render "edit_instructions"

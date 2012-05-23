@@ -1,6 +1,5 @@
-<%= render "tab_navigation" %>
 <section class="tab_content">
-<%= form_for(@path) do |f| %>
+<%= form_for(path) do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
   <div class="field clearfix">
     <%= f.label name_for_paths+" Name" %>
@@ -11,15 +10,15 @@
   <div class="field clearfix">
     <%= f.label :description %>
     <div class="input">
-      <%= f.text_area :description, :class=>"markitup", :rows => "15", :placeholder => "Try to describe this "+name_for_paths+" to others in a couple paragraphs or less..." %>
+      <%= f.text_area :description, :rows => "3", :placeholder => "Try to describe this "+name_for_paths+" to others in a few sentences...", :style => "width: 300px;" %>
     </div>
   </div>
   <div class="field clearfix">
     <%= f.label :category %>
     <div class="input">
       <select id="path_category_id" name="path[category_id]">
-        <% @categories.each do |c| %>
-          <% selected_value = c.id == @path.category_id ? "selected='selected'" : "" %>
+        <% categories.each do |c| %>
+          <% selected_value = c.id == path.category_id ? "selected='selected'" : "" %>
           <option value="<%= c.id %>" <%= selected_value %>><%= c.name %></option>
         <% end %>
       </select>
@@ -27,15 +26,9 @@
   </div>
   <hr/>
   <div class="field clearfix">
-    <label>Settings</label>
+    <label>Permissions</label>
     <div class="input">
       <ul class="inputs-list">
-        <li>
-          <label>
-            <%= f.check_box :is_published %>
-            <span>Publish this <%= name_for_paths %> to your Moonlite account.</span>
-          </label>
-        </li>
         <li>
           <label>
             <%= f.check_box :is_public %>
@@ -69,38 +62,24 @@
       </ul>
     </div>
     <br>
-    <%= f.label "Question Timer (secs)" %>
-    <div class="input">
-      <%= f.text_field :default_timer %>
-    </div>
-    <br>
-    <%= f.label "Game Type", :placeholder => "Advanced users only" %>
-    <div class="input">
-      <%= f.text_field :game_type %>
-      <p><strong>NOTE:</strong> If you are not sure, leave game type blank.</p>
-    </div>
-    <br>
-    <%= f.label "Exclude from leaderboards" %>
-    <div class="input">
-      <%= f.text_area :excluded_from_leaderboards, :rows => 3, :style => "width: 400px;" %>
-    </div>
   </div>
   <hr/>
   <div class="field clearfix">
     <label>Picture URL</label>
     <div class="input">
-      <%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge", :placeholder => "URL to picture..." %>
+      <%= f.text_field :image_url, :id => "image_url_input", :class=>"xlarge", :placeholder => "URL to picture..." %>
       <a class="btn secondary" style="margin-left:10px;">Preview</a>
     </div>
   </div>
   <div class="field clearfix">
     <div class="input">
-      <%= image_tag(@path.path_pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 0  px") %>
+      <%= image_tag(path.path_pic, :id => "image_url_preview", :width => "210", :style=>"margin:30px 0px 20px 0  px") %>
     </div>
   </div>
-  <div class="actions">
+  <hr/>
+  <div style="float:right; margin: 10px 20px 10px 0px;">
     <%= f.submit "Save", :class => "btn primary" %>
-    <%= link_to "View "+name_for_paths, @path, :class => "btn secondary" %>
+    <span class="btn secondary" onclick="$('#settings_modal').modal('hide');">Close</span>
   </div>
 <% end %>
 </section>

@@ -13,17 +13,17 @@ class PathsController < ApplicationController
   def new
     @path = Path.new
     @categories = current_user.company.categories
-    @title = "New Path"
+    @title = "New #{name_for_paths}"
   end
 
   def create
     params[:path][:company_id] = current_user.company.id
     @path = current_user.paths.build(params[:path])
     if @path.save
-      flash[:success] = "Challenge created."
-      redirect_to edit_path_path(@path, :m => "start")
+      flash[:success] = "#{name_for_paths} created."
+      redirect_to new_section_path(:path_id => @path.id)
     else
-      @title = "New Challenge"
+      @title = "New #{name_for_paths}"
       @categories = current_user.company.categories
       render 'new'
     end
@@ -47,27 +47,14 @@ class PathsController < ApplicationController
       @path.user_roles.each { |pur| @path_user_roles << pur.id }
       render "edit_roles"
     else
-      @start_mode = true if @mode == "start"
-      @mode = "sections"
       @sections = @path.sections
-      if params[:a] == "reorder"
-        @reorder = true
-      end
-      render "edit_sections"
+      @categories = current_user.company.categories
+      render "edit"
     end
   end
   
   def update
-    if params[:path][:image_url].blank?
-      params[:path].delete("image_url")
-    end
-    if params[:path][:is_published] == "1"
-      if @path.sections.where(["is_published = ?", true]).count.zero?
-        flash[:error] = "You need to publish at least one section before you can make your challenge publicly available."
-        render 'edit_settings' 
-        return
-      end
-    end
+    params[:path].delete("image_url") if params[:path][:image_url].blank?
     begin
       @path.update_attributes(params[:path])
       flash[:success] = "Changes saved."
@@ -105,10 +92,25 @@ class PathsController < ApplicationController
     end
     redirect_to edit_path_path(:id => @path, :m => "access_control")
   end
+  
+  def publish
+    if @path.sections.where(["is_published = ?", true]).count.zero?
+      flash[:error] = "You need to publish at least one section before you can make your challenge publicly available."
+    else
+      @path.is_published = true
+      @path.is_public = true
+      if @path.save
+        flash[:success] = "#{@path.name} has been successfully published. It is now visible to the #{ company_logo } community."
+      else
+        flash[:error] = "There was an error publishing."
+      end
+    end
+    redirect_to edit_path_path(@path)
+  end
 
   def destroy
     @path.destroy
-    flash[:success] = "Path successfully deleted."
+    flash[:success] = "#{name_for_paths} successfully deleted."
     redirect_back_or_to root_path
   end
 
@@ -167,7 +169,7 @@ class PathsController < ApplicationController
       @similar_paths = Path.similar_paths(@path, current_user)
       @suggested_paths = Path.suggested_paths(current_user, @path.id)
       if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
-        event = "<%u%> completed the <%p%> challenge with a score of #{@total_points_earned.to_s}."
+        event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
         current_user.user_events.create!(:path_id => @path.id, :content => event)
       end
       render "completion"
@@ -204,7 +206,7 @@ class PathsController < ApplicationController
   private
     def get_path_from_id
       if !@path = Path.find_by_id(params[:id])
-        flash[:error] = "No path found for the argument supplied."
+        flash[:error] = "No #{name_for_paths} found for the argument supplied."
         redirect_to root_path and return
       end
     end
@@ -218,7 +220,7 @@ class PathsController < ApplicationController
     
     def can_edit?
       unless can_edit_path(@path)
-        flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
+        flash[:error] = "You do not have access to this #{name_for_paths}. Please contact your administrator to gain access."
         redirect_to root_path
       end
     end

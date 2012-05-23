@@ -218,12 +218,14 @@ class UsersController < ApplicationController
   def destroy
     @user = User.find_by_id(params[:id])
     if @user == current_user
-      flash[:error] = "You cannot remove yourself from the equation."
-      redirect_to current_user.company
+      respond_to do |f|
+        f.html { render :partial => "shared/error_message", :locals => { :message => "You cannot remove yourself from the equation." } }
+      end
     else
       @user.destroy
-      flash[:success] = "User destroyed"
-      redirect_to current_user.company
+      respond_to do |f|
+        f.html { render :partial => "shared/success_message", :locals => { :message => "User successfully deleted." } }
+      end
     end
   end
   

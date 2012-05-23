@@ -1,7 +1,6 @@
-<%= render "tab_navigation" %>
-<%= form_for(@section) do |f| %>
+<%= form_for(section) do |f| %>
 <%= render "shared/error_messages", :object => f.object %>
-<section class="tab_content">
+  <%= f.submit "Save", :class => "btn primary", :style => "float:right;" %>
   <div class="field clearfix">
     <%= f.label :name %>
     <div class="input">
@@ -33,15 +32,10 @@
         <li>
           <label>
             <%= f.check_box :enable_skip_content %>
-            <span>Skip content section and go straight to quiz</span>
+            <span>Skip section content and go straight to quiz</span>
           </label>
         </li>
       </ul>
     </div>
   </div>
-</section>
-<div class="actions">
-  <%= f.submit "Save", :class => "btn primary" %>
-  <%= link_to "Back to "+name_for_paths, edit_path_path(@section.path, :m => "sections"), :class => "btn secondary" %>
-</div>
 <% end %>
