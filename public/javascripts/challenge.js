@@ -2,19 +2,13 @@ var streak_countdown;
 var start_modal_countdown;
 
 function get_next_task(event, data){
-  console.log("AND:");
-  console.log($correct_modal);
-  console.log("GETNEXTTASK");
-  console.log(data);
   if(data.indexOf("Redirecting to results:") >= 0){
     redirect_url = data.substring(data.indexOf(":")+1);
-    confirm(redirect_url);
     window.location = redirect_url;
   } else if (data.errors){
     alert("You have an error.");
   } else {
     $("section#content").html(data);
-    
     $('#challenge_form').submit(block_form_submit);
     $('#challenge_form').on('ajax:success', get_next_task);
     
@@ -114,6 +108,5 @@ $(document).ready(function() {
   } else {
     $("#help_button").hide();
   }
-  
   $('#challenge_form').on('ajax:success', get_next_task);
 });
