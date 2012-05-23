@@ -2,12 +2,14 @@ var streak_countdown;
 var start_modal_countdown;
 
 function get_next_task(event, data){
+  unblock_form_submit($('#challenge_form'));
   if(data.indexOf("Redirecting to results:") >= 0){
     redirect_url = data.substring(data.indexOf(":")+1);
     window.location = redirect_url;
   } else if (data.errors){
     alert("You have an error.");
   } else {
+    $('body').data("needs_reload", false);
     $("section#content").html(data);
     $('#challenge_form').submit(block_form_submit);
     $('#challenge_form').on('ajax:success', get_next_task);
@@ -20,6 +22,7 @@ function get_next_task(event, data){
     } else {
       start_question_timer();
     }
+    expose_help_button();
   }
 }
 
@@ -86,27 +89,19 @@ function start_question_timer(){
 }
 
 $(document).ready(function() {
-  $('form#challenge_form').submit(function() {
-    if(typeof jQuery.data(this, "disabledOnSubmit") == 'undefined') {
-      jQuery.data(this, "disabledOnSubmit", { submited: true });
-      $('input[type=submit], input[type=button]', this).each(function() {
-        $(this).attr("disabled", "disabled");
-      });
-      return true;
-    }
-    else
-    {
-      return false;
-    }
-  });
+  var page_needs_reload = false;
+  $('body').data("needs_reload", false);
   
-  if($("#help_modal").exists()){
-    $("#help_button").click(function(){
-      $('#help_modal').modal({ keyboard: true, backdrop: 'static', show: true });
-      $("#help_close_button").click(function(){ $("#help_modal").modal("hide"); });
-    });
-  } else {
-    $("#help_button").hide();
-  }
+  expose_help_button();
+  
+  $('#challenge_form').submit(function(){
+    block_form_submit();
+    $('body').data("needs_reload", true);
+    setTimeout(function(){
+      if($('body').data("needs_reload") == true){
+        window.location.reload();
+      }
+    }, 2500);
+  });
   $('#challenge_form').on('ajax:success', get_next_task);
 });

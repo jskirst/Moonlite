@@ -10,14 +10,12 @@ function add_events(obj){
   if(obj){
     $(obj).unbind("dblclick").dblclick(function(){
       $(this).remove();
-      console.log("REMOVING");ry 
       save();
     });
   } else {
     $("span,p,h2,h3,ol,ul,dl,div.thumb,div.rellink,blockquote").each(function(){
       $(this).unbind("dblclick").dblclick(function(){
         $(this).remove();
-        console.log("REMOVING");
         save();
       });
     });
@@ -78,9 +76,7 @@ function set_youtube_video(topic, current_position, article_id, youtube_link){
   if (article_id == null){
     var article_id = get_article_id(topic);
     var entries = youtube_entries[topic];
-    console.log(entries);
     if(current_position >= entries.size){
-      console.log("Out of videos for topic: "+topic);
       return false;
     }
     var entry = entries[current_position];
@@ -94,7 +90,6 @@ function set_youtube_video(topic, current_position, article_id, youtube_link){
     var id_fragments = youtube_link.substring(start_pos).split("&");
     var id = id_fragments[0];
   }
-  console.log(id);
   var yt_id = article_id + "_ytapiplayer";
   var new_youtube = "<div class='youtube'><h6>"+title+"</h6><strong class='edit_tools' style='float:right;' onclick='set_youtube_video(\""+topic+"\", "+(current_position+1)+");'>Next</strong><br><div id='"+yt_id+"'>Flash required.</div></div>";
   $("#"+article_id+" div.youtube").remove();
@@ -108,13 +103,10 @@ function set_youtube_video(topic, current_position, article_id, youtube_link){
 function search_youtube(topic){
   var std_url = "http://gdata.youtube.com/feeds/api/videos?max-results=10&alt=json";
   var url = std_url + "&q="+topic;
-  console.log(url);
   $.ajax({url: url, 
     type: "GET", 
     dataType: "jsonp",  
     success: function(resp){
-      console.log("SEACHING YOUTUBE");
-      console.log(resp);
       youtube_entries[topic] = resp.feed.entry;
       set_youtube_video(topic,0);
     }
@@ -127,8 +119,6 @@ function search_wikipedia(topic, original_topic, article_id){
     type: "GET", 
     dataType: "jsonp",  
     success: function(resp){
-      console.log("SEACHING WIKIPEDIA");
-      console.log(resp);
       if(resp.error != null){return;}
       var data = resp.parse;
       var title = data.title;
@@ -139,7 +129,6 @@ function search_wikipedia(topic, original_topic, article_id){
       if($redirect[0] != null){
         redirect_url = $redirect.find("a").attr("href");
         var new_topic = redirect_url.split("/").pop();
-        console.log("Found redirect for topic '"+topic+"'. Redirecting to topic: "+new_topic);
         search_wikipedia(new_topic, topic, article_id);
         return;
       }
@@ -160,7 +149,6 @@ function search_wikipedia(topic, original_topic, article_id){
         article_id = get_article_id(topic);
       }
       
-      console.log("TOPIC '"+topic+"' has article_id:"+article_id);
       var $article = $("#"+article_id);
       $article.append("<div class='wiki_content'></div>");
       $article.find("div.wiki_content").html(content);
@@ -183,9 +171,7 @@ function search_wikipedia(topic, original_topic, article_id){
 function search_google_images(topics){}
 
 function update_settings(){
-  console.log("UPDATING SETTINGS");
   var article_id = $("#last_article").val();
-  console.log(article_id);
   var $article = $("#"+article_id);
   var youtube_active = $("#youtube_active").prop("checked");
   var youtube_url = $("#youtube_url").val();
@@ -264,17 +250,11 @@ function add_text(article_id){
 }
 
 function update_topics(){
-  console.log("UPDATING TOPICS");
   var new_topic = $("#new_topic").val();
   var youtube_active = $("#new_youtube_active").prop("checked");
   var youtube_url = $("#new_youtube_url").val();
   var wiki_active = $("#new_wiki_active").prop("checked");
   var wiki_url = $("#new_wiki_url").val();
-  console.log(new_topic);
-  console.log(youtube_active);
-  console.log(youtube_url);
-  console.log(wiki_active);
-  console.log(wiki_url);
   
   add_empty_articles([new_topic]);
   article_id = get_article_id(new_topic);

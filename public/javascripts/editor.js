@@ -29,8 +29,6 @@ function bind_edit_task(obj){
       $row.find(".edit_button").removeAttr("disabled");
       $row.append(data);
       bind_update_task($row.find("form:first"));
-      console.log($row);
-      console.log($row.find(".correct_answer:first"));
       bind_answer_suggestion($row.find(".correct_answer:first"));
     }
   );

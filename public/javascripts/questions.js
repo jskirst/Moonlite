@@ -94,14 +94,12 @@ function get_questions(paragraphs, paragraph_index, limit){
     data: { text: paragraph },
     success: function(resp){
       resp = $.parseJSON(resp).resp;
-      console.log(resp);
       if(resp.output.length > 0){
         add_question_set(paragraph_index, resp.input, resp.output);
       }
       get_questions(paragraphs, paragraph_index + 1, limit);
     },
     error: function(resp){
-      console.log(resp);
       get_questions(paragraphs, paragraph_index + 1, limit);
     }
   });
