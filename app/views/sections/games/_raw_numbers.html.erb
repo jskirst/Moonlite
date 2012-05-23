@@ -6,9 +6,7 @@ function start_point_countdown(){
   continue_countdown = true;
   countdown = setInterval(function(){
     if(count % 200 == 0 && count > 200){
-      console.log("DO IT");
       points = parseInt($raw_number.text());
-      console.log(points);
       points --;
       if(points == 1){
         $("#raw_number").animate({opacity: 0.25}, 250);
