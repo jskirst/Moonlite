@@ -5,6 +5,7 @@
 <% else %>
 <table>
   <% user_events.each do |uv| %>
+    <% next if uv.path.nil? || uv.user.nil? %>
   <tr>
     <td style="width: 65px; padding: 5px;"><%= image_tag uv.path.path_pic, :size => "60x60" %>
     </td>
