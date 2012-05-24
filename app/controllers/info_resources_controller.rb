@@ -19,13 +19,10 @@ class InfoResourcesController < ApplicationController
       @info_resource = InfoResource.new(params[:info_resource])
       if @info_resource.save
         flash[:success] = "Image added."
-        redirect_to edit_section_path(@info_resource.task.section, :m => "tasks")
+        redirect_to edit_path_path(@info_resource.task.path)
       else
         @title = "New"
-        get_parent_type_and_id
-        unless @parent_type.nil?
-          render "new"
-        end
+        render "new"
       end
     else
       flash[:error] = "You do not have access to that data. Your actions have been reported."
@@ -38,11 +35,11 @@ class InfoResourcesController < ApplicationController
     if @info_resource.section && @info_resource.section.path.company == current_user.company
       @info_resource.destroy
       flash[:success] = "Resource deleted."
-      redirect_to edit_section_path(@info_resource.section)
+      redirect_to edit_path_path(@info_resource.section.path)
     elsif @info_resource.task && @info_resource.task.section.path.company == current_user.company
       @info_resource.destroy
       flash[:success] = "Resource deleted."
-      redirect_to edit_section_path(@info_resource.task.section, :m => "tasks")
+      redirect_to edit_path_path(@info_resource.task.path)
     else
       flash[:error] = "You do not have access to that data. Your actions have been reported."
       redirect_to root_path

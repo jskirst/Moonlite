@@ -1,9 +1,34 @@
 /* Section Editing */
 function close_section_container(btn){
-  console.log("closing container");
   $(btn).parents('td:first').find('.section_container').hide();
+  $(btn).parents('td:first').find("hr").hide();
+  $(btn).parents('td:first').find(".section_overview").slideDown();
   $(btn).parent('li').siblings('li').removeClass("active");
   $(btn).parent('li').addClass('active');
+}
+
+function bind_edit_section_questions(){
+  $(this).on('ajax:success', function(event, data){
+    var $row = $(this).parents("td.section:first");
+    $row.find(".edit_section_overview_pill").parent().removeClass("active");
+    $row.find(".edit_section_content_pill").parent().removeClass("active");
+    $row.find(".edit_section_questions_pill").parent().addClass("active");
+    $row.find(".section_container").hide().html(data).slideDown();
+    $row.find(".section_overview").hide();
+    $row.find("hr").show();
+  });
+}
+
+function bind_edit_section_content(){
+  $(this).on('ajax:success', function(event, data){
+    var $row = $(this).parents("td.section:first");
+    $row.find(".edit_section_overview_pill").parent().removeClass("active");
+    $row.find(".edit_section_content_pill").parent().addClass("active");
+    $row.find(".edit_section_questions_pill").parent().removeClass("active");
+    $row.find(".section_container").hide().html(data).slideDown();
+    $row.find(".section_overview").hide();
+    $row.find("hr").show();
+  });
 }
 
 
@@ -21,9 +46,9 @@ function bind_delete_task(obj){
   $(obj).on('ajax:success',
     function(event, data){
       if(data.errors){
-        $(obj).parents("td").prepend("<div class='alert-message error'>"+data.error+"</div>");
+        $(obj).parents("td.task:first").prepend("<div class='alert-message error'>"+data.error+"</div>");
       } else if(data.success){
-        $(obj).parents("tr").replaceWith("<div class='alert-message success'>"+data.success+"</div>");
+        $(obj).parents("td.task:first").html("<div class='alert-message success'>"+data.success+"</div>");
         $('.alert-message').fadeOut(3000);
       } else {
         alert("Unknown error occurred");
@@ -35,7 +60,7 @@ function bind_delete_task(obj){
 function bind_edit_task(obj){
   $(obj).on('ajax:success',
     function(event, data){
-      var $row = $(this).parents("td:first");
+      var $row = $(this).parents("td.task:first");
       $row.children(".question_display").hide();
       $row.find(".edit_button").removeAttr("disabled");
       $row.append(data);
@@ -48,7 +73,7 @@ function bind_edit_task(obj){
 function bind_update_task(obj){
   $(obj).on('ajax:success',
     function(event, data){
-      var $row = $(obj).parents("td");
+      var $row = $(obj).parents("td.task:first");
       $row.html(data);
       $row.find('.delete_button').each(function(){
         bind_delete_task(this);
@@ -94,3 +119,8 @@ function add_new_task(event, data) {
     );
   }
 }
+
+$(function(){
+  $('.edit_section_questions_pill').each(bind_edit_section_questions);
+  $('.edit_section_content_pill').each(bind_edit_section_content);
+});

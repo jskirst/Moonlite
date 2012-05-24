@@ -13,7 +13,7 @@
   <div style="margin-bottom: 15px;">
     <h2 style="margin-bottom:20px;">Document Preview</h2>
     <%= link_to "Retry", import_content_section_path(@section, :previous => @info_resource.id), :class => "btn secondary", :style=> "margin-right: 20px" %>
-    <%= link_to "Finish", edit_section_path(@section, :m => "instructions"), :class => "btn primary" %>
+    <%= link_to "Finish", edit_path_path(@section.path), :class => "btn primary" %>
   </div>
   <div>
     <p>If you have trouble seeing this document, you can <%= link_to "download it here", @info_resource.obj.url %>.</p>

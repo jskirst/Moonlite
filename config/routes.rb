@@ -40,6 +40,7 @@ SampleApp::Application.routes.draw do
 	end
 	resources :sections do
 		member do
+      get :publish
 			get :continue
       get :results
       put :reorder_tasks

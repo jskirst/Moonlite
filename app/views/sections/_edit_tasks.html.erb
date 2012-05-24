@@ -30,8 +30,8 @@ $(function(){
 
 <table id="task_list">
 <% tasks.each do |task| %>
-  <tr class="task">
-    <td>
+  <tr>
+    <td class="task">
       <%= render "tasks/task", { :task => task } %>
     </td>
   </tr>
