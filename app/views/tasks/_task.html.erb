@@ -1,5 +1,5 @@
 <div class="question_display row">
-  <div style="float:right; margin-top:0px;">
+  <div style="float:right; margin-top:0px; display:none;" class="edit_task_buttons">
     <%= link_to "Delete", task,
       :method => :delete, 
       :remote => true,
@@ -10,19 +10,21 @@
       :remote => true,
       :class => "btn secondary edit_button" %>
   </div>
-  <blockquote>
-    <p>
-      <%= task.question %>
-    </p>
-  </blockquote>
-  <% if task.info_resource %>
-    <%= image_tag task.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
-  <% end %>
-  <ol>
-    <% ca = task.correct_answer %>
-    <% if !task.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= task.answer1 %></li><% end %>
-    <% if !task.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= task.answer2 %></li><% end %>
-    <% if !task.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= task.answer3 %></li><% end %>
-    <% if !task.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= task.answer4 %></li><% end %>
-  </ol>
+  <div style="padding:15px;">
+    <blockquote style="margin-top:0px;">
+      <p>
+        <%= task.question %>
+      </p>
+    </blockquote>
+    <% if task.info_resource %>
+      <%= image_tag task.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
+    <% end %>
+    <ol style="padding-left:20px;">
+      <% ca = task.correct_answer %>
+      <% if !task.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= task.answer1 %></li><% end %>
+      <% if !task.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= task.answer2 %></li><% end %>
+      <% if !task.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= task.answer3 %></li><% end %>
+      <% if !task.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= task.answer4 %></li><% end %>
+    </ol>
+  </div>
 </div>

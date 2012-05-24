@@ -11,6 +11,8 @@ class SectionsController < ApplicationController
   before_filter :get_section_from_id, :except => [:new, :create, :generate]
   before_filter :can_edit?, :except => [:show, :continue, :new, :create, :generate] 
   before_filter :enrolled?, :only => [:continue]
+  
+  respond_to :json, :html
 
   def show
     if current_user.enrolled?(@section.path) && @section.enable_skip_content
@@ -31,7 +33,7 @@ class SectionsController < ApplicationController
     @path_id = params[:path_id]
     @path = Path.find(@path_id)
     unless can_edit_path(@path)
-      flash[:error] = "You cannot add tasks to this path."
+      flash[:error] = "You cannot add sections to this #{name_for_paths}."
       redirect_to root_path
       return
     end
@@ -41,22 +43,18 @@ class SectionsController < ApplicationController
     @path_id = params[:section][:path_id]
     @path = Path.find_by_id(@path_id)
     if @path.nil?
-      flash[:error] = "No Path selected for section."
+      flash[:error] = "No #{name_for_paths} selected for section."
       redirect_to root_path and return
     else
       unless can_edit_path(@path)
-        flash[:error] = "You cannot add tasks to this path."
+        flash[:error] = "You cannot add tasks to this #{name_for_paths}."
         redirect_to root_path
         return
       end
       @section = @path.sections.build(params[:section])
       if @section.save
         flash[:success] = "Section created."
-        if params[:commit] == "Save and New"
-          redirect_to new_section_path(:path_id => @path.id)
-        else
-          redirect_to edit_section_path(:id => @section, :m => "instructions")
-        end
+        redirect_to edit_path_path(@path)
       else
         @title = "New section"
         @form_title = @title
@@ -69,54 +67,47 @@ class SectionsController < ApplicationController
 # Begin Section Edit
   
   def edit
-    @title = "Edit section"
     @path_id = @section.path_id
-    @mode = params[:m]
-    if @mode == "tasks"
+    if params[:m] == "tasks"
       @task = @section.tasks.new
       @tasks = @section.tasks.includes(:info_resource).all(:order => "id DESC")
-      @reorder = true if params[:a] == "reorder"
-      @display_new_task_form = (@tasks.empty?)
-      render "edit_tasks"
-    elsif @mode == "settings"
-      render "edit_settings"
-    elsif @mode == "hidden_content"
-      render "edit_hidden_content"
-    elsif @mode == "randomize"
-      if @section.randomize_tasks
-        flash[:success] = "Tasks randomly reordered."
-      else
-        flash[:error] = "There was a problem reordering your tasks."
+      @display = (@tasks.empty?)
+      respond_to do |f|
+        f.html { render :partial => "edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks } }
       end
-      @section.reload
-      @tasks = @section.tasks
-      render "edit_tasks"
-    else
+    elsif params[:m] == "settings"
+      respond_to do |f|
+        f.html { render :partial => "edit_settings", :locals => { :section => @section } }
+      end
+    elsif params[:m] == "content"
       @info_resources = @section.info_resources.all
-      render "edit_instructions"
+      respond_to do |f|
+        f.html { render :partial => "edit_content", :locals => { :section => @section, :info_resources => @info_resources } }
+      end
     end
   end
   
   def update
-    if params[:section][:is_published] == "1"
-      if @section.tasks.size.zero?
-        flash[:error] = "You need to create at least 1 task for this section before you can make it publicly available."
-        @mode = "settings"
-        render "edit_settings" 
-        return
+    if @section.update_attributes(params[:section])
+      flash[:success] = "Section successfully updated."
+    else
+      flash[:error] = "Section could not be updated updated."
+    end
+    redirect_to edit_path_path(@section.path)
+  end
+  
+  def publish
+    if @section.tasks.count.zero?
+      flash[:error] = "You need to have at least one question before you can make your section publicly available."
+    else
+      @section.is_published = true
+      if @section.save
+        flash[:success] = "#{@section.name} has been successfully published. Note that if you have not already, you will still need to publish the #{name_for_paths.downcase} as a whole before it will be visible to the community."
+      else
+        flash[:error] = "There was an error publishing."
       end
     end
-    if params[:section][:hidden_content]
-      @section.update_attribute(:hidden_content, params[:section][:hidden_content])
-      redirect_to questions_section_path(@section, :hidden_content => true)
-    elsif @section.update_attributes(params[:section])
-      flash.now[:success] = "Section successfully updated."
-      @mode = "instructions"
-      redirect_to edit_section_path(@section, :m => "instructions")
-    else
-      @title = "Edit"
-      render "edit_settings"
-    end
+    redirect_to edit_path_path(@section.path)
   end
   
   def reorder_tasks

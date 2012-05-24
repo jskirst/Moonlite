@@ -1,3 +1,14 @@
+<script>
+$(function(){
+  $(".delete_user_button").on("ajax:success",
+    function(event, data){
+      $("#company-profile").prepend(data);
+      $(".alert-message").fadeOut(5000);
+    }
+  );
+});
+</script>
+
 <section id="company-profile">
   <h1><%= @company.name %></h1>
   <ul class="tabs">
@@ -47,7 +58,7 @@
             <% if current_user == u %>
               <%= link_to "Delete", "#", :class => "btn secondary disabled" %>
             <% else %>
-              <%= link_to "Delete", u, :method => "delete", :confirm => "Are you sure you want to delete this user?", :class => "btn secondary" %>
+              <%= link_to "Delete", u, :method => "delete", :remote => true, "data-type" => "html", :confirm => "Are you sure you want to delete this user?", :class => "btn secondary delete_user_button" %>
             <% end %>
             </td>
           </tr>

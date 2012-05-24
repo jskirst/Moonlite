@@ -2,7 +2,10 @@ var streak_countdown;
 var start_modal_countdown;
 
 function get_next_task(event, data){
+<<<<<<< HEAD
   unblock_form_submit($('#challenge_form'));
+=======
+>>>>>>> ajax-path-edit
   if(data.indexOf("Redirecting to results:") >= 0){
     redirect_url = data.substring(data.indexOf(":")+1);
     window.location = redirect_url;
@@ -92,6 +95,7 @@ $(document).ready(function() {
   var page_needs_reload = false;
   $('body').data("needs_reload", false);
   
+<<<<<<< HEAD
   expose_help_button();
   
   $('#challenge_form').submit(function(){
@@ -103,5 +107,15 @@ $(document).ready(function() {
       }
     }, 2500);
   });
+=======
+  if($("#help_modal").exists()){
+    $("#help_button").click(function(){
+      $('#help_modal').modal({ keyboard: true, backdrop: 'static', show: true });
+      $("#help_close_button").click(function(){ $("#help_modal").modal("hide"); });
+    });
+  } else {
+    $("#help_button").hide();
+  }
+>>>>>>> ajax-path-edit
   $('#challenge_form').on('ajax:success', get_next_task);
 });

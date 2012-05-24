@@ -31,20 +31,16 @@ SampleApp::Application.routes.draw do
 	resources :custom_styles, :only => [:index, :create, :edit, :update, :destroy]
   resources :paths do
 		member do
-			get :review
-			get :purchase
-			get :file
+      get :publish
 			get :continue
-			post :preview
-			post :upload
-      put :reorder_sections
-      get :hero
+			get :hero
       get :jumpstart
 			put :update_roles
 		end
 	end
 	resources :sections do
 		member do
+      get :publish
 			get :continue
       get :results
       put :reorder_tasks
