@@ -38,7 +38,7 @@
         <p><%= link_to "Add content", edit_section_path(s, :m => "content"), :remote => true, "data-type" => "html", :class => "edit_section_content_pill" %></p>
         <% else %>
           <% unless s.instructions.blank? %>
-            <%= truncate(s.instructions, :length => 140).html_safe %>
+            <%= truncate(s.instructions, :length => 140) %>
           <% else %>
             <% s.info_resources.first(2).each do |t| %>
             <p><%= t.obj_file_name %>, <%= t.obj_content_type %></p>
