@@ -5,20 +5,10 @@
   table tr { padding: 50px; }
   table p { font-size: 15px; }
   .editable { padding: 8px; }
-  .section_editable { padding: 3px; }
+  .section_editable { padding: 3px; width: 300px; }
   .editable:hover, .section_editable:hover { background-color: lightgray; cursor: pointer }
   h5 { font-weight: bold; }
 </style>
-<script>
-$(function(){
-  $(".edit_path_settings_button, .editable").each(function(){
-    $(this).click(function(){$('#settings_modal').modal({show: true, keyboard: true, static: true});});
-  });
-  $('.edit_caption_container').each(function(){
-    $(this).hover(function(){ $(this).find("div").show(); }, function(){ $(this).find("div").hide(); });
-  });
-});
-</script>
 <%= render "settings_modal", { :path => @path, :categories => @categories } %>
 <% @sections.each do |s| %>
   <%= render "section_settings_modal", { :section => s } %>

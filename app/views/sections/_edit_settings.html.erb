@@ -21,6 +21,6 @@
   </div>
   <div style="float:right; margin: 10px 20px 10px 0px;">
     <%= f.submit "Save", :class => "btn primary" %>
-    <span class="btn secondary" onclick="$('#settings_modal').modal('hide');">Close</span>
+    <span class="btn secondary" onclick="$('#section_settings_modal_<%= section.id %>').modal('hide');">Close</span>
   </div>
 <% end %>

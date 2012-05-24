@@ -123,4 +123,10 @@ function add_new_task(event, data) {
 $(function(){
   $('.edit_section_questions_pill').each(bind_edit_section_questions);
   $('.edit_section_content_pill').each(bind_edit_section_content);
+  $(".edit_path_settings_button, .editable").each(function(){
+    $(this).click(function(){$('#settings_modal').modal({show: true, keyboard: true, static: true});});
+  });
+  $('.edit_caption_container').each(function(){
+    $(this).hover(function(){ $(this).find("div").show(); }, function(){ $(this).find("div").hide(); });
+  });
 });
