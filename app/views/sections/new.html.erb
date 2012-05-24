@@ -1,31 +1,20 @@
 <section>
-  <h2>Create new section</h2>
-  <p  style="padding: 15px;">Start by picking a name for your new section and a link to a photo that you think best represents it.</p>
+  <h2 style="margin-bottom:10px;"><%= @path.sections.empty? ? "Create a Section" : "Add a Section" %></h2>
+  <h4>Choosing a name</h4>
+  <p style="margin: 5px 0 20px 0;padding: 0 200px 0 0;">If you only plan on having one section, the section name won't be very important and can be the same name as your <%= name_for_paths.downcase %>. Or, if you do plan on having multiple sections, you can name your sections based on topic or by order.</p>
   <%= form_for @section do |f| %>
     <%= render "shared/error_messages", :object => f.object %>
-    <%= f.hidden_field :path_id, :value => @path_id %><br/>
-    <div class="field">
-      <label for="section_name">Section Name</label>
+    <%= f.hidden_field :path_id, :value => @path.id %><br/>
+    <div class="field" style="margin-top:5px;">
+      <label for="section_name" style="font-weight: bold;">Section Name</label>
       <div class="input">
-        <%= f.text_field :name, :class => "xlarge" %>
+        <%= f.text_field :name, :class => "xlarge", :placeholder => "", :style => "margin-bottom: 5px;" %><br>
+        <span style="font-style: italic;">Examples: Level 1, Beginner Lessons, Fried food of the Midwest</span>
       </div>
     </div>
-    <div class="field clearfix">
-      <label for="section_image_url">Picture URL</label>
-      <div class="input">
-        <%= f.text_field :image_url, :id => "image_url_input", :class=>"xxlarge", :placeholder => "optional..." %>
-        <a class="btn secondary" style="margin-left:10px;">Preview</a>
-      </div>
-    </div>
-    <div class="field clearfix">
-      <%= f.label :default_picture %>
-      <div class="input">
-        <%= image_tag(@section.pic, :width => "210", :style=>"margin:10px 0px 20px 10px", :id => "image_url_preview") %>
-      </div>
-    </div>
-    <div class="actions">
+    <div class="actions" style="margin-top: 125px;">
       <%= f.submit "Next", :class => "btn primary" %>
-      <%= link_to "Cancel", edit_path_path(@path_id, :m=>"sections"), :class => "btn secondary" %>
+      <%= link_to "Cancel", edit_path_path(@path.id, :m=>"sections"), :class => "btn secondary" %>
     </div>
   <% end %>
 </section>

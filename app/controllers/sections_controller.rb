@@ -30,13 +30,13 @@ class SectionsController < ApplicationController
   def new
     @section = Section.new
     @title = "New section"
-    @path_id = params[:path_id]
-    @path = Path.find(@path_id)
+    @path = Path.find(params[:path_id])
     unless can_edit_path(@path)
       flash[:error] = "You cannot add sections to this #{name_for_paths}."
       redirect_to root_path
       return
     end
+    @section.path = @path
   end
   
   def create
