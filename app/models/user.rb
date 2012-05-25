@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   def self.create_with_omniauth(auth)
     raise "Auth is nil" if auth["provider"].nil? || auth["uid"].nil?
     user = User.find_by_email(auth["info"]["email"])
-    if existing_user.nil
+    if user.nil?
       user = create_anonymous_user(Company.find(1))
     end
     user.provider = auth["provider"]
