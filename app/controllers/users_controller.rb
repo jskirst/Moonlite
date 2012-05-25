@@ -155,10 +155,13 @@ class UsersController < ApplicationController
         end
       end
     else
+      flash[:error] = @user.errors.full_messages.join(". ")
       respond_to do |format|
         format.html do
           if request.xhr?
             render :json => @user.errors
+          elsif params[:user][:path_id]
+            redirect_to continue_path_path(current_user.company.paths.find(params[:user][:path_id]))
           else
             render 'edit'
           end
