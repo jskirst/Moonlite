@@ -13,6 +13,8 @@ gem 'zip'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'pg', '>= 0.13.2'
+gem 'omniauth'
+gem 'omniauth-facebook'
 
 group :development do
 	gem 'rspec-rails'

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120519190914) do
+ActiveRecord::Schema.define(:version => 20120525064354) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -303,6 +303,8 @@ ActiveRecord::Schema.define(:version => 20120519190914) do
     t.integer  "user_role_id"
     t.string   "catch_phrase"
     t.boolean  "is_fake_user",       :default => false
+    t.string   "provider"
+    t.string   "uid"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -4,8 +4,14 @@ class SessionsController < ApplicationController
   end
   
   def create
-    creds = params[:session]
-    user = User.authenticate(creds[:email],creds[:password])
+    auth = request.env["omiauth.auth"]
+    if auth
+      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+    else
+      credentials = params[:session]
+      user = User.authenticate(credentials[:email],credentials[:password])
+    end
+    
     if user.nil?
       @title = "Sign in"
       flash.now[:error] = "Invalid email/password combination."

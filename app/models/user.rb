@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_protected :admin
   attr_accessor :password, :password_confirmation
   attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, 
-    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user
+    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :provider, :uid
 
   belongs_to :company
   belongs_to :user_role
@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
 
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  
+  def self.create_with_omniauth(auth)
+    create!({:provider => auth[:provider], :uid => auth[:uid], :name => "SOCIAL"})
+  end
 
   validates :name,     
     :presence   => true,
