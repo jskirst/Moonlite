@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
     user.name = auth["info"]["name"]
     user.email = auth["info"]["email"]
     user.image_url = auth["info"]["image"]
-    user.save
+    raise "User Auth save failed." if !user.save
     return user
   end
 
