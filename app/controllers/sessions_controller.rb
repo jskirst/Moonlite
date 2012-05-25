@@ -22,6 +22,10 @@ class SessionsController < ApplicationController
     end
   end
   
+  def locallink
+    redirect_to "http://localhost:3000"
+  end
+  
   def destroy
     sign_out
     if @is_consumer

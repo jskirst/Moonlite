@@ -2,7 +2,7 @@ SampleApp::Application.routes.draw do
 	get ":id" => "users#show", :id => /\d+/
   #post "sections/generate" => "sections#generate"
   
-	resources :sessions, :only => [:new, :create, :destroy]
+	resources :sessions
 	resources :users do
 		member do
 			get :accept
@@ -80,7 +80,8 @@ SampleApp::Application.routes.draw do
 	
 	root 				:to => "pages#home"
 	
-  match '/auth/:provider',:to => 'sessions#create'
+  match '/locallink',  :to => 'sessions#locallink'
+  match '/auth/:provider/callback',  :to => 'sessions#create'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
 	
