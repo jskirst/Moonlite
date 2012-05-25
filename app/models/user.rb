@@ -20,7 +20,11 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
   def self.create_with_omniauth(auth)
-    create!({:provider => auth[:provider], :uid => auth[:uid], :name => "SOCIAL"})
+    user = create_anonymous_user(Company.find(1))
+    user.provider = auth["provider"]
+    user.uid = auth["uid"]
+    user.save
+    return user
   end
 
   validates :name,     

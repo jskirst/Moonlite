@@ -80,6 +80,7 @@ SampleApp::Application.routes.draw do
 	
 	root 				:to => "pages#home"
 	
+  match '/auth/:provider',:to => 'sessions#create'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
 	
