@@ -3,6 +3,8 @@
 $(function(){
   $('a[id != "signout_link"]').attr("href", "#");
   
+  $("#completion_content").fadeIn(4000);
+  
   $('#save_score, a[id != "signout_link"]').click(function(){
     $('#startmodal').modal({
       keyboard: true,
@@ -14,23 +16,27 @@ $(function(){
 </script>
 <%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
+<section id="completion_content" style="display:none;">
 <section class="row">
-  <div class="span5">
+  <div class="span4">
     <ul class="media-grid">
       <li>
         <a>
-          <%= image_tag @path.path_pic, :style => "min-height: 275px; max-height: 350px; max-width: 275px;" %>
+          <%= image_tag @path.path_pic, :style => "min-height: 125px; max-height: 150px; max-width: 275px;" %>
         </a>
       </li>
     </ul>
   </div>
-  <div class="span11" style="margin: 0 0 0 20px; ">
+  <div class="span12" style="margin: 0 0 0 20px; ">
     <h1 style="margin-bottom:8px;">Congratulations!</h1>
     <div>
       <p style="font-size:14px; font-weight: ; margin-bottom: 5px; line-height:19px;">You have successfully completed this <%= name_for_paths.downcase %>. You're now ranked <%= @user_rank %> with <%= @total_points_earned.to_i %> points. <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %></p>
       <% if @must_register %>
       <p style="font-size:15px; font-weight: bold; margin-bottom: 15px; line-height:19px;">Create an account below so you can <span style="text-decoration:underline">improve your ranking</span>, <span style="text-decoration:underline">start a public profile</span> and <span style="text-decoration:underline">unlock more challenges!</span></p>
-      <div style="width: 260px; padding: 13px; border: 0px solid lightgray; border-radius: 5px; float:left;">
+      <div>
+        
+      </div>
+      <div style="width: 260px; padding: 13px; border: 2px solid lightgray; border-radius: 5px; float:right;">
         <%= form_for(current_user, :html => {:id => "change_credentials_form", :style => "margin-bottom:0px;"}) do |f| %>
         <%= f.hidden_field :path_id, :value => @path.id %>
         <div class="clearfix" style="margin-bottom:8px;">
@@ -79,3 +85,4 @@ $(function(){
   <hr/>
   <%= render "pages/suggested_paths", {:paths_title => "Similar paths", :paths_list => @similar_paths} %>
 <% end %>
+</section>
