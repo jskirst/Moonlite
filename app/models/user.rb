@@ -23,6 +23,9 @@ class User < ActiveRecord::Base
     user = create_anonymous_user(Company.find(1))
     user.provider = auth["provider"]
     user.uid = auth["uid"]
+    user.name = auth["info"]["name"]
+    user.email = auth["info"]["email"]
+    user.image_url = auth["info"]["image"]
     user.save
     return user
   end
