@@ -22,6 +22,11 @@ class SessionsController < ApplicationController
     end
   end
   
+  def auth_failure
+    flash[:error] = params[:message]
+    redirect_to new_session_path
+  end
+  
   def locallink
     redirect_to "http://localhost:3000"
   end
