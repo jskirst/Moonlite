@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
   def self.create_with_omniauth(auth)
+    raise "Auth is nil" if auth["provider"].nil? || auth["uid"].nil?
     user = create_anonymous_user(Company.find(1))
     user.provider = auth["provider"]
     user.uid = auth["uid"]
