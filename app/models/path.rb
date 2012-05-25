@@ -36,9 +36,9 @@ class Path < ActiveRecord::Base
   
   def self.with_category(type, user, excluded_ids = -2, order = "id DESC")
     if excluded_ids.is_a?(Integer)
-      return Path.joins(:path_user_roles).where("is_locked = ? and path_user_roles.user_role_id = ? and is_published = ? and category_id = ? and paths.id != ?", false, user.user_role_id, true, "#{type}", excluded_ids).all(:order => order)
+      return Path.joins(:path_user_roles).where("path_user_roles.user_role_id = ? and is_published = ? and category_id = ? and paths.id != ?", user.user_role_id, true, "#{type}", excluded_ids).all(:order => "is_locked, "+order)
     else
-      return Path.where("is_locked = ? and is_published = ? and category_id = ? and id NOT IN (?)", false, true, "#{type}", excluded_ids).all(:order => order)
+      return Path.where("is_published = ? and category_id = ? and id NOT IN (?)", true, "#{type}", excluded_ids).all(:order => "is_locked, "+order)
     end
   end
   

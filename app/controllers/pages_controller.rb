@@ -89,14 +89,14 @@ class PagesController < ApplicationController
     
     def user_creation_enabled?
       unless @enable_user_creation
-        flash[:error] = "You do not have access to this functionality."
+        flash[:error] = "You do not have access to #{name_for_paths} editing functionality."
         redirect_to root_path
       end
     end
     
     def browsing_enabled?
       unless @enable_browsing
-        flash[:error] = "You do not have access to this functionality."
+        flash[:error] = "You do not have access to #{name_for_paths} browsing functionality."
         redirect_to root_path
       end
     end

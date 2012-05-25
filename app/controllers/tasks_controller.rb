@@ -90,7 +90,7 @@ class TasksController < ApplicationController
     
     def has_access?
       unless @enable_user_creation
-        flash[:error] = "You do not have access to this functionality."
+        flash[:error] = "You do not have the ability to edit this task."
         redirect_to root_path
       end
     end

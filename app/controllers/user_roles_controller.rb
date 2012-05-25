@@ -73,7 +73,7 @@ class UserRolesController < ApplicationController
   
     def has_access?
       unless @enable_administration
-        flash[:error] = "You do not have access to this functionality."
+        flash[:error] = "You do not have the ability to create or edit user roles."
         redirect_to root_path
         return
       end

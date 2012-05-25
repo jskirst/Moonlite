@@ -241,7 +241,7 @@ class UsersController < ApplicationController
       end
       
       unless (current_user.admin? || (@enable_administration && current_user.company.id == company_id.to_i))
-        flash[:error] = "You do not have access to this functionality."
+        flash[:error] = "You do not have the ability to create or edit users."
         redirect_to root_path 
       end
     end
