@@ -28,7 +28,7 @@ class SessionsController < ApplicationController
   end
   
   def locallink
-    redirect_to "http://localhost:3000"
+    redirect_to "http://localhost:3000/auth/facebook/callback?code=#{params[:code]}"
   end
   
   def destroy

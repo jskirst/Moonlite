@@ -81,7 +81,7 @@ SampleApp::Application.routes.draw do
 	root 				:to => "pages#home"
 	
   match '/locallink',  :to => 'sessions#locallink'
-  match '/auth/faiilure',  :to => 'sessions#auth_failure'
+  match '/auth/failure',  :to => 'sessions#auth_failure'
   match '/auth/:provider/callback',  :to => 'sessions#create'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
