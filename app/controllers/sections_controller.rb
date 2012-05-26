@@ -263,9 +263,11 @@ class SectionsController < ApplicationController
     @task = @section.next_task(current_user)
     if @task.nil?
       if params[:task_id]
-        redirect_url = "Redirecting to results:#{results_section_url(@section)}"
-        logger.debug "REDIRECT URL IS HEREEEE"
-        logger.debug redirect_url
+        if @is_consumer
+          redirect_url = "Redirecting to results:#{continue_path_url(@section.path)}"
+        else
+          redirect_url = "Redirecting to results:#{results_section_url(@section)}"
+        end
         respond_to do |f|
           f.html { render :text => redirect_url }
         end

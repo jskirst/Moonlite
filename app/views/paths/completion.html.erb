@@ -2,8 +2,8 @@
 <script>
 $(function(){
   $("#completion_content").fadeIn(2000);
-  $('a').filter("a[id *= 'sign']").attr("href", "#");
-  $('#save_score, a').filter("a[id *= 'sign']").click(function(){
+  $('a:not([id*="sign"])').attr("href", "#");
+  $('#save_score, a:not([id*="sign"])').click(function(){
     $('#startmodal').modal({
       keyboard: true,
       backdrop: 'static',
