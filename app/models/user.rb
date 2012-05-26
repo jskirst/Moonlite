@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
     :length    => { :maximum => 50 }
     
   validates :catch_phrase,
-    :length    => { :maximum => 25 }
+    :length    => { :maximum => 140 }
 
   validates :email,    
     :presence   => true,

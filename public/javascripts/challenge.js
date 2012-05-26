@@ -48,10 +48,16 @@ function show_start_modal(){
 function bind_change_name_form(){
   $('#change_name_form').submit(function(){
     if ($("#user_name").val() == ""){
-      $(".form_errors").text("Username must be at least 3 letters.");
+      $(".form_errors").text("Username must be at least 3 characters.");
+      return false;
+    } else if ($("#user_name").val().length >= 50){
+      $(".form_errors").text("Username must be less than 50 characters.");
       return false;
     } else if ($("#user_catch_phrase").val() == ""){
-      $(".form_errors").text("Motto must be at least 3 letters.");
+      $(".form_errors").text("Motto must be at least 3 characters.");
+      return false;
+    } else if ($("#user_catch_phrase").val().length >= 140 ){
+      $(".form_errors").text("Motto must be less than 140 characters.");
       return false;
     } else {
       $("#user_name_in_header").text($("#user_name").val());
