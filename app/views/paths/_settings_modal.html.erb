@@ -1,9 +1,9 @@
-<div id="settings_modal" class="modal hide fade" style="top: 40%;">
+<div id="settings_modal" class="modal hide fade" style="top: 40%; width: 600px;">
   <div class="modal-header">
     <a href="#" class="close"></a>
     <h3><%= name_for_paths %> Settings</h3>
   </div>
-  <div class="modal-body">
+  <div class="modal-body" style="height: 500px; overflow: auto;">
     <%= render "settings", { :path => path, :categories => categories } %>
   </div>
 </div>
