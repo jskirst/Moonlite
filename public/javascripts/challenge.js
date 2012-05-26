@@ -33,9 +33,14 @@ function show_start_modal(){
     backdrop: 'static',
     show: true
   });
-  var count = 10;
+  var count = 15;
   start_modal_countdown = setInterval(function(){
-    $("#starting_timer").html("<strong>00:0"+count+"</strong>");
+    if(count >= 10){
+      $("#starting_timer").html("<strong>00:"+count+"</strong>");
+    } else {
+      $("#starting_timer").html("<strong>00:0"+count+"</strong>");
+    }
+    
     if(count==0){
       $('#start_modal').modal('hide');
       clearInterval(start_modal_countdown);
@@ -77,21 +82,24 @@ function set_answer_status(previously_correct){
 }
 
 function start_question_timer(){
-  clearInterval(streak_countdown);
-  var count = 30;
-  streak_countdown = setInterval(function(){
-    if(count >= 10){
-      $(".timer").html("00:"+count);
-    } else {
-      $(".timer").html("00:0"+count);
-    }
-    if(count<=0){
-      $(".timer").removeClass("timer").addClass("expired-timer");
-      $(".streak").animate({opacity: 0.25}, 250);
-      $("#listless").val(false);
-      clearInterval(streak_countdown);
-    } count --;
-  }, 1000);
+  if(typeof $("#countdown_timer").data("running") == 'undefined' || $(this).data("running") == false) {
+    $("#countdown_timer").data("running", true);
+    clearInterval(streak_countdown);
+    var count = 30;
+    streak_countdown = setInterval(function(){
+      if(count >= 10){
+        $(".timer").html("00:"+count);
+      } else {
+        $(".timer").html("00:0"+count);
+      }
+      if(count<=0){
+        $(".timer").removeClass("timer").addClass("expired-timer");
+        $(".streak").animate({opacity: 0.25}, 250);
+        $("#listless").val(false);
+        clearInterval(streak_countdown);
+      } count --;
+    }, 1000);
+  }
 }
 
 $(document).ready(function() {

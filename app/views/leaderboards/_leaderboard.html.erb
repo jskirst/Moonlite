@@ -15,13 +15,28 @@
   </tr>
 <% counter = 1 %>
 <% leaderboard_entries.each do |entry| %>
-  <% if (counter > limit) then break end %>
+  <% if (counter <= limit) %>
   <tr>
     <td><%= counter.to_s %></td>
     <td class="user-name"><%= link_to truncate(entry.user.name, :length => 25), entry.user %></td>
     <td style="width:50%" class="user-completed-tasks"><%= @is_consumer == true ? truncate(entry.user.catch_phrase.to_s, :length => 25) : entry.completed_tasks %></td>
     <td class="user-score"><%= entry.score %></td>
   </tr>
+  <% end %>
+  <% if counter > limit && entry.user == current_user %>
+  <tr>
+    <td>...</td>
+    <td class="user-name">...</td>
+    <td style="width:50%" class="user-completed-tasks">...</td>
+    <td class="user-score">...</td>
+  </tr>
+  <tr>
+    <td style="font-weight: bold; color: darkgoldenrod;"><%= counter.to_s %></td>
+    <td style="font-weight: bold; color: darkgoldenrod;" class="user-name"><%= link_to truncate(entry.user.name, :length => 25), entry.user %></td>
+    <td style="font-weight: bold; color: darkgoldenrod; width:50%;" class="user-completed-tasks"><%= @is_consumer == true ? truncate(entry.user.catch_phrase.to_s, :length => 25) : entry.completed_tasks %></td>
+    <td style="font-weight: bold; color: darkgoldenrod;" class="user-score"><%= entry.score %></td>
+  </tr>
+  <% end %>
   <% counter += 1 %>
 <% end %>
 <% unless disable_filler %>
