@@ -1,11 +1,9 @@
 <% if @must_register %>
 <script>
 $(function(){
-  $('a[id != "signout_link"]').attr("href", "#");
-  
-  $("#completion_content").fadeIn(4000);
-  
-  $('#save_score, a[id != "signout_link"]').click(function(){
+  $("#completion_content").fadeIn(2000);
+  $('a').filter("a[id *= 'sign']").attr("href", "#");
+  $('#save_score, a').filter("a[id *= 'sign']").click(function(){
     $('#startmodal').modal({
       keyboard: true,
       backdrop: 'static',
@@ -16,59 +14,83 @@ $(function(){
 </script>
 <%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
-<section id="completion_content" style="display:none;">
-<section class="row">
-  <div class="span4">
-    <ul class="media-grid">
-      <li>
-        <a>
-          <%= image_tag @path.path_pic, :style => "min-height: 125px; max-height: 150px; max-width: 275px;" %>
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div class="span12" style="margin: 0 0 0 20px; ">
-    <h1 style="margin-bottom:8px;">Congratulations!</h1>
-    <div>
-      <p style="font-size:14px; font-weight: ; margin-bottom: 5px; line-height:19px;">You have successfully completed this <%= name_for_paths.downcase %>. You're now ranked <%= @user_rank %> with <%= @total_points_earned.to_i %> points. <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %></p>
-      <% if @must_register %>
-      <p style="font-size:15px; font-weight: bold; margin-bottom: 15px; line-height:19px;">Create an account below so you can <span style="text-decoration:underline">improve your ranking</span>, <span style="text-decoration:underline">start a public profile</span> and <span style="text-decoration:underline">unlock more challenges!</span></p>
+<section id="completion_content" <% if @must_register %>style="display:none;"<% end %>>
+<section>
+  <div class="row">
+    <div class="span3" style="width: 130xp;">
+      <ul class="media-grid">
+        <li>
+          <a>
+            <%= image_tag @path.path_pic, :style => "min-height: 100px; max-height: 105px; max-width: 130px;" %>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="span13" style="margin: 0 0 0 0px; ">
+      <h1 style="margin-bottom:8px;">Congratulations!</h1>
       <div>
-        
+        <p style="font-size:14px; font-weight: ; margin-bottom: 5px; line-height:19px;">You have successfully completed this <%= name_for_paths.downcase %>. <strong>You're now ranked <%= @user_rank %> with <%= @total_points_earned.to_i %> points. </strong> <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %></p>
+        <% if @must_register %>
       </div>
-      <div style="width: 260px; padding: 13px; border: 2px solid lightgray; border-radius: 5px; float:right;">
-        <%= form_for(current_user, :html => {:id => "change_credentials_form", :style => "margin-bottom:0px;"}) do |f| %>
-        <%= f.hidden_field :path_id, :value => @path.id %>
-        <div class="clearfix" style="margin-bottom:8px;">
-          <label style="font-size: 14px; width: 60px;">Email</label>
-          <div class="input" style="margin-left: 70px;">
-            <%= f.text_field :email, :value => "", :style => "width:175px; margin-right: 15px;" %>
-          </div>
-        </div>
-        <div class="clearfix" style="margin-bottom:8px;">
-          <label style="font-size: 14px; width: 60px;">Password</label>
-          <div class="input" style="margin-left: 70px;" >
-            <%= f.password_field :password, :value => "", :style => "width:175px; margin-right: 15px;" %>
-          </div>
-        </div>
-        <div class="clearfix" style="margin-bottom:0px;">
-          <label style="font-size: 14px; width: 60px;">Confirm Password</label>
-          <div class="input" style="margin-left: 70px;" >
-            <%= f.password_field :password_confirmation, :value => "", :style => "width:175px; margin-right: 15px;" %>
-          </div>
-        </div>
-        <%= f.submit "Save Score", :class => "btn primary", :style => "margin-left: 120px;" %>
-        <% end %>
-      </div>
-      <% else %>
-        <% if @enable_comments %>
-          <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
-          <a href="http://www.facebook.com/sharer.php?u=<%=u hero_path_url(@path.id, :hero => current_user.id) %>" target="_blank"><img src="/images/facebook-connect.gif" width="150" height="55"></a>
-          <a href="https://twitter.com/intent/tweet?url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
-        <% end %>
-      <% end %>
     </div>
   </div>
+  <div class="row" style="margin:0 125px 0 125px;">
+    <table style="border: 1px solid lightgray; background-color:whitesmoke; padding: 100px;">
+      <tr>
+        <td colspan="3">
+          <p style="font-size:15px; font-weight: bold; line-height:19px;">Create an account below so you can <span style="text-decoration:underline">improve your ranking</span>, <span style="text-decoration:underline">start a public profile</span> and <span style="text-decoration:underline">unlock more challenges!</span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td style="border-top: none; vertical-align: middle;">
+          <%= link_to image_tag("/images/facebook_login_button.png", :size => "244x50"), "/auth/facebook", :id => "facebook_signin" %>
+        </td>
+        <td style="border-top: none; border-right: 0px solid darkgray; border-left: 0px solid darkgray; vertical-align: middle;">
+          <p style="font-weight: bold; font-size; 18px;">Or</p>
+        </td>
+        <td style="padding: 13px; border-top: none;">
+          <%= form_for(current_user, :html => {:id => "change_credentials_form", :style => "margin-bottom:0px;"}) do |f| %>
+          <%= f.hidden_field :path_id, :value => @path.id %>
+          <div class="clearfix" style="margin-bottom:8px;">
+            <label style="font-size: 14px; width: 60px;">Email</label>
+            <div class="input" style="margin-left: 70px;">
+              <%= f.text_field :email, :value => "", :style => "width:175px; margin-right: 15px;" %>
+            </div>
+          </div>
+          <div class="clearfix" style="margin-bottom:8px;">
+            <label style="font-size: 14px; width: 60px;">Password</label>
+            <div class="input" style="margin-left: 70px;" >
+              <%= f.password_field :password, :value => "", :style => "width:175px; margin-right: 15px;" %>
+            </div>
+          </div>
+          <div class="clearfix" style="margin-bottom:0px;">
+            <label style="font-size: 14px; width: 60px;">Confirm Password</label>
+            <div class="input" style="margin-left: 70px;" >
+              <%= f.password_field :password_confirmation, :value => "", :style => "width:175px; margin-right: 15px;" %>
+            </div>
+          </div>
+          <%= f.submit "Save Score", :class => "btn primary", :style => "margin-left: 120px;" %>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <% else %>
+  <div style="margin:20px;">
+    <% if @enable_comments %>
+      <div style="display:inline;">
+        <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
+      </div>
+      <div style="display:inline; padding:20px;">
+        <a href="http://www.facebook.com/sharer.php?u=<%=u hero_path_url(@path.id, :hero => current_user.id) %>" target="_blank"><img src="/images/facebook_connect.png" width="150" height="45"></a>
+      </div>
+      <div style="display:inline;">
+        <a href="https://twitter.com/intent/tweet?url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
 </section>
 <section>
 <%= render "leaderboards/leaderboard", 
