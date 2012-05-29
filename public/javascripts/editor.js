@@ -99,7 +99,7 @@ function add_new_task(event, data) {
   if(data.errors){
     $("#task_form").find(".message_container").text(data.errors[0]).removeClass("success").addClass("error").show();
   } else {
-    $("#task_form").find(".message_container").text("Task added successfully.").removeClass("error").addClass("success").show();
+    $("#task_form").find(".message_container").text("Question added successfully.").removeClass("error").addClass("success").show();
     clear_form();
     var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo("#task_list");
     $(".task:first").show();

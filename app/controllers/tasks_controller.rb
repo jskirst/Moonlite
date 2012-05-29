@@ -65,6 +65,9 @@ class TasksController < ApplicationController
     @associated_phrases = []
     unless @phrase.nil?
       @associated_phrases = @phrase.associated_phrases
+      @original_content = @phrase.original_content
+    else
+      @original_content = ""
     end
     respond_to do |format|
       format.json  

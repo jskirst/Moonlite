@@ -66,6 +66,7 @@ function get_suggestions($answer, $suggestions){
       } else {
         $suggestions.find("ol").hide();
         $suggestions.find(".found_message").hide();
+        $suggestions.find(".did_you_mean").hide();
         $suggestions.find(".not_found_message").show();
       }
     }
