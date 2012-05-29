@@ -148,6 +148,16 @@ class Path < ActiveRecord::Base
     return cloned_path
   end
   
+  def import_tasks_from(from_path)
+    from_path.tasks.each do |t|
+      if tasks.find_by_question(t.question).nil?
+        imported_task = t.dup
+        imported_task.section_id = sections.first.id
+        imported_task.save
+      end
+    end
+  end
+  
   private
     def check_image_url
       unless self.image_url.nil?
