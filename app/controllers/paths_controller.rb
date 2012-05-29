@@ -63,7 +63,7 @@ class PathsController < ApplicationController
       if @path.update_attributes(params[:path])
         flash[:success] = "Changes saved."
       else
-        flash[:error] = "Error occurred."
+        flash[:error] = "Error occurred: "+@path.errors.full_messages.join(". ")
       end
     rescue
       flash[:error] = "An error prevented your changes from being saved. Please try again."
