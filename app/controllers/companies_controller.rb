@@ -79,7 +79,9 @@ class CompaniesController < ApplicationController
           company_paths = @company.paths.where("is_published = ?", true)
           logger.debug company_paths
           company_paths.each do |p|
-            @user.enroll!(p)
+            if p.path_user_roles.find_by_user_role_id(@user.user_role_id)
+              @user.enroll!(p)
+            end
           end
         end
         
