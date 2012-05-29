@@ -60,8 +60,11 @@ class PathsController < ApplicationController
   def update
     params[:path].delete("image_url") if params[:path][:image_url].blank?
     begin
-      @path.update_attributes(params[:path])
-      flash[:success] = "Changes saved."
+      if @path.update_attributes(params[:path])
+        flash[:success] = "Changes saved."
+      else
+        flash[:error] = "Error occurred."
+      end
     rescue
       flash[:error] = "An error prevented your changes from being saved. Please try again."
     end
