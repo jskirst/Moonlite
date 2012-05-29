@@ -6,7 +6,7 @@ class Path < ActiveRecord::Base
   attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
     :is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
     :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-    :is_locked, :enable_retakes, :game_type
+    :is_locked, :enable_retakes, :game_type, :company_id, :user_id
   
   belongs_to :user
   belongs_to :company
