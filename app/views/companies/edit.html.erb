@@ -34,16 +34,6 @@
       </div>
       <hr/>
       <div class="field clearfix">
-        <%= f.label "Default User Role" %>
-        <div class="input">
-          <select id="company_user_role_id" name="company[user_role_id]">
-            <% @user_roles.each do |u| %>
-              <option value="<%= u.id %>" <%= "selected='selected'" if @company.user_role_id == u.id %>><%= u.name %></option>
-            <% end %>
-          </select>
-        </div>
-      </div>
-      <div class="field clearfix">
         <%= f.label "Default User Profile Picture" %>
         <div class="input">
           <%= f.text_field :default_profile_picture_link %>
