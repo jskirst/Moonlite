@@ -7,7 +7,7 @@ class SectionsController < ApplicationController
   include GeneratorHelper
   
   before_filter :authenticate
-  before_filter :has_edit_access?, :except => [:show, :continue]
+  before_filter :has_edit_access?, :except => [:show, :continue, :results]
   before_filter :get_section_from_id, :except => [:new, :create, :generate]
   before_filter :can_edit?, :except => [:show, :continue, :results, :new, :create, :generate] 
   before_filter :enrolled?, :only => [:continue, :results]
