@@ -9,7 +9,6 @@
           <p><%= link_to "Publish", publish_section_path(s) %></p>
         <% elsif s.path.enrolled_users.empty? %>
           <p>You do not have any users yet.</p>
-          <p><a href="#">Tips gettings users</a></p>
         <% else %>
           <p>Answered Questions: <%= s.completed_tasks.size %></p>
           <p>Average Score: <%= s.percentage_correct %>%</p>

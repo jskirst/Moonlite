@@ -28,8 +28,7 @@ class Path < ActiveRecord::Base
   
   validates :user_id, :presence => true
   
-  validate :company_id, :if => :user_belongs_to_company
-  
+  before_save :user_belongs_to_company
   before_save :check_image_url
   
   #default_scope :order => 'paths.created_at DESC'
@@ -110,11 +109,11 @@ class Path < ActiveRecord::Base
   end
   
   def user_belongs_to_company
-    if company != nil
-      if user.company != company
-        errors[:base] << "User does not belong to this company."
-      end
-    end
+    # if self.company != nil
+      # if user.company_id != self.company_id
+        # errors[:base] << "User does not belong to this company."
+      # end
+    # end
   end
   
   def enrolled_user_count
