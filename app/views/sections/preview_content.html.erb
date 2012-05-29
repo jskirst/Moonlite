@@ -15,8 +15,8 @@
     <%= link_to "Finish", edit_path_path(@section.path), :class => "btn primary" %>
   </div>
   <div>
-    <p>If you have trouble seeing this document, you can <%= link_to "download it here", @info_resource.obj.url %>.</p>
+    <p>If you have trouble seeing this document, you can <%= link_to "download it here", @info_resource.obj.url.gsub("::",":") %>.</p>
     <p class="ie_warning" style="display:none;"><strong>NOTE:</strong> If you are using Microsoft Internet Explore, you will need to add <i>http://docs.google.com</i> to your list of trusted sites. <a href="http://windows.microsoft.com/en-us/windows-vista/Security-zones-adding-or-removing-websites" target="_blank">Instructions here.</a></p>
-    <iframe src="http://docs.google.com/viewer?url=<%=u @info_resource.obj.url %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
+    <iframe src="http://docs.google.com/viewer?url=<%= @info_resource.obj.url.gsub("::",":") %>&embedded=true" width="800" height="650" style="border: none;"></iframe>
   </div>
 </div>
