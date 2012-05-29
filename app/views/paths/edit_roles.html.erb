@@ -1,4 +1,4 @@
-<%= render "tab_navigation" %>
+<h2>Access Control</h2>
 <section class="tab_content">
   <p style="padding: 10px 0 10px 20px;">Select each of the user roles listed below that you would like to allow access to this <%= name_for_paths %>.</p>
   <%= form_tag({ :controller => :paths, :action => :update_roles }, :method => :put ) %>
@@ -19,5 +19,6 @@
   </div>
 </section>
 <div class="actions">
+  <%= link_to "Back", edit_path_path(@path), :class => "btn secondary" %>
   <%= submit_tag "Save", :class => "btn primary" %>
 </div>

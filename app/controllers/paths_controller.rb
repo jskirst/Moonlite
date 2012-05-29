@@ -80,20 +80,23 @@ class PathsController < ApplicationController
   
   def update_roles
     @path = current_user.company.paths.find(params[:id])
-    params[:path][:user_roles].each do |id, status|
-      user_roll = @path.company.user_roles.find(id)
-      if user_roll.nil?
-        flash[:error] = "You do not have access to that data. This action has been reported."
-        redirect_to root_path
-        return
-      elsif status == "on" && @path.path_user_roles.where("user_role_id = ?", id).empty?
-        if @path.path_user_roles.create!(:user_role_id => id)
-          flash[:success] = "Access granted to user role(s)."
-        else
-          flash[:error] = "Oops! Unknown error encountered. Please try again."
-        end
+    all_roles = current_user.company.user_roles
+    allowed_roles = []
+    unless params[:path].nil?
+      params[:path][:user_roles].each do |id, status|
+        allowed_roles << id
       end
     end
+    
+    all_roles.each do |r|
+      path_user_role = @path.path_user_roles.find_by_user_role_id(r.id)
+      if allowed_roles.include?(r.id.to_s)
+        new_role = @path.path_user_roles.create!(:user_role_id => r.id) if path_user_role.nil?
+      else
+        @path.path_user_roles.delete(path_user_role) unless path_user_role.nil?
+      end
+    end
+    flash[:success] = "Path access control updated."
     redirect_to edit_path_path(:id => @path, :m => "access_control")
   end
   

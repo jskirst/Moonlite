@@ -76,6 +76,7 @@
     </div>
   </div>
   <hr/>
+  <%= link_to "Access Control", edit_path_path(path, :m => "access_control"), :class => "btn secondary", :style => "float:left;" %>
   <div style="float:right; margin: 0px 20px 0px 0px;">
     <%= f.submit "Save", :class => "btn primary", :style => "margin-right: 10px;" %>
     <span class="btn secondary" onclick="$('#settings_modal').modal('hide');">Close</span>
