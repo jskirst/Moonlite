@@ -1,6 +1,7 @@
 /* Section Editing */
 function close_section_container(btn){
-  $(btn).parents('td:first').find('.section_container').hide();
+  $(btn).parents('td:first').find('.section_questions_container').hide();
+  $(btn).parents('td:first').find('.section_content_container').hide();
   $(btn).parents('td:first').find("hr").hide();
   $(btn).parents('td:first').find(".section_overview").slideDown();
   $(btn).parent('li').siblings('li').removeClass("active");
@@ -10,25 +11,37 @@ function close_section_container(btn){
 function bind_edit_section_questions(){
   $(this).on('ajax:success', function(event, data){
     var $row = $(this).parents("td.section:first");
-    $row.find(".edit_section_overview_pill").parent().removeClass("active");
-    $row.find(".edit_section_content_pill").parent().removeClass("active");
-    $row.find(".edit_section_questions_pill").parent().addClass("active");
-    $row.find(".section_container").hide().html(data).slideDown();
-    $row.find(".section_overview").hide();
-    $row.find("hr").show();
+    $row.find(".section_questions_container").hide().html(data).slideDown();
+    display_section_questions($row);
   });
+}
+
+function display_section_questions($row){
+  $row.find(".edit_section_overview_pill").parent().removeClass("active");
+  $row.find(".edit_section_content_pill").parent().removeClass("active");
+  $row.find(".edit_section_questions_pill").parent().addClass("active");
+  $row.find('.section_questions_container').slideDown();
+  $row.find('.section_content_container').hide();
+  $row.find(".section_overview").hide();
+  $row.find("hr").show();
 }
 
 function bind_edit_section_content(){
   $(this).on('ajax:success', function(event, data){
     var $row = $(this).parents("td.section:first");
-    $row.find(".edit_section_overview_pill").parent().removeClass("active");
-    $row.find(".edit_section_content_pill").parent().addClass("active");
-    $row.find(".edit_section_questions_pill").parent().removeClass("active");
-    $row.find(".section_container").hide().html(data).slideDown();
-    $row.find(".section_overview").hide();
-    $row.find("hr").show();
+    $row.find(".section_content_container").hide().html(data);
+    display_section_content($row);
   });
+}
+
+function display_section_content($row){
+  $row.find(".edit_section_overview_pill").parent().removeClass("active");
+  $row.find(".edit_section_content_pill").parent().addClass("active");
+  $row.find(".edit_section_questions_pill").parent().removeClass("active");
+  $row.find('.section_questions_container').hide();
+  $row.find('.section_content_container').slideDown();
+  $row.find(".section_overview").hide();
+  $row.find("hr").show();
 }
 
 
@@ -95,14 +108,15 @@ function bind_answer_suggestion(obj){
 }
 
 function add_new_task(event, data) {
-  unblock_form_submit($("#new_task"));
+  unblock_form_submit($(".new_task_form"));
   if(data.errors){
-    $("#task_form").find(".message_container").text(data.errors[0]).removeClass("success").addClass("error").show();
+    $(this).find(".new_task").find(".message_container").text(data.errors[0]).removeClass("success").addClass("error").show();
   } else {
-    $("#task_form").find(".message_container").text("Question added successfully.").removeClass("error").addClass("success").show();
+    $(this).find(".new_task").find(".message_container").text("Question added successfully.").removeClass("error").addClass("success").show();
     clear_form();
-    var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo("#task_list");
-    $(".task:first").show();
+    $task_list = $(this).siblings(".task_list");
+    var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo($task_list);
+    $task_list.find(".task:first").show();
     $(".alert-message").fadeOut(5000);
     var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
     bind_delete_task($new_question.find(".delete_button"));

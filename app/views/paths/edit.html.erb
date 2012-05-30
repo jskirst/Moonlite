@@ -52,8 +52,8 @@
             <div style="float:right;">
               <ul class="pills">
                 <li class="active"><a class="edit_section_overview_pill" onclick="close_section_container(this);">Overview</a></li>
-                <li><%= link_to "Questions", edit_section_path(s, :m => "tasks"), :remote => true, "data-type" => "html", :class => "edit_section_questions_pill" %></li>
-                <li><%= link_to "Content", edit_section_path(s, :m => "content"), :remote => true, "data-type" => "html", :class => "edit_section_content_pill" %></li>
+                <li><a class ="edit_section_questions_pill" onclick="display_section_questions($(this).parents('td.section'));">Questions</a></li>
+                <li><a class ="edit_section_content_pill" onclick="display_section_content($(this).parents('td.section'));">Content</a></li>
               </ul>
             </div>
             <div class="span14">
@@ -72,7 +72,12 @@
               <%= render "sections/overview", { :s => s } %>
             </div>
           </div>
-          <div class="section_container row" style="margin: 10px 0px 0px 0px;"></div>
+          <div class="section_questions_container row" style="margin: 10px 0px 0px 0px; display:none;">
+            <%= render "sections/edit_tasks", { :section => s, :tasks => s.tasks, :display_new_task_form => true, :task => s.tasks.new } %>
+          </div>
+          <div class="section_content_container row" style="margin: 10px 0px 0px 0px; display:none;">
+            <%= render "sections/edit_content", { :section => s, :info_resources => s.info_resources} %>
+          </div>
         </section>
       </td>
     </tr>

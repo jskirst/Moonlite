@@ -6,7 +6,7 @@
       :confirm => "Are you sure you want to delete this question?", 
       "data-type" => "json",
       :class => "btn secondary delete_button" %>
-    <%= link_to "Edit", edit_task_path(task),
+    <%= link_to "Edit", edit_task_path(task.id),
       :remote => true,
       :class => "btn secondary edit_button" %>
   </div>

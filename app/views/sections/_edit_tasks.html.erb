@@ -1,7 +1,7 @@
 <script>
 $(function(){
-  $('#new_task').submit(block_form_submit);
-  $('#new_task').on('ajax:success', add_new_task);
+  //$('.section_questions_container form').submit(block_form_submit);
+  $('.section_questions_container form').on('ajax:success', add_new_task);
   $('.delete_button').each(function(){
     bind_delete_task(this);
   });
@@ -14,7 +14,7 @@ $(function(){
   $(".correct_answer").change(function(){
     bind_answer_suggestion(this);
   });
-  $('#task_list td').hover(
+  $('.task_list td').hover(
     function(){
       $(this).find('.edit_task_buttons').show();
       $(this).css("background-color", "whitesmoke");
@@ -26,9 +26,9 @@ $(function(){
   );
 });
 </script>
-<%= render "tasks/new_task_form", { :task => task, :display => display_new_task_form } %>
+<%= render "tasks/new_task_form", { :task => task, :display => display_new_task_form, :section => section } %>
 
-<table id="task_list">
+<table class="task_list">
 <% tasks.each do |task| %>
   <tr>
     <td class="task">

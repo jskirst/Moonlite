@@ -73,7 +73,7 @@ class SectionsController < ApplicationController
       @tasks = @section.tasks.includes(:info_resource).all(:order => "id DESC")
       @display = (@tasks.empty?)
       respond_to do |f|
-        f.html { render :partial => "edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks } }
+        f.html { render :partial => "edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks, :section => @section } }
       end
     elsif params[:m] == "settings"
       respond_to do |f|

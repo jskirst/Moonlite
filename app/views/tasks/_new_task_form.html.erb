@@ -1,36 +1,36 @@
-<%= form_for(task, :remote => true, "data-type" => "html") do |f| %>
-<div style="float:right;">
-  <%= f.submit "Save", :id => "save_question_button", :class => "btn primary" %>
-  <span id="close_question_button" class="btn secondary" onclick="clear_form();">Clear</span>
-</div>
-<div id="task_form" style="margin-top:10px;">
-  <h3 style="margin-left:10px;" id="form_title">Add Question</h3>
-  <div class="message_container alert-message" style="display: none; width:350px; margin-left: 70px; margin-top:10px;"></div>
-  <%= f.hidden_field :section_id, :value => @section.id %><br/>
-  <div class="field clearfix">
-    <%= f.label :question %>
-    <div class="input">
-      <%= f.text_area :question, :class => "xxlarge", :rows => "3" %>
-    </div>
+<%= form_tag("/tasks", {:remote => true, "data-type" => "html"}) %>
+  <div style="float:right;">
+    <%= submit_tag "Save", :id => "save_question_button", :class => "btn primary" %>
+    <span id="close_question_button" class="btn secondary" onclick="clear_form();">Clear</span>
   </div>
-  <div class="row">
-    <div class="span8 answers">
-      <% (1..4).each do |i| %>
-       <div class="field clearfix">
-        <% status = (i == 1 ? "Correct answer" : "Wrong answer") %>
-        <%= f.label status %>
-        <div class="input">
-          <%= f.text_field "answer"+i.to_s, :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") %>
-        </div>
+  <div class="new_task" style="margin-top:10px;">
+    <h3 style="margin-left:10px;" id="form_title">Add Question</h3>
+    <div class="message_container alert-message" style="display: none; width:350px; margin-left: 70px; margin-top:10px;"></div>
+    <%= hidden_field_tag "task[section_id]", section.id %><br/>
+    <div class="field clearfix">
+      <%= label_tag :question %>
+      <div class="input">
+        <%= text_area_tag("task[question]", nil, { :class => "xxlarge", :rows => "3" })%>
       </div>
-      <% end %>
     </div>
-    <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
-      <p class="not_found_message" style="display: none;">No suggestions found.</p>
-      <p class="did_you_mean" style="display: none;">Did you mean...?</p>
-      <p class="found_message" style="display: none;">Suggestions (doubleclick):</p>
-      <ol style="margin-top:10px; display: none;"></ol>
+    <div class="row">
+      <div class="span8 answers">
+        <% (1..4).each do |i| %>
+         <div class="field clearfix">
+          <% status = (i == 1 ? "Correct answer" : "Wrong answer") %>
+          <%= label_tag status %>
+          <div class="input">
+            <%= text_field_tag("task[answer"+i.to_s+"]", nil, { :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") }) %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+      <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
+        <p class="not_found_message" style="display: none;">No suggestions found.</p>
+        <p class="did_you_mean" style="display: none;">Did you mean...?</p>
+        <p class="found_message" style="display: none;">Suggestions (doubleclick):</p>
+        <ol style="margin-top:10px; display: none;"></ol>
+      </div>
     </div>
   </div>
-</div>
-<% end %>
+</form>
