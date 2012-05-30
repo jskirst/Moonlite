@@ -91,10 +91,7 @@ function bind_update_task(obj){
   $(obj).unbind();
   $(obj).on('ajax:success',
     function(event, data){
-      console.log(data);
-      console.log(event);
       if(data.errors){
-        console.log(data.errors);
         $(this).parents("td.task:first").find(".alert-message").text(data.errors[0]).show();
       } else {
         var $row = $(obj).parents("td.task:first");
