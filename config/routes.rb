@@ -7,7 +7,7 @@ SampleApp::Application.routes.draw do
 		member do
 			get :accept
 			put :join
-			get :adminize
+			get :set_type
 			get :request_reset
 			put :reset_password
 			get :edit_role

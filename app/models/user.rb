@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_protected :admin
   attr_accessor :password, :password_confirmation
   attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, 
-    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :provider, :uid
+    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :is_test_user, :provider, :uid
 
   belongs_to :company
   belongs_to :user_role
@@ -61,6 +61,7 @@ class User < ActiveRecord::Base
   before_save :encrypt_password
   before_save :set_tokens
   before_save :check_image_url
+  before_save :check_user_type
   
   def self.create_anonymous_user(company)
     p = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
@@ -225,6 +226,14 @@ class User < ActiveRecord::Base
     def check_image_url
       unless self.image_url.nil?
         self.image_url = nil if self.image_url.length < 9
+      end
+    end
+    
+    def check_user_type
+      if self.email.include?("@demo.moonlite.com")
+        self.is_fake_user = true
+      elsif self.name.include?("test_user")
+        self.is_test_user = true
       end
     end
   

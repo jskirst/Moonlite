@@ -84,7 +84,7 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.paginate(:page => params[:page], :conditions => ["users.is_fake_user = ?", false], :order => "created_at DESC")
+    @users = User.paginate(:page => params[:page], :conditions => ["users.is_fake_user = ? and users.is_test_user = ?", false, false], :order => "created_at DESC")
     @title = "All users"
   end
   
@@ -170,15 +170,19 @@ class UsersController < ApplicationController
     end
   end
   
-  def adminize
+  def set_type
     @user = User.find(params[:id])
-    unless @user.admin == true
-      @user.toggle(:admin)
-      if @user.save
-        flash[:success] = "User is now an admin."
-      else
-        flash[:error] = "User could not be made an admin."
-      end
+    if params[:type] == "fake"
+      @user.is_fake_user = true
+    elsif params[:type] == "test"
+      @user.is_test_user = true
+    elsif params[:type] == "admin"
+      @user.admin = true
+    end
+    if @user.save
+      flash[:success] = "User is now of type : #{params[:type]}"
+    else
+      flash[:error] = "User could not be made type: #{params[:type]}"
     end
     redirect_to users_path
   end

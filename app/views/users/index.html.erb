@@ -12,6 +12,7 @@
       <p>Email: <%= user.email %></p>
       <p>Motto: <%= user.catch_phrase %></p>
       <p>User Role: <%= user.user_role.name %></p>
+      <p><strong><%= user.admin? ? "Admin" : "" %></strong></p>
     </td>
     <td>
     <td style="width:250px;">
@@ -40,7 +41,9 @@
     <td>
       <%= link_to "Delete", user, :method => :delete, :confirm => "You sure?", :title => "Delete #{user.name}", :class => "btn secondary" %>
       <% unless user.admin? %>
-        <%= link_to "Adminize", adminize_user_path(user), :confirm => "Are you sure you want to make this user an admin?", :class => "btn secondary" %>
+        <%= link_to "Set Admin", set_type_user_path(user, :type => "admin"), :confirm => "Are you sure you want to make this user a admin?", :class => "btn secondary" %>
+        <%= link_to "Set Fake", set_type_user_path(user, :type => "fake"), :confirm => "Are you sure you want to make this user a fake user?", :class => "btn secondary" %>
+        <%= link_to "Set Test", set_type_user_path(user, :type => "test"), :confirm => "Are you sure you want to make this user a test user?", :class => "btn secondary" %>
       <% end %>
     </td>
   </tr>
