@@ -49,7 +49,11 @@ class CompaniesController < ApplicationController
   end
   
   def join
-    redirect_to root_path if signed_in?
+    if signed_in?
+      flash[:info] = "You cannot access this link becaue you are already signed in. Please signout if you would like to create another account."
+      redirect_to root_path
+      return
+    end
     @user_role = UserRole.where("signup_token = ?", params[:id]).first
     @company = @user_role.company
     if @company.nil?
