@@ -11,6 +11,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 $(function(){
   $("#image_url_input").change(function(){
     var link = $(this).val();
+    $(".image_url_preview").attr("src", link);
     $("#image_url_preview").attr("src", link);
   });
 });

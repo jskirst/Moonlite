@@ -91,14 +91,21 @@ function bind_update_task(obj){
   $(obj).unbind();
   $(obj).on('ajax:success',
     function(event, data){
-      var $row = $(obj).parents("td.task:first");
-      $row.html(data);
-      $row.find('.delete_button').each(function(){
-        bind_delete_task(this);
-      });
-      $row.find('.edit_button').each(function(){
-        bind_edit_task(this);
-      });
+      console.log(data);
+      console.log(event);
+      if(data.errors){
+        console.log(data.errors);
+        $(this).parents("td.task:first").find(".alert-message").text(data.errors[0]).show();
+      } else {
+        var $row = $(obj).parents("td.task:first");
+        $row.html(data);
+        $row.find('.delete_button').each(function(){
+          bind_delete_task(this);
+        });
+        $row.find('.edit_button').each(function(){
+          bind_edit_task(this);
+        });
+      }
     }
   );
 }
@@ -114,13 +121,14 @@ function bind_answer_suggestion(obj){
 
 function add_new_task(event, data) {
   unblock_form_submit($(".new_task_form"));
-  if(data.errors){
+  try {
+    data = $.parseJSON(data);
     $(this).find(".new_task").find(".message_container").text(data.errors[0]).removeClass("success").addClass("error").show();
-  } else {
-    $(this).find(".new_task").find(".message_container").text("Question added successfully.").removeClass("error").addClass("success").show();
+  } catch(e){
+  $(this).find(".new_task").find(".message_container").text("Question added successfully.").removeClass("error").addClass("success").show();
     clear_form();
     $task_list = $(this).siblings(".task_list");
-    var $new_question = $("<tr class='task'><td>"+data+"</td></tr>").prependTo($task_list);
+    var $new_question = $("<tr><td class='task'>"+data+"</td></tr>").prependTo($task_list);
     $task_list.find(".task:first").show();
     $(".alert-message").fadeOut(5000);
     var question_count = $("#question_counter").text(parseInt($("#question_counter").text())+1);
