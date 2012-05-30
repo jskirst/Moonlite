@@ -1,5 +1,6 @@
 /* Section Editing */
 function close_section_container(btn){
+  console.log("close_section_container");
   $(btn).parents('td:first').find('.section_questions_container').hide();
   $(btn).parents('td:first').find('.section_content_container').hide();
   $(btn).parents('td:first').find("hr").hide();
@@ -9,6 +10,8 @@ function close_section_container(btn){
 }
 
 function bind_edit_section_questions(){
+  console.log("bind_edit_section_questions");
+  $(this).unbind();
   $(this).on('ajax:success', function(event, data){
     var $row = $(this).parents("td.section:first");
     $row.find(".section_questions_container").hide().html(data).slideDown();
@@ -17,6 +20,7 @@ function bind_edit_section_questions(){
 }
 
 function display_section_questions($row){
+  console.log("display_section_questions");
   $row.find(".edit_section_overview_pill").parent().removeClass("active");
   $row.find(".edit_section_content_pill").parent().removeClass("active");
   $row.find(".edit_section_questions_pill").parent().addClass("active");
@@ -27,6 +31,8 @@ function display_section_questions($row){
 }
 
 function bind_edit_section_content(){
+  console.log("bind_edit_section_content");
+  $(this).unbind();
   $(this).on('ajax:success', function(event, data){
     var $row = $(this).parents("td.section:first");
     $row.find(".section_content_container").hide().html(data);
@@ -35,6 +41,7 @@ function bind_edit_section_content(){
 }
 
 function display_section_content($row){
+  console.log("display_section_content");
   $row.find(".edit_section_overview_pill").parent().removeClass("active");
   $row.find(".edit_section_content_pill").parent().addClass("active");
   $row.find(".edit_section_questions_pill").parent().removeClass("active");
@@ -47,6 +54,7 @@ function display_section_content($row){
 
 /* Task Editing */
 function clear_form(){
+  console.log("clear_form");
   $("#task_question").val("");
   $("#task_answer1").val("");
   $("#task_answer2").val("");
@@ -56,6 +64,8 @@ function clear_form(){
 }
 
 function bind_delete_task(obj){
+  console.log("bind_delete_task");
+  $(obj).unbind();
   $(obj).on('ajax:success',
     function(event, data){
       if(data.errors){
@@ -71,6 +81,8 @@ function bind_delete_task(obj){
 }
 
 function bind_edit_task(obj){
+  console.log("bind_edit_task");
+  $(obj).unbind();
   $(obj).on('ajax:success',
     function(event, data){
       var $row = $(this).parents("td.task:first");
@@ -84,6 +96,8 @@ function bind_edit_task(obj){
 }
 
 function bind_update_task(obj){
+  console.log("bind_update_task");
+  $(obj).unbind();
   $(obj).on('ajax:success',
     function(event, data){
       var $row = $(obj).parents("td.task:first");
@@ -99,6 +113,7 @@ function bind_update_task(obj){
 }
 
 function bind_answer_suggestion(obj){
+  console.log("bind_answer_suggestion");
   var $answer = $(obj);
   var $suggestions = $answer.parents(".row:first").children(".suggestions:first");
   get_suggestions($answer, $suggestions);
@@ -108,6 +123,7 @@ function bind_answer_suggestion(obj){
 }
 
 function add_new_task(event, data) {
+  console.log("add_new_task");
   unblock_form_submit($(".new_task_form"));
   if(data.errors){
     $(this).find(".new_task").find(".message_container").text(data.errors[0]).removeClass("success").addClass("error").show();
@@ -135,6 +151,7 @@ function add_new_task(event, data) {
 }
 
 $(function(){
+  console.log("$(function(){");
   $('.edit_section_questions_pill').each(bind_edit_section_questions);
   $('.edit_section_content_pill').each(bind_edit_section_content);
   $(".edit_path_settings_button, .editable").each(function(){

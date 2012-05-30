@@ -26,13 +26,14 @@ $(function(){
   );
 });
 </script>
-<%= render "tasks/new_task_form", { :task => task, :display => display_new_task_form, :section => section } %>
+<%= render "tasks/new_task_form", { :new_task => new_task, :display => display_new_task_form, :section => section } %>
 
 <table class="task_list">
-<% tasks.each do |task| %>
+<% tasks.each do |t| %>
+  <% next if t.id.nil? %>
   <tr>
     <td class="task">
-      <%= render "tasks/task", { :task => task } %>
+      <%= render "tasks/task", { :task => t } %>
     </td>
   </tr>
 <% end %>

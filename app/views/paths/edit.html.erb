@@ -73,7 +73,7 @@
             </div>
           </div>
           <div class="section_questions_container row" style="margin: 10px 0px 0px 0px; display:none;">
-            <%= render "sections/edit_tasks", { :section => s, :tasks => s.tasks, :display_new_task_form => true, :task => s.tasks.new } %>
+            <%= render "sections/edit_tasks", { :section => s, :tasks => s.tasks, :display_new_task_form => true, :new_task => s.tasks.new } %>
           </div>
           <div class="section_content_container row" style="margin: 10px 0px 0px 0px; display:none;">
             <%= render "sections/edit_content", { :section => s, :info_resources => s.info_resources} %>
