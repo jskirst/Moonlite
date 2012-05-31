@@ -52,6 +52,6 @@ SampleApp::Application.configure do
 	config.action_mailer.delivery_method = :smtp
 	ActionMailer::Base.delivery_method = :smtp
   
-  Vanity.playground.establish_connection :production
+  Vanity.playground.establish_connection :staging
   Vanity.playground.collecting = true
 end

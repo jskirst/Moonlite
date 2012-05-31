@@ -6,3 +6,13 @@ development:
   username: postgres
   password: disrupt11
   port: 5432
+
+staging:
+  adapter: active_record
+  active_record_adapter: postgresql
+  database: db/production.postgresql
+  
+production:
+  adapter: active_record
+  active_record_adapter: postgresql
+  database: db/staging.postgresql
