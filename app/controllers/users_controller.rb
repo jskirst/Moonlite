@@ -140,7 +140,6 @@ class UsersController < ApplicationController
       respond_to do |format|
         format.html do
           if request.xhr?
-            track! :signups
             render :json => {:status => "success"}
           elsif params[:user][:path_id]
             flash[:success] = "Profile successfully updated."

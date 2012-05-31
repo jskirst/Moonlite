@@ -10,9 +10,10 @@ development:
 production:
   adapter: active_record
   active_record_adapter: postgresql
-  
-  <% username, password, host, database = ENV['DATABASE_URL'].scan(%r{//(.*):(.*)@(.*)/(.*)}).first %>
-  host:     <%= host %>
-  username: <%= username %>
-  password: <%= password %>
-  database: <%= database %>
+  <% unless ENV['DATABASE_URL'].nil? %>
+    <% username, password, host, database = ENV['DATABASE_URL'].scan(%r{//(.*):(.*)@(.*)/(.*)}).first %>
+    host:     <%= host %>
+    username: <%= username %>
+    password: <%= password %>
+    database: <%= database %>
+  <% end %>
