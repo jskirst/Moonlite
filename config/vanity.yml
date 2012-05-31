@@ -1,0 +1,8 @@
+development:
+  adapter: active_record
+  active_record_adapter: postgresql
+  host: localhost
+  database: db/development
+  username: postgres
+  password: disrupt11
+  port: 5432

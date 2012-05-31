@@ -115,6 +115,9 @@ GEM
     rake (0.9.2.2)
     rdoc (3.12)
       json (~> 1.4)
+    redis (2.2.2)
+    redis-namespace (1.0.3)
+      redis (< 3.0.0)
     rspec (2.10.0)
       rspec-core (~> 2.10.0)
       rspec-expectations (~> 2.10.0)
@@ -144,6 +147,9 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)
     uuidtools (2.1.2)
+    vanity (1.8.0)
+      redis (~> 2.0)
+      redis-namespace (~> 1.0.0)
     webrat (0.7.3)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
@@ -174,6 +180,7 @@ DEPENDENCIES
   rspec-rails
   simplecov
   spork
+  vanity
   webrat
   will_paginate
   zip

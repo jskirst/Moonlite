@@ -15,6 +15,7 @@ gem 'aws-sdk'
 gem 'pg', '>= 0.13.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'vanity'
 
 group :development do
 	gem 'rspec-rails'

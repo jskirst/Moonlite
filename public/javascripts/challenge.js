@@ -33,14 +33,9 @@ function show_start_modal(){
     backdrop: 'static',
     show: true
   });
-  var count = 15;
+  var count = parseInt($("#starting_timer").text());
   start_modal_countdown = setInterval(function(){
-    if(count >= 10){
-      $("#starting_timer").html("<strong>00:"+count+"</strong>");
-    } else {
-      $("#starting_timer").html("<strong>00:0"+count+"</strong>");
-    }
-    
+    $("#starting_timer").html("<strong>"+count+"</strong>");
     if(count==0){
       $('#start_modal').modal('hide');
       clearInterval(start_modal_countdown);
@@ -58,10 +53,10 @@ function bind_change_name_form(){
     } else if ($("#user_name").val().length >= 50){
       $(".form_errors").text("Username must be less than 50 characters.");
       return false;
-    } else if ($("#user_catch_phrase").val() == ""){
+    } else if ($("#user_catch_phrase").exists() && $("#user_catch_phrase").val() == ""){
       $(".form_errors").text("Motto must be at least 3 characters.");
       return false;
-    } else if ($("#user_catch_phrase").val().length >= 140 ){
+    } else if ($("#user_catch_phrase").exists() && $("#user_catch_phrase").val().length >= 140 ){
       $(".form_errors").text("Motto must be less than 140 characters.");
       return false;
     } else {

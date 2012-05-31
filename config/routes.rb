@@ -103,6 +103,8 @@ SampleApp::Application.routes.draw do
 	match '/password_reset', :to => 'users#request_send'
 	match '/send_reset', :to => 'users#send_reset'
   
+  match '/vanity(/:action(/:id(.:format)))', :controller=>:vanity
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
