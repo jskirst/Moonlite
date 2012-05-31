@@ -63,13 +63,19 @@ class User < ActiveRecord::Base
   before_save :check_image_url
   before_save :check_user_type
   
-  def self.create_anonymous_user(company)
+  def self.create_anonymous_user(company, options = nil)
     p = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
     e = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
-    e = "anonymous"+e+"@moonlite.com"
+    email = "anonymous"+e+"@moonlite.com"
+    name = "anonymous"
+    unless options.nil?
+      name = options["name"] || name
+      email = options["email"] || email
+    end
+    
     user_details = {
-      :name => "anonymous",
-      :email => e,
+      :name => name,
+      :email => email,
       :password => p,
       :password_confirmation => p,
       :company_id => company.id

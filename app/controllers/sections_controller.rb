@@ -258,6 +258,9 @@ class SectionsController < ApplicationController
     if params[:task_id] && (params[:answer] || params[:text_answer])
       last_question = create_completed_task
       @last_points = last_question.points_awarded
+      if current_user.completed_tasks.count == 1
+        track! :engagement
+      end
     end
     
     @task = @section.next_task(current_user)

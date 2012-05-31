@@ -217,6 +217,11 @@ class PathsController < ApplicationController
       @user = User.create_anonymous_user(@company)
       sign_in(@user)
       @user.enrollments.create!(:path_id => @path.id)
+      if(ab_test :slow_start)
+        @user.update_attribute(:name, "beginner")
+        redirect_to @path
+        return
+      end
     end
     redirect_to continue_path_path(@path)
   end

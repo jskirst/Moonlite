@@ -6,7 +6,7 @@ class EnrollmentsController < ApplicationController
     @enrollment = current_user.enrollments.build(params[:enrollment])
     if @enrollment.save
       flash[:success] = "Successfully enrolled."
-      redirect_to @enrollment.path
+      redirect_to continue_path_path(@enrollment.path)
     else
       redirect_to root_path
     end
