@@ -7,12 +7,12 @@ development:
   password: disrupt11
   port: 5432
 
-staging:
-  adapter: active_record
-  active_record_adapter: postgresql
-  database: db/production.postgresql
-  
 production:
   adapter: active_record
   active_record_adapter: postgresql
-  database: db/staging.postgresql
+  
+  <% username, password, host, database = ENV['DATABASE_URL'].scan(%r{//(.*):(.*)@(.*)/(.*)}).first %>
+  host:     <%= host %>
+  username: <%= username %>
+  password: <%= password %>
+  database: <%= database %>
