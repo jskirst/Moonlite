@@ -72,9 +72,12 @@ class Leaderboard < ActiveRecord::Base
     path.enrolled_users.each do |u|
       l = u.leaderboards.find_by_path_id(path.id)
       l.destroy unless l.nil?
-      unless excluded_users.blank?
+     
+     unless excluded_users.blank?
         next if excluded_users.include?(u.email)
       end
+      next if u.is_test_user
+      
       total_path_tasks = 0
       total_path_points = 0
       path.sections.each do |s|
