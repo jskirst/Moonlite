@@ -14,12 +14,12 @@ $(function(){
       return false;
     } else {
       $(".registration-message").show();
-      $('#startmodal').modal('hide');
+      $('#jumpstart_registration_modal').modal('hide');
     }
   });
 });
 </script>
-<div id="startmodal" class="modal hide fade">
+<div id="jumpstart_registration_modal" class="modal hide fade">
   <%= form_for(user, :html => {:id => "change_credentials_form", :style => "margin-bottom:0px;"}) do |f| %>
   <%= f.hidden_field :path_id, :value => @path.id %>
   <div class="modal-header">
@@ -52,7 +52,7 @@ $(function(){
   </div>
   <div class="modal-footer">
   <%= f.submit "Save Score", :class => "btn primary" %>
-  <span class="btn seconday" onclick="$('#startmodal').modal('hide');">Back</span>
+  <span class="btn seconday" onclick="$('#jumpstart_registration_modal').modal('hide');">Back</span>
   </div>
   <% end %>
 </div>

@@ -1,1 +1,27 @@
+<% if @must_register %>
+  <script>
+  $(function(){
+    $('a').attr("href", "#");
+    $('a').click(function(){
+      $('#must_complete_first_modal').modal({
+        keyboard: true,
+        show: true
+      });
+    });
+  });
+  </script>
+  <%= render "sections/modals/must_complete_first" %>
+<% end %>
+
+<% if @jumpstart %>
+  <%= render "sections/modals/jumpstart", { :path => @path, :leaderboards => @leaderboards } %>
+  <%= render "sections/modals/start_modal" %>
+  <script>
+    $(function(){
+      $('#username_modal').modal({ keyboard: true, backdrop: 'static', show: true });
+      bind_change_name_form();
+    });
+  </script>
+<% end %>
+
 <%= render "continue", @locals %>

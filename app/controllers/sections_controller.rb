@@ -308,6 +308,7 @@ class SectionsController < ApplicationController
       @jumpstart = true
       @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
     end
+    @must_register = current_user.must_register?
     
     @locals = { :path => @path, 
       :section => @section, 

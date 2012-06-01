@@ -1,18 +1,5 @@
-<%= render "sections/modals/start_modal" %>
 <% if correct == true %>
   <%= render "sections/modals/correct_modal" %>
-<% end %>
-
-<% if jumpstart %>
-  <%= render "sections/modals/jumpstart", { :path => path, :leaderboards => leaderboards } %>
-  <script>
-    $(function(){
-      $('#username_modal').modal({ keyboard: true, backdrop: 'static', show: true });
-      bind_change_name_form();
-    });
-  </script>
-<% elsif earned_points == 0 && correct.nil? %>
-  <script>$(function(){ show_start_modal(); });</script>
 <% end %>
 
 <%= form_tag({ :controller => :sections, :action => "continue" }, :remote => true, :method => "get", "data-type" => "html", :id => "challenge_form") %>
@@ -54,7 +41,7 @@
 <div class="row">
   <div class="actions" style="margin-top:50px">
     <input type="hidden" id="listless" name="listless" value="true">
-    <%= submit_tag "Submit", :class => "btn primary", :id => "submit_button" %>
+    <%= submit_tag "Next", :class => "btn primary", :id => "submit_button" %>
     <div class="btn secondary" id="help_button" style="margin-left: 15px;">Help</div>
   </div>
 </div>

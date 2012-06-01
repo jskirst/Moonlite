@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120531123823) do
+ActiveRecord::Schema.define(:version => 20120601190152) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -162,7 +162,7 @@ ActiveRecord::Schema.define(:version => 20120531123823) do
     t.boolean  "is_published",               :default => false
     t.boolean  "is_purchaseable",            :default => false
     t.integer  "category_id",                :default => 0
-    t.boolean  "enable_section_display",     :default => true
+    t.boolean  "enable_section_display",     :default => false
     t.integer  "default_timer",              :default => 30
     t.string   "excluded_from_leaderboards"
     t.boolean  "enable_nonlinear_sections",  :default => false
