@@ -104,17 +104,21 @@ class PathsController < ApplicationController
   end
   
   def publish
-    @path.sections.each do |s|
-      s.update_attribute(:is_published, true)
-    end
-    current_user.company.user_roles.each do |ur|
-      if @path.user_roles.find_by_id(ur.id).nil?
-        @path.path_user_roles.create!(:user_role_id => ur.id)
-      end
-    end
     if @path.sections.where(["is_published = ?", true]).count.zero?
       flash[:error] = "You need to publish at least one section before you can make your challenge publicly available."
+    elsif @path.default_pic?
+      flash[:info] = "You need to set a custom picture for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
+    elsif @path.description.blank?
+      flash[:info] = "You need to create a description for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
     else
+      @path.sections.each do |s|
+        s.update_attribute(:is_published, true)
+      end
+      current_user.company.user_roles.each do |ur|
+        if @path.user_roles.find_by_id(ur.id).nil?
+          @path.path_user_roles.create!(:user_role_id => ur.id)
+        end
+      end
       @path.is_published = true
       @path.is_public = true
       if @path.save

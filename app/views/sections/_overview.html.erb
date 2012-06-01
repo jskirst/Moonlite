@@ -6,7 +6,7 @@
         <% if !s.is_published %>
           <p>You have not published this section yet.</p>
           <p><strong>NOTE:</strong> Publishing a section will not make the entire <%= name_for_paths.downcase %> visible.</p>
-          <p><%= link_to "Publish", publish_section_path(s) %></p>
+          <p><%= link_to "Publish", publish_section_path(s), :confirm => "Are you sure you want to publish this section?" %></p>
         <% elsif s.path.enrolled_users.empty? %>
           <p>You do not have any users yet.</p>
         <% else %>
@@ -19,21 +19,21 @@
         <h5>QUESTIONS</h5>
         <% if s.tasks.empty? %>
           <p>You don't have any questions created yet.</p>
-          <p><%= link_to "Create Questions", edit_section_path(s, :m => "tasks"), :remote => true, "data-type" => "html", :class => "edit_section_questions_pill" %></p>
+          <p><a class ="edit_section_questions_pill" onclick="display_section_questions($(this).parents('td.section'));" style="cursor: pointer;">Get Started</a></p>
         <% else %>
           <ol style="margin: 0 0 5px 20px;">
           <% s.tasks.first(3).each do |t| %>
             <li style="padding:5px;"><%= truncate(t.question, :length => 70) %></li>
           <% end %>
           </ol>
-          <p><%= link_to "View all", edit_section_path(s, :m => "tasks"), :remote => true, "data-type" => "html", :class => "edit_section_questions_pill" %></p>
+          <p><a class ="edit_section_questions_pill" onclick="display_section_questions($(this).parents('td.section'));" style="cursor: pointer;">View all</a></p>
         <% end %>
       </td>
       <td style="padding: 0px 10px 10px 15px; border-top:none; min-width: 278px;">
         <h5>CONTENT</h5>
         <% if s.info_resources.empty? && s.instructions.blank? %>
         <p>You do not have any attached content for this section.</p>
-        <p><%= link_to "Add content", edit_section_path(s, :m => "content"), :remote => true, "data-type" => "html", :class => "edit_section_content_pill" %></p>
+        <p><a class ="edit_section_content_pill" onclick="display_section_content($(this).parents('td.section'));" style="cursor: pointer;">Add Content</a></p>
         <% else %>
           <% unless s.instructions.blank? %>
             <%= truncate(s.instructions, :length => 140) %>
@@ -42,7 +42,7 @@
             <p><%= t.obj_file_name %>, <%= t.obj_content_type %></p>
             <% end %>
           <% end %>
-        <p><%= link_to "View all", edit_section_path(s, :m => "content"), :remote => true, "data-type" => "html", :class => "edit_section_content_pill" %></p>
+        <p><a class ="edit_section_content_pill" onclick="display_section_content($(this).parents('td.section'));" style="cursor: pointer;">View all</a></p>
         <% end %>
       </td>
     </tr>

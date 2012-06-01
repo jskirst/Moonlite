@@ -84,6 +84,11 @@ class Path < ActiveRecord::Base
     return sections.where(["position > ? and is_published = ?", section.position, true]).first
   end
   
+  def default_pic?
+    return true if path_pic == "/images/default_path_pic.jpg"
+    return false
+  end
+  
   def path_pic
     if self.image_url != nil
       return self.image_url
