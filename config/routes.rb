@@ -33,6 +33,7 @@ SampleApp::Application.routes.draw do
 		member do
       get :publish
 			get :continue
+      get :finish
 			get :hero
       get :jumpstart
 			put :update_roles

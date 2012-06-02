@@ -165,42 +165,43 @@ class PathsController < ApplicationController
     until @section.nil? || !@section.completed?(current_user)
       @section = @path.next_section(@section)
     end
-    if @section.nil? || @section.is_published == false
-      @must_register = current_user.must_register?
-      @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
-      
-      Leaderboard.reset_for_path_user(@path, current_user)
-      @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first
-      counter = 1
-      previous = nil
-      @leaderboards[1].each do |l|
-        if l.user_id == current_user.id
-          if counter == 1
-            @next_rank_points = 0
-          else
-            @next_rank_points = previous.score - l.score + 1
-          end
-          @user_rank = ActiveSupport::Inflector::ordinalize(counter)
-          break
-        else
-          previous = l
-          counter += 1
-        end
-      end
-      
-      @similar_paths = Path.similar_paths(@path, current_user)
-      @suggested_paths = Path.suggested_paths(current_user, @path.id)
-      if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
-        event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
-        current_user.user_events.create!(:path_id => @path.id, :content => event)
-      end
-      render "completion"
-    else
-      if @section.enable_skip_content || (@section.instructions.blank? && @section.info_resources.empty?)
+    
+    unless @section.nil? || @section.is_published == false
+      if @section.instructions.blank? && @section.info_resources.empty?
         redirect_to continue_section_path(@section)
       else
         redirect_to @section
       end
+    else
+      redirect_to finish_path_path(@path)
+    end
+  end
+  
+  def finish
+    @must_register = current_user.must_register?
+    @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
+    
+    previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
+    track! :path_completion if previous_ranking.nil?
+    
+    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first
+    counter = 1
+    previous = nil
+    @leaderboards[1].each do |l|
+      if l.user_id == current_user.id
+        @next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
+        @user_rank = ActiveSupport::Inflector::ordinalize(counter)
+        break
+      else
+        previous = l
+        counter += 1
+      end
+    end
+    
+    @similar_paths = Path.similar_paths(@path, current_user)
+    if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
+      event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
+      current_user.user_events.create!(:path_id => @path.id, :content => event)
     end
   end
 

@@ -122,6 +122,7 @@ class Leaderboard < ActiveRecord::Base
       total_path_points += total_section_points
     end
     Leaderboard.create!(:user_id => user.id, :path_id => path.id, :completed_tasks => total_path_tasks, :score => total_path_points, :created_at => date)
+    return l
   end
   
   def self.get_user_stats(user, date = Time.now)
