@@ -169,7 +169,7 @@ class PathsController < ApplicationController
       @must_register = current_user.must_register?
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
       
-      Leaderboard.reset_for_path(@path)
+      Leaderboard.reset_for_path_user(@path, current_user)
       @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first
       counter = 1
       previous = nil

@@ -96,6 +96,34 @@ class Leaderboard < ActiveRecord::Base
     end
   end
   
+  def self.reset_for_path_user(path, user)
+    date = Time.now
+    excluded_users = path.excluded_from_leaderboards
+    l = user.leaderboards.find_by_path_id(path.id)
+    l.destroy unless l.nil?
+     
+    unless excluded_users.blank?
+      return false if excluded_users.include?(user.email)
+    end
+    return false if user.is_test_user
+    
+    total_path_tasks = 0
+    total_path_points = 0
+    path.sections.each do |s|
+      total_section_tasks = 0
+      total_section_points = 0
+      tasks = user.completed_tasks.includes(:section).where("sections.id = ? and status_id = 1", s.id)
+      total_section_tasks = tasks.size
+      tasks.each {|t| total_section_points += t.points_awarded.to_i}
+      l = user.leaderboards.find_by_section_id(s.id)
+      l.destroy unless l.nil?
+      Leaderboard.create!(:user_id => user.id, :section_id => s.id, :completed_tasks => total_section_tasks, :score => total_section_points, :created_at => date)
+      total_path_tasks += total_section_tasks
+      total_path_points += total_section_points
+    end
+    Leaderboard.create!(:user_id => user.id, :path_id => path.id, :completed_tasks => total_path_tasks, :score => total_path_points, :created_at => date)
+  end
+  
   def self.get_user_stats(user, date = Time.now)
     excluded_emails = get_all_excluded_users(user.company)
     return nil if excluded_emails.include?(user.email)
