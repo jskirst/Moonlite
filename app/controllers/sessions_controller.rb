@@ -6,10 +6,19 @@ class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     if auth
-      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"]) || User.create_with_omniauth(auth)
+      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"])
+      unless user.nil?
+        track! :login_facebook
+      else
+        user = User.create_with_omniauth(auth)
+        track! :registration_facebook
+      end
     else
       credentials = params[:session]
       user = User.authenticate(credentials[:email],credentials[:password])
+      unless user.nil? || user.is_test_user || user.admin?
+        track! :login_conventional
+      end
     end
     
     if user.nil?
@@ -35,6 +44,7 @@ class SessionsController < ApplicationController
     sign_out
     if @is_consumer
       redirect_to root_path(:m => "c")
+      track! :logout
     else
       redirect_to root_path
     end

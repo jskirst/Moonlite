@@ -145,11 +145,13 @@ class UsersController < ApplicationController
             flash[:success] = "Profile successfully updated."
             @user.reload
             sign_in(@user)
+            track! :registration_email
             redirect_to continue_path_path(current_user.company.paths.find(params[:user][:path_id]))
           else
             flash[:success] = "Profile successfully updated."
             @user.reload
             sign_in(@user)
+            track! :profile_update
             redirect_to @user
           end
         end
