@@ -5,35 +5,46 @@ class SessionsController < ApplicationController
   
   def create
     auth = request.env["omniauth.auth"]
-    if auth
+    back_or_root = request.env['HTTP_REFERER'] || root_path
+    
+    if current_user
+      if auth
+        current_user.merge_with_omniauth(auth)
+        track! :registration_facebook
+      else
+        flash[:info] = "You are already signed in."
+      end
+      redirect_to back_or_root
+    elsif auth    
       user = User.find_by_provider_and_uid_and_company_id(auth["provider"], auth["uid"], 1)
-      unless user.nil?
+      if user
+        sign_in user
         track! :login_facebook
+        redirect_to root_path
       else
         if request.env['HTTP_REFERER'] && request.env['HTTP_REFERER'].include?("signin")
-          flash[:info] = "You must already have an account to login with Facebook."
+          flash.now[:info] = "You must already have an account to login with Facebook."
           render 'new'
-          return
         else
           user = User.create_with_omniauth(auth)
           track! :registration_facebook
+          redirect_to back_or_root
         end
       end
     else
       credentials = params[:session]
       user = User.authenticate(credentials[:email],credentials[:password])
-      unless user.nil? || user.is_test_user || user.admin?
-        track! :login_conventional
+      if user
+        sign_in user
+        redirect_back_or_to root_path
+        unless user.is_test_user || user.admin?
+          track! :login_conventional
+        end
+      else
+        @title = "Sign in"
+        flash.now[:error] = "Invalid email/password combination."
+        render 'new'
       end
-    end
-    
-    if user.nil?
-      @title = "Sign in"
-      flash.now[:error] = "Invalid email/password combination."
-      render 'new'
-    else
-      sign_in user
-      redirect_back_or_to root_path
     end
   end
   

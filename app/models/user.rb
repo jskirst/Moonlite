@@ -19,6 +19,15 @@ class User < ActiveRecord::Base
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
+  def merge_with_omniauth(auth)
+    self.provider = auth["provider"]
+    self.uid = auth["uid"]
+    self.name = auth["info"]["name"]
+    self.email = auth["info"]["email"]
+    self.image_url = auth["info"]["image"]
+    raise "User Auth save failed."+user.errors.full_messages.join(".").to_s unless self.save
+  end
+  
   def self.create_with_omniauth(auth)
     raise "Auth is nil" if auth["provider"].nil? || auth["uid"].nil?
     user = User.find_by_email(auth["info"]["email"])
