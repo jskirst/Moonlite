@@ -6,12 +6,18 @@ class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     if auth
-      user = User.find_by_provider_and_uid(auth["provider"], auth["uid"])
+      user = User.find_by_provider_and_uid_and_company_id(auth["provider"], auth["uid"], 1)
       unless user.nil?
         track! :login_facebook
       else
-        user = User.create_with_omniauth(auth)
-        track! :registration_facebook
+        if request.env['HTTP_REFERER'] && request.env['HTTP_REFERER'].include?("signin")
+          flash[:info] = "You must already have an account to login with Facebook."
+          render 'new'
+          return
+        else
+          user = User.create_with_omniauth(auth)
+          track! :registration_facebook
+        end
       end
     else
       credentials = params[:session]
