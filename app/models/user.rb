@@ -236,7 +236,7 @@ class User < ActiveRecord::Base
       return enrolled_paths.count
     elsif stat == "completed_paths"
       counter = 0
-      paths.each do |p|
+      enrolled_paths.each do |p|
         counter += 1 if p.completed?(self)
       end
       return counter
