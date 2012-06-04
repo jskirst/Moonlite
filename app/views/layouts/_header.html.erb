@@ -44,8 +44,10 @@
             <a href="#" class="dropdown-toggle">Admin</a>
             <ul class="dropdown-menu">
               <li><%= link_to "Companies", companies_path %></li>
-              <li><%= link_to "Users", users_path %></li>
-              <li><%= link_to "Transactions", user_transactions_path %></li>
+              <li><%= link_to "Users", users_path(:period => "7") %></li>
+              <li><%= link_to "Usage (7 Days)", users_path(:format => "csv", :period => "7") %></li>
+              <li><%= link_to "Usage (30 Days)", users_path(:format => "csv", :period => "30") %></li>
+              <li><%= link_to "Usage (All Time)", users_path(:format => "csv") %></li>
             </ul>
           </li>
         </ul>

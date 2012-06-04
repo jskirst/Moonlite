@@ -84,7 +84,13 @@ class UsersController < ApplicationController
   end
   
   def index
-    @users = User.paginate(:page => params[:page], :conditions => ["users.is_fake_user = ? and users.is_test_user = ?", false, false], :order => "created_at DESC")
+    if params[:period]
+      period = DateTime.now - params[:period].to_i.days
+      @users = User.where("users.is_fake_user = ? and users.is_test_user = ? and created_at > ?", false, false, period).all(:order => "created_at DESC")
+    else
+      @users = User.where("users.is_fake_user = ? and users.is_test_user = ?", false, false).all(:order => "created_at DESC")
+    end
+   
     @title = "All users"
     respond_to do |format|
       format.html

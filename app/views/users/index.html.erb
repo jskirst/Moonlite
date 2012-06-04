@@ -1,8 +1,6 @@
 <h1>All Users</h1>
 <div style="float:right;text-weight:bold; margin:5px; font-size:18px;">Count: <%= @users.size %></div>
 
-<%= will_paginate %>
-
 <table class='users'>
 <% @users.each do |user| %>
   <tr>
@@ -49,5 +47,3 @@
   </tr>
 <% end %>
 </table>
-
-<%= will_paginate %>
