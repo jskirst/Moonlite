@@ -168,13 +168,8 @@ class PathsController < ApplicationController
       sign_in(@user)
       @user.enrollments.create!(:path_id => @path.id)
       if(ab_test :slow_start)
-        ab_test :slow_start_completion
-        ab_test :slow_start_registration
         redirect_to @path
         return
-      else
-        ab_test :jump_start_completion
-        ab_test :jump_start_registration
       end
     end
     redirect_to continue_path_path(@path)
