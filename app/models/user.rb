@@ -237,7 +237,7 @@ class User < ActiveRecord::Base
     elsif stat == "completed_paths"
       counter = 0
       paths.each do |p|
-        counter += 0 if p.completed?(self)
+        counter += 1 if p.completed?(self)
       end
       return counter
     elsif stat == "incorrect_answers"
