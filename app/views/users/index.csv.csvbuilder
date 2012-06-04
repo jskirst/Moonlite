@@ -1,0 +1,4 @@
+csv << ["Name", "Email", "Motto", "# Enrolled Paths", "# Completed Paths", "# Correct Answers", "# Incorrect Answers", "Created At Date", "Last Action Date"]
+@users.each do |u|
+  csv << [u.name, u.email, u.catch_phrase.to_s, u.usage("enrolled_paths"),u.usage("completed_paths"), u.usage("correct_answers"), u.usage("incorrect_answers"),u.created_at, u.usage("last_action")]
+end
