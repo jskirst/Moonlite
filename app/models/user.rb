@@ -231,12 +231,22 @@ class User < ActiveRecord::Base
     return true unless my_completed_tasks.where(["section_id = ?", section.id]).empty?
   end
   
-  def number_of_completed_paths
-    counter = 0
-    paths.each do |p|
-      counter += 0 if p.completed?(self)
+  def usage(stat)
+    if stat == "enrolled_paths"
+      return enrolled_paths.count
+    elsif stat == "completed_paths"
+      counter = 0
+      paths.each do |p|
+        counter += 0 if p.completed?(self)
+      end
+      return counter
+    elsif stat == "incorrect_answers"
+      return completed_tasks.where("status_id = ?", 0).count
+    elsif stat == "correct_answers"
+      return completed_tasks.where("status_id = ?", 1).count
+    elsif stat == "last_action"
+      return completed_tasks.last.created_at unless completed_tasks.last.nil?
     end
-    return counter
   end
   
   private  
