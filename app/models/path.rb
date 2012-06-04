@@ -103,7 +103,11 @@ class Path < ActiveRecord::Base
   
   def total_remaining_tasks(user)
     remaining_tasks = 0
-    sections.each {|s| remaining_tasks += s.remaining_tasks(user) }
+    if self.enable_retakes
+      remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 1)", user.id]).count
+    else
+      remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
+    end
     return remaining_tasks
   end
   
