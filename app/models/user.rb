@@ -44,6 +44,7 @@ class User < ActiveRecord::Base
     user.name = auth["info"]["name"]
     user.email = auth["info"]["email"]
     user.image_url = auth["info"]["image"]
+    user.is_anonymous = false
     raise "User Auth save failed."+user.errors.full_messages.join(".").to_s if !user.save
     return user
   end

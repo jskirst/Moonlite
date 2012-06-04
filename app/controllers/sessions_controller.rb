@@ -11,10 +11,11 @@ class SessionsController < ApplicationController
       if auth
         current_user.merge_with_omniauth(auth)
         track! :registration_facebook
+        redirect_to back_or_root+"?reg=true&"
       else
         flash[:info] = "You are already signed in."
+        redirect_to back_or_root
       end
-      redirect_to back_or_root
     elsif auth    
       user = User.find_by_provider_and_uid_and_company_id(auth["provider"], auth["uid"], 1)
       if user

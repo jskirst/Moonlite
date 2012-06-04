@@ -139,6 +139,15 @@ class PathsController < ApplicationController
 # Begin Path Journey
 
   def show
+    if params[:reg] == true
+      redirect_to continue_path_path(@path)
+      return
+    elsif current_user.must_register?
+      if ab_test :slow_start_immediate_registration
+        @immediate_registration = true
+      end
+    end
+    
     @title = @path.name
     #@achievements = @path.achievements.all(:limit => 20)
     #@enrolled_users = @path.enrolled_users.all(:limit => 20)
@@ -167,7 +176,7 @@ class PathsController < ApplicationController
       @user = User.create_anonymous_user(@company)
       sign_in(@user)
       @user.enrollments.create!(:path_id => @path.id)
-      if(ab_test :slow_start)
+      if(ab_test :slow_start_v2)
         redirect_to @path
         return
       end

@@ -1,8 +1,18 @@
+<% if @immediate_registration %>
+  <%= render "users/immediate_registration", { :path => @path } %>
+  <script>
+    $(function(){
+      $('#username_modal').modal({ keyboard: true, backdrop: 'static', show: true });
+      bind_change_name_form();
+    });
+  </script>
+<% end %>
 <section class="path">
   <div style="min-height: 120px;">
     <div style="float:left; margin: 0px 15px 0px 0px;">
       <%= image_tag(@path.path_pic, :size=>"100x100") %>
     </div>
+    <% unless @immediate_registration %>
     <div>
       <% unless @enrolled %>
         <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
@@ -13,6 +23,7 @@
         <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
       <% end %>
     </div>
+    <% end %>
     <div>
       <h1 style="margin-bottom: 0px;"><%= @path.name %></h1>
     </div>

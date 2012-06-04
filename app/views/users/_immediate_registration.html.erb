@@ -1,0 +1,14 @@
+<div id="username_modal" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>Welcome to <span style="color:green"><%= company_logo %>!</span></h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size: 16px; padding:0 7px 5px 10px;"><strong style="color:green"><%= company_logo %></strong> lets you prove your knowledge for the stuff you like. Show off your smarts and connect with other fans.</p>
+    <p style="font-size: 16px; padding:0 7px 5px 10px; font-weight:bold;">Are you up to the Challenge? Make a name for yourself and see where you rank.</p>
+    <p class="form_errors" style="color:red; padding:0 7px 0px 10px;"></p>
+    <div style="margin:20px 0 20px 130px;">
+      <%= link_to image_tag("/images/facebook_login_button.png", :size => "244x50"), "/auth/facebook", :id => "facebook_signin" %>
+    </div>
+  </div>
+</div>

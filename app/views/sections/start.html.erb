@@ -1,8 +1,8 @@
 <% if @must_register %>
   <script>
   $(function(){
-    $('a').attr("href", "#");
-    $('a').click(function(){
+    $('a[id!="facebook_signin"]').attr("href", "#");
+    $('a[id!="facebook_signin"]').click(function(){
       $('#must_complete_first_modal').modal({
         keyboard: true,
         show: true
@@ -13,9 +13,8 @@
   <%= render "sections/modals/must_complete_first" %>
 <% end %>
 
-<% if @jumpstart %>
-  <%= render "sections/modals/jumpstart", { :path => @path, :leaderboards => @leaderboards } %>
-  <%= render "sections/modals/start_modal" %>
+<% if @immediate_registration %>
+  <%= render "users/immediate_registration", { :path => @path } %>
   <script>
     $(function(){
       $('#username_modal').modal({ keyboard: true, backdrop: 'static', show: true });
