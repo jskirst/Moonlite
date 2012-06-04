@@ -32,10 +32,9 @@ SampleApp::Application.routes.draw do
   resources :paths do
 		member do
       get :publish
+      get :jumpstart
 			get :continue
       get :finish
-			get :hero
-      get :jumpstart
 			put :update_roles
 		end
 	end

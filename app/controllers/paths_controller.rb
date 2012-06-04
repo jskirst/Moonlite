@@ -160,6 +160,26 @@ class PathsController < ApplicationController
     end
   end
   
+  def jumpstart
+    @company = Company.find(1)
+    @path = @company.paths.find(params[:id])
+    unless signed_in?
+      @user = User.create_anonymous_user(@company)
+      sign_in(@user)
+      @user.enrollments.create!(:path_id => @path.id)
+      if(ab_test :slow_start)
+        ab_test :slow_start_completion
+        ab_test :slow_start_registration
+        redirect_to @path
+        return
+      else
+        ab_test :jump_start_completion
+        ab_test :jump_start_registration
+      end
+    end
+    redirect_to continue_path_path(@path)
+  end
+  
   def continue
     @section = current_user.most_recent_section_for_path(@path)
     until @section.nil? || !@section.completed?(current_user)
@@ -203,32 +223,6 @@ class PathsController < ApplicationController
       event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
       current_user.user_events.create!(:path_id => @path.id, :content => event)
     end
-  end
-
-  def hero
-    @title = @path.name
-    @user_hero = User.find_by_id(params[:hero])
-    @hero_score = @user_hero.enrollments.where("path_id = ?", @path.id).first.total_points
-    @other_completed_paths = @user_hero.enrollments.includes(:path).where("paths.id != ?", @path.id).all
-    @info_resources = @path.info_resources(:limit => 5)
-    @achievements = @path.achievements.all(:limit => 5)
-    @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
-  end
-  
-  def jumpstart
-    @company = Company.find(1)
-    @path = @company.paths.find(params[:id])
-    unless signed_in?
-      @user = User.create_anonymous_user(@company)
-      sign_in(@user)
-      @user.enrollments.create!(:path_id => @path.id)
-      if(ab_test :slow_start)
-        @user.update_attribute(:name, "beginner")
-        redirect_to @path
-        return
-      end
-    end
-    redirect_to continue_path_path(@path)
   end
 
   private

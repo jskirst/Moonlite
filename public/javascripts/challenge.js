@@ -47,23 +47,27 @@ function show_start_modal(){
 
 function bind_change_name_form(){
   $('#change_name_form').submit(function(){
-    if ($("#user_name").val() == ""){
+    var name = $("#user_name").val().replace(" ", "");
+    var catch_phrase = false;
+    if($("#user_catch_phrase").length > 0){
+      catch_phrase = $("#user_catch_phrase").val().replace(" ", "");
+    }
+    
+    if (name.length < 3){
       $(".form_errors").text("Username must be at least 3 characters.");
-      return false;
-    } else if ($("#user_name").val().length >= 50){
+    } else if (name.length >= 50){
       $(".form_errors").text("Username must be less than 50 characters.");
-      return false;
-    } else if ($("#user_catch_phrase").exists() && $("#user_catch_phrase").val() == ""){
+    } else if (catch_phrase != false && catch_phrase.length < 3){
       $(".form_errors").text("Motto must be at least 3 characters.");
-      return false;
-    } else if ($("#user_catch_phrase").exists() && $("#user_catch_phrase").val().length >= 140 ){
+    } else if (catch_phrase != false && catch_phrase.length >= 140){
       $(".form_errors").text("Motto must be less than 140 characters.");
-      return false;
     } else {
       $("#user_name_in_header").text($("#user_name").val());
       $('#username_modal').modal('hide');
       show_start_modal();
+      return;
     }
+    return false;
   });
 }
 

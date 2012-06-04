@@ -1,0 +1,3 @@
+@users.each do |u|
+  csv << [u.name, u.tasks.count]
+end

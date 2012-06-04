@@ -16,6 +16,7 @@ gem 'pg', '>= 0.13.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'vanity'
+gem 'csv_builder'
 
 group :development do
 	gem 'rspec-rails'

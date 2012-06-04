@@ -31,7 +31,9 @@
               <% end %>
             </li>
             <% end %>
+          <% unless current_user.must_register? %>
           <li><%= link_to "Sign out", signout_path, :method => :delete, :id => "signout_link" %></li>
+          <% end %>
           <% else %>
           <li ><%= link_to "Sign in", signin_path %></li>
           <% end %>

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :authenticate, :except => [:accept, :join, :request_send, :send_reset, :request_reset, :reset_password, :show]
   before_filter :company_admin_or_admin_only, :only => [:new, :create, :destroy]
   before_filter :user_only,  :only => [:edit, :update]
-  before_filter :admin_only, :only => [:adminize]
+  before_filter :admin_only, :only => [:adminize, :index]
   
   def new
     @company = Company.find(params[:company_id])
@@ -86,6 +86,10 @@ class UsersController < ApplicationController
   def index
     @users = User.paginate(:page => params[:page], :conditions => ["users.is_fake_user = ? and users.is_test_user = ?", false, false], :order => "created_at DESC")
     @title = "All users"
+    respond_to do |format|
+      format.html
+      format.csv
+    end
   end
   
   def edit
@@ -130,7 +134,10 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    @user.name = params[:user][:name] if params[:user][:name] 
+    if params[:user][:name]
+      @user.is_anonymous = false
+      @user.name = params[:user][:name]  
+    end
     @user.email = params[:user][:email] if params[:user][:email] 
     @user.image_url = params[:user][:image_url] if params[:user][:image_url] 
     @user.password = params[:user][:password] if params[:user][:password] 

@@ -304,7 +304,7 @@ class SectionsController < ApplicationController
     @info_resource = @task.info_resource
     @title = @section.name
     @correct = (last_question.status_id == 1) if last_question
-    if current_user.still_anonymous?
+    if current_user.is_anonymous && !(ab_test :slow_start)
       @jumpstart = true
       @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user).first[1].first(3)
     end

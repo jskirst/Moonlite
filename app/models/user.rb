@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   attr_protected :admin
   attr_accessor :password, :password_confirmation
   attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, 
-    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :is_test_user, :provider, :uid
+    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :is_test_user, :provider, :uid, :is_anonymous
 
   belongs_to :company
   belongs_to :user_role
@@ -16,16 +16,21 @@ class User < ActiveRecord::Base
   has_many :leaderboards, :dependent => :destroy
   has_many :user_events, :dependent => :destroy
 
-
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  def merge_with_omniauth(auth)
-    self.provider = auth["provider"]
-    self.uid = auth["uid"]
-    self.name = auth["info"]["name"]
-    self.email = auth["info"]["email"]
-    self.image_url = auth["info"]["image"]
-    raise "User Auth save failed."+user.errors.full_messages.join(".").to_s unless self.save
+  def self.create_anonymous_user(company, details = nil)
+    u = Hash.new if details.nil?
+    u["password"] ||= (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+    u["password_confirmation"] = u["password"]
+    u["name"] ||= generate_username
+    u["email"] ||= "#{u["name"]}@anonymous.metabright.com"
+    u["is_anonymous"] ||= true
+    u["company_id"] ||= company.id
+    
+    @user = company.users.create!(u)
+    @user.user_role_id = company.user_role_id
+    @user.save
+    return @user
   end
   
   def self.create_with_omniauth(auth)
@@ -42,10 +47,19 @@ class User < ActiveRecord::Base
     raise "User Auth save failed."+user.errors.full_messages.join(".").to_s if !user.save
     return user
   end
+  
+  def merge_with_omniauth(auth)
+    self.provider = auth["provider"]
+    self.uid = auth["uid"]
+    self.name = auth["info"]["name"]
+    self.email = auth["info"]["email"]
+    self.image_url = auth["info"]["image"]
+    raise "User Auth save failed. " + self.errors.full_messages.join(". ") unless self.save
+  end
 
   validates :name,     
     :presence   => true,
-    :length    => { :maximum => 50 }
+    :length    => { :within => 3..50 }
     
   validates :catch_phrase,
     :length    => { :maximum => 140 }
@@ -66,41 +80,21 @@ class User < ActiveRecord::Base
     :length    => { :within => 6..40 },
     :on => :update,
     :if => :validate_password?
-
+  
   before_save :encrypt_password
   before_save :set_tokens
   before_save :check_image_url
   before_save :check_user_type
   
-  def self.create_anonymous_user(company, options = nil)
-    p = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
-    e = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
-    email = "anonymous"+e+"@moonlite.com"
-    name = "anonymous"
-    unless options.nil?
-      name = options["name"] || name
-      email = options["email"] || email
+  def self.generate_username
+    loop do
+      username = generate_random_username()
+      return username unless User.find_by_name(username)
     end
-    
-    user_details = {
-      :name => name,
-      :email => email,
-      :password => p,
-      :password_confirmation => p,
-      :company_id => company.id
-    }
-    @user = company.users.create!(user_details)
-    @user.user_role_id = company.user_role_id
-    @user.save
-    return @user
-  end
-  
-  def still_anonymous?
-    return self.name.include?("anonymous")
   end
   
   def must_register?
-    return self.email.include?("anonymous")
+    return self.email.include?("@anonymous.metabright.com")
   end
   
   def validate_password?
@@ -156,10 +150,6 @@ class User < ActiveRecord::Base
   
   def unenroll!(path)
     enrollments.find_by_path_id(path.id).destroy
-  end
-
-  def completed?(task)
-    completed_tasks.find_by_task_id(task.id)
   end
   
   def admin?
@@ -229,6 +219,10 @@ class User < ActiveRecord::Base
     end
   end
   
+  def completed?(task)
+    completed_tasks.find_by_task_id(task.id)
+  end
+  
   def path_started?(path)
     return true unless my_completed_tasks.includes(:path).where(["paths.id = ?", path.id]).empty?
   end
@@ -237,7 +231,15 @@ class User < ActiveRecord::Base
     return true unless my_completed_tasks.where(["section_id = ?", section.id]).empty?
   end
   
-  private
+  def number_of_completed_paths
+    counter = 0
+    paths.each do |p|
+      counter += 0 if p.completed?(self)
+    end
+    return counter
+  end
+  
+  private  
     def check_image_url
       unless self.image_url.nil?
         self.image_url = nil if self.image_url.length < 9
@@ -286,5 +288,18 @@ class User < ActiveRecord::Base
         :task_id => task_id, 
         :amount => points,
         :status => 1})
+    end
+    
+    def self.generate_random_username()
+      num = 11 + rand(1000)
+      return [adjs.sample.capitalize,nouns.sample.capitalize,num].join
+    end
+    
+    def self.adjs()
+      return %w[aged ancient autumn billowing bitter black blue bold broken cold cool crimson damp dark dawn delicate divine dry empty falling floral fragrant frosty green hidden holy icy late lingering little lively long misty morning muddy nameless old patient polished proud purple quiet red restless rough shy silent small snowy solitary sparkling spring still summer throbbing twilight wandering weathered white wild winter wispy withered young]
+    end
+  
+    def self.nouns()
+      return %w[bird breeze brook bush butterfly cherry cloud darkness dawn dew dream dust feather field fire firefly flower fog forest frog frost glade glitter grass haze hill lake leaf meadow moon morning mountain night paper pine pond rain resonance river sea shadow shape silence sky smoke snow snowflake sound star sun sun sunset surf thunder tree violet voice water water waterfall wave wildflower wind wood]
     end
 end
