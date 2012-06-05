@@ -139,12 +139,16 @@ class PathsController < ApplicationController
 # Begin Path Journey
 
   def show
-    if params[:reg] == true
+    if params[:reg] == "true"
       redirect_to continue_path_path(@path)
       return
     elsif current_user.must_register?
       if ab_test :slow_start_immediate_registration
-        @immediate_registration = true
+        if ab_test :slow_start_partial_immediate_registration
+          @partial_immediate_registration = true
+        else
+          @immediate_registration = true
+        end
       end
     end
     
@@ -163,7 +167,7 @@ class PathsController < ApplicationController
     if current_user.path_started?(@path)
       @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Challenge"
     elsif current_user.enrolled?(@path)
-      @start_mode = "Get Started"
+      @start_mode = "Start #{name_for_paths}"
     else
       @start_mode = "Enroll"
     end

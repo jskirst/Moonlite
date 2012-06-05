@@ -18,7 +18,13 @@
   <script>
     $(function(){
       $('#username_modal').modal({ backdrop: 'static', show: true });
-      bind_change_name_form();
+    });
+  </script>
+<% elsif @earned_points == 0 %>
+  <%= render "sections/modals/start_modal" %>
+  <script>
+    $(function(){
+      show_start_modal();
     });
   </script>
 <% end %>

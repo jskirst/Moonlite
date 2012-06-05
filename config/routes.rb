@@ -80,6 +80,7 @@ SampleApp::Application.routes.draw do
 	
 	root 				:to => "pages#home"
 	
+  match '/outndelete',  :to => 'sessions#out_and_delete'
   match '/locallink',  :to => 'sessions#locallink'
   match '/auth/failure',  :to => 'sessions#auth_failure'
   match '/auth/:provider/callback',  :to => 'sessions#create'

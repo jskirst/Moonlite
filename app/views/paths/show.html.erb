@@ -1,29 +1,33 @@
-<% if @immediate_registration %>
+<% if @immediate_registration || @partial_immediate_registration %>
   <%= render "users/immediate_registration", { :path => @path } %>
+  <% if @immediate_registration %>
   <script>
     $(function(){
-      $('#username_modal').modal({ backdrop: 'static', show: true });
-      bind_change_name_form();
+      $('#username_modal').modal({ backdrop: 'static', show: true, keyboard: true });
     });
   </script>
+  <% end %>
 <% end %>
 <section class="path">
   <div style="min-height: 120px;">
     <div style="float:left; margin: 0px 15px 0px 0px;">
       <%= image_tag(@path.path_pic, :size=>"100x100") %>
     </div>
-    <% unless @immediate_registration %>
     <div>
-      <% unless @enrolled %>
-        <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
-          <%= f.hidden_field :path_id %>
-          <%= f.submit "Get Started", :class=> "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;" %>
-        <% end %>
-      <% else %>
-        <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
+    <% unless @enrolled %>
+      <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
+        <%= f.hidden_field :path_id %>
+        <%= f.submit "Start "+name_for_paths, :class=> "btn primary xlarge", :style => "margin: 10px 40px 0px 0px; float:right;" %>
       <% end %>
-    </div>
+    <% else %>
+      <% if @partial_immediate_registration || @immediate_registration %>  
+        <a onclick="$('#username_modal').modal({ backdrop: 'static', show: true, keyboard: true });
+;" class="btn primary xlarge" style="margin: 10px 40px 0px 0px; float:right;">Start <%= name_for_paths %></a>
+      <% else %>
+        <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary xlarge", :style => "margin: 10px 40px 0px 0px; float:right;"%>
+      <% end %>
     <% end %>
+    </div>
     <div>
       <h1 style="margin-bottom: 0px;"><%= @path.name %></h1>
     </div>
