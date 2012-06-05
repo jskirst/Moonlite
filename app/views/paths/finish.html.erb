@@ -48,13 +48,13 @@ $(function(){
     <div style="margin:20px;">
       <% if @enable_comments %>
         <div style="display:inline;">
-          <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
+          <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u jumpstart_path_path(@path.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= jumpstart_path_path(@path.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
         </div>
         <div style="display:inline; padding:20px;">
-          <a href="http://www.facebook.com/sharer.php?u=<%=u hero_path_url(@path.id, :hero => current_user.id) %>" target="_blank"><img src="/images/facebook_connect.png" width="150" height="45"></a>
+          <a href="http://www.facebook.com/sharer.php?u=<%=u jumpstart_path_path(@path.id) %>" target="_blank"><img src="/images/facebook_connect.png" width="150" height="45"></a>
         </div>
         <div style="display:inline;">
-          <a href="https://twitter.com/intent/tweet?url=<%=u hero_path_url(@path.id, :hero => current_user.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
+          <a href="https://twitter.com/intent/tweet?url=<%=u jumpstart_path_path(@path.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
         </div>
       <% end %>
     </div>
