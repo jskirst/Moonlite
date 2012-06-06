@@ -177,7 +177,7 @@ class UsersController < ApplicationController
           if request.xhr?
             render :json => @user.errors
           elsif params[:user][:path_id]
-            redirect_to continue_path_path(current_user.company.paths.find(params[:user][:path_id]))
+            redirect_back_or_to continue_path_path(current_user.company.paths.find(params[:user][:path_id]))
           else
             render 'edit'
           end

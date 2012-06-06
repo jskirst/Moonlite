@@ -304,6 +304,7 @@ class SectionsController < ApplicationController
     @info_resource = @task.info_resource
     @title = @section.name
     @correct = (last_question.status_id == 1) if last_question
+    store_location #So user will be redirected here after registration
     if current_user.is_anonymous && !(ab_test :slow_start_v2) && (ab_test :jump_start_immediate_registration)
       @immediate_registration = true
     end

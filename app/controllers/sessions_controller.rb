@@ -5,49 +5,52 @@ class SessionsController < ApplicationController
   
   def create
     auth = request.env["omniauth.auth"]
-    back_or_root = request.env['HTTP_REFERER'] || root_path
-    
-    if current_user
-      if auth
+    if auth
+      if current_user
         if current_user.merge_with_omniauth(auth)
-          track! :registration_facebook
-          redirect_to back_or_root+"?reg=true&"
+          track_session(:register, current_user, auth)
         else
-          flash[:error] = "Email address by #{auth["provider"].capitalize} matched the email listed for another account."
-          redirect_to back_or_root
+          flash[:error] = "An error occured. Please try another form of authentication."
         end
       else
-        flash[:info] = "You are already signed in."
-        redirect_to back_or_root
-      end
-    elsif auth
-      user = User.find_with_omniauth(auth)
-      #user = User.find_by_provider_and_uid_and_company_id(auth["provider"], auth["uid"], 1)
-      if user
-        sign_in user
-        if auth["provider"] == "facebook"
-          track! :login_facebook
+        if user = User.find_with_omniauth(auth)
+          sign_in(user) and track_session(:login, user, auth)
+        elsif user = User.find_by_email(auth["info"]["email"])
+          if user.merge_with_omniauth(auth)
+            sign_in(user) and track_session(:login, user, auth)
+          else
+            flash[:error] = "An error occured. Please try another form of authentication."
+          end
+        else
+          flash.now[:info] = "You must already have a Metabright account to login with #{auth["provider"].capitalize}."
+          render('new') and return
         end
-        redirect_to root_path
-      else
-        flash.now[:info] = "You must already have an account to login with #{auth["provider"].capitalize}."
-        render 'new'
       end
     else
       credentials = params[:session]
-      user = User.authenticate(credentials[:email],credentials[:password])
-      if user
-        sign_in user
-        redirect_back_or_to root_path
-        unless user.is_test_user || user.admin?
-          track! :login_conventional
-        end
+      if user = User.authenticate(credentials[:email],credentials[:password])
+        sign_in(user) and track_session(:login_conventional, user)
       else
-        @title = "Sign in"
         flash.now[:error] = "Invalid email/password combination."
-        render 'new'
+        render('new') and return
       end
     end
+    redirect_back_or_to root_path
+  end
+  
+  def destroy
+    track_session(:logout, current_user)
+    sign_out
+    if @is_consumer
+      redirect_to root_path(:m => "c")
+    else
+      redirect_to root_path
+    end
+  end
+  
+  # Secret methods to help with testing
+  def locallink
+    redirect_to "http://localhost:3000/auth/facebook/callback?code=#{params[:code]}"
   end
   
   def out_and_delete
@@ -60,17 +63,25 @@ class SessionsController < ApplicationController
     redirect_to new_session_path
   end
   
-  def locallink
-    redirect_to "http://localhost:3000/auth/facebook/callback?code=#{params[:code]}"
-  end
-  
-  def destroy
-    sign_out
-    if @is_consumer
-      redirect_to root_path(:m => "c")
-      track! :logout
+  private
+  def track_session(action, user, auth = {})
+    unless user.admin? || user.is_test_user
+      if action == :register
+        track! :registration_facebook if auth["provider"] == "facebook"
+        track! :registration_google if auth["provider"] == "google_oauth2"
+      elsif action == :login
+        track! :login_facebook if auth["provider"] == "facebook"
+        track! :login_google if auth["provider"] == "google_oauth2"
+      elsif action == :login_conventional
+        track! :login_conventional
+      elsif action == :logout
+        track! :logout
+      else
+        raise [action.to_s, user.to_s, auth.to_s].join("::").to_s
+      end
     else
-      redirect_to root_path
+      raise "Admin action."
     end
   end
+
 end

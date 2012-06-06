@@ -139,11 +139,9 @@ class PathsController < ApplicationController
 # Begin Path Journey
 
   def show
-    if params[:reg] == "true"
-      redirect_to continue_path_path(@path)
-      return
-    elsif current_user.must_register?
+    if current_user.must_register?
       if ab_test :slow_start_immediate_registration
+        store_location(continue_path_url(@path)) #So user will be redirected here after registration
         if ab_test :slow_start_partial_immediate_registration
           @partial_immediate_registration = true
         else
@@ -177,6 +175,7 @@ class PathsController < ApplicationController
     @company = Company.find(1)
     @path = @company.paths.find(params[:id])
     unless signed_in?
+      store_location
       @user = User.create_anonymous_user(@company)
       sign_in(@user)
       @user.enrollments.create!(:path_id => @path.id)
@@ -206,6 +205,7 @@ class PathsController < ApplicationController
   end
   
   def finish
+    store_location #So user will be redirected here after registration
     @must_register = current_user.must_register?
     @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
     

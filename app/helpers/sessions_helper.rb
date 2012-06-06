@@ -91,6 +91,10 @@ module SessionsHelper
     end
   end
   
+  def store_location(location = nil)
+    session[:return_to] = location || request.fullpath
+  end
+  
   private
     def user_from_remember_token
       User.authenticate_with_salt(*remember_token)
@@ -98,10 +102,6 @@ module SessionsHelper
     
     def remember_token
       cookies.signed[:remember_token] || [nil,nil]
-    end
-    
-    def store_location
-      session[:return_to] = request.fullpath
     end
     
     def clear_return_to
