@@ -1,8 +1,9 @@
 <div class="row" style="margin:0 125px 0 125px;">
   <table style="border: 1px solid lightgray; background-color:whitesmoke; padding: 100px;">
     <tr>
-      <td style="border-top: none; vertical-align: middle;">
-        <%= link_to image_tag("/images/facebook_login_button.png", :size => "244x50"), "/auth/facebook", :id => "facebook_signin" %>
+      <td style="border-top: none; vertical-align: middle; width: 270px; padding-left:25px;">
+        <%= link_to image_tag("/images/facebook_login_button.png", :size => "220x55"), "/auth/facebook", :id => "facebook_signin" %>
+        <%= link_to image_tag("/images/google_login_button.png", :size => "220x45"), "/auth/google_oauth2", :id => "google_signin" %>
       </td>
       <td style="border-top: none; border-right: 0px solid darkgray; border-left: 0px solid darkgray; vertical-align: middle;">
         <p style="font-weight: bold; font-size; 18px;"><span style="font-size:25px; color:lightgray;">|</span> Or <span style="font-size:25px; color:lightgray;">|</span></p>

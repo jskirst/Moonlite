@@ -9,28 +9,29 @@ class SessionsController < ApplicationController
     
     if current_user
       if auth
-        current_user.merge_with_omniauth(auth)
-        track! :registration_facebook
-        redirect_to back_or_root+"?reg=true&"
+        if current_user.merge_with_omniauth(auth)
+          track! :registration_facebook
+          redirect_to back_or_root+"?reg=true&"
+        else
+          flash[:error] = "Email address by #{auth["provider"].capitalize} matched the email listed for another account."
+          redirect_to back_or_root
+        end
       else
         flash[:info] = "You are already signed in."
         redirect_to back_or_root
       end
-    elsif auth    
-      user = User.find_by_provider_and_uid_and_company_id(auth["provider"], auth["uid"], 1)
+    elsif auth
+      user = User.find_with_omniauth(auth)
+      #user = User.find_by_provider_and_uid_and_company_id(auth["provider"], auth["uid"], 1)
       if user
         sign_in user
-        track! :login_facebook
+        if auth["provider"] == "facebook"
+          track! :login_facebook
+        end
         redirect_to root_path
       else
-        if request.env['HTTP_REFERER'] && request.env['HTTP_REFERER'].include?("signin")
-          flash.now[:info] = "You must already have an account to login with Facebook."
-          render 'new'
-        else
-          user = User.create_with_omniauth(auth)
-          track! :registration_facebook
-          redirect_to back_or_root
-        end
+        flash.now[:info] = "You must already have an account to login with #{auth["provider"].capitalize}."
+        render 'new'
       end
     else
       credentials = params[:session]
@@ -51,7 +52,6 @@ class SessionsController < ApplicationController
   
   def out_and_delete
     current_user.destroy
-    sign_out
     redirect_to root_path
   end
   

@@ -15,6 +15,7 @@ gem 'aws-sdk'
 gem 'pg', '>= 0.13.2'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
 gem 'vanity'
 gem 'csv_builder'
 

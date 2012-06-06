@@ -1,8 +1,8 @@
 <% if @must_register %>
   <script>
   $(function(){
-    $('a[id!="facebook_signin"]').attr("href", "#");
-    $('a[id!="facebook_signin"]').click(function(){
+    $('a').not("[id*=signin]").attr("href", "#");
+    $('a').not("[id*=signin]").click(function(){
       $('#must_complete_first_modal').modal({
         keyboard: true,
         show: true

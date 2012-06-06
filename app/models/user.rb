@@ -1,11 +1,12 @@
 class User < ActiveRecord::Base
-  attr_protected :admin
+  attr_protected :admin, :login_at, :logout_at
   attr_accessor :password, :password_confirmation
   attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, 
     :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :is_test_user, :provider, :uid, :is_anonymous
 
   belongs_to :company
   belongs_to :user_role
+  has_many :user_auths, :dependent => :destroy
   has_many :paths, :dependent => :destroy
   has_many :enrollments, :dependent => :destroy
   has_many :enrolled_paths, :through => :enrollments, :source => :path
@@ -18,47 +19,6 @@ class User < ActiveRecord::Base
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  def self.create_anonymous_user(company, details = nil)
-    u = Hash.new if details.nil?
-    u["password"] ||= (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
-    u["password_confirmation"] = u["password"]
-    u["name"] ||= generate_username
-    u["email"] ||= "#{u["name"]}@anonymous.metabright.com"
-    u["is_anonymous"] ||= true
-    u["company_id"] ||= company.id
-    
-    @user = company.users.create!(u)
-    @user.user_role_id = company.user_role_id
-    @user.save
-    return @user
-  end
-  
-  def self.create_with_omniauth(auth)
-    raise "Auth is nil" if auth["provider"].nil? || auth["uid"].nil?
-    user = User.find_by_email(auth["info"]["email"])
-    if user.nil?
-      user = create_anonymous_user(Company.find(1))
-    end
-    user.provider = auth["provider"]
-    user.uid = auth["uid"]
-    user.name = auth["info"]["name"]
-    user.email = auth["info"]["email"]
-    user.image_url = auth["info"]["image"]
-    user.is_anonymous = false
-    raise "User Auth save failed."+user.errors.full_messages.join(".").to_s if !user.save
-    return user
-  end
-  
-  def merge_with_omniauth(auth)
-    self.provider = auth["provider"]
-    self.uid = auth["uid"]
-    self.name = auth["info"]["name"]
-    self.email = auth["info"]["email"]
-    self.image_url = auth["info"]["image"]
-    self.is_anonymous = false
-    raise "User Auth save failed. " + self.errors.full_messages.join(". ") unless self.save
-  end
-
   validates :name,     
     :presence   => true,
     :length    => { :within => 3..50 }
@@ -87,6 +47,66 @@ class User < ActiveRecord::Base
   before_save :set_tokens
   before_save :check_image_url
   before_save :check_user_type
+  
+  def self.find_with_omniauth(auth)
+    user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
+    return user_auth.user if user_auth
+    return nil
+  end
+  
+  def self.create_anonymous_user(company, details = nil)
+    u = Hash.new if details.nil?
+    u["password"] ||= (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+    u["password_confirmation"] = u["password"]
+    u["name"] ||= generate_username
+    u["email"] ||= "#{u["name"]}@anonymous.metabright.com"
+    u["image_url"] ||= nil
+    u["is_anonymous"] ||= true
+    u["company_id"] ||= company.id
+    
+    user = company.users.create!(u)
+    user.user_role_id = company.user_role_id
+    user.save
+    return user
+  end
+  
+  def self.create_with_omniauth(auth)
+    user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
+    return user_auth.user if user_auth
+    
+    user_details = {:name => auth["info"]["name"], 
+        :email => auth["info"]["email"], 
+        :image_url => auth["info"]["image"],
+        :is_anonymous => false}
+    if user
+      user = User.find_by_email(auth["info"]["email"])
+      user.update_attributes(user_details)
+    else
+      user = create_anonymous_user(Company.find(1), user_details)
+    end
+    
+    user.user_auths.create!(:provider => auth["provider"], :uid => auth["uid"])
+    return user
+  end
+  
+  def merge_with_omniauth(auth)
+    user_auth = user_auths.find_by_provider_and_uid(auth["provider"], auth["uid"])
+    user = User.find_by_email(auth["info"]["email"])
+    if user && user.id != self.id
+      return false
+    end
+    
+    if user_auth.nil?
+      user_auth = user_auths.create!(:provider => auth["provider"], :uid => auth["uid"])
+    end
+    
+    self.name = auth["info"]["name"]
+    self.email = auth["info"]["email"]
+    self.image_url = auth["info"]["image"]
+    self.is_anonymous = false
+    raise "User Auth save failed. " + self.errors.full_messages.join(". ") unless self.save
+    return true
+  end
   
   def self.generate_username
     loop do
