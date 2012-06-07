@@ -264,11 +264,10 @@ class SectionsController < ApplicationController
         @last_points = last_question.points_awarded
       end
       @progress = @path.percent_complete(current_user) + 1
-      @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
+      @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
       @possible_points = 10
       streak = @section.user_streak(current_user)
       @streak_points = streak <= 0 ? 0 : streak
-      @question_type = @task.question_type
       generate_hint if @path.enable_retakes
       @info_resource = @task.info_resource
       generate_locals
@@ -281,11 +280,7 @@ class SectionsController < ApplicationController
         end
       end
       
-      if params[:task_id]
-        render :partial => "continue", :locals => @locals
-      else
-        render "start"
-      end
+      render params[:task_id].nil? ? "start" : (:partial => "continue", :locals => @locals)
     else
       redirect_url = "Redirecting to results:" + (@is_consumer ? continue_path_url(@section.path) : results_section_url(@section))
       render :text => redirect_url
@@ -371,7 +366,6 @@ class SectionsController < ApplicationController
         :possible_points => @possible_points, 
         :streak_points => @streak_points, 
         :hints => @hints, 
-        :question_type => @question_type, 
         :info_resource => @info_resource, 
         :correct => @correct, 
         :jumpstart => @jumpstart, 

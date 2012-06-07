@@ -18,9 +18,9 @@
     </div>
     <div class="answer">
       <input type="hidden" name="task_id" value="<%= task.id %>">
-      <% if question_type == "text" && path.game_type == "character guess" %>
+      <% if task.question_type == "text" && path.game_type == "character guess" %>
         <%= render "character_guess", { :answer => task.answer1 } %>
-      <% elsif question_type == "text" %>
+      <% elsif task.question_type == "text" %>
         <%= render "single_answer", { :task => task } %>
       <% else %>
         <%= render "multiple_choice_answer", { :task => task } %>
