@@ -255,81 +255,41 @@ class SectionsController < ApplicationController
 # Begin Section Journey
   
   def continue
-    if params[:task_id] && (params[:answer] || params[:text_answer])
-      last_question = create_completed_task
-      @last_points = last_question.points_awarded
-    end
+    last_question = create_completed_task if (params[:answer] || params[:text_answer])
     
     @task = @section.next_task(current_user)
-    if @task.nil?
+    if @task
+      if last_question
+        @correct = last_question.status_id == 1
+        @last_points = last_question.points_awarded
+      end
+      @progress = @path.percent_complete(current_user) + 1
+      @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
+      @possible_points = 10
+      streak = @section.user_streak(current_user)
+      @streak_points = streak <= 0 ? 0 : streak
+      @question_type = @task.question_type
+      generate_hint if @path.enable_retakes
+      @info_resource = @task.info_resource
+      generate_locals
+      
+      if current_user.is_anonymous
+        store_location #So user will be redirected here after registration
+        @must_register = true
+        if !(ab_test :slow_start_v2) && (ab_test :jump_start_immediate_registration)
+          @immediate_registration = true
+        end
+      end
+      
       if params[:task_id]
-        if @is_consumer
-          redirect_url = "Redirecting to results:#{continue_path_url(@section.path)}"
-        else
-          redirect_url = "Redirecting to results:#{results_section_url(@section)}"
-        end
-        respond_to do |f|
-          f.html { render :text => redirect_url }
-        end
+        render :partial => "continue", :locals => @locals
       else
-        redirect_to results_section_path(@section)
-      end
-      return
-    end
-    
-    @progress = @path.percent_complete(current_user) + 1
-    @earned_points = @path.enrollments.where(["user_id = ?", current_user.id]).first.total_points
-    @possible_points = 10
-    streak = @section.user_streak(current_user)
-    @streak_points = streak <= 0 ? 0 : streak
-    
-    @hints = []
-    @question_type = @task.question_type
-    if @path.enable_retakes
-      if @question_type == "text" && streak <= -1
-        answer = @task.describe_correct_answer.to_s
-        streak = ((streak+2)*-1) #converting it so it can be used in a range
-        @hint = "Answer starts with '" + answer.slice(0..streak) + "'"
-      else
-        previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
-        previous_wrong_answers.each do |p|
-          @hints << p.answer
-        end
-      end
-    end
-    
-    @info_resource = @task.info_resource
-    @title = @section.name
-    @correct = (last_question.status_id == 1) if last_question
-    store_location #So user will be redirected here after registration
-    if current_user.is_anonymous && !(ab_test :slow_start_v2) && (ab_test :jump_start_immediate_registration)
-      @immediate_registration = true
-    end
-    @must_register = current_user.must_register?
-    
-    @locals = { :path => @path, 
-      :section => @section, 
-      :task => @task, 
-      :progress => @progress, 
-      :earned_points => @earned_points,
-      :possible_points => @possible_points, 
-      :streak_points => @streak_points, 
-      :hints => @hints, 
-      :question_type => @question_type, 
-      :info_resource => @info_resource, 
-      :correct => @correct, 
-      :jumpstart => @jumpstart, 
-      :leaderboards => @leaderboards, 
-      :hint => @hint }
-    
-    if params[:task_id]
-      respond_to do |f|
-        f.html { render :partial => "continue", :locals => @locals }
+        render "start"
       end
     else
-      respond_to do |f|
-        f.html { render "start" }
-      end
+      redirect_url = "Redirecting to results:" + (@is_consumer ? continue_path_url(@section.path) : results_section_url(@section))
+      render :text => redirect_url
+      return
     end
   end
   
@@ -386,6 +346,37 @@ class SectionsController < ApplicationController
         completed_task.save
       end
       return completed_task
+    end
+    
+    def generate_hint
+      if @question_type == "text" && streak <= -1
+        answer = @task.describe_correct_answer.to_s
+        streak = ((streak+2)*-1) #converting it so it can be used in a range
+        @hint = "Answer starts with '" + answer.slice(0..streak) + "'"
+      else
+        @hints = []
+        previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
+        previous_wrong_answers.each do |p|
+          @hints << p.answer
+        end
+      end
+    end
+    
+    def generate_locals
+      @locals = { :path => @path, 
+        :section => @section, 
+        :task => @task, 
+        :progress => @progress, 
+        :earned_points => @earned_points,
+        :possible_points => @possible_points, 
+        :streak_points => @streak_points, 
+        :hints => @hints, 
+        :question_type => @question_type, 
+        :info_resource => @info_resource, 
+        :correct => @correct, 
+        :jumpstart => @jumpstart, 
+        :leaderboards => @leaderboards, 
+        :hint => @hint }
     end
   
     def has_edit_access?
