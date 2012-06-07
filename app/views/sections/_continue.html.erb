@@ -6,8 +6,9 @@
 <div class="task row">
   <div class="span9">
     <div class="question">
-      <h2>Section <%= section.position.to_s %>. <%= section.name %></h2>
-      <blockquote>
+      <%= image_tag path.path_pic, :style => "width: 50px; float:left;" %>
+      <h2 style="margin-left:55px;">Section <%= section.position.to_s %>. <%= section.name %></h2>
+      <blockquote style="margin: 40px 20px 20px 30px;">
         <p>
           <%= task.question %>
         </p>
@@ -39,7 +40,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="actions" style="margin-top:50px">
+  <div class="actions">
     <input type="hidden" id="listless" name="listless" value="true">
     <%= submit_tag "Next", :class => "btn primary", :id => "submit_button" %>
     <div class="btn secondary" id="help_button" style="margin-left: 15px;">Help</div>
