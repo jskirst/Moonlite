@@ -30,10 +30,10 @@ $(function(){
   #raw_number {  }
   #raw_number_progressbar { }
 </style>
-<div id="game_container" style="<%= @streak_points > 0 ? "" : "opacity:.2;" %> margin-top: 75px; width:230px;">
-  <div style="font-size: 20px; color: grey; margin: auto; font-weight: bold; margin: 0px 0px 5px 30px;">STREAK BONUS</div>
-  <div id="raw_number_container" style="border: 5px solid #57A957; width:230px; border-radius: 5px;">
-    <span id="raw_number" style="font-size: 120px; color: #57A957;  padding: 10px;">+<%= @streak_points %></span><span style="font-size:15px; font-weight: bold; color: #57A957;">Points</span>
+<div id="game_container" style="margin-top: 75px; width:230px;">
+  <div id="raw_number_container" style="border: 5px solid #57A957; border-radius: 5px; padding: 5px;">
+    <span style="font-size: 15px; color: #57A957; font-weight: bold; margin: 0 0 5px 55px;">TOTAL SCORE</span>
+    <span id="raw_number" style="font-size: 120px; color: #57A957;">+<%= @earned_points %></span>
   </div>
   <div id="raw_number_progressbar" alt="Progress Bar" style="width: 240px; margin-top: 15px; border-radius: 5px;"></div>
 </div>
