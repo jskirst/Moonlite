@@ -79,8 +79,6 @@ class SessionsController < ApplicationController
       else
         raise [action.to_s, user.to_s, auth.to_s].join("::").to_s
       end
-    else
-      raise "Admin action."
     end
   end
 

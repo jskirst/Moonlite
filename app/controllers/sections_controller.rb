@@ -280,7 +280,11 @@ class SectionsController < ApplicationController
         end
       end
       
-      render params[:task_id].nil? ? "start" : (:partial => "continue", :locals => @locals)
+      if params[:task_id].nil?
+        render "start" 
+      else
+        render :partial => "continue", :locals => @locals
+      end
     else
       redirect_url = "Redirecting to results:" + (@is_consumer ? continue_path_url(@section.path) : results_section_url(@section))
       render :text => redirect_url

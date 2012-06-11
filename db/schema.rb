@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120607022030) do
+ActiveRecord::Schema.define(:version => 20120610234601) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -233,6 +233,17 @@ ActiveRecord::Schema.define(:version => 20120607022030) do
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
+
+  create_table "usage_reports", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.string   "report_file_name"
+    t.string   "report_content_type"
+    t.integer  "report_file_size"
+    t.datetime "report_updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "user_achievements", :force => true do |t|
     t.integer  "achievement_id"
