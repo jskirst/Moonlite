@@ -99,6 +99,10 @@ class UsersController < ApplicationController
     end
   end
   
+  def usage_reports
+    @reports = current_user.company.usage_reports.all(:order => "id DESC")
+  end
+  
   def edit
     @user = User.find(params[:id])
     @title = "Settings"
