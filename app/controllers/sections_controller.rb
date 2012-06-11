@@ -256,8 +256,9 @@ class SectionsController < ApplicationController
   
   def continue
     last_question = create_completed_task if (params[:answer] || params[:text_answer])
-    
     @task = @section.next_task(current_user)
+    
+    @streak ||= @task.section.user_streak(current_user)
     if @task
       if last_question
         @correct = last_question.status_id == 1
@@ -266,8 +267,8 @@ class SectionsController < ApplicationController
       @progress = @path.percent_complete(current_user) + 1
       @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
       @possible_points = 10
-      streak = @section.user_streak(current_user)
-      @streak_points = streak <= 0 ? 0 : streak
+      @streak = @section.user_streak(current_user)
+      @streak_points = @streak <= 0 ? 0 : @streak
       generate_hint if @path.enable_retakes
       @info_resource = @task.info_resource
       generate_locals
@@ -327,13 +328,13 @@ class SectionsController < ApplicationController
       end
       
       completed_task = current_user.completed_tasks.build(params.merge(:status_id => status_id, :answer => answer))
-      streak = task.section.user_streak(current_user)
+      @streak = task.section.user_streak(current_user)
       if status_id == 1
         points = 10
         if params[:listless] == "true"        
-          unless streak < 1
+          unless @streak < 1
             if last_answer_date > 35.seconds.ago
-              points += streak
+              points += @streak
             end
           end
         end
@@ -348,10 +349,10 @@ class SectionsController < ApplicationController
     end
     
     def generate_hint
-      if @question_type == "text" && streak <= -1
+      if @task.question_type == "text" && @streak <= -1
         answer = @task.describe_correct_answer.to_s
-        streak = ((streak+2)*-1) #converting it so it can be used in a range
-        @hint = "Answer starts with '" + answer.slice(0..streak) + "'"
+        @streak = ((@streak+2)*-1) #converting it so it can be used in a range
+        @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
       else
         @hints = []
         previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
