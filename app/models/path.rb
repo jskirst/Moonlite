@@ -198,6 +198,30 @@ class Path < ActiveRecord::Base
     return all_tags
   end
   
+  def skill_ranking(user)
+    enrollment = enrollments.find_by_user_id(user.id)
+    return nil if enrollment.nil?
+    
+    points = enrollment.total_points.to_i
+    possible = tasks.count * 10
+    case
+      when points > 1.5 * possible
+        return "Master"
+      when points > 1.3 * possible
+        return "Elite"
+      when points > 1.25 * possible
+        return "Expert"
+      when points > 1 * possible
+        return "Knowledgeable"
+      when points > 0.9 * possible
+        return "Average"
+      when points > 0.7 * possible
+        return "Just OK"
+      else
+        return "Noob"
+      end
+  end
+  
   private
     def check_image_url
       unless self.image_url.nil?

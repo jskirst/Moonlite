@@ -31,7 +31,7 @@ $(function(){
         <p style="font-size:13px; font-style: italic; font-weight:bold; margin-bottom: 10px;">You have successfully completed this <%= name_for_paths.downcase %></p>
         <div>
           <p style="line-height:20px; font-size:17px;">
-            You're now ranked <strong><%= @user_rank %></strong> with <strong><%= @total_points_earned.to_i %> points</strong>.
+            You're now ranked <strong><%= @user_rank %></strong> with <strong><%= @total_points_earned.to_i %> points</strong>. You reached a skill ranking of <strong><%= @skill_ranking.to_s %></strong>.
             <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %>
           </p>
            <% if @must_register %>

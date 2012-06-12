@@ -199,6 +199,7 @@ class PathsController < ApplicationController
     previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
     track! :path_completion if previous_ranking.nil?
     
+    @skill_ranking = @path.skill_ranking(current_user)
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first
     counter = 1
     previous = nil
