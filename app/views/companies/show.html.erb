@@ -8,7 +8,6 @@ $(function(){
   );
 });
 </script>
-
 <section id="company-profile">
   <h1><%= @company.name %></h1>
   <ul class="tabs">
@@ -22,7 +21,13 @@ $(function(){
     <% if @users.empty? %>
       <p>You do not have any users for your organization yet.</p>
     <% else %>
-    <span style="float:right;padding-bottom:10px; font-size: 16px; font-weight: bold;">Available seats: <%= @company.seat_limit - @company.users.size %></span>
+    <%= will_paginate @users, :style => "float:left; margin-bottom:0;" %>
+    <div style="float:right; margin: 18px 0 0px 0;">
+      <%= form_tag @company, :method => "get" do %>
+        <%= text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name or email..." %>
+        <%= submit_tag "Search", :class => "btn primary" %>
+      <% end %>
+    </div>
     <table>
       <thead>
         <tr>
@@ -35,7 +40,7 @@ $(function(){
         </tr>
       </thead>
       <tbody>
-        <% user_counter = 0 %>
+        <% user_counter = 1 %>
         <% @users.each do |u| %>
           <tr>
             <td><%= user_counter.to_s %></td>
@@ -67,6 +72,7 @@ $(function(){
       </tbody>
     </table>
     <% end %>
+    <%= will_paginate @users %>
     <h4>Note: Adding Users</h4>
     <p>Users must be added to a specific user role. To invite new users, click on the <strong>User Roles</strong> tab above, then click on one of the user roles in the table. From there, you'll find a link to use to invite new users to your organization.</p>
     <hr/>

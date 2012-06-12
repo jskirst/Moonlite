@@ -1,6 +1,11 @@
 <h1>All Users</h1>
-<div style="float:right;text-weight:bold; margin:5px; font-size:18px;">Count: <%= @users.size %></div>
-
+<%= will_paginate @users, :style => "float:left; margin-bottom:0;" %>
+<div style="float:right; margin: 18px 0 0px 0;">
+  <%= form_tag({:controller => :users, :action => :index }, :method => "get") %>
+    <%= text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name or email..." %>
+    <%= submit_tag "Search", :class => "btn primary" %>
+  </form>
+</div>
 <table class='users'>
 <% @users.each do |user| %>
   <tr>
@@ -47,3 +52,4 @@
   </tr>
 <% end %>
 </table>
+<%= will_paginate @users, :style => "float:left; margin-bottom:0;" %>

@@ -84,18 +84,12 @@ class UsersController < ApplicationController
   end
   
   def index
-    if params[:lower_id] && params[:upper_id]
-      @users = User.where("users.is_fake_user = ? and users.is_test_user = ? and id > ? and id <= ?", false, false, params[:lower_id].to_i, params[:upper_id].to_i).all(:order => "created_at DESC")
-    elsif params[:last]
-      @users = User.where("users.is_fake_user = ? and users.is_test_user = ?", false, false).all(:order => "created_at DESC").last(params[:last].to_i)
+    if params[:search]
+      @users = User.paginate(:page => params[:page], 
+        :conditions => ["is_fake_user = ? and is_test_user = ? and (name LIKE ? or email LIKE ?)", 
+          false, false, "%#{params[:search]}%", "%#{params[:search]}%"], :order => "id DESC")
     else
-      @users = User.where("users.is_fake_user = ? and users.is_test_user = ?", false, false).all(:order => "created_at DESC").last(50)
-    end
-    
-    @title = "All users"
-    respond_to do |format|
-      format.html
-      format.csv
+      @users = User.paginate(:page => params[:page], :conditions => ["is_fake_user = ? and is_test_user = ?", false, false], :order => "id DESC")
     end
   end
   

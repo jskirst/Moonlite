@@ -21,9 +21,13 @@ class CompaniesController < ApplicationController
   end
   
   def show
-    @users = @company.users.includes(:user_role).find(:all, :conditions => ["company_id = ? AND name != ?", @company.id, "pending"])
-    @unregistered_users =  @company.users.find(:all, :conditions => ["company_id = ? AND name = ?", @company.id, "pending"])
-    @title = @company.name
+    if params[:search]
+      @users = User.paginate(:page => params[:page], 
+        :conditions => ["company_id = ? and (name LIKE ? or email LIKE ?)", 
+          @company.id, "%#{params[:search]}%", "%#{params[:search]}%"])
+    else
+      @users = User.paginate(:page => params[:page], :conditions => ["company_id = ?", @company.id])
+    end
   end
   
   def edit

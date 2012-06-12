@@ -93,3 +93,8 @@ section.wiki { margin-bottom: 50px; }
 .notice a          { color: #514721; }
 .success a         { color: #264409; }
 .info a            { color: #205791; }
+
+/* Random */
+.pagination a { padding: 0 10px; line-height: 22px; height: 22px;}
+.pagination .disabled { display:none; }
+.pagination em.current { display: none; }
