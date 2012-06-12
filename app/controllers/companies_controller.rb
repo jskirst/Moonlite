@@ -23,7 +23,7 @@ class CompaniesController < ApplicationController
   def show
     if params[:search]
       @users = User.paginate(:page => params[:page], 
-        :conditions => ["company_id = ? and (name LIKE ? or email LIKE ?)", 
+        :conditions => ["company_id = ? and (name ILIKE ? or email ILIKE ?)", 
           @company.id, "%#{params[:search]}%", "%#{params[:search]}%"])
     else
       @users = User.paginate(:page => params[:page], :conditions => ["company_id = ?", @company.id])

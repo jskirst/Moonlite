@@ -84,6 +84,11 @@ section.wiki { margin-bottom: 50px; }
 .jumpstart_leaderboard td {padding:3px;}
 .jumpstart_leaderboard th {padding:3px;}
 
+/* Random */
+.pagination a { padding: 0 10px; line-height: 22px; height: 22px;}
+.pagination .disabled { display:none; }
+.pagination em.current { display: none; }
+.alert-message { font-size: 16px; }
 .error,.alert,.notice,.success,.info { padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
 .error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
 .notice        { background: #fff6bf; color: #514721; border-color: #ffd324; }
@@ -93,8 +98,3 @@ section.wiki { margin-bottom: 50px; }
 .notice a          { color: #514721; }
 .success a         { color: #264409; }
 .info a            { color: #205791; }
-
-/* Random */
-.pagination a { padding: 0 10px; line-height: 22px; height: 22px;}
-.pagination .disabled { display:none; }
-.pagination em.current { display: none; }

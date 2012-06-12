@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   def index
     if params[:search]
       @users = User.paginate(:page => params[:page], 
-        :conditions => ["is_fake_user = ? and is_test_user = ? and (name LIKE ? or email LIKE ?)", 
+        :conditions => ["is_fake_user = ? and is_test_user = ? and (name ILIKE ? or email ILIKE ?)", 
           false, false, "%#{params[:search]}%", "%#{params[:search]}%"], :order => "id DESC")
     else
       @users = User.paginate(:page => params[:page], :conditions => ["is_fake_user = ? and is_test_user = ?", false, false], :order => "id DESC")

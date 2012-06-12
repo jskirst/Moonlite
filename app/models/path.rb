@@ -45,7 +45,7 @@ class Path < ActiveRecord::Base
   end
   
   def self.with_name_like(name, user)
-    return Path.joins(:path_user_roles).where("is_locked = ? and path_user_roles.user_role_id = ? and is_published = ? and name LIKE ?", false, user.user_role_id, true, "%#{name}%")
+    return Path.joins(:path_user_roles).where("is_locked = ? and path_user_roles.user_role_id = ? and is_published = ? and name ILIKE ?", false, user.user_role_id, true, "%#{name}%")
   end
   
   def self.with_tags_like(tags, user, excluded_path_id)
@@ -56,7 +56,7 @@ class Path < ActiveRecord::Base
     
     tags_query = []
     tags.each do |t|
-      tags_query << "tags LIKE ?"
+      tags_query << "tags ILIKE ?"
       query_variables << "%#{t}%"
     end
     query = "(#{base_query.join(" and ")}) and (#{tags_query.join(" or ")})"
