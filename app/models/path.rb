@@ -66,7 +66,7 @@ class Path < ActiveRecord::Base
   def self.similar_paths(path, user)
     paths = Set.new
     unless path.nil?
-      Path.with_tags_like(path.tags_to_array, User.find(1), path.id).each {|p| paths << p}
+      Path.with_tags_like(path.tags_to_array, user, path.id).each {|p| paths << p}
       Path.with_category(path.category_id, user, path.id, "id DESC").each {|p| paths << p}
       return paths.to_a
     else
