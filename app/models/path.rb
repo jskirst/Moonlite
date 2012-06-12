@@ -49,6 +49,7 @@ class Path < ActiveRecord::Base
   end
   
   def self.with_tags_like(tags, user, excluded_path_id)
+    return [] if tags.empty?
     conditions = []
     base_query = ["is_locked = ?", "is_published = ?", "path_user_roles.user_role_id = ?", "paths.id != ?"]
     query_variables = [false, true, user.user_role_id, excluded_path_id]
