@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120610234601) do
+ActiveRecord::Schema.define(:version => 20120612042538) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(:version => 20120610234601) do
     t.boolean  "is_locked",                  :default => false
     t.boolean  "enable_retakes",             :default => true
     t.string   "game_type",                  :default => "basic"
+    t.string   "tags"
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"

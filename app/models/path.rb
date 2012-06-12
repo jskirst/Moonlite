@@ -6,7 +6,7 @@ class Path < ActiveRecord::Base
   attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
     :is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
     :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-    :is_locked, :enable_retakes, :game_type, :company_id, :user_id
+    :is_locked, :enable_retakes, :game_type, :company_id, :user_id, :tags
   
   belongs_to :user
   belongs_to :company
@@ -25,6 +25,9 @@ class Path < ActiveRecord::Base
   
   validates :description,
     :length    => { :maximum => 2500 }
+    
+  validates :tags,
+    :length    => { :maximum => 250 }
   
   validates :user_id, :presence => true
   
@@ -45,9 +48,27 @@ class Path < ActiveRecord::Base
     return Path.joins(:path_user_roles).where("is_locked = ? and path_user_roles.user_role_id = ? and is_published = ? and name LIKE ?", false, user.user_role_id, true, "%#{name}%")
   end
   
+  def self.with_tags_like(tags, user, excluded_path_id)
+    conditions = []
+    base_query = ["is_locked = ?", "is_published = ?", "path_user_roles.user_role_id = ?", "paths.id != ?"]
+    query_variables = [false, true, user.user_role_id, excluded_path_id]
+    
+    tags_query = []
+    tags.each do |t|
+      tags_query << "tags LIKE ?"
+      query_variables << "%#{t}%"
+    end
+    query = "(#{base_query.join(" and ")}) and (#{tags_query.join(" or ")})"
+    conditions = [query] + query_variables
+    return Path.joins(:path_user_roles).where(conditions)
+  end
+  
   def self.similar_paths(path, user)
+    paths = Set.new
     unless path.nil?
-      return Path.with_category(path.category_id, user, path.id, "id DESC")
+      Path.with_tags_like(path.tags_to_array, User.find(1), path.id).each {|p| paths << p}
+      Path.with_category(path.category_id, user, path.id, "id DESC").each {|p| paths << p}
+      return paths.to_a
     else
       return Path.with_category(user.company.categories.first.id, user)
     end
@@ -164,6 +185,16 @@ class Path < ActiveRecord::Base
         imported_task.save
       end
     end
+  end
+  
+  def tags_to_array
+    all_tags = []
+    return [] if self.tags.blank?
+    
+    self.tags.split(",").each do |t|
+      all_tags << t.strip
+    end
+    return all_tags
   end
   
   private
