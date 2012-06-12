@@ -255,30 +255,26 @@ class SectionsController < ApplicationController
 # Begin Section Journey
   
   def continue
-    last_question = create_completed_task if (params[:answer] || params[:text_answer])
+    last_question, @streak, @streak_points, @streak_name = create_completed_task
+    @streak ||= @section.user_streak(current_user)
     @task = @section.next_task(current_user)
     
-    @streak ||= @task.section.user_streak(current_user)
     if @task
       if last_question
         @correct = last_question.status_id == 1
-        @last_points = last_question.points_awarded
+        @points_awarded = last_question.points_awarded
       end
       @progress = @path.percent_complete(current_user) + 1
       @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
       @possible_points = 10
-      @streak = @section.user_streak(current_user)
-      @streak_points = @streak <= 0 ? 0 : @streak
+      if @streak < 0
+        @possible_points = @possible_points/(-1*@streak)
+      end
       generate_hint if @path.enable_retakes
-      @info_resource = @task.info_resource
-      generate_locals
-      
-      if current_user.is_anonymous
-        store_location #So user will be redirected here after registration
-        @must_register = true
-        if !(ab_test :slow_start_v2) && (ab_test :jump_start_immediate_registration)
-          @immediate_registration = true
-        end
+      @info_resource = @task.info_resource      
+      @must_register = true if current_user.is_anonymous
+      if @correct
+        @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first
       end
       
       if params[:task_id].nil?
@@ -312,46 +308,73 @@ class SectionsController < ApplicationController
   
   private
     def create_completed_task
-      answer = params[:answer]
-      text_answer = params[:text_answer]
-      task = Task.find(params[:task_id])
-      
-      previous_task = current_user.completed_tasks.last
-      last_answer_date = previous_task.created_at unless previous_task.nil?
-      
-      unless text_answer.nil?
-        status_id = task.is_correct?(text_answer, "text") ? 1 : 0
-        answer = text_answer
+      unless (params[:answer] || params[:text_answer])
+        return nil, nil, nil
+      end
+    
+      current_task = Task.find(params[:task_id])
+      unless params[:text_answer].nil?
+        answer = params[:text_answer]
+        status_id = current_task.is_correct?(answer, "text") ? 1 : 0
       else
-        status_id = task.is_correct?(answer, "multiple") ?  1 : 0
-        answer = task.describe_answer(answer)
+        answer = current_task.describe_answer(params[:answer])
+        status_id = current_task.is_correct?(params[:answer], "multiple") ?  1 : 0
       end
       
+      streak = current_task.section.user_streak(current_user)
+      last_task_time = current_user.completed_tasks.last.created_at unless current_user.completed_tasks.empty?
       completed_task = current_user.completed_tasks.build(params.merge(:status_id => status_id, :answer => answer))
-      @streak = task.section.user_streak(current_user)
       if status_id == 1
         points = 10
-        if params[:listless] == "true"        
-          unless @streak < 1
-            if last_answer_date > 35.seconds.ago
-              points += @streak
-            end
-          end
+        if streak < 0
+          points = points / ((streak-1) * -1)
+        elsif (last_task_time || Time.now) > 40.seconds.ago
+          streak += 1
+          streak_points, streak_name = calculate_streak_bonus(streak, points)
+          points += streak_points
+        else
+          points = points / 2
         end
         completed_task.points_awarded = points
         completed_task.save
-        current_user.award_points_and_achievements(task, points)
+        current_user.award_points_and_achievements(current_task, points)
       else
         completed_task.points_awarded = 0
         completed_task.save
       end
-      return completed_task
+      return completed_task, streak, streak_points, streak_name
+    end
+    
+    def calculate_streak_bonus(streak, base_points)
+      case streak
+      when 3
+        return base_points.to_f * 0.25, "Heating Up"
+      when 5
+        return base_points.to_f * 0.5, "On Fire"
+      when 7
+        return base_points.to_f * 0.75, "Brilliant"
+      when 10
+        return base_points.to_f * 1, "Unstoppable"
+      when 14
+        return base_points.to_f * 2, "God Like"
+      when 18
+        return base_points.to_f * 3, "Genuinely Impossible"
+      when 22
+        return base_points.to_f * 4, "What??!?!"
+      when 25
+        return base_points.to_f * 5, "Please stop"
+      when 28
+        return base_points.to_f * 6, "Look, you broke it."
+      when 40
+        return base_points.to_f * 7, "We don't even have a name for this"
+      end
+      return 0
     end
     
     def generate_hint
       if @task.question_type == "text" && @streak <= -1
         answer = @task.describe_correct_answer.to_s
-        @streak = ((@streak+2)*-1) #converting it so it can be used in a range
+        @streak = ((@streak+1)*-1) #converting it so it can be used in a range
         @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
       else
         @hints = []
@@ -360,22 +383,6 @@ class SectionsController < ApplicationController
           @hints << p.answer
         end
       end
-    end
-    
-    def generate_locals
-      @locals = { :path => @path, 
-        :section => @section, 
-        :task => @task, 
-        :progress => @progress, 
-        :earned_points => @earned_points,
-        :possible_points => @possible_points, 
-        :streak_points => @streak_points, 
-        :hints => @hints, 
-        :info_resource => @info_resource, 
-        :correct => @correct, 
-        :jumpstart => @jumpstart, 
-        :leaderboards => @leaderboards, 
-        :hint => @hint }
     end
   
     def has_edit_access?

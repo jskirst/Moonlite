@@ -107,6 +107,7 @@ class Section < ActiveRecord::Base
     unless user_completed_tasks.empty?
       current_task_id = user_completed_tasks.first.task_id
       if user_completed_tasks.first.status_id == 1
+        streak = 1
         user_completed_tasks.each do |t|
           first_task_id ||= t.task_id
           if t.id != first_task_id && t.status_id == 1

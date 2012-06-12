@@ -145,10 +145,8 @@ class UsersController < ApplicationController
   
   def update
     @user = User.find(params[:id])
-    if params[:user][:name]
-      @user.is_anonymous = false
-      @user.name = params[:user][:name]  
-    end
+    @user.is_anonymous = false if params[:user][:name] || params[:user][:email]
+    @user.name = params[:user][:name] if params[:user][:name]
     @user.email = params[:user][:email] if params[:user][:email] 
     @user.image_url = params[:user][:image_url] if params[:user][:image_url] 
     @user.password = params[:user][:password] if params[:user][:password] 

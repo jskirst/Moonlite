@@ -54,7 +54,7 @@ class SessionsController < ApplicationController
   end
   
   def out_and_delete
-    current_user.destroy
+    current_user.destroy if signed_in?
     redirect_to root_path
   end
   

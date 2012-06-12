@@ -30,12 +30,12 @@ $(function(){
         <h1 style="margin-bottom:2px;">Congratulations!</h1>
         <p style="font-size:13px; font-style: italic; font-weight:bold; margin-bottom: 10px;">You have successfully completed this <%= name_for_paths.downcase %></p>
         <div>
-          <p style="line-height:13px;">
+          <p style="line-height:20px; font-size:17px;">
             You're now ranked <strong><%= @user_rank %></strong> with <strong><%= @total_points_earned.to_i %> points</strong>.
             <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %>
           </p>
            <% if @must_register %>
-          <p style="line-height:13px;">
+          <p style="line-height:20px; font-size:17px;">
             Create an account below so you can <span style="text-decoration:underline; font-weight:bold;">improve your ranking</span>, <span style="text-decoration:underline; font-weight:bold;">start a public profile</span> and <span style="text-decoration:underline; font-weight:bold;">unlock more challenges!</span>
           </p>
           <% end %>
@@ -63,7 +63,7 @@ $(function(){
   </section>
   <% if @enable_recommendations %>
   <hr/>
-  <%= render "pages/suggested_paths", {:paths_title => "Similar paths", :paths_list => @similar_paths} %>
+  <%= render "pages/suggested_paths", {:paths_title => "Similar "+name_for_paths.pluralize, :paths_list => @similar_paths} %>
   <% end %>
   <section>
   <%= render "leaderboards/leaderboard", 

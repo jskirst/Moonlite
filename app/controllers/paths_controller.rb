@@ -139,20 +139,7 @@ class PathsController < ApplicationController
 # Begin Path Journey
 
   def show
-    if current_user.must_register?
-      if ab_test :slow_start_immediate_registration
-        store_location(continue_path_url(@path)) #So user will be redirected here after registration
-        if ab_test :slow_start_partial_immediate_registration
-          @partial_immediate_registration = true
-        else
-          @immediate_registration = true
-        end
-      end
-    end
-    
     @title = @path.name
-    #@achievements = @path.achievements.all(:limit => 20)
-    #@enrolled_users = @path.enrolled_users.all(:limit => 20)
     @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
     
     if @enable_leaderboard

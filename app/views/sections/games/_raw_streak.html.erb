@@ -17,7 +17,7 @@ function start_point_countdown(){
 }
 
 $(function(){
-  <% if @streak_points > 0 %>
+  <% if @streak_points.to_i > 0 %>
   start_point_countdown();
   <% end %>
   $("#raw_number_progressbar").progressbar({ value: 100 });

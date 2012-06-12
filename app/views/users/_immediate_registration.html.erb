@@ -12,7 +12,7 @@
       <%= link_to image_tag("/images/google_login_button.png", :size => "220x45"), "/auth/google_oauth2", :id => "google_signin" %>
     </div>
     <div style="float:left; padding:0 0 10px 10px;">
-      <a onclick="$('#auth_signin_explanation').slideDown();">Why use Google or Facebook login?</a>
+      <a id="auth_signin_explanation_link" onclick="$('#auth_signin_explanation').slideDown();">Why use Google or Facebook login?</a>
       <div id="auth_signin_explanation" style="display:none; margin-top: 10px;">
         <p>When you use a third party login service like Google or Facebook, we can keep the bare minimum information we need to create an account for you. We don't need to store any passwords or other identifiable information.</p>
         <p>That way if your Metabright account is ever compromised, there's no stored password that hackers can take to access other services that you use.</p>

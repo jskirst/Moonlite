@@ -14,14 +14,7 @@ function get_next_task(event, data){
     $('#challenge_form').submit(block_form_submit);
     $('#challenge_form').on('ajax:success', get_next_task);
     
-    var $correct_modal = $("#correct_modal");
-    if($correct_modal.length > 0){
-      $correct_modal.modal({keyboard: true, show: true });
-      $correct_modal.on('hidden', function(){ $(this).remove(); });
-      setTimeout(function(){$correct_modal.modal('hide'); start_question_timer();},1000);
-    } else {
-      start_question_timer();
-    }
+    start_question_timer();
     expose_help_button();
   }
 }
