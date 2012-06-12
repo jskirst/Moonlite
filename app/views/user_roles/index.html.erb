@@ -1,11 +1,5 @@
 <section id="company-settings" style="min-height: 500px;">
-  <h1><%= @company.name %></h1>
-  <ul class="tabs">
-    <li><%= link_to "Users", @company %></li>
-    <li><%= link_to "Settings", edit_company_path(@company) %></li>
-    <li class="active"><a href="#">User roles</a></li>
-    <li><%= link_to "Custom Styles", custom_styles_path %></li>
-  </ul>
+  <%= render "companies/tab_header", { :company => @company, :mode => "roles" } %>
   <section>
     <h2 style="margin-bottom:15px;">User roles</h2>
     <table>

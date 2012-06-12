@@ -1,11 +1,5 @@
 <section id="company-settings">
-  <h1><%= @company.name %></h1>
-  <ul class="tabs">
-    <li><%= link_to "Users", @company %></li>
-    <li class="active"><a href="#">Settings</a></li>
-    <li><%= link_to "User Roles", user_roles_path %></li>
-    <li><%= link_to "Custom Styles", custom_styles_path %></li>
-  </ul>
+  <%= render "companies/tab_header", { :company => @company, :mode => "settings" } %>
   <section id="settings">
     <h2 style="margin-bottom:15px;">Settings</h2>
     <%= form_for(@company) do |f| %>
