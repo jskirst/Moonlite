@@ -63,7 +63,7 @@ class UsersController < ApplicationController
     if @user.save
       @user.reload
       sign_in @user
-      flash[:success] = "Welcome to the Moonlite!"
+      flash[:success] = "Welcome to the MetaBright!"
       redirect_to @user
     else
       @title = "Accept invite"

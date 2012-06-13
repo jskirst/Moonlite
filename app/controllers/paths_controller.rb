@@ -17,8 +17,8 @@ class PathsController < ApplicationController
   end
 
   def create
-    params[:path][:company_id] = current_user.company.id
-    @path = current_user.paths.build(params[:path])
+    params[:path][:user_id] = current_user.id
+    @path = current_user.company.paths.build(params[:path])
     if @path.save
       flash[:success] = "#{name_for_paths} created."
       redirect_to new_section_path(:path_id => @path.id)

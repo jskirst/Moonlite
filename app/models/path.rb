@@ -3,10 +3,12 @@ class Path < ActiveRecord::Base
     "#{id} #{name}".parameterize
   end
   
-  attr_accessible :name, :description, :company_id, :purchased_path_id, :image_url, 
+  attr_protected :company_id
+  
+  attr_accessible :name, :description, :purchased_path_id, :image_url, 
     :is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
     :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-    :is_locked, :enable_retakes, :game_type, :company_id, :user_id, :tags
+    :is_locked, :enable_retakes, :game_type, :tags, :user_id
   
   belongs_to :user
   belongs_to :company
