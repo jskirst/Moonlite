@@ -207,20 +207,18 @@ class Path < ActiveRecord::Base
     points = enrollment.total_points.to_i
     possible = tasks.count * 10
     case
-      when points > 1.5 * possible
-        return "Master"
       when points > 1.3 * possible
+        return "Master"
+      when points > 1.1 * possible
         return "Elite"
-      when points > 1.25 * possible
-        return "Expert"
-      when points > 1 * possible
-        return "Knowledgeable"
       when points > 0.9 * possible
-        return "Average"
+        return "Expert"
       when points > 0.7 * possible
-        return "Just OK"
+        return "Highly Knowledgeable"
+      when points > 0.5 * possible
+        return "Intermediate"
       else
-        return "Noob"
+        return "Beginner"
       end
   end
   
