@@ -232,6 +232,35 @@ class PathsController < ApplicationController
       current_user.user_events.create!(:path_id => @path.id, :content => event)
     end
   end
+  
+# Administration #
+  def index
+    if params[:search]
+      @paths = Path.paginate(:page => params[:page], 
+        :conditions => ["name ILIKE ? or description ILIKE ? or tags ILIKE ?", 
+          "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%"], :order => "id DESC")
+    else
+      @paths = Path.paginate(:page => params[:page], :order => "id DESC")
+    end
+  end
+  
+  def change_company
+    if params[:company_id]
+      company = Company.find(params[:company_id])
+      if company
+        @path.company_id = company.id
+        if @path.save
+          flash[:success] = "Company #{name_for_paths} transfer succcessful."
+        else
+          flash[:error] = "Company #{name_for_paths} transfer unsucccessful. Please try again."
+        end
+      else
+        flash[:error] = "Company could not be found. Please try again."
+      end
+    end
+    @companies = Company.all
+  end
+  
 
   private
     def get_path_from_id

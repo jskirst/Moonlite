@@ -33,6 +33,7 @@ SampleApp::Application.routes.draw do
 		member do
       get :publish
       get :unpublish
+      get :change_company
       get :jumpstart
 			get :continue
       get :finish

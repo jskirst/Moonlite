@@ -1,0 +1,43 @@
+<section>
+  <h2 style="margin-bottom:15px;">Paths Index</h2>
+  <%= will_paginate @paths, :style => "float:left; margin-bottom:0;" %>
+  <div style="float:right; margin: 18px 0 0px 0;">
+    <%= form_tag({:controller => :paths, :action => :index }, :method => "get") %>
+      <%= text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name, description or tag..." %>
+      <%= submit_tag "Search", :class => "btn primary" %>
+    </form>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Status</th>
+        <th>Description</th>
+        <th>User Roles</th>
+        <th>Enrolled Users</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @paths.empty? %>
+      <tr><% (1..6).each do %><td>...</td><% end %></tr>
+      <% else %>
+        <% counter = 1 %>
+        <% @paths.each do |p| %>
+        <tr>
+          <td><%= counter.to_s %></td>
+          <td><%= link_to p.name, p %></td>
+          <td><%= link_to p.company.name, change_company_path_path(p) %></td>
+          <td><%= p.is_published ? "Published" : "" %></td>
+          <td><%= truncate((p.path_user_roles.to_a.collect {|pur| pur.user_role.name }).join(", "), :length => 60) %></td>
+          <td><%= p.enrollments.size.to_s %></td>
+        </tr>
+        <% counter += 1 %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <hr>
+  <%= will_paginate @paths %>
+</section>
