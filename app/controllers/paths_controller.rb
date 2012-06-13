@@ -46,7 +46,7 @@ class PathsController < ApplicationController
       @achievements = @path.achievements
       render "edit_achievements"
     elsif @mode == "access_control"
-      raise "Path and current user belong to different companies." if @path.company.id != current_user.company.id
+      raise "Path and current user belong to different companies. Path company id: #{@path.company_id}. User company id: #{current_user.company.id}" if @path.company.id != current_user.company.id
       raise "Path company user roles and current user company user roles are different." if @path.company.user_roles != current_user.company.user_roles
       @user_roles = @path.company.user_roles
       @path_user_roles = [] 
