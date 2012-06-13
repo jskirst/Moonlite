@@ -1,8 +1,12 @@
 class CustomStyle < ActiveRecord::Base
   attr_protected :company_id
-  attr_accessible :is_active, :core_layout_styles, :add_on_styles
+  attr_accessible :mode, :styles
   
   belongs_to :company
   
   validates :company_id, :presence => true
+  
+  validates :mode, 
+    :presence => true,
+    :numericality => { :less_than_or_equal_to => 2, :greater_than_or_equal_to => 0  }
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120612042538) do
+ActiveRecord::Schema.define(:version => 20120612224945) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -93,11 +93,10 @@ ActiveRecord::Schema.define(:version => 20120612042538) do
 
   create_table "custom_styles", :force => true do |t|
     t.integer  "company_id"
-    t.boolean  "is_active"
-    t.text     "core_layout_styles"
-    t.text     "add_on_styles"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.text     "styles"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "mode",       :default => 0
   end
 
   create_table "enrollments", :force => true do |t|

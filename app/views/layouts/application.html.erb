@@ -6,11 +6,10 @@
 <%= javascript_include_tag :defaults %>
 <%= render "layouts/stylesheets" %>
 <%= render "layouts/scripts" %>
-<% unless current_user.nil? || current_user.company.custom_styles.first.nil? %>
-  <style>
-  <%= current_user.company.custom_styles.first.core_layout_styles.html_safe %>
-  <%= current_user.company.custom_styles.first.add_on_styles.html_safe %>
-  </style>
+<% if current_user && current_user.company.custom_style %>
+  <% if current_user.company.custom_style.mode == 1 || (current_user.company.custom_style.mode == 2 && @enable_administration) %>
+  <style><%= current_user.company.custom_style.styles %></style>
+  <% end %>
 <% end %>
 </head>
 <body>

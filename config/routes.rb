@@ -28,7 +28,7 @@ SampleApp::Application.routes.draw do
 			get :edit_roles
 		end
 	end
-	resources :custom_styles, :only => [:index, :create, :edit, :update, :destroy]
+	resources :custom_styles
   resources :paths do
 		member do
       get :publish
