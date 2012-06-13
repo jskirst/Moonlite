@@ -32,6 +32,7 @@ SampleApp::Application.routes.draw do
   resources :paths do
 		member do
       get :publish
+      get :unpublish
       get :jumpstart
 			get :continue
       get :finish

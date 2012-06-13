@@ -129,6 +129,16 @@ class PathsController < ApplicationController
     end
     redirect_to edit_path_path(@path)
   end
+  
+  def unpublish
+    @path.is_published = false
+    if @path.save
+      flash[:success] = "#{name_for_paths} has been unpublished and is no longer visible."
+    else
+      flash[:error] = "Oops, could not unpublish this #{name_for_paths}. Please try again."
+    end
+    redirect_to edit_path_path(@path)
+  end
 
   def destroy
     @path.destroy
