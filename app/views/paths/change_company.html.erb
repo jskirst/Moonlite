@@ -2,8 +2,9 @@
 <%= form_tag({:controller => :paths, :action => :change_company }, :method => "get", :style => "margin-top: 20px;") %>
   <p>Select a company from the dropdown below to transfer this <%= name_for_paths %> to.</p>
   <p>This <%= name_for_paths %> currently belongs to: <strong><%= @path.company.name %></strong></p>
+  <p><span style="color:red; font-weight:bold;">WARNING:</span> It may be the only way, but be wary: You are about to nuke this object from orbit.</p>
   <div class="clearfix" style="margin:30px 0;">
-    <label style="font-size: 16px;">Email</label>
+    <label style="font-size: 16px;">Company</label>
     <div class="input">
       <select name="company_id">
         <% @companies.each do |c| %>

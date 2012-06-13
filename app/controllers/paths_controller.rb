@@ -32,6 +32,7 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
+    @path.reload
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id)
       return
@@ -46,8 +47,6 @@ class PathsController < ApplicationController
       @achievements = @path.achievements
       render "edit_achievements"
     elsif @mode == "access_control"
-      raise "Path and current user belong to different companies. Path company id: #{@path.company_id}. User company id: #{current_user.company.id}" if @path.company.id != current_user.company.id
-      raise "Path company user roles and current user company user roles are different." if @path.company.user_roles != current_user.company.user_roles
       @user_roles = @path.company.user_roles
       @path_user_roles = [] 
       @path.user_roles.each { |pur| @path_user_roles << pur.id }
@@ -250,6 +249,10 @@ class PathsController < ApplicationController
       if company
         @path.company_id = company.id
         if @path.save
+          @path.path_user_roles.destroy_all
+          @path.enrollments.destroy_all
+          @path.category_id = nil
+          @path.save
           flash[:success] = "Company #{name_for_paths} transfer succcessful."
         else
           flash[:error] = "Company #{name_for_paths} transfer unsucccessful. Please try again."
