@@ -29,6 +29,11 @@ module SessionsHelper
     deny_access unless signed_in?
   end
   
+  def admin_only
+    flash[:error] = "You do not have access to that functionality."
+    redirect_to(root_path) unless current_user.admin?
+  end
+  
   def company_admin
     unless @enable_administration
       flash[:error] = "You do not have access rights to that resource. Please contact your administrator."

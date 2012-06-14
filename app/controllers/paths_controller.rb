@@ -2,6 +2,7 @@ class PathsController < ApplicationController
   include OrderHelper
   
   before_filter :authenticate, :except => [:hero, :jumpstart]
+  before_filter :admin_only, :only => [:index, :change_company]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
   before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy]

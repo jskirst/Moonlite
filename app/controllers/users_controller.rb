@@ -265,8 +265,4 @@ class UsersController < ApplicationController
     def user_only
       redirect_to root_path unless current_user.id == params[:id].to_i
     end
-  
-    def admin_only
-      redirect_to(root_path) unless current_user.admin?
-    end
 end
