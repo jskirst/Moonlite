@@ -21,6 +21,7 @@ class CompaniesController < ApplicationController
   end
   
   def show
+    @user_roles = current_user.company.user_roles
     if params[:search]
       @users = User.paginate(:page => params[:page], 
         :conditions => ["company_id = ? and (name ILIKE ? or email ILIKE ?)", 

@@ -3,12 +3,8 @@ class Mailer < ActionMailer::Base
 
   def welcome(details)
     @user_email = details[:email]
-    if Rails.env.production?
-      @accept_url = "http://www.metabright.com/users/#{details[:token1]}/accept"
-    else
-      @accept_url = "http://localhost:3000/users/#{details[:token1]}/accept"
-    end
-    mail(:to => details[:email], :subject => "Welcome to Moonlite!")
+    @accept_url = details[:signup_link]
+    mail(:to => details[:email], :subject => "Welcome to MetaBright!")
   end
   
   def reset(details)

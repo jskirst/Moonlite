@@ -10,12 +10,13 @@ $(function(){
 <section id="company-profile">
   <%= render "companies/tab_header", { :company => @company, :mode => "users" } %>
   <section id="users">
+    <a href="#adding_users" class="btn primary" style="float:right;">Add Users</a>
     <h2 style="margin-bottom:15px;">Registered Users</h2>
-    <%= will_paginate @users, :style => "float:left; margin-bottom:0;" %>
-    <div style="float:right; margin: 18px 0 0px 0;">
+    <%= will_paginate @users, :style => "float:left; margin-bottom:0; margin-top: 0;" %>
+    <div style="float:right; margin: 0 0 0px 0;">
       <%= form_tag @company, :method => "get" do %>
         <%= text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name or email..." %>
-        <%= submit_tag "Search", :class => "btn primary" %>
+        <%= submit_tag "Search", :class => "btn secondary" %>
       <% end %>
     </div>
     <table>
@@ -33,10 +34,10 @@ $(function(){
         <% if @users.empty? %>
         <tr><% (1..6).each do %><td>...</td><% end %></tr>
         <% else %>
-          <% user_counter = 1 %>
+          <% counter = 1 %>
           <% @users.each do |u| %>
           <tr>
-            <td><%= user_counter.to_s %></td>
+            <td><%= counter.to_s %></td>
             <td><%= link_to u.name, u %></td>
             <td><%= link_to u.user_role.name, edit_role_user_path(u) unless u.user_role.nil?%></td>
             <td><%= truncate((u.enrolled_paths.to_a.collect {|i| i.name}).join(", "), :length => 60) %></td>
@@ -49,15 +50,45 @@ $(function(){
               <% end %>
             </td>
           </tr>
-          <% user_counter += 1 %>
+          <% counter += 1 %>
           <% end %>
         <% end %>
       </tbody>
     </table>
     <hr>
-    <%= will_paginate @users %>
-    <h4>Note: Adding Users</h4>
-    <p>Users must be added to a specific user role. To invite new users, click on the <strong>User Roles</strong> tab above, then click on one of the user roles in the table. From there, you'll find a link to use to invite new users to your organization.</p>
-    <hr/>
+  </section>
+  <section id="adding_users">
+    <h2 style="margin:10px 0;">Adding Users</h2>
+    <p>You can invite new users to your organization one of two ways:
+    <ul>
+      <li style="color:#404040; padding:5px;"><strong>Copy/pasting the signup link</strong> for the appropriate user role and email the link to the desired recipient yourself.</li>
+      <li style="color:#404040; padding:5px;"><strong>Email</strong> the person you'd like to invite to your account directly from MetaBright by clicking the <strong>Invite</strong> button.</li>
+    </ul>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>User Role</th>
+          <th>Signup Link</th>
+          <th>Number of Users</th>
+          <th>Invite</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% counter = 1 %>
+      <% @user_roles.each do |ur| %>
+        <tr>
+          <td><%= counter.to_s %></td>
+          <td><%= link_to ur.name, edit_user_role_path(ur) %></td>
+          <td><%= ur.signup_link %></td>
+          <td><%= ur.users.size %></td>
+          <td><%= link_to "Invite", invite_user_role_path(ur), :class => "btn secondary" %></td>
+        </tr>
+        <% counter += 1 %>
+      <% end %>
+      </tbody>
+    </table>
+    <p style="margin-top:20px;">Want to create a different user role?</p>
+    <%= link_to "Create New Role", new_user_role_path, :class => "btn secondary" %>
   </section>
 </section>

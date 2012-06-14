@@ -40,6 +40,11 @@ class UserRole < ActiveRecord::Base
     end
   end
   
+  def send_invitation_email(email)
+    email_details = { :email => email, :signup_link => self.signup_link }
+    Mailer.welcome(email_details).deliver
+  end
+  
   private
     def set_signup_token
       if(self.signup_token == nil)

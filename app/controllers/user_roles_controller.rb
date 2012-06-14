@@ -45,6 +45,13 @@ class UserRolesController < ApplicationController
     end
   end
   
+  def invite
+    if params[:email]
+      @user_role.send_invitation_email(params[:email])
+      flash[:success] = "Invitation sent to #{params[:email]}."
+    end
+  end
+  
   def destroy
     unless @user_role.users.empty?
       redirect_to user_roles_path

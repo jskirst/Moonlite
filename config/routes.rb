@@ -78,7 +78,11 @@ SampleApp::Application.routes.draw do
   resources :leaderboards
 	resources :categories
 	resources :phrases
-	resources :user_roles
+	resources :user_roles do
+    member do
+      get :invite
+    end
+  end
 	
 	root 				:to => "pages#home"
 	
