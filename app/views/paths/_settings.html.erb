@@ -84,6 +84,11 @@
   </div>
   <hr/>
   <%= link_to "Access Control", edit_path_path(path, :m => "access_control"), :class => "btn secondary", :style => "float:left;" %>
+  <% if path.is_published %>
+    <%= link_to "Unpublish", unpublish_path_path(@path), :class => "btn danger", :style => "float:left; margin-left: 10px;", :confirm => "Are you certain you want to unpublish this "+name_for_paths+"?" %>
+  <% else %>
+    <%= link_to "Publish", publish_path_path(@path), :confirm => "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes.", :class => "btn primary", :style => "float:left; margin-left: 10px;" %>
+  <% end %>
   <div style="float:right; margin: 0px 20px 0px 0px;">
     <%= f.submit "Save", :class => "btn primary", :style => "margin-right: 10px;" %>
     <span class="btn secondary" onclick="$('#settings_modal').modal('hide');">Close</span>

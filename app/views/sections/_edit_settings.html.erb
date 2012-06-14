@@ -10,7 +10,7 @@
   <div class="field clearfix">
     <%= f.label "Section Picture URL" %>
     <div class="input">
-      <%= f.text_field :image_url, :id => "image_url_input", :class=>"xlarge" %>
+      <%= f.text_field :image_url, :id => "image_url_input", :class=>"xlarge", :placeholder => "optional..." %>
       <a class="btn secondary" style="margin-left:10px;">Preview</a>
     </div>
   </div>
@@ -19,8 +19,16 @@
       <%= image_tag(section.pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 10px") %>
     </div>
   </div>
+  <div style="float:left; margin: 10px 20px 10px 0px;">
+  <% if section.is_published %>
+    <%= link_to "Unpublish", unpublish_section_path(section), :class => "btn secondary", :confirm => "Are you sure you want to unpublish this section?" %>
+  <% else %>
+    <%= link_to "Publish", publish_section_path(section), :class => "btn secondary", :confirm => "Are you sure you want to publish this section?" %>
+  <% end %>
+  <%= link_to "Delete", confirm_delete_section_path(section), :class => "btn danger", :style => "margin-left: 10px;" %>
+  </div>
   <div style="float:right; margin: 10px 20px 10px 0px;">
-    <%= f.submit "Save", :class => "btn primary" %>
+    <%= f.submit "Save", :class => "btn primary", :style => "margin-right: 8px;" %>
     <span class="btn secondary" onclick="$('#section_settings_modal_<%= section.id %>').modal('hide');">Close</span>
   </div>
 <% end %>

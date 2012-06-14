@@ -110,6 +110,21 @@ class SectionsController < ApplicationController
     redirect_to edit_path_path(@section.path)
   end
   
+  def unpublish
+    other_sections = @section.path.sections.where("is_published = ? and id != ?", true, @section.id)
+    if other_sections.size < 1
+      flash[:error] = "You cannot unpublish a section if it is the only one. You must unpublish the whole #{name_for_paths}."
+    else
+      @section.is_published = false
+      if @section.save
+        flash[:success] = "#{@section.name} has been successfully unpublished. It will no longer be visible."
+      else
+        flash[:error] = "There was an error unpublishing."
+      end
+    end
+    redirect_to edit_path_path(@section.path)
+  end
+  
   def reorder_tasks
     old_order = @section.tasks.map { |t| [t.id, t.position] }
     new_order = params[:tasks][:positions].map { |id, position| [id.to_i, position.to_i] }
@@ -118,6 +133,9 @@ class SectionsController < ApplicationController
       @section.tasks.find(t[0]).update_attribute(:position, t[1])
     end
     redirect_to edit_section_path(@section, :m => "tasks")
+  end
+  
+  def confirm_delete
   end
   
   def destroy
