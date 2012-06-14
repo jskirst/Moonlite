@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120614090323) do
+ActiveRecord::Schema.define(:version => 20120614100638) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -177,6 +177,7 @@ ActiveRecord::Schema.define(:version => 20120614090323) do
     t.boolean  "enable_retakes",             :default => true
     t.string   "game_type",                  :default => "basic"
     t.string   "tags"
+    t.boolean  "enable_voting",              :default => false
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
