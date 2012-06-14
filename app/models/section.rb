@@ -78,7 +78,7 @@ class Section < ActiveRecord::Base
   def remaining_tasks(user)
     unless self.is_published == false
       if path.enable_retakes
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 1)", user.id]).count
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and (completed_tasks.status_id = ? or completed_tasks.status_id = ?))", user.id, 1, 2]).count
       else
         return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
       end
@@ -106,7 +106,8 @@ class Section < ActiveRecord::Base
     streak = 0
     unless user_completed_tasks.empty?
       current_task_id = user_completed_tasks.first.task_id
-      if user_completed_tasks.first.status_id == 1
+      last_completed_status_id = user_completed_tasks.first.status_id == 1
+      if last_completed_status_id == 1
         streak = 1
         user_completed_tasks.each do |t|
           first_task_id ||= t.task_id
@@ -117,7 +118,7 @@ class Section < ActiveRecord::Base
             break
           end
         end
-      else
+      elsif last_completed_status_id == 0
         user_completed_tasks.each do |t|
           unless t.status_id == 0 && t.task_id == current_task_id
             break;

@@ -42,7 +42,11 @@ module SessionsHelper
   end
   
   def can_edit_path(path)
-    return (@enable_user_creation) && ((path.user == current_user) || (path.company_id = current_user.company_id && @enable_collaboration))
+    return false unless @enable_user_creation #creation enabled for your user role and...
+    return true if path.user == current_user #1) You are the path creator or...
+    return true if path.company_id = current_user.company_id && @enable_collaboration #2) Your org enables org wide collaboration
+    return true if path.collaborations.find_by_user_id(current_user.id) #3) Your listed as a collaborator
+    return false
   end
   
   def deny_access

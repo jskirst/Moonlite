@@ -20,6 +20,8 @@ class Path < ActiveRecord::Base
   has_many :info_resources, :dependent => :destroy
   has_many :path_user_roles, :dependent => :destroy
   has_many :user_roles, :through => :path_user_roles
+  has_many :collaborations
+  has_many :collaborating_users, :through => :collaborations, :source => :user
   
   validates :name, 
     :presence => true,

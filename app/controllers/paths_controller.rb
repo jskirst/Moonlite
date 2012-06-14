@@ -5,7 +5,7 @@ class PathsController < ApplicationController
   before_filter :admin_only, :only => [:index, :change_company]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
-  before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy]
+  before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy, :collaborator, :collaborators]
   before_filter :can_view?, :only => [:show]
   before_filter :can_continue?, :only => [:continue]
   
@@ -146,6 +146,47 @@ class PathsController < ApplicationController
     @path.destroy
     flash[:success] = "#{name_for_paths} successfully deleted."
     redirect_back_or_to root_path
+  end
+  
+  #GET
+  def collaborators
+    @collaborators = @path.collaborating_users
+    @collaborator = @path.collaborations.new
+  end
+  
+  #PUT
+  def collaborator
+    @collaborators = @path.collaborating_users
+    flash[:error] = "No collaborator stated."and render "collaborators" and return if params[:collaborator].nil?
+    
+    @user = User.find_by_email(params[:collaborator][:email])
+    flash[:error] = "User does not exist." and render "collaborators" and return if @user.nil?
+    params[:collaborator][:user_id] = @user.id
+    params[:collaborator][:granting_user_id] = current_user.id
+    
+    @collaborator = @path.collaborations.new(params[:collaborator])
+    if @collaborator.save
+      flash.now[:success] = "#{@user.name} successfully added as a collaborator."
+    else
+      flash.now[:error] = @collaborator.errors.full_messages.join(". ")
+      render "collaborators"
+      return
+    end
+    redirect_to collaborators_path_path(@path)
+  end
+  
+  #GET
+  def undo_collaboration
+    if @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
+      if @collaboration.destroy
+        flash[:sad_success] = "User will no longer have access."
+      else
+        flash[:error] = @collaboration.errors.full_messages.join(". ")
+      end
+    else
+      flash[:error] = "No such user."
+    end
+    redirect_to collaborators_path_path(@path)
   end
 
 # Begin Path Journey

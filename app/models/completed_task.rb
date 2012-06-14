@@ -6,12 +6,18 @@ class CompletedTask < ActiveRecord::Base
   has_one :section, :through => :task
   has_one :path, :through => :section
   has_one :category, :through => :path
+  has_one :submitted_answer
   
   validates :user_id, :presence => true
   validates :task_id, :presence => true
   validates :status_id, :presence => true
 
   validate :user_enrolled_in_path
+  
+  def user_submitted_answer
+    return nil if submitted_answer.nil
+    return submitted_answer.content
+  end
   
   private
     def user_enrolled_in_path

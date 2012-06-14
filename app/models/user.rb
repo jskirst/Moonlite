@@ -16,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :comments, :dependent => :destroy
   has_many :leaderboards, :dependent => :destroy
   has_many :user_events, :dependent => :destroy
+  has_many :collaborations
+  has_many :collaborating_paths, :through => :collaborations, :source => :path
 
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   

@@ -63,6 +63,7 @@ class PagesController < ApplicationController
     else
       @published_paths = current_user.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
       @unpublished_paths = current_user.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
+      @collaborating_paths = current_user.collaborating_paths.all(:order => "updated_at DESC")
     end
   end
   

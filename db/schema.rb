@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120612224945) do
+ActiveRecord::Schema.define(:version => 20120614090323) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -32,6 +32,14 @@ ActiveRecord::Schema.define(:version => 20120612224945) do
     t.string   "category_pic_content_type"
     t.integer  "category_pic_file_size"
     t.datetime "category_pic_updated_at"
+  end
+
+  create_table "collaborations", :force => true do |t|
+    t.integer  "path_id"
+    t.integer  "user_id"
+    t.integer  "granting_user_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "comments", :force => true do |t|
@@ -217,6 +225,13 @@ ActiveRecord::Schema.define(:version => 20120612224945) do
     t.boolean  "enable_skip_content", :default => false
   end
 
+  create_table "submitted_answers", :force => true do |t|
+    t.integer  "completed_task_id"
+    t.string   "content"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
+  end
+
   create_table "tasks", :force => true do |t|
     t.string   "question"
     t.string   "answer1"
@@ -230,6 +245,7 @@ ActiveRecord::Schema.define(:version => 20120612224945) do
     t.string   "answer4"
     t.integer  "correct_answer", :default => 1
     t.integer  "position"
+    t.integer  "answer_type",    :default => 2
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

@@ -279,6 +279,7 @@ class SectionsController < ApplicationController
     
     if @task
       if last_question
+        @free_response = last_question.status_id == 2
         @correct = last_question.status_id == 1
         @points_awarded = last_question.points_awarded
       end
@@ -331,9 +332,12 @@ class SectionsController < ApplicationController
       end
     
       current_task = Task.find(params[:task_id])
-      unless params[:text_answer].nil?
+      if params[:text_answer]
         answer = params[:text_answer]
         status_id = current_task.is_correct?(answer, "text") ? 1 : 0
+      elsif current_task.answer_type == 0
+        answer = ""
+        status_id = 2
       else
         answer = current_task.describe_answer(params[:answer])
         status_id = current_task.is_correct?(params[:answer], "multiple") ?  1 : 0
@@ -359,6 +363,9 @@ class SectionsController < ApplicationController
       else
         completed_task.points_awarded = 0
         completed_task.save
+        if current_task.answer_type == 0
+          completed_task.create_submitted_answer!(:content => params[:answer])
+        end
       end
       return completed_task, streak, streak_points, streak_name
     end

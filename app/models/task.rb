@@ -1,12 +1,7 @@
 class Task < ActiveRecord::Base
   attr_protected :section_id
   attr_accessor :randomize
-  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position
-  
-  before_create :set_position
-  before_create :record_phrases
-  before_validation :set_point_value
-  before_save :randomize_answers
+  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position, :answer_type
   
   belongs_to   :section
   has_one   :path, :through => :section
@@ -44,7 +39,11 @@ class Task < ActiveRecord::Base
   
   validate  :unique_answers
   
-  #default_scope :order => 'tasks.position ASC'
+  before_create :set_position
+  before_create :record_phrases
+  before_validation :set_point_value
+  before_save :randomize_answers
+  before_save :determine_answer_type
   
   def is_correct?(user_answer, type)
     if type == "text"
@@ -80,6 +79,17 @@ class Task < ActiveRecord::Base
   end
   
   private
+    def determine_answer_type
+      answers = answers_to_array
+      if answers.size == 0
+        self.answer_type = 0
+      elsif answers.size == 1
+        self.answer_type = 1
+      elsif answers.size > 1
+        self.answer_type = 2
+      end
+    end
+    
     def set_point_value
       self.points = 10 if self.points.nil? || self.points == 0
     end

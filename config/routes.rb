@@ -38,6 +38,9 @@ SampleApp::Application.routes.draw do
 			get :continue
       get :finish
 			put :update_roles
+      get :collaborators
+      put :collaborator
+      get :undo_collaboration
 		end
 	end
 	resources :sections do
