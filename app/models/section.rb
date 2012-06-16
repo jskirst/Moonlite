@@ -21,8 +21,6 @@ class Section < ActiveRecord::Base
     :presence     => true
     
   before_save :check_image_url
-    
-  default_scope :order => 'sections.position ASC'
   
   def randomize_tasks
     old_task_array = tasks_to_array
@@ -147,7 +145,7 @@ class Section < ActiveRecord::Base
     def get_next_incorrectly_finished_task(user)
       incorrect_answers = tasks.joins(:completed_tasks).where(["status_id = 0 and user_id = ?", user.id]).all(:order => "position ASC")
       incorrect_answers.each do |a|
-        other_answers = user.completed_tasks.where(["completed_tasks.task_id = ? and status_id = 1", a.id]).count
+        other_answers = user.completed_tasks.where(["completed_tasks.task_id = ? and (status_id = 1 or status_id = 2)", a.id]).count
         if other_answers == 0
           return a
         end

@@ -16,7 +16,6 @@
           <% if @enable_company_store %><li><%= link_to "Rewards", rewards_path %></li><% end %>
           <% if current_user.admin? || @enable_administration %>
             <li><%= link_to "Administration", current_user.company %></li>
-            <% if @enable_dashboard %><li><%= link_to "Dashboard", dashboard_path %></li><% end %>
           <% end %>
         </ul>
         <% end %>

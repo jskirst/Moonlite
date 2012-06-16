@@ -1,3 +1,46 @@
+<style>
+.answer_note { margin: 20px 0 0 150px; font-style: italic; width:300px;}
+</style>
+<script>
+function display_sub_type_message(){
+  var sub_type = $("#task_answer_sub_type").val();
+  console.log(sub_type);
+  $(".answer_note").hide();
+  if(sub_type=="100"){
+    $(".free_text_note").show();
+  } else if(sub_type=="101"){
+    $(".image_link_note").show();
+  } else {
+    $(".youtube_link_note").show();
+  }
+}
+
+$(function(){
+  $("#task_answer_sub_type").change(function(){
+    display_sub_type_message();
+  });
+
+  $("#task_answer_type").change(function(){
+    if($(this).val()== 0){
+      $("#task_answer_sub_type").parents("div.field").show();
+      $(".creative").show();
+      $(".multiple_choice").hide();
+      $(".fib").hide();
+      display_sub_type_message();
+    } else if ($(this).val()== 1){
+      $("#task_answer_sub_type").parents("div.field").hide();
+      $(".fib").show();
+      $(".creative").hide();
+      $(".multiple_choice").hide();
+    } else {
+      $("#task_answer_sub_type").parents("div.field").hide();
+      $(".multiple_choice").show();
+      $(".fib").hide();
+      $(".creative").hide();
+    }
+  });
+});
+</script>
 <%= form_tag("/tasks", {:remote => true, "data-type" => "html"}) %>
   <div style="float:right;">
     <%= submit_tag "Save", :id => "save_question_button", :class => "btn primary" %>
@@ -5,25 +48,60 @@
   </div>
   <div class="new_task" style="margin-top:10px;">
     <h3 style="margin-left:10px;" id="form_title">Add Question</h3>
-    <div class="message_container alert-message" style="display: none; width:350px; margin-left: 70px; margin-top:10px;"></div>
     <%= hidden_field_tag "task[section_id]", section.id %><br/>
     <div class="field clearfix">
       <%= label_tag :question %>
       <div class="input">
-        <%= text_area_tag("task[question]", nil, { :class => "xxlarge", :rows => "3" })%>
+        <%= text_area_tag("task[question]", nil, { :class => "xxlarge", :rows => "3", :placeholder => "Type your question here..." })%>
       </div>
     </div>
     <div class="row">
       <div class="span8 answers">
-        <% (1..4).each do |i| %>
-         <div class="field clearfix">
-          <% status = (i == 1 ? "Correct answer" : "Wrong answer") %>
-          <%= label_tag status %>
+        <div class="field clearfix">
+          <%= label_tag "Answer type" %>
           <div class="input">
-            <%= text_field_tag("task[answer"+i.to_s+"]", nil, { :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") }) %>
+            <select name="task[answer_type]" id="task_answer_type">
+              <option value="2" selected="selected">Multiple choice</option>
+              <option value="1">Fill in the blank</option>
+              <option value="0">Creative response</option>
+            </select>
           </div>
         </div>
-        <% end %>
+        <div class="field clearfix hide">
+          <%= label_tag "Response type" %>
+          <div class="input">
+            <select name="task[answer_sub_type]" id="task_answer_sub_type">
+              <option value="100" selected="selected">Free text</option>
+              <option value="101">Link to image (JPEG, PNG, GIF)</option>
+              <option value="102">Link to Youtube video</option>          
+            </select>
+          </div>
+        </div>
+        <div class="multiple_choice">
+          <% (1..4).each do |i| %>
+           <div class="field clearfix">
+            <% status = (i == 1 ? "Correct answer" : "Wrong answer") %>
+            <%= label_tag status %>
+            <div class="input">
+              <%= text_field_tag("task[answer"+i.to_s+"]", nil, { :maxlength => 255, :size => 75, :class => status.downcase.gsub(" ","_") }) %>
+            </div>
+          </div>
+          <% end %>
+        </div>
+        <div class="fib hide">
+          <div class="field clearfix">
+            <div class="input">
+              <%= text_area_tag("task[fib_answer]", nil, :style=>"width:300px;", :placeholder => "List answers here...") %>
+              <p style="font-style: italic; width:300px;">Provide a list of all possible correct answers (case-insensitve) seperated by <strong>commas</strong>.</p>
+            </div>
+          </div>
+        </div>
+        <div class="creative hide">
+          <p class="free_text_note answer_note hide">To answer this question, the user will be asked to type an appropriate free text response into a text box.</p>
+          <p class="image_link_note answer_note hide">To answer this question, the user will be asked to copy and paste a link to an image from the internet.</p>
+          <p class="youtube_link_note answer_note hide">To answer this question, the user will be asked to copy and paste a link to a video from Youtube.</p>
+          <p style="margin: 20px 0 0 150px; font-style: italic; width:300px;">All creative response questions will need to be evaluated from the <%= name_for_paths %> Dashboard by the <%= name_for_paths %> creator before the user will be rewarded any points.</p>
+        </div>
       </div>
       <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
         <p class="not_found_message" style="display: none;">No suggestions found.</p>
@@ -32,5 +110,6 @@
         <ol style="margin-top:10px; display: none;"></ol>
       </div>
     </div>
+    <div class="message_container alert-message" style="display: none; width:350px; margin-left: 70px; margin-top:10px;"></div>
   </div>
 </form>

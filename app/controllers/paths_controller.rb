@@ -306,6 +306,14 @@ class PathsController < ApplicationController
     @companies = Company.all
   end
   
+  def dashboard
+    @time = (params[:time] || 7).to_i
+
+    @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
+    
+    @unresolved_tasks = @path.completed_tasks.where("status_id = ?", 2)
+  end
+  
 
   private
     def get_path_from_id
@@ -335,5 +343,37 @@ class PathsController < ApplicationController
     
     def can_continue?
       redirect_to root_path unless current_user.enrolled?(@path)
+    end
+    
+    def calculate_path_statistics(path, time)
+      # User points
+      user_points = {"0-50" => 0, "51-100" => 0, "101-500" => 0, "501-2000" => 0, "2000+" => 0 }
+      path.enrollments.select(:total_points).each do |e|
+        if e.total_points <= 50
+          user_points["0-50"] += 1
+        elsif e.total_points <= 100
+          user_points["51-100"] += 1
+        elsif e.total_points <= 500
+          user_points["101-500"] += 1
+        elsif e.total_points <= 2000
+          user_points["501-2000"] += 1
+        else
+          user_points["2000+"] += 1
+        end
+      end
+      
+      # Completed tasks over time
+      activity_over_time = []
+      (0..@time).each do |d|
+        completed_tasks = @path.completed_tasks.where("completed_tasks.updated_at <= ? and completed_tasks.updated_at > ?", d.days.ago, (d+1).days.ago).count
+        enrollments = @path.enrollments.where("enrollments.created_at <= ? and enrollments.created_at > ?", d.days.ago, (d+1).days.ago).count
+        activity_over_time << {:date => d.days.ago.strftime("%b %d"), :completed_tasks => completed_tasks, :enrollments => enrollments}
+      end
+      activity_over_time.reverse!
+      
+      # Path score
+      path_score = ((@path.completed_tasks.average("status_id", :conditions => ["completed_tasks.updated_at > ?", @time.days.ago]) || 0) * 100).to_i
+      
+      return [user_points, activity_over_time, path_score]
     end
 end

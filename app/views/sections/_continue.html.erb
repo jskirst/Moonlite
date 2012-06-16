@@ -4,6 +4,7 @@
     <div class="question">
       <%= image_tag @path.path_pic, :style => "width: 50px; float:left;" %>
       <h2 style="margin-left:55px;">Section <%= @section.position.to_s %>. <%= @section.name %></h2>
+      <p>Time allotted: <%= @time_allotted %></p>
       <blockquote style="margin: 40px 20px 20px 30px;">
         <p>
           <%= @task.question %>
@@ -16,8 +17,6 @@
       <input type="hidden" name="task_id" value="<%= @task.id %>">
       <% if @task.answer_type == 0 %>
         <%= render "free_response", { :task => @task } %>
-      <% elsif @task.answer_type == 1 && @path.game_type == "character guess" %>
-        <%= render "character_guess", { :answer => @task.answer1 } %>
       <% elsif @task.answer_type == 1 %>
         <%= render "single_answer", { :task => @task } %>
       <% else %>

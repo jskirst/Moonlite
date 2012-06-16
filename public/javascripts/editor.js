@@ -54,6 +54,7 @@ function clear_form(){
   $("#task_answer2").val("");
   $("#task_answer3").val("");
   $("#task_answer4").val("");
+  $("#task_fib_answer").val("");
   $('.suggestions').find('p,ol').each(function(){ $(this).hide(); });
 }
 

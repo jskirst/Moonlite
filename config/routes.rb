@@ -31,16 +31,17 @@ SampleApp::Application.routes.draw do
 	resources :custom_styles
   resources :paths do
 		member do
+      get :dashboard
       get :publish
       get :unpublish
       get :change_company
-      get :jumpstart
-			get :continue
-      get :finish
-			put :update_roles
+      put :update_roles
       get :collaborators
       put :collaborator
       get :undo_collaboration
+      get :jumpstart
+			get :continue
+      get :finish
 		end
 	end
 	resources :sections do
@@ -66,11 +67,11 @@ SampleApp::Application.routes.draw do
 	resources :tasks do
     member do
       get :suggest
+      put :resolve
     end
   end
 	resources :achievements
 	resources :user_achievements
-	resources :completed_tasks
 	resources :info_resources
 	resources :user_transactions
 	resources :rewards do

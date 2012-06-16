@@ -1,6 +1,18 @@
 <div class="field clearfix">
-  <label style="margin-top:0px;">Answer:</label>
+  <% if task.answer_sub_type == 100 %>
   <div class="input">
-    <textarea id="answer1" name="answer" rows="3" style="width: 350px;"></textarea>
+    <textarea name="answer" rows="3" style="width: 350px;"></textarea>
+    <p>Free style that shit.</p>
   </div>
+  <% elsif task.answer_sub_type == 101 %>
+  <div class="input">
+    <input type="text" name="answer" rows="3" style="width: 350px;"></textarea>
+    <p>Provide a link to an image</p>
+  </div>
+  <% else %>
+  <div class="input">
+    <input type="text" name="answer" rows="3" style="width: 350px;"></textarea>
+    <p>Provide a link to a Youtube video</p>
+  </div>
+  <% end %>
 </div>

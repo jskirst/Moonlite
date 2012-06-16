@@ -15,6 +15,7 @@ class Path < ActiveRecord::Base
   belongs_to :category
   has_many :sections, :dependent => :destroy
   has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
+  has_many :completed_tasks, :through => :tasks
   has_many :enrollments, :dependent => :destroy
   has_many :enrolled_users, :through => :enrollments, :source => :user
   has_many :info_resources, :dependent => :destroy

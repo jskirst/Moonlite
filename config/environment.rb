@@ -13,4 +13,3 @@ ActionMailer::Base.smtp_settings = {
 	:password => "disrupt11",
 	:authentication => :plain
 }
-

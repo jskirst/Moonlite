@@ -1,0 +1,34 @@
+<section>
+  <h2>Unresolved Submissions</h2>
+  <% if @unresolved_tasks.empty? %>
+  <p>There are no unresolved submissions right now.</p>
+  <% else %>
+  <ol id="unresolved_tasks_list">
+    <% @unresolved_tasks.each do |ut| %>
+      <li style="padding:15px; color:#404040;">
+        <div style="float;left;">
+          <p style="font-size: 16px; font-weight:bold; margin-bottom: 20px;"><%= ut.task.question %></p>
+          <% if ut.task.answer_sub_type == 100 %>
+            <blockquote><p><%= ut.submitted_answer.content %></p></blockquote>
+          <% elsif ut.task.answer_sub_type == 101 %>
+            <p><%= image_tag sanitize(ut.submitted_answer.content), :style => "height: 100px;" %></p>
+          <% elsif ut.task.answer_sub_type == 102 %>
+            <p><%= youtube_embed(ut.submitted_answer.content).html_safe %></p>
+          <% else %>
+            <% raise "Invalid answer sub type." %>
+          <% end %>
+          <%= form_tag({:controller => :tasks, :action => :resolve, :id => ut.task_id}, :method => :put) %>
+            <input type="hidden" value="<%= ut.id %>" name="completed_task[id]">
+            <select name="completed_task[points]">
+              <option value="0">No points</option>
+              <option value="5">Half points</option>
+              <option value="10">Full points</option>
+            </select>
+            <%= submit_tag "Save", :class => "btn primary", :style => "margin-left: 10px;" %>
+          </form>
+        </div>
+      </li> 
+    <% end %>
+  </ol>
+  <% end %>
+</section>

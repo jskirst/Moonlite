@@ -1,8 +1,8 @@
 class TasksController < ApplicationController
   before_filter :authenticate
   before_filter :has_access?
-  before_filter :get_task_from_id, :only => [:edit, :update, :destroy]
-  before_filter :can_edit?, :only => [:edit, :update, :destroy]
+  before_filter :get_task_from_id, :only => [:edit, :update, :destroy, :resolve]
+  before_filter :can_edit?, :only => [:edit, :update, :destroy, :resolve]
   
   respond_to :json, :html
   
@@ -33,6 +33,10 @@ class TasksController < ApplicationController
     @section = Section.find(params[:task][:section_id])
     unless can_edit_path(@section.path)
       respond_with({ :error => "You do not have access to that object." })
+    end
+    
+    if params[:task][:answer_type] == "1"
+      params[:task][:answer1] = params[:task][:fib_answer]
     end
     
     @task = @section.tasks.new(params[:task])
@@ -80,6 +84,26 @@ class TasksController < ApplicationController
     else
       respond_to { |f| f.json { render :json => { :errors => "Question could not be deleted." } } }
     end
+  end
+  
+  def resolve
+    unless @completed_task = @task.completed_tasks.find_by_id(params[:completed_task][:id])
+      flash[:error] = "Completed task does not belong to ask."
+    else    
+      unless points = (params[:completed_task][:points]).to_i
+        flash[:error] = "No points argument found."
+      else
+        @completed_task.user.award_points_and_achievements(@completed_task.task, points)
+        @completed_task.points_awarded = points
+        @completed_task.status_id = 1
+        if @completed_task.save
+          flash[:success] = "Resolved."
+        else
+          flash[:error] = "Error resolving. Please try again."
+        end
+      end
+    end
+    redirect_to dashboard_path_path(@task.path, :anchor => "unresolved_tasks_list")        
   end
   
   private

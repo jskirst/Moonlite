@@ -296,6 +296,8 @@ class SectionsController < ApplicationController
         @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first
       end
       
+      @time_allotted = get_time_remaining(@task)
+      
       if params[:task_id].nil?
         render "start" 
       else
@@ -368,6 +370,19 @@ class SectionsController < ApplicationController
         end
       end
       return completed_task, streak, streak_points, streak_name
+    end
+    
+    def get_time_remaining(task)
+      last_question = current_user.completed_tasks.last
+      unless last_question.nil?
+        last_question = nil unless last_question.path == task.path
+      end
+      
+      if last_question.nil? || last_question.created_at > 10.seconds.ago
+        return @task.answer_type == 0 ? 300 : 30
+      else
+        return (@task.answer_type == 0 ? 300 : 30) - (Time.now - last_question.created_at)
+      end
     end
     
     def calculate_streak_bonus(streak, base_points)

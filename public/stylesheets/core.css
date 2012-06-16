@@ -109,3 +109,5 @@ section.wiki { margin-bottom: 50px; }
 .notice a          { color: #514721; }
 .success a         { color: #264409; }
 .info a            { color: #205791; }
+.selected-time { text-decoration:underline; }
+#unresolved_tasks_list li:hover { background-color:whitesmoke; }
