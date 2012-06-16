@@ -11,7 +11,7 @@
           <% if ut.task.answer_sub_type == 100 %>
             <blockquote><p><%= ut.submitted_answer.content %></p></blockquote>
           <% elsif ut.task.answer_sub_type == 101 %>
-            <p><%= image_tag sanitize(ut.submitted_answer.content), :style => "height: 100px;" %></p>
+            <p><%= image_tag sanitize(ut.submitted_answer.content), :style => "height: 200px;" %></p>
           <% elsif ut.task.answer_sub_type == 102 %>
             <p><%= youtube_embed(ut.submitted_answer.content).html_safe %></p>
           <% else %>
