@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120616031217) do
+ActiveRecord::Schema.define(:version => 20120617221401) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -93,10 +93,11 @@ ActiveRecord::Schema.define(:version => 20120616031217) do
     t.integer  "task_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "status_id",      :default => 0
+    t.integer  "status_id",           :default => 0
     t.datetime "quiz_session"
     t.integer  "points_awarded"
     t.string   "answer"
+    t.integer  "submitted_answer_id"
   end
 
   create_table "custom_styles", :force => true do |t|
@@ -227,10 +228,11 @@ ActiveRecord::Schema.define(:version => 20120616031217) do
   end
 
   create_table "submitted_answers", :force => true do |t|
-    t.integer  "completed_task_id"
     t.string   "content"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "total_votes", :default => 0
+    t.integer  "task_id"
   end
 
   create_table "tasks", :force => true do |t|

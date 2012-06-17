@@ -57,6 +57,14 @@
     <label>Permissions</label>
     <div class="input">
       <ul class="inputs-list" style="margin-bottom: 0px;">
+        <% if @is_consumer %>
+        <li>
+          <label>
+            <%= f.check_box :enable_voting %>
+            <span>Allow users to vote on creative response answers</span>
+          </label>
+        </li>
+        <% end %>
         <li>
           <label>
             <%= f.check_box :is_public %>
@@ -67,12 +75,6 @@
           <label>
             <%= f.check_box :enable_section_display %>
             <span>Display section previews on the main <%= name_for_paths %> page</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <%= f.check_box :enable_nonlinear_sections %>
-            <span>Allow users to do sections in any order</span>
           </label>
         </li>
         <li>

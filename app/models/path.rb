@@ -16,6 +16,7 @@ class Path < ActiveRecord::Base
   has_many :sections, :dependent => :destroy
   has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
   has_many :completed_tasks, :through => :tasks
+  has_many :submitted_answers, :through => :tasks
   has_many :enrollments, :dependent => :destroy
   has_many :enrolled_users, :through => :enrollments, :source => :user
   has_many :info_resources, :dependent => :destroy
@@ -131,7 +132,7 @@ class Path < ActiveRecord::Base
   def total_remaining_tasks(user)
     remaining_tasks = 0
     if self.enable_retakes
-      remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 1)", user.id]).count
+      remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id IN (?))", user.id, [1,2]]).count
     else
       remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
     end

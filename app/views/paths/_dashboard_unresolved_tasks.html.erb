@@ -3,6 +3,7 @@
   <% if @unresolved_tasks.empty? %>
   <p>There are no unresolved submissions right now.</p>
   <% else %>
+  <%= will_paginate(@unresolved_tasks) %>
   <ol id="unresolved_tasks_list">
     <% @unresolved_tasks.each do |ut| %>
       <li style="padding:15px; color:#404040;">
@@ -19,16 +20,20 @@
           <% end %>
           <%= form_tag({:controller => :tasks, :action => :resolve, :id => ut.task_id}, :method => :put) %>
             <input type="hidden" value="<%= ut.id %>" name="completed_task[id]">
+            <% unless @path.enable_voting %>
             <select name="completed_task[points]">
               <option value="0">No points</option>
               <option value="5">Half points</option>
               <option value="10">Full points</option>
             </select>
             <%= submit_tag "Save", :class => "btn primary", :style => "margin-left: 10px;" %>
+            <% end %>
+            <%= submit_tag "Delete", :class => "btn danger", :style => "margin-left: 10px;" %>
           </form>
         </div>
       </li> 
     <% end %>
   </ol>
+  <%= will_paginate(@unresolved_tasks) %>
   <% end %>
 </section>

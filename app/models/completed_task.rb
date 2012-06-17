@@ -1,12 +1,12 @@
 class CompletedTask < ActiveRecord::Base
-  attr_accessible :task_id, :status_id, :quiz_session, :updated_at, :points_awarded, :answer
+  attr_accessible :task_id, :submitted_answer_id, :status_id, :quiz_session, :updated_at, :points_awarded, :answer
   
   belongs_to :user
   belongs_to :task
+  belongs_to :submitted_answer
   has_one :section, :through => :task
   has_one :path, :through => :section
   has_one :category, :through => :path
-  has_one :submitted_answer
   
   validates :user_id, :presence => true
   validates :task_id, :presence => true
@@ -17,6 +17,12 @@ class CompletedTask < ActiveRecord::Base
   def user_submitted_answer
     return nil if submitted_answer.nil
     return submitted_answer.content
+  end
+  
+  def find_or_create_submitted_answer(content)
+    sa = SubmittedAnswer.find_by_task_id_and_content(self.task_id, content)
+    return sa unless sa.nil?
+    return task.submitted_answers.create!(:content => content)
   end
   
   private

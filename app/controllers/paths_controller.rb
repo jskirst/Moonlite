@@ -268,6 +268,9 @@ class PathsController < ApplicationController
     end
     
     @similar_paths = Path.similar_paths(@path, current_user)
+    
+    @submitted_answers = @path.submitted_answers
+    
     if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
       event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
       current_user.user_events.create!(:path_id => @path.id, :content => event)
@@ -308,10 +311,8 @@ class PathsController < ApplicationController
   
   def dashboard
     @time = (params[:time] || 7).to_i
-
     @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    
-    @unresolved_tasks = @path.completed_tasks.where("status_id = ?", 2)
+    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 20)
   end
   
 

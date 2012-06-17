@@ -1,15 +1,18 @@
 class SubmittedAnswer < ActiveRecord::Base
-  attr_protected :completed_task_id
+  attr_protected :task_id, :total_votes
   attr_accessible :content
   
-  belongs_to :completed_task
-  has_one :task, :through => :completed_task
-  has_one :user, :through => :completed_task
-  
-  validates :completed_task_id, :presence => true
+  belongs_to :task
+  has_many :completed_tasks
+  has_many :users, :through => :completed_task
  
   validates :content, 
     :presence     => true,
     :length      => { :within => 1..2500 }
+    
+  def add_vote
+    self.total_votes += 1
+    save
+  end
     
 end

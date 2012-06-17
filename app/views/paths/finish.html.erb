@@ -60,7 +60,6 @@ $(function(){
     </div>
     <% end %>
   </section>
-  </section>
   <% if @enable_recommendations %>
   <hr/>
   <%= render "pages/suggested_paths", {:paths_title => "Similar "+name_for_paths.pluralize, :paths_list => @similar_paths} %>
@@ -75,4 +74,15 @@ $(function(){
       :limit => 5,
       :table_class => "bordered-table"
   } %>
+  </section>
+  <section>
+    <ol>
+      <% @submitted_answers.each do |sa| %>
+      <li>
+        <h5><%= sa.task.question %></h5>
+        <blockquote><p><%= sa.content %></p></blockquote>
+        <p><%= sa.total_votes %></p>
+      </li>
+      <% end %>
+    </ol>
 </section>

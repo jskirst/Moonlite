@@ -360,15 +360,15 @@ class SectionsController < ApplicationController
           points = points / 2
         end
         completed_task.points_awarded = points
-        completed_task.save
         current_user.award_points_and_achievements(current_task, points)
       else
         completed_task.points_awarded = 0
-        completed_task.save
         if current_task.answer_type == 0
-          completed_task.create_submitted_answer!(:content => params[:answer])
+          submitted_answer = completed_task.find_or_create_submitted_answer(params[:answer])
+          completed_task.submitted_answer_id = submitted_answer.id
         end
       end
+      completed_task.save
       return completed_task, streak, streak_points, streak_name
     end
     

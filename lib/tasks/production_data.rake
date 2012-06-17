@@ -46,15 +46,14 @@ namespace :db do
   desc "Fill database with production data"
   task :genesis => :environment do
     Rake::Task['db:reset'].invoke
+    
     moonlite_company = Company.create!(:name => "Moonlite")
     default_role = moonlite_company.user_roles.create!(:name => "Admin", :enable_administration => true)
     moonlite_company.user_role_id = default_role.id
     moonlite_company.save
     default_cat = moonlite_company.categories.create!(:name => "Everything")
-    moonlite_admin = create_user(moonlite_company, default_role, "Jonathan Kirst", "jc@moonlite.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
-    create_user(moonlite_company, default_role, "Nathan Sokol-Ward", "nathan@moonlite.com", "http://www.hecticgourmet.com/blog/wp-content/uploads/2011/11/slap-chop.jpg")
-    create_user(moonlite_company, default_role, "Martha Elster", "mjelster@moonlite.com", "http://www.eskie.net/superior/west/images/jane_2c.jpg")
-    create_user(moonlite_company, default_role, "Guest User", "guest@moonlite.com", "http://rlv.zcache.com/question_mark_hat-p148553218496209654z8nb8_400.jpg")
+    
+    moonlite_admin = create_user(moonlite_company, default_role, "Jonathan Kirst", "admin@metabright.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
     
     PHRASE_PAIRINGS.each do |pp|
       PhrasePairing.create_phrase_pairings(pp)
@@ -80,46 +79,5 @@ namespace :db do
         end
       end
     end
-    
-    NUMBER_OF_USERS.times do |n|
-      new_user = nil
-      while(new_user.nil?)
-        fake_user = FAKE_USERS[rand(FAKE_USERS.size)]
-        name = fake_user[0]
-        email = name.gsub(" ",".") + "@moonlite.com"
-        image_url = fake_user[1]
-        if User.find_by_email(email).nil?
-          new_user = create_user(moonlite_company, default_role, name, email, image_url)
-        end
-      end
-      
-      Path.all.each do |p|
-        if rand(2) == 1
-          new_user.enrollments.create!(:path_id => p.id)
-          stop = rand(NUMBER_OF_TASKS*PATH_SECTIONS.size)
-          stop_counter = 0
-          
-          p.sections.each do |s|
-            s.tasks.each do |t|
-              if stop_counter >= stop
-                break
-              else
-                date = rand(TIME_PERIOD).days.ago
-                score = rand(10)
-                if score > AVG_SCORE
-                  status_id = 0
-                  new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
-                else
-                  status_id = 1
-                  new_user.completed_tasks.create!(:task_id => t.id, :status_id => status_id, :quiz_session => date, :updated_at => date)
-                  new_user.award_points(t, 10)
-                end            
-              end
-              stop_counter += 1              
-            end
-          end
-        end
-      end
-    end
-  end
+	end
 end

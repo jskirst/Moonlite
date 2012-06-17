@@ -89,17 +89,22 @@ class TasksController < ApplicationController
   def resolve
     unless @completed_task = @task.completed_tasks.find_by_id(params[:completed_task][:id])
       flash[:error] = "Completed task does not belong to ask."
-    else    
-      unless points = (params[:completed_task][:points]).to_i
-        flash[:error] = "No points argument found."
+    else
+      if params[:commit] == "Delete"
+        @completed_task.destroy
+        flash[:success] = "Submission deleted."
       else
-        @completed_task.user.award_points_and_achievements(@completed_task.task, points)
-        @completed_task.points_awarded = points
-        @completed_task.status_id = 1
-        if @completed_task.save
-          flash[:success] = "Resolved."
+        unless points = (params[:completed_task][:points]).to_i
+          flash[:error] = "No points argument found."
         else
-          flash[:error] = "Error resolving. Please try again."
+          @completed_task.user.award_points_and_achievements(@completed_task.task, points)
+          @completed_task.points_awarded = points
+          @completed_task.status_id = 1
+          if @completed_task.save
+            flash[:success] = "Resolved."
+          else
+            flash[:error] = "Error resolving. Please try again."
+          end
         end
       end
     end
