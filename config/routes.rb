@@ -68,6 +68,7 @@ SampleApp::Application.routes.draw do
     member do
       get :suggest
       put :resolve
+      get :vote
     end
   end
 	resources :achievements

@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate
   before_filter :has_access?
-  before_filter :get_task_from_id, :only => [:edit, :update, :destroy, :resolve]
+  before_filter :get_task_from_id, :only => [:edit, :update, :destroy, :resolve, :vote]
   before_filter :can_edit?, :only => [:edit, :update, :destroy, :resolve]
   
   respond_to :json, :html
@@ -109,6 +109,21 @@ class TasksController < ApplicationController
       end
     end
     redirect_to dashboard_path_path(@task.path, :anchor => "unresolved_tasks_list")        
+  end
+  
+  def vote
+    @submission = @task.submitted_answers.find(params[:sa_id])
+    unless @submission
+      flash[:error] = "Submitted answer does not belong to this task."
+    else
+      if current_user.enrollments.find_by_path_id(@task.path.id).available_votes > 0
+        @submission.add_vote
+        flash[:success] = "Vote recieved."
+      else
+        flash[:info] = "You have no more votes to spend."
+      end
+    end
+    redirect_to finish_path_path(@task.path)
   end
   
   private

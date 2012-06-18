@@ -82,6 +82,7 @@ $(function(){
         <h5><%= sa.task.question %></h5>
         <blockquote><p><%= sa.content %></p></blockquote>
         <p><%= sa.total_votes %></p>
+        <p><%= link_to image_tag("/images/kitty1.jpg", :style => "height:30px;"), vote_task_path(sa.task.id, :sa_id => sa.id) %></p>
       </li>
       <% end %>
     </ol>

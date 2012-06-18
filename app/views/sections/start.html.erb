@@ -2,7 +2,7 @@
   <script>
   $(function(){
     $('a').not("[id*=signin]").attr("href", "#");
-    $('a').not("[id*=signin]").click(function(){
+    $('a').not("[id*=signin]").not("[id*=preview]").click(function(){
       $('#must_complete_first_modal').modal({
         keyboard: true,
         show: true

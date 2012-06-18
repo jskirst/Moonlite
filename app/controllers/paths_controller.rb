@@ -269,6 +269,10 @@ class PathsController < ApplicationController
     
     @similar_paths = Path.similar_paths(@path, current_user)
     
+    enrollment = current_user.enrollments.find_by_path_id(@path.id)
+    enrollment.available_votes += 5
+    enrollment.save
+    @available_votes = enrollment.available_votes
     @submitted_answers = @path.submitted_answers
     
     if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120617221401) do
+ActiveRecord::Schema.define(:version => 20120618174209) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -113,7 +113,8 @@ ActiveRecord::Schema.define(:version => 20120617221401) do
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "total_points", :default => 0
+    t.integer  "total_points",    :default => 0
+    t.integer  "available_votes", :default => 0
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
