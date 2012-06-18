@@ -1,20 +1,29 @@
 <div class="field clearfix">
   <% if task.answer_sub_type == 100 %>
   <div class="input" style="margin-top:10px;">
-    <textarea name="answer" rows="3" style="width: 350px;" placeholder="Enter answer here..."></textarea>
+    <textarea name="answer" id="answer_input" rows="3" style="width: 350px;" placeholder="Enter answer here..."></textarea>
     <p style="font-style:italic;">*Points awarded by votes</p>
   </div>
   <% elsif task.answer_sub_type == 101 %>
    <script>
     $(function(){
-      $("#answer_input").change(function(){
-        var url = $(this).val();
-        $("#image_placeholder").attr("src", url);
+      check_image_before_submit();
+    
+      $("#answer_preview_button").click(function(){
+        var url = $("#answer_input").val();
+        is_valid_image(url, function(valid){
+          if(valid == true){
+            $("#image_placeholder").attr("src", url);
+          } else {
+            alert("Please provide a link to a valid image.");
+          }
+        });
+        
       });
     });
   </script>
   <div class="input">
-    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to image URL here..."><a id="answer_preview_button" class="btn secondary" style="margin-left: 10px;">Preview</a>
+    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to image URL here..."><a id="answer_preview_button" class="btn secondary clickable_link" style="margin-left: 10px;">Preview</a>
     <p style="font-style:italic;">*Points awarded by votes</p>
     <div id="answer_preview_container" style="width:250px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;">
       <div id="answer_preview" >
@@ -24,27 +33,25 @@
   </div>
   <% else %>
   <script>
-    function set_youtube_preview(youtube_link, preview_id){
-      var start_pos = youtube_link.indexOf("v=") + 2;
-      var id_fragments = youtube_link.substring(start_pos).split("&");
-      var id = id_fragments[0];
-      
-      var params = { allowScriptAccess: "always", wmode: "transparent" }
-      var attr = { id: preview_id };
-      
-      $("#youtube_placeholder").remove();
-      swfobject.embedSWF("http://www.youtube.com/v/"+id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "480", "295", "8", null, null, params, attr);
-    }
-  
     $(function(){
-      $("#answer_input").change(function(){
-        var url = $(this).val();
-        set_youtube_preview(url, "answer_preview");
+      check_youtube_before_submit();
+    
+      $("#answer_preview_button").click(function(){
+        var url = $("#answer_input").val();
+        console.log(url);
+        var youtube_id = get_youtube_id_from_link(url);
+        console.log(youtube_id);
+        if(is_valid_youtube_id(youtube_id)){
+          $("#youtube_placeholder").remove();
+          set_youtube_preview(url, "answer_preview");
+        } else {
+          alert("Please provide a link to a valid Youtube video.");
+        }
       });
     });
   </script>
   <div class="input">
-    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to youtube video here..."><a class="btn secondary" style="margin-left: 10px;">Preview</a>
+    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to youtube video here..."><a class="btn secondary clickable_link" style="margin-left: 10px;" id="answer_preview_button">Preview</a>
     <p style="font-style:italic;">*Points awarded by votes</p>
     <div id="answer_preview_container" style="width: 480px; height:295px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;">
       <div id="answer_preview" >

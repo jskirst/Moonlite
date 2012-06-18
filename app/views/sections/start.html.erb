@@ -1,8 +1,8 @@
 <% if @must_register %>
   <script>
   $(function(){
-    $('a').not("[id*=signin]").attr("href", "#");
-    $('a').not("[id*=signin]").not("[id*=preview]").click(function(){
+    $('a').not(".clickable_link").attr("href", "#");
+    $('a').not(".clickable_link").click(function(){
       $('#must_complete_first_modal').modal({
         keyboard: true,
         show: true

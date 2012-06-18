@@ -11,7 +11,7 @@ function get_next_task(event, data){
   } else {
     $('body').data("needs_reload", false);
     $("section#content").html(data);
-    $('#challenge_form').submit(block_form_submit);
+    //$('#challenge_form').submit(block_form_submit);
     $('#challenge_form').on('ajax:success', get_next_task);
     
     start_question_timer();
@@ -94,13 +94,74 @@ function start_question_timer(){
   }
 }
 
+function get_youtube_id_from_link(youtube_link){
+  if(youtube_link.indexOf("youtu.be")>=0){
+    var start_pos = youtube_link.indexOf("be/") + 3;
+  } else {
+    var start_pos = youtube_link.indexOf("v=") + 2;
+  }
+  var id_fragments = youtube_link.substring(start_pos).split("&");
+  var id = id_fragments[0];
+  console.log(id);
+  return id;
+}
+
+function is_valid_youtube_id(youtube_id){
+  //need to add regex varification of id characters
+  return (youtube_id.length == 11);
+}
+
+function set_youtube_preview(youtube_link, preview_id){
+  var youtube_id = get_youtube_id_from_link(youtube_link);
+  var params = { allowScriptAccess: "always", wmode: "transparent" }
+  var attr = { id: preview_id };
+  swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "480", "295", "8", null, null, params, attr);
+}
+
+function check_youtube_before_submit(){
+  $("#challenge_form").submit(function(){  
+    $('body').data("needs_reload", false);
+    var url = $("#answer_input").val();
+    var youtube_id = get_youtube_id_from_link(url);
+    if(is_valid_youtube_id(youtube_id)){
+      block_form_submit($("#challenge_form"));
+      $("#challenge_form").unbind("submit");
+      $("#challenge_form").submit();
+      return true;
+    } else {
+      alert("Please provide a link to a valid Youtube video.");
+      return false;
+    }
+  });
+}
+
+function check_image_before_submit(){
+  $("#challenge_form").submit(function(){
+    $('body').data("needs_reload", false);
+    var url = $("#answer_input").val();
+    is_valid_image(url, function(valid){
+      if(valid == true){
+        block_form_submit($("#challenge_form"));
+        $("#challenge_form").unbind("submit");
+        $("#challenge_form").submit();
+        return true;
+      } else {
+        alert("Please provide a link to a valid image.");
+        unblock_form_submit($('#challenge_form'));
+        return false;
+      }
+    });
+    return false;
+  });
+}
+
 $(document).ready(function() {
   var page_needs_reload = false;
   $('body').data("needs_reload", false);
   expose_help_button();
   
   $('#challenge_form').submit(function(){
-    block_form_submit();
+    //block_form_submit();
     $('body').data("needs_reload", true);
     setTimeout(function(){
       if($('body').data("needs_reload") == true){

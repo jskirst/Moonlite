@@ -46,3 +46,15 @@ function expose_help_button(){
     $("#help_button").hide();
   }
 }
+
+function is_valid_image(url, callback){
+  if (url == ""){
+    callback(false);
+  } else {
+    $("<img>", {
+      src: url,
+      error: function() { callback(false) },
+      load: function() { callback(true) }
+    });
+  }
+}

@@ -329,7 +329,10 @@ class SectionsController < ApplicationController
   
   private
     def create_completed_task
-      unless (params[:answer] || params[:text_answer])
+      if params[:task_id].nil?
+        return nil, nil, nil
+      elsif params[:answer].blank? && params[:text_answer].blank?
+        flash.now[:error] = "You must provide an answer."
         return nil, nil, nil
       end
     
