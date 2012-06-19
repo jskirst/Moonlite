@@ -59,7 +59,7 @@ $(function(){
       </div>
     </div>
   </section>
-  <hr/>
+  <hr style="margin:10px;"/>
   <section>
     <div class="row">
       <div class="span3">
@@ -87,13 +87,17 @@ $(function(){
         <% end %>
         </table>
       </div>
-      <div class="span10" style="border-left:1px solid #DDD; border-right:1px solid #DDD; padding:10px 20px;">
+      <div class="span10" style="border-left:1px solid #DDD; border-right:1px solid #DDD; padding:0px 20px;">
         <% if @must_register %>
         <div style="height: 900px;">
           <p style="font-size: 18px; line-height:25px;"><%= link_to "Save your score", signin_path %> so that people can vote for your submissions, and so that you can vote on theirs!</p>
           <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this challenge to improve your global ranking, create your own challenges and start a <%= link_to "Persona", "#" %>.</p>
         </div>
         <% else %>
+        <div style="float:right; padding:0 10px; display:block;">
+          <%= link_to "Newest", finish_path_path(@path, :order => "recent") %> | <%= link_to "Most Votes", finish_path_path(@path, :order => "votes") %>
+        </div>
+        <div style="width:100%; height: 40px;"></div>
         <div style="margin: 0 20px 20px 20px; padding:10px; font-size:18px; background-color: #0069D6; color:white; border-radius: 5px;">
           <span style="float:right; padding:0px 3px 1px 3px; border:1px solid white; cursor: pointer; border-radius:3px;" onclick="$(this).parent().fadeOut();">x</span>
           <h3 style="color:white; font-size:20px;margin-bottom: 10px">How does voting work?</h3>
@@ -120,13 +124,15 @@ $(function(){
                 <% if task.answer_sub_type == 100 %>
                   <blockquote><p style="font-size: 18px;"><%= sa.content %></p></blockquote>
                 <% elsif task.answer_sub_type == 101 %>
-                  <%= image_tag sanitize(sa.content), :style => "max-width: 400px; min-width:200px;" %>
+                  <%= link_to image_tag(sanitize(sa.content), :style => "max-width: 400px; min-width:200px;"), sanitize(sa.content), :target => "_blank" %>
                 <% elsif task.answer_sub_type == 102 %>
                   <%= youtube_embed(sa.content).html_safe %>
                 <% else %>
                   <% raise "Invalid answer sub type." %>
                 <% end %>
-                  <div style="line-height: 16px; font-size:18px; font-weight: bold;">Votes: <div class="vote_count" style="display:inline;"><%= sa.total_votes %></div></div>
+                  <div style="line-height: 16px; font-size:18px; font-weight: bold; float:left;">
+                    Votes: <div class="vote_count" style="display:inline;"><%= sa.total_votes %></div>
+                  </div>
                 </li>
               <% end %>
             </ol>

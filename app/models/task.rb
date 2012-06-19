@@ -8,7 +8,7 @@ class Task < ActiveRecord::Base
   has_one   :info_resource
   has_many  :completed_tasks
   has_many  :comments, :dependent => :destroy
-  has_many  :submitted_answers, :dependent => :destroy
+  has_many  :submitted_answers, :dependent => :destroy, :limit => 10
   
   validates :question, 
     :presence     => true,

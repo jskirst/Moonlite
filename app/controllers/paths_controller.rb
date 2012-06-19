@@ -249,9 +249,11 @@ class PathsController < ApplicationController
     @must_register = current_user.must_register?
     @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
     
+    # Lots of queries
     previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
     track! :path_completion if previous_ranking.nil?
     
+    # This can be optimized by grabbing the top 10 + yours and then the count between. 3 queries
     @skill_ranking = @path.skill_ranking(current_user)
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     counter = 1
@@ -272,9 +274,10 @@ class PathsController < ApplicationController
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
     @tasks = []
     @task_ids = []
-    @path.tasks.includes(:submitted_answers, :completed_tasks).where("completed_tasks.user_id = ?", current_user.id).each do |t|
-      @task_ids << t.id 
-      @tasks << { :task => t, :submitted_answers => t.submitted_answers, :users_completed_task => t.completed_tasks.first }
+    @path.tasks.includes(:completed_tasks).where("completed_tasks.user_id = ?", current_user.id).each do |t|
+      @task_ids << t.id
+      users_completed_task = t.completed_tasks.first
+      @tasks << { :task => t, :submitted_answers => t.submitted_answers, :users_completed_task => users_completed_task }
     end
     @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
     
