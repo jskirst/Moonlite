@@ -253,10 +253,10 @@ class PathsController < ApplicationController
     track! :path_completion if previous_ranking.nil?
     
     @skill_ranking = @path.skill_ranking(current_user)
-    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first
+    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     counter = 1
     previous = nil
-    @leaderboards[1].each do |l|
+    @leaderboards.each do |l|
       if l.user_id == current_user.id
         @next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
         @user_rank = ActiveSupport::Inflector::ordinalize(counter)

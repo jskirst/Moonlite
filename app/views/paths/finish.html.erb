@@ -11,7 +11,7 @@ $(function(){
   });
 });
 </script>
-<%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
+<%= render "users/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
 <script>
 $(function(){
@@ -52,52 +52,64 @@ $(function(){
         <p style="font-size:13px; font-style: italic; font-weight:bold; margin-bottom: 10px;">You have successfully completed this <%= name_for_paths.downcase %></p>
         <div>
           <p style="line-height:20px; font-size:17px;">
-            You're now ranked <strong><%= @user_rank %></strong> with <strong><%= @total_points_earned.to_i %> points</strong>. You reached a skill ranking of <strong><%= @skill_ranking.to_s %></strong>.
-            <% if @next_rank_points.to_i > 0 %>You only need <%= @next_rank_points.to_i %> points to move up to the next rank!<% end %>
+            You're now ranked <strong><%= @user_rank %></strong> with <strong><%= pluralize(@total_points_earned.to_i, "point") %></strong>. You reached a skill ranking of <strong><%= @skill_ranking.to_s %></strong>.
+            <% if @next_rank_points.to_i > 0 %>You only need <%= pluralize(@next_rank_points.to_i, "point") %></strong> to move up to the next rank!<% end %>
           </p>
-          <% if @must_register %>
-          <p style="line-height:20px; font-size:17px;">
-            Create an account below so you can <span style="text-decoration:underline; font-weight:bold;">improve your ranking</span>, <span style="text-decoration:underline; font-weight:bold;">start a public profile</span> and <span style="text-decoration:underline; font-weight:bold;">unlock more challenges!</span>
-          </p>
-          <% end %>
         </div>
-      </div>
-      <div>
-      <%= render "leaderboards/leaderboard", 
-        { :leaderboard_entries => @leaderboards[1], 
-          :leaderboard_id => "Overall", 
-          :display => true, 
-          :disable_filler => true, 
-          :highlight => current_user.id,
-          :limit => 5,
-          :table_class => "bordered-table"
-      } %>
       </div>
     </div>
   </section>
   <hr/>
   <section>
     <div class="row">
-      <div class="span3" style="border-right: 1px solid lightgray;">
-        <h3>Recommended</h3>
-        <ul class="media-grid">
-          <% @similar_paths.each do |similar_path| %>
-            <li><%= link_to image_tag(similar_path.path_pic, :size => "100x90"), similar_path, :class => (similar_path.is_locked ? "locked_challenge" : ""), :title => similar_path.name %>
+      <div class="span3">
+        <table class="learderboard">
+        <% counter = 1 %>
+        <% limit = 10 %>
+        <% @leaderboards.each do |entry| %>
+          <% if (counter <= limit) %>
+          <tr>
+            <td style="width:20px; padding-left: 2px; padding-right: 2px; border-top:none; border-bottom:1px solid #DDD;"><%= counter.to_s %></td>
+            <td class="user-name" style="padding-left: 2px; padding-right: 2px; width:150px; border-top:none; border-bottom:1px solid #DDD;"><p><%= link_to truncate(entry.user.name, :length => 25), entry.user %></p><p><%= entry.score %></p></td>
+          </tr>
           <% end %>
-        </ul>
+          <% if counter > limit && entry.user == current_user %>
+          <tr>
+            <td style="padding-left: 2px; padding-right: 2px;">...</td>
+            <td  style="padding-left: 2px; padding-right: 2px;" class="user-name">...</td>
+          </tr>
+          <tr>
+            <td style="padding-left: 2px; padding-right: 2px; font-weight: bold; background-color: lightyellow;"><%= counter.to_s %></td>
+            <td style="padding-left: 2px; padding-right: 2px; font-weight: bold; background-color: lightyellow;" class="user-name"><p><%= link_to truncate(entry.user.name, :length => 25), entry.user %></p><p><%= entry.score %></p></td>
+          </tr>
+          <% end %>
+          <% counter += 1 %>
+        <% end %>
+        </table>
       </div>
-      <div class="span12">
+      <div class="span10" style="border-left:1px solid #DDD; border-right:1px solid #DDD; padding:10px 20px;">
+        <% if @must_register %>
+        <div style="height: 900px;">
+          <p style="font-size: 18px; line-height:25px;"><%= link_to "Save your score", signin_path %> so that people can vote for your submissions, and so that you can vote on theirs!</p>
+          <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this challenge to improve your global ranking, create your own challenges and start a <%= link_to "Persona", "#" %>.</p>
+        </div>
+        <% else %>
+        <div style="margin: 0 20px 20px 20px; padding:10px; font-size:18px; background-color: #0069D6; color:white; border-radius: 5px;">
+          <span style="float:right; padding:0px 3px 1px 3px; border:1px solid white; cursor: pointer; border-radius:3px;" onclick="$(this).parent().fadeOut();">x</span>
+          <h3 style="color:white; font-size:20px;margin-bottom: 10px">How does voting work?</h3>
+          <p style="color:white; font-size:17px;">We don't really know yet, to be honest. But we're really working pretty hard to figure it out. Vote anyway, if you wouldn't mind, please.</p>
+        </div>
         <ol>
           <% @tasks.each do |t| %>
           <% task = t[:task] %>
           <% submitted_answers = t[:submitted_answers] %>
           <% user_answer = t[:users_completed_task].answer %>
-          <li style="margin:20px;">
-            <p style="font-size: 22px; font-weight:bold; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
+          <li style="margin-bottom:20px; padding-bottom:10px; border-bottom:3px solid darkgray;">
+            <p style="font-size: 22px; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
             <% if task.answer_type == 0 %>
             <ol style="list-style: none; margin-left: 0;">
               <% submitted_answers.each do |sa| %>
-                <li style="border-top: 1px solid lightgray; padding: 10px 0px; color: #404040; <% if @current_users_answers.include?(sa.id) %> background-color:whitesmoke; <% end %>">
+                <li style="padding:20px; margin: 0 20px 20px 20px; border-top: 1px solid lightgray; color: #404040; <% if @current_users_answers.include?(sa.id) %> background-color:whitesmoke; <% end %>">
                   <div style="float:right;">
                     <% if @votes.include?(sa.id) %>
                       <%= link_to "Voted", vote_task_path(sa.task.id, :sa_id => sa.id), :remote => true, :class => "btn primary vote_button clickable_link" %>
@@ -106,15 +118,15 @@ $(function(){
                     <% end %>
                   </div>
                 <% if task.answer_sub_type == 100 %>
-                  <p style="font-size: 18px;"><%= sa.content %></p>
+                  <blockquote><p style="font-size: 18px;"><%= sa.content %></p></blockquote>
                 <% elsif task.answer_sub_type == 101 %>
-                  <%= image_tag sanitize(sa.content), :style => "height: 400px;" %>
+                  <%= image_tag sanitize(sa.content), :style => "max-width: 400px; min-width:200px;" %>
                 <% elsif task.answer_sub_type == 102 %>
                   <%= youtube_embed(sa.content).html_safe %>
                 <% else %>
                   <% raise "Invalid answer sub type." %>
                 <% end %>
-                  <div style="line-height: 15px; font-weight: bold;">Votes: <div class="vote_count"><%= sa.total_votes %></div></div>
+                  <div style="line-height: 16px; font-size:18px; font-weight: bold;">Votes: <div class="vote_count" style="display:inline;"><%= sa.total_votes %></div></div>
                 </li>
               <% end %>
             </ol>
@@ -155,6 +167,14 @@ $(function(){
           </li>
           <% end %>
         </ol>
+        <% end %>
+      </div>
+      <div class="span2">
+        <ul class="media-grid">
+          <% @similar_paths.each do |similar_path| %>
+            <li><%= link_to image_tag(similar_path.path_pic, :size => "100x90", :title => similar_path.name), similar_path, :class => (similar_path.is_locked ? "locked_challenge" : "") %>
+          <% end %>
+        </ul>
       </div>
     </div>
   </section>
