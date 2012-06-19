@@ -90,8 +90,9 @@ class TasksController < ApplicationController
     unless @completed_task = @task.completed_tasks.find_by_id(params[:completed_task][:id])
       flash[:error] = "Completed task does not belong to ask."
     else
+      @page = params[:page] || 1
       if params[:commit] == "Delete"
-        @completed_task.destroy
+        @completed_task.submitted_answer.destroy
         flash[:success] = "Submission deleted."
       else
         unless points = (params[:completed_task][:points]).to_i
@@ -108,7 +109,7 @@ class TasksController < ApplicationController
         end
       end
     end
-    redirect_to dashboard_path_path(@task.path, :anchor => "unresolved_tasks_list")        
+    redirect_to dashboard_path_path(@task.path, :page => @page, :anchor => "unresolved_tasks_list")        
   end
   
   def vote
@@ -116,14 +117,25 @@ class TasksController < ApplicationController
     unless @submission
       flash[:error] = "Submitted answer does not belong to this task."
     else
-      if current_user.enrollments.find_by_path_id(@task.path.id).available_votes > 0
-        @submission.add_vote
-        flash[:success] = "Vote recieved."
+      if @vote = current_user.votes.find_by_submitted_answer_id(@submission.id)
+        if @vote.destroy && @submission.subtract_vote(current_user)
+          respond_to {|format| format.json { render :json => @vote.to_json } }
+        else
+          respond_to {|format| format.json { render :json => { :errors => "Error removing your vote." } } }
+        end
       else
-        flash[:info] = "You have no more votes to spend."
+        @other_task_votes = current_user.votes.joins(:submitted_answer).where("submitted_answers.task_id = ?", @task.id).count
+        if @other_task_votes < 3
+          if @vote = @submission.add_vote(current_user)
+            respond_to {|format| format.json { render :json => @vote.to_json } }
+          else
+            respond_to {|format| format.json { render :json => { :errors => "Uknown error."} } }
+          end
+        else
+          respond_to {|format| format.json { render :json => { :errors => "You have no more votes to spend for this question."} } }
+        end
       end
     end
-    redirect_to finish_path_path(@task.path)
   end
   
   private

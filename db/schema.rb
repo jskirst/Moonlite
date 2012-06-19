@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120618174209) do
+ActiveRecord::Schema.define(:version => 20120619094208) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -113,8 +113,7 @@ ActiveRecord::Schema.define(:version => 20120618174209) do
     t.integer  "path_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "total_points",    :default => 0
-    t.integer  "available_votes", :default => 0
+    t.integer  "total_points", :default => 0
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -251,6 +250,10 @@ ActiveRecord::Schema.define(:version => 20120618174209) do
     t.integer  "position"
     t.integer  "answer_type",     :default => 2
     t.integer  "answer_sub_type"
+    t.integer  "count_answer1",   :default => 0
+    t.integer  "count_answer2",   :default => 0
+    t.integer  "count_answer3",   :default => 0
+    t.integer  "count_answer4",   :default => 0
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
@@ -399,5 +402,14 @@ ActiveRecord::Schema.define(:version => 20120618174209) do
   add_index "vanity_participants", ["experiment_id", "seen"], :name => "by_experiment_id_and_seen"
   add_index "vanity_participants", ["experiment_id", "shown"], :name => "by_experiment_id_and_shown"
   add_index "vanity_participants", ["experiment_id"], :name => "index_vanity_participants_on_experiment_id"
+
+  create_table "votes", :force => true do |t|
+    t.integer  "submitted_answer_id"
+    t.integer  "user_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  add_index "votes", ["user_id", "submitted_answer_id"], :name => "index_votes_on_user_id_and_submitted_answer_id"
 
 end

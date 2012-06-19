@@ -1,7 +1,7 @@
 class Task < ActiveRecord::Base
   attr_protected :section_id
   attr_accessor :randomize
-  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position, :answer_type, :answer_sub_type
+  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position, :answer_type, :answer_sub_type, :count_answer1, :count_answer2, :count_answer3, :count_answer4
   
   belongs_to   :section
   has_one   :path, :through => :section
@@ -77,6 +77,10 @@ class Task < ActiveRecord::Base
   
   def question_type
     return answers_to_array.size == 1 ? "text" : "multiple"
+  end
+  
+  def total_answers
+    return count_answer1 + count_answer2 + count_answer3 + count_answer4
   end
   
   private

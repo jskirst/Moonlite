@@ -20,6 +20,7 @@
           <% end %>
           <%= form_tag({:controller => :tasks, :action => :resolve, :id => ut.task_id}, :method => :put) %>
             <input type="hidden" value="<%= ut.id %>" name="completed_task[id]">
+            <input type="hidden" value="<%= @page.to_i %>" name="page">
             <% unless @path.enable_voting %>
             <select name="completed_task[points]">
               <option value="0">No points</option>

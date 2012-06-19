@@ -349,6 +349,9 @@ class SectionsController < ApplicationController
       end
       
       streak = current_task.section.user_streak(current_user)
+      if streak == 0 && current_task.answer_type != 0
+        current_task.update_attribute("count_answer#{params[:answer]}", current_task["count_answer#{params[:answer]}"] + 1)
+      end
       last_task_time = current_user.completed_tasks.last.created_at unless current_user.completed_tasks.empty?
       completed_task = current_user.completed_tasks.build(params.merge(:status_id => status_id, :answer => answer))
       if status_id == 1

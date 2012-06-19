@@ -1,9 +1,8 @@
 <% if @must_register %>
 <script>
 $(function(){
-  $("#completion_content").fadeIn(2000);
-  $('a:not([id*="sign"])').attr("href", "#");
-  $('#save_score, a:not([id*="sign"])').click(function(){
+  $('a').not(".clickable_link").attr("href", "#");
+  $('#save_score, a').not(".clickable_link").click(function(){
     $('#jumpstart_registration_modal').modal({
       keyboard: true,
       backdrop: 'static',
@@ -14,7 +13,29 @@ $(function(){
 </script>
 <%= render "paths/popups/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
-<section id="completion_content" <% if @must_register %>style="display:none;"<% end %>>
+<script>
+$(function(){
+  $(".vote_button").on("ajax:success",
+    function(event, data){
+      if(data.errors){
+        alert(data.errors);
+      } else {
+        var $vote_counter = $(this).parents("li:first").children("div:last").children(".vote_count")
+        var votes = parseInt($vote_counter.text());
+        console.log(votes);
+        if($(this).hasClass("primary")){
+          $(this).removeClass("primary").addClass("secondary").text("Vote");
+          $vote_counter.text(votes-1);
+        } else if($(this).hasClass("secondary")){
+          $(this).removeClass("secondary").addClass("primary").text("Voted");
+          $vote_counter.text(votes+1);
+        }
+      }
+    }
+  );
+});
+</script>
+<section id="completion_content">
   <section>
     <div class="row">
       <div class="span3" style="width: 130xp;">
@@ -27,7 +48,7 @@ $(function(){
         </ul>
       </div>
       <div class="span13" style="margin: 0 0 0 0px; ">
-        <h1 style="margin-bottom:2px;">Congratulations!</h1>
+        <h1 style="margin-bottom:2px; text-decoration: underline;">Congratulations!</h1>
         <p style="font-size:13px; font-style: italic; font-weight:bold; margin-bottom: 10px;">You have successfully completed this <%= name_for_paths.downcase %></p>
         <div>
           <p style="line-height:20px; font-size:17px;">
@@ -41,49 +62,100 @@ $(function(){
           <% end %>
         </div>
       </div>
+      <div>
+      <%= render "leaderboards/leaderboard", 
+        { :leaderboard_entries => @leaderboards[1], 
+          :leaderboard_id => "Overall", 
+          :display => true, 
+          :disable_filler => true, 
+          :highlight => current_user.id,
+          :limit => 5,
+          :table_class => "bordered-table"
+      } %>
+      </div>
     </div>
-    <% if @must_register %>
-      <%= render "users/registration", { :user => current_user, :submit_button_name => "Save Score" } %>
-    <% else %>
-    <div style="margin:20px;">
-      <% if @enable_comments %>
-        <div style="display:inline;">
-          <a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u jumpstart_path_path(@path.id) %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= jumpstart_path_path(@path.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
-        </div>
-        <div style="display:inline; padding:20px;">
-          <a href="http://www.facebook.com/sharer.php?u=<%=u jumpstart_path_path(@path.id) %>" target="_blank"><img src="/images/facebook_connect.png" width="150" height="45"></a>
-        </div>
-        <div style="display:inline;">
-          <a href="https://twitter.com/intent/tweet?url=<%=u jumpstart_path_path(@path.id) %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>
-        </div>
-      <% end %>
-    </div>
-    <% end %>
   </section>
-  <% if @enable_recommendations %>
   <hr/>
-  <%= render "pages/suggested_paths", {:paths_title => "Similar "+name_for_paths.pluralize, :paths_list => @similar_paths} %>
-  <% end %>
   <section>
-  <%= render "leaderboards/leaderboard", 
-    { :leaderboard_entries => @leaderboards[1], 
-      :leaderboard_id => "Overall", 
-      :display => true, 
-      :disable_filler => true, 
-      :highlight => current_user.id,
-      :limit => 5,
-      :table_class => "bordered-table"
-  } %>
+    <div class="row">
+      <div class="span3" style="border-right: 1px solid lightgray;">
+        <h3>Recommended</h3>
+        <ul class="media-grid">
+          <% @similar_paths.each do |similar_path| %>
+            <li><%= link_to image_tag(similar_path.path_pic, :size => "100x90"), similar_path, :class => (similar_path.is_locked ? "locked_challenge" : ""), :title => similar_path.name %>
+          <% end %>
+        </ul>
+      </div>
+      <div class="span12">
+        <ol>
+          <% @tasks.each do |t| %>
+          <% task = t[:task] %>
+          <% submitted_answers = t[:submitted_answers] %>
+          <% user_answer = t[:users_completed_task].answer %>
+          <li style="margin:20px;">
+            <p style="font-size: 22px; font-weight:bold; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
+            <% if task.answer_type == 0 %>
+            <ol style="list-style: none; margin-left: 0;">
+              <% submitted_answers.each do |sa| %>
+                <li style="border-top: 1px solid lightgray; padding: 10px 0px; color: #404040; <% if @current_users_answers.include?(sa.id) %> background-color:whitesmoke; <% end %>">
+                  <div style="float:right;">
+                    <% if @votes.include?(sa.id) %>
+                      <%= link_to "Voted", vote_task_path(sa.task.id, :sa_id => sa.id), :remote => true, :class => "btn primary vote_button clickable_link" %>
+                    <% else %>
+                      <%= link_to "Vote", vote_task_path(sa.task.id, :sa_id => sa.id), :remote => true, :class => "btn secondary vote_button clickable_link" %>
+                    <% end %>
+                  </div>
+                <% if task.answer_sub_type == 100 %>
+                  <p style="font-size: 18px;"><%= sa.content %></p>
+                <% elsif task.answer_sub_type == 101 %>
+                  <%= image_tag sanitize(sa.content), :style => "height: 400px;" %>
+                <% elsif task.answer_sub_type == 102 %>
+                  <%= youtube_embed(sa.content).html_safe %>
+                <% else %>
+                  <% raise "Invalid answer sub type." %>
+                <% end %>
+                  <div style="line-height: 15px; font-weight: bold;">Votes: <div class="vote_count"><%= sa.total_votes %></div></div>
+                </li>
+              <% end %>
+            </ol>
+            <% elsif task.answer_type == 1 %>
+            <p>Not sure what to do with FIB yet.</p>
+            <% elsif task.answer_type == 2 %>
+            <ol style="padding-left:20px;" class="task">
+              <% total_answers = task.total_answers %>
+              <% ca = task.correct_answer %>
+              <% unless task.answer1.blank? %>
+                <% answer_percent = ((task.count_answer1 / total_answers) * 100) %>
+                <li class="answer <% if ca == 1 %>correct<% end %> <% if user_answer == task.answer1 %>user_answer<% end %>">
+                  <%= task.answer1 %> (<%= answer_percent %>%)
+                </li>
+              <% end %>
+              <% unless task.answer2.blank? %>
+                <% answer_percent = ((task.count_answer2 / total_answers) * 100) %>
+                <li class="answer <% if ca == 2 %>correct<% end %> <% if user_answer == task.answer2 %>user_answer<% end %>">
+                  <%= task.answer2 %> (<%= answer_percent %>%)
+                </li>
+              <% end %>
+                <% unless task.answer3.blank? %>
+                <% answer_percent = ((task.count_answer3 / total_answers) * 100) %>
+                <li  class="answer <% if ca == 3 %>correct<% end %> <% if user_answer == task.answer3 %>user_answer<% end %>">
+                  <%= task.answer3 %> (<%= answer_percent %>%)
+                </li>
+              <% end %>
+                <% unless task.answer4.blank? %>
+                <% answer_percent = ((task.count_answer4 / total_answers) * 100) %>
+                <li class="answer <% if ca == 4 %>correct<% end %> <% if user_answer == task.answer4 %>user_answer<% end %>">'
+                  <%= task.answer4 %> (<%= answer_percent %>%)
+                </li>
+              <% end %>
+            </ol>
+            <% else %>
+              <% raise "Invalid answer type." %>
+            <% end %>
+          </li>
+          <% end %>
+        </ol>
+      </div>
+    </div>
   </section>
-  <section>
-    <ol>
-      <% @submitted_answers.each do |sa| %>
-      <li>
-        <h5><%= sa.task.question %></h5>
-        <blockquote><p><%= sa.content %></p></blockquote>
-        <p><%= sa.total_votes %></p>
-        <p><%= link_to image_tag("/images/kitty1.jpg", :style => "height:30px;"), vote_task_path(sa.task.id, :sa_id => sa.id) %></p>
-      </li>
-      <% end %>
-    </ol>
 </section>

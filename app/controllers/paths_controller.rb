@@ -269,11 +269,14 @@ class PathsController < ApplicationController
     
     @similar_paths = Path.similar_paths(@path, current_user)
     
-    enrollment = current_user.enrollments.find_by_path_id(@path.id)
-    enrollment.available_votes += 5
-    enrollment.save
-    @available_votes = enrollment.available_votes
-    @submitted_answers = @path.submitted_answers
+    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
+    @tasks = []
+    @task_ids = []
+    @path.tasks.includes(:submitted_answers, :completed_tasks).where("completed_tasks.user_id = ?", current_user.id).each do |t|
+      @task_ids << t.id 
+      @tasks << { :task => t, :submitted_answers => t.submitted_answers, :users_completed_task => t.completed_tasks.first }
+    end
+    @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
     
     if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
       event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
@@ -314,6 +317,7 @@ class PathsController < ApplicationController
   end
   
   def dashboard
+    @page = params[:page] || 1
     @time = (params[:time] || 7).to_i
     @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
     @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 20)
