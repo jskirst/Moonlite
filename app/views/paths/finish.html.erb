@@ -148,27 +148,23 @@ $(function(){
               <% total_answers = task.total_answers %>
               <% ca = task.correct_answer %>
               <% unless task.answer1.blank? %>
-                <% answer_percent = ((task.count_answer1 / total_answers) * 100) %>
-                <li class="answer <% if ca == 1 %>correct<% end %> <% if user_answer == task.answer1 %>user_answer<% end %>">
-                  <%= task.answer1 %> (<%= answer_percent %>%)
+                <li class="answer <%= "correct" if ca == 1 %> <%= "user_answer" if user_answer == task.answer1 %>">
+                  <%= task.answer1 %> (<%= task.answer_percent(1) %>%)
                 </li>
               <% end %>
               <% unless task.answer2.blank? %>
-                <% answer_percent = ((task.count_answer2 / total_answers) * 100) %>
-                <li class="answer <% if ca == 2 %>correct<% end %> <% if user_answer == task.answer2 %>user_answer<% end %>">
-                  <%= task.answer2 %> (<%= answer_percent %>%)
+                <li class="answer <%= "correct" if ca == 2 %> <%= "user_answer" if user_answer == task.answer2 %>">
+                  <%= task.answer2 %> (<%= task.answer_percent(2) %>%)
                 </li>
               <% end %>
                 <% unless task.answer3.blank? %>
-                <% answer_percent = ((task.count_answer3 / total_answers) * 100) %>
-                <li  class="answer <% if ca == 3 %>correct<% end %> <% if user_answer == task.answer3 %>user_answer<% end %>">
-                  <%= task.answer3 %> (<%= answer_percent %>%)
+                <li  class="answer <%= "correct" if ca == 3 %> <%= "user_answer" if user_answer == task.answer3 %>">
+                  <%= task.answer3 %> (<%= task.answer_percent(3) %>%)
                 </li>
               <% end %>
                 <% unless task.answer4.blank? %>
-                <% answer_percent = ((task.count_answer4 / total_answers) * 100) %>
-                <li class="answer <% if ca == 4 %>correct<% end %> <% if user_answer == task.answer4 %>user_answer<% end %>">'
-                  <%= task.answer4 %> (<%= answer_percent %>%)
+                <li class="answer <%= "correct" if ca == 4 %> <%= "user_answer" if user_answer == task.answer4 %>">
+                  <%= task.answer4 %> (<%= task.answer_percent(4) %>%)
                 </li>
               <% end %>
             </ol>

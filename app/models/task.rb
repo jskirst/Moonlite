@@ -83,6 +83,17 @@ class Task < ActiveRecord::Base
     return count_answer1 + count_answer2 + count_answer3 + count_answer4
   end
   
+  def answer_percent(requested_answer)
+    if total_answers == 0
+      return 0
+    else
+      return (self.count_answer1 / total_answers) * 100 if requested_answer == 1
+      return (self.count_answer2 / total_answers) * 100 if requested_answer == 2
+      return (self.count_answer3 / total_answers) * 100 if requested_answer == 3
+      return (self.count_answer4 / total_answers) * 100 if requested_answer == 4
+    end 
+  end
+  
   private
     def check_answer_type
       unless self.answer_type == 0
