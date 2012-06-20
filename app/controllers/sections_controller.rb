@@ -278,6 +278,10 @@ class SectionsController < ApplicationController
     @task = @section.next_task(current_user)
     
     if @task
+      @answers = @task.answers
+      unless @answers.empty?
+        @answers = @answers.to_a.shuffle
+      end
       if last_question
         @free_response = last_question.status_id == 2
         @correct = last_question.status_id == 1
@@ -337,20 +341,32 @@ class SectionsController < ApplicationController
       end
     
       current_task = Task.find(params[:task_id])
-      if params[:text_answer]
-        answer = params[:text_answer]
-        status_id = current_task.is_correct?(answer, "text") ? 1 : 0
-      elsif current_task.answer_type == 0
+      if current_task.answer_type == 0
         answer = ""
         status_id = 2
+        submitted_answer = current_task.find_or_create_submitted_answer(params[:answer])
+        submitted_answer_id = submitted_answer.id
+        chosen_answer_id = nil
+      elsif current_task.answer_type >= 1
+        answer = params[:answer]
+        status_id, chosen_answer = current_task.is_correct?(answer)
+        if chosen_answer.nil? && current_task.answer_type != 1
+          raise "RUNTIME EXCEPTION: No answer found for multiple choice question for Task ##{current_task.id}"
+        end
+        chosen_answer_id = chosen_answer.id unless chosen_answer.nil?
+        submitted_answer_id = nil
       else
-        answer = current_task.describe_answer(params[:answer])
-        status_id = current_task.is_correct?(params[:answer], "multiple") ?  1 : 0
+        raise "RUNTIME EXCEPTION: Invalid answer type for Task ##{current_task.id.to_s}"
       end
       
       streak = current_task.section.user_streak(current_user)
       last_task_time = current_user.completed_tasks.last.created_at unless current_user.completed_tasks.empty?
-      completed_task = current_user.completed_tasks.build(params.merge(:status_id => status_id, :answer => answer))
+      completed_task = current_user.completed_tasks.build(
+        params.merge(:status_id => status_id, 
+          :answer => answer, 
+          :answer_id => chosen_answer_id, 
+          :submitted_answer_id => submitted_answer_id))
+
       if status_id == 1
         points = 10
         if streak < 0
@@ -362,22 +378,12 @@ class SectionsController < ApplicationController
         else
           points = points / 2
         end
-        choice_answer = completed_task.task.answers.find_by_task_id_and_content(completed_task.task, completed_task.answer)
-        raise "NO CHOICE ANSWER FOUND!!!" unless choice_answer
-        completed_task.answer_id = choice_answer.id
         completed_task.points_awarded = points
         current_user.award_points_and_achievements(current_task, points)
       else
-        completed_task.points_awarded = 0
-        if current_task.answer_type == 0
-          submitted_answer = completed_task.find_or_create_submitted_answer(params[:answer])
-          completed_task.submitted_answer_id = submitted_answer.id
-        else
-          choice_answer = completed_task.task.answers.find_by_task_id_and_content(completed_task.task, completed_task.answer)
-          raise "NO CHOICE ANSWER FOUND!!!" unless choice_answer
-          completed_task.answer_id = choice_answer.id
-        end        
+        completed_task.points_awarded = 0        
       end
+      
       completed_task.save
       return completed_task, streak, streak_points, streak_name
     end

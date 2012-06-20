@@ -48,18 +48,27 @@ class Task < ActiveRecord::Base
   before_save :check_answer_type
   before_save :randomize_answers
   
-  def is_correct?(user_answer, type)
-    if type == "text"
-      answers = describe_correct_answer.downcase.split(",")
-      logger.debug 'Fuck a text answer!!'
-      logger.debug answers
-      logger.debug user_answer
-      answers.each do |answer|
-        return true if same_letters?(user_answer, answer)
+  def find_or_create_submitted_answer(content)
+    sa = submitted_answers.find_by_task_id_and_content(self.id, content)
+    return sa unless sa.nil?
+    return submitted_answers.create!(:content => content)
+  end
+  
+  def is_correct?(user_answer)
+    if self.answer_type == 1
+      correct_answer = answers.first
+      possible_correct_answers = correct_answer.content.split(",")
+      possible_correct_answers.each do |pca|
+        return [true, correct_answer] if same_letters?(user_answer, pca)
       end
       return false
     else
-      return Integer(user_answer) == Integer(self.correct_answer)
+      chosen_answer = answers.find_by_id(user_answer)
+      if chosen_answer.nil?
+        raise "RUNTIME EXCEPTION: Answer ##{user_answer.to_s} is not an option for Task ##{self.id}"
+      else
+        return [chosen_answer.is_correct? ? 1 : 0, chosen_answer]
+      end
     end
   end
   
@@ -104,8 +113,8 @@ class Task < ActiveRecord::Base
     end
     
     def same_letters?(word, str)
-      word = word.downcase
-      str = str.downcase
+      word = word.downcase.strip
+      str = str.downcase.strip
       
       return false unless word.size == str.size
       str.split(//).each do |s|
