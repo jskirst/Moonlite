@@ -349,9 +349,6 @@ class SectionsController < ApplicationController
       end
       
       streak = current_task.section.user_streak(current_user)
-      if streak == 0 && current_task.answer_type != 0
-        current_task.update_attribute("count_answer#{params[:answer]}", current_task["count_answer#{params[:answer]}"] + 1)
-      end
       last_task_time = current_user.completed_tasks.last.created_at unless current_user.completed_tasks.empty?
       completed_task = current_user.completed_tasks.build(params.merge(:status_id => status_id, :answer => answer))
       if status_id == 1
@@ -365,6 +362,9 @@ class SectionsController < ApplicationController
         else
           points = points / 2
         end
+        choice_answer = completed_task.task.answers.find_by_task_id_and_content(completed_task.task, completed_task.answer)
+        raise "NO CHOICE ANSWER FOUND!!!" unless choice_answer
+        completed_task.answer_id = choice_answer.id
         completed_task.points_awarded = points
         current_user.award_points_and_achievements(current_task, points)
       else
@@ -372,7 +372,11 @@ class SectionsController < ApplicationController
         if current_task.answer_type == 0
           submitted_answer = completed_task.find_or_create_submitted_answer(params[:answer])
           completed_task.submitted_answer_id = submitted_answer.id
-        end
+        else
+          choice_answer = completed_task.task.answers.find_by_task_id_and_content(completed_task.task, completed_task.answer)
+          raise "NO CHOICE ANSWER FOUND!!!" unless choice_answer
+          completed_task.answer_id = choice_answer.id
+        end        
       end
       completed_task.save
       return completed_task, streak, streak_points, streak_name

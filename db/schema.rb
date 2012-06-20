@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120619094208) do
+ActiveRecord::Schema.define(:version => 20120620034417) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,15 @@ ActiveRecord::Schema.define(:version => 20120619094208) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_url"
+  end
+
+  create_table "answers", :force => true do |t|
+    t.integer  "task_id"
+    t.string   "content"
+    t.boolean  "is_correct",   :default => false
+    t.integer  "answer_count", :default => 0
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   create_table "categories", :force => true do |t|
@@ -98,6 +107,7 @@ ActiveRecord::Schema.define(:version => 20120619094208) do
     t.integer  "points_awarded"
     t.string   "answer"
     t.integer  "submitted_answer_id"
+    t.integer  "answer_id"
   end
 
   create_table "custom_styles", :force => true do |t|
@@ -250,10 +260,6 @@ ActiveRecord::Schema.define(:version => 20120619094208) do
     t.integer  "position"
     t.integer  "answer_type",     :default => 2
     t.integer  "answer_sub_type"
-    t.integer  "count_answer1",   :default => 0
-    t.integer  "count_answer2",   :default => 0
-    t.integer  "count_answer3",   :default => 0
-    t.integer  "count_answer4",   :default => 0
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

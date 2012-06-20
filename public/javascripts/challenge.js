@@ -162,12 +162,7 @@ $(document).ready(function() {
   
   $('#challenge_form').submit(function(){
     //block_form_submit();
-    $('body').data("needs_reload", true);
-    setTimeout(function(){
-      if($('body').data("needs_reload") == true){
-        window.location.reload();
-      }
-    }, 2500);
+
   });
   if($("#help_modal").exists()){
     $("#help_button").click(function(){

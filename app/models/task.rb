@@ -1,12 +1,13 @@
 class Task < ActiveRecord::Base
   attr_protected :section_id
   attr_accessor :randomize
-  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position, :answer_type, :answer_sub_type, :count_answer1, :count_answer2, :count_answer3, :count_answer4
+  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position, :answer_type, :answer_sub_type
   
   belongs_to   :section
   has_one   :path, :through => :section
   has_one   :info_resource
   has_many  :completed_tasks
+  has_many  :answers
   has_many  :comments, :dependent => :destroy
   has_many  :submitted_answers, :dependent => :destroy, :limit => 10
   
@@ -42,6 +43,7 @@ class Task < ActiveRecord::Base
   
   before_create :set_position
   before_create :record_phrases
+  after_create :create_answers
   before_validation :set_point_value
   before_save :check_answer_type
   before_save :randomize_answers
@@ -49,6 +51,9 @@ class Task < ActiveRecord::Base
   def is_correct?(user_answer, type)
     if type == "text"
       answers = describe_correct_answer.downcase.split(",")
+      logger.debug 'Fuck a text answer!!'
+      logger.debug answers
+      logger.debug user_answer
       answers.each do |answer|
         return true if same_letters?(user_answer, answer)
       end
@@ -80,18 +85,11 @@ class Task < ActiveRecord::Base
   end
   
   def total_answers
-    return count_answer1 + count_answer2 + count_answer3 + count_answer4
+    return 0
   end
   
   def answer_percent(requested_answer)
-    if total_answers == 0
-      return 0
-    else
-      return (self.count_answer1 / total_answers) * 100 if requested_answer == 1
-      return (self.count_answer2 / total_answers) * 100 if requested_answer == 2
-      return (self.count_answer3 / total_answers) * 100 if requested_answer == 3
-      return (self.count_answer4 / total_answers) * 100 if requested_answer == 4
-    end 
+    return 0
   end
   
   private
@@ -120,6 +118,8 @@ class Task < ActiveRecord::Base
       answers = answers_to_array
       if answers.size > 1
         answers = answers.shuffle
+        logger.debug "RANDOMIZEEEE!"
+        logger.debug answers
         self.correct_answer = answers.index(self.answer1.chomp) + 1
         self.points = 10
         self.answer1 = answers[0]
@@ -131,6 +131,13 @@ class Task < ActiveRecord::Base
     
     def record_phrases
       PhrasePairing.create_phrase_pairings(answers_to_array)
+    end
+    
+    def create_answers
+      answers.create!(:content => self.answer1, :is_correct => (self.correct_answer == 1)) unless self.answer1.blank?
+      answers.create!(:content => self.answer2, :is_correct => (self.correct_answer == 2)) unless self.answer2.blank?
+      answers.create!(:content => self.answer3, :is_correct => (self.correct_answer == 3)) unless self.answer3.blank?
+      answers.create!(:content => self.answer4, :is_correct => (self.correct_answer == 4)) unless self.answer4.blank?
     end
     
     def set_position

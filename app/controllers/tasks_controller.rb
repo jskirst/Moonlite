@@ -36,7 +36,7 @@ class TasksController < ApplicationController
     end
     
     if params[:task][:answer_type] == "1"
-      params[:task][:answer1] = params[:task][:fib_answer]
+      params[:task][:answer1] = params[:task][:fibanswer1]
     end
     
     @task = @section.tasks.new(params[:task])
