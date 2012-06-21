@@ -8,7 +8,7 @@ task :transfer_answers => :environment do
       t.completed_tasks.each do |ct|
         if answer.content.downcase.include?(ct.answer.to_s.downcase) && ct.answer_id.nil?
           ct.update_attribute(:answer_id, answer.id)
-          answer.update_attribute(:answer_count, (ct.answer_count + 1))
+          answer.update_attribute(:answer_count, (answer.answer_count + 1))
         end
       end
     # IF Multiple choice
@@ -18,7 +18,7 @@ task :transfer_answers => :environment do
         t.completed_tasks.each do |ct|
           if ct.answer == answer.content && ct.answer_id.nil?
             ct.update_attribute(:answer_id, answer.id)
-            answer.update_attribute(:answer_count, (ct.answer_count + 1))
+            answer.update_attribute(:answer_count, (answer.answer_count + 1))
           end
         end
       end
@@ -28,7 +28,7 @@ task :transfer_answers => :environment do
         t.completed_tasks.each do |ct|
           if ct.answer == answer.content && ct.answer_id.nil?
             ct.update_attribute(:answer_id, answer.id)
-            answer.update_attribute(:answer_count, (ct.answer_count + 1))
+            answer.update_attribute(:answer_count, (answer.answer_count + 1))
           end
         end
       end
@@ -38,7 +38,7 @@ task :transfer_answers => :environment do
         t.completed_tasks.each do |ct|
           if ct.answer == answer.content && ct.answer_id.nil?
             ct.update_attribute(:answer_id, answer.id)
-            answer.update_attribute(:answer_count, (ct.answer_count + 1))
+            answer.update_attribute(:answer_count, (answer.answer_count + 1))
           end
         end
       end
@@ -48,7 +48,7 @@ task :transfer_answers => :environment do
         t.completed_tasks.each do |ct|
           if ct.answer == answer.content && ct.answer_id.nil?
             ct.update_attribute(:answer_id, answer.id)
-            answer.update_attribute(:answer_count, (ct.answer_count + 1))
+            answer.update_attribute(:answer_count, (answer.answer_count + 1))
           end
         end
       end
