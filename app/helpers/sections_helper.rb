@@ -53,6 +53,7 @@ module SectionsHelper
     end
     
     completed_task.save
+    Answer.increment_counter(:answer_count, chosen_answer_id) if chosen_answer_id
     return completed_task, streak, streak_points, streak_name
   end
   

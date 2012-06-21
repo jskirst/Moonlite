@@ -283,14 +283,16 @@ class PathsController < ApplicationController
       @order = "submitted_answers.created_at DESC"
     end
    
-    @tasks = []
-    @task_ids = []
-    @path.tasks.includes(:completed_tasks, :answers).where("completed_tasks.user_id = ?", current_user.id).all(:limit => 10, :order => "tasks.id ASC").each do |t|
-      @task_ids << t.id
-      users_completed_task = t.completed_tasks.first
-      @tasks << { :task => t, :submitted_answers => t.submitted_answers.all(:order => @order), :users_completed_task => users_completed_task, :answers => t.answers }
+    unless @must_register
+      @tasks = []
+      @task_ids = []
+      @path.tasks.includes(:completed_tasks, :answers).where("completed_tasks.user_id = ?", current_user.id).all(:limit => 10, :order => "tasks.id ASC").each do |t|
+        @task_ids << t.id
+        users_completed_task = t.completed_tasks.first
+        @tasks << { :task => t, :submitted_answers => t.submitted_answers.all(:order => @order), :users_completed_task => users_completed_task, :answers => t.answers }
+      end
+      @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
     end
-    @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
     
     if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
       event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
