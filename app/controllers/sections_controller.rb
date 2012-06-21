@@ -428,16 +428,13 @@ class SectionsController < ApplicationController
     end
     
     def generate_hint
-      if @task.question_type == "text" && @streak <= -1
+      if @task.answer_type == 1 && @streak < 0
         answer = @task.describe_correct_answer.to_s
         @streak = ((@streak+1)*-1) #converting it so it can be used in a range
         @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
-      else
-        @hints = []
+      elsif @task.answer_type == 2
         previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
-        previous_wrong_answers.each do |p|
-          @hints << p.answer
-        end
+        @hints = previous_wrong_answers.to_a.collect! {|pwa| pwa.answer_id }
       end
     end
   

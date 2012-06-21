@@ -17,9 +17,9 @@ label.unselected_answer { border: 2px solid white; background: white;}
     <ul class="inputs-list">  
     <% @answers.each do |a| %>
       <li>
-      <label class="<%= @hints.include?(a.content) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(a.content) %>">
-        <input <%= @hints.include?(a.content) ? "disabled='disabled'" : "" %> name="answer" type="radio" value="<%= a.id %>">
-        <span class="<%= @hints.include?(a.content) ? "already_guessed" : "" %>"><%= a.content %></span>
+      <label class="<%= @hints.include?(a.id) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(a.id) %>">
+        <input <%= @hints.include?(a.id) ? "disabled='disabled'" : "" %> name="answer" type="radio" value="<%= a.id %>">
+        <span class="<%= @hints.include?(a.id) ? "already_guessed" : "" %>"><%= a.content %></span>
       </label>
       </li>
     <% end %>

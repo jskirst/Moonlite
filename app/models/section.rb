@@ -102,9 +102,13 @@ class Section < ActiveRecord::Base
   def user_streak(user)
     user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all(:order => "id DESC")
     streak = 0
+    logger.debug "Computing streak."
+    logger.debug user_completed_tasks.to_yaml
     unless user_completed_tasks.empty?
       current_task_id = user_completed_tasks.first.task_id
-      last_completed_status_id = user_completed_tasks.first.status_id == 1
+      last_completed_status_id = user_completed_tasks.first.status_id
+      logger.debug current_task_id.to_yaml
+      logger.debug last_completed_status_id.to_s
       if last_completed_status_id == 1
         streak = 1
         user_completed_tasks.each do |t|
@@ -117,6 +121,7 @@ class Section < ActiveRecord::Base
           end
         end
       elsif last_completed_status_id == 0
+        logger.debug "COMPUTING NEGATIVE STREAK!"
         user_completed_tasks.each do |t|
           unless t.status_id == 0 && t.task_id == current_task_id
             break;

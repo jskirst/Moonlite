@@ -78,8 +78,7 @@ class Task < ActiveRecord::Base
   end
   
   def describe_correct_answer
-    answers = [nil,answer1,answer2,answer3,answer4]
-    return answers[correct_answer]
+    answers.where("is_correct = ?", true).first.content
   end
   
   def describe_answers

@@ -4,7 +4,7 @@ class CompletedTask < ActiveRecord::Base
   belongs_to :user
   belongs_to :task
   belongs_to :submitted_answer
-  belongs_to :choice_answer
+  belongs_to :chosen_answer, :class_name => "Answer"
   has_one :section, :through => :task
   has_one :path, :through => :section
   has_one :category, :through => :path
