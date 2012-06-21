@@ -12,6 +12,6 @@ class Answer < ActiveRecord::Base
   def answer_percent
     total_answers_for_task = task.total_answers
     return 0 if total_answers_for_task == 0
-    return (self.answer_count / total_answers_for_task) * 100
+    return ((self.answer_count.to_f / total_answers_for_task.to_f).to_f * 100).to_i
   end
 end
