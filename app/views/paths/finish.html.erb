@@ -145,7 +145,10 @@ $(function(){
               <% end %>
             </ol>
             <% elsif task.answer_type == 1 %>
-            <p>Not sure what to do with FIB yet.</p>
+              <% answer = task.answers.first %>
+            <div class="task" style="padding-left:20px;">
+              <p class="answer">Possible Answers: <%= answer.content %> (<%= task.fib_answer_breakdown %>%)</p>
+            </div>
             <% elsif task.answer_type == 2 %>
             <ol style="padding-left:20px;" class="task">
               <% answers.each do |answer| %>

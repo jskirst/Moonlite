@@ -96,6 +96,20 @@ class Task < ActiveRecord::Base
     total_answers = answers.sum(:answer_count)
   end
   
+  def fib_answer_breakdown
+    if self.answer_type == 1
+      number_correct = completed_tasks.where("status_id = 1").count
+      number_incorrect = completed_tasks.where("status_id = 0").count
+      unless number_correct == 0 && number_incorrect == 0
+        return ((number_correct.to_f / (number_correct + number_incorrect).to_f) * 100).to_i
+      else
+        return 0
+      end
+    else
+      raise "RUNTIME EXCEPTION: Using fib_guess_breakdown when not FIB"
+    end
+  end
+  
   private
     def check_answer_type
       unless self.answer_type == 0
