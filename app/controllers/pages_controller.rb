@@ -6,7 +6,7 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if signed_in?
-      @paths = current_user.enrolled_paths
+      @paths = current_user.enrolled_paths.where("is_published = ?", true)
       @enrolled_paths = []
       @completed_paths = []
       @paths.each do |p|

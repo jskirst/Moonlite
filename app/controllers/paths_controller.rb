@@ -97,6 +97,9 @@ class PathsController < ApplicationController
       path_user_role = @path.path_user_roles.find_by_user_role_id(r.id)
       if allowed_roles.include?(r.id.to_s)
         new_role = @path.path_user_roles.create!(:user_role_id => r.id) if path_user_role.nil?
+        if params[:commit] = "Save & Enroll"
+          r.users.each {|u| u.enroll!(@path) }
+        end
       else
         @path.path_user_roles.delete(path_user_role) unless path_user_role.nil?
       end
