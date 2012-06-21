@@ -101,6 +101,10 @@ class Path < ActiveRecord::Base
     end
   end
   
+  def has_creative_response
+    return tasks.where("answer_type = ?", 0).count > 0
+  end
+  
   def current_section(current_user)
     last_task = current_user.completed_tasks.includes(:section).where(["sections.path_id = ?", self.id]).first(:order => "sections.position DESC")
     logger.debug last_task

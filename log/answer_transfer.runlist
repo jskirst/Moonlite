@@ -1,0 +1,14 @@
+heroku pgbackups:capture --app moonlite --expire
+heroku pg:reset DATABASE --app fierce-stone-6508 --confirm fierce-stone-6508
+heroku pgbackups:url --app moonlite
+https://s3.amazonaws.com/hkpgbackups/app1830422@heroku.com/a049.dump?AWSAccessKeyId=AKIAI3X3VXO3C5HJJXSQ&Expires=1340253781&Signature=2PR94UDK7pdXrpebShjGWriX2cU%3D
+
+heroku pgbackups:restore DATABASE "https://s3.amazonaws.com/hkpgbackups/app1830422@heroku.com/a049.dump?AWSAccessKeyId=AKIAI3X3VXO3C5HJJXSQ&Expires=1340253781&Signature=2PR94UDK7pdXrpebShjGWriX2cU%3D" --app fierce-stone-6508
+
+heroku run rake db:migrate --remote staging
+
+heroku run rake transfer_answers --remote staging
+
+heroku run console --remote staging
+
+CompletedTask.joins(:task).where("completed_tasks.answer_id is ? and tasks.answer_type != ?", nil, 1).count

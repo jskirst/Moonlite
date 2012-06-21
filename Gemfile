@@ -18,6 +18,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'vanity'
 gem 'csv_builder'
+gem 'taps'
 
 group :development do
 	gem 'rspec-rails'

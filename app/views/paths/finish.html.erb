@@ -96,6 +96,7 @@ $(function(){
           <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this challenge to improve your global ranking, create your own challenges and start a <%= link_to "Persona", "#" %>.</p>
         </div>
         <% else %>
+        <% if @show_voting %>
         <div style="float:right; padding:0 10px; display:block;">
           <%= link_to "Newest", finish_path_path(@path, :order => "recent") %> | <%= link_to "Most Votes", finish_path_path(@path, :order => "votes") %>
         </div>
@@ -105,6 +106,7 @@ $(function(){
           <h3 style="color:white; font-size:20px;margin-bottom: 10px">How does voting work?</h3>
           <p style="color:white; font-size:17px;">We don't really know yet, to be honest. But we're really working pretty hard to figure it out. Vote anyway, if you wouldn't mind, please.</p>
         </div>
+        <% end %>
         <ol>
           <% @tasks.each do |t| %>
           <% task = t[:task] %>

@@ -270,11 +270,18 @@ class PathsController < ApplicationController
     end
     
     @similar_paths = Path.similar_paths(@path, current_user)
-    
-    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
+       
+    if @path.enable_voting && @path.has_creative_response
+      @show_voting = true
+      @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
+      @order = params[:order] == "votes" ? "submitted_answers.total_votes DESC" : "submitted_answers.created_at DESC"
+    else
+      @votes = []
+      @order = "submitted_answers.created_at DESC"
+    end
+   
     @tasks = []
     @task_ids = []
-    @order = params[:order] == "votes" ? "submitted_answers.total_votes DESC" : "submitted_answers.created_at DESC"
     @path.tasks.includes(:completed_tasks).where("completed_tasks.user_id = ?", current_user.id).all(:limit => 10, :order => "tasks.id ASC").each do |t|
       @task_ids << t.id
       users_completed_task = t.completed_tasks.first
