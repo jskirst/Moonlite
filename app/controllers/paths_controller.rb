@@ -282,10 +282,10 @@ class PathsController < ApplicationController
    
     @tasks = []
     @task_ids = []
-    @path.tasks.includes(:completed_tasks).where("completed_tasks.user_id = ?", current_user.id).all(:limit => 10, :order => "tasks.id ASC").each do |t|
+    @path.tasks.includes(:completed_tasks, :answers).where("completed_tasks.user_id = ?", current_user.id).all(:limit => 10, :order => "tasks.id ASC").each do |t|
       @task_ids << t.id
       users_completed_task = t.completed_tasks.first
-      @tasks << { :task => t, :submitted_answers => t.submitted_answers.all(:order => @order), :users_completed_task => users_completed_task }
+      @tasks << { :task => t, :submitted_answers => t.submitted_answers.all(:order => @order), :users_completed_task => users_completed_task, :answers => t.answers }
     end
     @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
     

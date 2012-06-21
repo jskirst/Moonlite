@@ -94,11 +94,7 @@ class Task < ActiveRecord::Base
   end
   
   def total_answers
-    return 0
-  end
-  
-  def answer_percent(requested_answer)
-    return 0
+    total_answers = answers.sum(:answer_count)
   end
   
   private

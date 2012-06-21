@@ -109,9 +109,10 @@ $(function(){
         <% end %>
         <ol>
           <% @tasks.each do |t| %>
-          <% task = t[:task] %>
-          <% submitted_answers = t[:submitted_answers] %>
-          <% user_answer = t[:users_completed_task].answer %>
+            <% task = t[:task] %>
+            <% submitted_answers = t[:submitted_answers] %>
+            <% answers = t[:answers] %>
+            <% user_answer = t[:users_completed_task] %>
           <li style="margin-bottom:20px; padding-bottom:10px; border-bottom:3px solid darkgray;">
             <p style="font-size: 22px; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
             <% if task.answer_type == 0 %>
@@ -147,26 +148,10 @@ $(function(){
             <p>Not sure what to do with FIB yet.</p>
             <% elsif task.answer_type == 2 %>
             <ol style="padding-left:20px;" class="task">
-              <% total_answers = task.total_answers %>
-              <% ca = task.correct_answer %>
-              <% unless task.answer1.blank? %>
-                <li class="answer <%= "correct" if ca == 1 %> <%= "user_answer" if user_answer == task.answer1 %>">
-                  <%= task.answer1 %> (<%= task.answer_percent(1) %>%)
-                </li>
-              <% end %>
-              <% unless task.answer2.blank? %>
-                <li class="answer <%= "correct" if ca == 2 %> <%= "user_answer" if user_answer == task.answer2 %>">
-                  <%= task.answer2 %> (<%= task.answer_percent(2) %>%)
-                </li>
-              <% end %>
-                <% unless task.answer3.blank? %>
-                <li  class="answer <%= "correct" if ca == 3 %> <%= "user_answer" if user_answer == task.answer3 %>">
-                  <%= task.answer3 %> (<%= task.answer_percent(3) %>%)
-                </li>
-              <% end %>
-                <% unless task.answer4.blank? %>
-                <li class="answer <%= "correct" if ca == 4 %> <%= "user_answer" if user_answer == task.answer4 %>">
-                  <%= task.answer4 %> (<%= task.answer_percent(4) %>%)
+              <% answers.each do |answer| %>
+                <% answer_percent = answer.answer_percent %>
+                <li class="answer <%= "correct" if answer.is_correct? %> <%= "user_answer" if user_answer.answer_id == answer.id %>">
+                  <%= answer.content %> <%= "(#{answer.answer_percent}%)" if answer_percent > 0 %>
                 </li>
               <% end %>
             </ol>
