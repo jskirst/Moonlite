@@ -229,8 +229,11 @@ class PathsController < ApplicationController
   
   def continue
     @section = current_user.most_recent_section_for_path(@path)
-    until @section.nil? || !@section.completed?(current_user)
-      @section = @path.next_section(@section)
+    if @section.completed?(current_user)
+      while @section.completed?(current_user)
+        @section = @path.next_section(@section)
+        break if @section.nil?
+      end
     end
     
     unless @section.nil? || @section.is_published == false

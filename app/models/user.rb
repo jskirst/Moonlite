@@ -227,7 +227,7 @@ class User < ActiveRecord::Base
   
   def most_recent_section_for_path(path)
     last_task = completed_tasks.includes(:path).where(["paths.id = ?", path.id]).first(:order => "completed_tasks.updated_at DESC")
-    return path.sections.first if last_task.nil?
+    return path.sections.first(:order => "position ASC") if last_task.nil?
     return last_task.section
   end
   

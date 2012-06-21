@@ -113,7 +113,7 @@ class Path < ActiveRecord::Base
   end
   
   def next_section(section=nil)
-    return sections.where(["position > ? and is_published = ?", section.position, true]).first
+    return sections.where(["position > ? and is_published = ?", section.position, true]).first(:order => "position ASC")
   end
   
   def default_pic?
