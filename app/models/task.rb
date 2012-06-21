@@ -59,9 +59,9 @@ class Task < ActiveRecord::Base
       correct_answer = answers.first
       possible_correct_answers = correct_answer.content.split(",")
       possible_correct_answers.each do |pca|
-        return [true, correct_answer] if same_letters?(user_answer, pca)
+        return [1, correct_answer] if same_letters?(user_answer, pca)
       end
-      return false
+      return [0, nil]
     else
       chosen_answer = answers.find_by_id(user_answer)
       if chosen_answer.nil?
