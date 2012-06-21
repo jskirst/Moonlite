@@ -5,7 +5,7 @@ task :transfer_answers => :environment do
       answer = t.answers.create!(:content => t.answer1, :is_correct => (t.correct_answer == 1)) unless existing_answer
       t.update_attribute(:answer_type, 1)
       t.completed_tasks.each do |ct|
-        if answer.content.downcase.include?(ct.answer.downcase) && ct.answer_id.nil?
+        if answer.content.downcase.include?(ct.answer.to_s.downcase) && ct.answer_id.nil?
           ct.update_attribute(:answer_id, answer.id)
           answer.update_attribute(:answer_count, (ct.answer_count + 1))
         end
