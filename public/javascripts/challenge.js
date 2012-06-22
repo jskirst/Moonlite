@@ -11,7 +11,6 @@ function get_next_task(event, data){
   } else {
     $('body').data("needs_reload", false);
     $("section#content").html(data);
-    //$('#challenge_form').submit(block_form_submit);
     $('#challenge_form').on('ajax:success', get_next_task);
     
     start_question_timer();
@@ -127,6 +126,8 @@ function check_youtube_before_submit(){
       block_form_submit($("#challenge_form"));
       $("#challenge_form").unbind("submit");
       $("#challenge_form").submit();
+      $(".loading_image").show();
+      block_form_submit();
       return true;
     } else {
       alert("Please provide a link to a valid Youtube video.");
@@ -144,6 +145,8 @@ function check_image_before_submit(){
         block_form_submit($("#challenge_form"));
         $("#challenge_form").unbind("submit");
         $("#challenge_form").submit();
+        $(".loading_image").show();
+        block_form_submit();
         return true;
       } else {
         alert("Please provide a link to a valid image.");
@@ -160,10 +163,6 @@ $(document).ready(function() {
   $('body').data("needs_reload", false);
   expose_help_button();
   
-  $('#challenge_form').submit(function(){
-    //block_form_submit();
-
-  });
   if($("#help_modal").exists()){
     $("#help_button").click(function(){
       $('#help_modal').modal({ keyboard: true, backdrop: 'static', show: true });

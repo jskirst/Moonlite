@@ -12,6 +12,13 @@ label.unselected_answer { border: 2px solid white; background: white;}
 
 <% selection_script = "$('.selected_answer').removeClass('selected_answer').addClass('unselected_answer');$(this).removeClass('unselected_answer').addClass('selected_answer');" %>
 
+<script>
+$('#challenge_form').submit(function(){
+  $(".loading_image").show();
+  block_form_submit();
+});
+</script>
+
 <div class="field clearfix">
   <div class="input">
     <ul class="inputs-list">  

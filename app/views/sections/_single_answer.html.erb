@@ -1,3 +1,12 @@
+<script>
+$(function(){
+  $('#challenge_form').submit(function(){
+    $(".loading_image").show();
+    block_form_submit();
+  });
+});
+</script>
+
 <div class="field clearfix">
   <label style="margin-top:0px;">Answer:</label>
   <div class="input">
