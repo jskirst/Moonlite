@@ -21,6 +21,7 @@
           </div>
         </div>
       </td>
+      <% unless @hide_social %>
       <td style="border-top: none; border-right: 0px solid darkgray; border-left: 0px solid darkgray; vertical-align: middle;">
         <p style="font-weight: bold; font-size; 18px;"><span style="font-size:25px; color:lightgray;">|</span> Or <span style="font-size:25px; color:lightgray;">|</span></p>
       </td>
@@ -28,6 +29,7 @@
         <%= link_to image_tag("/images/facebook_login_button.png", :size => "220x55"), "/auth/facebook", :id => "facebook_signin" %>
         <%= link_to image_tag("/images/google_login_button.png", :size => "220x45"), "/auth/google_oauth2", :id => "google_signin" %>
       </td>
+      <% end %>
     </tr>
   </table>
   <div class="actions">

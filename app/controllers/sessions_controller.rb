@@ -22,7 +22,8 @@ class SessionsController < ApplicationController
             flash[:error] = "An error occured. Please try another form of authentication."
           end
         else
-          flash.now[:info] = "You must already have a Metabright account to login with #{auth["provider"].capitalize}."
+          flash.now[:info] = "Please login with your normal email and password before connecting with #{auth["provider"] == "facebook" ? "Facebook" : "Google" }."
+          @hide_social = true
           render('new') and return
         end
       end
