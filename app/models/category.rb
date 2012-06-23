@@ -1,16 +1,7 @@
 class Category < ActiveRecord::Base
-  attr_accessible :company_id, :name, :category_pic, :category_pic_file_name, :category_pic_content_type, :category_pic_file_size, :category_pic_updated_at
-  
-  has_attached_file :category_pic,
-    :storage => :s3,
-    :bucket => ENV['S3_BUCKET_NAME'],
-    :path => ":attachment/:id/:style.:extension",
-    :url  => ":s3_moonlite_url",
-    :s3_credentials => {
-      :access_key_id => ENV['AWS_ACCESS_KEY_ID'],
-      :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
-    }
-  
+  attr_accessor :image_resource
+  attr_accessible :company_id, :name, :image
+
   has_many :paths
   belongs_to :company
   
@@ -22,8 +13,33 @@ class Category < ActiveRecord::Base
   
   before_destroy :any_paths_left?
   
+  def default_image?
+    return true if image == "/images/default_path_pic.jpg"
+    return false
+  end
+  
+  def image
+    sr = stored_resource
+    if sr
+      return sr.obj.url
+    else
+      return "/images/default_category_pic.jpg"
+    end
+  end
+  
+  def stored_resource
+    return StoredResource.find_by_owner_name_and_owner_id("category", self.id)
+  end
+  
+  def store_image_resource(image_resource)
+    if image_resource
+      StoredResource.create!(:owner_name => "category", :owner_id => self.id, :obj => image_resource)
+    else
+      raise "RUNTIME EXCEPTION: No image resource."
+    end
+  end
+  
   private
-    
     def any_paths_left?
       return paths.empty?
     end

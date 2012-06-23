@@ -33,6 +33,7 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
+    store_location
     @path.reload
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id)
@@ -220,7 +221,7 @@ class PathsController < ApplicationController
     end
     
     unless @section.nil? || @section.is_published == false
-      if @section.instructions.blank? && @section.info_resources.empty?
+      if @section.instructions.blank? && @section.has_stored_resources
         redirect_to continue_section_path(@section)
       else
         redirect_to @section

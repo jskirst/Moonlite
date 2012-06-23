@@ -11,6 +11,7 @@ class CategoriesController < ApplicationController
     params[:category][:company_id] = current_user.company_id
     @category = Category.new(params[:category])
     if @category.save
+      @category.store_image_resource(params[:category][:image_resource])
       flash[:success] = "Category created."
       redirect_to edit_company_path(current_user.company)
     else

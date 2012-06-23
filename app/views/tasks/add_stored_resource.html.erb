@@ -1,0 +1,19 @@
+<h1>New Picture</h1>
+<p>You can upload a picture for any task and have it displayed just below the question. You can use this for "identify this" type questions or just for some added visuals.</p>
+<%= form_tag({:controller => "tasks", :action => "add_stored_resource"}, { :multipart => true, :method => :put }) %>
+  <div class="field clearfix">
+    <%= label_tag :description %>
+    <div class="input">
+      <%= text_area_tag :description, nil, :class => "xxlarge", :rows => "2", :placeholder => "optional..." %>
+    </div>
+  </div>
+  <div class="field">
+    <%= label_tag "Upload File" %>
+    <div class="input">
+      <%= file_field_tag :obj %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Save", :class => "btn primary" %>
+  </div>
+</form>

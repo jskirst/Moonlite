@@ -5,7 +5,6 @@ class Task < ActiveRecord::Base
   
   belongs_to   :section
   has_one   :path, :through => :section
-  has_one   :info_resource
   has_many  :completed_tasks
   has_many  :answers
   has_many  :comments, :dependent => :destroy
@@ -52,6 +51,14 @@ class Task < ActiveRecord::Base
     sa = submitted_answers.find_by_task_id_and_content(self.id, content)
     return sa unless sa.nil?
     return submitted_answers.create!(:content => content)
+  end
+  
+  def has_stored_resources
+    return StoredResource.find_by_owner_name_and_owner_id("task", self.id)
+  end
+  
+  def stored_resources
+    return StoredResource.where("owner_name = ? and owner_id = ?", "task", self.id)
   end
   
   def is_correct?(user_answer)

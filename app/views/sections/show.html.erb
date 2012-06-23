@@ -11,7 +11,7 @@
   <% unless @section.instructions.blank? %>
   <div style="padding: 20px"><%= @section.instructions.html_safe %></div>
   <% end %>
-  <% @info_resources.each do |r| %>
+  <% @stored_resources.each do |r| %>
     <div>
       <p>If you have trouble seeing content below, you can <%= link_to "download it here", r.obj.url %>.</p>
       <p class="ie_warning" style="display:none;"><strong>NOTE:</strong> If you are using Microsoft Internet Explore, you will need to add <i>http://docs.google.com</i> to your list of trusted sites. <a href="http://windows.microsoft.com/en-us/windows-vista/Security-zones-adding-or-removing-websites" target="_blank">Instructions here.</a></p>

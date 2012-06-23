@@ -39,11 +39,11 @@
             <%= f.text_field "answer4", :value => @answers[4], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
           </div>
         </div>
-        <% if @info_resource %>
-          <%= image_tag @task.info_resource.obj.url, :style => "height: 100px; margin: 20px 0px 0px 150px;" %>
-          <%= link_to "Remove Attachment", @info_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?", :style => "margin:10px 0 0 150px;" %>
+        <% if @stored_resource %>
+          <%= image_tag @stored_resource.obj.url, :style => "height: 100px; margin: 20px 0px 0px 150px;" %>
+          <%= link_to "Remove Attachment", @stored_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?", :style => "margin:10px 0 0 150px;" %>
         <% else %>
-          <%= link_to "Attachments", new_info_resource_path(:task_id => @task.id), :class => "btn secondary edit_button", :style => "margin: 20px 0px 0px 40px;" %>
+          <%= link_to "Attachments", add_stored_resource_task_path(@task), :class => "btn secondary edit_button", :style => "margin: 20px 0px 0px 40px;", :method => :put %>
         <% end %>
       </div>
       <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">

@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate
   before_filter :has_access?
-  before_filter :get_task_from_id, :only => [:edit, :update, :destroy, :resolve, :vote]
+  before_filter :get_task_from_id, :only => [:edit, :update, :destroy, :resolve, :vote, :add_stored_resource]
   before_filter :can_edit?, :only => [:edit, :update, :destroy, :resolve]
   
   respond_to :json, :html
@@ -24,7 +24,7 @@ class TasksController < ApplicationController
   end
   
   def edit
-    @info_resource = @task.info_resource
+    @stored_resource = @task.stored_resources.first
     @answers = @task.describe_answers
     respond_to {|f| f.html { render :partial => "edit_task_form" } }
   end
@@ -134,6 +134,21 @@ class TasksController < ApplicationController
         else
           respond_to {|format| format.json { render :json => { :errors => "You have no more votes to spend for this question."} } }
         end
+      end
+    end
+  end
+  
+  def add_stored_resource
+    unless params[:commit]
+      @stored_resource = StoredResource.new
+    else
+      @stored_resource = StoredResource.new(params.merge(:owner_name => "task", :owner_id => @task.id))
+      if @stored_resource.save
+        flash[:success] = "Image added."
+        redirect_to edit_path_path(@task.path)
+        return
+      else
+        flash[:error] = "Error occurred, could not add your image."
       end
     end
   end

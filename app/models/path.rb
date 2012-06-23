@@ -19,7 +19,6 @@ class Path < ActiveRecord::Base
   has_many :submitted_answers, :through => :tasks
   has_many :enrollments, :dependent => :destroy
   has_many :enrolled_users, :through => :enrollments, :source => :user
-  has_many :info_resources, :dependent => :destroy
   has_many :path_user_roles, :dependent => :destroy
   has_many :user_roles, :through => :path_user_roles
   has_many :collaborations
@@ -40,7 +39,25 @@ class Path < ActiveRecord::Base
   before_save :user_belongs_to_company
   before_save :check_image_url
   
-  #default_scope :order => 'paths.created_at DESC'
+  def default_pic?
+    return true if path_pic == "/images/default_path_pic.jpg"
+    return false
+  end
+  
+  def path_pic
+    sr = stored_resource
+    if sr
+      return sr.obj.url
+    elsif self.image_url
+      return self.image_url
+    else
+      return "/images/default_path_pic.jpg"
+    end
+  end
+  
+  def stored_resource
+    return StoredResource.find_by_owner_name_and_owner_id("path", self.id)
+  end
   
   def self.with_category(type, user, excluded_ids = -2, order = "id DESC")
     if excluded_ids.is_a?(Integer)
@@ -114,19 +131,6 @@ class Path < ActiveRecord::Base
   
   def next_section(section=nil)
     return sections.where(["position > ? and is_published = ?", section.position, true]).first(:order => "position ASC")
-  end
-  
-  def default_pic?
-    return true if path_pic == "/images/default_path_pic.jpg"
-    return false
-  end
-  
-  def path_pic
-    if self.image_url != nil
-      return self.image_url
-    else
-      return "/images/default_path_pic.jpg"
-    end
   end
   
   def completed?(user)

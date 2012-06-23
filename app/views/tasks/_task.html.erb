@@ -17,8 +17,8 @@
         <%= task.question %>
       </p>
     </blockquote>
-    <% if task.info_resource %>
-      <%= image_tag task.info_resource.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
+    <% if task.stored_resources.first %>
+      <%= image_tag task.stored_resources.first.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
     <% end %>
     <ol style="padding-left:20px;">
       <% ca = task.correct_answer %>

@@ -22,7 +22,7 @@ class SectionsController < ApplicationController
       @path_name = @section.path.name
       @title = @section.name
       @section_started = current_user.section_started?(@section)
-      @info_resources = @section.info_resources.all
+      @stored_resources = @section.stored_resources.all
     end
   end
 
@@ -71,7 +71,7 @@ class SectionsController < ApplicationController
     @path_id = @section.path_id
     if params[:m] == "tasks"
       @task = @section.tasks.new
-      @tasks = @section.tasks.includes(:info_resource).all(:order => "id DESC")
+      @tasks = @section.tasks.all(:order => "id DESC")
       @display = (@tasks.empty?)
       respond_to do |f|
         f.html { render :partial => "edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks, :section => @section } }
@@ -81,9 +81,9 @@ class SectionsController < ApplicationController
         f.html { render :partial => "edit_settings", :locals => { :section => @section } }
       end
     elsif params[:m] == "content"
-      @info_resources = @section.info_resources.all
+      @stored_resources = @section.stored_resources
       respond_to do |f|
-        f.html { render :partial => "edit_content", :locals => { :section => @section, :info_resources => @info_resources } }
+        f.html { render :partial => "edit_content", :locals => { :section => @section, :stored_resources => @stored_resources } }
       end
     end
   end
@@ -149,17 +149,14 @@ class SectionsController < ApplicationController
 
   def import_content
     if params[:previous]
-      InfoResource.delete(params[:previous])
+      StoredResource.delete(params[:previous])
     end
     render "import_content"
   end
   
   def preview_content
-    @info_resource = InfoResource.new
-    @info_resource.obj = params[:section][:file]
-    @info_resource.info_type = "unknown"
-    @info_resource.section_id = @section.id
-    if @info_resource.save
+    @stored_resource = StoredResource.new(:owner_name => "section", :owner_id => @section.id, :obj => params[:section][:file])
+    if @stored_resource.save
       render "preview_content"
     else
       flash[:error] = "Could not load content. Please try again."
@@ -295,7 +292,7 @@ class SectionsController < ApplicationController
         @possible_points = @possible_points/(-1*@streak)
       end
       generate_hint if @path.enable_retakes
-      @info_resource = @task.info_resource      
+      @stored_resource = @task.stored_resources
       @must_register = true if current_user.is_anonymous
       if @correct
         @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first

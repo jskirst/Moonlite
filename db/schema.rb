@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120620034417) do
+ActiveRecord::Schema.define(:version => 20120623061621) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -37,10 +37,6 @@ ActiveRecord::Schema.define(:version => 20120620034417) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "category_pic_file_name"
-    t.string   "category_pic_content_type"
-    t.integer  "category_pic_file_size"
-    t.datetime "category_pic_updated_at"
   end
 
   create_table "collaborations", :force => true do |t|
@@ -130,23 +126,6 @@ ActiveRecord::Schema.define(:version => 20120620034417) do
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
 
-  create_table "info_resources", :force => true do |t|
-    t.string   "description"
-    t.string   "link"
-    t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "section_id"
-    t.integer  "task_id"
-    t.string   "info_type"
-    t.string   "obj_file_name"
-    t.string   "obj_content_type"
-    t.integer  "obj_file_size"
-    t.datetime "obj_updated_at"
-  end
-
-  add_index "info_resources", ["path_id"], :name => "index_info_resources_on_path_id"
-
   create_table "leaderboards", :force => true do |t|
     t.integer  "user_id"
     t.integer  "completed_tasks", :default => 0
@@ -169,7 +148,7 @@ ActiveRecord::Schema.define(:version => 20120620034417) do
 
   create_table "paths", :force => true do |t|
     t.string   "name"
-    t.string   "description",                :default => ""
+    t.text     "description",                :default => ""
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -233,9 +212,28 @@ ActiveRecord::Schema.define(:version => 20120620034417) do
     t.string   "image_url"
     t.string   "content_type"
     t.text     "hidden_content"
-    t.boolean  "skip_content",        :default => false
     t.boolean  "enable_skip_content", :default => false
   end
+
+  create_table "stored_resources", :force => true do |t|
+    t.string   "description"
+    t.string   "link"
+    t.integer  "path_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "section_id"
+    t.integer  "task_id"
+    t.string   "info_type"
+    t.string   "obj_file_name"
+    t.string   "obj_content_type"
+    t.integer  "obj_file_size"
+    t.datetime "obj_updated_at"
+    t.integer  "owner_id"
+    t.string   "owner_name"
+  end
+
+  add_index "stored_resources", ["owner_id", "owner_name"], :name => "index_stored_resources_on_owner_id_and_owner_name"
+  add_index "stored_resources", ["path_id"], :name => "index_info_resources_on_path_id"
 
   create_table "submitted_answers", :force => true do |t|
     t.string   "content"
@@ -294,8 +292,8 @@ ActiveRecord::Schema.define(:version => 20120620034417) do
     t.integer  "user_id"
     t.integer  "path_id"
     t.string   "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_roles", :force => true do |t|
@@ -320,8 +318,8 @@ ActiveRecord::Schema.define(:version => 20120620034417) do
     t.boolean  "enable_company_store",    :default => false
     t.boolean  "enable_auto_generate",    :default => false
     t.string   "signup_token"
-    t.datetime "created_at",                                 :null => false
-    t.datetime "updated_at",                                 :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "user_transactions", :force => true do |t|

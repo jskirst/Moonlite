@@ -6,7 +6,7 @@
     </script>
 <![endif]-->
 <div>
-  <% if section.instructions.blank? & info_resources.empty? %>
+  <% if section.instructions.blank? & stored_resources.empty? %>
   <div style="padding: 20px;">
     <p>You have not added any content for this section yet. Start by doing one of the following:</p>
     <ul>
@@ -29,7 +29,7 @@
         <h5 style="float:left;">This content will be displayed before the user starts this section.</h5>
         <%= link_to "Add Document", import_content_section_path(section), :class => "btn secondary", :style => "float:right;" %>
       </div>
-      <% info_resources.each do |r| %>
+      <% stored_resources.each do |r| %>
       <div style="margin-top:20px;">
         <p>If you have trouble seeing this document, you can <%= link_to "download it here", r.obj.url.gsub("::",":") %>. You can remove the attachment <%= link_to "here", r, :method => :delete, :confirm => "Are you sure you want to delete this document?" %>.</p>
         <p class="ie_warning" style="display:none;"><strong>NOTE:</strong> If you are using Microsoft Internet Explore, you will need to add <i>http://docs.google.com</i> to your list of trusted sites. <a href="http://windows.microsoft.com/en-us/windows-vista/Security-zones-adding-or-removing-websites" target="_blank">Instructions here.</a></p>

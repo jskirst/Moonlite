@@ -69,11 +69,12 @@ SampleApp::Application.routes.draw do
       get :suggest
       put :resolve
       get :vote
+      put :add_stored_resource
     end
   end
 	resources :achievements
 	resources :user_achievements
-	resources :info_resources
+	resources :stored_resources
 	resources :user_transactions
 	resources :rewards do
 		member do
@@ -113,8 +114,6 @@ SampleApp::Application.routes.draw do
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'
 	match '/marketplace',:to => 'paths#marketplace'
-	
-	match '/retrieve', :to => 'info_resources#retrieve'
 	
 	match '/password_reset', :to => 'users#request_send'
 	match '/send_reset', :to => 'users#send_reset'
