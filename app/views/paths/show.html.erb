@@ -105,12 +105,12 @@ $(function(){
         <%= render "side_leaderboard" %>
       </div>
       <div class="span10" style="border-left:1px solid #DDD; border-right:1px solid #DDD; padding:0px 20px;">
-      <% if @must_register && @complete %>
+      <% if @must_register && @completed %>
         <div style="height: 900px;">
           <p style="font-size: 18px; line-height:25px;"><%= link_to "Save your score", signin_path %> so that people can vote for your submissions, and so that you can vote on theirs!</p>
           <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this challenge to improve your global ranking, create your own challenges and start a <%= link_to "Persona", "#" %>.</p>
         </div>
-      <% elsif @must_register %>
+      <% elsif !@completed %>
         <div style="height: 900px;">
           <p style="font-size: 18px; line-height:25px;">Complete the first level of this challenge so you can see where you rank on the global leaderboard and vote on other people's answers!</p>
           <% unless @enrolled %>

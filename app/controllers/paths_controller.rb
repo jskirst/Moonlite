@@ -247,7 +247,7 @@ class PathsController < ApplicationController
     @must_register = current_user.must_register?
     
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
-    if @path.completed?(current_user)
+    if @completed
       @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
       # Lots of queries
       previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)

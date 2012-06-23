@@ -115,4 +115,4 @@ section.wiki { margin-bottom: 50px; }
 #unresolved_tasks_list li:hover { background-color:whitesmoke; }
 .underlined { text-decoration:underline; }
 .btn.big { font-size: 18px; padding:8px; margin:10px;}
-.btn.really_big { font-size: 25px; padding:12px; margin:10px;}
+.btn.really_big { font-size: 23px; padding:10px; margin:10px;}

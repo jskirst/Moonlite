@@ -1,4 +1,4 @@
-<div id="knowledge_tasks_list" style="display:none;">
+<div id="knowledge_tasks_list" style="<%= @show_voting ? "display:none;":"" %>>
   <ol>
   <% @knowledge_tasks.each do |t| %>
     <% task = t[:task] %>
