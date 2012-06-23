@@ -15,7 +15,7 @@ label.unselected_answer { border: 2px solid white; background: white;}
 <script>
 $('#challenge_form').submit(function(){
   $(".loading_image").show();
-  block_form_submit();
+  $("#submit_button").attr("disabled","disabled");
 });
 </script>
 

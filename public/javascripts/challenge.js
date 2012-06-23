@@ -123,11 +123,10 @@ function check_youtube_before_submit(){
     var url = $("#answer_input").val();
     var youtube_id = get_youtube_id_from_link(url);
     if(is_valid_youtube_id(youtube_id)){
-      block_form_submit($("#challenge_form"));
       $("#challenge_form").unbind("submit");
       $("#challenge_form").submit();
       $(".loading_image").show();
-      block_form_submit();
+      $("#submit_button").attr("disabled","disabled");
       return true;
     } else {
       alert("Please provide a link to a valid Youtube video.");
@@ -142,11 +141,10 @@ function check_image_before_submit(){
     var url = $("#answer_input").val();
     is_valid_image(url, function(valid){
       if(valid == true){
-        block_form_submit($("#challenge_form"));
         $("#challenge_form").unbind("submit");
         $("#challenge_form").submit();
         $(".loading_image").show();
-        block_form_submit();
+        $("#submit_button").attr("disabled","disabled");
         return true;
       } else {
         alert("Please provide a link to a valid image.");

@@ -1,3 +1,8 @@
+<script>
+$(function(){
+  $("a").not(".clickable_link").attr("href", "#");
+});
+</script>
 <div class="row" style="margin-bottom:50px;">
   <%= render "path_grid", { :paths => @first_four_challenges } %>
 </div>
@@ -22,11 +27,11 @@
     </div>
     <div class="field clearfix">
       <div class="input">
-        <p>Not registered yet? <%= link_to "Request an invite.", invitation_path %></p>
+        <p>Not registered yet? <%= link_to "Request an invite.", invitation_path, :class => "clickable_link" %></p>
       </div>
     </div>
     <%= f.submit "Sign in", :class => "btn primary", :style => "margin-left:150px;" %>
-    <%= link_to "Login with Facebook", "/auth/facebook", :class => "btn secondary" %>
+    <%= link_to "Login with Facebook", "/auth/facebook", :class => "btn secondary clickable_link" %>
   <% end %>
   </div>
 </div>

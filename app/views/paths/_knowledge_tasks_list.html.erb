@@ -1,0 +1,29 @@
+<div id="knowledge_tasks_list" style="display:none;">
+  <ol>
+  <% @knowledge_tasks.each do |t| %>
+    <% task = t[:task] %>
+    <% answers = t[:answers] %>
+    <% user_answer = t[:users_completed_task] %>
+    <li style="margin-bottom:20px; padding-bottom:10px; border-bottom:3px solid darkgray;">
+      <p style="font-size: 22px; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
+      <% if task.answer_type == 1 %>
+      <% answer = task.answers.first %>
+      <div class="task" style="padding-left:45px;">
+        <p class="answer">Answers: <%= answer.content %> (<%= task.fib_answer_breakdown %>%)</p>
+      </div>
+      <% elsif task.answer_type == 2 %>
+      <ol style="padding-left:45px;" class="task">
+      <% answers.each do |answer| %>
+        <% answer_percent = answer.answer_percent %>
+        <li class="answer <%= "correct" if answer.is_correct? %> <%= "user_answer" if user_answer.answer_id == answer.id %>">
+          <%= answer.content %> <%= "(#{answer.answer_percent}%)" if answer_percent > 0 %>
+        </li>
+      <% end %>
+      </ol>
+      <% else %>
+        <% raise "Invalid answer type." %>
+      <% end %>
+    </li>
+  <% end %>
+  </ol>
+</div>

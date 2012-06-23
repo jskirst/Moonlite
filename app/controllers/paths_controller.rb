@@ -1,7 +1,7 @@
 class PathsController < ApplicationController
   include OrderHelper
   
-  before_filter :authenticate, :except => [:hero, :jumpstart]
+  before_filter :authenticate, :except => [:hero, :show, :jumpstart]
   before_filter :admin_only, :only => [:index, :change_company]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
@@ -193,27 +193,7 @@ class PathsController < ApplicationController
   end
 
 # Begin Path Journey
-
-  def show
-    @title = @path.name
-    @sections = @path.sections.find(:all, :conditions => ["sections.is_published = ?", true])
-    
-    if @enable_leaderboard
-      @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user)
-      @last_update = Leaderboard.get_most_recent_board_date
-    end
-    
-    @current_position = @path.current_section(current_user).position unless @sections.empty?
-    @enrolled = current_user.enrolled?(@path)
-    if current_user.path_started?(@path)
-      @start_mode = @path.completed?(current_user) ? "View Score" : "Continue Challenge"
-    elsif current_user.enrolled?(@path)
-      @start_mode = "Start #{name_for_paths}"
-    else
-      @start_mode = "Enroll"
-    end
-  end
-  
+ 
   def jumpstart
     @company = Company.find(1)
     @path = @company.paths.find(params[:id])
@@ -246,32 +226,45 @@ class PathsController < ApplicationController
         redirect_to @section
       end
     else
-      redirect_to finish_path_path(@path)
+      redirect_to @path
     end
   end
   
-  def finish
+  def show
+    unless signed_in?
+      @user = User.create_anonymous_user(Company.find(1))
+      sign_in(@user)
+      current_user.enrollments.create!(:path_id => @path.id)
+      @enrolled = true, @completed = false
+      @start_mode = "Start #{name_for_paths}"
+    else
+      @enrolled = current_user.enrolled?(@path)
+      @completed = @path.completed?(current_user)
+      @start_mode = "Continue #{name_for_paths}"
+    end
+  
     store_location #So user will be redirected here after registration
     @must_register = current_user.must_register?
-    @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
     
-    # Lots of queries
-    previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
-    track! :path_completion if previous_ranking.nil?
-    
-    # This can be optimized by grabbing the top 10 + yours and then the count between. 3 queries
-    @skill_ranking = @path.skill_ranking(current_user)
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
-    counter = 1
-    previous = nil
-    @leaderboards.each do |l|
-      if l.user_id == current_user.id
-        @next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
-        @user_rank = ActiveSupport::Inflector::ordinalize(counter)
-        break
-      else
-        previous = l
-        counter += 1
+    if @path.completed?(current_user)
+      @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
+      # Lots of queries
+      previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
+      # This can be optimized by grabbing the top 10 + yours and then the count between. 3 queries
+      @skill_ranking = @path.skill_ranking(current_user)
+    
+      counter = 1
+      previous = nil
+      @leaderboards.each do |l|
+        if l.user_id == current_user.id
+          @next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
+          @user_rank = ActiveSupport::Inflector::ordinalize(counter)
+          break
+        else
+          previous = l
+          counter += 1
+        end
       end
     end
     
@@ -287,19 +280,34 @@ class PathsController < ApplicationController
     end
    
     unless @must_register
-      @tasks = []
       @task_ids = []
-      @path.tasks.includes(:completed_tasks, :answers).where("completed_tasks.user_id = ?", current_user.id).all(:limit => 10, :order => "tasks.id ASC").each do |t|
-        @task_ids << t.id
-        users_completed_task = t.completed_tasks.first
-        @tasks << { :task => t, :submitted_answers => t.submitted_answers.all(:order => @order), :users_completed_task => users_completed_task, :answers => t.answers }
+      @creative_tasks = []
+      @knowledge_tasks = []
+      if params[:task_id]
+        @in_drill_down = true
+        task = @path.tasks.find(params[:task_id])
+        @creative_tasks << { :task => task, 
+          :submitted_answers => task.submitted_answers.all(:order => @order), 
+          :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
+          :answers => task.answers }
+        @task_ids << task.id
+        @current_users_answers = current_user.submitted_answers.find_by_task_id(task.id)
+        @current_users_answers = [@current_users_answers.id] unless @current_users_answers.nil?
+      else
+        @path.tasks.includes(:completed_tasks, :answers)
+          .where("completed_tasks.user_id = ?", current_user.id)
+          .all(:limit => 100, :order => "tasks.id ASC").each do |t|
+          @task_ids << t.id
+          users_completed_task = t.completed_tasks.first
+          task = { :task => t, 
+            :submitted_answers => t.submitted_answers.all(:order => @order, :limit => 10), 
+            :users_completed_task => users_completed_task, 
+            :answers => t.answers }
+          
+          t.answer_type == 0 ? (@creative_tasks << task) : (@knowledge_tasks << task)
+        end
+        @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
       end
-      @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
-    end
-    
-    if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
-      event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{@total_points_earned.to_s}."
-      current_user.user_events.create!(:path_id => @path.id, :content => event)
     end
   end
   
@@ -366,7 +374,13 @@ class PathsController < ApplicationController
     end
     
     def can_view?
-      redirect_to root_path unless (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id) && !@path.is_locked) || (@path.user_id = current_user.id) || (@path.company_id == current_user.company_id && @enable_collaboration)
+      unless 
+      (@path.company_id == 1 && @path.is_published) ||
+      (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id) && !@path.is_locked) ||
+      (@path.user_id = current_user.id) ||
+      (@path.company_id == current_user.company_id && @enable_collaboration)
+        redirect_to root_path
+      end
     end
     
     def can_continue?

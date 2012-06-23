@@ -3,12 +3,16 @@ class EnrollmentsController < ApplicationController
   before_filter :authorized_user, :only => :destroy
   
   def create
-    @enrollment = current_user.enrollments.build(params[:enrollment])
-    if @enrollment.save
-      flash[:success] = "Successfully enrolled."
+    if @enrollment = current_user.enrollments.find(params[:enrollment][:id])
       redirect_to continue_path_path(@enrollment.path)
     else
-      redirect_to root_path
+      @enrollment = current_user.enrollments.build(params[:enrollment])
+      if @enrollment.save
+        flash[:success] = "Successfully enrolled."
+        redirect_to continue_path_path(@enrollment.path)
+      else
+        redirect_to root_path
+      end
     end
   end
   

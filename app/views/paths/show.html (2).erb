@@ -1,0 +1,91 @@
+<% if @immediate_registration || @partial_immediate_registration %>
+  <%= render "users/immediate_registration", { :path => @path } %>
+  <% if @immediate_registration %>
+  <script>
+    $(function(){
+      $('#username_modal').modal({ backdrop: 'static', show: true, keyboard: true });
+    });
+  </script>
+  <% end %>
+<% end %>
+<section class="path">
+  <div style="min-height: 120px;">
+    <div style="float:left; margin: 0px 15px 0px 0px;">
+      <%= image_tag(@path.path_pic, :size=>"100x100") %>
+    </div>
+    <div>
+    <% unless @enrolled %>
+      <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
+        <%= f.hidden_field :path_id %>
+        <%= f.submit "Start "+name_for_paths, :class=> "btn primary xlarge", :style => "margin: 10px 40px 0px 0px; float:right;" %>
+      <% end %>
+    <% else %>
+      <% if @partial_immediate_registration || @immediate_registration %>  
+        <a onclick="$('#username_modal').modal({ backdrop: 'static', show: true, keyboard: true });
+;" class="btn primary xlarge" style="margin: 10px 40px 0px 0px; float:right;">Start <%= name_for_paths %></a>
+      <% else %>
+        <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary xlarge", :style => "margin: 10px 40px 0px 0px; float:right;"%>
+      <% end %>
+    <% end %>
+    </div>
+    <div>
+      <h1 style="margin-bottom: 0px;"><%= @path.name %></h1>
+    </div>
+    <div style="padding:15px 30px 0 10px;">
+      <div class="description"><%= @path.description.html_safe %></div>
+    </div>
+  </div>
+  
+  
+  <% if @path.enable_section_display %>
+    <%= render "path_sections", { :sections => @sections } %>
+  <% end %>
+  
+  
+  <% if @enable_leaderboard %>
+  <section class="tab_header">
+    <div>
+      <h3>Leaderboards</h4>
+    </div>
+    <div>
+      <script>
+      $(function (){
+        $("#leaderboard_overall").show().addClass("active_board");
+      });
+      
+      function change_leaderboard(new_board_id){
+        var old_board_id = $(".active_board").attr("id").replace("leaderboard_","");
+        $(".active_board").hide().removeClass("active_board");
+        $("#leaderboard_"+new_board_id).show().addClass("active_board");
+        $("#leaderboard_header_"+old_board_id).removeClass("active");
+        $("#leaderboard_header_"+new_board_id).addClass("active");
+      }
+      </script>
+      <ul class="tabs">
+        <li class="active" id="leaderboard_header_overall"><a onclick="change_leaderboard('overall')">Overall</a></li>
+        <% @sections.each do |s| %>
+        <li id="leaderboard_header_<%= s.id.to_s %>"><a onclick="change_leaderboard('<%= s.id.to_s %>')"><%= s.name %></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <% @leaderboards.each do |l| %>
+      <%= render "leaderboards/leaderboard", {:leaderboard_id => l[0], :leaderboard_entries => l[1] } %>
+    <% end %>
+    <% unless @leaderboards.empty? %>
+      <p>Last leaderboard update: <%= time_ago_in_words(@last_update) %> ago</p>
+    <% end %>
+  </section>
+  <% end %>
+  
+  
+  <% if @enable_comments %>
+    <%= render "facebook_like" %>
+  <% end %>
+  
+  
+  <% if can_edit_path(@path) %>
+  <div class="actions">
+    <%= link_to "Edit", edit_path_path(@path), :class => "btn primary", :style => " margin: 10px 40px 0px 0px;" %>
+  </div>
+  <% end %>
+</section>

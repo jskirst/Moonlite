@@ -4,12 +4,12 @@
   $(function(){
     $('#challenge_form').submit(function(){
       $(".loading_image").show();
-      block_form_submit();
+      $("#submit_button").attr("disabled","disabled");
     });
   });
   </script>
   <div class="input" style="margin-top:10px;">
-    <textarea name="answer" id="answer_input" rows="3" style="width: 350px;" placeholder="Enter answer here..."></textarea>
+    <textarea name="answer" id="answer_input" rows="3" style="width: 350px;" placeholder="Enter answer here..." autofocus="autofocus"></textarea>
     <p style="font-style:italic;">*Points awarded by votes</p>
   </div>
   <% elsif task.answer_sub_type == 101 %>
@@ -31,7 +31,7 @@
     });
   </script>
   <div class="input">
-    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to image URL here..."><a id="answer_preview_button" class="btn secondary clickable_link" style="margin-left: 10px;">Preview</a>
+    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to image URL here..." autofocus="autofocus"><a id="answer_preview_button" class="btn secondary clickable_link" style="margin-left: 10px;">Preview</a>
     <p style="font-style:italic;">*Points awarded by votes</p>
     <div id="answer_preview_container" style="width:250px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;">
       <div id="answer_preview" >
@@ -59,7 +59,7 @@
     });
   </script>
   <div class="input">
-    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to youtube video here..."><a class="btn secondary clickable_link" style="margin-left: 10px;" id="answer_preview_button">Preview</a>
+    <input type="text" id="answer_input" name="answer" style="width: 250px;" placeholder="Copy & paste link to youtube video here..." autofocus="autofocus"><a class="btn secondary clickable_link" style="margin-left: 10px;" id="answer_preview_button">Preview</a>
     <p style="font-style:italic;">*Points awarded by votes</p>
     <div id="answer_preview_container" style="width: 480px; height:295px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;">
       <div id="answer_preview" >
