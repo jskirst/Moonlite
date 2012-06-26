@@ -140,9 +140,9 @@ class TasksController < ApplicationController
   
   def add_stored_resource
     unless params[:commit]
-      @stored_resource = StoredResource.new
+      @stored_resource = @task.stored_resources.new
     else
-      @stored_resource = StoredResource.new(params.merge(:owner_name => "task", :owner_id => @task.id))
+      @stored_resource = @task.stored_resources.new(params)
       if @stored_resource.save
         flash[:success] = "Image added."
         redirect_to edit_path_path(@task.path)

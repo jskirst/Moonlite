@@ -3,7 +3,7 @@ class EnrollmentsController < ApplicationController
   before_filter :authorized_user, :only => :destroy
   
   def create
-    if @enrollment = current_user.enrollments.find(params[:enrollment][:id])
+    if @enrollment = current_user.enrollments.find_by_path_id(params[:enrollment][:path_id])
       redirect_to continue_path_path(@enrollment.path)
     else
       @enrollment = current_user.enrollments.build(params[:enrollment])

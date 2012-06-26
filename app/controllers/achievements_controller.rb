@@ -1,37 +1,32 @@
 class AchievementsController < ApplicationController
   before_filter :authenticate
   before_filter :company_admin, :except => [:show]
-  before_filter :get_from_id, :except => [:new, :create]
-  before_filter :get_path_from_id, :only => [:new]
-  before_filter :get_path_from_params, :only => [:create]
+  before_filter :get_from_id, :except => [:new, :create, :index]
   before_filter :authorized, :except => [:show]
-  before_filter :is_enabled?
   
   def new
-    if @path.nil?
-      flash[:error] = "No Path argument supplied."
-      redirect_to root_path
-    else
-      @sections = @path.sections
-      @achievement = Achievement.new
-      @title = "New Achievement"
-      render "new"
-    end
+    @categories = current_user.company.categories.includes(:paths)
+    @achievement = Achievement.new
+    @title = "New Achievement"
+    render "new"
   end
   
   def create
     a = params[:achievement]
-    @achievement = @path.achievements.build(a)
-    @sections = @path.sections
-    if a[:tasks].nil?
-      flash[:error] = "You did not select any tasks or sections to include as criteria for unlocking this achievement."
-      render "new"
+    @achievement = current_user.company.achievements.build(a)
+    if a[:paths].nil?
+      flash[:error] = "You did not select any #{name_for_paths.pluralize} to include as criteria for unlocking this achievement."
+      redirect_to new_achievement_path
     else
-      @achievement.criteria = a[:tasks].map { |id, state| id }.join(",")
+      criteria = a[:paths].collect { |id, state| id }
       if @achievement.save
         flash[:success] = "Achievement created."
-        redirect_to edit_path_path(@path, :m => "achievements")
+        criteria.each do |c|
+          @achievement.path_achievements.create!(:path_id => c)
+        end
+        redirect_to achievements_path
       else
+        @categories = current_user.company.categories.includes(:paths)
         @title = "New achievement"
         render "new"
       end
@@ -40,6 +35,10 @@ class AchievementsController < ApplicationController
   
   def show
     @user_achievements = @achievement.user_achievements
+  end
+  
+  def index
+    @achievements = current_user.company.achievements
   end
   
   def edit
@@ -60,45 +59,23 @@ class AchievementsController < ApplicationController
   
   def destroy
     @achievement.destroy
-    flash[:success] = "Achiement successfully deleted."
-    redirect_to edit_path_path(@achievement.path, :m => "achievements")
+    flash[:success] = "Achievement successfully deleted."
+    redirect_to achievements_path
   end
   
   private
-    def is_enabled?
-      unless @enable_achievements
-        flash[:error] = "This functionality has not been enabled for you."
-        redirect_to root_path
-      end
-    end
-  
     def get_from_id
       @achievement = Achievement.find_by_id(params[:id])
       if @achievement.nil?
         flash[:error] = "No record found for the argument supplied."
         redirect_to root_path and return
       end
-      @path = @achievement.path
     end
-    
-    def get_path_from_id
-      unless @path = Path.find_by_id(params[:path_id])
-        flash[:error] = "No record found for the argument supplied."
-        redirect_to root_path and return
-      end
-    end
-    
-    def get_path_from_params
-      unless @path = Path.find_by_id(params[:achievement][:path_id])
-        flash[:error] = "No record found for the argument supplied."
-        redirect_to root_path and return
-      end
-    end
-    
+   
     def authorized
-      unless @path.company_id == current_user.company_id
+      unless @enable_administration
         flash[:error] = "You are not authorized to access that data."
-        redirect_to signin_path and return
+        redirect_to root_path and return
       end
     end
 end

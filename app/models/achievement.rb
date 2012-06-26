@@ -1,8 +1,12 @@
 class Achievement < ActiveRecord::Base
-  attr_accessible :name, :description, :criteria, :points, :path_id, :image_url
-  
-  belongs_to  :path
+  attr_accessible :company_id, :name, :description, :criteria, :points
+
+  belongs_to :company
+  has_many :stored_resources, :as => :owner 
   has_many    :user_achievements, :include => :user
+  has_many    :users, :through => :user_achievements
+  has_many    :path_achievements, :include => :path
+  has_many    :paths, :through => :path_achievements
   
   validates :name, 
     :presence     => true,
@@ -11,15 +15,10 @@ class Achievement < ActiveRecord::Base
   validates :description, 
     :presence     => true,
     :length      => { :within => 1..255 }
-    
-  validates :criteria,
-    :presence     => true
   
   validates :points, 
     :presence     => true
     
-  validates :path_id, :presence => true
-  
   def pic
     if self.image_url != nil
       return self.image_url

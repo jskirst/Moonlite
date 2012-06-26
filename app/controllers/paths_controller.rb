@@ -221,12 +221,15 @@ class PathsController < ApplicationController
     end
     
     unless @section.nil? || @section.is_published == false
-      if @section.instructions.blank? && @section.has_stored_resources
+      if @section.instructions.blank? && @section.stored_resources.empty?
         redirect_to continue_section_path(@section)
       else
         redirect_to @section
       end
     else
+      previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
+      current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
+      award_achievements
       redirect_to @path
     end
   end
@@ -249,9 +252,7 @@ class PathsController < ApplicationController
     
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     if @completed
-      @total_points_earned = @path.enrollments.where("enrollments.user_id = ?", current_user.id).first.total_points
-      # Lots of queries
-      previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
+      @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
       # This can be optimized by grabbing the top 10 + yours and then the count between. 3 queries
       @skill_ranking = @path.skill_ranking(current_user)
     
@@ -418,5 +419,24 @@ class PathsController < ApplicationController
       path_score = ((@path.completed_tasks.average("status_id", :conditions => ["completed_tasks.updated_at > ?", @time.days.ago]) || 0) * 100).to_i
       
       return [user_points, activity_over_time, path_score]
+    end
+    
+    def award_achievements
+      incomplete_achievements = []
+      completed_achievements = []
+      completed_paths = current_user.enrollments.where("is_complete = ?", true).to_a.collect {|e| e.path_id}
+      current_user.company.achievements.includes(:path_achievements).each do |a|
+        criteria = a.path_achievements.all.to_a.collect {|pa| pa.path_id }
+        completed_criteria = 0
+        criteria.each {|c| completed_criteria += 1 if completed_paths.include?(c)}
+        if completed_criteria == criteria.size
+          unless current_user.achievements.find_by_id(a.id)
+            current_user.user_achievements.create!(:achievement_id => a.id)
+            flash[:success] = "You unlocked the #{a.name} Achievement!"
+          end
+        elsif (criteria - completed_paths) != criteria
+          flash[:success] = [flash[:success].to_s, "You almost unlocked the #{a.name} Achievement!"].join(" ")
+        end
+      end
     end
 end

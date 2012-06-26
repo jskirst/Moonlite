@@ -3,7 +3,7 @@ class UserAchievement < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :achievement
-  has_one :path, :through => :achievement
+  belongs_to :path
   
   validates :user_id, :presence => true
   validates :achievement_id, :presence => true

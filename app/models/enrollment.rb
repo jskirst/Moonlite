@@ -1,5 +1,5 @@
 class Enrollment < ActiveRecord::Base
-  attr_accessible :path_id, :total_points
+  attr_accessible :path_id, :total_points, :is_complete
   
   belongs_to :user
   belongs_to :path

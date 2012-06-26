@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :completed_tasks, :dependent => :destroy
   has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
   has_many :user_achievements, :dependent => :destroy
+  has_many :achievements, :through => :user_achievements
   has_many :comments, :dependent => :destroy
   has_many :leaderboards, :dependent => :destroy
   has_many :user_events, :dependent => :destroy

@@ -155,7 +155,7 @@ class SectionsController < ApplicationController
   end
   
   def preview_content
-    @stored_resource = StoredResource.new(:owner_name => "section", :owner_id => @section.id, :obj => params[:section][:file])
+    @stored_resource = @section.stored_resources.new(:obj => params[:section][:file])
     if @stored_resource.save
       render "preview_content"
     else
@@ -292,7 +292,7 @@ class SectionsController < ApplicationController
         @possible_points = @possible_points/(-1*@streak)
       end
       generate_hint if @path.enable_retakes
-      @stored_resource = @task.stored_resources
+      @stored_resource = @task.stored_resources.first
       @must_register = true if current_user.is_anonymous
       if @correct
         @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first

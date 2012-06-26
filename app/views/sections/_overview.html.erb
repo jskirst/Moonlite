@@ -31,7 +31,7 @@
       </td>
       <td style="padding: 0px 10px 10px 15px; border-top:none; min-width: 278px;">
         <h5>CONTENT</h5>
-        <% if !s.has_stored_resources && s.instructions.blank? %>
+        <% if s.stored_resources.empty? && s.instructions.blank? %>
         <p>You do not have any attached content for this section.</p>
         <p><a class ="edit_section_content_pill" onclick="display_section_content($(this).parents('td.section'));" style="cursor: pointer;">Add Content</a></p>
         <% else %>

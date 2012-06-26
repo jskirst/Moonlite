@@ -8,6 +8,7 @@ class Section < ActiveRecord::Base
   belongs_to :path
   has_many :tasks, :dependent => :destroy
   has_many :completed_tasks, :through => :tasks, :source => :completed_tasks
+  has_many :stored_resources, :as => :owner
   
   validates :name, 
     :presence     => true,
@@ -20,14 +21,6 @@ class Section < ActiveRecord::Base
     :presence     => true
     
   before_save :check_image_url
-  
-  def has_stored_resources
-    return StoredResource.find_by_owner_name_and_owner_id("section", self.id)
-  end
-  
-  def stored_resources
-    return StoredResource.where("owner_name = ? and owner_id = ?", "section", self.id)
-  end
   
   def randomize_tasks
     old_task_array = tasks_to_array

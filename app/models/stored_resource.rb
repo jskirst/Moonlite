@@ -1,5 +1,7 @@
 class StoredResource < ActiveRecord::Base
-  attr_accessible :owner_id, :owner_name, :section_id, :path_id, :task_id, :description, :link, :info_type, :obj, :obj_file_name, :obj_content_type, :obj_file_size, :obj_updated_at
+  attr_accessible :owner_id, :owner_type, :section_id, :path_id, :task_id, :description, :link, :info_type, :obj, :obj_file_name, :obj_content_type, :obj_file_size, :obj_updated_at
+  
+  belongs_to :owner, :polymorphic => true
   
   has_attached_file :obj,
     :storage => :s3,
@@ -14,8 +16,8 @@ class StoredResource < ActiveRecord::Base
   validates :owner_id,
     :presence => true
     
-  validates :owner_name,
-    :length => { :within => 1..40 }
+  validates :owner_type,
+    :presence => true
   
   validates :description,
   :length      => { :maximum => 255 }

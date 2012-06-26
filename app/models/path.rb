@@ -10,6 +10,7 @@ class Path < ActiveRecord::Base
     :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
     :is_locked, :enable_retakes, :game_type, :tags, :user_id, :enable_voting
   
+  has_many :stored_resources, :as => :owner
   belongs_to :user
   belongs_to :company
   belongs_to :category
@@ -45,7 +46,7 @@ class Path < ActiveRecord::Base
   end
   
   def path_pic
-    sr = stored_resource
+    sr = stored_resources.first
     if sr
       return sr.obj.url
     elsif self.image_url
@@ -53,10 +54,6 @@ class Path < ActiveRecord::Base
     else
       return "/images/default_path_pic.jpg"
     end
-  end
-  
-  def stored_resource
-    return StoredResource.find_by_owner_name_and_owner_id("path", self.id)
   end
   
   def self.with_category(type, user, excluded_ids = -2, order = "id DESC")
@@ -134,7 +131,7 @@ class Path < ActiveRecord::Base
   end
   
   def completed?(user)
-    return total_remaining_tasks(user) <= 0
+    return enrollments.find_by_user_id(user.id).is_complete?
   end
   
   def total_remaining_tasks(user)

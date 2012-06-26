@@ -1,7 +1,6 @@
 <h1>New Achievement</h1>
 <%= form_for @achievement do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
-  <%= f.hidden_field :path_id, :value => @path.id %><br/>
   <div class="field clearfix">
     <%= f.label :name %>
     <div class="input">
@@ -27,58 +26,30 @@
     </div>
   </div>
   <div>
-    <script>
-      $(document).ready(function(){
-        $('.section_check').change(function(){
-          var state = $(this).prop("checked");
-          var this_id = $(this).val();
-          this_id = this_id.replace("section_", "");
-          $(".section_task_"+this_id).each(function(){
-            if(state==true){
-              $(this).find("input").prop("checked", true);
-              $(this).find("input").prop("disabled", true);
-            } else {
-              $(this).find("input").prop("checked", false);
-              $(this).find("input").prop("disabled", false);
-            }
-          });
-        });
-      });
-    </script>
     <h2>Criteria</h2>
-    <% if @sections.empty? %>
-      <p style="margin: 20px 0px 20px 20px;">You have not yet created any sections for this Path. You need to create at least one section to create an achievement.</p>
+    <% if @categories.empty? %>
+      <p style="margin: 20px 0px 20px 20px;">You have not yet created any <%= name_for_paths.pluralize %> yet. You need to create at least one <%= name_for_paths %> to create an achievement.</p>
     <% else %>
-      <p style="margin: 20px 0px 20px 20px;">Select which tasks, or which sections, must be completed for the user to unlock the achievement.</p>
-      <table>
-      <% @sections.each do |s| %>
-        <% if !s.tasks.empty? %>
-        <tr><td>  
-          <h3>
-            <input type="checkbox" style="display:inline;" class="section_check" value="section_<%= s.id.to_s %>"/>
-            <%= s.name %>
-          </h3>
-          <ul style="list-style-type: none;">
-          <% s.tasks.each do |t| %>
-            <li class="section_task_<%= s.id.to_s %>">
-              <h4>
-                <input id="achievement[tasks][<%= t.id.to_s %>]" name="achievement[tasks][<%= t.id.to_s %>]" type="checkbox" style="margin-right:10px;"/>
-                <%= t.question %>
-              </h4>
+      <p style="margin: 20px 0px 20px 20px;">Select which <%= name_for_paths.pluralize %> must be completed for the user to unlock the achievement.</p>
+      <ul style="list-style-type: none;">
+      <% @categories.each do |c| %>
+        <li>
+          <h5><%= c.name %></h5>
+          <ol>
+          <% c.paths.each do |p| %>
+            <li>
+                <span><%= p.name %></span>
+                <input type="checkbox" name="achievement[paths][<%= p.id.to_s %>]" style="margin-left: 5px;"/>
             </li>
           <% end %>
-          </ul>
-        <% end %>
-        </tr></td>
+          </ol>
+        </li>
       <% end %>
-      </table>
+      </ul>
     <% end %>
   </div>
   <div class="actions">
-  <% if @sections.empty? %>
-    <%= link_to "Back", edit_path_path(@path, :m => "achievements"), :class => "btn primary"  %>
-  <% else %>
+    <%= link_to "Back", achievements_path, :class => "btn secondary"  %>
     <%= f.submit "Save", :class => "btn primary" %>
-  <% end %>
   </div>
 <% end %>

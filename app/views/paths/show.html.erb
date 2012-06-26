@@ -53,51 +53,32 @@ $(function(){
 });
 </script>
 <section>
-  <% unless @completed %>
-  <div style="min-height: 120px;">
-    <div style="float:left; margin: 0px 15px 0px 0px;">
-      <%= image_tag(@path.path_pic, :size=>"100x100") %>
-    </div>
-    <div>
-    <% unless @enrolled %>
-      <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
-        <%= f.hidden_field :path_id %>
-        <%= f.submit "Start "+name_for_paths, :class=> "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;" %>
-      <% end %>
-    <% else %>  
-      <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary", :style => "margin: 10px 40px 0px 0px; float:right;"%>
-    <% end %>
-    </div>
-    <div>
-      <h1 style="margin-bottom: 0px;"><%= @path.name %></h1>
-    </div>
-    <div style="padding:15px 30px 0 10px;">
-      <div class="description"><%= @path.description.html_safe %></div>
-    </div>
-  </div>
-  <% else %>
-  <div class="row">
-    <div class="span3" style="width: 130xp;">
-      <ul class="media-grid">
-        <li>
-          <a>
-            <%= image_tag @path.path_pic, :style => "min-height: 100px; max-height: 105px; max-width: 130px;" %>
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div class="span13" style="margin: 0 0 0 0px; ">
-      <h1 style="margin-bottom:2px; text-decoration: underline;">Congratulations!</h1>
-      <p style="font-size:13px; font-style: italic; font-weight:bold; margin-bottom: 10px;">You have successfully completed this <%= name_for_paths.downcase %></p>
-      <div>
-        <p style="line-height:20px; font-size:17px;">
-          You're now ranked <strong><%= @user_rank %></strong> with <strong><%= pluralize(@total_points_earned.to_i, "point") %></strong>. You reached a skill ranking of <strong><%= @skill_ranking.to_s %></strong>.
+  <div class="row" style="border: 1px solid #DDD; margin:0;">
+    <div class="span3" style="padding:0px; margin:0px; width:170px;">
+      <div style="width:100%; background-color:whitesmoke; padding:8px; ">
+        <h1 style="font-size: 28px;margin:0px;"><%= @path.name %></h1>
+      </div>
+      <div style="padding:10px 5px;">
+        <% if @completed %>
+        <p>You're now ranked <strong><%= @user_rank %></strong> with <strong><%= pluralize(@total_points_earned.to_i, "point") %></strong>. You reached a skill ranking of <strong><%= @skill_ranking.to_s %></strong>!
           <% if @next_rank_points.to_i > 0 %>You only need <%= pluralize(@next_rank_points.to_i, "point") %></strong> to move up to the next rank!<% end %>
         </p>
+        <a href="#" class="btn primary big" style="margin:3px 50px 0 50px;">Share</a>
+        <% else %>
+        <p><a href="#">937 people</a> have take this</p>
+        <p><a href="#">Extreme</a> difficulty rating</p>
+        <p>Total Points possible: 1137</p>
+        <% end %>
       </div>
     </div>
+    <div class="span10" style="margin-left:10px; background: url(http://geekgasboard.com/wp-content/uploads/2011/11/game-of-thrones.jpg) no-repeat; background-size: 100%; min-height:230px;">
+    </div>
+    <div class="span3" style="height:230px; width:159px; margin:0px; padding:0px 10px 0 10px; overflow:hidden;">
+      <img src="http://scifimafia.com/wp-content/uploads/2011/04/game-of-thrones-stark-house-sigil-WIDE.jpg" style="width:100%;">
+      <img src="http://2.media.collegehumor.cvcdn.com/51/64/7692441a5ecc5bfc1b3925fd1cb2a98b-game-of-thrones-sigil-for-house-bluth.jpg" style="width:100%;">
+      <img src="http://2.media.collegehumor.cvcdn.com/51/64/7692441a5ecc5bfc1b3925fd1cb2a98b-game-of-thrones-sigil-for-house-bluth.jpg" style="width:100%;">
+    </div>
   </div>
-  <% end %>
   <hr style="margin:10px;"/>
   <section>
     <div class="row">
@@ -113,13 +94,13 @@ $(function(){
       <% elsif !@completed %>
         <div style="height: 900px;">
           <p style="font-size: 18px; line-height:25px;">Complete the first level of this challenge so you can see where you rank on the global leaderboard and vote on other people's answers!</p>
-          <% unless @enrolled %>
+          <% if @enrolled %>
+            <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary really_big clickable_link", :style => "margin: 20px 160px;"%>
+          <% else %>  
             <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
               <%= f.hidden_field :path_id %>
               <%= f.submit "Start "+name_for_paths, :class=> "btn primary really_big clickable_link", :style => "margin: 20px 180px;" %>
             <% end %>
-          <% else %>  
-            <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary really_big clickable_link", :style => "margin: 20px 160px;"%>
           <% end %>
         </div>
       <% else %>
@@ -152,12 +133,19 @@ $(function(){
         <%= render "knowledge_tasks_list" %>
       <% end %>
       </div>
-      <div class="span2">
-        <ul class="media-grid">
+      <div class="span2" style="width:110px;">
+        <table>
           <% @similar_paths.each do |similar_path| %>
-            <li><%= link_to image_tag(similar_path.path_pic, :size => "100x90", :title => similar_path.name), similar_path, :class => (similar_path.is_locked ? "locked_challenge" : "") %>
+            <tr>
+              <td style="border: none;">
+                <a href="<%= path_url(similar_path) %>">
+                  <h5 style="font-size:11px; line-height:15px;"><%= similar_path.name %></h5>
+                  <%= image_tag(similar_path.path_pic, :size => "60x60", :title => similar_path.name) %>
+               </a>
+              </td>
+            </tr>
           <% end %>
-        </ul>
+        </table>
       </div>
     </div>
   </section>

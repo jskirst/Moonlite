@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120623061621) do
+ActiveRecord::Schema.define(:version => 20120626060323) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20120623061621) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image_url"
+    t.integer  "company_id"
   end
 
   create_table "answers", :force => true do |t|
@@ -120,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20120623061621) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "total_points", :default => 0
+    t.boolean  "is_complete",  :default => false
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -135,6 +137,11 @@ ActiveRecord::Schema.define(:version => 20120623061621) do
     t.integer  "category_id"
     t.integer  "path_id"
     t.integer  "section_id"
+  end
+
+  create_table "path_achievements", :force => true do |t|
+    t.integer "path_id"
+    t.integer "achievement_id"
   end
 
   create_table "path_user_roles", :force => true do |t|
@@ -229,10 +236,10 @@ ActiveRecord::Schema.define(:version => 20120623061621) do
     t.integer  "obj_file_size"
     t.datetime "obj_updated_at"
     t.integer  "owner_id"
-    t.string   "owner_name"
+    t.string   "owner_type"
   end
 
-  add_index "stored_resources", ["owner_id", "owner_name"], :name => "index_stored_resources_on_owner_id_and_owner_name"
+  add_index "stored_resources", ["owner_id", "owner_type"], :name => "index_stored_resources_on_owner_id_and_owner_name"
   add_index "stored_resources", ["path_id"], :name => "index_info_resources_on_path_id"
 
   create_table "submitted_answers", :force => true do |t|
