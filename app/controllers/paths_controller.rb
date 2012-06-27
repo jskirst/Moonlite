@@ -230,6 +230,12 @@ class PathsController < ApplicationController
       previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
       current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
       award_achievements
+      if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
+        total_earned_points = @path.enrollments.find_by_user_id(current_user.id).total_points.to_i
+        event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{total_earned_points.to_s}."
+        current_user.user_events.create!(:path_id => @path.id, :content => event)
+      end
+      
       redirect_to @path
     end
   end
@@ -311,6 +317,8 @@ class PathsController < ApplicationController
         @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
       end
     end
+    
+    @activity_stream = @path.activity_stream
   end
   
 # Administration #

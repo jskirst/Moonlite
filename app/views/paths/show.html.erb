@@ -1,3 +1,4 @@
+<script src="javascripts/voting.js"></script>
 <% if @must_register && @completed %>
 <script>
 $(function(){
@@ -13,126 +14,15 @@ $(function(){
 </script>
 <%= render "users/jumpstart_registration", { :user => current_user, :path => @path } %>
 <% end %>
-<script>
-function show_creative_list(){
-  console.log(this);
-  $('#creative_tasks_list').show();
-  $('#knowledge_tasks_list').hide();
-  $('.creative_link').addClass('underlined');
-  $('.creative_link').siblings('a').removeClass('underlined');
-}
-
-function show_knowledge_list(){
-  $('#knowledge_tasks_list').show();
-  $('#creative_tasks_list').hide();
-  $('.knowledge_link').addClass('underlined');
-  $('.knowledge_link').siblings('a').removeClass('underlined');
-}
-
-$(function(){
-  $(".vote_button").on("ajax:success",
-    function(event, data){
-      if(data.errors){
-        alert(data.errors);
-      } else {
-        console.log($(this).parents("li:first").children("div:last"));
-        var $vote_counter = $(this).parents("li:first").children("div.vote_count");
-        console.log($vote_counter);
-        var votes = parseInt($vote_counter.text());
-        console.log(votes);
-        if($(this).hasClass("primary")){
-          $(this).removeClass("primary").addClass("secondary").text("Vote");
-          $vote_counter.html("<span class='label notice' style='font-size: 16px;'>+"+(votes-1)+"</span>");
-        } else if($(this).hasClass("secondary")){
-          $(this).removeClass("secondary").addClass("primary").text("Voted");
-          $vote_counter.html("<span class='label notice' style='font-size: 16px;'>+"+(votes+1)+"</span>");
-        }
-      }
-    }
-  );
-});
-</script>
 <section>
-  <div class="row" style="border: 1px solid #DDD; margin:0;">
-    <div class="span3" style="padding:0px; margin:0px; width:170px;">
-      <div style="width:100%; background-color:whitesmoke; padding:8px; ">
-        <h1 style="font-size: 28px;margin:0px;"><%= @path.name %></h1>
-      </div>
-      <div style="padding:10px 5px;">
-        <% if @completed %>
-        <p>You're now ranked <strong><%= @user_rank %></strong> with <strong><%= pluralize(@total_points_earned.to_i, "point") %></strong>. You reached a skill ranking of <strong><%= @skill_ranking.to_s %></strong>!
-          <% if @next_rank_points.to_i > 0 %>You only need <%= pluralize(@next_rank_points.to_i, "point") %></strong> to move up to the next rank!<% end %>
-        </p>
-        <a href="#" class="btn primary big" style="margin:3px 50px 0 50px;">Share</a>
-        <% else %>
-        <p><a href="#">937 people</a> have take this</p>
-        <p><a href="#">Extreme</a> difficulty rating</p>
-        <p>Total Points possible: 1137</p>
-        <% end %>
-      </div>
-    </div>
-    <div class="span10" style="margin-left:10px; background: url(http://geekgasboard.com/wp-content/uploads/2011/11/game-of-thrones.jpg) no-repeat; background-size: 100%; min-height:230px;">
-    </div>
-    <div class="span3" style="height:230px; width:159px; margin:0px; padding:0px 10px 0 10px; overflow:hidden;">
-      <img src="http://scifimafia.com/wp-content/uploads/2011/04/game-of-thrones-stark-house-sigil-WIDE.jpg" style="width:100%;">
-      <img src="http://2.media.collegehumor.cvcdn.com/51/64/7692441a5ecc5bfc1b3925fd1cb2a98b-game-of-thrones-sigil-for-house-bluth.jpg" style="width:100%;">
-      <img src="http://2.media.collegehumor.cvcdn.com/51/64/7692441a5ecc5bfc1b3925fd1cb2a98b-game-of-thrones-sigil-for-house-bluth.jpg" style="width:100%;">
-    </div>
-  </div>
+  <%= render "path_header" %>
   <hr style="margin:10px;"/>
   <section>
     <div class="row">
       <div class="span3">
         <%= render "side_leaderboard" %>
       </div>
-      <div class="span10" style="border-left:1px solid #DDD; border-right:1px solid #DDD; padding:0px 20px;">
-      <% if @must_register && @completed %>
-        <div style="height: 900px;">
-          <p style="font-size: 18px; line-height:25px;"><%= link_to "Save your score", signin_path %> so that people can vote for your submissions, and so that you can vote on theirs!</p>
-          <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this challenge to improve your global ranking, create your own challenges and start a <%= link_to "Persona", "#" %>.</p>
-        </div>
-      <% elsif !@completed %>
-        <div style="height: 900px;">
-          <p style="font-size: 18px; line-height:25px;">Complete the first level of this challenge so you can see where you rank on the global leaderboard and vote on other people's answers!</p>
-          <% if @enrolled %>
-            <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary really_big clickable_link", :style => "margin: 20px 160px;"%>
-          <% else %>  
-            <%= form_for current_user.enrollments.build(:path_id => @path.id) do |f| %>
-              <%= f.hidden_field :path_id %>
-              <%= f.submit "Start "+name_for_paths, :class=> "btn primary really_big clickable_link", :style => "margin: 20px 180px;" %>
-            <% end %>
-          <% end %>
-        </div>
-      <% else %>
-        <% if @show_voting %>
-          <% unless @in_drill_down %>
-          <div class="row" style="margin-bottom:15px;">
-            <div style="float:left; padding:0 10px; cursor:pointer;">
-              <a onclick="show_creative_list();" class="underlined creative_link">Creative</a> | 
-              <a onclick="show_knowledge_list();" class="knowledge_link" >Knowledge</a>
-            </div>
-            <div style="float:right; padding:0 10px;">
-              <%= link_to "Newest", 
-                finish_path_path(@path, :order => "recent"), 
-                :class => (@order.include?("votes") ? "" : "underlined") %> | 
-              <%= link_to "Most Votes", 
-                finish_path_path(@path, :order => "votes"), 
-                :class => (@order.include?("votes") ? "underlined" : "") %>
-            </div>
-          </div>
-          <%= render "voting_explanation" %>
-          <% else %>
-          <div class="row" style="margin-bottom:15px;">
-            <div style="float:left; padding:0 10px;">
-              <%= link_to "<<< Back", finish_path_path(@path, :order => "recent") %>
-            </div>
-          </div>
-          <% end %>
-          <%= render "creative_tasks_list" %>
-        <% end %>
-        <%= render "knowledge_tasks_list" %>
-      <% end %>
-      </div>
+      <%= render "answer_board" %>
       <div class="span2" style="width:110px;">
         <table>
           <% @similar_paths.each do |similar_path| %>

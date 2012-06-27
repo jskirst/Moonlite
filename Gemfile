@@ -24,6 +24,7 @@ group :development do
 	gem 'rspec-rails'
 	gem 'annotate'
 	gem 'faker'
+  gem 'heroku'
 end
 
 group :test do

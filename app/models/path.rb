@@ -22,6 +22,7 @@ class Path < ActiveRecord::Base
   has_many :enrolled_users, :through => :enrollments, :source => :user
   has_many :path_user_roles, :dependent => :destroy
   has_many :user_roles, :through => :path_user_roles
+  has_many :user_events
   has_many :collaborations
   has_many :collaborating_users, :through => :collaborations, :source => :user
   
@@ -131,6 +132,8 @@ class Path < ActiveRecord::Base
   end
   
   def completed?(user)
+    enrollment = enrollments.find_by_user_id(user.id)
+    return false if enrollment.nil?
     return enrollments.find_by_user_id(user.id).is_complete?
   end
   
@@ -229,6 +232,26 @@ class Path < ActiveRecord::Base
       else
         return "Beginner"
       end
+  end
+  
+  def activity_stream
+    start_time = Time.now
+    events = user_events.joins(:user).last(8).to_a.collect  do |e| 
+      {:user => e.user, 
+      :type => :event, 
+      :content => e,
+      :date => e.created_at}
+    end
+    answers = submitted_answers.joins(:task).where("tasks.answer_sub_type in (?)", [100,101]).last(8).to_a.collect do |a| 
+      {:user => nil,
+      :type => (a.task.answer_sub_type == 100 ? :text : :image),
+      :content => a.content,
+      :date => a.created_at,
+      :votes => a.total_votes}
+    end
+    stream = (events + answers).sort {|a,b| b[:date] <=> a[:date]}
+    # raise stream.to_yaml
+    return stream
   end
   
   private
