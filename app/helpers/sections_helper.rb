@@ -54,6 +54,9 @@ module SectionsHelper
     
     completed_task.save
     Answer.increment_counter(:answer_count, chosen_answer_id) if chosen_answer_id
+    if streak_name && streak >= 10
+      create_user_event_for_streak(streak_points, streak_name)
+    end
     return completed_task, streak, streak_points, streak_name
   end
   
@@ -84,4 +87,8 @@ module SectionsHelper
   end
   
   private
+    def create_user_event_for_streak(streak_points, streak_name)
+      event = "<%u%> unlocked the <strong>#{streak_name}</strong> achievement for an extra #{streak_points.to_i.to_s} points!"
+      current_user.user_events.create!(:path_id => @path.id, :content => event)
+    end
 end
