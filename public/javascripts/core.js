@@ -58,3 +58,7 @@ function is_valid_image(url, callback){
     });
   }
 }
+
+$(function() {
+    $('.hoverscroll').hoverscroll();
+});

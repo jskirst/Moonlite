@@ -20,17 +20,21 @@
         <% end %>
       </div>
     </div>
-    <div class="row" style="overflow:hidden;">
+    <div class="row hoverscroll">
       <h6 style="margin:0;padding:0;line-height:15px;color:#404040;">Recent Activity</h6>
-      <div style="width:2000px; height: 140px; margin-left: -5px; ">
-      <% if @activity_stream.empty? %>
-        <p style="margin:15px;">No one has taken this <%= name_for_paths %> yet. Be the first by clicking <strong>Start Challenge</strong> below!</p>
-      <% else %>
-        <% @activity_stream.each do |item| %>
-          <%= render "activity_stream_item", :item => item %>
+      <div class="hoverscroll_left"></div>
+      <div class="hoverscroll_container" style="height: 150px; margin-left: -5px;">
+        <div class="hoverscroll_content">
+        <% if @activity_stream.empty? %>
+          <p style="margin:15px;">No one has taken this <%= name_for_paths %> yet. Be the first by clicking <strong>Start Challenge</strong> below!</p>
+        <% else %>
+          <% @activity_stream.each do |item| %>
+            <%= render "activity_stream_item", :item => item %>
+          <% end %>
         <% end %>
-      <% end %>
+        </div>
       </div>
+      <div class="hoverscroll_right"></div>
     </div>
   </div>
 </div>
