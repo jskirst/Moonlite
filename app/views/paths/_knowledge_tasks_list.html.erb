@@ -31,9 +31,11 @@
       <% else %>
         <% raise "Invalid answer type." %>
       <% end %>
+      <% if @in_drill_down %>
       <div class="comments" style="float:left; margin-top: 20px;">
         <%= render "comments/comments", :owner => task, :owner_type => "Task", :owner_id => task.id %>
       </div>
+      <% end %>
     </li>
   <% end %>
   </ol>
