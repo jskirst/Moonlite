@@ -48,7 +48,7 @@ $.fn.exists = function(){return this.length>0;}
     <%= link_to "Okay", "#", :class => "btn primary", :onclick => "$('#locked_modal').modal('hide');" %>
   </div>
 </div>
-<div class="container">
+<div class="container body">
   <%= render "layouts/header" %>
   <section id="content">
     <% flash.each do |key, value| %>
