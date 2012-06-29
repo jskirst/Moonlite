@@ -8,7 +8,7 @@
   <div class="span11" style="margin: 0; padding:2px 0px 0px 0px; width:700px;">
     <div class="row" style="height: 75px;">
       <div style="float:left; width:397px; margin-top:4px; padding:5px;" class="">
-        <h1 style="font-size: 28px;line-height:28px; margin:6px 0 4px 3px;"><%= @path.name %></h1>
+        <h1 style="font-size: 28px; line-height:28px; margin:0px 0 4px 3px;" title="<%= @path.name %>"><%= truncate(@path.name, :length => 55) %></h1>
       </div>
       <div class="" style="margin:5px 0px 5px 5px; padding:0px; float:right; background-color: white; text-align:right;">
         <div style="font-size: 18px; padding:0;">
