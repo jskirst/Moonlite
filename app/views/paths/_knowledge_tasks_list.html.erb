@@ -1,10 +1,10 @@
-<div id="knowledge_tasks_list" style="<%= @show_voting ? "display:none;":"" %> padding-top: 15px;">
+<div id="knowledge_tasks_list" style="<%= @show_voting ? "display:none;":"" %> margin-top: 15px;">
   <ol>
   <% @knowledge_tasks.each do |t| %>
     <% task = t[:task] %>
     <% answers = t[:answers] %>
     <% user_answer = t[:users_completed_task] %>
-    <li style="margin-bottom:20px; padding-bottom:10px; border-bottom:3px solid darkgray;">
+    <li style="margin-bottom:20px; padding-top:10px;  border-top: 3px solid #DDD;">
       <p style="font-size: 22px; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
       <% if task.answer_type == 1 %>
       <% answer = task.answers.first %>

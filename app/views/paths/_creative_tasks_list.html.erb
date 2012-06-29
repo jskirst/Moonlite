@@ -8,7 +8,7 @@
       </a>
       <ol style="list-style: none; margin-left: 0;">
       <% t[:submitted_answers].each do |sa| %>
-        <li style="padding:20px; margin: 0 20px 20px 20px; border-top: 1px solid lightgray; color: #404040; <% if @current_users_answers.include?(sa.id) %> background-color:whitesmoke; <% end %>">
+        <li style="padding:20px; margin: 0 20px 20px 20px; border-top: 3px solid #DDD; color: #404040; <% if @current_users_answers.include?(sa.id) %> background-color:whitesmoke; <% end %>">
           <div style="float:right;">
             <% if @votes.include?(sa.id) %>
               <%= link_to "Voted", vote_task_path(sa.task.id, :sa_id => sa.id), :remote => true, :class => "btn primary vote_button clickable_link" %>
