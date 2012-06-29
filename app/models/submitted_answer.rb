@@ -5,6 +5,7 @@ class SubmittedAnswer < ActiveRecord::Base
   belongs_to :task
   has_many :completed_tasks, :dependent => :destroy
   has_many :users, :through => :completed_task
+  has_many :comments, :as => :owner
  
   validates :content, 
     :presence     => true,

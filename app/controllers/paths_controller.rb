@@ -15,6 +15,10 @@ class PathsController < ApplicationController
     @path = Path.new
     @categories = current_user.company.categories
     @title = "New #{name_for_paths}"
+    if params[:type] == "question"
+      @path.is_question = true
+      render "new_question"
+    end
   end
 
   def create
@@ -241,16 +245,16 @@ class PathsController < ApplicationController
   end
   
   def show
-    unless signed_in?
+    if signed_in?
+      @enrolled = current_user.enrolled?(@path)
+      @completed = @path.completed?(current_user)
+      @start_mode = "Continue #{name_for_paths}"
+    else
       @user = User.create_anonymous_user(Company.find(1))
       sign_in(@user)
       current_user.enrollments.create!(:path_id => @path.id)
       @enrolled = true, @completed = false
       @start_mode = "Start #{name_for_paths}"
-    else
-      @enrolled = current_user.enrolled?(@path)
-      @completed = @path.completed?(current_user)
-      @start_mode = "Continue #{name_for_paths}"
     end
   
     store_location #So user will be redirected here after registration
@@ -294,13 +298,20 @@ class PathsController < ApplicationController
       if params[:task_id]
         @in_drill_down = true
         task = @path.tasks.find(params[:task_id])
-        @creative_tasks << { :task => task, 
-          :submitted_answers => task.submitted_answers.all(:order => @order), 
-          :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
-          :answers => task.answers }
-        @task_ids << task.id
-        @current_users_answers = current_user.submitted_answers.find_by_task_id(task.id)
-        @current_users_answers = [@current_users_answers.id] unless @current_users_answers.nil?
+        if task.answer_type == 0
+          @creative_tasks << { :task => task, 
+            :submitted_answers => task.submitted_answers.all(:order => @order), 
+            :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
+            :answers => task.answers }
+          @task_ids << task.id
+          @current_users_answers = current_user.submitted_answers.find_by_task_id(task.id)
+          @current_users_answers = [@current_users_answers.id] unless @current_users_answers.nil?
+        else
+          @task_ids << task.id
+          @knowledge_tasks << { :task => task,
+            :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
+            :answers => task.answers }
+        end
       else
         @path.tasks.includes(:completed_tasks, :answers)
           .where("completed_tasks.user_id = ?", current_user.id)

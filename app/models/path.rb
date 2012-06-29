@@ -8,7 +8,7 @@ class Path < ActiveRecord::Base
   attr_accessible :name, :description, :purchased_path_id, :image_url, 
     :is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
     :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-    :is_locked, :enable_retakes, :game_type, :tags, :user_id, :enable_voting
+    :is_locked, :enable_retakes, :game_type, :tags, :user_id, :enable_voting, :is_question
   
   has_many :stored_resources, :as => :owner
   belongs_to :user

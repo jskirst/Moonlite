@@ -10,6 +10,7 @@ class Task < ActiveRecord::Base
   has_many  :comments, :dependent => :destroy
   has_many  :submitted_answers, :dependent => :destroy, :limit => 10
   has_many :stored_resources, :as => :owner
+  has_many :comments, :as => :owner
   
   validates :question, 
     :presence     => true,

@@ -1,11 +1,19 @@
-<div id="knowledge_tasks_list" style="<%= @show_voting ? "display:none;":"" %> margin-top: 15px;">
+<% if @knowledge_tasks.empty? || (@show_voting && !@in_drill_down) %>
+  <% display = "none" %>
+<% else %>
+  <% display = "block" %>
+<% end %>
+
+<div id="knowledge_tasks_list" style="display: <%= display %>; margin-top: 15px;">
   <ol>
   <% @knowledge_tasks.each do |t| %>
     <% task = t[:task] %>
     <% answers = t[:answers] %>
     <% user_answer = t[:users_completed_task] %>
     <li style="margin-bottom:20px; padding-top:10px;  border-top: 3px solid #DDD;">
-      <p style="font-size: 22px; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
+      <a href="<%= path_url(@path, :task_id => task.id) %>">
+        <p style="font-size: 22px; margin-bottom: 20px; color: #404040;"><%= task.question %></p>
+      </a>
       <% if task.answer_type == 1 %>
       <% answer = task.answers.first %>
       <div class="task" style="padding-left:45px;">
@@ -23,6 +31,9 @@
       <% else %>
         <% raise "Invalid answer type." %>
       <% end %>
+      <div class="comments" style="float:left; margin-top: 20px;">
+        <%= render "comments/comments", :owner => task, :owner_type => "Task", :owner_id => task.id %>
+      </div>
     </li>
   <% end %>
   </ol>

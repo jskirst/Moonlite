@@ -1,22 +1,17 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :task_id, :content
+  attr_accessible :owner_id, :owner_type, :content
   
   belongs_to :user
-  belongs_to :task
+  belongs_to :owner, :polymorphic => true
 
   validates :user_id, 
     :presence => true
-  validates :task_id, 
+  validates :owner_id, 
+    :presence => true
+  validates :owner_type, 
     :presence => true
   validates :content, 
     :presence => true,
     :length => { :within => 1..255 }
-  validate :user_enrolled_in_path
-  
-  private
-    def user_enrolled_in_path
-      unless task.nil? || user.enrolled?(task.path)
-        errors[:base] << "User must be enrolled in the path."
-      end
-    end
+    
 end

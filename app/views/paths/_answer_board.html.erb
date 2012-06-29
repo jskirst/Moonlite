@@ -26,10 +26,10 @@
       </div>
       <div style="float:right; padding:0 10px;">
         <%= link_to "Newest", 
-          finish_path_path(@path, :order => "recent"), 
+          path_path(@path, :order => "recent"), 
           :class => (@order.include?("votes") ? "" : "underlined") %> | 
         <%= link_to "Most Votes", 
-          finish_path_path(@path, :order => "votes"), 
+          path_path(@path, :order => "votes"), 
           :class => (@order.include?("votes") ? "underlined" : "") %>
       </div>
     </div>
@@ -37,7 +37,7 @@
     <% else %>
     <div class="row" style="margin-bottom:15px;">
       <div style="float:left; padding:0 10px;">
-        <%= link_to "<<< Back", finish_path_path(@path, :order => "recent") %>
+        <%= link_to "<<< Back", path_path(@path, :order => "recent") %>
       </div>
     </div>
     <% end %>

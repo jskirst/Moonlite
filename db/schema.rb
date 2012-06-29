@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120626060323) do
+ActiveRecord::Schema.define(:version => 20120629185917) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -50,10 +50,11 @@ ActiveRecord::Schema.define(:version => 20120626060323) do
 
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "task_id"
+    t.integer  "owner_id"
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "owner_type"
   end
 
   create_table "companies", :force => true do |t|
@@ -127,6 +128,21 @@ ActiveRecord::Schema.define(:version => 20120626060323) do
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "info_resources", :force => true do |t|
+    t.string   "description"
+    t.string   "link"
+    t.integer  "path_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "section_id"
+    t.integer  "task_id"
+    t.string   "info_type"
+    t.string   "obj_file_name"
+    t.string   "obj_content_type"
+    t.integer  "obj_file_size"
+    t.datetime "obj_updated_at"
+  end
 
   create_table "leaderboards", :force => true do |t|
     t.integer  "user_id"
