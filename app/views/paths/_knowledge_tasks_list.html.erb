@@ -28,12 +28,14 @@
         </li>
       <% end %>
       </ol>
-      <% else %>
-        <% raise "Invalid answer type." %>
       <% end %>
       <% if @in_drill_down %>
-      <div class="comments" style="float:left; margin-top: 20px;">
+      <div class="comments" style="margin-top: 20px;">
         <%= render "comments/comments", :owner => task, :owner_type => "Task", :owner_id => task.id %>
+      </div>
+      <% else %>
+      <div class="comments" style="margin-top: 10px; text-align:right;">
+        <p><%= link_to "#{task.comments.count} comments", path_path(@path, :task_id => task.id) %></p>
       </div>
       <% end %>
     </li>

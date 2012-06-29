@@ -32,6 +32,10 @@
           <div class="comments" style="margin-top: 20px; margin-bottom:15px; display: block;">
             <%= render "comments/comments", :owner => sa, :owner_type => "SubmittedAnswer", :owner_id => sa.id %>
           </div>
+          <% else %>
+          <div class="comments" style="margin-top: 10px; text-align:right;">
+            <p><%= link_to "#{task.comments.count} comments", path_path(@path, :task_id => task.id) %></p>
+          </div>
           <% end %>
         </li>
       <% end %>
