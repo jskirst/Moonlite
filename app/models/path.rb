@@ -246,6 +246,7 @@ class Path < ActiveRecord::Base
       {:user => nil,
       :type => (a.task.answer_sub_type == 100 ? :text : :image),
       :content => a.content,
+      :context => a.task.question,
       :date => a.created_at,
       :votes => a.total_votes}
     end
