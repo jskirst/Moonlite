@@ -5,8 +5,8 @@
 <title><%= title %></title>
 <%= csrf_meta_tag %>
 
-<%= javascript_include_tag "application", debug: true %>
-<%= stylesheet_link_tag "application", debug: true %>
+<%= javascript_include_tag "application" %>
+<%= stylesheet_link_tag "application" %>
 
 <% if current_user && current_user.company.custom_style %>
   <% if current_user.company.custom_style.mode == 1 || (current_user.company.custom_style.mode == 2 && @enable_administration) %>
