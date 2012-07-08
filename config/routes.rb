@@ -1,4 +1,4 @@
-SampleApp::Application.routes.draw do
+Metabright::Application.routes.draw do
 	get ":id" => "users#show", :id => /\d+/
   #post "sections/generate" => "sections#generate"
   
