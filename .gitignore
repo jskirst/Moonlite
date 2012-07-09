@@ -4,3 +4,4 @@ log/*.log
 tmp/**/*
 webrat.log
 test_output.txt
+.project
