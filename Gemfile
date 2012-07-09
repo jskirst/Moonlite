@@ -20,6 +20,12 @@ gem 'vanity'
 gem 'csv_builder'
 gem 'taps'
 
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
+
 group :development do
 	gem 'rspec-rails'
 	gem 'annotate'

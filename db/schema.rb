@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120629185917) do
+ActiveRecord::Schema.define(:version => 20120708002940) do
 
   create_table "achievements", :force => true do |t|
     t.string   "name"
@@ -277,10 +277,12 @@ ActiveRecord::Schema.define(:version => 20120629185917) do
     t.string   "answer2"
     t.string   "answer3"
     t.string   "answer4"
-    t.integer  "correct_answer",  :default => 1
+    t.integer  "correct_answer",     :default => 1
     t.integer  "position"
-    t.integer  "answer_type",     :default => 2
+    t.integer  "answer_type",        :default => 2
     t.integer  "answer_sub_type"
+    t.boolean  "disable_time_limit", :default => false
+    t.integer  "time_limit",         :default => 30
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

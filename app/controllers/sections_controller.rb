@@ -306,27 +306,10 @@ class SectionsController < ApplicationController
         render :partial => "continue", :locals => @locals
       end
     else
-      redirect_url = "Redirecting to results:" + (@is_consumer ? continue_path_url(@section.path) : results_section_url(@section))
+      redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
       render :text => redirect_url
       return
     end
-  end
-  
-  def results
-    last_task = current_user.completed_tasks.includes(:section).where(["sections.id = ?", @section.id]).first(:order => "completed_tasks.id DESC")
-    @answers = current_user.completed_tasks.joins(:task).where(["section_id = ?", last_task.task.section_id]).all
-    @total_questions = last_task.task.section.tasks.size
-    @correct_answers = 0
-    @incorrect_answers = 0
-    @total_points = 0
-    if !@answers.empty?
-      @answers.each do |a|
-        @total_points += a.points_awarded.to_i
-      end
-    end
-    @percent_correct = last_task.task.section.percentage_correct(current_user)
-    @final_section = true if @path.next_section(@section).nil?
-    render "results"
   end
   
   private
