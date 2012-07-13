@@ -1,9 +1,7 @@
 module SectionsHelper
-
   def create_completed_task
-    if params[:task_id].nil?
-      return nil, nil, nil
-    elsif params[:answer].blank? && params[:text_answer].blank?
+    return nil if params[:task_id].nil?
+    if params[:answer].blank? && params[:text_answer].blank?
       flash.now[:error] = "You must provide an answer."
       return nil, nil, nil
     end
@@ -39,7 +37,7 @@ module SectionsHelper
       points = 10
       if streak < 0
         points = points / ((streak-1) * -1)
-      elsif (last_task_time || Time.now) > 40.seconds.ago
+      elsif (last_task_time || Time.now) > current_task.time_limit.seconds.ago
         streak += 1
         streak_points, streak_name = calculate_streak_bonus(streak, points)
         points += streak_points
@@ -49,7 +47,7 @@ module SectionsHelper
       completed_task.points_awarded = points
       current_user.award_points_and_achievements(current_task, points)
     else
-      completed_task.points_awarded = 0        
+      completed_task.points_awarded = 0
     end
     
     completed_task.save
@@ -84,6 +82,32 @@ module SectionsHelper
       return base_points.to_f * 7, "We don't even have a name for this"
     end
     return 0
+  end
+  
+  def get_time_remaining(task)
+    last_question = current_user.completed_tasks.last
+    unless last_question.nil?
+      last_question = nil unless last_question.path == task.path
+    end
+    
+    if @task.disable_time_limit
+        return nil
+    elsif last_question.nil? || last_question.created_at > 10.seconds.ago
+      return @task.time_limit
+    else
+      return (@task.time_limit) - (Time.now - last_question.created_at)
+    end
+  end
+  
+  def generate_hint
+    if @task.answer_type == 1 && @streak < 0
+      answer = @task.describe_correct_answer.to_s
+      @streak = ((@streak+1)*-1) #converting it so it can be used in a range
+      @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
+    elsif @task.answer_type == 2
+      previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
+      @hints = previous_wrong_answers.to_a.collect! {|pwa| pwa.answer_id }
+    end
   end
   
   private

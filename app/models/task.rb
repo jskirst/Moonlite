@@ -1,7 +1,16 @@
 class Task < ActiveRecord::Base
   attr_protected :section_id
   attr_accessor :randomize
-  attr_accessible :question, :answer1, :answer2, :answer3, :answer4, :points, :resource, :correct_answer, :position, :answer_type, :answer_sub_type
+  attr_accessible :question, 
+    :answer1, :answer2, :answer3, :answer4, 
+    :points, 
+    :resource, 
+    :correct_answer, 
+    :position, 
+    :answer_type, 
+    :answer_sub_type,
+    :disable_time_limit,
+    :time_limit
   
   belongs_to   :section
   has_one   :path, :through => :section

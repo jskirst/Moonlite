@@ -271,6 +271,7 @@ class SectionsController < ApplicationController
 # Begin Section Journey
   
   def continue
+    start_time = Time.now
     last_question, @streak, @streak_points, @streak_name = create_completed_task
     @streak ||= @section.user_streak(current_user)
     @task = @section.next_task(current_user)
@@ -305,38 +306,16 @@ class SectionsController < ApplicationController
       else
         render :partial => "continue", :locals => @locals
       end
+      logger.debug "CONTINE TIME ELAPSED:" + (Time.now - start_time).to_s
     else
       redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
       render :text => redirect_url
+      logger.debug "CONTINE TIME ELAPSED:" + Time.now - start_time
       return
     end
   end
   
   private
-    def get_time_remaining(task)
-      last_question = current_user.completed_tasks.last
-      unless last_question.nil?
-        last_question = nil unless last_question.path == task.path
-      end
-      
-      if last_question.nil? || last_question.created_at > 10.seconds.ago
-        return @task.answer_type == 0 ? 300 : 30
-      else
-        return (@task.answer_type == 0 ? 300 : 30) - (Time.now - last_question.created_at)
-      end
-    end
-    
-    def generate_hint
-      if @task.answer_type == 1 && @streak < 0
-        answer = @task.describe_correct_answer.to_s
-        @streak = ((@streak+1)*-1) #converting it so it can be used in a range
-        @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
-      elsif @task.answer_type == 2
-        previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
-        @hints = previous_wrong_answers.to_a.collect! {|pwa| pwa.answer_id }
-      end
-    end
-  
     def has_edit_access?
       unless @enable_user_creation
         flash[:error] = "You do not have the ability to edit this section."
