@@ -11,18 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120708002940) do
-
-  create_table "achievements", :force => true do |t|
-    t.string   "name"
-    t.string   "description"
-    t.string   "criteria"
-    t.integer  "points"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "image_url"
-    t.integer  "company_id"
-  end
+ActiveRecord::Schema.define(:version => 20120713221446) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -123,6 +112,7 @@ ActiveRecord::Schema.define(:version => 20120708002940) do
     t.datetime "updated_at"
     t.integer  "total_points", :default => 0
     t.boolean  "is_complete",  :default => false
+    t.integer  "level"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -155,7 +145,7 @@ ActiveRecord::Schema.define(:version => 20120708002940) do
     t.integer  "section_id"
   end
 
-  create_table "path_achievements", :force => true do |t|
+  create_table "path_personas", :force => true do |t|
     t.integer "path_id"
     t.integer "achievement_id"
   end
@@ -194,6 +184,19 @@ ActiveRecord::Schema.define(:version => 20120708002940) do
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
+
+  create_table "personas", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "criteria"
+    t.integer  "points"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "image_url"
+    t.integer  "company_id"
+    t.integer  "parent_id"
+    t.integer  "unlock_threshold"
+  end
 
   create_table "phrase_pairings", :force => true do |t|
     t.integer  "phrase_id"
@@ -298,13 +301,6 @@ ActiveRecord::Schema.define(:version => 20120708002940) do
     t.datetime "updated_at",          :null => false
   end
 
-  create_table "user_achievements", :force => true do |t|
-    t.integer  "achievement_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "user_auths", :force => true do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -319,6 +315,14 @@ ActiveRecord::Schema.define(:version => 20120708002940) do
     t.string   "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "user_personas", :force => true do |t|
+    t.integer  "achievement_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "level"
   end
 
   create_table "user_roles", :force => true do |t|
