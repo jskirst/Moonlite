@@ -33,27 +33,7 @@ class PagesController < ApplicationController
   
   def explore
     @title = "Explore"
-    @path_categories = []
-    @display_all = true
-    if params[:search]
-      @query = params[:search]
-      @path_categories << [Category.new(:name => "Search Results"), Path.with_name_like(@query, current_user)]
-    elsif params[:c]
-      category = current_user.company.categories.find(params[:c])
-      if category.nil?
-        flash[:error] = "Invalid Path category."
-        redirect_to explore_path and return
-      else
-        @path_categories << [category, Path.with_category(c.id, current_user)]
-      end
-    else
-      @display_all = true
-      categories = Category.find_all_by_company_id(current_user.company_id)
-      categories.each do |c|
-        @path_categories << [c, Path.with_category(c.id, current_user)]
-      end
-    end
-    logger.debug @path_categories
+    @personas = current_user.company.personas
   end
   
   def create

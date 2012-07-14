@@ -13,7 +13,7 @@ class Company < ActiveRecord::Base
   has_many :categories
   has_many :user_roles
   has_many :usage_reports
-  has_many :achievements
+  has_many :personas
   has_one :user_role
   has_one :custom_style
   

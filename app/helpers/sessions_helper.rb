@@ -76,6 +76,10 @@ module SessionsHelper
     end
   end
   
+  def name_for_personas
+    return "Path"
+  end
+  
   def determine_enabled_features
     unless current_user.nil?
       role = current_user.user_role
