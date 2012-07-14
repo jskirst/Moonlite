@@ -1,8 +1,17 @@
 class User < ActiveRecord::Base
-  attr_protected :admin, :login_at, :logout_at
+  attr_readonly :signup_token
+  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :company_admin
   attr_accessor :password, :password_confirmation
-  attr_accessible :name, :company_id, :email, :earned_points, :spent_points, :image_url, :signup_token, 
-    :company_admin, :password, :password_confirmation, :catch_phrase, :user_role_id, :is_fake_user, :is_test_user, :provider, :uid, :is_anonymous
+  attr_accessible :company_id, 
+    :name,
+    :email, 
+    :image_url,
+    :password, 
+    :password_confirmation, 
+    :catch_phrase, 
+    :provider, 
+    :uid,
+    :is_anonymous
 
   belongs_to :company
   belongs_to :user_role
@@ -281,6 +290,8 @@ class User < ActiveRecord::Base
     def check_user_type
       if self.email.include?("@demo.moonlite.com")
         self.is_fake_user = true
+      elsif !self.email.include?("anonymous")
+        #self.is_anonymous = true
       elsif self.name.include?("test_user")
         self.is_test_user = true
       end

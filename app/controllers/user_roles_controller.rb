@@ -18,8 +18,7 @@ class UserRolesController < ApplicationController
   def create
     @user_role = current_user.company.user_roles.new(params[:user_role])
     if @user_role.save
-      flash[:success] = "User role created."
-      redirect_to user_roles_path
+      redirect_to user_roles_path, notice: "User role created."
     else
       @title = "New user role"
       @form_mode = "new"
@@ -36,8 +35,7 @@ class UserRolesController < ApplicationController
   
   def update
     if @user_role.update_attributes(params[:user_role])
-      flash[:success] = "User Role updated."
-      redirect_to user_roles_path
+      redirect_to user_roles_path, notice: "User Role updated."
     else
       @title = "Edit User Role"
       @form_mode = "edit"
@@ -54,8 +52,7 @@ class UserRolesController < ApplicationController
   
   def destroy
     unless @user_role.users.empty?
-      redirect_to user_roles_path
-      flash[:error] = "You cannot delete a user role until all users have been removed from it."
+      redirect_to user_roles_path, alert: "You cannot delete a user role until all users have been removed from it."
       return
     end
     
@@ -70,24 +67,16 @@ class UserRolesController < ApplicationController
   private
     def get_user_role_from_id
       @user_role = current_user.company.user_roles.find(params[:id])
-      if @user_role.nil?
-        flash[:error] = "This is not a valid company."
-        redirect_to root_path
-      else
-        @company = @user_role.company
-      end
+      @company = @user_role.company
     end
   
     def has_access?
       unless @enable_administration
-        flash[:error] = "You do not have the ability to create or edit user roles."
-        redirect_to root_path
-        return
+        redirect_to root_path, alert: "You do not have the ability edit user roles."
       end
       
       if @company && @company != current_user.company
-        flash[:error] = "You do not have access to this organizations data."
-        redirect_to root_path
+        redirect_to root_path, alert: "You do not have access to this organizations data."
       end
     end
 end
