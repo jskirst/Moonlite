@@ -1,12 +1,15 @@
-class Achievement < ActiveRecord::Base
+class Persona < ActiveRecord::Base
   attr_accessible :company_id, :name, :description, :criteria, :points
 
   belongs_to :company
+  
   has_many :stored_resources, :as => :owner 
-  has_many    :user_achievements, :include => :user
-  has_many    :users, :through => :user_achievements
-  has_many    :path_achievements, :include => :path
-  has_many    :paths, :through => :path_achievements
+  
+  has_many    :user_personas, :include => :user
+  has_many    :users, :through => :user_personas
+  
+  has_many    :path_personas, :include => :path
+  has_many    :paths, :through => :path_personas
   
   validates :name, 
     :presence     => true,

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120713221446) do
+ActiveRecord::Schema.define(:version => 20120713235157) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(:version => 20120713221446) do
 
   create_table "path_personas", :force => true do |t|
     t.integer "path_id"
-    t.integer "achievement_id"
+    t.integer "persona_id"
   end
 
   create_table "path_user_roles", :force => true do |t|
@@ -318,7 +318,7 @@ ActiveRecord::Schema.define(:version => 20120713221446) do
   end
 
   create_table "user_personas", :force => true do |t|
-    t.integer  "achievement_id"
+    t.integer  "persona_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
