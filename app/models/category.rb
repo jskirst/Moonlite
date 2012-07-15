@@ -5,13 +5,10 @@ class Category < ActiveRecord::Base
   has_many :paths
   belongs_to :company
   
-  validates :company_id,
-  :presence      => true
+  validates :company_id, presence: true
+  validates :name, length: { within: 1..80 }
   
-  validates :name,
-  :length      => { :within => 1..80 }
-  
-  before_destroy :any_paths_left?
+  before_destroy { |c| errors[:base] << "Remove paths before destroy" unless c.paths.empty? }
   
   def default_image?
     return true if image == "/images/default_path_pic.jpg"
@@ -38,9 +35,4 @@ class Category < ActiveRecord::Base
       raise "RUNTIME EXCEPTION: No image resource."
     end
   end
-  
-  private
-    def any_paths_left?
-      return paths.empty?
-    end
 end

@@ -76,12 +76,6 @@ Metabright::Application.routes.draw do
 	resources :user_achievements
 	resources :stored_resources
 	resources :user_transactions
-	resources :rewards do
-		member do
-			get :review
-			get :purchase
-		end
-	end
   resources :comments
   resources :leaderboards
 	resources :categories
@@ -113,7 +107,6 @@ Metabright::Application.routes.draw do
   
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'
-	match '/marketplace',:to => 'paths#marketplace'
 	
 	match '/password_reset', :to => 'users#request_send'
 	match '/send_reset', :to => 'users#send_reset'

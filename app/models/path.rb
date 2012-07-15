@@ -3,12 +3,21 @@ class Path < ActiveRecord::Base
     "#{id} #{name}".parameterize
   end
   
-  attr_protected :company_id
-  
-  attr_accessible :name, :description, :purchased_path_id, :image_url, 
-    :is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
-    :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-    :is_locked, :enable_retakes, :game_type, :tags, :user_id, :enable_voting, :is_question
+  attr_readonly :user_id, :company_id
+  attr_protected :is_published, :is_purchaseable, :category_id
+  attr_accessible :name, 
+    :description, 
+    :image_url,
+    :is_public,
+    :enable_section_display,
+    :default_timer, 
+    :excluded_from_leaderboards, 
+    :enable_nonlinear_sections,
+    :is_locked, 
+    :enable_retakes, 
+    :game_type, 
+    :tags, 
+    :enable_voting
   
   has_many :stored_resources, :as => :owner
   belongs_to :user
@@ -26,20 +35,19 @@ class Path < ActiveRecord::Base
   has_many :collaborations
   has_many :collaborating_users, :through => :collaborations, :source => :user
   
-  validates :name, 
-    :presence => true,
-    :length    => { :within => 2..140 }
-  
-  validates :description,
-    :length    => { :maximum => 2500 }
-    
-  validates :tags,
-    :length    => { :maximum => 250 }
-  
+  validates :name, length: { :within => 2..140 }
+  validates :description, length: { :maximum => 2500 }
+  validates :tags, length: { :maximum => 250 }
   validates :user_id, :presence => true
   
-  before_save :user_belongs_to_company
+  validate on: :create, do errors.add_to_base "Error" unless user.company_id == company_id end
   before_save :check_image_url
+
+      def check_image_url
+      unless self.image_url.nil?
+        self.image_url = nil if self.image_url.length < 9
+      end
+    end
   
   def default_pic?
     return true if path_pic == "/images/default_path_pic.jpg"
@@ -152,15 +160,7 @@ class Path < ActiveRecord::Base
     total_remaining = total_remaining_tasks(user)
     return (((total_tasks - total_remaining.to_f) / total_tasks.to_f) * 100).to_i
   end
-  
-  def user_belongs_to_company
-    # if self.company != nil
-      # if user.company_id != self.company_id
-        # errors[:base] << "User does not belong to this company."
-      # end
-    # end
-  end
-  
+ 
   def enrolled_user_count
     return enrollments.count
   end
@@ -254,11 +254,4 @@ class Path < ActiveRecord::Base
     # raise stream.to_yaml
     return stream
   end
-  
-  private
-    def check_image_url
-      unless self.image_url.nil?
-        self.image_url = nil if self.image_url.length < 9
-      end
-    end
 end

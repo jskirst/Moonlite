@@ -3,32 +3,20 @@ class Persona < ActiveRecord::Base
 
   belongs_to :company
   
-  has_many :stored_resources, :as => :owner 
+  has_many :stored_resources, as: :owner 
+  has_many :user_personas, include: :user
+  has_many :users, through: :user_personas
+  has_many :path_personas, include: :path
+  has_many :paths, through: :path_personas
   
-  has_many    :user_personas, :include => :user
-  has_many    :users, :through => :user_personas
-  
-  has_many    :path_personas, :include => :path
-  has_many    :paths, :through => :path_personas
-  
-  validates :name, 
-    :presence     => true,
-    :length      => { :within => 1..255 }
-  
-  validates :description, 
-    :presence     => true,
-    :length      => { :within => 1..255 }
-  
-  validates :points, 
-    :presence     => true
-    
-  def pic
-    if self.image_url != nil
-      return self.image_url
-    else
-      return "/images/default_achievement_pic.jpg"
-    end
-  end
+  validates :name, length: { :within => 1..255 }
+  validates :description, length: { :within => 1..255 }
+  validates :points, presence: true
   
   default_scope :order => 'points ASC'
+    
+  def pic
+    return self.image_url unless self.image_url.nil?
+    return "/images/default_achievement_pic.jpg"
+  end
 end

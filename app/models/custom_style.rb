@@ -4,9 +4,7 @@ class CustomStyle < ActiveRecord::Base
   
   belongs_to :company
   
-  validates :company_id, :presence => true
+  validates :company_id, presence: true
   
-  validates :mode, 
-    :presence => true,
-    :numericality => { :less_than_or_equal_to => 2, :greater_than_or_equal_to => 0  }
+  validates :mode, numericality: { less_than_or_equal_to: 2, greater_than_or_equal_to: 0  }
 end

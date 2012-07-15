@@ -1,29 +1,26 @@
 class Section < ActiveRecord::Base
-  attr_protected :path_id
-  attr_accessible :name, :instructions, :position, :is_published, :image_url,
-    :content_type, :hidden_content, :enable_skip_content
-  
-  before_create :set_position
+  attr_protected :path_id, :is_published
+  attr_accessible :name, 
+    :instructions, 
+    :position, 
+    :image_url,
+    :content_type, 
+    :enable_skip_content
   
   belongs_to :path
-  has_many :tasks, :dependent => :destroy
-  has_many :completed_tasks, :through => :tasks, :source => :completed_tasks
-  has_many :stored_resources, :as => :owner
+  has_many :tasks, dependent: :destroy
+  has_many :completed_tasks, through: :tasks, source: :completed_tasks
+  has_many :stored_resources, as: :owner
   
-  validates :name, 
-    :presence     => true,
-    :length      => { :within => 1..255 }
-  
-  validates :instructions,
-    :length      => { :maximum => 1000000 }
-  
-  validates :path_id, 
-    :presence     => true
+  validates :name, length: { within: 1..255 }
+  validates :instructions, length: { maximum: 1000000 }
+  validates :path_id, presence: true
     
-  before_save :check_image_url
+  before_create { self.position = get_next_position_for_path }
+  before_save { self.image_url = nil if ( self.image_url && self.image_url.length < 9) }
   
   def randomize_tasks
-    old_task_array = tasks_to_array
+    old_task_array = tasks.all(:order => "position ASC").to_a
     unless old_task_array.size == 1
       new_task_array = old_task_array.shuffle
       until new_task_array != old_task_array
@@ -38,24 +35,13 @@ class Section < ActiveRecord::Base
     end
   end
   
-  def tasks_to_array
-    ary = []
-    tasks.all(:order => "position ASC").each do |t|
-      ary << t
-    end
-    return ary
-  end
-  
   def has_custom_image?
     return !self.image_url.nil?
   end
   
   def pic
-    if self.image_url != nil
-      return self.image_url
-    else
-      return "/images/default_section_pic.jpg"
-    end
+    return self.image_url if self.image_url != nil
+    return "/images/default_section_pic.jpg"
   end
     
   def next_task(user)
@@ -135,12 +121,6 @@ class Section < ActiveRecord::Base
   end
     
   private
-    def check_image_url
-      unless self.image_url.nil?
-        self.image_url = nil if self.image_url.length < 9
-      end
-    end
-  
     def get_next_unfinished_task(user)
       previous_task = tasks.joins(:completed_tasks).where(["completed_tasks.user_id = ?", user.id]).last(:order => "position ASC")
       previous_task_position = previous_task.nil? ? 0 : previous_task.position
@@ -151,22 +131,13 @@ class Section < ActiveRecord::Base
       incorrect_answers = tasks.joins(:completed_tasks).where(["status_id = 0 and user_id = ?", user.id]).all(:order => "position ASC")
       incorrect_answers.each do |a|
         other_answers = user.completed_tasks.where(["completed_tasks.task_id = ? and (status_id = 1 or status_id = 2)", a.id]).count
-        if other_answers == 0
-          return a
-        end
+        return a if other_answers == 0
       end
       return nil
     end
   
-    def set_position
-      self.position = get_next_position_for_path
-    end
-    
     def get_next_position_for_path
-      unless path.sections.empty?
-        return path.sections.last.position + 1
-      else
-        return 1
-      end
+     return (path.sections.last.position + 1) unless path.sections.empty?
+     return 1
     end
 end

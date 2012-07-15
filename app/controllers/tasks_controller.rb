@@ -98,7 +98,7 @@ class TasksController < ApplicationController
         unless points = (params[:completed_task][:points]).to_i
           flash[:error] = "No points argument found."
         else
-          @completed_task.user.award_points_and_achievements(@completed_task.task, points)
+          @completed_task.user.award_points(@completed_task.task, points)
           @completed_task.points_awarded = points
           @completed_task.status_id = 1
           if @completed_task.save

@@ -45,7 +45,7 @@ module SectionsHelper
         points = points / 2
       end
       completed_task.points_awarded = points
-      current_user.award_points_and_achievements(current_task, points)
+      current_user.award_points(current_task, points)
     else
       completed_task.points_awarded = 0
     end

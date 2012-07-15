@@ -1,12 +1,11 @@
 class Phrase < ActiveRecord::Base
   attr_accessible :content, :original_content
-  before_create :downcase
   
   has_many :phrase_pairings
   
-  validates :content, 
-    :presence   => true,
-    :length      => { :within => 1..255 }
+  validates :content, length: { :within => 1..255 }
+  
+  before_create :downcase
     
   def self.search(str)
     #return Phrase.where(["content LIKE :str", {:str => str}]).first
@@ -16,11 +15,7 @@ class Phrase < ActiveRecord::Base
   end
     
   def associated_phrases
-    associated_phrases = []
-    phrase_pairings.each do |p|
-      associated_phrases << Phrase.find_by_id(p.paired_phrase_id).original_content
-    end
-    return associated_phrases
+    return phrase_pairings.each { Phrase.find_by_id(p.paired_phrase_id).original_content }
   end
   
   def downcase

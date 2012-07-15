@@ -1,4 +1,5 @@
 class UserRole < ActiveRecord::Base
+  attr_readonly :signup_token
   attr_accessible :company_id, 
     :name,  
     :enable_administration,
@@ -23,14 +24,11 @@ class UserRole < ActiveRecord::Base
   has_many :users
   belongs_to :company
   
-  validates :company_id,
-  :presence      => true
+  validates :company_id, presence: true
+  validates :name, length: { within: 1..255 }
   
-  validates :name,
-  :length      => { :within => 1..255 }
-  
-  before_create :set_signup_token
-  before_destroy :any_users_left?
+  before_create { self.signup_token = random_alphanumeric }
+  before_destroy { users.empty? }
   
   def signup_link
     if Rails.env.production?
@@ -45,18 +43,8 @@ class UserRole < ActiveRecord::Base
     Mailer.welcome(email_details).deliver
   end
   
-  private
-    def set_signup_token
-      if(self.signup_token == nil)
-        self.signup_token = random_alphanumeric
-      end
-    end
-    
+  private    
     def random_alphanumeric(size=15)
       (1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
-    end
-    
-    def any_users_left?
-      return users.empty?
     end
 end
