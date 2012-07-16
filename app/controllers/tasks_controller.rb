@@ -7,39 +7,24 @@ class TasksController < ApplicationController
   respond_to :json, :html
   
   def new
-    @section_id = params[:section_id]
     @section = Section.find(@section_id)
     unless can_edit_path(@section.path)
-      flash[:error] = "You cannot add tasks to this path."
-      redirect_to root_path
+      redirect_to root_path, alert: "You cannot add tasks to this path."
       return
-    end
-    
+    end    
     @task = Task.new
-    @ca = 1
-    @title = "New Question"
-    
     @form_title = "New Question"
     render "tasks/task_form"
-  end
-  
-  def edit
-    @stored_resource = @task.stored_resources.first
-    @answers = @task.describe_answers
-    respond_to {|f| f.html { render :partial => "edit_task_form" } }
   end
   
   def create
     @section = Section.find(params[:task][:section_id])
     unless can_edit_path(@section.path)
-      respond_with({ :error => "You do not have access to that object." })
-    end
-    
-    if params[:task][:answer_type] == "1"
-      params[:task][:answer1] = params[:task][:fibanswer1]
+      respond_with({ :error => "No access." }) and return
     end
     
     @task = @section.tasks.new(params[:task])
+    @task.answer_content = gather_answers(params[:task])
     if @task.save
       respond_to do |f|
         f.html { render :partial => "task", :locals => {:task => @task } }
@@ -50,22 +35,31 @@ class TasksController < ApplicationController
     end
   end
   
+  def edit
+    @stored_resource = @task.stored_resources.first
+    @answers = @task.answers
+    respond_to {|f| f.html { render :partial => "edit_task_form" } }
+  end
+    
   def update
-    if @task.update_attributes(params[:task])
+    errors = []
+    unless @task.question == params[:task][:question]
+      errors = @task.errors.full_messages unless @task.save
+    end
+    errors += @task.update_answers(params[:task])
+    
+    if errors.empty?
       respond_to do |f|
         f.html { render :partial => "task", :locals => {:task => @task} }
         f.json { render :json => @task }
       end
     else
-      respond_to { |f| f.json { render :json => { :errors => @task.errors.full_messages } } }
+      respond_to { |f| f.json { render :json => { :errors => errors } } }
     end
   end
   
   def suggest
-    @phrase = params[:id]
-    logger.debug "SUGGEST: searching for phrase: '#{@phrase}'"
-    @phrase = Phrase.search(@phrase.downcase)
-    logger.debug "SUGGEST: search result: '#{@phrase}'"
+    @phrase = Phrase.search(params[:phrase].downcase)
     @associated_phrases = []
     unless @phrase.nil?
       @associated_phrases = @phrase.associated_phrases
@@ -73,9 +67,7 @@ class TasksController < ApplicationController
     else
       @original_content = ""
     end
-    respond_to do |format|
-      format.json  
-    end  
+    respond_to { |f| f.json }
   end
   
   def destroy
@@ -144,9 +136,7 @@ class TasksController < ApplicationController
     else
       @stored_resource = @task.stored_resources.new(params)
       if @stored_resource.save
-        flash[:success] = "Image added."
-        redirect_to edit_path_path(@task.path)
-        return
+        redirect_to edit_path_path(@task.path), notice: "Image added."
       else
         flash[:error] = "Error occurred, could not add your image."
       end
@@ -156,10 +146,6 @@ class TasksController < ApplicationController
   private
     def get_task_from_id
       @task = Task.find(params[:id])
-      unless @task
-        flash[:error] = "Task could not be found."
-        redirect_to root_path
-      end
     end
     
     def has_access?
@@ -174,5 +160,15 @@ class TasksController < ApplicationController
         flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
         redirect_to root_path
       end
+    end
+    
+    def gather_answers(task)
+      params[:task][:answer1] = params[:task][:fibanswer1] if params[:task][:answer_type] == "1"
+      answers = []
+      answers << { content: task[:answer1], is_correct: true } if task[:answer1]
+      answers << { content: task[:answer2], is_correct: false } if task[:answer2]
+      answers << { content: task[:answer3], is_correct: false } if task[:answer3]
+      answers << { content: task[:answer4], is_correct: false } if task[:answer4]
+      return answers
     end
 end

@@ -6,81 +6,52 @@ module SectionsHelper
       return nil, nil, nil
     end
   
-    current_task = Task.find(params[:task_id])
-    if current_task.answer_type == 0
-      answer = ""
-      status_id = 2
-      submitted_answer = current_task.find_or_create_submitted_answer(params[:answer])
-      submitted_answer_id = submitted_answer.id
-      chosen_answer_id = nil
-    elsif current_task.answer_type >= 1
-      answer = params[:answer]
-      status_id, chosen_answer = current_task.is_correct?(answer)
-      if chosen_answer.nil? && current_task.answer_type != 1
-        raise "RUNTIME EXCEPTION: No answer found for multiple choice question for Task ##{current_task.id}"
-      end
-      chosen_answer_id = chosen_answer.id unless chosen_answer.nil?
-      submitted_answer_id = nil
+    task = Task.find(params[:task_id])
+    ct = current_user.completed_tasks.new()
+    ct.task_id = task.id
+    if task.answer_type == 0
+      ct.status_id = 2
+      submitted_answer = task.find_or_create_submitted_answer(params[:answer])
+      ct = submitted_answer.id 
+    elsif task.answer_type >= 1
+      ct.answer = params[:answer]
+      status_id, chosen_answer = task.is_correct?(ct.answer)
+      ct.status_id = status_id
+      ct.answer_id = chosen_answer.id unless chosen_answer.nil?
     else
-      raise "RUNTIME EXCEPTION: Invalid answer type for Task ##{current_task.id.to_s}"
+      raise "RUNTIME EXCEPTION: Invalid answer type for Task ##{task.id.to_s}"
     end
+    #raise chosen_answer.to_yaml + task.to_yaml + ct.to_yaml
     
-    streak = current_task.section.user_streak(current_user)
+    streak = task.section.user_streak(current_user)
     last_task_time = current_user.completed_tasks.last.created_at unless current_user.completed_tasks.empty?
-    completed_task = current_user.completed_tasks.build(
-      params.merge(:status_id => status_id, 
-        :answer => answer, 
-        :answer_id => chosen_answer_id, 
-        :submitted_answer_id => submitted_answer_id))
-
     if status_id == 1
       points = 10
       if streak < 0
         points = points / ((streak-1) * -1)
-      elsif (last_task_time || Time.now) > current_task.time_limit.seconds.ago
+      elsif (last_task_time || Time.now) > task.time_limit.seconds.ago
         streak += 1
         streak_points, streak_name = calculate_streak_bonus(streak, points)
         points += streak_points
       else
         points = points / 2
       end
-      completed_task.points_awarded = points
-      current_user.award_points(current_task, points)
+      ct.points_awarded = points
+      #TODO: move this to completed task
+      current_user.award_points(task, points)
     else
-      completed_task.points_awarded = 0
+      ct.points_awarded = 0
     end
     
-    completed_task.save
-    Answer.increment_counter(:answer_count, chosen_answer_id) if chosen_answer_id
-    if streak_name && streak >= 10
-      create_user_event_for_streak(streak_points, streak_name)
-    end
-    return completed_task, streak, streak_points, streak_name
+    ct.save
+    Answer.increment_counter(:answer_count, chosen_answer.id) if chosen_answer
+    create_user_event_for_streak(streak_points, streak_name) if streak_name && streak >= 10
+    return ct, streak, streak_points, streak_name
   end
   
   def calculate_streak_bonus(streak, base_points)
-    case streak
-    when 3
-      return base_points.to_f * 0.25, "Heating Up"
-    when 5
-      return base_points.to_f * 0.5, "On Fire"
-    when 7
-      return base_points.to_f * 0.75, "Brilliant"
-    when 10
-      return base_points.to_f * 1, "Unstoppable"
-    when 14
-      return base_points.to_f * 2, "God Like"
-    when 18
-      return base_points.to_f * 3, "Genuinely Impossible"
-    when 22
-      return base_points.to_f * 4, "What??!?!"
-    when 25
-      return base_points.to_f * 5, "Please stop"
-    when 28
-      return base_points.to_f * 6, "Look, you broke it."
-    when 40
-      return base_points.to_f * 7, "We don't even have a name for this"
-    end
+    streak_bonus = STREAK_BONUSES[streak]
+    return streak_bonus[0] * base_points, streak_bonus[1] if streak_bonus
     return 0
   end
   
@@ -101,7 +72,7 @@ module SectionsHelper
   
   def generate_hint
     if @task.answer_type == 1 && @streak < 0
-      answer = @task.describe_correct_answer.to_s
+      answer = @task.correct_answer.to_s
       @streak = ((@streak+1)*-1) #converting it so it can be used in a range
       @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
     elsif @task.answer_type == 2

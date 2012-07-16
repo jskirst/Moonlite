@@ -239,7 +239,7 @@ class User < ActiveRecord::Base
     end
     
     def log_transaction(task_id, points)
-      user_transactions.create!(task_id: task_id, amount: points, status: 1)
+      user_transactions.create!(owner_id: task_id, owner_type: "Task", amount: points, status: 1)
     end
     
     def self.generate_random_username()

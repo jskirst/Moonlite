@@ -33,7 +33,7 @@ function get_suggestions($answer, $suggestions){
   if(phrase==""){ return; }
   loading_status($suggestions, true);
   
-  $.ajax({url: std_url+"tasks/"+phrase+"/suggest.json",
+  $.ajax({url: std_url+"suggest.json?phrase="+phrase,
     type: "GET",
     dataType: "text",
     success: function(resp){

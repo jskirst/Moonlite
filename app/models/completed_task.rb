@@ -1,6 +1,6 @@
 class CompletedTask < ActiveRecord::Base
   attr_readonly :task_id, :submitted_answer_id, :answer_id, :status_id
-  attr_protected :points_awarded
+  attr_protected :task_id, :points_awarded
   attr_accessible :updated_at, :answer
   
   belongs_to :user

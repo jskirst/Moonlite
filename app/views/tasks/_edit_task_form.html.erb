@@ -15,30 +15,14 @@
     </div>
     <div class="row">
       <div class="span8 answers">
+        <% @answers.each do |a|%>
         <div class="field clearfix">
-          <%= f.label "Correct answer" %>
+          <%= f.label (a.is_correct ? "Correct answer" : "Wrong answer") %>
           <div class="input">
-            <%= f.text_field "answer1", :value => @answers[1], :maxlength => 255, :size => 75, :class => "correct_answer" %>
+            <%= f.text_field "answer_#{a.id}", :value => a.content, :maxlength => 255, :size => 75, :class => (a.is_correct ? "correct_answer" : "wrong_answer") %>
           </div>
         </div>
-        <div class="field clearfix">
-          <%= f.label "Wrong answer" %>
-          <div class="input">
-            <%= f.text_field "answer2", :value => @answers[2], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
-          </div>
-        </div>
-        <div class="field clearfix">
-          <%= f.label "Wrong answer" %>
-          <div class="input">
-            <%= f.text_field "answer3", :value => @answers[3], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
-          </div>
-        </div>
-        <div class="field clearfix">
-          <%= f.label "Wrong answer" %>
-          <div class="input">
-            <%= f.text_field "answer4", :value => @answers[4], :maxlength => 255, :size => 75, :class => "wrong_answer" %>
-          </div>
-        </div>
+        <% end %>
         <% if @stored_resource %>
           <%= image_tag @stored_resource.obj.url, :style => "height: 100px; margin: 20px 0px 0px 150px;" %>
           <%= link_to "Remove Attachment", @stored_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?", :style => "margin:10px 0 0 150px;" %>

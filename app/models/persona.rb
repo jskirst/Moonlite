@@ -1,4 +1,5 @@
 class Persona < ActiveRecord::Base
+  attr_accessor :criteria
   attr_accessible :company_id, :name, :description, :criteria, :points
 
   belongs_to :company
@@ -12,6 +13,8 @@ class Persona < ActiveRecord::Base
   validates :name, length: { :within => 1..255 }
   validates :description, length: { :within => 1..255 }
   validates :points, presence: true
+  
+  after_create { :criteria.each { |c| path_personas.create!(:path_id => c) } }
   
   default_scope :order => 'points ASC'
     

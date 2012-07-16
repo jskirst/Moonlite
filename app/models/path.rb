@@ -3,8 +3,8 @@ class Path < ActiveRecord::Base
     "#{id} #{name}".parameterize
   end
   
-  attr_readonly :user_id, :company_id
-  attr_protected :is_published, :is_purchaseable, :category_id
+  attr_readonly 
+  attr_protected :user_id, :company_id, :is_published, :is_purchaseable, :category_id
   attr_accessible :name, 
     :description, 
     :image_url,
@@ -19,35 +19,31 @@ class Path < ActiveRecord::Base
     :tags, 
     :enable_voting
   
-  has_many :stored_resources, :as => :owner
+  has_many :stored_resources, as: :owner
   belongs_to :user
   belongs_to :company
   belongs_to :category
-  has_many :sections, :dependent => :destroy
-  has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
-  has_many :completed_tasks, :through => :tasks
-  has_many :submitted_answers, :through => :tasks
-  has_many :enrollments, :dependent => :destroy
-  has_many :enrolled_users, :through => :enrollments, :source => :user
-  has_many :path_user_roles, :dependent => :destroy
-  has_many :user_roles, :through => :path_user_roles
+  has_many :sections, dependent: :destroy
+  has_many :tasks, through: :sections, conditions: ["sections.is_published = ?", true]
+  has_many :completed_tasks, through: :tasks
+  has_many :submitted_answers, through: :tasks
+  has_many :enrollments, dependent: :destroy
+  has_many :enrolled_users, through: :enrollments, source: :user
+  has_many :path_user_roles, dependent: :destroy
+  has_many :user_roles, through: :path_user_roles
   has_many :user_events
   has_many :collaborations
-  has_many :collaborating_users, :through => :collaborations, :source => :user
+  has_many :collaborating_users, through: :collaborations, source: :user
   
-  validates :name, length: { :within => 2..140 }
-  validates :description, length: { :maximum => 2500 }
-  validates :tags, length: { :maximum => 250 }
-  validates :user_id, :presence => true
-  
-  validate on: :create, do errors.add_to_base "Error" unless user.company_id == company_id end
-  before_save :check_image_url
-
-      def check_image_url
-      unless self.image_url.nil?
-        self.image_url = nil if self.image_url.length < 9
-      end
+  validates :name, length: { within: 2..140 }
+  validates :description, length: { maximum: 2500 }
+  validates :tags, length: { maximum: 250 }
+  validates :user_id, presence: true
+  validate do
+    unless self.image_url.nil?
+      self.image_url = nil if self.image_url.length < 9
     end
+  end
   
   def default_pic?
     return true if path_pic == "/images/default_path_pic.jpg"
@@ -56,13 +52,9 @@ class Path < ActiveRecord::Base
   
   def path_pic
     sr = stored_resources.first
-    if sr
-      return sr.obj.url
-    elsif self.image_url
-      return self.image_url
-    else
-      return "/images/default_path_pic.jpg"
-    end
+    return sr.obj.url if sr
+    return self.image_url if self.image_url
+    return "/images/default_path_pic.jpg"
   end
   
   def self.with_category(type, user, excluded_ids = -2, order = "id DESC")

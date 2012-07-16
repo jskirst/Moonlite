@@ -1,13 +1,14 @@
 class Task < ActiveRecord::Base
   attr_readonly :section_id
-  attr_accessor :randomize
+  attr_accessor :answer_content
   attr_accessible :question,
     :points,
     :position, 
     :answer_type, 
     :answer_sub_type,
     :disable_time_limit,
-    :time_limit
+    :time_limit,
+    :answer_content
   
   belongs_to :section
   has_one :path, through: :section
@@ -21,16 +22,28 @@ class Task < ActiveRecord::Base
   validates :question, length: { :within => 1..255 }
   validates :points, presence: true, numericality: { :less_than => 51 }
   validates :section_id, :presence => true
-  validate do
-    answers_content = answers_to_array
-    errors[:base] << "All answers must be different." unless answers_content.uniq!.nil?
-  end
   
   before_validation { self.points = 10 if (self.points.nil? || self.points == 0) }
   before_create { self.position = get_next_position_for_section }
   before_save { self.answer_sub_type = nil unless self.answer_type == 0 }
-  after_create :create_answers
-  after_create :record_phrases
+  after_create { answer_content.each { |a| answers.create!(content: a[:content], is_correct: a[:is_correct]) } }
+  after_create { PhrasePairing.create_phrase_pairings(answers_to_array) }
+  
+  def update_answers(params)
+    errors = []
+    params.each do |key,value| 
+      if key.include?("answer_")
+        answer = answers.find(key.gsub("answer_",""))
+        if value.blank?
+          answer.destroy
+        elsif answer.content != value
+          answer.content = value
+          errors += answer.errors.full_messages unless answer.save
+        end
+      end
+    end
+    return errors
+  end
   
   def find_or_create_submitted_answer(content)
     sa = submitted_answers.find_by_task_id_and_content(self.id, content)
@@ -47,12 +60,9 @@ class Task < ActiveRecord::Base
       end
       return [0, nil]
     else
-      chosen_answer = answers.find_by_id(user_answer)
-      if chosen_answer.nil?
-        raise "RUNTIME EXCEPTION: Answer ##{user_answer.to_s} is not an option for Task ##{self.id}"
-      else
-        return [chosen_answer.is_correct? ? 1 : 0, chosen_answer]
-      end
+      chosen_answer = answers.find(user_answer)
+      raise "Answer not an option" if chosen_answer.nil?
+      return [chosen_answer.is_correct? ? 1 : 0, chosen_answer]
     end
   end
   
@@ -61,14 +71,14 @@ class Task < ActiveRecord::Base
     return answers[Integer(answer)]
   end
   
-  def get_correct_answer
-    answers.where("is_correct = ?", true).first.content
+  def correct_answer
+    answers.find_by_is_correct(true).content
   end
   
   def describe_answers
     all_answers = answers_to_array
-    correct_answer = get_correct_answer
-    all_answers = all_answers.unshift(correct_answer).unshift(nil)
+    answer = correct_answer
+    all_answers = all_answers.unshift(answer).unshift(nil)
     all_answers = all_answers.uniq
     return all_answers
   end
@@ -101,17 +111,6 @@ class Task < ActiveRecord::Base
         return false unless word.include?(s)
       end
       return true
-    end
-    
-    def record_phrases
-      PhrasePairing.create_phrase_pairings(answers_to_array)
-    end
-    
-    def create_answers
-      answers.create!(:content => self.answer1, :is_correct => (self.correct_answer == 1)) unless self.answer1.blank?
-      answers.create!(:content => self.answer2, :is_correct => (self.correct_answer == 2)) unless self.answer2.blank?
-      answers.create!(:content => self.answer3, :is_correct => (self.correct_answer == 3)) unless self.answer3.blank?
-      answers.create!(:content => self.answer4, :is_correct => (self.correct_answer == 4)) unless self.answer4.blank?
     end
     
     def get_next_position_for_section
