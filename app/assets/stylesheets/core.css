@@ -90,8 +90,66 @@ section.wiki { margin-bottom: 50px; }
 #doc_root { min-height: 400px; }
 
 /* Explore */
-#path_explore h2 { float: left; text-transform: uppercase; font-size: 19px; font-weight: bold; color: slategray; }
-.caption-title { font-size: 12px; font-weight: bold; line-height: 13px; }
+#path_explore h1 { font-size: 26px; font-weight: bold; color:#001F00; }
+.row {padding-left: 20px;}
+.explore_instructions {padding-left: 10px; padding-top: 30px;}
+.grid4col {width: 100%; zoom:1; }
+.grid4col::after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+#persona_box ul {
+	list-style: none outside; 
+	display: block;
+	}
+.column {
+	float:left; 
+	position:relative;
+	padding-right: 60px;
+
+	}
+#persona_box{
+	background: #E1E8F2; 
+	padding: 15px; 
+	margin: 0;
+	border: solid 05px #069;
+	position:relative;
+	right:10px;
+	border-radius:15px;
+	width:750px;
+	left:90px;
+}
+#tile_collection {
+	position: relative;
+	left:20px;
+	top:10px;
+}
+.block_callout{
+	position:relative;
+}
+.block_callout:hover{
+	text-decoration:none;
+}
+.column .persona_title{
+	position:relative;
+	width:118px;
+	line-height:18px;
+	font-size: 20px;
+	text-transform: uppercase;
+	display:block;
+	color: black;
+}
+.column {
+	border:solid 2px transparent;
+	padding:15px;
+}
+.column:hover {
+	border:solid 2px #339BB9;
+	border-radius:5px;
+	color: green;
+}
+.column a:hover {
+	color:green;
+}
+
+
 
 /* Leaderboard */
 .jumpstart_leaderboard td {padding:3px;}

@@ -10,20 +10,48 @@
   </div>
   <div><a><h1><%= company_logo %> <%= name_for_personas.pluralize %></h1></a></div>
 </section>
+
 <hr/>
 <section id="path_explore">
 <% if @personas.empty? %>
   <p style="padding:30px 20px 300px 20px;">No <%= name_for_paths.pluralize %> have been listed for your organization yet. Please check with your administrator to see if your Moonlite instance has been properly configured.</p>
 <% else %>
+
+<div class="explore_instructions">
+  	<h1>Choose your path...</h1>
+ 
+  	</div>
   <% empty = true %>
+  
   <% @personas.each do |persona| %>
     
-    <div class="row" style="padding-left: 20px;">
-      <h2><%= persona.name %></h2>
-      <p><%= persona.description %></p>
-    </div>
+<script>
+$(function(){
+	alert("FUCK YOU");
+	$(".column").mosaic({animation: "slide"})
+});
+</script>
     
-    
+    <div id="persona_box">
+    	<div id="tile_collection">
+		<% (1..3).each do |n| %>
+			<ul class="grid4col">
+				<% (1..4).each do |n| %>
+				<li class="column">
+					<a class="block_callout" href="#">
+						<img src="http://media.idownloadblog.com/wp-content/uploads/2011/06/App-Store-Icon.jpeg" width="118" height="114" alt="">
+						<span class="persona_title"><%= persona.name %></span>
+						<div class="details" style="display:none;">					
+							<h4><%= persona.name %></h4>
+							<p><%= persona.description %></p>
+						</div>
+					</a>
+				</li>
+				<% end %>
+			</ul>
+		<% end %>
+		</div>
+	</div>
   <% end %>
 <% end %>
 </section>
