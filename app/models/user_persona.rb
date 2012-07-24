@@ -5,7 +5,7 @@ class UserPersona < ActiveRecord::Base
   belongs_to :persona
   belongs_to :path
   
-  validates :user_id, presence: true, uniqueness: { scope: persona_id }
+  validates :user_id, presence: true, uniqueness: { scope: :persona_id }
   validates :persona_id, presence: true
   validate do errors[:base] << "Must be enrolled."unless user.enrolled?(path) end
   
