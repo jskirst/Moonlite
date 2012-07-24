@@ -67,17 +67,20 @@ namespace :db do
       PATH_SECTIONS.each do |s|
         section = path.sections.create(:name => s[0], :category_id => default_cat.id, :instructions => "Instructions to follow.", :is_published => true, :image_url => s[1])
         NUMBER_OF_TASKS.times do |n|
-          t = section.tasks.new(:question => "What is #{n} + #{n}?",
-            :answer1 => "#{2*n}",
-            :answer2 => "#{n-10}",
-            :answer3 => "#{(3*n)+1}",
-            :answer4 => "#{(4*n)+2}",
-            :correct_answer => 1,
-            :points => 10
+          t = section.tasks.new(
+            question: "What is #{n} + #{n}?",
+            answer_content: [
+              { content: "#{2*n}", is_correct: true },
+              { content: "#{n-10}", is_correct: false },
+              { content: "#{n-10}", is_correct: false },
+              { content: "#{(4*n)+2}", is_correct: false }
+            ],
+            points: 10,
+            answer_type: 2
           )
           t.save
         end
       end
     end
-	end
+  end
 end

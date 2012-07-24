@@ -4,8 +4,10 @@ class Path < ActiveRecord::Base
   end
   
   attr_readonly 
-  attr_protected :user_id, :company_id, :is_published, :is_purchaseable, :category_id
-  attr_accessible :name, 
+  attr_protected :company_id, :is_published, :is_purchaseable
+  attr_accessible :user_id,
+    :category_id,
+    :name, 
     :description, 
     :image_url,
     :is_public,
