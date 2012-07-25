@@ -8,16 +8,6 @@ class UserEvent < ActiveRecord::Base
   validates :user_id, :presence => true
   validates :path_id, :presence => true
   
-  validates :content, 
-    :presence     => true,
-    :length      => { :within => 1..140 }
-  
-  validate :user_enrolled_in_path
-  
-  private
-    def user_enrolled_in_path
-      unless user.enrolled?(path)
-        errors[:base] << "User must be enrolled in the path."
-      end
-    end
+  validates :content, length: { within: 1..140 }
+  validate do errors[:base] << "Must be enrolled."unless user.enrolled?(path) end
 end

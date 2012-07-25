@@ -12,13 +12,6 @@ Metabright::Application.routes.draw do
 			put :reset_password
 			get :edit_role
 			put :update_role
-			get :puzzle
-		end
-	end
-	resources :tours do
-		member do
-			get :admin_tour
-			get :user_tour
 		end
 	end
 	resources :companies do
@@ -41,7 +34,6 @@ Metabright::Application.routes.draw do
       get :undo_collaboration
       get :jumpstart
 			get :continue
-      get :finish
 		end
 	end
 	resources :sections do
@@ -50,7 +42,6 @@ Metabright::Application.routes.draw do
       get :unpublish
       get :confirm_delete
 			get :continue
-      get :results
       put :reorder_tasks
       get :research
       get :questions
@@ -66,22 +57,14 @@ Metabright::Application.routes.draw do
 	resources :enrollments
 	resources :tasks do
     member do
-      get :suggest
       put :resolve
       get :vote
       put :add_stored_resource
     end
   end
-	resources :achievements
-	resources :user_achievements
+  match '/suggest', to: "tasks#suggest"
+	resources :personas
 	resources :stored_resources
-	resources :user_transactions
-	resources :rewards do
-		member do
-			get :review
-			get :purchase
-		end
-	end
   resources :comments
   resources :leaderboards
 	resources :categories
@@ -107,13 +90,11 @@ Metabright::Application.routes.draw do
 	match '/help',		:to => 'pages#help'
 	match '/invitation',:to => 'pages#invitation'
 
-  match '/all_paths',	:to => 'pages#explore'
   match '/explore',:to => 'pages#explore'
   match '/create',:to => 'pages#create'
   
 	match '/dashboard',	:to => 'reports#dashboard'
 	match '/details',	:to => 'reports#details'
-	match '/marketplace',:to => 'paths#marketplace'
 	
 	match '/password_reset', :to => 'users#request_send'
 	match '/send_reset', :to => 'users#send_reset'

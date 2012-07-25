@@ -2,14 +2,12 @@
 <div class="question_display row">
   <div style="float:right; margin-top:0px; display:none;" class="edit_task_buttons">
     <%= link_to "Delete", task,
-      :method => :delete, 
-      :remote => true,
-      :confirm => "Are you sure you want to delete this question?", 
+      method: :delete, 
+      remote: true,
+      confirm: "Are you sure you want to delete this question?", 
       "data-type" => "json",
-      :class => "btn secondary delete_button" %>
-    <%= link_to "Edit", edit_task_path(task.id),
-      :remote => true,
-      :class => "btn secondary edit_button" %>
+      class: "btn secondary delete_button" %>
+    <%= link_to "Edit", edit_task_path(task.id), remote: true, class: "btn secondary edit_button" %>
   </div>
   <div style="padding:15px;">
     <blockquote style="margin-top:0px;">
@@ -18,14 +16,12 @@
       </p>
     </blockquote>
     <% if task.stored_resources.first %>
-      <%= image_tag task.stored_resources.first.obj.url, :style => "height: 200px; margin: 10px 0px 10px 20px;" %>
+      <%= image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 20px;" %>
     <% end %>
     <ol style="padding-left:20px;">
-      <% ca = task.correct_answer %>
-      <% if !task.answer1.blank? %><li <% if ca == 1 %> class="correct" <% end %>><%= task.answer1 %></li><% end %>
-      <% if !task.answer2.blank? %><li <% if ca == 2 %> class="correct" <% end %>><%= task.answer2 %></li><% end %>
-      <% if !task.answer3.blank? %><li <% if ca == 3 %> class="correct" <% end %>><%= task.answer3 %></li><% end %>
-      <% if !task.answer4.blank? %><li <% if ca == 4 %> class="correct" <% end %>><%= task.answer4 %></li><% end %>
+      <% task.answers.each do |a| %>
+        <li class="<%= "correct" if a.is_correct %>"><%= a.content %></li>
+      <% end %>
     </ol>
   </div>
 </div>

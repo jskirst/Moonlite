@@ -1,19 +1,16 @@
 class Leaderboard < ActiveRecord::Base
-  attr_accessible :user_id, :completed_tasks, :category_id, :path_id, :section_id, :score, :created_at
+  #TODO: make polymorphic
+  attr_accessible :user_id, 
+    :completed_tasks, :category_id, :path_id, :section_id, :score, :created_at
   
   belongs_to :user
   belongs_to :category
   belongs_to :path
   belongs_to :section
   
-  validates :user_id, 
-    :presence => true
-  validates :completed_tasks, 
-    :presence => true,
-    :numericality  => true
-  validates :score, 
-    :presence => true,
-    :numericality  => true
+  validates :user_id, presence: true
+  validates :completed_tasks, numericality: true
+  validates :score, numericality: true
     
   def self.get_all_excluded_users(company)
     excluded_emails = ""

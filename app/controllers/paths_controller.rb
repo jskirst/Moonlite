@@ -22,13 +22,12 @@ class PathsController < ApplicationController
   end
 
   def create
-    params[:path][:user_id] = current_user.id
-    @path = current_user.company.paths.build(params[:path])
+    @path = current_user.company.paths.new(params[:path])
+    @path.user_id = current_user.id
     if @path.save
       flash[:success] = "#{name_for_paths} created."
       redirect_to new_section_path(:path_id => @path.id)
     else
-      @title = "New #{name_for_paths}"
       @categories = current_user.company.categories
       render 'new'
     end
@@ -58,7 +57,7 @@ class PathsController < ApplicationController
       @path.user_roles.each { |pur| @path_user_roles << pur.id }
       render "edit_roles"
     else
-      @sections = @path.sections
+      @sections = @path.sections.includes({ :tasks => :answers })
       @categories = current_user.company.categories
       render "edit"
     end
@@ -441,21 +440,21 @@ class PathsController < ApplicationController
     end
     
     def award_achievements
-      incomplete_achievements = []
-      completed_achievements = []
-      completed_paths = current_user.enrollments.where("is_complete = ?", true).to_a.collect {|e| e.path_id}
-      current_user.company.achievements.includes(:path_achievements).each do |a|
-        criteria = a.path_achievements.all.to_a.collect {|pa| pa.path_id }
-        completed_criteria = 0
-        criteria.each {|c| completed_criteria += 1 if completed_paths.include?(c)}
-        if completed_criteria == criteria.size
-          unless current_user.achievements.find_by_id(a.id)
-            current_user.user_achievements.create!(:achievement_id => a.id)
-            flash[:success] = "You unlocked the #{a.name} Achievement!"
-          end
-        elsif (criteria - completed_paths) != criteria
-          flash[:success] = [flash[:success].to_s, "You almost unlocked the #{a.name} Achievement!"].join(" ")
-        end
-      end
+      # incomplete_achievements = []
+      # completed_achievements = []
+      # completed_paths = current_user.enrollments.where("is_complete = ?", true).to_a.collect {|e| e.path_id}
+      # current_user.company.achievements.includes(:path_achievements).each do |a|
+        # criteria = a.path_achievements.all.to_a.collect {|pa| pa.path_id }
+        # completed_criteria = 0
+        # criteria.each {|c| completed_criteria += 1 if completed_paths.include?(c)}
+        # if completed_criteria == criteria.size
+          # unless current_user.achievements.find_by_id(a.id)
+            # current_user.user_achievements.create!(:achievement_id => a.id)
+            # flash[:success] = "You unlocked the #{a.name} Achievement!"
+          # end
+        # elsif (criteria - completed_paths) != criteria
+          # flash[:success] = [flash[:success].to_s, "You almost unlocked the #{a.name} Achievement!"].join(" ")
+        # end
+      # end
     end
 end

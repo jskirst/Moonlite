@@ -310,7 +310,7 @@ class SectionsController < ApplicationController
     else
       redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
       render :text => redirect_url
-      logger.debug "CONTINE TIME ELAPSED:" + Time.now - start_time
+      logger.debug "CONTINE TIME ELAPSED:" + (Time.now - start_time).to_s
       return
     end
   end

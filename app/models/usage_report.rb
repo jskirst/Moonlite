@@ -15,16 +15,12 @@ class UsageReport < ActiveRecord::Base
   
   def self.generate_csv_report(report_data)
     report = CSV.open("#{Rails.root}/tmp/file.csv", "wb")
-    
     report_data.each do |row|
       report << row
     end
     report.close
-    
-    
     return report
   end
   
-  validates :name,
-  :length      => { :within => 1..255 }
+  validates :name, length: { within: 1..255 }
 end

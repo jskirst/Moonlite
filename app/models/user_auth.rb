@@ -3,6 +3,6 @@ class UserAuth < ActiveRecord::Base
   
   belongs_to :user
   
-  validates :user_id, :presence => true
-  validates :provider, :presence => true
+  validates :user_id, presence: true, uniqueness: { scope: :provider }
+  validates :provider, presence: true
 end

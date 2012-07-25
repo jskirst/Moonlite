@@ -1,30 +1,24 @@
 class CompletedTask < ActiveRecord::Base
-  attr_accessible :task_id, :submitted_answer_id, :answer_id, :status_id, :quiz_session, :updated_at, :points_awarded, :answer
+  attr_readonly :task_id, :submitted_answer_id, :answer_id, :status_id
+  attr_protected :task_id, :points_awarded
+  attr_accessible :updated_at, :answer
   
   belongs_to :user
   belongs_to :task
   belongs_to :submitted_answer
-  belongs_to :chosen_answer, :class_name => "Answer"
-  has_one :section, :through => :task
-  has_one :path, :through => :section
-  has_one :category, :through => :path
+  belongs_to :chosen_answer, class_name: "Answer"
+  has_one :section, through: :task
+  has_one :path, through: :section
+  has_one :category, through: :path
   
-  validates :user_id, :presence => true
-  validates :task_id, :presence => true
-  validates :status_id, :presence => true
+  validates :user_id, presence: true
+  validates :task_id, presence: true
+  validates :status_id, presence: true
 
-  validate :user_enrolled_in_path
+  validate on: :create, do errors.add_to_base "Must be enrolled" unless user.enrolled?(task.path) end
   
   def user_submitted_answer
     return nil if submitted_answer.nil
     return submitted_answer.content
   end
-  
-  private
-    def user_enrolled_in_path
-      unless user.nil? || task.nil? || user.enrolled?(task.path)
-        errors[:base] << "User must be enrolled in the path."
-      end
-    end
-  
 end

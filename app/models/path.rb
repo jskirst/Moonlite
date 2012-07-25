@@ -3,43 +3,49 @@ class Path < ActiveRecord::Base
     "#{id} #{name}".parameterize
   end
   
-  attr_protected :company_id
+  attr_readonly 
+  attr_protected :company_id, :is_published, :is_purchaseable
+  attr_accessible :user_id,
+    :category_id,
+    :name, 
+    :description, 
+    :image_url,
+    :is_public,
+    :enable_section_display,
+    :default_timer, 
+    :excluded_from_leaderboards, 
+    :enable_nonlinear_sections,
+    :is_locked, 
+    :enable_retakes, 
+    :game_type, 
+    :tags, 
+    :enable_voting
   
-  attr_accessible :name, :description, :purchased_path_id, :image_url, 
-    :is_public, :is_published, :is_purchaseable, :category_id, :enable_section_display,
-    :default_timer, :excluded_from_leaderboards, :enable_nonlinear_sections,
-    :is_locked, :enable_retakes, :game_type, :tags, :user_id, :enable_voting, :is_question
-  
-  has_many :stored_resources, :as => :owner
+  has_many :stored_resources, as: :owner
   belongs_to :user
   belongs_to :company
   belongs_to :category
-  has_many :sections, :dependent => :destroy
-  has_many :tasks, :through => :sections, :conditions => ["sections.is_published = ?", true]
-  has_many :completed_tasks, :through => :tasks
-  has_many :submitted_answers, :through => :tasks
-  has_many :enrollments, :dependent => :destroy
-  has_many :enrolled_users, :through => :enrollments, :source => :user
-  has_many :path_user_roles, :dependent => :destroy
-  has_many :user_roles, :through => :path_user_roles
+  has_many :sections, dependent: :destroy
+  has_many :tasks, through: :sections, conditions: ["sections.is_published = ?", true]
+  has_many :completed_tasks, through: :tasks
+  has_many :submitted_answers, through: :tasks
+  has_many :enrollments, dependent: :destroy
+  has_many :enrolled_users, through: :enrollments, source: :user
+  has_many :path_user_roles, dependent: :destroy
+  has_many :user_roles, through: :path_user_roles
   has_many :user_events
   has_many :collaborations
-  has_many :collaborating_users, :through => :collaborations, :source => :user
+  has_many :collaborating_users, through: :collaborations, source: :user
   
-  validates :name, 
-    :presence => true,
-    :length    => { :within => 2..140 }
-  
-  validates :description,
-    :length    => { :maximum => 2500 }
-    
-  validates :tags,
-    :length    => { :maximum => 250 }
-  
-  validates :user_id, :presence => true
-  
-  before_save :user_belongs_to_company
-  before_save :check_image_url
+  validates :name, length: { within: 2..140 }
+  validates :description, length: { maximum: 2500 }
+  validates :tags, length: { maximum: 250 }
+  validates :user_id, presence: true
+  validate do
+    unless self.image_url.nil?
+      self.image_url = nil if self.image_url.length < 9
+    end
+  end
   
   def default_pic?
     return true if path_pic == "/images/default_path_pic.jpg"
@@ -48,13 +54,9 @@ class Path < ActiveRecord::Base
   
   def path_pic
     sr = stored_resources.first
-    if sr
-      return sr.obj.url
-    elsif self.image_url
-      return self.image_url
-    else
-      return "/images/default_path_pic.jpg"
-    end
+    return sr.obj.url if sr
+    return self.image_url if self.image_url
+    return "/images/default_path_pic.jpg"
   end
   
   def self.with_category(type, user, excluded_ids = -2, order = "id DESC")
@@ -152,15 +154,7 @@ class Path < ActiveRecord::Base
     total_remaining = total_remaining_tasks(user)
     return (((total_tasks - total_remaining.to_f) / total_tasks.to_f) * 100).to_i
   end
-  
-  def user_belongs_to_company
-    # if self.company != nil
-      # if user.company_id != self.company_id
-        # errors[:base] << "User does not belong to this company."
-      # end
-    # end
-  end
-  
+ 
   def enrolled_user_count
     return enrollments.count
   end
@@ -254,11 +248,4 @@ class Path < ActiveRecord::Base
     # raise stream.to_yaml
     return stream
   end
-  
-  private
-    def check_image_url
-      unless self.image_url.nil?
-        self.image_url = nil if self.image_url.length < 9
-      end
-    end
 end

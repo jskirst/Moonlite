@@ -20,6 +20,10 @@ module SessionsHelper
     user == current_user
   end
   
+  def current_company
+    current_user.company
+  end
+  
   def sign_out
     cookies.delete(:remember_token)
     self.current_user = nil

@@ -1,3 +1,32 @@
+task :check_is_complete => :environment do
+  User.includes(:enrollments).all.each do |u|
+    u.enrollments.each do |e|
+      e.update_attribute(:is_complete, true) if e.path.total_remaining_tasks(u) <= 0
+    end
+  end
+end
+
+task :stored_resource_switch => :environment do
+  StoredResource.all.each do |sr|
+    if !sr.path_id.nil?
+      sr.owner_type = "Path"
+      sr.owner_id = sr.path_id
+    elsif !sr.section_id.nil?
+      sr.owner_type = "Section"
+      sr.owner_id = sr.section_id
+    elsif !sr.task_id.nil?
+      sr.owner_type = "Task"
+      sr.owner_id = sr.task_id
+    else
+      raise "RUNTIME EXCEPTION: unknown object id for SR ##{sr.id}"
+    end
+    
+    unless sr.save
+      raise "RUNTIME EXCEPTION: SR could not save"
+    end
+  end
+end
+
 task :transfer_answers => :environment do
   Task.all.each do |t|
     # IF Fill-in-the-blank (FIB)
@@ -51,6 +80,33 @@ task :transfer_answers => :environment do
           end
         end
       end
+    end
+  end
+end
+
+task :user_transaction_switch => :environment do
+  puts "Starting switch"
+  counter = 0
+  UserTransaction.all.each do |ut|
+    if ut.path_id
+      ut.owner_type = "Path"
+      ut.owner_id = ut.path_id
+    elsif ut.reward_id
+      ut.owner_type = "Reward"
+      ut.owner_id = ut.reward_id
+    elsif ut.task_id
+      ut.owner_type = "Task"
+      ut.owner_id = ut.task_id
+    else
+      raise "RUNTIME EXCEPTION: unknown object id for ut ##{ut.id}"
+    end
+    
+    unless ut.save
+      raise "RUNTIME EXCEPTION: ut could not save"
+    end
+    counter += 1
+    if counter % 100 == 0
+      puts counter.to_s
     end
   end
 end

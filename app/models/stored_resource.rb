@@ -1,5 +1,9 @@
 class StoredResource < ActiveRecord::Base
-  attr_accessible :owner_id, :owner_type, :section_id, :path_id, :task_id, :description, :link, :info_type, :obj, :obj_file_name, :obj_content_type, :obj_file_size, :obj_updated_at
+  attr_accessible :owner_id, 
+    :owner_type,
+    :description, 
+    :link,
+    :obj
   
   belongs_to :owner, :polymorphic => true
   
@@ -13,15 +17,8 @@ class StoredResource < ActiveRecord::Base
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   
-  validates :owner_id,
-    :presence => true
-    
-  validates :owner_type,
-    :presence => true
-  
-  validates :description,
-  :length      => { :maximum => 255 }
-
-  validates :link,
-  :length      => { :maximum => 255 }
+  validates :owner_id, presence: true
+  validates :owner_type, presence: true
+  validates :description, length: { maximum: 255 }
+  validates :link, length: { maximum: 255 }
 end
