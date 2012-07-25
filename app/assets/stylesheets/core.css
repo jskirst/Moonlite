@@ -183,6 +183,59 @@ section.wiki { margin-bottom: 50px; }
 .underlined { text-decoration:underline; }
 .btn.big { font-size: 18px; padding:8px; margin:10px;}
 .btn.really_big { font-size: 23px; padding:10px; margin:10px;}
-.container.body { width:990px; padding:0 10px 0 30px;  background-color:rgba(254,254,254,.9); border:1px solid #DDD; box-shadow: 0px 0px 7px 5px rgba(0,0,0,0.25); }
+.container.body { width:990px; padding: 0px 10px 0 30px;  background-color:rgba(254,254,254,.9); border:1px solid #DDD; box-shadow: 0px 0px 7px 5px rgba(0,0,0,0.25); }
 .shadow { background-color:white; box-shadow: 4px 4px 3px 2px rgba(0,0,0,0.25); }
 body {background-color: whitesmoke; }
+
+
+/* Landing page */
+body {
+	background-image:url('http://profileunlimited.com/myspace-graphics/images/Backgrounds/Pastel/30c0e4x.gif');
+	backgorund-repeat:repeat-x;
+}
+
+.container.body {
+	width:860px;
+	height:400px;
+	padding-top:70px;
+	margin-left:330px;
+	background-color:transparent;
+	border:none;
+	box-shadow:none;
+	
+}
+#center_box {
+	width:620px; 
+	height: 400px;
+	background-color:rgba(254,254,254,.8); 
+	border:1px solid #DDD; 
+	box-shadow: 0px 0px 7px 5px rgba(0,0,0,0.25);
+	border-radius:10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
