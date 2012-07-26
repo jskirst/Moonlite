@@ -1,0 +1,14 @@
+<% if current_user && current_user.is_anonymous %>
+<div id="locked_modal" class="modal hide fade">
+  <div class="modal-header">
+    <a href="#" class="close"></a>
+    <h3>Locked <%= name_for_paths.pluralize %></span></h3>
+  </div>
+  <div class="modal-body">
+    <p style="font-size: 16px; padding:0 7px 5px 10px;">You must complete at least 8 <%= name_for_paths.pluralize %> to unlock this <%= name_for_paths %>.</p>
+  </div>
+  <div class="modal-footer">
+    <%= link_to "Okay", "#", :class => "btn primary", :onclick => "$('#locked_modal').modal('hide');" %>
+  </div>
+</div>
+<% end %>

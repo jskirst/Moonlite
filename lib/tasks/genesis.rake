@@ -47,8 +47,8 @@ namespace :db do
   task :genesis => :environment do
     Rake::Task['db:reset'].invoke
     
-    moonlite_company = Company.create!(:name => "Moonlite")
-    default_role = moonlite_company.user_roles.create!(:name => "Admin", :enable_administration => true)
+    moonlite_company = Company.create!(:name => "Metabright")
+    default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_user_creation: true, enable_explore: true)
     moonlite_company.user_role_id = default_role.id
     moonlite_company.save
     default_cat = moonlite_company.categories.create!(:name => "Everything")

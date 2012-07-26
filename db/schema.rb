@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715034450) do
+ActiveRecord::Schema.define(:version => 20120726010312) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
   create_table "categories", :force => true do |t|
     t.integer  "company_id"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "collaborations", :force => true do |t|
@@ -41,36 +41,29 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.integer  "user_id"
     t.integer  "owner_id"
     t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.string   "owner_type"
   end
 
   create_table "companies", :force => true do |t|
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "enable_company_store",         :default => true
-    t.boolean  "enable_leaderboard",           :default => true
-    t.boolean  "enable_dashboard",             :default => true
-    t.boolean  "enable_tour",                  :default => true
-    t.boolean  "enable_comments",              :default => true
-    t.boolean  "enable_feedback",              :default => true
+    t.datetime "created_at",                                                :null => false
+    t.datetime "updated_at",                                                :null => false
     t.boolean  "enable_news",                  :default => true
-    t.boolean  "enable_achievements",          :default => true
-    t.boolean  "enable_recommendations",       :default => true
-    t.boolean  "enable_printer_friendly",      :default => true
-    t.boolean  "enable_browsing",              :default => true
-    t.boolean  "enable_user_creation",         :default => true
     t.boolean  "enable_auto_enroll",           :default => true
-    t.boolean  "enable_collaboration",         :default => true
-    t.boolean  "enable_one_signup",            :default => true
-    t.string   "signup_token"
     t.string   "default_profile_picture_link"
-    t.boolean  "enable_auto_generate",         :default => false
     t.integer  "user_role_id"
     t.integer  "seat_limit",                   :default => 50
     t.string   "name_for_paths",               :default => "certification"
+    t.boolean  "enable_traditional_explore",   :default => true
+    t.string   "home_title"
+    t.string   "home_subtitle"
+    t.string   "home_paragraph"
+    t.string   "big_logo_link"
+    t.string   "small_logo_link"
+    t.string   "referrer_url"
+    t.boolean  "enable_custom_landing",        :default => false
   end
 
   create_table "company_users", :force => true do |t|
@@ -79,16 +72,16 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.integer  "company_id"
     t.string   "token1"
     t.string   "token2"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.boolean  "is_admin"
   end
 
   create_table "completed_tasks", :force => true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.integer  "status_id",           :default => 0
     t.datetime "quiz_session"
     t.integer  "points_awarded"
@@ -108,8 +101,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.integer  "total_points", :default => 0
     t.boolean  "is_complete",  :default => false
     t.integer  "level"
@@ -119,27 +112,12 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
 
-  create_table "info_resources", :force => true do |t|
-    t.string   "description"
-    t.string   "link"
-    t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "section_id"
-    t.integer  "task_id"
-    t.string   "info_type"
-    t.string   "obj_file_name"
-    t.string   "obj_content_type"
-    t.integer  "obj_file_size"
-    t.datetime "obj_updated_at"
-  end
-
   create_table "leaderboards", :force => true do |t|
     t.integer  "user_id"
     t.integer  "completed_tasks", :default => 0
     t.integer  "score",           :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "category_id"
     t.integer  "path_id"
     t.integer  "section_id"
@@ -163,8 +141,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.string   "name"
     t.text     "description",                :default => ""
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                      :null => false
+    t.datetime "updated_at",                                      :null => false
     t.integer  "company_id"
     t.string   "image_url"
     t.boolean  "is_public",                  :default => false
@@ -190,8 +168,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.string   "description"
     t.string   "criteria"
     t.integer  "points"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "image_url"
     t.integer  "company_id"
     t.integer  "parent_id"
@@ -202,16 +180,16 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.integer  "phrase_id"
     t.integer  "paired_phrase_id"
     t.integer  "strength",         :default => 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
   end
 
   add_index "phrase_pairings", ["phrase_id"], :name => "index_phrase_pairings_on_phrase_id"
 
   create_table "phrases", :force => true do |t|
     t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.string   "original_content"
   end
 
@@ -223,8 +201,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.string   "description"
     t.integer  "points"
     t.string   "image_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "sections", :force => true do |t|
@@ -232,8 +210,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.string   "name"
     t.text     "instructions"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.boolean  "is_published",        :default => false
     t.string   "image_url"
     t.string   "content_type"
@@ -245,8 +223,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.string   "description"
     t.string   "link"
     t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "section_id"
     t.integer  "task_id"
     t.string   "info_type"
@@ -275,8 +253,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.string   "resource"
     t.integer  "points"
     t.integer  "section_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "answer2"
     t.string   "answer3"
     t.string   "answer4"
@@ -313,15 +291,15 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.integer  "user_id"
     t.integer  "path_id"
     t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "user_personas", :force => true do |t|
     t.integer  "persona_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "level"
   end
 
@@ -347,8 +325,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.boolean  "enable_company_store",    :default => false
     t.boolean  "enable_auto_generate",    :default => false
     t.string   "signup_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                 :null => false
+    t.datetime "updated_at",                                 :null => false
   end
 
   create_table "user_transactions", :force => true do |t|
@@ -357,8 +335,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
     t.integer  "task_id"
     t.float    "amount"
     t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
     t.integer  "path_id"
     t.integer  "owner_id"
     t.string   "owner_type"
@@ -369,8 +347,8 @@ ActiveRecord::Schema.define(:version => 20120715034450) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin",              :default => false

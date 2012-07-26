@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   def new
+    domain = get_referrer_domain
     if signed_in?
       redirect_to root_path
     else
@@ -69,22 +70,21 @@ class SessionsController < ApplicationController
   end
   
   private
-  def track_session(action, user, auth = {})
-    unless user.admin? || user.is_test_user
-      if action == :register
-        track! :registration_facebook if auth["provider"] == "facebook"
-        track! :registration_google if auth["provider"] == "google_oauth2"
-      elsif action == :login
-        track! :login_facebook if auth["provider"] == "facebook"
-        track! :login_google if auth["provider"] == "google_oauth2"
-      elsif action == :login_conventional
-        track! :login_conventional
-      elsif action == :logout
-        track! :logout
-      else
-        raise [action.to_s, user.to_s, auth.to_s].join("::").to_s
+    def track_session(action, user, auth = {})
+      unless user.admin? || user.is_test_user
+        if action == :register
+          track! :registration_facebook if auth["provider"] == "facebook"
+          track! :registration_google if auth["provider"] == "google_oauth2"
+        elsif action == :login
+          track! :login_facebook if auth["provider"] == "facebook"
+          track! :login_google if auth["provider"] == "google_oauth2"
+        elsif action == :login_conventional
+          track! :login_conventional
+        elsif action == :logout
+          track! :logout
+        else
+          raise [action.to_s, user.to_s, auth.to_s].join("::").to_s
+        end
       end
     end
-  end
-
 end

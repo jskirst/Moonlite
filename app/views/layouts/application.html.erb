@@ -18,18 +18,7 @@
 <body>
 <div id="fb-root"></div>
 <script>var std_url = '<%= root_url %>';</script>
-<div id="locked_modal" class="modal hide fade">
-  <div class="modal-header">
-    <a href="#" class="close"></a>
-    <h3>Locked <%= name_for_paths.pluralize %></span></h3>
-  </div>
-  <div class="modal-body">
-    <p style="font-size: 16px; padding:0 7px 5px 10px;">You must complete at least 8 <%= name_for_paths.pluralize %> to unlock this <%= name_for_paths %>.</p>
-  </div>
-  <div class="modal-footer">
-    <%= link_to "Okay", "#", :class => "btn primary", :onclick => "$('#locked_modal').modal('hide');" %>
-  </div>
-</div>
+<%= render "shared/locked_modal" %>
 <div class="container body">
   <%= render "layouts/header" %>
   <section id="content">

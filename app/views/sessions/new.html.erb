@@ -21,13 +21,17 @@
           </div>
         </div>
       </td>
-      <% unless @hide_social %>
+      <% if @is_consumer %>
       <td style="border-top: none; border-right: 0px solid darkgray; border-left: 0px solid darkgray; vertical-align: middle;">
         <p style="font-weight: bold; font-size; 18px;"><span style="font-size:25px; color:lightgray;">|</span> Or <span style="font-size:25px; color:lightgray;">|</span></p>
       </td>
       <td style="border-top: none; vertical-align: middle;">
         <%= link_to image_tag("/images/facebook_login_button.png", :size => "220x55"), "/auth/facebook", :id => "facebook_signin" %>
         <%= link_to image_tag("/images/google_login_button.png", :size => "220x45"), "/auth/google_oauth2", :id => "google_signin" %>
+      </td>
+      <% elsif @is_company && @possible_company && @possible_company.big_logo_link %>
+      <td style="border-top: none; vertical-align: middle;">
+        <%= image_tag @possible_company.big_logo_link, style: "height: 130px; max-width: 300px; margin-left:50px;" %>
       </td>
       <% end %>
     </tr>
