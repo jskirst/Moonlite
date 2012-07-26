@@ -1,9 +1,10 @@
 <div>
   <h1><%= company.name %></h1>
   <ul class="tabs">
-    <% if mode == "users" %><li class="active"><a href="#">Users</a><% else %><li><%= link_to "Users", company %><% end %></li>
-    <% if mode == "settings" %><li class="active"><a href="#">Settings</a><% else %><li><%= link_to "Settings", edit_company_path(company) %><% end %></li>
+    <% if mode == "users" %><li class="active"><a href="#">Users</a><% else %><li><%= link_to "Users", current_company %><% end %></li>
+    <% if mode == "settings" %><li class="active"><a href="#">Settings</a><% else %><li><%= link_to "Settings", edit_company_path(current_company) %><% end %></li>
     <% if mode == "roles" %><li class="active"><a href="#">User Roles</a><% else %><li><%= link_to "User Roles", user_roles_path %><% end %></li>
-    <% if mode == "styles" %><li class="active"><a href="#">Custom Styles</a><% else %><li><%= link_to "Custom Styles", company.custom_style %><% end %></li>
+    <% if mode == "styles" %><li class="active"><a href="#">Custom Styles</a><% else %><li><%= link_to "Custom Styles", current_company.custom_style %><% end %></li>
   </ul>
+  <p><%= mode %></p>
 </div>

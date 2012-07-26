@@ -1,5 +1,5 @@
 <section>
-  <%= render "companies/tab_header", { :company => @company, :mode => "styles" } %>
+  <%= render "companies/tab_header", { :company => current_company, :mode => "styles" } %>
   <section>
     <%= link_to "Edit", edit_custom_style_path(@custom_style), :class => "btn primary", :style=>"float:right;" %>
     <h2>Custom Styles</h2>

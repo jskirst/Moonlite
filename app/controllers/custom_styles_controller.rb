@@ -19,7 +19,7 @@ class CustomStylesController < ApplicationController
   
   private
     def get_style
-      @custom_style = current_user.company.custom_style
+      @custom_style = current_company.custom_style
       raise "nil custom style" if @custom_style.nil?
     end
   
