@@ -10,6 +10,56 @@
           <%= f.text_field :name %>
         </div>
       </div>
+      <div class="field clearfix">
+        <%= f.label "Default Profile Picture" %>
+        <div class="input">
+          <%= f.text_field :default_profile_picture_link %>
+          <p><%= image_tag (@company.default_profile_picture_link.blank? ? "/images/default_profile_pic.png": @company.default_profile_picture_link), size: "75x75", style: "margin-top:10px;" %></p>
+        </div>
+        
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Term for certification", :placeholder => "e.g. 'challenge', 'path', 'test', 'quiz'." %>
+        <div class="input">
+          <p><%= f.text_field :name_for_paths %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Home page title" %>
+        <div class="input">
+          <p><%= f.text_field :home_title %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Home page subtitle" %>
+        <div class="input">
+          <p><%= f.text_field :home_subtitle %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Home page text" %>
+        <div class="input">
+          <p><%= f.text_field :home_paragraph %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Big logo link" %>
+        <div class="input">
+          <p><%= f.text_field :big_logo_link, class: "xlarge" %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Small logo link" %>
+        <div class="input">
+          <p><%= f.text_field :small_logo_link, class: "xlarge" %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
+        <%= f.label "Enable custom landing page" %>
+        <div class="input">
+          <p><%= f.check_box :enable_custom_landing %></p>
+        </div>
+      </div>
       <hr/>
       <div class="field clearfix">
         <%= f.label :categories %>
@@ -27,19 +77,6 @@
         </div>
       </div>
       <hr/>
-      <div class="field clearfix">
-        <%= f.label "Default User Profile Picture" %>
-        <div class="input">
-          <%= f.text_field :default_profile_picture_link %>
-        </div>
-      </div>
-      <div class="field clearfix">
-        <%= f.label "Term for 'certification'", :placeholder => "e.g. 'challenge', 'path', 'test', 'quiz'." %>
-        <div class="input">
-          <p><%= f.text_field :name_for_paths %></p>
-          <p><strong>NOTE:</strong> Please provide the singular version of the word.</p>
-        </div>
-      </div>
       <div class="input">
         <%= f.submit "Save", :class => "btn primary" %>
       </div>

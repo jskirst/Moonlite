@@ -68,7 +68,7 @@ module SessionsHelper
     unless current_user.nil?
       return current_user.company.name
     else
-      return "Metabright"
+      @possible_company ? @possible_company.name : "Metabright"
     end
   end
   
@@ -84,10 +84,28 @@ module SessionsHelper
     return "Path"
   end
   
+  def analyze_visitor
+    if current_user
+      if current_user.company_id == 1
+        @is_consumer = true
+      else
+        @is_company = true
+      end
+    elsif params[:c]
+      @possible_company = Company.where("referrer_url like ?", "%#{params[:c]}%").first
+      @is_company = true if @possible_company
+      @is_consumer = false
+      session[:company] = @possible_company.id
+    elsif session[:company]
+      @possible_company = Company.find(session[:company])
+      @is_company = true if @possible_company
+      @is_consumer = false
+    end
+  end
+  
   def determine_enabled_features
     unless current_user.nil?
       role = current_user.user_role
-      @is_consumer = (current_user.company_id == 1)
       @enable_administration = role.enable_administration
       @enable_rewards = role.enable_company_store
       @enable_leaderboard = role.enable_leaderboard

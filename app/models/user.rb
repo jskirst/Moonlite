@@ -123,7 +123,7 @@ class User < ActiveRecord::Base
   
   def profile_pic
     return self.image_url if self.image_url != nil
-    return "/images/default_profile_pic.jpg"  if company.default_profile_picture_link.blank?
+    return "/images/default_profile_pic.png"  if company.default_profile_picture_link.blank?
     return company.default_profile_picture_link
   end
   
