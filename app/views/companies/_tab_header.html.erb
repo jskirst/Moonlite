@@ -6,5 +6,4 @@
     <% if mode == "roles" %><li class="active"><a href="#">User Roles</a><% else %><li><%= link_to "User Roles", user_roles_path %><% end %></li>
     <% if mode == "styles" %><li class="active"><a href="#">Custom Styles</a><% else %><li><%= link_to "Custom Styles", custom_style_path(current_company.custom_style) %><% end %></li>
   </ul>
-  <p><%= mode %></p>
 </div>

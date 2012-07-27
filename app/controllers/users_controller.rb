@@ -114,12 +114,12 @@ class UsersController < ApplicationController
   def destroy
     if @user == current_user
       respond_to do |f|
-        f.html { render :partial => "shared/error_message", :locals => { :message => "Cannot delete yourself." } }
+        f.html { render partial: "shared/error_message", locals: { message: "Cannot delete yourself." } }
       end
     else
       @user.destroy
       respond_to do |f|
-        f.html { render :partial => "shared/success_message", :locals => { :message => "User successfully deleted." } }
+        f.html { render partial: "shared/success_message", locals: { message: "User successfully deleted." } }
       end
     end
   end
@@ -130,8 +130,7 @@ class UsersController < ApplicationController
     end
   
     def company_admin_or_admin_only
-      company_id = @user.ni? ? (params[:company_id] || params[:user][:company_id]) : @user.company.id
-
+      company_id = @user.nil? ? (params[:company_id] || params[:user][:company_id]) : @user.company.id
       unless (current_user.admin? || (@enable_administration && current_company.id == company_id.to_i))
         redirect_to root_path, alert: "You do not have the ability to create or edit users."
       end

@@ -19,15 +19,19 @@ class Task < ActiveRecord::Base
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
   
-  validates :question, length: { :within => 1..255 }
-  validates :points, presence: true, numericality: { :less_than => 51 }
-  validates :section_id, :presence => true
+  validates :question, length: { within: 1..255 }
+  validates :points, presence: true, numericality: { less_than: 51 }
+  validates :section_id, presence: true
   
-  before_validation { self.points = 10 if (self.points.nil? || self.points == 0) }
+  before_validation { self.points = 10 if self.points.to_i == 0 }
   before_create { self.position = get_next_position_for_section }
   before_save { self.answer_sub_type = nil unless self.answer_type == 0 }
-  after_create { answer_content.each { |a| answers.create!(content: a[:content], is_correct: a[:is_correct]) } }
-  after_create { PhrasePairing.create_phrase_pairings(answers_to_array) }
+  after_create do
+    answer_content.each do |a|
+      answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+    end
+    PhrasePairing.create_phrase_pairings(answers_to_array)
+  end
   
   def update_answers(params)
     errors = []
