@@ -1,6 +1,5 @@
 class CustomStyle < ActiveRecord::Base
-  attr_protected :company_id
-  attr_accessible :mode, :styles
+  attr_accessible :company_id, :mode, :styles
   
   belongs_to :company
   

@@ -20,5 +20,9 @@ class Company < ActiveRecord::Base
   has_one :user_role
   has_one :custom_style
   
-  validates :name, presence: true, length: { :maximum => 100 }
+  validates :name, presence: true, length: { maximum: 100 }
+  
+  after_create do
+    CustomStyle.create!(company_id: self.id)
+  end
 end
