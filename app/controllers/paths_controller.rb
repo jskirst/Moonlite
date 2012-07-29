@@ -120,9 +120,7 @@ class PathsController < ApplicationController
     elsif @path.description.blank?
       flash[:info] = "You need to create a description for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
     else
-      @path.sections.each do |s|
-        s.update_attribute(:is_published, true)
-      end
+      @path.sections.each { |s| s.update_attribute(:is_published, true) }
       current_user.company.user_roles.each do |ur|
         if @path.user_roles.find_by_id(ur.id).nil?
           @path.path_user_roles.create!(:user_role_id => ur.id)
@@ -232,15 +230,25 @@ class PathsController < ApplicationController
     else
       previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
       current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
-      award_achievements
       if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
         total_earned_points = @path.enrollments.find_by_user_id(current_user.id).total_points.to_i
         event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{total_earned_points.to_s}."
         current_user.user_events.create!(:path_id => @path.id, :content => event)
       end
-      
+      if @path.has_creative_response && !@path.enable_voting
+        flash[:success] = "Congratulations! You've finished this #{name_for_paths}. You should recieve an email with your final score as soon as your administrator finishes grading your answers."
+      else
+        flash[:success] = "Congratulations! You've finished this #{name_for_paths}."
+      end
       redirect_to @path
     end
+  end
+  
+  def retake
+    @enrollment = @path.enrollments.find_by_user_id(current_user.id)
+    @enrollment.retake!
+    @path.completed_tasks.where("user_id = ?", current_user.id).destroy_all
+    redirect_to @path
   end
   
   def show
@@ -437,24 +445,5 @@ class PathsController < ApplicationController
       path_score = ((@path.completed_tasks.average("status_id", :conditions => ["completed_tasks.updated_at > ?", @time.days.ago]) || 0) * 100).to_i
       
       return [user_points, activity_over_time, path_score]
-    end
-    
-    def award_achievements
-      # incomplete_achievements = []
-      # completed_achievements = []
-      # completed_paths = current_user.enrollments.where("is_complete = ?", true).to_a.collect {|e| e.path_id}
-      # current_user.company.achievements.includes(:path_achievements).each do |a|
-        # criteria = a.path_achievements.all.to_a.collect {|pa| pa.path_id }
-        # completed_criteria = 0
-        # criteria.each {|c| completed_criteria += 1 if completed_paths.include?(c)}
-        # if completed_criteria == criteria.size
-          # unless current_user.achievements.find_by_id(a.id)
-            # current_user.user_achievements.create!(:achievement_id => a.id)
-            # flash[:success] = "You unlocked the #{a.name} Achievement!"
-          # end
-        # elsif (criteria - completed_paths) != criteria
-          # flash[:success] = [flash[:success].to_s, "You almost unlocked the #{a.name} Achievement!"].join(" ")
-        # end
-      # end
     end
 end

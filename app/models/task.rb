@@ -25,7 +25,13 @@ class Task < ActiveRecord::Base
   
   before_validation { self.points = 10 if self.points.to_i == 0 }
   before_create { self.position = get_next_position_for_section }
-  before_save { self.answer_sub_type = nil unless self.answer_type == 0 }
+  before_save do
+    if self.answer_type == 0
+      self.disable_time_limit = true
+    else
+      self.answer_sub_type = nil
+    end
+  end
   after_create do
     answer_content.each do |a|
       answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?

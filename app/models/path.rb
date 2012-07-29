@@ -19,7 +19,9 @@ class Path < ActiveRecord::Base
     :enable_retakes, 
     :game_type, 
     :tags, 
-    :enable_voting
+    :enable_voting,
+    :passing_score,
+    :enable_path_retakes
   
   has_many :stored_resources, as: :owner
   belongs_to :user
@@ -48,8 +50,7 @@ class Path < ActiveRecord::Base
   end
   
   def default_pic?
-    return true if path_pic == "/images/default_path_pic.jpg"
-    return false
+    return path_pic == "/images/default_path_pic.jpg"
   end
   
   def path_pic
@@ -109,11 +110,8 @@ class Path < ActiveRecord::Base
         enrolled_path_ids << p.id
         category_counter[p.category_id] = category_counter[p.category_id].to_i + 1
       end
-      logger.debug category_counter
       category_counter = category_counter.sort_by { |k,v| v }
       category_counter = category_counter
-      logger.debug category_counter.to_a
-      logger.debug category_counter.to_a[-1]
       return Path.with_category(category_counter.to_a[-1][0].to_i, user, enrolled_path_ids)
     end
   end
@@ -197,13 +195,7 @@ class Path < ActiveRecord::Base
   end
   
   def tags_to_array
-    all_tags = []
-    return [] if self.tags.blank?
-    
-    self.tags.split(",").each do |t|
-      all_tags << t.strip
-    end
-    return all_tags
+    return self.tags.blank? ? [] : (self.tags.split(",").collect { |t| t.strip })
   end
   
   def skill_ranking(user)
@@ -247,5 +239,18 @@ class Path < ActiveRecord::Base
     stream = (events + answers).sort {|a,b| b[:date] <=> a[:date]}
     # raise stream.to_yaml
     return stream
+  end
+  
+  def percentage_correct(user = nil)
+    if user.nil?
+      number_of_tasks = completed_tasks.where("status_id = ?", 1).size
+      correct_answers = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)"]).count
+      return 0 if correct_answers == 0 || number_of_tasks == 0
+    else
+      number_of_tasks = tasks.size
+      correct_answers = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)", user.id]).count
+      return 0 if correct_answers == 0 || number_of_tasks == 0
+    end
+    return ((correct_answers.to_f / number_of_tasks.to_f) * 100).to_i
   end
 end

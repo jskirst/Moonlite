@@ -25,6 +25,14 @@
       <%= image_tag(path.path_pic, :class => "image_url_preview", :height => "50px", :style=>"margin:30px 0px 20px 0  px") %>
     </div>
   </div>
+  <% if true %>
+  <div class="field clearfix" style="margin-top:10px;">
+    <label>Passing Score (optional)</label>
+    <div class="input">
+      <%= f.text_field :passing_score, :class=>"small" %>
+    </div>
+  </div>
+  <% end %>
   <div class="field clearfix" style="margin-bottom: 5px;">
     <%= f.label :tags %>
     <div class="input">
@@ -85,6 +93,12 @@
           <label>
             <%= f.check_box :is_locked %>
             <span>Make visible but only accessible by creators and collaborators</span>
+          </label>
+        </li>
+        <li>
+          <label>
+            <%= f.check_box :enable_path_retakes %>
+            <span>Allow users to retake the <%= name_for_paths %></span>
           </label>
         </li>
       </ul>

@@ -11,7 +11,6 @@
           <p>You do not have any users yet.</p>
         <% else %>
           <p>Answered Questions: <%= s.completed_tasks.size %></p>
-          <p>Average Score: <%= s.percentage_correct %>%</p>
           <p>Last Activity: <%= s.completed_tasks.empty? ? "N/A" : time_ago_in_words(s.completed_tasks.last.created_at)+" ago" %></p>
         <% end %>
       </td>

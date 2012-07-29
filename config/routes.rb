@@ -34,6 +34,7 @@ Metabright::Application.routes.draw do
       get :undo_collaboration
       get :jumpstart
 			get :continue
+			get :retake
 		end
 	end
 	resources :sections do

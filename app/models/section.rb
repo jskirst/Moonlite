@@ -71,20 +71,6 @@ class Section < ActiveRecord::Base
     end
   end
   
-  #correct answers is really the number of questions without an incorrect answer
-  def percentage_correct(user = nil)
-    if user.nil?
-      number_of_tasks = completed_tasks.where("status_id = ?", 1).size
-      correct_answers = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)"]).count
-      return 0 if correct_answers == 0 || number_of_tasks == 0
-    else
-      number_of_tasks = tasks.size
-      correct_answers = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)", user.id]).count
-      return 0 if correct_answers == 0 || number_of_tasks == 0
-    end
-    return ((correct_answers.to_f / number_of_tasks.to_f) * 100).to_i
-  end
-  
   def user_streak(user)
     user_completed_tasks = completed_tasks.where("user_id = ?", user.id).all(:order => "id DESC")
     streak = 0

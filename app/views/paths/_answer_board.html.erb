@@ -2,11 +2,11 @@
 <% if @must_register && @completed %>
   <div style="height: 900px; padding:10px;">
     <p style="font-size: 18px; line-height:25px;"><%= link_to "Save your score", signin_path %> so that people can vote for your submissions, and so that you can vote on theirs!</p>
-    <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this challenge to improve your global ranking, create your own challenges and start a <%= link_to "Persona", "#" %>.</p>
+    <p style="font-size: 18px; line-height:25px;">Once you save your score, you can also take the next level of this <%= name_for_paths.downcase %> to improve your global ranking, create your own <%= name_for_paths.pluralize %> and start a <%= link_to "Persona", "#" %>.</p>
   </div>
 <% elsif !@completed %>
   <div style="height: 900px; padding:15px;">
-    <p style="font-size: 18px; line-height:25px;">Complete the first level of this challenge to see where you rank on the global leaderboard and vote on other people's answers!</p>
+    <p style="font-size: 18px; line-height:25px;">Complete the first level of this <%= name_for_paths.downcase %> to see where you rank on the global leaderboard<% if @path.enable_voting %> and vote on other people's answers<% end %>!</p>
     <% if @enrolled %>
       <%= link_to @start_mode, continue_path_path(@path), :class => "btn primary really_big clickable_link", :style => "margin: 20px 160px;"%>
     <% else %>  

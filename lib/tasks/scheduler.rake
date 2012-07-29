@@ -43,3 +43,39 @@ task :refresh_staging => :environment do
   ending_time = Time.now
   puts "Total run time: #{ending_time - starting_time} seconds."
 end
+
+task :send_completed_scores => :environment do
+  enrollments = Enrollment.all
+  enrollments.each do |e|
+    e.is_score_sent = false
+    e.percentage_correct = nil
+    e.save
+  end
+  puts "Starting to send completed scores."
+  @paths = Path.where("passing_score is not ?", nil)
+  puts "Paths that are pass/fail: #{@paths.size}"
+  @paths.each do |p|
+    puts "Processing #{p.name}"
+    passing_score = p.passing_score
+    puts "Passing score: #{passing_score}"
+    @unsent_enrollments = p.enrollments.where("is_complete = ? and is_score_sent = ?", true, false) 
+    puts "Unsent emails:#{@unsent_enrollments.size}"
+    @unsent_enrollments.each do |e|
+      user = e.user
+      puts "Sending to #{user.email}"
+      score = p.percentage_correct(user)
+      puts "Score: #{score}"
+      e.is_passed = score >= passing_score
+      e.percentage_correct = score
+      e.save
+      puts e.to_yaml
+      if e.send_result_email
+        e.is_score_sent = true
+        raise "Could not save unsent enrollment." + e.to_yaml unless e.save
+      else
+        raise "Could not send result email." + e.to_yaml
+      end
+      puts "Email sent."
+    end
+  end
+end

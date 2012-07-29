@@ -12,7 +12,7 @@ module SectionsHelper
     if task.answer_type == 0
       ct.status_id = 2
       submitted_answer = task.find_or_create_submitted_answer(params[:answer])
-      ct = submitted_answer.id 
+      ct.submitted_answer_id = submitted_answer.id 
     elsif task.answer_type >= 1
       ct.answer = params[:answer]
       status_id, chosen_answer = task.is_correct?(ct.answer)

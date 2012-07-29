@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120726010312) do
+ActiveRecord::Schema.define(:version => 20120729192250) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -101,11 +101,14 @@ ActiveRecord::Schema.define(:version => 20120726010312) do
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at",                      :null => false
-    t.datetime "updated_at",                      :null => false
-    t.integer  "total_points", :default => 0
-    t.boolean  "is_complete",  :default => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "total_points",       :default => 0
+    t.boolean  "is_complete",        :default => false
     t.integer  "level"
+    t.boolean  "is_score_sent",      :default => false
+    t.boolean  "is_passed",          :default => false
+    t.integer  "percentage_correct"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -159,6 +162,8 @@ ActiveRecord::Schema.define(:version => 20120726010312) do
     t.string   "game_type",                  :default => "basic"
     t.string   "tags"
     t.boolean  "enable_voting",              :default => false
+    t.integer  "passing_score"
+    t.boolean  "enable_path_retakes",        :default => false
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
