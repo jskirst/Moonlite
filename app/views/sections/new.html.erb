@@ -1,7 +1,7 @@
 <section>
   <h2 style="margin-bottom:10px;"><%= @path.sections.empty? ? "Create a Section" : "Add a Section" %></h2>
   <h4>What are sections?</h4>
-  <p style="margin: 5px 0 20px 0;padding: 0 200px 0 0;">Every <%= name_for_paths.downcase %> is made up of a series of section that are <strong>organized by content</strong> or <strong>question difficulty</strong>. Having more than one section is completely optional, in fact most <%= name_for_paths.downcase.pluralize %> have between 1 and 3 sections. The only requirement is that every <%= name_for_paths.downcase %> have at <strong>least one section</strong>.</p>
+  <p style="margin: 5px 0 20px 0;padding: 0 200px 0 0;">Every <%= name_for_paths.downcase %> is made up of a series of sections  that are <strong>organized by content</strong> or <strong>question difficulty</strong>. Having more than one section is completely optional, in fact most <%= name_for_paths.downcase.pluralize %> have between 1 and 3 sections. The only requirement is that every <%= name_for_paths.downcase %> have at <strong>least one section</strong>.</p>
   <h4>Choosing a name</h4>
   <p style="margin: 5px 0 20px 0;padding: 0 200px 0 0;">If you only plan on having one section, the section name won't be very important and can be the same name as your <%= name_for_paths.downcase %>. Or, if you do plan on having multiple sections, you can name your sections based on topic or by order.</p>
   <%= form_for @section do |f| %>
