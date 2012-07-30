@@ -101,6 +101,11 @@ module SessionsHelper
       @possible_company = Company.find(cookies[:mb_c].to_i)
       @is_company = true if @possible_company
       @is_consumer = false
+    else
+      http_host = request.env["HTTP_HOST"]
+      domain = http_host.split(".")[-2].to_s.downcase
+      @possible_company = Company.where("referrer_url ILIKE ?", "%#{domain}%").first
+      @is_company = true if @possible_company
     end
   end
   
