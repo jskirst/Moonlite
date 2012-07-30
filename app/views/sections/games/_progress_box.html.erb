@@ -1,13 +1,15 @@
 <script>
 $(function(){
-  <% unless @jumpstart || (@earned_points == 0 && @correct.nil?)%> start_question_timer(); <% end %>
+  <% unless @jumpstart || (@earned_points == 0 && @correct.nil?) || @task.disable_time_limit %> start_question_timer(); <% end %>
   $("#progressbar").progressbar({ value: <%= @progress %> });
 });
 </script>
 <section class="progress-box" style="margin-bottom: 50px;">
   <div style="float:right; margin-top: 10px;">
     <span class="points total">+<%= @earned_points %> Total</span>
+    <% unless @task.disable_time_limit %>
     <span class="timer" id="countdown_timer"><%= @time_allotted %></span>
+    <% end %>
   </div>
   <div id="progressbar" style="float:right; margin: 4px; width: 160px; height: 28px;" alt="Progress Bar"></div>
 </section>

@@ -1,3 +1,4 @@
+<% points_awarded_by = @path.enable_voting ? "*Points awarded by number of votes" : "Points awarded by Administrator" %>
 <div class="field clearfix">
   <% if task.answer_sub_type == 100 %>
   <script>
@@ -10,7 +11,7 @@
   </script>
   <div class="input" style="margin-top:10px;">
     <textarea name="answer" id="answer_input" rows="3" style="width: 350px;" placeholder="Enter answer here..." autofocus="autofocus"></textarea>
-    <p style="font-style:italic;">*Points awarded by votes</p>
+    <p style="font-style:italic;"><%= points_awarded_by %></p>
   </div>
   <% elsif task.answer_sub_type == 101 %>
    <script>
