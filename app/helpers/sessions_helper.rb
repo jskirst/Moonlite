@@ -90,14 +90,15 @@ module SessionsHelper
         @is_consumer = true
       else
         @is_company = true
+        cookies.permanent[:mb_c] = current_company.id
       end
     elsif params[:c]
       @possible_company = Company.where("referrer_url like ?", "%#{params[:c]}%").first
       @is_company = true if @possible_company
       @is_consumer = false
-      session[:company] = @possible_company.id
-    elsif session[:company]
-      @possible_company = Company.find(session[:company])
+      cookies.permanent[:mb_c] = @possible_company.id
+    elsif cookies[:mb_c]
+      @possible_company = Company.find(cookies[:mb_c].to_i)
       @is_company = true if @possible_company
       @is_consumer = false
     end

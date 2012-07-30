@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
   def new
-    domain = get_referrer_domain
     if signed_in?
       redirect_to root_path
     else
