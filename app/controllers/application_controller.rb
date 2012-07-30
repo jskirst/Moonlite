@@ -8,6 +8,6 @@ class ApplicationController < ActionController::Base
   use_vanity :current_user
   
   def test_test_test
-    raise request.env.to_yaml
+    raise request.env.to_s
   end
 end
