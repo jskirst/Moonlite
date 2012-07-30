@@ -79,7 +79,7 @@ class CompaniesController < ApplicationController
       @user.password_confirmation = params[:user][:password_confirmation]
       @user.user_role_id = @user_role.id
       if @user.save
-        flash[:success] = "Welcome to Moonlite!"
+        flash[:success] = "Welcome to #{current_company.name}"
         @user.reload
         sign_in @user
         

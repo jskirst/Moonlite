@@ -1,34 +1,43 @@
-<h2>Join <%= @company.name %> on <%= company_logo %></h2>
-<p style="margin: 20px 0px 30px 0px;">Welcome to <%= company_logo %>! Fill out the form below to create an account and begin your certification.</p>
+<h3>Welcome to the <%= @company.name %> Certification Program!</h3>
 <%= form_for @user, :url => { :controller => "companies", :action => "accept" }, :method => "put" do |f| %>
-  <%= render "shared/error_messages", :object => f.object %>
-  <div class="field">
-    <%= f.label :name %>
-    <div class="input">
-      <%= f.text_field :name %>
+  <div class="row">
+    <div class="span8">
+      <p style="margin: 20px 0px 30px 0px;">Fill out the form below to create an account and begin your certification.</p>
+      <%= render "shared/error_messages", :object => f.object %>
+      <div class="field">
+        <%= f.label :name %>
+        <div class="input">
+          <%= f.text_field :name %>
+        </div>
+      </div>
+        <div class="field">
+        <%= f.label :email %> 
+        <div class="input">
+          <%= f.text_field :email %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :password %>
+        <div class="input">
+          <%= f.password_field :password %>
+        </div>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation, "Confirm password" %>
+        <div class="input">
+          <%= f.password_field :password_confirmation %>
+        </div>
+      </div>
+      <div class="field">
+        <div class="input">
+          <p>Already have an account? <%= link_to "Login here.", signin_path %></p>
+        </div>
+      </div>
     </div>
-  </div>
-    <div class="field">
-    <%= f.label :email %> 
-    <div class="input">
-      <%= f.text_field :email %>
-    </div>
-  </div>
-  <div class="field">
-    <%= f.label :password %>
-    <div class="input">
-      <%= f.password_field :password %>
-    </div>
-  </div>
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm password" %>
-    <div class="input">
-      <%= f.password_field :password_confirmation %>
-    </div>
-  </div>
-  <div class="field">
-    <div class="input">
-      <p>Already have an account? <%= link_to "Login here.", signin_path %></p>
+    <div class="span7">
+    <% if @company.big_logo_link %>
+      <%= image_tag @company.big_logo_link, style: "height: 130px; max-width: 300px; margin: 25px 0 0 50px;" %>
+    <% end %>
     </div>
   </div>
   <div class="actions">
