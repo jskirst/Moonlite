@@ -1,8 +1,7 @@
 <h2>Join <%= @company.name %> on <%= company_logo %></h2>
-<p style="margin: 20px 0px 30px 0px;">Welcome to <%= company_logo %>! Fill out the form below to create an account and join your company.</p>
+<p style="margin: 20px 0px 30px 0px;">Welcome to <%= company_logo %>! Fill out the form below to create an account and begin your certification.</p>
 <%= form_for @user, :url => { :controller => "companies", :action => "accept" }, :method => "put" do |f| %>
   <%= render "shared/error_messages", :object => f.object %>
-  <%= f.hidden_field :signup_token, :value => @company.signup_token %>
   <div class="field">
     <%= f.label :name %>
     <div class="input">
@@ -10,7 +9,7 @@
     </div>
   </div>
     <div class="field">
-    <%= f.label :email %>
+    <%= f.label :email %> 
     <div class="input">
       <%= f.text_field :email %>
     </div>

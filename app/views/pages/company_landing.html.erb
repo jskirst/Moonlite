@@ -9,6 +9,6 @@
   </div>
 </div>
 <center style="padding:30px;">
-  <%= link_to "Register", signin_path, :class => "btn primary large", style: "margin-right: 30px; font-size: 23px;" %>
+  <%= link_to "Register", @possible_company.user_role.signup_link, :class => "btn primary large", style: "margin-right: 30px; font-size: 23px;" %>
   <%= link_to "Sign In", signin_path, :class => "btn large", style: "font-size: 23px; backgroud: #FD944E url(https://www.infoarmy.com/images/infoarmyarmy_sprite.png);" %>
 </center>
