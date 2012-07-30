@@ -19,7 +19,7 @@ class Task < ActiveRecord::Base
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
   
-  validates :question, length: { within: 1..255 }
+  validates :question, length: { within: 1..1000 }
   validates :points, presence: true, numericality: { less_than: 51 }
   validates :section_id, presence: true
   

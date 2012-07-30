@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120729192250) do
+ActiveRecord::Schema.define(:version => 20120730150719) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -253,7 +253,7 @@ ActiveRecord::Schema.define(:version => 20120729192250) do
   end
 
   create_table "tasks", :force => true do |t|
-    t.string   "question"
+    t.text     "question"
     t.string   "answer1"
     t.string   "resource"
     t.integer  "points"
