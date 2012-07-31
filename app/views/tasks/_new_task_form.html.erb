@@ -16,24 +16,24 @@ function display_sub_type_message(){
 }
 
 $(function(){
-  $("#task_answer_sub_type").change(function(){
+  $(".task_answer_sub_type").change(function(){
     display_sub_type_message();
   });
 
-  $("#task_answer_type").change(function(){
+  $(".task_answer_type").change(function(){
     if($(this).val()== 0){
-      $("#task_answer_sub_type").parents("div.field").show();
+      $(".task_answer_sub_type").parents("div.field").show();
       $(".creative").show();
       $(".multiple_choice").hide();
       $(".fib").hide();
       display_sub_type_message();
     } else if ($(this).val()== 1){
-      $("#task_answer_sub_type").parents("div.field").hide();
+      $(".task_answer_sub_type").parents("div.field").hide();
       $(".fib").show();
       $(".creative").hide();
       $(".multiple_choice").hide();
     } else {
-      $("#task_answer_sub_type").parents("div.field").hide();
+      $(".task_answer_sub_type").parents("div.field").hide();
       $(".multiple_choice").show();
       $(".fib").hide();
       $(".creative").hide();
@@ -60,7 +60,7 @@ $(function(){
         <div class="field clearfix">
           <%= label_tag "Answer type" %>
           <div class="input">
-            <select name="task[answer_type]" id="task_answer_type">
+            <select name="task[answer_type]" class="task_answer_type">
               <option value="2" selected="selected">Multiple choice</option>
               <option value="1">Fill in the blank</option>
               <option value="0">Creative response</option>
@@ -70,7 +70,7 @@ $(function(){
         <div class="field clearfix hide">
           <%= label_tag "Response type" %>
           <div class="input">
-            <select name="task[answer_sub_type]" id="task_answer_sub_type">
+            <select name="task[answer_sub_type]" class="task_answer_sub_type">
               <option value="100" selected="selected">Free text</option>
               <option value="101">Link to image (JPEG, PNG, GIF)</option>
               <option value="102">Link to Youtube video</option>          
