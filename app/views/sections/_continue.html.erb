@@ -44,13 +44,7 @@
       });
     </script>
     <table id="challenge_messages" style="margin-top:30px; font-weight: bold; color:#57A957; display:none;">
-    <% if @task.answer_type == 0 %>
-      <tr>
-        <td style="padding: 15px 15px 0 0; color:darkcyan; text-align:right; border-top:none;">
-          <p style="font-size: 16px;">*Points awarded by votes</p>
-        </td>
-      </tr>
-    <% elsif !@free_response && @points_awarded %>   
+    <% if !@free_response && @points_awarded %>   
       <tr>
         <td style="padding: 15px 15px 0 0; text-align:right; border-top:none;">
           <% if @correct == true %>
