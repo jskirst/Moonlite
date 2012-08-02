@@ -96,7 +96,7 @@ task :send_completed_scores => :environment do
   end
 end
 
-tasks :clean_up_hanging_blobs => :environment do
+task :clean_up_hanging_blobs => :environment do
   SubmitteAnswer.all.each do |sa|
     unless CompletedTask.where("submitted_answer_id = ?", sa.id).count > 0
       sa.destroy
