@@ -253,4 +253,12 @@ class Path < ActiveRecord::Base
     end
     return ((correct_answers.to_f / number_of_tasks.to_f) * 100).to_i
   end
+  
+  def create_completion_event(user, name_for_paths)
+    if user.user_events.where("path_id = ? and content LIKE ?", self.id, "%completed%").empty?
+      total_earned_points = enrollments.find_by_user_id(user.id).total_points.to_i
+      event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{total_earned_points.to_s}."
+      user.user_events.create!(path_id: self.id, content: event)
+    end
+  end
 end

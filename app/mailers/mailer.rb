@@ -36,6 +36,11 @@ class Mailer < ActionMailer::Base
     end
     
     @subject = @is_passed ? "Congratulations! You passed the #{@path.name} #{@name_for_paths}!" : "Your #{@path.name} results"
-    mail(to: @user.email, subject: @subject)
+    
+    admin_user_role_ids = @current_company.user_roles.to_a.collect { |ur| ur.id if ur.enable_administration }
+    admins = @current_company.users.where("user_role_id in (?)", admin_user_role_ids)
+    admin_emails = admins.to_a.collect {|a| a.email}
+    puts "CC'd: #{admin_emails.join(", ")}"
+    mail(to: @user.email, subject: @subject, cc: admin_emails)
   end
 end
