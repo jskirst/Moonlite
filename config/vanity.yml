@@ -2,9 +2,9 @@ development:
   adapter: active_record
   active_record_adapter: postgresql
   host: localhost
-  database: db/development
+  database: mb/development
   username: postgres
-  password: disrupt11
+  password: 168washu
   port: 5432
 
 production:

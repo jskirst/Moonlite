@@ -1,4 +1,4 @@
-VANITY_ENVIRONMENTS = %w{development production}
+VANITY_ENVIRONMENTS = %w{development production test}
 
 def vanity_tables_exist?
   ActiveRecord::Base.connection.table_exists?('vanity_experiments')

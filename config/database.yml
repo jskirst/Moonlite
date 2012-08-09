@@ -1,20 +1,20 @@
 development:
   adapter: postgresql
-  database: db/development
+  database: mb/development
   pool: 5
   timeout: 5000
   port: 5432
   username: postgres
-  password: disrupt11
+  password: 168washu
 
 test:
   adapter: postgresql
-  database: db/test
+  database: mb/test
   pool: 5
   timeout: 5000
   port: 5432
   username: postgres
-  password: disrupt11
+  password: 168washu
 
 staging:
   adapter: postgresql

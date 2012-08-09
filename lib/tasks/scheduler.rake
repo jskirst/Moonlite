@@ -45,12 +45,6 @@ task :refresh_staging => :environment do
 end
 
 task :send_completed_scores => :environment do
-  enrollments = Enrollment.all
-  enrollments.each do |e|
-    e.is_score_sent = false
-    e.percentage_correct = nil
-    e.save
-  end
   puts "Starting to send completed scores."
   @paths = Path.where("passing_score is not ?", nil)
   puts "Paths that are pass/fail: #{@paths.size}"

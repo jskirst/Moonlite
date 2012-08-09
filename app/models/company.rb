@@ -1,5 +1,5 @@
 class Company < ActiveRecord::Base
-  attr_protected :seat_limit, :user_role_id, :enable_traditional_explore, :referrer_url
+  attr_protected :seat_limit, :enable_traditional_explore, :referrer_url
   attr_accessible :name, 
     :default_profile_picture_link, 
     :name_for_paths,
@@ -8,7 +8,8 @@ class Company < ActiveRecord::Base
     :home_paragraph,
     :big_logo_link,
     :small_logo_link,
-    :enable_custom_landing
+    :enable_custom_landing,
+    :user_role_id
   
   has_many :users
   has_many :rewards
