@@ -55,6 +55,12 @@
         </div>
       </div>
       <div class="field clearfix">
+        <%= f.label "Custom email from for notifications" %>
+        <div class="input">
+          <p><%= f.text_field :custom_email_from, class: "xlarge" %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
         <%= f.label "Enable custom landing page" %>
         <div class="input">
           <p><%= f.check_box :enable_custom_landing %></p>
