@@ -9,7 +9,8 @@ class Company < ActiveRecord::Base
     :big_logo_link,
     :small_logo_link,
     :enable_custom_landing,
-    :user_role_id
+    :user_role_id,
+    :custom_email_from
   
   has_many :users
   has_many :rewards
@@ -25,5 +26,10 @@ class Company < ActiveRecord::Base
   
   after_create do
     CustomStyle.create!(company_id: self.id)
+  end
+  
+  def email_from
+    return "metabot@metabright.com" if custom_email_from.nil?
+    return custom_email_from
   end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730150719) do
+ActiveRecord::Schema.define(:version => 20120809165844) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(:version => 20120730150719) do
     t.string   "small_logo_link"
     t.string   "referrer_url"
     t.boolean  "enable_custom_landing",        :default => false
+    t.string   "custom_email_from"
   end
 
   create_table "company_users", :force => true do |t|

@@ -35,12 +35,12 @@ class Mailer < ActionMailer::Base
       @retake_url = "http://localhost:3000/paths/#{@path.id}/retake"
     end
     
-    @subject = @is_passed ? "Congratulations! You passed the #{@path.name} #{@name_for_paths}!" : "Your #{@path.name} results"
+    @subject = @is_passed ? "Congratulations! You are now #{@path.name} Certified!" : "Your #{@path.name} results"
     
     admin_user_role_ids = @current_company.user_roles.to_a.collect { |ur| ur.id if ur.enable_administration }
     admins = @current_company.users.where("user_role_id in (?)", admin_user_role_ids)
     admin_emails = admins.to_a.collect {|a| a.email}
     puts "CC'd: #{admin_emails.join(", ")}"
-    mail(to: @user.email, subject: @subject, cc: admin_emails)
+    mail(from: @current_company.email_from, to: @user.email, subject: @subject, cc: admin_emails)
   end
 end

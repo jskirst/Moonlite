@@ -1,12 +1,9 @@
 <% if @is_passed %>
 <p>Congratulations on passing the <%= @path.name %> <%= @name_for_paths %> with a score of <%= @enrollment.percentage_correct %>% and <%= @enrollment.total_points %> points.</p>
-<p>Your score has also been sent to your <%= @current_company.name %> administrator and logged in your profile. Stay tuned to updates on future <%= @name_for_paths.pluralize %>!</p>
+<p>Your score has been logged in your profile and sent to the <%= @current_company.name %> team. If you are not yet a senior researcher and would like to become one, please email support@infoarmy.com to get started.</p>
 <% else %>
 <p>Hello <%= @user.name %>,</p>
-<p>Unfortunately you did not get a high enough score to pass the <%= @path.name %> <%= @name_for_paths %>. You got <%= @enrollment.percentage_correct %>% correct, and you need to get <%= @path.passing_score %>% or better. Your <%= @current_company.name %> administrators will be reaching out to you soon.</p>
-  <% if @path.enable_path_retakes %>
-  <p>But don't worry! You can retake the <%= @name_for_paths %> at any time using the link below. Good luck!</p>
-  <p><a href="<%= @retake_url %>">Retake Certification</a></p>
-  <% end %>
+<p>Unfortunately you did not get a high enough score to pass the <%= @path.name %> <%= @name_for_paths %>. You got <%= @enrollment.percentage_correct %>% correct, and you need to get <%= @path.passing_score %>% or better. Don't worry, you can try again, but first you'll need to complete another report to get more practice. Once you do so, please email support@infoarmy.com to take the certification test again.</p>
 <% end %>
-<p>-Team <%= @current_company.name %></p>
+<p>Sincerely,</p>
+<p>-The <%= @current_company.name %> Team</p>
