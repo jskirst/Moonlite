@@ -229,12 +229,11 @@ class PathsController < ApplicationController
       end
     else
       previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
-      current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
-      if current_user.user_events.where("path_id = ? and content LIKE ?", @path.id, "%completed%").empty?
-        total_earned_points = @path.enrollments.find_by_user_id(current_user.id).total_points.to_i
-        event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{total_earned_points.to_s}."
-        current_user.user_events.create!(:path_id => @path.id, :content => event)
+      unless @path.has_creative_response
+        current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
+        @path.create_completion_event(current_user, name_for_paths)
       end
+      
       if @path.has_creative_response && !@path.enable_voting
         flash[:success] = "Congratulations! You've finished this #{name_for_paths}. You should recieve an email with your final score as soon as your administrator finishes grading your answers."
       else
@@ -254,7 +253,11 @@ class PathsController < ApplicationController
   def show
     if signed_in?
       @enrolled = current_user.enrolled?(@path)
-      @completed = @path.completed?(current_user)
+      if @path.has_creative_response
+        @completed = @path.total_remaining_tasks(current_user)
+      else
+        @completed = @path.completed?(current_user)
+      end
       @start_mode = "Continue #{name_for_paths}"
     else
       @user = User.create_anonymous_user(Company.find(1))

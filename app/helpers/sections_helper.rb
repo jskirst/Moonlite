@@ -77,6 +77,7 @@ module SectionsHelper
       @hint = "Answer starts with '" + answer.slice(0..@streak) + "'"
     elsif @task.answer_type == 2
       previous_wrong_answers = current_user.completed_tasks.where(["completed_tasks.task_id = ? and completed_tasks.status_id = ?", @task.id, 0])
+      raise previous_wrong_answers.to_yaml
       @hints = previous_wrong_answers.to_a.collect! {|pwa| pwa.answer_id }
     end
   end

@@ -292,7 +292,11 @@ class SectionsController < ApplicationController
       if @streak < 0
         @possible_points = @possible_points/(-1*@streak)
       end
-      generate_hint if @path.enable_retakes
+      if @path.enable_retakes
+        generate_hint
+      else
+        @hints = []
+      end
       @stored_resource = @task.stored_resources.first
       @must_register = true if current_user.is_anonymous
       if @correct

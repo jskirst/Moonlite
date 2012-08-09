@@ -5,7 +5,7 @@ class CompletedTask < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :task
-  belongs_to :submitted_answer
+  belongs_to :submitted_answer, dependent: :destroy
   belongs_to :chosen_answer, class_name: "Answer"
   has_one :section, through: :task
   has_one :path, through: :section
