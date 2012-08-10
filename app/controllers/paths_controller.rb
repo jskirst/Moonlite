@@ -254,7 +254,7 @@ class PathsController < ApplicationController
     if signed_in?
       @enrolled = current_user.enrolled?(@path)
       if @path.has_creative_response
-        @completed = @path.total_remaining_tasks(current_user)
+        @completed = @path.total_remaining_tasks(current_user) == 0
       else
         @completed = @path.completed?(current_user)
       end
