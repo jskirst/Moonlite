@@ -1,5 +1,5 @@
 <% if @is_passed %>
-<p>Congratulations on passing the <%= @path.name %> <%= @name_for_paths %> with a score of <%= @enrollment.percentage_correct %>% and <%= @enrollment.total_points %> points.</p>
+<p>Congratulations on passing the <%= @path.name %> <%= @name_for_paths %> with a score of <%= @enrollment.percentage_correct %>%.</p>
 <p>Your score has been logged in your profile and sent to the <%= @current_company.name %> team. If you are not yet a senior researcher and would like to become one, please email support@infoarmy.com to get started.</p>
 <% else %>
 <p>Hello <%= @user.name %>,</p>
