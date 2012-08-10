@@ -41,7 +41,7 @@ class Mailer < ActionMailer::Base
     admins = @current_company.users.where("user_role_id in (?)", admin_user_role_ids)
     admin_emails = admins.to_a.collect {|a| a.email}
     puts "CC'd: #{admin_emails.join(", ")}"
-    mail(from: @current_company.email_from, to: @user.email, subject: @subject, cc: admin_emails)
+    mail(from: @current_company.email_from, to: @user.email, subject: @subject, bcc: admin_emails)
     SentEmail.create!(user_id: @user.id)
     return true
   end

@@ -9,7 +9,7 @@ ActionMailer::Base.smtp_settings = {
 	:address => "smtp.gmail.com",
 	:domain => "metabright.com",
 	:port => 587, 
-	:user_name => "jskirst@metabright.com", 
+	:user_name => "infoarmy@metabright.com", 
 	:password => "disrupt11",
 	:authentication => :plain
 }
