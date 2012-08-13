@@ -1,7 +1,7 @@
 class Path < ActiveRecord::Base
-  def to_param
-    "#{id} #{name}".parameterize
-  end
+  # def to_param
+    # "#{id} #{name}".parameterize
+  # end
   
   attr_readonly 
   attr_protected :company_id, :is_published, :is_purchaseable
