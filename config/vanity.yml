@@ -4,7 +4,7 @@ development:
   host: localhost
   database: mb/development
   username: postgres
-  password: 168washu
+  password: disrupt11
   port: 5432
 
 production:
