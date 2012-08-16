@@ -16,7 +16,7 @@ class CompletedTask < ActiveRecord::Base
   validates :status_id, presence: true
 
   validate(on: :create) do 
-    errors.add_to_base "Must be enrolled" unless user.enrolled?(task.path) 
+    errors[:base] << "Must be enrolled" unless user.enrolled?(task.path) 
   end
   
   def user_submitted_answer

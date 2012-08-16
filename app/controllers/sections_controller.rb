@@ -8,10 +8,10 @@ class SectionsController < ApplicationController
   include SectionsHelper
   
   before_filter :authenticate
-  before_filter :has_edit_access?, :except => [:show, :continue, :results]
-  before_filter :get_section_from_id, :except => [:new, :create, :generate]
-  before_filter :can_edit?, :except => [:show, :continue, :results, :new, :create, :generate] 
-  before_filter :enrolled?, :only => [:continue, :results]
+  before_filter :has_edit_access?, except: [:show, :continue, :results]
+  before_filter :get_section_from_id, except: [:new, :create, :generate]
+  before_filter :can_edit?, except: [:show, :continue, :results, :new, :create, :generate] 
+  before_filter :enrolled?, only: [:continue, :results, :chose, :take, :took]
   
   respond_to :json, :html
 
@@ -269,6 +269,59 @@ class SectionsController < ApplicationController
   end
 
 # Begin Section Journey
+
+  def chose
+    @tasks = @section.tasks
+    @completed_tasks = @section.completed_tasks.where("user_id = ?", current_user.id).to_a.collect { |cp| cp.task_id } 
+  end
+  
+  def take
+    @task = @section.tasks.find(params[:task_id])
+    @path = @section.path
+    @answers = @task.answers
+    @answers = @answers.to_a.shuffle unless @answers.empty?
+    @stored_resource = @task.stored_resources.first
+  end
+  
+  def took
+    task = @section.tasks.find(params[:task_id])
+    if params[:answer].blank? && params[:text_answer].blank?
+      flash.now[:error] = "You must provide an answer."
+      redirect_to take_section_path(@section, task_id: task.id)
+    end
+    
+    ct = current_user.completed_tasks.new()
+    ct.task_id = task.id
+    if task.answer_type == 0
+      ct.status_id = 2
+      submitted_answer = task.find_or_create_submitted_answer(params[:answer])
+      ct.submitted_answer_id = submitted_answer.id 
+      flash[:success] = "Answer submitted to the community."
+    elsif task.answer_type >= 1
+      ct.answer = params[:answer]
+      status_id, chosen_answer = task.is_correct?(ct.answer)
+      ct.status_id = status_id
+      ct.answer_id = chosen_answer.id unless chosen_answer.nil?
+    else
+      raise "RUNTIME EXCEPTION: Invalid answer type for Task ##{task.id.to_s}"
+    end
+    
+    if status_id == 1
+      flash[:success] = "Correct!"
+      points = 10
+      ct.points_awarded = points
+      current_user.award_points(task, points)
+    else
+      ct.points_awarded = 0
+    end
+    
+    if ct.save
+      Answer.increment_counter(:answer_count, chosen_answer.id) if chosen_answer
+    else
+      flash[:error] = @ct.errors.full_messages.join(", ")
+    end
+    redirect_to chose_section_path(@section)
+  end
   
   def continue
     start_time = Time.now

@@ -1,0 +1,33 @@
+<%= form_for(@task, url: took_section_path(@section, task_id: @task.id)) do |f| %>
+<div class="task row">
+  <div class="span12">
+    <div class="question">
+      <%= image_tag @path.path_pic, :style => "width: 50px; float:left;" %>
+      <h2 style="margin-left:55px;"><%= @path.name %></h2>
+      <blockquote style="margin: 40px 20px 20px 30px;">
+        <p>
+          <%= @task.question %>
+        </p>
+      </blockquote>
+      <%= render "stored_resource", { :stored_resource => @stored_resource } %>
+    </div>
+    <div class="answer">
+      <input type="hidden" name="task_id" value="<%= @task.id %>">
+      <% if @task.answer_type == 0 %>
+        <%= render "free_response", { :task => @task } %>
+      <% elsif @task.answer_type == 1 %>
+        <%= render "single_answer", { :task => @task } %>
+      <% else %>
+        <%= render "multiple_choice_answer", { :task => @task } %>
+      <% end %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="actions">
+    <input type="hidden" id="listless" name="listless" value="true">
+    <%= submit_tag "Submit", :class => "btn primary", :id => "submit_button" %>
+    <%= link_to "Back", chose_section_path(@section), class: "btn secondary" %>
+  </div>
+</div>
+<% end %>

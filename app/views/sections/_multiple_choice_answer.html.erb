@@ -24,9 +24,9 @@ $('#challenge_form').submit(function(){
     <ul class="inputs-list">  
     <% @answers.each do |a| %>
       <li>
-      <label class="<%= @hints.include?(a.id) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless @hints.include?(a.id) %>">
-        <input <%= @hints.include?(a.id) ? "disabled='disabled'" : "" %> name="answer" type="radio" value="<%= a.id %>">
-        <span class="<%= @hints.include?(a.id) ? "already_guessed" : "" %>"><%= a.content %></span>
+      <label class="<%= (@hints && @hints.include?(a.id)) ? "incorrect_answer" : "possible_answer" %> unselected_answer" onclick="<%= selection_script unless (@hints && @hints.include?(a.id)) %>">
+        <input <%= (@hints && @hints.include?(a.id)) ? "disabled='disabled'" : "" %> name="answer" type="radio" value="<%= a.id %>">
+        <span class="<%= (@hints && @hints.include?(a.id)) ? "already_guessed" : "" %>"><%= a.content %></span>
       </label>
       </li>
     <% end %>

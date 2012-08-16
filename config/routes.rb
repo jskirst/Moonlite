@@ -53,6 +53,9 @@ Metabright::Application.routes.draw do
       post :preview_content
       post :save_content
       get :html_editor
+      get :chose
+      get :take
+      put :took
 		end
 	end
 	resources :enrollments
