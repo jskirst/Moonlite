@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   belongs_to :company
   belongs_to :user_role
   has_many :user_auths, :dependent => :destroy
-  has_many :paths, :dependent => :destroy
+  has_many :paths
   has_many :enrollments, :dependent => :destroy
   has_many :enrolled_paths, :through => :enrollments, :source => :path
   has_many :completed_tasks, :dependent => :destroy
