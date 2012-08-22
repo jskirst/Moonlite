@@ -159,9 +159,11 @@ class User < ActiveRecord::Base
   end
   
   def award_points(task, points)
-    log_transaction(task.id, points)
-    self.update_attribute('earned_points', self.earned_points + points)
-    enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
+    if points.to_i > 0
+      log_transaction(task.id, points)
+      self.update_attribute('earned_points', self.earned_points + points)
+      enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
+    end
   end
   
   def debit_points(points)
