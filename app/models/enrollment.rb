@@ -24,7 +24,9 @@ class Enrollment < ActiveRecord::Base
   def add_earned_points(points)
     points = points.to_i
     self.total_points = self.total_points + points
-    self.save!
+    unless self.save
+      raise self.errors.to_yaml
+    end
   end
   
   def send_result_email
