@@ -25,7 +25,7 @@ class Enrollment < ActiveRecord::Base
     points = points.to_i
     self.total_points = self.total_points + points
     unless self.save
-      raise self.errors.to_yaml
+      raise points.to_yaml
     end
   end
   
