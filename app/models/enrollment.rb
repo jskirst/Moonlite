@@ -22,6 +22,7 @@ class Enrollment < ActiveRecord::Base
   end
   
   def add_earned_points(points)
+    points = points.to_i
     self.total_points = self.total_points + points
     self.save!
   end
