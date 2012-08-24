@@ -298,7 +298,6 @@ class SectionsController < ApplicationController
         @hints = []
       end
       @stored_resource = @task.stored_resources.first
-      @must_register = true if current_user.is_anonymous
       if @correct
         @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first
       end

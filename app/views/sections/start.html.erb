@@ -1,26 +1,4 @@
-<% if @must_register %>
-  <script>
-  $(function(){
-    $('a').not(".clickable_link").attr("href", "#");
-    $('a').not(".clickable_link").click(function(){
-      $('#must_complete_first_modal').modal({
-        keyboard: true,
-        show: true
-      });
-    });
-  });
-  </script>
-  <%= render "sections/modals/must_complete_first" %>
-<% end %>
-
-<% if @immediate_registration %>
-  <%= render "users/immediate_registration", { :path => @path } %>
-  <script>
-    $(function(){
-      $('#username_modal').modal({ backdrop: 'static', show: true });
-    });
-  </script>
-<% elsif @earned_points == 0 %>
+<% if @earned_points == 0 %>
   <%= render "sections/modals/start_modal" %>
   <script>
     $(function(){
