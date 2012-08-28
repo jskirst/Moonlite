@@ -2,7 +2,7 @@ class PathsController < ApplicationController
   include OrderHelper
   
   before_filter :authenticate, :except => [:hero, :show, :jumpstart]
-  before_filter :admin_only, :only => [:index, :change_company]
+  before_filter :admin_only, :only => [:index]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
   before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy, :collaborator, :collaborators]
@@ -174,22 +174,18 @@ class PathsController < ApplicationController
       flash.now[:success] = "#{@user.name} successfully added as a collaborator."
     else
       flash.now[:error] = @collaborator.errors.full_messages.join(". ")
-      render "collaborators"
-      return
+      render "collaborators" and return
     end
     redirect_to collaborators_path_path(@path)
   end
   
   #GET
   def undo_collaboration
-    if @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
-      if @collaboration.destroy
-        flash[:sad_success] = "User will no longer have access."
-      else
-        flash[:error] = @collaboration.errors.full_messages.join(". ")
-      end
+    @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
+    if @collaboration.destroy
+      flash[:sad_success] = "User will no longer have access."
     else
-      flash[:error] = "No such user."
+      flash[:error] = @collaboration.errors.full_messages.join(". ")
     end
     redirect_to collaborators_path_path(@path)
   end
@@ -250,14 +246,24 @@ class PathsController < ApplicationController
     redirect_to @path
   end
   
+  def community
+    redirect_to root_path unless signed_in? && current_user.enrolled?(@path)
+    
+    @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
+    @skill_ranking = @path.skill_ranking(current_user)
+    
+    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
+    @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 
+    
+    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
+    @responses = @path.completed_tasks.all
+    @activity_stream = @path.activity_stream
+  end
+  
   def show
     if signed_in?
       @enrolled = current_user.enrolled?(@path)
-      if @path.has_creative_response
-        @completed = @path.total_remaining_tasks(current_user) == 0
-      else
-        @completed = @path.completed?(current_user)
-      end
+      @completed = @path.has_creative_response ? @path.total_remaining_tasks(current_user) == 0 : @path.completed?(current_user)
       @start_mode = "Continue #{name_for_paths}"
     else
       @user = User.create_anonymous_user(Company.find(1))
@@ -273,21 +279,8 @@ class PathsController < ApplicationController
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     if @completed
       @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
-      # This can be optimized by grabbing the top 10 + yours and then the count between. 3 queries
       @skill_ranking = @path.skill_ranking(current_user)
-    
-      counter = 1
-      previous = nil
-      @leaderboards.each do |l|
-        if l.user_id == current_user.id
-          @next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
-          @user_rank = ActiveSupport::Inflector::ordinalize(counter)
-          break
-        else
-          previous = l
-          counter += 1
-        end
-      end
+      @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
     end
     
     @similar_paths = Path.similar_paths(@path, current_user)
@@ -353,27 +346,6 @@ class PathsController < ApplicationController
     end
   end
   
-  def change_company
-    if params[:company_id]
-      company = Company.find(params[:company_id])
-      if company
-        @path.company_id = company.id
-        if @path.save
-          @path.path_user_roles.destroy_all
-          @path.enrollments.destroy_all
-          @path.category_id = nil
-          @path.save
-          flash[:success] = "Company #{name_for_paths} transfer succcessful."
-        else
-          flash[:error] = "Company #{name_for_paths} transfer unsucccessful. Please try again."
-        end
-      else
-        flash[:error] = "Company could not be found. Please try again."
-      end
-    end
-    @companies = Company.all
-  end
-  
   def dashboard
     @page = params[:page] || 1
     @time = (params[:time] || 7).to_i
@@ -416,6 +388,24 @@ class PathsController < ApplicationController
     
     def can_continue?
       redirect_to root_path unless current_user.enrolled?(@path)
+    end
+    
+    def get_rank_and_next_points(leaderboards)
+      counter = 1
+      previous = nil
+      user_rank = nil
+      next_rank_points = nil
+      leaderboards.each do |l|
+        if l.user_id == current_user.id
+          user_rank = ActiveSupport::Inflector::ordinalize(counter)
+          next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
+          break
+        else
+          previous = l
+          counter += 1
+        end
+      end
+      return user_rank, next_rank_points 
     end
     
     def calculate_path_statistics(path, time)

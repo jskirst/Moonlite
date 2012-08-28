@@ -24,6 +24,7 @@ Metabright::Application.routes.draw do
 	resources :custom_styles
   resources :paths do
 		member do
+		  get :community
       get :dashboard
       get :publish
       get :unpublish

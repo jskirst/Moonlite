@@ -1,0 +1,44 @@
+<section>
+  <%= render "path_header" %>
+  <hr style="margin:10px;"/>
+  <section>
+    <div class="row">
+      <div class="span4" style="padding:8px;">
+        <%= render "side_leaderboard" %>
+      </div>
+      <div class="span12">
+        <div class="newsfeed">
+          <% @responses.each do |r| %>
+          <div class="post">
+            <div class="postphotospace">
+              <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+            </div>
+            <div class="postspace">
+              <div class="postheader">
+                <h3><a class="username"><Nathaniel Sokoll-Ward><%= r.user.to_s %></a></h3>
+                <div class="votingandpointsarea">
+                   <a class="btn" href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"><div><%= r.submitted_answer.total_votes.to_i %></div></a>
+                </div>
+              </div>
+              <div class="posttext">Responded to <span class="leveltext"><%= r.task.question %></span></div>
+              <div class="CRarea">
+              <% if r.task.answer_sub_type == 100 %>
+                <blockquote style="margin:20px;"><%= r.submitted_answer.content %></blockquote>
+              <% elsif r.task.answer_sub_type == 101 %>
+                <%= link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank" %>
+              <% end %>
+              </div>
+              <div class="postfooter">
+                <div class="leftstuff">
+                  <a class="comment" href="#">Comment</a>
+                </div>
+                <p><%= r.created_at %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

@@ -56,6 +56,10 @@ class User < ActiveRecord::Base
   before_save :check_image_url
   before_save :check_user_type
   
+  def to_s
+    return self.name
+  end
+  
   def self.find_with_omniauth(auth)
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
     return user_auth.user if user_auth
