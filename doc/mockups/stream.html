@@ -59,12 +59,22 @@ a{ text-decoration:none; }
 .leftstuff { float:left; }
 .leftstuff a { cursor:hover; text-decoration:none; color: #004700; }
 .span11 { display: inline-block; vertical-align: top; }
+.leftboxheader{background-color: #F9F9F9; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 12px; line-height: 16px;}
+.leftbtn{margin-right:-4px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
+.midbtn{margin-right:-4px; border-radius:0px;}
+.rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
+.leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+.newsfeed>.leftboxheader{padding:6px 12px;}
+    
 </style>
 </head>
 <body>
 
 <div class="span11">
   <div class="newsfeed">
+    <div class="leftboxheader">
+      Stream <a class="btn leftbtn">Question</a> <a class="btn midbtn">Date</a> <a class="btn rightbtn">Votes</a> <a href="#">clear filters</a>
+    </div>
     <div class="post">
       <div class="postphotospace">
         <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
