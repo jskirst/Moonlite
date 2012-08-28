@@ -5,7 +5,7 @@ development:
   timeout: 5000
   port: 5432
   username: postgres
-  password: disrupt11
+  password: 168washu
 
 test:
   adapter: postgresql
@@ -14,7 +14,7 @@ test:
   timeout: 5000
   port: 5432
   username: postgres
-  password: disrupt11
+  password: 168washu
 
 staging:
   adapter: postgresql
