@@ -44,6 +44,7 @@ class TasksController < ApplicationController
   def update
     errors = []
     unless @task.question == params[:task][:question]
+      @task.question = params[:task][:question]
       errors = @task.errors.full_messages unless @task.save
     end
     errors += @task.update_answers(params[:task])

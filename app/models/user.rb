@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   belongs_to :company
   belongs_to :user_role
   has_many :user_auths, :dependent => :destroy
-  has_many :paths, :dependent => :destroy
+  has_many :paths
   has_many :enrollments, :dependent => :destroy
   has_many :enrolled_paths, :through => :enrollments, :source => :path
   has_many :completed_tasks, :dependent => :destroy
@@ -159,9 +159,11 @@ class User < ActiveRecord::Base
   end
   
   def award_points(task, points)
-    log_transaction(task.id, points)
-    self.update_attribute('earned_points', self.earned_points + points)
-    enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
+    if points.to_i > 0
+      log_transaction(task.id, points)
+      self.update_attribute('earned_points', self.earned_points + points)
+      enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
+    end
   end
   
   def debit_points(points)

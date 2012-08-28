@@ -3,8 +3,8 @@ class Path < ActiveRecord::Base
     # "#{id} #{name}".parameterize
   # end
   
-  attr_readonly 
-  attr_protected :company_id, :is_published, :is_purchaseable
+  attr_readonly :company_id
+  attr_protected :is_published, :is_purchaseable
   attr_accessible :user_id,
     :category_id,
     :name, 
