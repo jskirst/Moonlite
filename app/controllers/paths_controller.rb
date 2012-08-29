@@ -247,7 +247,7 @@ class PathsController < ApplicationController
   end
   
   def community
-    redirect_to root_path unless signed_in? && current_user.enrolled?(@path)
+    redirect_to root_path unless signed_in? && @enrollment = current_user.enrolled?(@path)
     
     @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
     @skill_ranking = @path.skill_ranking(current_user)
@@ -256,7 +256,7 @@ class PathsController < ApplicationController
     @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 
     
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
-    @responses = @path.completed_tasks.all
+    @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
     @activity_stream = @path.activity_stream
   end
   

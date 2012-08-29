@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
   end
   
   def enrolled?(path)
-    return true unless enrollments.find_by_path_id(path.id).nil?
+    return enrollments.find_by_path_id(path.id)
   end
   
   def enroll!(path)
