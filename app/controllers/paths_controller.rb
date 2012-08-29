@@ -256,7 +256,15 @@ class PathsController < ApplicationController
     @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 
     
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
-    @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    @tasks = @path.tasks
+    
+    if params[:task]
+      @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+    elsif params[:order] && params[:order] == "date"
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+    else
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    end
     @activity_stream = @path.activity_stream
   end
   

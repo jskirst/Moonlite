@@ -75,10 +75,34 @@
     </div>
     <div class="span11">
       <div class="newsfeed">
+        <style>
+          .leftboxheader{background-color: #F9F9F9; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 12px; line-height: 16px;}
+          .leftbtn{margin-right:-4px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
+          .midbtn{margin-right:-4px; border-radius:0px;}
+          .rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
+          .leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+          .newsfeed>.leftboxheader{padding:6px 12px;}
+        </style>
+        <div class="leftboxheader">
+          <div>
+            <span>Stream</span>
+            <a class="btn leftbtn" onclick="$(this).parents('.leftboxheader').find('.questions_filter').slideDown();">Question</a>
+            <%= link_to "Date", community_path_path(@path, order: "date"), class: "btn midbtn" %>
+            <%= link_to "Votes", community_path_path(@path, order: "votes"), class: "btn rightbtn" %>
+          </div>
+          <div class="questions_filter" style="display:none;">
+            <p style="font-size: 13px; margin: 10px 5px;">Click on one of the questions below to see responses only for that question.</p>
+            <ol>
+            <% @tasks.each do |t| %>
+              <li style="padding: 5px;"><%= link_to truncate(t.question, length: 80), community_path_path(@path, task: t.id), style: "font-size: 14px; text-decoration: none; color: darkgrey" %></li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
       <% @responses.each do |r| %>
         <div class="post">
           <div class="postphotospace">
-            <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+            <%= image_tag r.user.profile_pic, class: "photo" %>  
           </div>
           <div class="postspace">
             <div class="postheader">
@@ -110,7 +134,7 @@
               <div class="posttimestamp">
                 <p><%= r.created_at %></p>
               </div>
-              <div class="row comments" style="display:none;">
+              <div class="comments" style="display:none; text-align: left;">
                 <%= render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id } %>
               </div>
             </div>
