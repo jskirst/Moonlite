@@ -75,7 +75,6 @@ function get_youtube_id_from_link(youtube_link){
   }
   var id_fragments = youtube_link.substring(start_pos).split("&");
   var id = id_fragments[0];
-  console.log(id);
   return id;
 }
 

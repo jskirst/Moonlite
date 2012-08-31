@@ -358,7 +358,7 @@ class PathsController < ApplicationController
     @page = params[:page] || 1
     @time = (params[:time] || 7).to_i
     @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 20)
+    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
   end
   
 

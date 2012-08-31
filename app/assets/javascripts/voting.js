@@ -1,5 +1,4 @@
 function show_creative_list(){
-  console.log(this);
   $('#creative_tasks_list').show();
   $('#knowledge_tasks_list').hide();
   $('.creative_link').addClass('underlined');
@@ -20,9 +19,7 @@ $(function(){
         alert(data.errors);
       } else {
         var $vote_counter = $(this).find("div.vote_count");
-        console.log($vote_counter);
         var votes = parseInt($vote_counter.text());
-        console.log(votes);
         if($(this).hasClass("primary")){
           $(this).removeClass("primary");
           $vote_counter.text(votes-1);
