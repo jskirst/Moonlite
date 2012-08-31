@@ -81,13 +81,12 @@ class TasksController < ApplicationController
   
   def resolve
     @completed_task = @task.completed_tasks.find(params[:completed_task][:id])
-    @page = params[:page] || 1
     if params[:commit] == "Delete"
       @completed_task.submitted_answer.destroy
-      flash[:success] = "Submission deleted."
+      render json: { status: "success" }
     else
       unless points = (params[:completed_task][:points]).to_i
-        flash[:error] = "No points argument found."
+        render json: { status: "error", error: "You must specify a point amount to award." } 
       else
         if points > 0
           @completed_task.user.award_points(@completed_task.task, points)
@@ -97,13 +96,12 @@ class TasksController < ApplicationController
         end
         @completed_task.points_awarded = points
         if @completed_task.save
-          flash[:success] = "Resolved."
+          render json: { status: "success" }
         else
           raise "Error, could save resolution."
         end
       end
-    end
-    redirect_to dashboard_path_path(@task.path, :page => @page, :anchor => "unresolved_tasks_list")        
+    end        
   end
   
   def vote

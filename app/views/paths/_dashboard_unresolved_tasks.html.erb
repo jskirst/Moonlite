@@ -1,3 +1,17 @@
+<script>
+$(function(){
+  $(".resolve_task").on("ajax:success", function(xhr, data, status){
+    console.log(data.status);
+    if(data.status == "success"){
+      $(this).parents(".unresolved_task").slideUp();
+    } else {
+      $(this).find(".messages").text(data.errors);
+    }
+  });
+});
+  
+</script>
+
 <section>
   <h2>Unresolved Submissions</h2>
   <% if @unresolved_tasks.empty? %>
@@ -6,7 +20,7 @@
   <%= will_paginate(@unresolved_tasks) %>
   <ol id="unresolved_tasks_list">
     <% @unresolved_tasks.each do |ut| %>
-      <li style="padding:15px; color:#404040;">
+      <li style="padding:15px; color:#404040;" class="unresolved_task">
         <div style="float;left;">
           <p style="font-size: 16px; font-weight:bold; margin-bottom: 20px;"><%= ut.task.question %></p>
           <% if ut.task.answer_sub_type == 100 %>
@@ -18,9 +32,8 @@
           <% else %>
             <% raise "Invalid answer sub type." %>
           <% end %>
-          <%= form_tag({:controller => :tasks, :action => :resolve, :id => ut.task_id}, :method => :put) %>
+          <%= form_tag({:controller => :tasks, :action => :resolve, :id => ut.task_id}, remote: true, :method => :put, class: "resolve_task") %>
             <input type="hidden" value="<%= ut.id %>" name="completed_task[id]">
-            <input type="hidden" value="<%= @page.to_i %>" name="page">
             <% unless @path.enable_voting %>
             <select name="completed_task[points]">
               <option value="0">No points</option>
@@ -29,6 +42,7 @@
             </select>
             <%= submit_tag "Save", :class => "btn primary", :style => "margin-left: 10px;" %>
             <%= submit_tag "Delete", :class => "btn danger", :style => "margin-left: 10px;" %>
+            <span class="messages"></span>
             <% end %>
           </form>
         </div>

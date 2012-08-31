@@ -353,32 +353,11 @@ class PathsController < ApplicationController
     end
   end
   
-  def change_company
-    if params[:company_id]
-      company = Company.find(params[:company_id])
-      if company
-        @path.company_id = company.id
-        if @path.save
-          @path.path_user_roles.destroy_all
-          @path.enrollments.destroy_all
-          @path.category_id = nil
-          @path.save
-          flash[:success] = "Company #{name_for_paths} transfer succcessful."
-        else
-          flash[:error] = "Company #{name_for_paths} transfer unsucccessful. Please try again."
-        end
-      else
-        flash[:error] = "Company could not be found. Please try again."
-      end
-    end
-    @companies = Company.all
-  end
-  
   def dashboard
     @page = params[:page] || 1
     @time = (params[:time] || 7).to_i
     @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 20)
+    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
   end
   
 
