@@ -43,6 +43,7 @@ Metabright::Application.routes.draw do
       get :unpublish
       get :confirm_delete
 			get :continue
+			post :continue
       put :reorder_tasks
       get :research
       get :questions
