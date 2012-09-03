@@ -1,44 +1,147 @@
 <section>
-  <%= render "path_header" %>
-  <hr style="margin:10px;"/>
-  <section>
-    <div class="row">
-      <div class="span4" style="padding:8px;">
-        <%= render "side_leaderboard" %>
+  <div id="topsection">
+    <div id="updatespace">
+      <div style="display:inline; width:20%;">
+        <%= image_tag @path.path_pic, class: "bigheaderimage" %>
       </div>
-      <div class="span12">
-        <div class="newsfeed">
-          <% @responses.each do |r| %>
-          <div class="post">
-            <div class="postphotospace">
-              <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
-            </div>
-            <div class="postspace">
-              <div class="postheader">
-                <h3><a class="username"><Nathaniel Sokoll-Ward><%= r.user.to_s %></a></h3>
-                <div class="votingandpointsarea">
-                   <a class="btn" href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"><div><%= r.submitted_answer.total_votes.to_i %></div></a>
-                </div>
-              </div>
-              <div class="posttext">Responded to <span class="leveltext"><%= r.task.question %></span></div>
-              <div class="CRarea">
-              <% if r.task.answer_sub_type == 100 %>
-                <blockquote style="margin:20px;"><%= r.submitted_answer.content %></blockquote>
-              <% elsif r.task.answer_sub_type == 101 %>
-                <%= link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank" %>
-              <% end %>
-              </div>
-              <div class="postfooter">
-                <div class="leftstuff">
-                  <a class="comment" href="#">Comment</a>
-                </div>
-                <p><%= r.created_at %></p>
-              </div>
-            </div>
+      <div class="rightofbigheaderimage" style="width:80%;">
+        <div id="topboxcontent">
+          <div class="span5">
+            <h1><%= @path.name %></h1>
+            <h3><%= @path.sections.size %> sections - <%= @path.enrolled_user_count %> users</h3>
           </div>
-        <% end %>
+          <div class="userctrlpanel">
+            <button class="btn danger">Enroll</button>
+            <p><%= current_user.name %></p>
+            <span id="level">Level 19</span> � <span id="points"><%= @enrollment.total_points %> pts</span>          
+          </div>
+        </div>
+        <div class="challengecarousel">
+          <ul class="inlinedisplay">
+            <li>
+              <div class="mosaic-block bar2">
+                <a href="#" target="_blank" class="mosaic-overlay">
+                  <div class="details">
+                    <h4>New Challenge added!</h4>
+                    <p>Kitten Throwing!</p>
+                  </div>
+                </a>
+                <div><img class="mosaic-backdrop" src="http://www.placekitten.com/200/80"/></div>
+              </div>
+            </li>
+            <li>
+              <div class="mosaic-block bar2">
+                <a href="#" target="_blank" class="mosaic-overlay">
+                  <div class="details">
+                    <h4>Just 1 level away...</h4>
+                    <p>From unlocking the Hacker persona!</p>
+                  </div>
+                </a>
+                <div><img class="mosaic-backdrop" src="http://www.placekitten.com/g/200/80"/></div>
+              </div>
+            </li>
+            <li>
+              <div class="mosaic-block bar2">
+                <a href="#" target="_blank" class="mosaic-overlay">
+                  <div class="details">
+                    <h4>Our site just got updated!</h4>
+                    <p>Take the grand tour!</p>
+                  </div>
+                </a>
+                <div><img class="mosaic-backdrop" src="http://www.placekitten.com/200/80"/></div>
+              </div>
+            </li>
+          </ul>  
         </div>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="row">
+    <div class="span5">
+      <div class="leftbox">
+        <div class="leftboxheader">Leaderboard</div>
+        <ul id="ranks">
+          <% @leaderboards.each_with_index do |entry, i| %>
+            <li>
+              <span class="rank"><%= (i+1).to_s %>.</span>
+              <%= image_tag entry.user.profile_pic %> 
+              <%= link_to truncate(entry.user.name, length: 25), entry.user, class: "name" %>
+              <span class="level">lvl 19</span> 
+              <span class="points"><% entry.score %></span>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+    <div class="span11">
+      <div class="newsfeed">
+        <style>
+          .leftboxheader{background-color: #F9F9F9; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 12px; line-height: 16px;}
+          .leftbtn{margin-right:-4px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
+          .midbtn{margin-right:-4px; border-radius:0px;}
+          .rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
+          .leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+          .newsfeed>.leftboxheader{padding:6px 12px;}
+        </style>
+        <div class="leftboxheader">
+          <div>
+            <span>Stream</span>
+            <a class="btn leftbtn" onclick="$(this).parents('.leftboxheader').find('.questions_filter').slideDown();">Question</a>
+            <%= link_to "Date", community_path_path(@path, order: "date"), class: "btn midbtn" %>
+            <%= link_to "Votes", community_path_path(@path, order: "votes"), class: "btn rightbtn" %>
+          </div>
+          <div class="questions_filter" style="display:none;">
+            <p style="font-size: 13px; margin: 10px 5px;">Click on one of the questions below to see responses only for that question.</p>
+            <ol>
+            <% @tasks.each do |t| %>
+              <li style="padding: 5px;"><%= link_to truncate(t.question, length: 80), community_path_path(@path, task: t.id), style: "font-size: 14px; text-decoration: none; color: darkgrey" %></li>
+            <% end %>
+            </ol>
+          </div>
+        </div>
+      <% @responses.each do |r| %>
+        <div class="post">
+          <div class="postphotospace">
+            <%= image_tag r.user.profile_pic, class: "photo" %>  
+          </div>
+          <div class="postspace">
+            <div class="postheader">
+              <h3><a class="username"><Nathaniel Sokoll-Ward><%= r.user.to_s %></a></h3>
+              <div class="votingandpointsarea">
+                <% if @votes.include?(r.submitted_answer.id) %>
+                  <%= link_to vote_task_path(r.task.id, :sa_id => r.submitted_answer.id), :remote => true, :class => "btn primary vote_button" do %>
+                    <img src="https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"><div class='vote_count'><%= r.submitted_answer.total_votes.to_i %></div>
+                  <% end %>
+                <% else %>
+                  <%= link_to vote_task_path(r.task.id, :sa_id => r.submitted_answer.id), :remote => true, :class => "btn vote_button" do %>
+                    <img src="https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"><div class='vote_count'><%= r.submitted_answer.total_votes.to_i %></div>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+            <div class="posttext">Responded to <span class="leveltext"><%= r.task.question %></span></div>
+            <div class="CRarea">
+            <% if r.task.answer_sub_type == 100 %>
+              <blockquote style="margin:20px;"><%= r.submitted_answer.content %></blockquote>
+            <% elsif r.task.answer_sub_type == 101 %>
+              <%= link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank" %>
+            <% end %>
+            </div>
+            <div class="postfooter">
+              <div class="leftstuff">
+                <a class="comment" onclick="$(this).parent().parent().find('.comments').slideDown();">Comment(<%= r.submitted_answer.comments.size %>)</a>
+              </div>
+              <div class="posttimestamp">
+                <p><%= r.created_at %></p>
+              </div>
+              <div class="comments" style="display:none; text-align: left;">
+                <%= render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
 </section>

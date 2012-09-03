@@ -1,7 +1,7 @@
 <% flash.each do |key, value| %>
   <%= content_tag(:div, value, :class => "alert-message #{key}") %>
 <% end %>
-<%= form_tag({ :controller => :sections, :action => "continue" }, :remote => true, :method => "get", "data-type" => "html", :id => "challenge_form") %>
+<%= form_tag({ :controller => :sections, :action => "continue" }, :remote => true, :method => "post", "data-type" => "html", :id => "challenge_form") %>
 <div class="task row">
   <div class="span9">
     <div class="question">

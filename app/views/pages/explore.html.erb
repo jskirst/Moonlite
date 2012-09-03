@@ -2,28 +2,19 @@
 </style>
 
 <section>
-  <div class="input" style="float:right; margin-top: 5px">
-  <%= form_tag explore_path, :method => "get" do %>
-    <%= text_field_tag :search, params[:search], :class => "xlarge", :value => "Search by title or keyword", :onclick => "this.value='';" %>
-    <%= submit_tag "Search", :class => "btn primary" %>
-  <% end %>
-  </div>
-  <div><a><h1><%= company_logo %> <%= name_for_personas.pluralize %></h1></a></div>
+  <div><a><h1>Choose your path...</h1></a></div>
 </section>
 <hr/>
-<section id="path_explore">
+<section id="path_explore" style="padding-left: 20px;">
 <% if @personas.empty? %>
   <p style="padding:30px 20px 300px 20px;">No <%= name_for_paths.pluralize %> have been listed for your organization yet. Please check with your administrator to see if your Moonlite instance has been properly configured.</p>
 <% else %>
-  <% empty = true %>
   <% @personas.each do |persona| %>
-    
-    <div class="row" style="padding-left: 20px;">
-      <h2><%= persona.name %></h2>
-      <p><%= persona.description %></p>
+    <div style="margin:20px; display: inline-block;">
+      <%= link_to persona do %>
+        <%= image_tag persona.picture, class: "photo", style: "width: 175px; height: 175px;" %>
+      <% end %>
     </div>
-    
-    
   <% end %>
 <% end %>
 </section>

@@ -1,5 +1,4 @@
 function show_creative_list(){
-  console.log(this);
   $('#creative_tasks_list').show();
   $('#knowledge_tasks_list').hide();
   $('.creative_link').addClass('underlined');
@@ -19,17 +18,14 @@ $(function(){
       if(data.errors){
         alert(data.errors);
       } else {
-        console.log($(this).parents("li:first").children("div:last"));
-        var $vote_counter = $(this).parents("li:first").children("div.vote_count");
-        console.log($vote_counter);
+        var $vote_counter = $(this).find("div.vote_count");
         var votes = parseInt($vote_counter.text());
-        console.log(votes);
         if($(this).hasClass("primary")){
-          $(this).removeClass("primary").addClass("secondary").text("Vote");
-          $vote_counter.html("<span class='label notice' style='font-size: 16px;'>+"+(votes-1)+"</span>");
-        } else if($(this).hasClass("secondary")){
-          $(this).removeClass("secondary").addClass("primary").text("Voted");
-          $vote_counter.html("<span class='label notice' style='font-size: 16px;'>+"+(votes+1)+"</span>");
+          $(this).removeClass("primary");
+          $vote_counter.text(votes-1);
+        } else {
+          $(this).addClass("primary");
+          $vote_counter.text(votes+1);
         }
       }
     }

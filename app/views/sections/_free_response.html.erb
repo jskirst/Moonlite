@@ -47,9 +47,7 @@
     
       $("#answer_preview_button").click(function(){
         var url = $("#answer_input").val();
-        console.log(url);
         var youtube_id = get_youtube_id_from_link(url);
-        console.log(youtube_id);
         if(is_valid_youtube_id(youtube_id)){
           $("#youtube_placeholder").remove();
           set_youtube_preview(url, "answer_preview");

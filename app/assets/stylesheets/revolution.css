@@ -22,7 +22,7 @@
   position:relative;
   font:normal 13px arial, sans-serif;
   padding: 0 12px;
-  width: 580px;
+  width: 520px;
 }
 .photo{ border-radius:4px; width: 50px; height: 50px; }
 .username{ text-decoration: none; color:#005C1F; font-size:17px; }
@@ -57,8 +57,8 @@
 #updatespace{ background-color: white; border-radius:6px; padding: 12px 0 9px 13px; overflow: hidden; }
 .bigheaderimage{ height:160px; width:160px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
 .rightofbigheaderimage{ display:inline-block; }
-#topboxcontent { width:729px; }
-#topboxcontent h1 { margin:0px; line-height:28px; font-size:40px; }
+
+#topboxcontent h1 { margin:0px; line-height:28px; }
 #topboxcontent h3 { margin-bottom:9px; font-style:italic; color:#666666; }
 .userctrlpanel { display:inline-block; margin-top:-5px; float:right; }
 .userctrlpanel button { float:right; }
@@ -129,5 +129,7 @@
 .level{ font: bold 11px arial, sans-serif; }
 .name{ text-decoration:none; color:gray; }
 .commentfeed { height:300px; width: 200px; border-radius: 4px; background-color:white; vertical-align:top; position:relative; left:337px; position:absolute; }
-.span5{ display:inline-block; vertical-align: top; margin-right:7px }
+.span5{ display:inline-block; vertical-align: top; }
 .span11{ display: inline-block; vertical-align: top; }
+.container.body { width: 940px; padding: 15px; }
+#content { padding-top: 55px; }

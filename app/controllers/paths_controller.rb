@@ -247,7 +247,7 @@ class PathsController < ApplicationController
   end
   
   def community
-    redirect_to root_path unless signed_in? && current_user.enrolled?(@path)
+    redirect_to root_path unless signed_in? && @enrollment = current_user.enrolled?(@path)
     
     @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
     @skill_ranking = @path.skill_ranking(current_user)
@@ -256,7 +256,15 @@ class PathsController < ApplicationController
     @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 
     
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
-    @responses = @path.completed_tasks.all
+    @tasks = @path.tasks
+    
+    if params[:task]
+      @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+    elsif params[:order] && params[:order] == "date"
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+    else
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    end
     @activity_stream = @path.activity_stream
   end
   
@@ -350,7 +358,7 @@ class PathsController < ApplicationController
     @page = params[:page] || 1
     @time = (params[:time] || 7).to_i
     @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 20)
+    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
   end
   
 
