@@ -1,0 +1,18 @@
+:javascript
+  $(function(){
+    $(".userctrlpanel").click(function(){
+      $('#launchpad').modal({
+           keyboard: true,
+           backdrop: 'static',
+           show: true
+       });
+     });
+  });
+%div#launchpad.modal.hide.fade
+  %div.modal-header
+    %a.close{ href: "#" }
+    %h3 Get Started!
+  %div.modal-body
+  %div.modal-footer
+    %a.btn.secondary{ href: "#", onclick: "$('#startmodal').modal('hide');" } Later
+    = link_to "Get Started", continue_path_path(@path), :class => "btn primary"

@@ -19,6 +19,7 @@ gem 'omniauth-google-oauth2'
 gem 'vanity'
 gem 'csv_builder'
 gem 'taps'
+gem 'haml'
 
 group :assets do
   gem 'sass-rails'
