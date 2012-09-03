@@ -328,120 +328,75 @@ var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
 
 <style>
     .overlay{
-     position: absolute;
-     left: 0px;
-     top: 0px;
-     width:100%;
-     height:100%;
-     text-align:left;
-     z-index: 1000;
+position: absolute;
+left: 0px;
+top: 0px;
+width:100%;
+height:100%;
+text-align:left;
+z-index: 1000;
     }
     .launchpad{
-     width:880px;
-     height:440px;
-     margin: 100px auto;
-     border:10px solid #d1896d;
-     border-style:ridge;
-     text-align:left;
-     border-radius: 16px;
-     box-shadow: 0 0 50px 20px rgba(0, 0, 0, .05);
-     padding:11px 11px 0 11px;
-     background-color: #F9F9F9;
+width:880px;height:440px;margin: 100px auto;border:10px solid #d1896d;border-style:ridge;text-align:left;border-radius: 16px;box-shadow: 0 0 50px 20px rgba(0, 0, 0, .05);padding:11px 11px 0 11px;background-color: #F9F9F9;
     }
     .launchpad h1{
-        font: bold 23px 'Muli', sans-serif;
-        margin:0px;
-        border-bottom: 1px solid rgba(0, 0, 0, .1);
-        width:868px;
-        padding:0px;
+        font: bold 23px 'Muli', sans-serif;margin:0px;border-bottom: 1px solid rgba(0, 0, 0, .1);width:868px; padding:0px;
     }
     .launchpad h1>img{
         border-radius:4px; height:36px; width:36px;
     }
     .launchpad h1>span{
-        position:relative;
-        bottom:8px;
+        position:relative; bottom:8px;
     }
     .launchpadcontent{
-        padding-top:10px;
-        margin-left:10px;
-        margin-top:10px;
-        border-collapse:collapse;
+        padding-top:10px;margin-left:10px;margin-top:10px;border-collapse:collapse;
     }
     .launchpadpoints{
-        font-weight:bold;
-        font-size:11px;
-        font-style:italic;
-        white-space:nowrap;
+        font-weight:bold;font-size:11px;font-style:italic; white-space:nowrap;
     }
     .launchpadsectioncolumn{
-        display:inline-block;
-        border-right: 1px solid rgba(0, 0, 0, .1);
-        padding-right:10px;
-        width:160px;
-        vertical-align: top;
-        overflow:auto;
-        height:330px;
-        
+        display:inline-block;border-right: 1px solid rgba(0, 0, 0, .1); padding-right:10px; width:160px; vertical-align: top;overflow:auto; height:330px;        
     }
     .launchpadsectionpoints{
-        display:inline-block;
-        vertical-align: top;
+        display:inline-block; vertical-align: top;
     }
     .launchpadCRcolumn{
-        display:inline-block;
-        vertical-align: top;
-        overflow:auto;
+        display:inline-block;vertical-align: top; overflow:auto;
     }
     .launchpadCRcolumn td{
         font-style:italic;
         
     }
     .launchpadcolumnheader{
-        font-weight:bold;
-        text-align: left;
-        font-size:16px;
-        margin-bottom:10px;
-        border-bottom:1px solid rgba(0, 0, 0, .1);
-    }
+        font-weight:bold; text-align: left; font-size:16px; margin-bottom:10px; border-bottom:1px solid rgba(0, 0, 0, .1);
+        }
 
     .launchpadcolumnsubheader{
-        font-weight:bold;
-        text-align:right;
-        font-style:italic;
+        font-weight:bold; text-align:right; font-style:italic;
     }
     .sectionlist{
-        margin-bottom:0px;
-        text-align:right;
+        margin-bottom:0px; text-align:right;
     }
     .sectionlist li{
-        list-style: none;
-        line-height: 28px;
+        list-style: none; line-height: 28px;
     }
     .launchpadcontent table{
-        border-collapse: collapse;
-        margin-top:-10px;
+        border-collapse: collapse; margin-top:-10px;
     }
     .launchpadCRcolumn img{
-        display:inline;
-        position:relative;
-        height:17px;
+        display:inline; position:relative; height:17px;
     }
     .modalbuttonbox{
         text-align: right;
     }
     .modalbuttonbox button{
-        margin:0 11px 0 0;
-        padding: 6px 14px 6px 14px;
-        font: bold 12px 'Muli', sans-serif;
+        margin:0 11px 0 0; padding: 6px 14px 6px 14px; font: bold 12px 'Muli', sans-serif;
     }
     .label:hover{
         text-decoration: none;
     }
     .sectioninfocontainer{
-        background-color:white;
-        border-radius:6px;
-        border: 1px solid rgba(0, 0, 0, .1); display:inline-block; width:644px; height:309px; margin:-12px 0 0 15px; padding:11px 11px 0 12px; overflow:auto;
+        background-color:white; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1); display:inline-block; width:644px; height:309px; margin:-12px 0 0 15px; padding:11px 11px 0 12px; overflow:auto;
     }
     #sectionpointchart{
         width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px;
