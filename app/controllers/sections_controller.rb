@@ -291,6 +291,7 @@ class SectionsController < ApplicationController
   
   def took
     task = @section.tasks.find(params[:task_id])
+    raise "Task already completed" if current_user.completed_tasks.find_by_task_id(task.id)
     if params[:answer].blank? && params[:text_answer].blank?
       flash.now[:error] = "You must provide an answer."
       redirect_to take_section_path(@section, task_id: task.id)
@@ -326,7 +327,7 @@ class SectionsController < ApplicationController
     else
       flash[:error] = @ct.errors.full_messages.join(", ")
     end
-    redirect_to chose_section_path(@section)
+    redirect_to community_path_path(@section.path)
   end
   
   def continue

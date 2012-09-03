@@ -12,10 +12,10 @@
             %td
               - if completed_task
                 %a.label.success{ href: "#"  } Completed
+                %br
+                %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
               - else
-                %a.label.important{ href: "#"  } Incomplete
-              %br
-              %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                = link_to "Incomplete", take_section_path(@section, task_id: t.id), class: "label important"
     - else
       %p You must earn more points to unlock this section.
 
