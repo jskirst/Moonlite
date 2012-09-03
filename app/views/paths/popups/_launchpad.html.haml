@@ -1,5 +1,6 @@
 :javascript
   $(function(){
+    apply_hightcharts_theme();
     $(".userctrlpanel").click(function(){
       $('#launchpad').modal({
            keyboard: true,
@@ -13,6 +14,62 @@
     %a.close{ href: "#" }
     %h3 Get Started!
   %div.modal-body
+    %div.overlay
+      %div.launchpad
+        %h1
+          %img{ src: "http://placekitten.com/50/50" }
+          %span Kittens Challenge
+        %div.launchpadcontent
+          %div.launchpadsectioncolumn
+            %div.launchpadcolumnheader
+              Sections
+            %div.launchpadcolumnsubheader
+              Enrolled sections
+            %ul.sectionlist
+              %li Ugly Cats
+              %li{ style: "font-weight:bold; color:#404040" } Fat Cats
+              %li Stinky Cats
+              %br
+              %div.launchpadcolumnsubheader
+                Unenrolled sections
+              %ul.sectionlist
+                %li Cool Cats
+                %li Midget Cats
+            %div.sectioninfocontainer
+              %div.launchpadsectionpoints
+                %div.launchpadcolumnheader
+                  My points
+                %div#sectionpointchart
+                %div.launchpadCRcolumn
+                  %div.launchpadcolumnheader
+                    Creative response questions
+                  %table
+                    %tr
+                      %td This is a sample question I've completed</td>
+                      %td
+                        %a.label.success{ href: "#" } Complete
+                        %br
+                        %span.launchpadpoints 3,480 pts
+                    %tr
+                      %td This is a sample question I haven't completed
+                      %td
+                        %a.label.important{ href: "#" } Incomplete
+                        %br
+                        %span.launchpadpoints
+                    %tr
+                      %td This is a very very very very very very very very very very very very long question that I also haven't completed</td>
+                      %td 
+                        %a.label.important{ href: "#" } Incomplete
+                        %br
+                        %span.launchpadpoints
+                      %tr
+                        %td And this one is a very very very very very very very very very very very very long question that I have answered.</td>
+                        %td
+                          %a.label.success{ href: "#" } Complete
+                          %br
+                          %span.launchpadpoints 341,480 pts
+        %div.modalbuttonbox
+          %button.btn Done
   %div.modal-footer
     %a.btn.secondary{ href: "#", onclick: "$('#startmodal').modal('hide');" } Later
     = link_to "Get Started", continue_path_path(@path), :class => "btn primary"
