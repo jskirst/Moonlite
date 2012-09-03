@@ -23,18 +23,9 @@
           %div.launchpadsectioncolumn
             %div.launchpadcolumnheader
               Sections
-            %div.launchpadcolumnsubheader
-              Enrolled sections
             %ul.sectionlist
-              %li Ugly Cats
-              %li{ style: "font-weight:bold; color:#404040" } Fat Cats
-              %li Stinky Cats
-              %br
-              %div.launchpadcolumnsubheader
-                Unenrolled sections
-              %ul.sectionlist
-                %li Cool Cats
-                %li Midget Cats
+              - @path.sections.each do |s|
+                %li= s.name
             %div.sectioninfocontainer
               %div.launchpadsectionpoints
                 %div.launchpadcolumnheader
@@ -44,30 +35,13 @@
                   %div.launchpadcolumnheader
                     Creative response questions
                   %table
-                    %tr
-                      %td This is a sample question I've completed</td>
-                      %td
-                        %a.label.success{ href: "#" } Complete
-                        %br
-                        %span.launchpadpoints 3,480 pts
-                    %tr
-                      %td This is a sample question I haven't completed
-                      %td
-                        %a.label.important{ href: "#" } Incomplete
-                        %br
-                        %span.launchpadpoints
-                    %tr
-                      %td This is a very very very very very very very very very very very very long question that I also haven't completed</td>
-                      %td 
-                        %a.label.important{ href: "#" } Incomplete
-                        %br
-                        %span.launchpadpoints
+                    - @current_section.creative_tasks.each do |ct|
                       %tr
-                        %td And this one is a very very very very very very very very very very very very long question that I have answered.</td>
+                        %td= ct.question
                         %td
-                          %a.label.success{ href: "#" } Complete
+                          %a{ href: "#", class: "label " + (ct.status?(user) ? "success" : "important") } 
                           %br
-                          %span.launchpadpoints 341,480 pts
+                          %span.launchpadpoints= ct.earned_points(user)
         %div.modalbuttonbox
           %button.btn Done
   %div.modal-footer
