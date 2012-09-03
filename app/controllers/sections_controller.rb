@@ -270,6 +270,12 @@ class SectionsController < ApplicationController
 
 # Begin Section Journey
 
+  def launchpad
+    @current_section = @section
+    @unlocked = @section.unlocked?(current_user)
+    render partial: "launchpad"
+  end
+
   def chose
     @tasks = @section.tasks
     @completed_tasks = @section.completed_tasks.where("user_id = ?", current_user.id).to_a.collect { |cp| cp.task_id } 

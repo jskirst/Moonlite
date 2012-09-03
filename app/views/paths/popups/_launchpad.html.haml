@@ -1,49 +1,30 @@
+%div#launchpad.modal.hide.fade{ style: "left: 38%; top: 30%;"}
+  %div.overlay
+    %div.launchpad{ style: ""}
+      %h1
+        = image_tag(@path.path_pic)
+        %span= @path.name
+        %span.btn{ style: "float:right; margin: 10px 0 0 0;", onclick: "$(this).parents('.modal').modal('hide');" } Close
+      %div.launchpadcontent
+        %div.launchpadsectioncolumn
+          %div.launchpadcolumnheader
+            Sections
+          %ul.sectionlist
+            - @path.sections.each do |s|
+              %li.launchpad_link= link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"
+        = render "sections/launchpad"
+
 :javascript
   $(function(){
-    apply_hightcharts_theme();
     $(".userctrlpanel").click(function(){
       $('#launchpad').modal({
-           keyboard: true,
-           backdrop: 'static',
-           show: true
-       });
-     });
-  });
-%div#launchpad.modal.hide.fade
-  %div.modal-header
-    %a.close{ href: "#" }
-    %h3 Get Started!
-  %div.modal-body
-    %div.overlay
-      %div.launchpad
-        %h1
-          %img{ src: "http://placekitten.com/50/50" }
-          %span Kittens Challenge
-        %div.launchpadcontent
-          %div.launchpadsectioncolumn
-            %div.launchpadcolumnheader
-              Sections
-            %ul.sectionlist
-              - @path.sections.each do |s|
-                %li= s.name
-            %div.sectioninfocontainer
-              %div.launchpadsectionpoints
-                %div.launchpadcolumnheader
-                  My points
-                %div#sectionpointchart
-                %div.launchpadCRcolumn
-                  %div.launchpadcolumnheader
-                    Creative response questions
-                  %table
-                    - @current_section.creative_tasks.each do |ct|
-                      %tr
-                        %td= ct.question
-                        %td
-                          %a{ href: "#", class: "label " + (ct.status?(user) ? "success" : "important") } 
-                          %br
-                          %span.launchpadpoints= ct.earned_points(user)
-        %div.modalbuttonbox
-          %button.btn Done
-  %div.modal-footer
-    %a.btn.secondary{ href: "#", onclick: "$('#startmodal').modal('hide');" } Later
-    = link_to "Get Started", continue_path_path(@path), :class => "btn primary"
+        keyboard: true,
+        backdrop: 'static',
+        show: true
+      });
+    });
+     
+    $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
+      $(".sectioninfocontainer").replaceWith(data);
+    });
+  });                      

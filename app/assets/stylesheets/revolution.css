@@ -41,6 +41,12 @@
 .postfooter{ text-align: right; margin-right:-13px; }
 .leftstuff { float:left; }
 .leftstuff a { cursor:hover; text-decoration:none; color: #004700; }
+.leftboxheader{background-color: #F9F9F9; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 12px; line-height: 16px;}
+.leftbtn{margin-right:-4px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
+.midbtn{margin-right:-4px; border-radius:0px;}
+.rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
+.leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+.newsfeed>.leftboxheader{padding:6px 12px;}
 
 /* Other stuff - organize by feature */
 #topsection{
@@ -120,7 +126,7 @@
   border-bottom-left-radius: 5px;
   padding: 10px 12px;
 }
-#ranks { list-style: none; margin:0px; }
+#ranks { list-style: none; margin:0px; padding: 10px 0; }
 #ranks li { padding: 2px 0 7px 12px; font:normal 15px arial, sans-serif; }
 #ranks li:last-child { border-bottom-left-radius: 6px; border-bottom-right-radius:6px; }
 #ranks img{ height:27px; width:27px; border-radius:3px; margin:4px 4px -6px 2px; }

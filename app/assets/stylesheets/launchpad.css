@@ -9,55 +9,29 @@
 }
 .launchpad{
  width:880px;
- height:440px;
+ height:550px;
  margin: 100px auto;
- border:10px solid #d1896d;
- border-style:ridge;
+ border:10px ridge white;
  text-align:left;
  border-radius: 16px;
  box-shadow: 0 0 50px 20px rgba(0, 0, 0, .05);
  padding:11px 11px 0 11px;
  background-color: #F9F9F9;
 }
-.launchpad h1{
-    font: bold 23px 'Muli', sans-serif;
-    margin:0px;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
-    width:868px;
-    padding:0px;
-}
-.launchpad h1>img{
-    border-radius:4px; height:36px; width:36px;
-}
-.launchpad h1>span{
-    position:relative;
-    bottom:8px;
-}
-.launchpadcontent{
-    padding-top:10px;
-    margin-left:10px;
-    margin-top:10px;
-    border-collapse:collapse;
-}
-.launchpadpoints{
-    font-weight:bold;
-    font-size:11px;
-    font-style:italic;
-    white-space:nowrap;
-}
+.launchpad h1{ font: bold 23px 'Muli', sans-serif; margin:0px; width:868px; padding:0px; }
+.launchpad h1>img{ border-radius:4px; height:36px; width:36px; }
+.launchpad h1>span{ position:relative; bottom:8px; }
+.launchpadcontent{ margin-left:10px; margin-top:10px; border-collapse:collapse; }
+.launchpadpoints{ font-weight:bold; font-size:11px; font-style:italic; white-space:nowrap; }
 .launchpadsectioncolumn{
-    display:inline-block;
-    border-right: 1px solid rgba(0, 0, 0, .1);
-    padding-right:10px;
-    width:160px;
+    display: inline-block;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 6px;
+    padding: 10px;
+    width: 160px;
     vertical-align: top;
-    overflow:auto;
-    height:330px;
-    
-}
-.launchpadsectionpoints{
-    display:inline-block;
-    vertical-align: top;
+    overflow: auto;
+    height: 330px;
 }
 .launchpadCRcolumn{
     display:inline-block;
@@ -112,7 +86,13 @@
 .sectioninfocontainer{
     background-color:white;
     border-radius:6px;
-    border: 1px solid rgba(0, 0, 0, .1); display:inline-block; width:644px; height:309px; margin:-12px 0 0 15px; padding:11px 11px 0 12px; overflow:auto;
+    border: 1px solid rgba(0, 0, 0, .1); 
+    display:inline-block; 
+    width:644px; 
+    height:470px; 
+    margin: 0 0 0 10px; 
+    padding:10px; 
+    overflow:auto;
 }
 #sectionpointchart{
     width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px;

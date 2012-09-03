@@ -1,27 +1,3 @@
-$(function() {
-  var chart;
-  $(document).ready(function() {
-    chart = new Highcharts.Chart({
-      chart: { renderTo: 'sectionpointchart', type: 'bar' },
-      credits: { enabled: false },
-      title: { text: null },
-      xAxis: { min:0, categories: ['Fat Cats'] },
-      yAxis: { min: 0, max: 15000, title: { text: 'Points' } },
-      legend: {
-          backgroundColor: '#FFFFFF',
-          reversed: true,
-          align:'right',
-          layout:'vertical',
-          verticalAlign: 'top',
-      },
-      tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
-      plotOptions: { series: { stacking: 'normal' } },
-      navigation: { buttonOptions: { enabled: false } },
-      series: [ { name: 'Creative Response', data: [2500] }, { name: 'Core Questions', data: [4500] } ]
-    });
-  });
-});
-
 Highcharts.theme = {
    colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
    chart: {

@@ -1,0 +1,44 @@
+%div.sectioninfocontainer
+  %div#sectionpointchart
+  %div.launchpadCRcolumn
+    %div.launchpadcolumnheader
+      Challenge Questions
+    - if @unlocked
+      %table
+        - @current_section.creative_tasks.each do |t|
+          - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+          %tr
+            %td= t.question
+            %td
+              - if completed_task
+                %a.label.success{ href: "#"  } Completed
+              - else
+                %a.label.important{ href: "#"  } Incomplete
+              %br
+              %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+    - else
+      %p You must earn more points to unlock this section.
+
+:javascript
+  $(function(){
+    var chart;
+    chart = new Highcharts.Chart({
+      chart: { renderTo: 'sectionpointchart', type: 'bar' },
+      credits: { enabled: false },
+      title: { text: null },
+      xAxis: { min:0, categories: ['Fat Cats'] },
+      yAxis: { min: 0, max: 15000, title: { text: 'Points' } },
+      legend: {
+          backgroundColor: '#FFFFFF',
+          reversed: true,
+          align:'right',
+          layout:'vertical',
+          verticalAlign: 'top',
+      },
+      tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
+      plotOptions: { series: { stacking: 'normal' } },
+      navigation: { buttonOptions: { enabled: false } },
+      series: [ { name: 'Challenge Questions', data: [2500] }, { name: 'Core Questions', data: [4500] } ]
+    });
+    apply_hightcharts_theme();
+  });

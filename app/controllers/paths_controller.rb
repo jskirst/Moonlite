@@ -191,22 +191,6 @@ class PathsController < ApplicationController
   end
 
 # Begin Path Journey
- 
-  def jumpstart
-    @company = Company.find(1)
-    @path = @company.paths.find(params[:id])
-    unless signed_in?
-      store_location
-      @user = User.create_anonymous_user(@company)
-      sign_in(@user)
-      @user.enrollments.create!(:path_id => @path.id)
-      if(ab_test :slow_start_v2)
-        redirect_to @path
-        return
-      end
-    end
-    redirect_to continue_path_path(@path)
-  end
   
   def continue
     @section = current_user.most_recent_section_for_path(@path)
@@ -247,10 +231,11 @@ class PathsController < ApplicationController
   end
   
   def community
-    redirect_to root_path unless signed_in? && @enrollment = current_user.enrolled?(@path)
-    
-    @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
+    @enrollment = current_user.enrolled?(@path) || Enrollment.new(user: current_user, path: @path)
+    @total_points_earned = @enrollment.total_points
     @skill_ranking = @path.skill_ranking(current_user)
+    
+    @current_section = @path.sections.first
     
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 

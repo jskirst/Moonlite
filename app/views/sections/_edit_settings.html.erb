@@ -15,6 +15,12 @@
     </div>
   </div>
   <div class="field clearfix">
+    <%= f.label "Points to unlock" %>
+    <div class="input">
+      <%= f.text_field :points_to_unlock, :placeholder => "optional..." %>
+    </div>
+  </div>
+  <div class="field clearfix">
     <div class="input">
       <%= image_tag(section.pic, :id => "image_url_preview", :width => "210", :style=>"margin:20px 0px 20px 10px") %>
     </div>

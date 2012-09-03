@@ -5,7 +5,8 @@ class Section < ActiveRecord::Base
     :position, 
     :image_url,
     :content_type, 
-    :enable_skip_content
+    :enable_skip_content,
+    :points_to_unlock
   
   belongs_to :path
   has_many :tasks, dependent: :destroy
@@ -104,6 +105,20 @@ class Section < ActiveRecord::Base
       end
     end
     return streak
+  end
+  
+  def creative_tasks
+    return tasks.where("answer_type = ?", 0)
+  end
+  
+  def core_tasks
+    return tasks.where("answer_type in ?", [1,2])
+  end
+  
+  def unlocked?(user)
+    enrollment = user.enrollments.find_by_path_id(self.path_id)
+    return false if enrollment.nil?
+    return enrollment.total_points > self.points_to_unlock
   end
     
   private

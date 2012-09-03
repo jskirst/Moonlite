@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120831044354) do
+ActiveRecord::Schema.define(:version => 20120903225315) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -223,6 +223,7 @@ ActiveRecord::Schema.define(:version => 20120831044354) do
     t.string   "content_type"
     t.text     "hidden_content"
     t.boolean  "enable_skip_content", :default => false
+    t.integer  "points_to_unlock",    :default => 0
   end
 
   create_table "sent_emails", :force => true do |t|

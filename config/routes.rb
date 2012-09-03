@@ -58,6 +58,7 @@ Metabright::Application.routes.draw do
       get :chose
       get :take
       put :took
+      get :launchpad
 		end
 	end
 	resources :enrollments
