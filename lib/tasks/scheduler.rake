@@ -49,12 +49,14 @@ task :send_completed_scores => :environment do
   Path.all.each do |p|
     if p.has_creative_response
       p.enrollments.where("is_complete = ?", false).each do |e|
-        if p.completed_tasks.where("user_id = ? and status_id = ?", e.user.id, 2).count == 0
-          e.update_attribute(:is_complete, true)
-          p.create_completion_event(e.user, e.user.company.name_for_paths)
-          puts "completing #{p.name} for #{e.user.name}"
-        else
-          puts "not completing #{p.name} for #{e.user.name}"
+        if p.total_remaining_tasks(e.user) == 0
+          if p.completed_tasks.where("user_id = ? and status_id = ?", e.user.id, 2).count == 0
+            e.update_attribute(:is_complete, true)
+            p.create_completion_event(e.user, e.user.company.name_for_paths)
+            puts "completing #{p.name} for #{e.user.name}"
+          else
+            puts "not completing #{p.name} for #{e.user.name}"
+          end
         end
       end
     end
