@@ -33,15 +33,10 @@
     overflow: auto;
     height: 330px;
 }
-.launchpadCRcolumn{
-    display:inline-block;
-    vertical-align: top;
-    overflow:auto;
-}
-.launchpadCRcolumn td{
-    font-style:italic;
-    
-}
+.launchpadCRcolumn{ width: 100%; display:inline-block; vertical-align: top; overflow:auto; }
+.launchpadCRcolumn table { width: 100%; }
+.launchpadCRcolumn td.question_status { text-align: right; }
+.launchpadCRcolumn td{ font-style:italic; }
 .launchpadcolumnheader{
     font-weight:bold;
     text-align: left;
@@ -50,39 +45,15 @@
     border-bottom:1px solid rgba(0, 0, 0, .1);
 }
 
-.launchpadcolumnsubheader{
-    font-weight:bold;
-    text-align:right;
-    font-style:italic;
-}
-.sectionlist{
-    margin-bottom:0px;
-    text-align:right;
-}
-.sectionlist li{
-    list-style: none;
-    line-height: 28px;
-}
-.launchpadcontent table{
-    border-collapse: collapse;
-    margin-top:-10px;
-}
-.launchpadCRcolumn img{
-    display:inline;
-    position:relative;
-    height:17px;
-}
-.modalbuttonbox{
-    text-align: right;
-}
-.modalbuttonbox button{
-    margin:0 11px 0 0;
-    padding: 6px 14px 6px 14px;
-    font: bold 12px 'Muli', sans-serif;
-}
-.label:hover{
-    text-decoration: none;
-}
+.launchpadcolumnsubheader { font-weight:bold; text-align:right; font-style:italic; }
+.sectionlist { margin-bottom:0px; text-align:right; }
+.sectionlist li { list-style: none; line-height: 28px; }
+.sectionlist a { font-size: 15px; }
+.launchpadcontent table{ border-collapse: collapse; margin-top:-10px; }
+.launchpadCRcolumn img{ display:inline; position:relative; height:17px; }
+.modalbuttonbox{ text-align: right; }
+.modalbuttonbox button{ margin:0 11px 0 0; padding: 6px 14px 6px 14px; font: bold 12px 'Muli', sans-serif; }
+.label:hover{ text-decoration: none; }
 .sectioninfocontainer{
     background-color:white;
     border-radius:6px;
@@ -94,6 +65,4 @@
     padding:10px; 
     overflow:auto;
 }
-#sectionpointchart{
-    width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px;
-}
+#sectionpointchart{ width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px; }

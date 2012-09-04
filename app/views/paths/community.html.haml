@@ -10,10 +10,10 @@
             %h1= @path.name
             %h3 #{@path.sections.size} sections - #{@path.enrolled_user_count} users
           %div.userctrlpanel
-            %button.btn.danger Continue
+            %button.btn.primary.large{style: "margin-bottom: 5px;"} Continue
             %p= current_user.name
-            %span#level Level 19
-            %span#points= @enrollment.total_points.to_i.to_s + " pts"
+            %span#level Level #{@enrollment.level} - 
+            %span#points #{@enrollment.total_points.to_i.to_s} pts
         %div.challengecarousel
           %ul.inlinedisplay
             %li
@@ -34,7 +34,7 @@
               %span.rank= (i+1).to_s
               = image_tag entry.user.profile_pic 
               = link_to truncate(entry.user.name, length: 25), entry.user, class: "name"
-              %span.level lvl 19 
+              %span.level lvl. #{entry.user.level(@path)}
               %span.points= entry.score
     %div.span11
       %div.newsfeed

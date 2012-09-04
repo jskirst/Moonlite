@@ -10,7 +10,7 @@
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
             %tr
               %td= t.question
-              %td
+              %td.question_status
                 - if completed_task
                   %a.label.success{ href: "#"  } Completed
                   %br

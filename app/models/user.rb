@@ -170,6 +170,13 @@ class User < ActiveRecord::Base
     end
   end
   
+  def retract_points(task, points)
+    log_transaction(task.id, points * -1)
+    self.update_attribute('earned_points', self.earned_points - points)
+    enrollment = enrollments.find_by_path_id(task.section.path_id)
+    enrollment.update_attribute(:total_points, enrollment.total_points - points)
+  end
+  
   def debit_points(points)
     self.update_attribute('spent_points', self.spent_points + points)
   end
@@ -202,6 +209,10 @@ class User < ActiveRecord::Base
     return completed_tasks.where("status_id = ?", 1).count if stat == "correct_answers"
     return completed_tasks.last.created_at unless completed_tasks.last.nil? if stat == "last_action"
     return enrolled_paths.to_a.count { |p| p.completed?(self) } if stat == "completed_paths"
+  end
+  
+  def level(path)
+    return enrollments.find_by_path_id(path).level
   end
   
   private  

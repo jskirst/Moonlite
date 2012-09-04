@@ -33,4 +33,28 @@ class Enrollment < ActiveRecord::Base
     email_details = { enrollment: self, path: path, user: user }
     Mailer.path_result(email_details).deliver
   end
+  
+  def level
+    level = total_points / 40
+    return level > 0 ? level : 1
+  end
+  
+  def skill_ranking
+    points = self.total_points.to_i
+    possible = path.tasks.count * 10
+    case
+      when points > 1.3 * possible
+        return "Master"
+      when points > 1.1 * possible
+        return "Elite"
+      when points > 0.9 * possible
+        return "Expert"
+      when points > 0.7 * possible
+        return "Highly Knowledgeable"
+      when points > 0.5 * possible
+        return "Intermediate"
+      else
+        return "Beginner"
+      end
+  end
 end

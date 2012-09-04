@@ -233,7 +233,7 @@ class PathsController < ApplicationController
   def community
     @enrollment = current_user.enrolled?(@path) || Enrollment.new(user: current_user, path: @path)
     @total_points_earned = @enrollment.total_points
-    @skill_ranking = @path.skill_ranking(current_user)
+    @skill_ranking = @enrollment.skill_ranking
     
     @current_section = current_user.most_recent_section_for_path(@path)
     @unlocked = @current_section.unlocked?(current_user)
@@ -273,7 +273,7 @@ class PathsController < ApplicationController
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     if @completed
       @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
-      @skill_ranking = @path.skill_ranking(current_user)
+      @skill_ranking = @enrolled.skill_ranking
       @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
     end
     

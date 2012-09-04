@@ -198,28 +198,6 @@ class Path < ActiveRecord::Base
     return self.tags.blank? ? [] : (self.tags.split(",").collect { |t| t.strip })
   end
   
-  def skill_ranking(user)
-    enrollment = enrollments.find_by_user_id(user.id)
-    return nil if enrollment.nil?
-    
-    points = enrollment.total_points.to_i
-    possible = tasks.count * 10
-    case
-      when points > 1.3 * possible
-        return "Master"
-      when points > 1.1 * possible
-        return "Elite"
-      when points > 0.9 * possible
-        return "Expert"
-      when points > 0.7 * possible
-        return "Highly Knowledgeable"
-      when points > 0.5 * possible
-        return "Intermediate"
-      else
-        return "Beginner"
-      end
-  end
-  
   def activity_stream
     start_time = Time.now
     events = user_events.joins(:user).last(8).to_a.collect  do |e| 
