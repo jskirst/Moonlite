@@ -255,6 +255,7 @@ class PathsController < ApplicationController
   end
   
   def show
+    redirect_to community_path_path(@path) if current_company.id == 1
     if signed_in?
       @enrolled = current_user.enrolled?(@path)
       @completed = @path.has_creative_response ? @path.total_remaining_tasks(current_user) == 0 : @path.completed?(current_user)
