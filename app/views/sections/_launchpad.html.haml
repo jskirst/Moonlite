@@ -4,18 +4,22 @@
     %div.launchpadcolumnheader
       Challenge Questions
     - if @unlocked
-      %table
-        - @current_section.creative_tasks.each do |t|
-          - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
-          %tr
-            %td= t.question
-            %td
-              - if completed_task
-                %a.label.success{ href: "#"  } Completed
-                %br
-                %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
-              - else
-                = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
+      - if @current_section.quiz_complete?(current_user)
+        %table
+          - @current_section.creative_tasks.each do |t|
+            - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+            %tr
+              %td= t.question
+              %td
+                - if completed_task
+                  %a.label.success{ href: "#"  } Completed
+                  %br
+                  %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                - else
+                  = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
+      - else
+        %p Complete the knowledge test to unlock the rest of this section.
+        %p= link_to "Continue", continue_section_path(@current_section), class: "btn primary large"
     - else
       %p You must earn more points to unlock this section.
 

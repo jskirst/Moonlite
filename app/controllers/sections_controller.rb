@@ -331,7 +331,6 @@ class SectionsController < ApplicationController
   end
   
   def continue
-    start_time = Time.now
     last_question, @streak, @streak_points, @streak_name = create_completed_task
     @streak ||= @section.user_streak(current_user)
     @task = @section.next_task(current_user)
@@ -369,11 +368,9 @@ class SectionsController < ApplicationController
       else
         render :partial => "continue", :locals => @locals
       end
-      logger.debug "CONTINE TIME ELAPSED:" + (Time.now - start_time).to_s
     else
       redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
       render :text => redirect_url
-      logger.debug "CONTINE TIME ELAPSED:" + (Time.now - start_time).to_s
       return
     end
   end

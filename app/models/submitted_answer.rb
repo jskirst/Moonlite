@@ -12,6 +12,7 @@ class SubmittedAnswer < ActiveRecord::Base
   def add_vote(user)
     if vote = user.votes.create!(submitted_answer_id: self.id)
       self.total_votes += 1
+      completed_tasks.each {|ct| ct.update_attribute(:points_awarded, (ct.points_awarded += 1))}
       return vote if save
     end
     return false
@@ -20,6 +21,7 @@ class SubmittedAnswer < ActiveRecord::Base
   def subtract_vote(user)
     if self.total_votes > 0
       self.total_votes -= 1
+      completed_tasks.each {|ct| ct.update_attribute(:points_awarded, (ct.points_awarded -= 1))}
       return true if save
     end
     return false

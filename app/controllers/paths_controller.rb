@@ -235,7 +235,8 @@ class PathsController < ApplicationController
     @total_points_earned = @enrollment.total_points
     @skill_ranking = @path.skill_ranking(current_user)
     
-    @current_section = @path.sections.first
+    @current_section = current_user.most_recent_section_for_path(@path)
+    @unlocked = @current_section.unlocked?(current_user)
     
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 

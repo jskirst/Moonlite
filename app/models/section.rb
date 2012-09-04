@@ -107,6 +107,11 @@ class Section < ActiveRecord::Base
     return streak
   end
   
+  def quiz_complete?(user)
+    incomplete_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type > ?", user.id, 0])
+    return incomplete_tasks.size == 0
+  end
+  
   def creative_tasks
     return tasks.where("answer_type = ?", 0)
   end
@@ -129,7 +134,11 @@ class Section < ActiveRecord::Base
     def get_next_unfinished_task(user)
       previous_task = tasks.joins(:completed_tasks).where(["completed_tasks.user_id = ?", user.id]).last(:order => "position ASC")
       previous_task_position = previous_task.nil? ? 0 : previous_task.position
-      return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
+      if user.company_id > 1
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
+      else
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type > 0", user.id]).first(:order => "position ASC")
+      end
     end
     
     def get_next_incorrectly_finished_task(user)
