@@ -15,7 +15,7 @@
                 %br
                 %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
               - else
-                = link_to "Incomplete", take_section_path(@section, task_id: t.id), class: "label important"
+                = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
     - else
       %p You must earn more points to unlock this section.
 
@@ -26,8 +26,8 @@
       chart: { renderTo: 'sectionpointchart', type: 'bar' },
       credits: { enabled: false },
       title: { text: null },
-      xAxis: { min:0, categories: ['Fat Cats'] },
-      yAxis: { min: 0, max: 15000, title: { text: 'Points' } },
+      xAxis: { min:0, categories: [''] },
+      yAxis: { min: 0, max: 100, title: { text: 'Percent Complete' } },
       legend: {
           backgroundColor: '#FFFFFF',
           reversed: true,
@@ -38,7 +38,7 @@
       tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
       plotOptions: { series: { stacking: 'normal' } },
       navigation: { buttonOptions: { enabled: false } },
-      series: [ { name: 'Challenge Questions', data: [2500] }, { name: 'Core Questions', data: [4500] } ]
+      series: [ { name: '#{@current_section.name}', data: [#{@current_section.percentage_complete(current_user)}] } ]
     });
     apply_hightcharts_theme();
   });
