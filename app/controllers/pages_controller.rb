@@ -24,7 +24,7 @@ class PagesController < ApplicationController
       if params[:m]
         @first_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).first(4)
         @last_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).last(4)
-        render "consumer_landing"
+        render "consumer_landing", layout: false
       elsif @is_company
         if @possible_company && @possible_company.enable_custom_landing
           render "company_landing"

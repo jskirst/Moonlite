@@ -1,21 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:fb="http://www.facebook.com/2008/fbml">
 <head>
-	
-<title><%= title %></title>
-<%= csrf_meta_tag %>
-
-<%= javascript_include_tag "application" %>
-<%= stylesheet_link_tag "application" %>
-
-<% if current_user && current_user.company.custom_style %>
-  <% if current_user.company.custom_style.mode == 1 || (current_user.company.custom_style.mode == 2 && @enable_administration) %>
-  <style><%= current_user.company.custom_style.styles %></style>
-  <% end %>
-<% elsif @possible_company && @possible_company.custom_style.mode == 1 %>
-  <style><%= @possible_company.custom_style.styles %></style>
-<% end %>
-
+  <%= render "layouts/head" %>
 </head>
 <body>
 <div id="fb-root"></div>
