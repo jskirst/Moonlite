@@ -227,17 +227,19 @@ class PathsController < ApplicationController
     @enrollment = @path.enrollments.find_by_user_id(current_user.id)
     @enrollment.retake!
     @path.completed_tasks.where("user_id = ?", current_user.id).destroy_all
+    Leaderboard.reset_for_path_user(@path, current_user)
     redirect_to @path
   end
   
   def community
-    @enrollment = current_user.enrolled?(@path) || Enrollment.new(user: current_user, path: @path)
+    @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
     @total_points_earned = @enrollment.total_points
     @skill_ranking = @enrollment.skill_ranking
     
     @current_section = current_user.most_recent_section_for_path(@path)
     @unlocked = @current_section.unlocked?(current_user)
     
+    Leaderboard.reset_for_path_user(@path, current_user) if params[:completed]
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
     @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 
     

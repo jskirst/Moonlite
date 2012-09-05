@@ -8,7 +8,7 @@ class Enrollment < ActiveRecord::Base
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true
   validate do
-    errors[:base] << "Msg"  "Error 95" unless user.company_id == path.company_id 
+    errors[:base] << "Msg"  "Error 95" unless self.user.company_id == self.path.company_id 
   end
   
   def retake!

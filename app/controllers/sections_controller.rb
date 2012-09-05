@@ -214,7 +214,7 @@ class SectionsController < ApplicationController
     else
       flash[:error] = @ct.errors.full_messages.join(", ")
     end
-    redirect_to community_path_path(@section.path)
+    redirect_to community_path_path(@section.path, completed: true)
   end
   
   def continue
@@ -256,7 +256,11 @@ class SectionsController < ApplicationController
         render :partial => "continue", :locals => @locals
       end
     else
-      redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
+      if current_company.id == 1
+        redirect_url = "Redirecting to results:" + community_path_url(@section.path, completed: "true")
+      else
+        redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
+      end
       render :text => redirect_url
       return
     end

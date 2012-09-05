@@ -123,7 +123,7 @@ class Section < ActiveRecord::Base
   def unlocked?(user)
     enrollment = user.enrollments.find_by_path_id(self.path_id)
     return false if enrollment.nil?
-    return enrollment.total_points > self.points_to_unlock
+    return enrollment.total_points.to_i >= self.points_to_unlock
   end
   
   def percentage_complete(user)
