@@ -1,7 +1,7 @@
 class PathsController < ApplicationController
   include OrderHelper
   
-  before_filter :authenticate, :except => [:hero, :show, :jumpstart]
+  before_filter :authenticate, :except => [:show, :jumpstart]
   before_filter :admin_only, :only => [:index]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
@@ -77,16 +77,6 @@ class PathsController < ApplicationController
     redirect_to edit_path_path(@path)
   end
   
-  def reorder_sections
-    old_order = @path.sections.map { |s| [s.id, s.position] }
-    new_order = params[:sections][:positions].map { |id, position| [id.to_i, position.to_i] }
-    revised_order = reorder(old_order, new_order)
-    revised_order.each do |s|
-      @path.sections.find(s[0]).update_attribute(:position, s[1])
-    end
-    redirect_to edit_path_path(@path, :m => "sections")
-  end
-  
   def update_roles
     @path = current_user.company.paths.find(params[:id])
     all_roles = current_user.company.user_roles
@@ -152,14 +142,12 @@ class PathsController < ApplicationController
     flash[:success] = "#{name_for_paths} successfully deleted."
     redirect_back_or_to root_path
   end
-  
-  #GET
+
   def collaborators
     @collaborators = @path.collaborating_users
     @collaborator = @path.collaborations.new
   end
-  
-  #PUT
+
   def collaborator
     @collaborators = @path.collaborating_users
     flash[:error] = "No collaborator stated."and render "collaborators" and return if params[:collaborator].nil?
@@ -178,8 +166,7 @@ class PathsController < ApplicationController
     end
     redirect_to collaborators_path_path(@path)
   end
-  
-  #GET
+
   def undo_collaboration
     @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
     if @collaboration.destroy
@@ -188,6 +175,13 @@ class PathsController < ApplicationController
       flash[:error] = @collaboration.errors.full_messages.join(". ")
     end
     redirect_to collaborators_path_path(@path)
+  end
+  
+  def dashboard
+    @page = params[:page] || 1
+    @time = (params[:time] || 7).to_i
+    @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
+    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
   end
 
 # Begin Path Journey
@@ -331,25 +325,6 @@ class PathsController < ApplicationController
     
     @activity_stream = @path.activity_stream
   end
-  
-# Administration #
-  def index
-    if params[:search]
-      @paths = Path.paginate(:page => params[:page], 
-        :conditions => ["name ILIKE ? or description ILIKE ? or tags ILIKE ?", 
-          "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%"], :order => "id DESC")
-    else
-      @paths = Path.paginate(:page => params[:page], :order => "id DESC")
-    end
-  end
-  
-  def dashboard
-    @page = params[:page] || 1
-    @time = (params[:time] || 7).to_i
-    @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
-  end
-  
 
   private
     def get_path_from_id

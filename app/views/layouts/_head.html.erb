@@ -1,5 +1,3 @@
-<head>
-  
 <title><%= title %></title>
 <%= csrf_meta_tag %>
 
@@ -13,5 +11,3 @@
 <% elsif @possible_company && @possible_company.custom_style.mode == 1 %>
   <style><%= @possible_company.custom_style.styles %></style>
 <% end %>
-
-</head>

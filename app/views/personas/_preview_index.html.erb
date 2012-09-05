@@ -1,0 +1,24 @@
+<style>
+  #persona_selector { padding: 20px; }
+</style>
+<div id="persona_selector">
+  <div id="preview_index">
+    <script>
+    $(function(){
+      $(".persona_select").on("ajax:success", function(xhr, data){
+        $("#persona_preview").html(data);
+      });
+    });
+    </script>
+    <% @personas.each do |persona| %>
+      <div style="margin:20px; display: inline-block;">
+        <%= link_to preview_persona_path(persona), class: "persona_select", remote: true do %>
+          <%= image_tag persona.picture, class: "photo", style: "width: 90px; height: 90px;" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div id="persona_preview">
+    <%= render "personas/preview" %>
+  </div>
+</div>

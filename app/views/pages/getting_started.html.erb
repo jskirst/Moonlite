@@ -5,7 +5,7 @@
     .topbar-inner, .topbar .fill { background-color: #001A00; }
     body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif;}
     .topbar h3 a, .topbar .brand {float: left;    display: block;padding: 0px 20px 12px;margin-left: -20px;color: white;font-weight: 200;line-height: 1;text-decoration: none;font: normal 18px arial, sans-serif;}
-    #landingbox{height:335px;width:695px;margin-left:auto;margin-right:auto;margin-top:140px;background-color:whitesmoke;  border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
+    #landingbox{width:695px;margin-left:auto;margin-right:auto;margin-top:140px;background-color:whitesmoke;  border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
     #logospace{width:720px;margin-right:auto;margin-left:auto;position: relative;}
     #landinglogo{width:720px;margin-top:-40px; margin-bottom:-30px; }
     #buttonspace{ margin-top:30px;}
@@ -43,19 +43,7 @@
     </div>
   </nav>
   <div id="landingbox">
-    <div id="logospace">
-        <img id="landinglogo" src="https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo">
-    </div>
-    <div id="tagline"><span>We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.</span></div>
-    <div id="buttonspace">
-        <div id="LogIn">
-            <%= link_to "Sign In", signin_path, class: "btn danger", remote: true %>
-        </div>
-        <span style="padding:0 37px; font-size:20px;">-or-</span>
-        <div id="Register">
-          <%= link_to "Register", signin_path, class: "btn danger" %>
-        </div>
-    </div>
+    <%= render "personas/preview_index" %>
   </div>
 </body>
 </html>

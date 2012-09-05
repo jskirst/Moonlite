@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, :only => [:explore]
+  before_filter :authenticate, :only => [:explore, :start]
   before_filter :user_creation_enabled?, :only => [:create]
   before_filter :browsing_enabled?, :only => [:explore]
   
@@ -38,6 +38,14 @@ class PagesController < ApplicationController
     end
   end
   
+  def start
+    @personas = current_company.personas.all
+    @personas = current_company.personas.all
+    @persona = @personas.first
+    @paths = @persona.paths
+    render "getting_started", layout: false
+  end
+  
   def explore
     @title = "Explore"
     @personas = current_user.company.personas
@@ -51,14 +59,6 @@ class PagesController < ApplicationController
     else
       @collaborating_paths = current_user.collaborating_paths.all(:order => "updated_at DESC")
     end
-  end
-  
-  def about
-    @title = "About"
-  end
-  
-  def help
-    @title = "Help"
   end
   
   def invitation

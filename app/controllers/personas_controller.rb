@@ -26,7 +26,12 @@ class PersonasController < ApplicationController
   def destroy
     @persona.destroy
     flash[:success] = "Persona successfully deleted."
-    redirect_to persona_path
+    redirect_to personas_path
+  end
+  
+  def preview
+    @paths = @persona.paths
+    render partial: "preview"
   end
   
   private

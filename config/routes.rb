@@ -70,7 +70,12 @@ Metabright::Application.routes.draw do
     end
   end
   match '/suggest', to: "tasks#suggest"
-	resources :personas
+	resources :personas do
+	  member do
+	    get :preview_index
+	    get :preview
+	  end
+	end
 	resources :stored_resources
   resources :comments
   resources :leaderboards
@@ -92,6 +97,7 @@ Metabright::Application.routes.draw do
   match '/auth/:provider/callback',  :to => 'sessions#create'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
+	match '/start' => "pages#start"
 	
 	match '/about',		:to => 'pages#about'
 	match '/help',		:to => 'pages#help'
