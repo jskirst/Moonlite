@@ -3,8 +3,6 @@ require 'uri'
 require 'fileutils.rb'
 
 class SectionsController < ApplicationController
-  include OrderHelper
-  include GeneratorHelper
   include SectionsHelper
   
   before_filter :authenticate
@@ -126,16 +124,6 @@ class SectionsController < ApplicationController
     redirect_to edit_path_path(@section.path)
   end
   
-  def reorder_tasks
-    old_order = @section.tasks.map { |t| [t.id, t.position] }
-    new_order = params[:tasks][:positions].map { |id, position| [id.to_i, position.to_i] }
-    revised_order = reorder(old_order, new_order)
-    revised_order.each do |t|
-      @section.tasks.find(t[0]).update_attribute(:position, t[1])
-    end
-    redirect_to edit_section_path(@section, :m => "tasks")
-  end
-  
   def confirm_delete
   end
   
@@ -165,107 +153,6 @@ class SectionsController < ApplicationController
   end
   
   def html_editor
-  end
-  
-  def research
-    @mode = params[:m]
-    if params[:m] == "clear"
-      if @section.update_attribute("instructions", nil)
-        flash[:success] = "Instructions cleared."
-      else
-        flash[:error] = "Oops! An error occurred and we couldn't clear your instructions. Please try again."
-      end
-      redirect_to edit_section_path(@section, :m => "instructions")
-    elsif params[:m] == "create"
-      @topics = params[:topics].split(",")
-      if params[:main_topic]
-        @topics << @section.name
-      end
-      @topics = @topics.map {|t| t.strip}
-      @quoted_topics = @topics.map {|t| '"'+t+'"'}
-      
-      @use_wikipedia = params[:use_wikipedia] ? true : false;
-      @use_youtube = params[:use_youtube] ? true : false;
-      @use_google_images = params[:use_google_images] ? true : false;
-    elsif params[:m] == "topics"
-      @answers = []
-      @section.tasks.all.each do |t|
-        @answers << t.describe_correct_answer
-      end
-      @answers = @answers.uniq.join(", ")
-      render "research_settings"
-    else
-      @topics = []
-      @quoted_topics = []
-    end
-  end
-  
-  def questions
-    @title = "Generate Questions"
-    @url = "http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate"
-    @limit = params[:limit]
-    if params[:hidden_content]
-      text = clean_text(@section.hidden_content)
-    else
-      text = clean_text(@section.instructions)
-    end
-    if text.nil?
-      flash[:info] = "You need to add some content to your section before we can automatically generate tasks for you."
-      redirect_to edit_section_path(@section, :m => "instructions")
-    else
-      @split_paragraphs = split_and_clean_text(text)
-      @quoted_paragraphs = @split_paragraphs.map {|t| '"'+t+'"'}
-    end
-  end
-  
-  def generate
-    @text = params[:text]
-    uri = URI.parse("http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate")
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    http.read_timeout = 90
-    request = Net::HTTP::Post.new(uri.request_uri)
-    request.set_form_data({'text' => @text})
-    resp, @data = http.request(request)
-    
-    unless @data.nil?
-      logger.debug @data
-      respond_to do |format|
-        format.json
-      end
-    end
-  end
-  
-  def review
-    @title = "Review Questions"
-    raw_questions = params[:questions]
-    @processed_questions = {}
-    raw_questions.each do |key, value|
-      value = value.split("?")
-      question = value[0].to_s + "?"
-      answer = value[1].to_s
-      @processed_questions[key] = {:question => question, :answer1 => answer}
-    end
-    logger.debug "PQ:"
-    logger.debug @processed_questions.to_s
-  end
-  
-  def bulk_tasks
-    raw_questions = params[:questions]
-    @processed_questions = {}
-    raw_questions.each do |key, values|
-      new_task = @section.tasks.build(values.merge(:points => 10))
-      unless new_task.save
-        @processed_questions[key] = values.merge(:errors => new_task.errors.full_messages)
-      end
-    end
-    if @processed_questions.size > 0
-      flash[:error] = "Could not save the following tasks. Please review and resubmit."
-      render "review"
-    else
-      flash[:success] = "All tasks successfully added!"
-      redirect_to edit_section_path(@section, :m => "tasks")
-    end
   end
 
 # Begin Section Journey

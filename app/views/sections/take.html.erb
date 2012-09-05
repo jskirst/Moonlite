@@ -23,11 +23,9 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="actions">
-    <input type="hidden" id="listless" name="listless" value="true">
-    <%= submit_tag "Submit", :class => "btn primary", :id => "submit_button" %>
-    <%= link_to "Back", chose_section_path(@section), class: "btn secondary" %>
-  </div>
+<div class="actions">
+  <input type="hidden" id="listless" name="listless" value="true">
+  <%= submit_tag "Submit", :class => "btn primary", :id => "submit_button" %>
+  <%= link_to "Back", chose_section_path(@section), class: "btn secondary" %>
 </div>
 <% end %>

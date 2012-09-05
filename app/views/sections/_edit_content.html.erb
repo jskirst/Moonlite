@@ -10,7 +10,6 @@
   <div style="padding: 20px;">
     <p>You have not added any content for this section yet. Start by doing one of the following:</p>
     <ul>
-      <li style="padding:5px">Find relevent <%= link_to "Wikipedia articles or Youtube videos", research_section_path(section, :m => "topics") %>.</li>
       <li style="padding:5px">Import a <%= link_to "PDF, Microsoft Word document, or Powerpoint", import_content_section_path(section) %>.</li>
       <li style="padding:5px">Start with a <%= link_to "blank HTML editor", html_editor_section_path(section) %>.</li>
     </ul>
@@ -18,8 +17,7 @@
   <% else %>
     <% if !section.instructions.blank? %>
     <div style="float:right; margin-bottom: 20px;">
-      <%= link_to "Edit", research_section_path(section, :m => "edit"), :class => "btn primary" %>
-      <%= link_to "Advanced Edit", html_editor_section_path(section, :source => "html"), :class => "btn primary" %>
+      <%= link_to "Edit", html_editor_section_path(section, :source => "html"), :class => "btn primary" %>
     </div>
     <div style="padding: 30px;">
       <%= section.instructions.html_safe %>

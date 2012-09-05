@@ -7,10 +7,14 @@
   <% @persona.path_personas.each do |pp| %>
   <tr>
     <td style="width: 70px; padding: 5px;">
-      <%= image_tag pp.path.path_pic, :size => "60x60" %>
+      <%= link_to pp.path do %>
+        <%= image_tag pp.path.path_pic, :size => "60x60" %>
+      <% end %>
     </td>
     <td>
-      <p><strong><%= pp.path.name %></strong></p>
+      <%= link_to pp.path do %>
+        <p><strong><%= pp.path.name %></strong></p>
+      <% end %>
     </td>
   </tr>  
   <% end %>

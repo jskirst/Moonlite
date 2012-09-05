@@ -74,13 +74,11 @@
     </table>
   </div>
 </div>
-<div class="row">
-  <div class="actions">
-    <input type="hidden" id="listless" name="listless" value="true">
-    <%= submit_tag "Next", :class => "btn primary", :id => "submit_button" %>
-    <%= image_tag "/images/loading.gif", :size => "23x23", :style => "vertical-align:middle; margin-left: 5px; display:none;", :class => "loading_image" %>
-    <% unless @section.instructions.blank? %>
-      <%= link_to "Review Section Content", @section, style: "float:right;" %>
-    <% end %>
-  </div>
+<div class="actions">
+  <input type="hidden" id="listless" name="listless" value="true">
+  <%= submit_tag "Next", :class => "btn primary", :id => "submit_button" %>
+  <%= image_tag "/images/loading.gif", :size => "23x23", :style => "vertical-align:middle; margin-left: 5px; display:none;", :class => "loading_image" %>
+  <% unless @section.instructions.blank? %>
+    <%= link_to "Review Section Content", @section, style: "float:right;" %>
+  <% end %>
 </div>
