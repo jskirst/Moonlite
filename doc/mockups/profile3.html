@@ -1,0 +1,641 @@
+<html>
+        <head>
+<link href='http://fonts.googleapis.com/css?family=Dosis:400,600|Arvo:700italic|Muli' rel='stylesheet' type='text/css'>
+
+<link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="buildinternet-mosaic-ef45e11/js/mosaic.1.0.1.js"></script>
+
+<script type="text/javascript">  
+        
+        jQuery(function($){
+                
+                $('.bar2').mosaic({
+                        animation	:	'slide'		//fade or slide
+                });
+    
+    
+
+                $('.comment').click({
+                        animation	:	'slide',	//fade or slide
+                        hover_x		:	'400px'		//Horizontal position on hover
+                });
+  });
+
+    
+</script>
+<style>
+        .topbar {
+        height: 40px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10000;
+        overflow: visible;
+
+}
+.container {
+        width: 940px;
+        margin-left: auto;
+        margin-right: auto;
+        zoom: 1;
+}
+.topbar h3 a, .topbar .brand {
+float: left;
+display: block;
+padding: 0px 20px 12px;
+margin-left: -20px;
+color: white;
+font-weight: 200;
+line-height: 1;
+text-decoration: none;
+font: normal 18px muli, sans-serif;
+
+
+}
+    body{
+        background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');
+        background-repeat:no-repeat;
+        background-attachment:fixed;
+        background-size:100% 100%;
+    }
+    #homepage{
+        border-color: #D5D5D5;
+        border-style: solid;
+        border-width: 1px;
+        border-top:none;
+        border-radius:3px;
+        border-top-right-radius: 0px;
+        border-top-left-radius: 0px;
+        padding:20px 15px;
+        width:932px;
+        margin:0 auto;
+        background-color: white;
+        margin-top:38px;
+        background: url('https://twimg0-a.akamaihd.net/a/1343405872/t1/img/wash-white-30.png');
+        font-family: muli,sans-serif;
+        color:#333;     
+    }
+    #topsection{
+        margin: 0;
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-radius: 6px;
+        position:relative;
+        background-clip: padding-box;
+        color:#333;
+        background-color:white;
+        margin-bottom:10px;
+        
+    }
+    #updatespace{
+        background-color: white;
+        border-radius:6px;
+        padding: 12px 0 9px 13px;
+        overflow: hidden;
+    }
+    .bigheaderimage{
+        height:160px;
+        width:160px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;
+        margin-right: 12px;
+        border-radius:4px;
+    }
+    .rightofbigheaderimage{
+        display:inline-block;
+    }
+    #topboxcontent{
+        width:729px;
+    }
+    #topboxcontent h1{
+        margin:0px;
+        font-size:40px;
+        display:inline;
+    }
+    #topboxcontent h3{
+        margin-bottom:9px;
+        font-style:italic;
+        color:#666666;
+    }
+    .profilepersonaicons{
+        list-style-type: none;
+        margin:3px 0px 13px 0px;
+        display:inline;
+        margin-left:4px;
+    }
+    .profilepersonaicons li{
+        display:inline-block;
+        margin-right:8px;
+        height:30px;
+        width:30px;
+    }
+    .profilepersonaicons img{
+        margin-right:8px;
+        height:30px;
+        width:30px;
+    }
+    .userctrlpanel{
+        display:inline-block;
+        margin-top:-3px;
+        float:right;
+    }
+    .userctrlpanel button{
+        float:right;
+    }
+    .userctrlpanel p{
+        margin:31px 0 0 0;
+        color:#404040;
+        font-weight: bold;
+        font-size:12px;
+        display:none;
+    }
+    .userctrlpanel span{
+        font-size:11px;
+        color:#404040;
+        display:none;
+    }
+    .challengecarousel{
+        display:inline-block;
+    }
+    .inlinedisplay{
+        list-style-type: none;
+        position:relative;
+        margin: 37px 0 0 0;
+        bottom:6px;
+    }
+    .inlinedisplay li{
+        display:inline;
+        
+    }
+    .details	
+            h4{ margin:9px 10px 10px 10px; font:300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
+            p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
+            a{ text-decoration:none; }
+
+.bar2 .mosaic-overlay {
+    bottom:-20px;
+    height:40px;
+    opacity:0.8;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+    filter:alpha(opacity=80);
+    }
+    
+.bar2 .mosaic-overlay:hover {
+    opacity:1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter:alpha(opacity=100);
+    text-decoration: none;
+    }
+
+.mosaic-block {
+    display:inline-block;
+    position:relative;
+    overflow:hidden;
+    width:200px;
+    height:80px;
+    margin-right:10px;
+    background:#111 url(../img/progress.gif) no-repeat center center;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;
+}
+
+.mosaic-backdrop {
+    display:none;
+    position:absolute;
+    top:0;
+    height:100%;
+    width:100%;
+    background:#111;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;
+}
+
+.mosaic-overlay {
+    display:none;
+    z-index:5;
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#111;
+}
+    #leftrail{
+        width:270px;
+        display:block;
+        text-shadow: 0 1px 0 white;
+        border: 1px solid rgba(0, 0, 0, .1);
+        position: relative;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        background-clip:padding-box;
+        background-color:#F9F9F9;
+        padding:12px;
+
+    }
+
+    .leftrailcontent{
+        list-style-type: none;
+        display:list-item;
+        margin-top:3px;
+        
+    }
+    .leftrailicon{
+        height:46px;
+        width:46px;
+        border-radius:3px;
+        margin-right:3px;
+    }
+    .leftbox{
+        text-shadow: 0 1px 0 white;
+        border: 1px solid rgba(0, 0, 0, .1);
+        font-size:12px;
+        position: relative;
+        margin-bottom: 10px;
+        line-height: 16px;
+        border-radius: 6px;
+        display:block;
+    }
+    .leftboxheader{
+        background-color: #F9F9F9;
+        border-top-right-radius: 5px;
+        border-top-left-radius: 5px;
+        padding:10px 12px;
+        border-bottom: 1px solid #DDD;
+        font-weight: bold;
+        letter-spacing: .14em;
+    }
+    .leftboxfooter{
+        background-color:whitesmoke;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        padding: 10px 12px;
+    }
+    .leftboxfooter ul{
+        list-style-type:none;
+        margin:0;
+    }
+    .leftboxfooter span{
+        font-size:11px;
+        color:gray;
+    }
+    .post{
+            padding:12px;
+            
+    }
+    .post:hover{
+            background-color:#F9F9F9;
+            border-radius: 4px;
+    }
+    .post:hover .postspace{
+            background-color:#F9F9F9;
+            border-radius: 4px;
+            
+    }
+    .postphotospace{
+           display:inline-block;
+           vertical-align: top;
+           margin-right:12px;
+    }
+    .postspace{
+           display: inline-block;
+           vertical-align: top;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+            background-color:white;
+            border-color:#ccc;
+            border-style:solid;
+            border-width: 1px;
+            margin:0;
+            vertical-align: top;
+            position:relative;
+            font:normal 13px arial, sans-serif;
+            margin-right:auto;
+            margin-left:auto;
+            padding: 0 12px;
+            width:524px;
+    }
+    .photo{
+            border-radius:4px;
+            width=50px;
+            height=50px;
+    }
+    .username{
+            text-decoration: none;
+            color:#005C1F;
+    }
+    .posttext{
+            margin: -2px -12px 0 -12px;
+            padding: 3px 12px;
+            background-color:#E5F5EA;
+    }
+    .leveltext{
+            font-weight: bold;
+    }
+    .challengetext{
+            font-weight: bold;
+            text-decoration:none;
+            color:black;
+            display:inline;
+    }
+    .enrolledminiimages{
+            height:13px;
+            width:13px;
+    }
+    #miniposttext{
+            font:normal 10px arial, sans-serif;
+    }
+    .newsfeed{
+            border: 1px solid rgba(0, 0, 0, .1);
+            border-radius: 6px;
+            background-clip:padding-box;
+            background-color:white;
+    }
+    .CRimage{
+            max-width:548px;
+            max-height:300px;
+            border-color:#ccc;
+            border-style:solid;
+            border-width: 0px;
+            display:block;
+            margin-left:auto;
+            margin-right:auto;
+            
+    }
+    .crarea{
+            background-color: transparent;
+            background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .2),transparent);
+            border-top: 1px solid rgba(0, 0, 0, .2);
+            top:0;
+            border-bottom: 1px solid rgba(0, 0, 0, .1);
+            bottom:0;
+            right: 0;
+            left:0;
+            margin:12px -12px -7px -12px;
+    }
+    .commentfeed{
+
+        height:300px;
+        width: 200px;
+        border-radius: 4px;
+        background-color:white;
+        vertical-align:top;
+        position:relative;
+        left:337px;
+        position:absolute;
+        
+    }
+    .pointbox{
+            background-color:#002900;
+            font:italic 18px arial, sans-serif;
+            display:inline;
+            color:white;
+            padding: 2px 4px 2px 4px;
+            position:absolute;
+            float:right;
+            bottom:296px;
+            left: 397px;
+            text-align:right;
+            border-bottom-left-radius: 4px;
+            display:none;
+    }
+    .postfooter{
+        color:#999;
+        font-size:11px;
+        text-align: right;
+        margin-bottom:-6px;
+    }
+    .postfooter{
+        text-align: right;
+        margin-right:-13px;
+    }
+    .leftstuff{ 
+        float:left;
+        display:inline-block;
+        margin-top:3px;
+    }
+    .leftstuff a{
+        cursor:hover;
+        text-decoration:none;
+        color: #004700;
+    }
+    .leftstuff img{
+        height:26px;
+        width:26px;
+    }
+    .comment{
+        position:relative;
+        bottom:4px;
+    }
+    .posttimestamp{
+        display:inline-block;
+    }
+    .span5{
+        display:inline-block;
+        vertical-align: top;
+        margin-right:7px
+    }
+    .span11{
+        display: inline-block;
+        vertical-align: top;
+        overflow:hidden;
+
+    }
+</style>
+
+        </head>
+<body>
+    <nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown">
+    <div class="fill">
+      <div class="container">
+        <h3><a href="/" style="font-size: 26px;">MetaBright</a></h3>
+      </div>
+    </div>
+  </nav>
+    <div id="homepage">
+        <div id="topsection">
+                <div id="updatespace">
+                        <img class="bigheaderimage" src="http://www.sas.upenn.edu/~kimg/images/stickfigure.gif">
+                        <div class="rightofbigheaderimage">
+                        <div id="topboxcontent">
+                                <div class="span11">
+                                        <h1>Nathaniel Sokoll-Ward</h1>
+                                        <ul class="profilepersonaicons">
+                                                <li><img src="http://www.placekitten.com/100/100"></li>
+                                        </ul>
+                                </div>
+                                <div class="userctrlpanel">
+                                        <button class="btn danger">Edit</button>
+                                        <p>Rebecca Freeman</p>
+                                        <span id="level">Level 19</span> � <span id="points">12,439 pts</span>
+                                        
+                                </div>
+                        </div>
+                        <div class="challengecarousel">
+                                <ul class="inlinedisplay">
+                                        <li>
+                                           <div class="mosaic-block bar2">
+                                               <a href="#" target="_blank" class="mosaic-overlay">
+                                                   <div class="details">
+                                                       <h4>New Challenge added!</h4>
+                                                       <p>Kitten Throwing!</p>
+                                                   </div>
+                                               </a>
+                                               <div><img class="mosaic-backdrop" src="http://www.placekitten.com/200/80"/></div>
+                                           </div>
+                                        </li>
+                                        <li>
+                                           <div class="mosaic-block bar2">
+                                               <a href="#" target="_blank" class="mosaic-overlay">
+                                                   <div class="details">
+                                                       <h4>Just 1 level away...</h4>
+                                                       <p>From unlocking the Hacker persona!</p>
+                                                   </div>
+                                               </a>
+                                               <div><img class="mosaic-backdrop" src="http://www.placekitten.com/g/200/80"/></div>
+                                           </div>
+                                        </li>
+                                        <li>
+                                           <div class="mosaic-block bar2">
+                                               <a href="#" target="_blank" class="mosaic-overlay">
+                                                   <div class="details">
+                                                       <h4>Our site just got updated!</h4>
+                                                       <p>Take the grand tour!</p>
+                                                   </div>
+                                               </a>
+                                               <div><img class="mosaic-backdrop" src="http://www.placekitten.com/200/80"/></div>
+                                           </div>
+                                        </li>
+                                </ul>  
+                        </div>
+                        </div>
+                </div>
+        </div>
+        <div class="span5">
+                <div class="leftbox">
+                        <div class="leftboxheader">
+                                About me
+                        </div>
+                        <div class="leftboxfooter">
+                                <span>Author of What the Plus! Google+ for the Rest of Us, Enchantment: The Art of Changing Hearts, Minds, and Actions and former chief evangelist of Apple. 
+                                I publish approximately five-ten posts per day. My posts are numbered so that you can tell if you've missed any during the day. Each night at midnight Pacific time, I reset to 0.
+                                The topics that I focus on are marketing, enchantment, social media, entrepreneurship, innovation, venture capital, science, and photography.</span>
+                        </div>
+                </div>
+                <div class="leftbox">
+                        <div class="leftboxheader">
+                                My Info
+                        </div>
+                        <div class="leftboxfooter">
+                                <ul>
+                                        <li>Email</li>
+                                        <li>Links (partially autopopulated by sign up method)</li>
+                                        <li>Education</li>
+                                        <li>Employment</li>
+                                        <li>Location</li>
+                                        <li>*user created field*</li>
+                                </ul>
+                        </div>
+                </div>
+                <div class="leftbox">
+                        <div class="leftboxheader">
+                                My badges
+                        </div>
+                        <div class="leftboxfooter">
+                                <li class="leftrailcontent">
+                                    <a href="www.metabright.com/challenge">
+                                        <img src="http://3.bp.blogspot.com/_5r0jejB0yKM/SON-WwxWr8I/AAAAAAAAAP8/loLwzvi6oEo/s320/phish.jpeg" class="leftrailicon">
+                                    </a><a href="www.metabright.com/challenge">
+                                        <img src="http://www.theuntz.com/images/members/events/5954/the-disco-biscuits-at-best-buy-theater-4-14-2-featured.jpg" class="leftrailicon">
+                                    </a>
+                                    <a href="www.metabright.com/challenge">
+                                        <img src="http://c438342.r42.cf2.rackcdn.com/wp-content/uploads/2011/01/grateful-dead-260x256.jpg" class="leftrailicon">
+                                    </a>
+                                </li>
+                        </div>
+                </div>
+        </div>
+        <div class="span11">
+                 <div class="newsfeed">
+                        <div class="post">
+                                <div class="postphotospace">
+                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+                                </div>
+                                <div class="postspace">
+                                        <div class="postheader">
+                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+                                        </div>
+                                        <div class="posttext">
+                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+                                        </div>
+                                        <div class="postfooter">
+                                                <div class="leftstuff">
+                                                    <a class="stoney" href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/Bigstoney.png"></a> � <a class="comment" href="#">Comment</a>
+                                                </div>
+                                                <div class="posttimestamp">
+                                                    <p>July 23, 2012 3:12pm</p>
+                                                </div>
+                                        </div> 
+                                </div>
+                        </div>
+                        <div class="post">
+                                <div class="postphotospace">
+                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+                                </div>
+                                <div class="postspace">
+                                        <div class="postheader">
+                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+                                        </div>
+                                        <div class="posttext">
+                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+                                        </div>
+                                        <div class="CRarea">
+                                                <img src="http://chzderp.files.wordpress.com/2012/07/hurr-durr-derp-face-bertmern.jpg" alt class="CRimage">
+                                            <div class="pointbox">
+                                                + 3,400 pts
+                                            </div>
+                                        </div>
+                                        <div class="postfooter">
+                                                <div class="leftstuff">
+                                                    <a class="stoney" href="#">Stoney</a> � <a class="comment" href="#">Comment</a>
+                                                </div>
+                                                <div class="posttimestamp">
+                                                    <p>July 23, 2012 3:12pm</p>
+                                                </div>
+                                        </div>
+                                      
+                                </div>
+                        </div>
+                        <div class="post">
+                                <div class="postphotospace">
+                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+                                </div>
+                                <div class="postspace">
+                                        <div class="postheader">
+                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+                                        </div>
+                                        <div class="posttext">
+                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+                                        </div>
+                                        <div class="CRarea">
+                                            <img src="http://www.placekitten.com/550/300" alt class="CRimage">
+                                            <div class="commentfeed">
+                                                Comments go here.
+                                            </div>
+                                            <div class="pointbox">
+                                                + 3,400 pts
+                                            </div>
+                                        </div>
+                                        <div class="postfooter">
+                                                <div class="leftstuff">
+                                                    <a class="stoney" href="#">Stoney</a> � <a class="comment" href="#">Comment</a>
+                                                </div>
+                                                <div class="posttimestamp">
+                                                    <p>July 23, 2012 3:12pm</p>
+                                                </div>
+                                        </div>
+                                      
+                                </div>
+                        </div>
+                </div>
+        </div>
+    </div>
+</body>
+
+</html>
