@@ -6,8 +6,20 @@ class UsersController < ApplicationController
   before_filter :admin_only, only: [:adminize, :index, :set_type]
   
   def show
-   @enrolled_paths = @user.enrolled_paths.where("paths.is_public = ?", true)
-   @title = @user.name
+    if params[:task]
+      all_responses = @user.completed_tasks.joins(:submitted_answer)
+      @newsfeed_items = [all_responses.find_by_task_id(params[:task])]
+    elsif params[:order] && params[:order] == "date"
+      all_responses = @user.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+    else
+      all_responses = @user.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    end  
+    @newsfeed_items = all_responses if @newsfeed_items.nil?
+    
+    @creative_tasks = all_responses.collect { |item| item.task }
+    @enrolled_paths = @user.enrolled_paths.where("paths.is_public = ?", true)
+    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @title = @user.name
   end
   
   def index

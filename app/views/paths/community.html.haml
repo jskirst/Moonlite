@@ -37,41 +37,4 @@
               %span.level lvl. #{entry.user.level(@path)}
               %span.points= entry.score
     %div.span11
-      %div.newsfeed
-        %div.leftboxheader
-          %div
-            %span Stream
-            %a.btn.leftbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
-            = link_to "Date", community_path_path(@path, order: "date"), class: "btn midbtn"
-            = link_to "Votes", community_path_path(@path, order: "votes"), class: "btn rightbtn"
-          %div.questions_filter{ style: "display:none;" }
-            %p{ style: "font-size: 13px; margin: 10px 5px; color: black;" } Click on one of the questions below to see responses only for that question.
-            %ol
-              - @path.sections.each do |s|
-                - s.creative_tasks.each do |task|
-                  %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), community_path_path(@path, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
-        - @responses.each do |r|
-          %div.post
-            %div.postphotospace
-              = image_tag r.user.profile_pic, class: "photo"  
-            %div.postspace
-              %div.postheader
-                %h3
-                  %a.username= r.user.to_s
-                %div.votingandpointsarea
-                  = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
-                    %div.vote_count= r.submitted_answer.total_votes.to_i
-              %div.posttext.leveltext= r.task.question
-              %div.CRarea
-              - if r.task.answer_sub_type == 100
-                %blockquote{ style: "margin:20px;" }= r.submitted_answer.content
-              - elsif r.task.answer_sub_type == 101
-                = link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank"
-              %div.postfooter
-                %div.leftstuff
-                  %a.comment{ onclick: "$(this).parent().parent().find('.comments').slideDown();" } Comment(#{r.submitted_answer.comments.size})
-                %div.posttimestamp
-                  %p= r.created_at
-                %div.comments{ style: "display:none; text-align: left;" }
-                  = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id }
+      = render "shared/newsfeed", { newsfeed_items: @responses }

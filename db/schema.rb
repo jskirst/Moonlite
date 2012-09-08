@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120903225315) do
+ActiveRecord::Schema.define(:version => 20120908223621) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -381,6 +381,12 @@ ActiveRecord::Schema.define(:version => 20120903225315) do
     t.boolean  "is_anonymous",       :default => false
     t.datetime "login_at"
     t.datetime "logout_at"
+    t.string   "description"
+    t.string   "education"
+    t.string   "company_name"
+    t.string   "title"
+    t.string   "location"
+    t.string   "link"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

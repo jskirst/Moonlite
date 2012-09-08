@@ -1,0 +1,97 @@
+:javascript
+  jQuery(function($){
+    $('.bar2').mosaic({
+      animation : 'slide'   //fade or slide
+    });
+    $('.comment').click({
+      animation : 'slide',  //fade or slide
+      hover_x   : '400px'   //Horizontal position on hover
+    });
+  });
+
+%div#homepage
+  %div#topsection
+    %div#updatespace
+      %img.bigheaderimage{ src: "http://www.sas.upenn.edu/~kimg/images/stickfigure.gif" }
+        %div.rightofbigheaderimage
+          %div#topboxcontent
+            %div.span11
+              %h1= @user.name
+              %h3 Super user
+          %div.challengecarousel
+            %ul.inlinedisplay
+              %li
+                %div.mosaic-block.bar2
+                  %a{ href: "#", target: "_blank", class: "mosaic-overlay" }
+                    %div.details
+                      %h4 New Challenge added!
+                      %p Kitten Throwing!
+                %div
+                  %img.mosaic-backdrop{ src: "http://www.placekitten.com/200/80" }
+  %div.row
+    %div.span5
+      %div.leftbox
+        %div.leftboxheader About me
+        %div.leftboxfooter
+          %span= @user.description || "Person of mystery is a mystery..."
+      %div.leftbox
+        %div.leftboxheader My Info
+        %div.leftboxfooter
+          %ul
+            %li Location: #{@user.location || "A galaxy far, far away..."}
+            - if @user.link
+              %li Link: <a href='#{@user.link}' target='_newtab'>#{@user.link}</a>
+            - if @user.education 
+              %li Education: #{@user.education}
+            - if @user.company_name
+              %li Company: #{@user.company_name}  
+            - if @user.title
+              %li Title: #{@user.title}
+      %div.leftbox
+        %div.leftboxheader My badges
+        %div.leftboxfooter
+          %li.leftrailcontent
+            - @enrolled_paths.each do |c|
+              = link_to c do
+                = image_tag c.path_pic, class: "leftrailicon"
+    %div.span11
+      %div.newsfeed
+        %div.leftboxheader
+          %div
+            %span Stream
+            = link_to "Votes", user_path(@user, order: "votes"), class: "btn leftbtn"
+            = link_to "Date", user_path(@user, order: "date"), class: "btn midbtn"
+            %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
+          %div.questions_filter{ style: "display:none;" }
+            - if @creative_tasks.empty?
+              %p There are no responses to be viewed yet.
+            - else
+              %p{ style: "font-size: 13px; margin: 10px 5px; color: black;" } Click on one of the questions below to see the response for that question only.
+              %ol
+                - @creative_tasks.each do |task|
+                  %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), user_path(@user, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
+        - @newsfeed_items.each do |r|
+          %div.post
+            %div.postphotospace
+              = image_tag r.user.profile_pic, class: "photo"  
+            %div.postspace
+              %div.postheader
+                %h3
+                  %a.username= r.user.to_s
+                %div.votingandpointsarea
+                  = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
+                    %div.vote_count= r.submitted_answer.total_votes.to_i
+              %div.posttext.leveltext= r.task.question
+              %div.CRarea
+              - if r.task.answer_sub_type == 100
+                %blockquote{ style: "margin:20px;" }= r.submitted_answer.content
+              - elsif r.task.answer_sub_type == 101
+                = link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank"
+              %div.postfooter
+                %div.leftstuff
+                  %a.comment{ onclick: "$(this).parent().parent().find('.comments').slideDown();" } Comment(#{r.submitted_answer.comments.size})
+                %div.posttimestamp
+                  %p= r.created_at
+                %div.comments{ style: "display:none; text-align: left;" }
+                  = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id }
