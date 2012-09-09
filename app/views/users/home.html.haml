@@ -1,0 +1,74 @@
+:css
+  #topsection { margin: 0; border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position:relative; background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px; }
+  #headerspace { padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; }
+  #updatespace { background-color: #F9F9F9; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; padding: 12px 0 12px 12px; }
+  .inlinedisplay { list-style-type: none; position:relative; margin: 0; }
+  .inlinedisplay li{ display:inline; }
+
+%div#homepage
+  %div#topsection
+    %div#headerspace
+      %div#leftheaderspace News and updates
+    %div#updatespace
+      %ul.inlinedisplay
+        %li
+          %div.mosaic-block.bar2
+            %a{ href: "#", target: "_blank", class: "mosaic-overlay" }
+              %div.details
+                %h4 New Challenge added!
+                %p Kitten Throwing!
+                %div
+                  %img.mosaic-backdrop{ src: "http://www.placekitten.com/200/80" }
+  %div.row
+    %div.span5
+      %div.leftbox
+        %div.leftboxheader Suggested Challenges
+        %div.leftboxfooter
+          %li.leftrailcontent
+          - @suggested_paths.each do |p|
+            = link_to p do
+              = image_tag p.path_pic, class: "leftrailicon"
+      %div.leftbox
+        %div.leftboxheader Enrolled Personas
+        %div.leftboxfooter
+          %li.leftrailcontent
+          - @enrolled_personas.each do |p|
+            = link_to p do
+              = image_tag p.picture, class: "leftrailicon"
+      %div.leftbox
+        %div.leftboxheader Enrolled Challenges
+        %div.leftboxfooter
+          %li.leftrailcontent
+          - @enrolled_paths.each do |p|
+            = link_to p do
+              = image_tag p.path_pic, class: "leftrailicon"
+    %div.span11
+      %div.newsfeed
+        %div.leftboxheader
+          %div
+            %span Stream
+        - @newsfeed_items.each do |r|
+          %div.post
+            %div.postphotospace
+              = image_tag r.user.profile_pic, class: "photo"  
+            %div.postspace
+              %div.postheader
+                %h3
+                  %a.username= r.user.to_s
+                %div.votingandpointsarea
+                  = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
+                    %div.vote_count= r.submitted_answer.total_votes.to_i
+              %div.posttext.leveltext= r.task.question
+              %div.CRarea
+              - if r.task.answer_sub_type == 100
+                %blockquote{ style: "margin:20px;" }= r.submitted_answer.content
+              - elsif r.task.answer_sub_type == 101
+                = link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank"
+              %div.postfooter
+                %div.leftstuff
+                  %a.comment{ onclick: "$(this).parent().parent().find('.comments').slideDown();" } Comment(#{r.submitted_answer.comments.size})
+                %div.posttimestamp
+                  %p= r.created_at
+                %div.comments{ style: "display:none; text-align: left;" }
+                  = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id }

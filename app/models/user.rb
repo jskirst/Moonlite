@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :completed_tasks, :dependent => :destroy
   has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
   has_many :user_personas, :dependent => :destroy
+  has_many :personas, through: :user_personas
   has_many :achievements, :through => :user_achievements
   has_many :comments, :dependent => :destroy
   has_many :leaderboards, :dependent => :destroy
@@ -152,6 +153,7 @@ class User < ActiveRecord::Base
   
   def enroll!(path)
     enrollments.create!(path_id: path.id) unless enrollments.find_by_path_id(path.id)
+    user_personas.create!(persona_id: path.persona.id) unless personas.find(path.persona.id)
   end
   
   def unenroll!(path)

@@ -3,6 +3,7 @@ Metabright::Application.routes.draw do
 	resources :sessions
 	resources :users do
 		member do
+		  get :home
 			get :accept
 			put :join
 			get :set_type
@@ -85,7 +86,7 @@ Metabright::Application.routes.draw do
     end
   end
 	
-	root 				:to => "pages#home"
+	root 				:to => "users#home"
 	
   match '/usage', :to => 'users#usage_reports'
   
