@@ -3,6 +3,7 @@ Metabright::Application.routes.draw do
 	resources :sessions
 	resources :users do
 		member do
+		  get :home
 			get :accept
 			put :join
 			get :set_type

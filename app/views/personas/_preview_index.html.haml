@@ -1,0 +1,32 @@
+:javascript
+  $(function(){
+    $(".persona_select").on("ajax:success", function(xhr, data){
+      $(".exploretiledetailsarea").replaceWith(data);
+    });
+  });
+
+:css
+  .explorenewusercontent{background-color:white; overflow:hidden; width:681px;margin-left:auto;margin-right:auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1); box-shadow: 0 0 30px 12px #888;}
+  .exploreheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
+  .exploreheader span{font: normal 21px 'Muli', sans-serif;}
+  .exploretiles{margin-bottom:15px; }
+  .singleexploretile{display:inline-block; padding:17px 27px 0 21px;}
+  .singleexploretile a{margin:2px; text-decoration:none;}
+  .singleexploretile a:hover img{border:2px solid #3399FF; margin:-2px}
+  .exploretileimage img{border-radius:4px; width:85px;}
+  
+%div.explorenewusercontent
+  %div.exploreheader
+    %h1{ style: "font-size: 23px; margin-bottom: 8px;" }
+      %strong Explore: Pick a path...
+    %div
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px" }
+      %p{ style: "font-size: 15px; line-height: 28px; display:inline;"} Blah Blah Blah
+  %hr{ style: "margin:0px;" }
+  %div.exploretiles
+    - @personas.each do |persona|
+      %div.singleexploretile
+        = link_to preview_persona_path(persona), class: "persona_select", remote: true do
+          %div.exploretileimage
+            = image_tag persona.picture, size: "85x85"
+  = render "personas/preview", { persona: @personas.first }

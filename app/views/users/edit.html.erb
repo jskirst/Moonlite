@@ -1,4 +1,4 @@
-<h1>Edit user</h1>
+<h1 style="border-bottom: 1px solid whitesmoke;">Edit user</h1>
 <%= form_for(@user) do |f| %>
   <%= render 'shared/error_messages', :object => f.object %>
   <div class="field clearfix">
@@ -11,6 +11,36 @@
     <%= f.label :email %>
     <div class="input">
       <%= f.text_field :email %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :description %>
+    <div class="input">
+      <%= f.text_area :description, rows: "3", style: "width: 400px;", placeholder: "Tell us about yourself..." %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :location %>
+    <div class="input">
+      <%= f.text_field :location %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :education %>
+    <div class="input">
+      <%= f.text_field :education %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :company_name %>
+    <div class="input">
+      <%= f.text_field :company_name %>
+    </div>
+  </div>
+  <div class="field clearfix">
+    <%= f.label :title %>
+    <div class="input">
+      <%= f.text_field :title %>
     </div>
   </div>
   <div class="field clearfix">

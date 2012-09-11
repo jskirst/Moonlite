@@ -1,0 +1,14 @@
+:css
+  .topbar-inner, .topbar .fill{ height:40px; background-image: -webkit-linear-gradient(top, #334C80, #1F2E4C)}
+  .topbar { height: 40px;position: fixed;top: 0;left: 0;right: 0; z-index: 10000;overflow: visible;}
+  .topbar h3 a, .topbar .brand {float: left;display: block; padding: 0px 20px 12px; margin-left: -20px; line-height: 1; text-decoration: none; font: normal 18px muli, sans-serif;}
+  .chunk.cloudy { display:inline-block; width:30px; height:40px; background-color:white;opacity:.15; margin-right:28px;z-index: 1;}
+
+%nav.topbar{ "data-scollspy" => "scrollspy", "data-dropdown" => "dropdown" }
+  %div.fill
+    %div{ style: "position:absolute;" }
+      - 6.times do
+        %div.chunk.cloudy
+    %div.container
+      %h3
+        = link_to "Metabright", root_url, style: "font-size: 26px;"

@@ -100,20 +100,14 @@ class Path < ActiveRecord::Base
   end
   
   def self.suggested_paths(user, excluded_path_id = -1)
-    paths = user.enrolled_paths
-    enrolled_path_ids = []
-    if paths.empty?
-      return Path.with_category(user.company.categories.first.id, user)
-    else
-      category_counter = {}
-      paths.each do |p|
-        enrolled_path_ids << p.id
-        category_counter[p.category_id] = category_counter[p.category_id].to_i + 1
-      end
-      category_counter = category_counter.sort_by { |k,v| v }
-      category_counter = category_counter
-      return Path.with_category(category_counter.to_a[-1][0].to_i, user, enrolled_path_ids)
+    #TODO: suggest most popular 
+    personas = user.personas
+    personas = user.company.personas.to_a.last(3) if personas.empty?
+    enrolled_paths = user.enrolled_paths.to_a.collect &:id
+    suggested_paths = personas.to_a.collect do |persona|
+      persona.paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
     end
+    return suggested_paths.flatten.compact
   end
   
   def has_creative_response

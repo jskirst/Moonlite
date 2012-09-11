@@ -1,0 +1,23 @@
+:css
+  #logospace{width:720px;margin-right:auto;margin-left:auto;position: relative;}
+  #landinglogo{width:720px;margin-top:-40px; margin-bottom:-30px; }
+  #buttonspace{ margin-top:30px;}
+  #LogIn a, #Register a{ font-size:20px;width:160px;height:60px;font-weight:bold; text-align: center; vertical-align: center;}
+  #tagline{ width:538px; margin-right:auto; margin-left:auto; text-align:center;}
+  #tagline span{font-size:15px;font-style:italic;}
+  #LogIn{ display:inline;position:relative;margin-left:129px; }
+  #Register{display:inline-block;margin-right:0;position:relative;}
+  .btn.danger{background-color: #971D1C; background-repeat: repeat-x;background-image: -khtml-gradient(linear, left top, left bottom, from(#EE5F5B), to(#971D1C)); background-image: -moz-linear-gradient(top, #EE5F5B, #971D1C);background-image: -ms-linear-gradient(top, #EE5F5B, #971D1C); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EE5F5B), color-stop(100%, #971D1C)); background-image: -webkit-linear-gradient(top, #EE5F5B, #971D1C);ackground-image: -o-linear-gradient(top, #EE5F5B, #971D1C);background-image: linear-gradient(top, #EE5F5B, #971D1C);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee5f5b', endColorstr='#971D1C', GradientType=0);text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: #C43C35 #C43C35 #971D1C;}
+  .container {width: 940px; margin-left: auto; margin-right: auto; zoom: 1; display:inline-block; padding:3px 0 0 142px;}
+  .container h3{ left:68px; }
+    
+%div#logospace
+  %img#landinglogo{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo" }
+%div#tagline
+  %span We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.
+%div#buttonspace
+  %div#LogIn
+    = link_to "Sign In", signin_path, class: "btn danger", remote: true
+    %span{ style: "padding:0 37px; font-size:20px;"} -or-
+    %div#Register
+      = link_to "Register", signin_path, class: "btn danger"

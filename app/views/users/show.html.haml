@@ -12,22 +12,22 @@
 %div#homepage
   %div#topsection
     %div#updatespace
-      %img.bigheaderimage{ src: "http://www.sas.upenn.edu/~kimg/images/stickfigure.gif" }
-        %div.rightofbigheaderimage
-          %div#topboxcontent
-            %div.span11
-              %h1= @user.name
-              %h3 Super user
-          %div.challengecarousel
-            %ul.inlinedisplay
-              %li
-                %div.mosaic-block.bar2
-                  %a{ href: "#", target: "_blank", class: "mosaic-overlay" }
-                    %div.details
-                      %h4 New Challenge added!
-                      %p Kitten Throwing!
-                %div
-                  %img.mosaic-backdrop{ src: "http://www.placekitten.com/200/80" }
+      = image_tag @user.profile_pic, class: "bigheaderimage"
+      %div.rightofbigheaderimage
+        %div#topboxcontent
+          = link_to "Edit Profile", edit_user_path(@user), class: "btn", style: "float:right;"
+          %div.span9{style: "margin-bottom: 40px;"}
+            %h1= @user.name
+        %div.challengecarousel
+          %ul.inlinedisplay
+            %li
+              %div.mosaic-block.bar2
+                %a.mosaic-overlay{ href: "#", target: "_blank" }
+                  %div.details
+                    %h4 New Challenge added!
+                    %p Kitten Throwing!
+              %div
+                %img.mosaic-backdrop{ src: "http://www.placekitten.com/200/80" }
   %div.row
     %div.span5
       %div.leftbox

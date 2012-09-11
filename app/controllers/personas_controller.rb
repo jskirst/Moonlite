@@ -30,8 +30,7 @@ class PersonasController < ApplicationController
   end
   
   def preview
-    @paths = @persona.paths
-    render partial: "preview"
+    render partial: "preview", locals: { persona: @persona }
   end
   
   private

@@ -56,29 +56,10 @@ class UsersController < ApplicationController
   
   def update
     if @user.update_attributes(params[:user])
-      respond_to do |format|
-        format.html do
-          if request.xhr?
-            render :json => {:status => "success"}
-          else params[:user][:path_id]
-            flash[:success] = "Profile successfully updated."
-            redirect_back_or_to @user
-          end
-        end
-      end
+      flash[:success] = "Profile successfully updated."
+      redirect_to @user
     else
-      flash[:error] = @user.errors.full_messages.join(". ")
-      respond_to do |format|
-        format.html do
-          if request.xhr?
-            render :json => @user.errors
-          elsif params[:user][:path_id]
-            redirect_back_or_to continue_path_path(id: params[:user][:path_id])
-          else
-            render 'edit'
-          end
-        end
-      end
+      render 'edit'
     end
   end
   
