@@ -8,7 +8,13 @@ class User < ActiveRecord::Base
     :password, 
     :password_confirmation, 
     :catch_phrase,
-    :is_anonymous
+    :is_anonymous,
+    :description,
+    :title,
+    :company_name,
+    :education,
+    :link,
+    :location
 
   belongs_to :company
   belongs_to :user_role
