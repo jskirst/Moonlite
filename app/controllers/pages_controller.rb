@@ -6,25 +6,22 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     if signed_in?
-      @paths = current_user.enrolled_paths.where("is_published = ?", true)
-      @enrolled_paths = []
-      @completed_paths = []
-      @paths.each do |p|
-        if p.completed?(current_user)
-          @completed_paths << p
-        else
-          @enrolled_paths << p
-        end
+      redirect_to start and return if params[:go] == "start"
+      @enrolled_paths = current_user.enrolled_paths
+      @enrolled_personas = current_user.personas
+      @suggested_paths = Path.suggested_paths(current_user)
+      @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+      @newsfeed_items = []
+      @enrolled_paths.each do |p|
+        @newsfeed_items << p.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 10)
       end
-      if @enable_recommendations
-        @suggested_paths = Path.suggested_paths(current_user)        
-      end
-      @user_events = UserEvent.includes(:user, :company, :path).where("companies.id = ? and users.user_role_id = ?", current_user.company_id, current_user.user_role_id).all(:limit => 20, :order => "user_events.created_at DESC")
+      @newsfeed_items = @newsfeed_items.flatten.sort { |a, b| a.created_at <=> b.created_at }
+      render "users/home"
     else
       if params[:m]
         @first_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).first(4)
         @last_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).last(4)
-        render "consumer_landing", layout: false
+        render "consumer_landing", layout: "landing"
       elsif @is_company
         if @possible_company && @possible_company.enable_custom_landing
           render "company_landing"
@@ -40,10 +37,7 @@ class PagesController < ApplicationController
   
   def start
     @personas = current_company.personas.all
-    @personas = current_company.personas.all
-    @persona = @personas.first
-    @paths = @persona.paths
-    render "getting_started", layout: false
+    render "start", layout: "landing"
   end
   
   def explore

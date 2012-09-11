@@ -86,7 +86,7 @@ Metabright::Application.routes.draw do
     end
   end
 	
-	root 				:to => "users#home"
+	root 				:to => "pages#home"
 	
   match '/usage', :to => 'users#usage_reports'
   

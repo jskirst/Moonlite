@@ -1,17 +1,9 @@
 :javascript
   $(function(){
     $(".persona_select").on("ajax:success", function(xhr, data){
-      $("#persona_preview").html(data);
+      $(".exploretiledetailsarea").replaceWith(data);
     });
   });
-
-    <% @personas.each do |persona| %>
-      <div style="margin:20px; display: inline-block;">
-        <%= link_to preview_persona_path(persona), class: "persona_select", remote: true do %>
-          <%= image_tag persona.picture, class: "photo", style: "width: 90px; height: 90px;" %>
-        <% end %>
-      </div>
-    <% end %>
 
 :css
   .explorenewusercontent{background-color:white; overflow:hidden; width:681px;margin-left:auto;margin-right:auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1); box-shadow: 0 0 30px 12px #888;}
@@ -22,33 +14,19 @@
   .singleexploretile a{margin:2px; text-decoration:none;}
   .singleexploretile a:hover img{border:2px solid #3399FF; margin:-2px}
   .exploretileimage img{border-radius:4px; width:85px;}
-  .exploretiledetailsarea{border: 1px solid rgba(0, 0, 0, .1); border-radius:10px; padding:10px; background-color:whitesmoke; margin:0 21px 11px 21px;}
-  .bigexploreimagespace{display:inline-block; vertical-align: top;}
-  .bigexploreimagespace img{align:left; width:120px; margin-right:10px}
-  .exploredetailsspace{display:inline-block; width:466px;vertical-align: top;}
-  .exploredetailsspace button{float:right; margin-top:10px}
-  .exploretextdetails span{font-size:20px; font-weight:bold; font-style:italic;}
   
 %div.explorenewusercontent
   %div.exploreheader
-    %span{ style: "font: normal 21px 'Muli', sans-serif;" }
+    %h1{ style: "font-size: 23px; margin-bottom: 8px;" }
       %strong Explore: Pick a path...
     %div
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px" }
-      %span Blah Blah Blah
+      %p{ style: "font-size: 15px; line-height: 28px; display:inline;"} Blah Blah Blah
   %hr{ style: "margin:0px;" }
   %div.exploretiles
     - @personas.each do |persona|
       %div.singleexploretile
-        = link_to preview_persona_path(persona), remote: true do
+        = link_to preview_persona_path(persona), class: "persona_select", remote: true do
           %div.exploretileimage
-            = image_tag persona.picture
-  %div.exploretiledetailsarea
-    %div.bigexploreimagespace
-      %img{ src: "http://www.placedog.com/140/140" }
-    %div.exploredetailsspace
-      %div.exploretextdetails
-        %span Title
-        %br
-        %p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it.</div>
-      %button.btn.danger Select
+            = image_tag persona.picture, size: "85x85"
+  = render "personas/preview", { persona: @personas.first }

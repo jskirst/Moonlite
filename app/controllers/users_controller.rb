@@ -5,19 +5,6 @@ class UsersController < ApplicationController
   before_filter :user_only,  only: [:edit, :update]
   before_filter :admin_only, only: [:adminize, :index, :set_type]
   
-  def home
-    @enrolled_paths = current_user.enrolled_paths
-    @enrolled_personas = current_user.personas
-    @suggested_paths = Path.suggested_paths(current_user)
-    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
-    @newsfeed_items = []
-    @enrolled_paths.each do |p|
-      @newsfeed_items << p.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 10)
-    end
-    @newsfeed_items = @newsfeed_items.flatten.sort { |a, b| a.created_at <=> b.created_at }
-    #raise @newsfeed_item.to_yaml
-  end
-  
   def show
     if params[:task]
       all_responses = @user.completed_tasks.joins(:submitted_answer)
