@@ -1,0 +1,27 @@
+%section#dashboard
+  = link_to "Back to Editor", edit_path_path(@path), :class => "btn primary", :style => "float:right;"
+  %h1 Dashboard
+  %div
+    %ul.tabs
+      - if @mode == "statistics"
+        %li.active <a href="#">Statistics</a>
+      - else 
+        %li= link_to "Statistics", dashboard_path_path(@path, mode: "statistics")
+        
+      - if @mode == "tasks"
+        %li.active <a href="#">Tasks</a>
+      - else
+        %li= link_to "Tasks", dashboard_path_path(@path, mode: "tasks")
+        
+      - if @mode == "users"
+        %li.active <a href="#">Users</a>
+      - else
+        %li= link_to "Users", dashboard_path_path(@path, mode: "users")
+        
+  - if @mode == "statistics"
+    = render "dashboard_statistics"
+  - elsif @mode == "tasks"
+    = render "dashboard_unresolved_tasks"
+  - elsif @mode == "users"
+    = render "dashboard_users"
+        
