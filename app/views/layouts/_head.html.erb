@@ -11,3 +11,12 @@
 <% elsif @possible_company && @possible_company.custom_style.mode == 1 %>
   <style><%= @possible_company.custom_style.styles %></style>
 <% end %>
+
+<script>
+$(function(){
+  $('.bar2').mosaic({ animation: 'slide' });
+  $('.explore_link').click(function(){
+    $("#explore_modal").modal('show');
+  })
+})
+</script>

@@ -1,11 +1,16 @@
 class PersonasController < ApplicationController
   before_filter :authenticate
-  before_filter :company_admin, :except => [:show]
-  before_filter :get_from_id, :except => [:new, :create, :index]
-  before_filter :authorized, :except => [:show]
+  before_filter :company_admin, except: [:show]
+  before_filter :get_from_id, only: [:show, :preview, :destroy]
+  before_filter :authorized, except: [:show]
   
   def index
     @personas = current_company.personas
+  end
+  
+  def show
+    @paths = @persona.paths
+    render partial: "show"
   end
   
   def new
@@ -31,6 +36,11 @@ class PersonasController < ApplicationController
   
   def preview
     render partial: "preview", locals: { persona: @persona }
+  end
+  
+  def explore
+    @personas = current_company.personas
+    render partial: "explore"
   end
   
   private

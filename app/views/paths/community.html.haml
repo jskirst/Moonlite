@@ -10,7 +10,7 @@
             %h1= @path.name
             %h3 #{@path.sections.size} sections - #{@path.enrolled_user_count} users
           %div.userctrlpanel
-            %button.btn.primary.large{style: "margin-bottom: 5px;"} Continue
+            %button.btn.large{style: "margin-bottom: 5px;"} Dashboard
             %p= current_user.name
             %span#level Level #{@enrollment.level} - 
             %span#points #{@enrollment.total_points.to_i.to_s} pts

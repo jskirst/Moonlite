@@ -1,0 +1,50 @@
+:javascript
+  $(function(){
+    $(".back_to_preview_index").on("ajax:success", function(xhr, data){
+      $(".explorenewusercontent").fadeOut('fast', function(){
+        $(this).replaceWith(data, function(){
+          $(this).fadeIn();
+        });
+      });
+    });
+    $('.bar2').mosaic({ animation : 'slide' });
+      $('.comment').click({ animation : 'slide', hover_x: '400px' });
+    });
+
+:css
+  .exploreheader{ margin:0px; width:669px;padding:12px 0 0px 12px; background-color:#F9F9F9;}
+  .exploreheader h1 {font-size: 21px; margin-bottom: 10px;}
+  .exploreheader img {width:40px; height: 40px; border-radius:4px; float:left; margin-right: 8px;}
+  .exploretiles {padding:12px;}
+  .exploretiledetailsarea{border-radius:10px; padding:10px 10px 0 10px;}
+  .exploretiles .bigexploreimagespace{display:inline-block; vertical-align: top;}
+  .exploretiles .bigexploreimagespace img{width:120px; margin-right:10px}
+  .exploredetailsspace{display:inline-block; width:485px;vertical-align: top;}
+  .exploredetailsspace button{float:right; margin-top:10px}
+  .exploretextdetails span{font-size:20px; font-weight:bold; font-style:italic;}
+  .details h4{ margin:9px 10px 10px 10px; font:300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
+  .details p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
+  .details button{ padding:3px; float:right; position:relative; right:6px; font-size:10px; font-weight:bold; opacity:1;}
+  .exploretiles .bar2 .mosaic-overlay { bottom:-28px; height:48px;opacity:0.8; -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; filter:alpha(opacity=80); }    
+  .exploretiles .bar2 .mosaic-overlay:hover {opacity:1;-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";filter:alpha(opacity=100);text-decoration: none;}
+  .exploretiles .mosaic-block {margin: 4px 28px 10px 0; display:inline-block;position:relative; overflow:hidden;width:130px; height:130px;background:#111 url(../img/progress.gif) no-repeat center center;box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;}
+  .exploretiles .mosaic-backdrop { display:none; position:absolute; top:0;height:100%;width:100%;background:#111;box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; }
+  .exploretiles .mosaic-overlay {display:none;z-index:5;position:absolute;width:100%;height:100%;background:#111;}
+  .explorenewuserfooter{position:relative; bottom:12px; left:12px;}
+
+%div.explorenewusercontent
+  %div.exploreheader
+    = image_tag @persona.picture
+    %h1 <strong>Explore:</strong> Pick a challenge...
+  %hr{ style: "margin:0" }
+  %div.exploretiles
+    - @paths.each do |path|
+      %div.mosaic-block.bar2
+        = link_to path_url(path), class: "mosaic-overlay" do
+          %div.details
+            %h4 Challenge Title
+            %button.btn.danger Enroll
+        %div 
+          = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
+  %div.explorenewuserfooter
+    = link_to "Back", explore_path, class: "btn back_to_preview_index", remote: true

@@ -62,7 +62,7 @@ class SessionsController < ApplicationController
   
   private
     def track_session(action, user, auth = {})
-      unless user.admin? || user.is_test_user
+      unless user.nil? || user.admin? || user.is_test_user
         if action == :register
           track! :registration_facebook if auth["provider"] == "facebook"
           track! :registration_google if auth["provider"] == "google_oauth2"

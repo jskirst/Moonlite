@@ -72,6 +72,13 @@ task :send_completed_scores => :environment do
     @unsent_enrollments = p.enrollments.where("is_complete = ? and is_score_sent = ?", true, false) 
     puts "Unsent emails:#{@unsent_enrollments.size}"
     @unsent_enrollments.each do |e|
+      if ENV["EMAIL"] && ENV["EMAIL"] != e.user.email
+        puts "skipping user #{e.user.email}"
+        next
+      else
+        puts "not skipping #{e.user.email}"
+      end 
+      
       user = e.user
       puts "Sending to #{user.email}"
       score = p.percentage_correct(user)

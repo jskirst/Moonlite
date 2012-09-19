@@ -61,6 +61,7 @@ Metabright::Application.routes.draw do
 		end
 	end
 	resources :enrollments
+	
 	resources :tasks do
     member do
       put :resolve
@@ -69,12 +70,14 @@ Metabright::Application.routes.draw do
     end
   end
   match '/suggest', to: "tasks#suggest"
+	
 	resources :personas do
 	  member do
-	    get :preview_index
 	    get :preview
 	  end
 	end
+	match '/explore', to: "personas#explore"
+	
 	resources :stored_resources
   resources :comments
   resources :leaderboards
@@ -99,7 +102,6 @@ Metabright::Application.routes.draw do
 	
 	match '/invitation',:to => 'pages#invitation'
 
-  match '/explore',:to => 'pages#explore'
   match '/create',:to => 'pages#create'
   
 	match '/password_reset', :to => 'users#request_send'

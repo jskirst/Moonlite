@@ -1,8 +1,19 @@
+:javascript
+  $(function(){
+    $(".show_persona_select").on("ajax:success", function(xhr, data){
+      $(".explorenewusercontent").fadeOut('fast', function(){
+        $(this).replaceWith(data, function(){
+          $(this).fadeIn();
+        });
+      });
+    });
+  });
+
 :css
   .exploretiledetailsarea       { border: 1px solid rgba(0, 0, 0, .1); border-radius:10px; padding:10px; background-color:whitesmoke; margin:0 21px 11px 21px;}
-  .bigexploreimagespace         { display:inline-block; vertical-align: top;}
-  .bigexploreimagespace img     { align:left; width:120px; margin-right:10px}
-  .exploredetailsspace          { display:inline-block; width:466px;vertical-align: top;}
+  .exploretiledetailsarea .bigexploreimagespace         { display:inline-block; vertical-align: top;}
+  .exploretiledetailsarea .bigexploreimagespace img     { align:left; width:120px; margin-right:10px}
+  .exploredetailsspace          { display:inline-block; width:480px;vertical-align: top;}
   .exploredetailsspace button   { margin-top:10px}
   .exploretextdetails h2        { font-size:23px; font-weight:bold; font-style:italic;}
 
@@ -10,7 +21,8 @@
   %div.bigexploreimagespace
     = image_tag persona.picture, size: "140x140"
   %div.exploredetailsspace
-    %div.exploretextdetails
+    %div.exploretextdetails{ style: "min-height: 95px;" }
       %h2= persona.name
       %p= persona.description
-    %button.btn.danger Choose
+    = link_to persona_path(persona), class: "show_persona_select", remote: true do
+      %button.btn.danger{ style: "float: right;" } Choose

@@ -29,7 +29,7 @@ class PagesController < ApplicationController
           render "landing"
         end
       else
-        render "landing"
+        render "consumer_landing", layout: "landing"
       end
       return
     end

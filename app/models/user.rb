@@ -60,6 +60,7 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_password
   before_save :set_tokens
+  before_save :set_default_user_role
   before_save :check_image_url
   before_save :check_user_type
   
@@ -223,7 +224,13 @@ class User < ActiveRecord::Base
     return enrollments.find_by_path_id(path).level
   end
   
-  private  
+  private
+    def set_default_user_role
+      if self.user_role_id.nil?
+        self.user_role_id = self.company.user_role_id
+      end
+    end
+    
     def check_image_url
       unless self.image_url.nil?
         self.image_url = nil if self.image_url.length < 9

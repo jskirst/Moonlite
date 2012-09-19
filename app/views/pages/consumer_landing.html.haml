@@ -10,14 +10,17 @@
   .btn.danger{background-color: #971D1C; background-repeat: repeat-x;background-image: -khtml-gradient(linear, left top, left bottom, from(#EE5F5B), to(#971D1C)); background-image: -moz-linear-gradient(top, #EE5F5B, #971D1C);background-image: -ms-linear-gradient(top, #EE5F5B, #971D1C); background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EE5F5B), color-stop(100%, #971D1C)); background-image: -webkit-linear-gradient(top, #EE5F5B, #971D1C);ackground-image: -o-linear-gradient(top, #EE5F5B, #971D1C);background-image: linear-gradient(top, #EE5F5B, #971D1C);filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee5f5b', endColorstr='#971D1C', GradientType=0);text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);border-color: #C43C35 #C43C35 #971D1C;}
   .container {width: 940px; margin-left: auto; margin-right: auto; zoom: 1; display:inline-block; padding:3px 0 0 142px;}
   .container h3{ left:68px; }
+  .landingbuttontext{color:white; font-size:13px; display:inline-block; position:relative; bottom:7px; left:8px; font-weight: bold;}
     
 %div#logospace
   %img#landinglogo{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo" }
 %div#tagline
   %span We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.
 %div#buttonspace
-  %div#LogIn
-    = link_to "Sign In", signin_path, class: "btn danger", remote: true
-    %span{ style: "padding:0 37px; font-size:20px;"} -or-
-    %div#Register
-      = link_to "Register", signin_path, class: "btn danger"
+  %center
+    = link_to "/auth/google_oauth2", style: "margin-right:15px;", class: "btn danger" do
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png" }
+      %span.landingbuttontext Register with Google
+    = link_to "/auth/facebook", class: "btn danger" do
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png" }
+      %span.landingbuttontext Register with Facebook

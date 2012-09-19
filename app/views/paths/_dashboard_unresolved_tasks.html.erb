@@ -35,14 +35,14 @@ $(function(){
             <input type="hidden" value="<%= ut.id %>" name="completed_task[id]">
             <% unless @path.enable_voting %>
             <select name="completed_task[points]">
-              <option value="0">No points</option>
-              <option value="5">Half points</option>
               <option value="10">Full points</option>
+              <option value="5">Half points</option>
+              <option value="0">No points</option>
             </select>
             <%= submit_tag "Save", :class => "btn primary", :style => "margin-left: 10px;" %>
+            <% end %>
             <%= submit_tag "Delete", :class => "btn danger", :style => "margin-left: 10px;" %>
             <span class="messages"></span>
-            <% end %>
           </form>
         </div>
       </li> 

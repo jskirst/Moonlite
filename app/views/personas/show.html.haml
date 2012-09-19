@@ -1,8 +1,0 @@
-<%= image_tag @persona.picture, class: "photo", style: "height: 150px; width: 150px;" %>
-<% @paths.each do |path| %>
-  <div style="margin:20px; display: inline-block;">
-    <%= link_to path_path(path) do %>
-      <%= image_tag path.path_pic, class: "photo", style: "width: 100px; height: 100px;" %>
-    <% end %>
-  </div>
-<% end %>
