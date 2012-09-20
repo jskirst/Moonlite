@@ -17,11 +17,16 @@
             %p{ style: "font-size: 16px; font-weight:bold; margin-bottom: 20px;" }= r.task.question
             - if r.task.answer_type == 2
               %p= Answer.find(r.answer_id).content
-            - elsif r.task.answer_sub_type == 100
-              %blockquote
-                %p= r.submitted_answer.content
-            - elsif r.task.answer_sub_type == 101
-              %p= image_tag sanitize(r.submitted_answer.content), :style => "height: 200px;"
-            - elsif r.task.answer_sub_type == 102
-              %p= youtube_embed(r.submitted_answer.content).html_safe
-            %p{ style: "font-style: italic; font-size: 13px;"} #{r.points_awarded} points awarded
+              - if r.points_awarded > 0
+                %p{ style: "font-style: italic; font-size: 13px;"} Correct
+              - else
+                %p{ style: "font-style: italic; font-size: 13px;"} Wrong
+            - else
+              - if r.task.answer_sub_type == 100
+                %blockquote
+                  %p= r.submitted_answer.content
+              - elsif r.task.answer_sub_type == 101
+                %p= image_tag sanitize(r.submitted_answer.content), :style => "height: 200px;"
+              - elsif r.task.answer_sub_type == 102
+                %p= youtube_embed(r.submitted_answer.content).html_safe
+              %p{ style: "font-style: italic; font-size: 13px;"} #{r.points_awarded} points awarded
