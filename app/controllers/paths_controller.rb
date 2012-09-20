@@ -176,13 +176,6 @@ class PathsController < ApplicationController
     end
     redirect_to collaborators_path_path(@path)
   end
-  
-  def dashboard
-    @page = params[:page] || 1
-    @time = (params[:time] || 7).to_i
-    @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
-  end
 
 # Begin Path Journey
   
@@ -324,6 +317,28 @@ class PathsController < ApplicationController
     end
     
     @activity_stream = @path.activity_stream
+  end
+  
+# Administration #
+  
+  def dashboard
+    @page = params[:page] || 1
+    @time = (params[:time] || 7).to_i
+    @mode = params[:mode] || "statistics"
+    if @mode == "statistics"
+      @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
+    elsif @mode == "tasks"
+      @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
+    elsif @mode == "users"
+      @enrolled_users = @path.enrolled_users
+      if params[:user]
+        @user = @path.enrolled_users.find(params[:user])
+      else
+        @user = @path.enrolled_users.first
+      end
+      @responses = @user.completed_tasks.joins({:task => { :section => :path}}).where("paths.id = ?", @path.id)
+      @percentage_correct = @path.percentage_correct(@user)
+    end
   end
 
   private
