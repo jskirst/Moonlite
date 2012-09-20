@@ -368,7 +368,8 @@ class PathsController < ApplicationController
       else
         @user = @path.enrolled_users.first
       end
-      @responses = @user.completed_tasks.joins(:submitted_answer, {:task => { :section => :path}}).where("paths.id = ?", @path.id)
+      @responses = @user.completed_tasks.joins({:task => { :section => :path}}).where("paths.id = ?", @path.id)
+      @percentage_correct = @path.percentage_correct(@user)
     end
   end
   
