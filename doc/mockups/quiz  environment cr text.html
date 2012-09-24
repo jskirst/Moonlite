@@ -1,0 +1,454 @@
+<html>
+  <head>
+    <link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Dosis:400,600|Arvo:700italic|Muli:400,400italic' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script src="Highcharts/js/highcharts.js"></script>
+    <script src="Highcharts/js/modules/exporting.js"></script>
+    <script>;
+(function($) {
+/*
+        Function: initCounter
+
+        Initializes the scrolling counter using the value currently displayed in the element.
+
+        Parameters:
+
+            $this - the counter container
+            e - jQuery Event object
+
+        See Also:
+
+            <animateDigit>
+    */
+
+    function initCounter($this, e) {
+        $this.find('.digit').each(function() {
+            var $display = $(this);
+            var $digit = $display.find('span');
+
+            $digit.html([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].reverse().join('<br/>'))
+            $digit.css({
+                top: '-' + (parseInt($display.height()) * (10 - parseInt($digit.attr('title')))) + 'px'
+            });
+        });
+
+        animateDigit($this.find('.digit:last'), e);
+    }
+
+/*
+        Function: animateDigit
+
+        Moves the digit indicated by $this one step. If the end of the counter has been reach, the subsequent digit(s) will also be rotated
+
+        Parameters:
+
+            $this - digit to be rotated
+            e - jQuery Event object
+    */
+
+    function animateDigit($this, e) {
+        var $counter = $this.closest('.counter');
+        var $display = $this;
+        var $digit = $display.find('span');
+
+        // If we've reached the end of the counter, tick the previous digit
+        if (parseInt($digit.css('top')) == -1 * parseInt($display.height())) {
+            animateDigit($display.prevAll('.digit:first'), e);
+        }
+
+        $digit.animate({
+            top: '+=' + $display.height() + 'px'
+        }, 500, function() {
+            // Repeat the animation on a semi-random interval
+            if ($display.index('.counter .digit') == $counter.find('.digit').length - 1) {
+                setTimeout(function() {
+                    animateDigit($display, e);
+                }, Math.max(550, Math.random() * 10000));
+            }
+
+            // If we've reached the end of the counter, loop back to the top
+            if (parseInt($digit.css('top')) > -1 * parseInt($display.height())) {
+                $digit.css({
+                    top: '-' + (parseInt($display.height()) * 10) + 'px'
+                });
+            }
+        });
+    }
+
+    $(function() {
+        initCounter($('.counter'), $.Event('load'));
+    });
+})(jQuery);
+    </script>
+    
+    <script type="text/javascript">
+$(function() {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'CRprogressbar',
+                type: 'bar',
+                margin: [5, 25, 20, 20]
+            },
+            credits: {
+              enabled: false
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                min:0,
+                categories: ['Your Progress'],
+                labels: {
+                    enabled:false,
+                }
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: null
+                }
+            },
+            legend: {
+                backgroundColor: '#FFFFFF',
+                reversed: true,
+                align:'right',
+                layout:'vertical',
+                verticalAlign: 'top',
+                enabled:false
+            },
+            tooltip: {
+                formatter: function() {
+                    return '' + this.series.name + ': ' + this.y + '';
+                }
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+            navigation: {
+            buttonOptions: {
+                enabled: false
+                }
+            },
+            series: [{
+                name: 'Percent Complete',
+                data: [20]}]
+        });
+    });
+
+});
+
+Highcharts.theme = {
+   colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee",
+      "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+   chart: {
+      backgroundColor: {
+         linearGradient: [0, 0, 0, 400],
+         stops: [
+            [0, 'rgb(96, 96, 96)'],
+            [1, 'rgb(16, 16, 16)']
+         ]
+      },
+      borderWidth: 0,
+      borderRadius: 15,
+      plotBackgroundColor: null,
+      plotShadow: false,
+      plotBorderWidth: 0
+   },
+   title: {
+      style: {
+         color: '#FFF',
+         font: '16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+      }
+   },
+   subtitle: {
+      style: {
+         color: '#DDD',
+         font: '12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+      }
+   },
+   xAxis: {
+      gridLineWidth: 0,
+      lineColor: '#999',
+      tickColor: '#999',
+      labels: {
+         style: {
+            color: '#999',
+            fontWeight: 'bold'
+         }
+      },
+      title: {
+         style: {
+            color: '#AAA',
+            font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+         }
+      }
+   },
+   yAxis: {
+      alternateGridColor: null,
+      minorTickInterval: null,
+      gridLineColor: 'rgba(255, 255, 255, .1)',
+      lineWidth: 0,
+      tickWidth: 0,
+      labels: {
+         style: {
+            color: '#999',
+            fontWeight: 'bold'
+         }
+      },
+      title: {
+         style: {
+            color: '#AAA',
+            font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+         }
+      }
+   },
+   legend: {
+      itemStyle: {
+         color: '#CCC'
+      },
+      itemHoverStyle: {
+         color: '#FFF'
+      },
+      itemHiddenStyle: {
+         color: '#333'
+      }
+   },
+   labels: {
+      style: {
+         color: '#CCC'
+      }
+   },
+   tooltip: {
+      backgroundColor: {
+         linearGradient: [0, 0, 0, 50],
+         stops: [
+            [0, 'rgba(96, 96, 96, .8)'],
+            [1, 'rgba(16, 16, 16, .8)']
+         ]
+      },
+      borderWidth: 0,
+      style: {
+         color: '#FFF'
+      }
+   },
+
+
+   plotOptions: {
+      line: {
+         dataLabels: {
+            color: '#CCC'
+         },
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      spline: {
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      scatter: {
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      candlestick: {
+         lineColor: 'white'
+      }
+   },
+
+   toolbar: {
+      itemStyle: {
+         color: '#CCC'
+      }
+   },
+
+   navigation: {
+      buttonOptions: {
+         backgroundColor: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#606060'],
+               [0.6, '#333333']
+            ]
+         },
+         borderColor: '#000000',
+         symbolStroke: '#C0C0C0',
+         hoverSymbolStroke: '#FFFFFF'
+      }
+   },
+
+   exporting: {
+      buttons: {
+         exportButton: {
+            symbolFill: '#55BE3B'
+         },
+         printButton: {
+            symbolFill: '#7797BE'
+         }
+      }
+   },
+
+   // scroll charts
+   rangeSelector: {
+      buttonTheme: {
+         fill: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#888'],
+               [0.6, '#555']
+            ]
+         },
+         stroke: '#000000',
+         style: {
+            color: '#CCC',
+            fontWeight: 'bold'
+         },
+         states: {
+            hover: {
+               fill: {
+                  linearGradient: [0, 0, 0, 20],
+                  stops: [
+                     [0.4, '#BBB'],
+                     [0.6, '#888']
+                  ]
+               },
+               stroke: '#000000',
+               style: {
+                  color: 'white'
+               }
+            },
+            select: {
+               fill: {
+                  linearGradient: [0, 0, 0, 20],
+                  stops: [
+                     [0.1, '#000'],
+                     [0.3, '#333']
+                  ]
+               },
+               stroke: '#000000',
+               style: {
+                  color: 'yellow'
+               }
+            }
+         }
+      },
+      inputStyle: {
+         backgroundColor: '#333',
+         color: 'silver'
+      },
+      labelStyle: {
+         color: 'silver'
+      }
+   },
+
+   navigator: {
+      handles: {
+         backgroundColor: '#666',
+         borderColor: '#AAA'
+      },
+      outlineColor: '#CCC',
+      maskFill: 'rgba(16, 16, 16, 0.5)',
+      series: {
+         color: '#7798BF',
+         lineColor: '#A6C7ED'
+      }
+   },
+
+   scrollbar: {
+      barBackgroundColor: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#888'],
+               [0.6, '#555']
+            ]
+         },
+      barBorderColor: '#CCC',
+      buttonArrowColor: '#CCC',
+      buttonBackgroundColor: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#888'],
+               [0.6, '#555']
+            ]
+         },
+      buttonBorderColor: '#CCC',
+      rifleColor: '#FFF',
+      trackBackgroundColor: {
+         linearGradient: [0, 0, 0, 10],
+         stops: [
+            [0, '#000'],
+            [1, '#333']
+         ]
+      },
+      trackBorderColor: '#666'
+   },
+
+   // special colors for some of the demo examples
+   legendBackgroundColor: 'rgba(48, 48, 48, 0.8)',
+   legendBackgroundColorSolid: 'rgb(70, 70, 70)',
+   dataLabelsColor: '#444',
+   textColor: '#E0E0E0',
+   maskColor: 'rgba(255,255,255,0.3)'
+};
+
+
+
+// Apply the theme
+var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+    </script>
+
+    <style>
+    
+    body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif;}
+    .quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top:100px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+    .CRquizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px; min-height:300px;}
+    .quizheader{margin-bottom:12px;}
+    .quizheader img{width:78px; display:inline-block; margin-right:4px;}
+    .quizheader span{ font:normal 29px'Muli', sans-serif; position:relative; left:5px;}
+    .label.notice{font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
+    #CRprogressbar{width:632px; height: 40px; margin: 0 auto;}
+    .CRquestionandresponsespace{}
+    .CRquestionspace{width:40%; display:inline-block; padding-top:9px;}
+    .CRquestionheader{font:bold 18px 'Muli', sans-serif;}
+    .CRquestion{font-size:15px; position:relative; top:13px;} 
+    .CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'Muli', sans-serif;width:56.5%;}
+    .CRresponsespace textarea{display:block; margin:6px 12px 12px 12px; width:94%;}
+    .CRbuttonspace{margin-top:12px; }
+    
+    
+    </style>
+  </head>
+  <body>
+    <div class="quizcontainer">
+      <div class="CRquizspace">
+        <div class="quizheader">
+          <img src="http://www.placedog.com/150/150">
+            <div style="display:inline-block;">
+              <span><strong>JavaScript:</strong> Selectors</span> <span class="label notice">Challenge Questions</span>
+              <div id="CRprogressbar"></div>
+            </div>
+        </div>
+        <div class="CRquestionandresponsespace">
+          <div class="CRquestionspace"><span class="CRquestionheader">Challenge question:</span>
+          <br />
+          <span class="CRquestion">What is the most hilarious cat video featuring two girls and one cup?</span></div>
+          <div class="CRresponsespace">
+            <span>Your response:</span>
+            <textarea rows="7"></textarea>
+          </div>
+        </div>
+        <div class="CRbuttonspace">
+          <button class="btn">Back</button>
+          <button class="btn danger" style="float:right;">Submit</button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
