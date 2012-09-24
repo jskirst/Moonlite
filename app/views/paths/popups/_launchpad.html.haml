@@ -14,12 +14,21 @@
               %li.launchpad_link= link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "")
         = render "sections/launchpad"
 
+- if display
+  :javascript
+    $(function(){
+      $('#launchpad').modal({
+        keyboard: true,
+        backdrop: 'static',
+        show: true
+      });
+    });
+
 :javascript
   $(function(){
     $(".userctrlpanel").click(function(){
       $('#launchpad').modal({
         keyboard: true,
-        backdrop: 'static',
         show: true
       });
     });

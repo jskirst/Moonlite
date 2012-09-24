@@ -64,6 +64,7 @@ Metabright::Application.routes.draw do
 	
 	resources :tasks do
     member do
+      get :arena
       put :resolve
       get :vote
       put :add_stored_resource

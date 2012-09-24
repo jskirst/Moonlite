@@ -1,10 +1,16 @@
 class TasksController < ApplicationController
   before_filter :authenticate
   before_filter :has_access?
-  before_filter :get_task_from_id, :only => [:edit, :update, :destroy, :resolve, :vote, :add_stored_resource]
+  before_filter :get_task_from_id, :only => [:arena, :edit, :update, :destroy, :resolve, :vote, :add_stored_resource]
   before_filter :can_edit?, :only => [:edit, :update, :destroy, :resolve]
   
   respond_to :json, :html
+  
+  def arena
+    @answers  = @task.answers
+    @section  = @task.section
+    @path     = @section.path
+  end
   
   def new
     @section = Section.find(@section_id)
