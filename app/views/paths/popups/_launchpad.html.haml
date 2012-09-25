@@ -1,6 +1,6 @@
 %div#launchpad.modal.hide.fade{ style: "left: 38%; top: 30%;"}
   %div.overlay
-    %div.launchpad{ style: ""}
+    %div.launchpad
       %h1
         = image_tag(@path.path_pic)
         %span= @path.name
@@ -11,7 +11,11 @@
             Sections
           %ul.sectionlist
             - @path.sections.each do |s|
-              %li.launchpad_link= link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "")
+              %li.launchpad_link
+                = link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "") 
+                %div.pointsandprogress
+                  %div 4,500 pts
+                  %div 45% complete   
         = render "sections/launchpad"
 
 - if display

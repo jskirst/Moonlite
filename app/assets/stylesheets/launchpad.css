@@ -59,10 +59,24 @@
     border-radius:6px;
     border: 1px solid rgba(0, 0, 0, .1); 
     display:inline-block; 
-    width:644px; 
+    width:635px; 
     height:470px; 
     margin: 0 0 0 10px; 
     padding:10px; 
     overflow:auto;
 }
-#sectionpointchart{ width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px; }
+#sectionpointchart { width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px; }
+
+.launchpadsectioncolumn {background-color: #F9F9F9;display:inline-block;border-right: 1px solid rgba(0, 0, 0, .1); padding-right:10px; width:175px; vertical-align: top;overflow:auto; height:330px;}
+.launchpadsectionpoints {display:inline-block; vertical-align: top;}
+.launchpadCRcolumn {display:inline-block;vertical-align: top; overflow:auto;}
+.launchpadCRcolumn td {font-style:italic;}
+.launchpadcolumnheader {font-weight:bold; text-align: left; font-size:16px; margin-bottom:10px; border-bottom:1px solid rgba(0, 0, 0, .1);}
+.launchpadcolumnsubheader {font-weight:bold; text-align:right; font-style:italic;}
+.sectionlist {margin: 0 0 18px 2px; text-align:left;}
+.sectionlist li {list-style: none; line-height: 28px;}
+.sectionlist a {font-size:14px;}
+.sectionlist hr {margin:4px 0;}
+.pointsandprogress {display:inline-block; font-size:10px; font-style:italic; float:right; text-align:right; margin-top:-6px;}
+.pointsandprogress div { margin-bottom:-16px;}
+.launchpad_link { border-bottom: 1px solid #EEE; margin: 4px 0px;}

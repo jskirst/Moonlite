@@ -1,0 +1,71 @@
+= form_for(@task, url: took_section_path(@section, task_id: @task.id)) do |f|
+  :javascript
+    $(function(){
+      $('#challenge_form').submit(function(){
+        $(".loading_image").show();
+        $("#submit_button").attr("disabled","disabled");
+      });
+    });
+  %div.quizcontainer
+    %div.CRquizspace
+      %div.quizheader
+        = image_tag @path.path_pic, size: "40x40"
+        %div{ style: "display:inline-block;" }
+          %span <strong>#{@path.name}:</strong> #{@section.name}</span>
+          %div#CRprogressbar
+      %div{ style: "margin: auto;" }
+        = render "stored_resource", { :stored_resource => @stored_resource }
+      %div.CRquestionandresponsespace
+        %div.CRquestionspace
+          %span.CRquestionheader Challenge question:
+          %br
+          %span.CRquestion= @task.question
+        %div.CRresponsespace 
+          %span Your response:
+          - if @task.answer_sub_type == 100
+            %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
+            %p{ style: "font-style:italic;" }= @path.enable_voting ? "*Points awarded by number of votes" : "Points awarded by Administrator"
+          - elsif @task.answer_sub_type == 101
+            :javascript
+              $(function(){
+                check_image_before_submit();
+                $("#answer_preview_button").click(function(){
+                  var url = $("#answer_input").val();
+                  is_valid_image(url, function(valid){
+                    if(valid == true) { $("#image_placeholder").attr("src", url);
+                    } else { alert("Please provide a link to a valid image."); }
+                  });
+                });
+              });
+            %div.input
+              %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
+              %a#answer_preview_button.btn.secondary Preview
+              %p{ style: "font-style:italic;" } *Points awarded by votes
+              %div#answer_preview_container{ style: "width:250px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+                %div#answer_preview
+                  = image_tag "/images/image_thumb.png", :style => "width: 250px;", :id => "image_placeholder"
+          - else
+            :javascript
+              $(function(){
+                check_youtube_before_submit();
+                $("#answer_preview_button").click(function(){
+                  var url = $("#answer_input").val();
+                  var youtube_id = get_youtube_id_from_link(url);
+                  if(is_valid_youtube_id(youtube_id)){
+                    $("#youtube_placeholder").remove();
+                    set_youtube_preview(url, "answer_preview");
+                  } else {
+                    alert("Please provide a link to a valid Youtube video.");
+                  }
+                });
+              });
+            %div.input
+              %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to youtube video here...", autofocus: "autofocus" }
+              %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px;" } Preview
+              %p{ style: "font-style:italic;" } *Points awarded by votes
+              %div#answer_preview_container{ style: "width: 480px; height:295px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+                %div#answer_preview
+                  = image_tag "/images/youtube_thumb.jpg", :size => "480x295", :id => "youtube_placeholder"
+      %div.CRbuttonspace
+        = link_to "Back", chose_section_path(@section), class: "btn secondary"
+        = submit_tag "Submit", :class => "btn danger", :id => "submit_button", style: "float:right;"
