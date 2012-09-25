@@ -60,8 +60,11 @@ Metabright::Application.routes.draw do
       get :launchpad
 		end
 	end
-	resources :enrollments
-	
+	resources :enrollments do
+	  member do
+	    put :grade
+	  end
+	end
 	resources :tasks do
     member do
       get :arena

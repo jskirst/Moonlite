@@ -333,7 +333,8 @@ class PathsController < ApplicationController
     elsif @mode == "users"
       @enrolled_users = @path.enrolled_users
       if params[:user]
-        @user = @path.enrolled_users.find(params[:user])
+        @enrollment = @path.enrollments.find_by_user_id(params[:user])
+        @user = @enrollment.user
       else
         @user = @path.enrolled_users.first
       end
