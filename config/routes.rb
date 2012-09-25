@@ -54,7 +54,11 @@ Metabright::Application.routes.draw do
       get :html_editor
 		end
 	end
-	resources :enrollments
+	resources :enrollments do
+	  member do
+	    put :grade
+	  end
+	end
 	resources :tasks do
     member do
       put :resolve
