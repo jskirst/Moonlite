@@ -160,7 +160,9 @@ class User < ActiveRecord::Base
   
   def enroll!(path)
     enrollments.create!(path_id: path.id) unless enrollments.find_by_path_id(path.id)
-    user_personas.create!(persona_id: path.persona.id) unless personas.find(path.persona.id)
+    path.personas.each do |persona|
+      user_personas.create!(persona_id: persona.id) unless user_personas.find_by_persona_id(persona.id)
+    end
   end
   
   def unenroll!(path)

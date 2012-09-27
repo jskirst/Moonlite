@@ -1,0 +1,18 @@
+!!!
+/xmlns:fb="http://www.facebook.com/2008/fbml"
+%html
+  %head
+    = render "layouts/head"
+  %body
+    %div#fb-root
+      :javascript
+        var std_url = '<%= root_url %>';
+    %div.container.body
+      = render "layouts/header"
+      = render "layouts/explore_modal" if current_user
+      %section#content
+      - flash.each do |key, value|
+        = content_tag(:div, value, :class => "alert-message #{key}")
+      = yield
+    = render "layouts/footer"
+    = debug(params) if Rails.env.development?
