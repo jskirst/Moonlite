@@ -44,20 +44,14 @@ Metabright::Application.routes.draw do
       get :confirm_delete
 			get :continue
 			post :continue
-      put :reorder_tasks
-      get :research
-      get :questions
-      post :generate
-      post :review
-      post :bulk_tasks
       get :import_content
       post :preview_content
       post :save_content
       get :html_editor
-      get :chose
       get :take
       put :took
       get :launchpad
+      put :complete
 		end
 	end
 	resources :enrollments do

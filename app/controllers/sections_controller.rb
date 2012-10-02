@@ -8,10 +8,8 @@ class SectionsController < ApplicationController
   before_filter :authenticate
   before_filter :has_edit_access?, except: [:show, :continue, :results]
   before_filter :get_section_from_id, except: [:new, :create, :generate]
-  before_filter :can_edit?, except: [:show, :continue, :results, :new, :create, :generate] 
-  before_filter :enrolled?, only: [:continue, :results, :chose, :take, :took]
-  
-  respond_to :json, :html
+  #before_filter :can_edit?, except: [:show, :continue, :complete, :launchpade, :new, :create] 
+  before_filter :enrolled?, only: [:complete, :continue, :take, :took]
 
   def show
     if current_user.enrolled?(@section.path) && @section.enable_skip_content
@@ -162,11 +160,6 @@ class SectionsController < ApplicationController
     @unlocked = @section.unlocked?(current_user)
     render partial: "launchpad"
   end
-
-  def chose
-    @tasks = @section.tasks
-    @completed_tasks = @section.completed_tasks.where("user_id = ?", current_user.id).to_a.collect { |cp| cp.task_id } 
-  end
   
   def take
     @task = @section.tasks.find(params[:task_id])
@@ -217,52 +210,51 @@ class SectionsController < ApplicationController
     redirect_to community_path_path(@section.path, completed: true)
   end
   
-  def continue
-    last_question, @streak, @streak_points, @streak_name = create_completed_task
-    @streak ||= @section.user_streak(current_user)
-    @task = @section.next_task(current_user)
+  def complete
+    task = Task.find(params[:task_id])
+    answer = task.answers.find(params[:answer])
+    correct_answer = task.correct_answer
+    ct = current_user.completed_tasks.new(
+      task: task, 
+      answer: answer, 
+      status_id: (answer == correct_answer ? Answer::CORRECT : Answer::INCORRECT),
+      points_awarded: 0)
     
+    streak = task.section.user_streak(current_user)
+    if ct.status_id == 1
+      streak_points, streak_name = calculate_streak_bonus((streak + 1), points)
+      ct.points_awarded = params[:points_remaining] + streak_points
+      current_user.award_points(task, points)
+    end
+    ct.save
+    
+    percent_complete = @section.percentage_complete(current_user) + 1
+    earned_points = current_user.enrollments.find_by_path_id(@section.path.id).total_points
+    
+    render json: { correct_answer: correct_answer.id, 
+      supplied_answer: answer.id, 
+      earned_points: earned_points, 
+      progress: percent_complete, 
+      messages: [streak_name] }
+  end
+    
+  
+  def continue
+    @task = @section.next_task(current_user)
     if @task
-      @answers = @task.answers
-      unless @answers.empty?
-        @answers = @answers.to_a.shuffle
-      end
-      if last_question
-        @free_response = last_question.status_id == 2
-        @correct = last_question.status_id == 1
-        @points_awarded = last_question.points_awarded
-      end
-      @progress = @path.percent_complete(current_user) + 1
+      @answers = @task.answers.to_a.shuffle
+      @progress = @section.percentage_complete(current_user) + 1
       @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
-      @possible_points = 10
-      if @streak < 0
-        @possible_points = @possible_points/(-1*@streak)
-      end
-      if @path.enable_retakes
-        generate_hint
-      else
-        @hints = []
-      end
       @stored_resource = @task.stored_resources.first
-      if @correct
-        @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first
-      end
-      
       @time_allotted = get_time_remaining(@task)
       
-      if params[:task_id].nil?
+      if request.get?
         render "start" 
       else
-        render :partial => "continue", :locals => @locals
+        render :partial => "continue"
       end
     else
-      if current_company.id == 1
-        redirect_url = "Redirecting to results:" + community_path_url(@section.path, completed: "true")
-      else
-        redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
-      end
-      render :text => redirect_url
-      return
+      redirect_to community_path_url(@section.path, completed: "true")
     end
   end
   

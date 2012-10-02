@@ -46,13 +46,7 @@ class Section < ActiveRecord::Base
   end
     
   def next_task(user)
-    if path.enable_retakes
-      next_task = get_next_incorrectly_finished_task(user)
-      next_task = get_next_unfinished_task(user) if next_task.nil?
-    else
-      next_task = get_next_unfinished_task(user)
-    end
-    return next_task
+    return get_next_unfinished_task(user)
   end
   
   def completed?(user)

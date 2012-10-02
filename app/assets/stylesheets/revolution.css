@@ -229,7 +229,7 @@
 .counterbox{border:1px solid rgba(0, 0, 0, .1); background-color:white; border-radius:4px; padding: 7px 7px 0;}
 .messagespace{margin:12px 9px 0 37px; font-size:15px; word-wrap:normal; width:240px; font-weight:bold;}
 
-.quizcontainer {overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top:100px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+.quizcontainer {overflow:hidden; width:770px;margin-left:auto;margin-right:auto;margin-top:100px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .CRquizspace {background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px; min-height:300px;}
 .label.notice {font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
 #CRprogressbar {width:632px; height: 40px; margin: 0 auto;}

@@ -1,7 +1,7 @@
 class CompletedTask < ActiveRecord::Base
-  attr_readonly :task_id, :submitted_answer_id, :answer_id
-  attr_protected :task_id, :points_awarded, :status_id
-  attr_accessible :updated_at, :answer
+  attr_readonly :task, :submitted_answer, :answer
+  attr_protected :points_awarded, :status_id
+  attr_accessible :updated_at, :task, :answer, :submitted_answer
   
   belongs_to :user
   belongs_to :task
@@ -15,8 +15,13 @@ class CompletedTask < ActiveRecord::Base
   validates :task_id, presence: true
   validates :status_id, presence: true
 
-  validate(on: :create) do 
-    errors[:base] << "Must be enrolled" unless user.enrolled?(task.path) 
+  validate(on: :create) do
+    raise "Already answered." if user.completed_tasks.find_by_task_id(task.id)
+    raise "Must be enrolled" unless user.enrolled?(task.path) 
+  end
+  
+  after_create do
+    Answer.increment_counter(:answer_count, answer_id) unless answer_id.nil?
   end
   
   def user_submitted_answer
