@@ -214,16 +214,14 @@ class SectionsController < ApplicationController
     task = Task.find(params[:task_id])
     answer = task.answers.find(params[:answer])
     correct_answer = task.correct_answer
-    ct = current_user.completed_tasks.new(
-      task: task, 
-      answer: answer, 
-      status_id: (answer == correct_answer ? Answer::CORRECT : Answer::INCORRECT),
-      points_awarded: 0)
+    points = params[:points_remaining].to_i
+    status = (answer == correct_answer) ? Answer::CORRECT : Answer::INCORRECT
+    ct = current_user.completed_tasks.new(task_id: task.id, answer_id: answer.id, status_id: status, points_awarded: 0)
     
     streak = task.section.user_streak(current_user)
     if ct.status_id == 1
       streak_points, streak_name = calculate_streak_bonus((streak + 1), points)
-      ct.points_awarded = params[:points_remaining] + streak_points
+      ct.points_awarded = points + streak_points
       current_user.award_points(task, points)
     end
     ct.save
@@ -247,6 +245,7 @@ class SectionsController < ApplicationController
       @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
       @stored_resource = @task.stored_resources.first
       @time_allotted = get_time_remaining(@task)
+      @streak = @task.section.user_streak(current_user)
       
       if request.get?
         render "start" 

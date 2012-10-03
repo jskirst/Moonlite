@@ -1,6 +1,6 @@
 class Persona < ActiveRecord::Base
-
-  attr_accessible :company_id, :name, :description, :image_url
+  attr_accessor :criteria
+  attr_accessible :company_id, :name, :description, :image_url, :criteria
 
   belongs_to :company
   
@@ -14,7 +14,7 @@ class Persona < ActiveRecord::Base
   validates :description, length: { :within => 1..255 }
   validates :image_url, presence: true
   
-  after_create { self.criteria.each { |c| path_personas.create!(:path_id => c) } }
+  after_create { criteria.each { |c| path_personas.create!(:path_id => c) } }
     
   def picture
     return self.image_url unless self.image_url.nil?

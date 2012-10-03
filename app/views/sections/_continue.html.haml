@@ -1,14 +1,43 @@
 %div.quizcontainer
   :javascript
+    var continue_countdown = true;
+    var count_down_bar_width = 100;
+    function count_down_points(){
+      points = parseInt($count_down_bar.text());
+      if(points > 0){
+        points = points - 1;
+        $count_down_bar.text(points);
+        $("#points_remaining").val(points);
+        if(continue_countdown == true){
+          setTimeout(count_down_points, 300);
+        }
+      }
+    }
+    
+    function count_down_bar(){
+      if(continue_countdown == true){
+        count_down_bar_width = count_down_bar_width - .1
+        $count_down_bar.css("width", count_down_bar_width+"%")
+        setTimeout(count_down_bar, 30);
+      }
+    }
+    
     $(function(){
+      $count_down_bar = $(".pointbarfiller");
+      setTimeout(function(){
+        setTimeout(count_down_bar, 300);
+        setTimeout(count_down_points, 300); 
+      }, 2000);
+      
       $(".answer_content").click(function(){
+        continue_countdown = false;
         $(this).find("input").attr("checked", "checked");
         $("#challenge_form").submit();
       });
       $("#challenge_form").on("ajax:success", function(xhr, data){
-        $("#answer_"+data.correct_answer).css("background-color", "green");
+        $("#answer_"+data.correct_answer).css("background-color", "green").css("color", "white");
         if(data.correct_answer != data.supplied_answer){
-          $("#answer_"+data.supplied_answer).css("background-color", "red");
+          $("#answer_"+data.supplied_answer).css("background-color", "red").css("color", "white");
         }
       });
       $("#nextbutton").on("ajax:success", function(xhr, data){
@@ -31,7 +60,8 @@
       %div.questionspace
         %span= @task.question
       %div.questionfooter
-        %div.pointbar 100 points
+        %div.pointbar
+          %div.pointbarfiller{ style: "text-align: left; padding-left: 3px;"} 100
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id
@@ -46,16 +76,18 @@
       %div.pointsandstreakspace
         %div.pointspace.counterbox
           %span.counter
-            - (1..4).each do
+            - earned_points_digits = @earned_points.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
+            - earned_points_digits.each do |d|
               %span.digit
-                %span{ title: "0" } 0
+                %span{ title: "#{d}" }= d
           %br
           %span Points
         %div.streakspace.counterbox
           %span.counter
-            - (1..2).each do
+            - streak = @streak.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
+            - streak.each do |s|
               %span.digit
-                %span{ title: "0" } 0
+                %span{ title: s }= s
           %br
           %span Streak
       %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }

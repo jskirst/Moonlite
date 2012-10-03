@@ -27,13 +27,23 @@ FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt
     ["Atticus Finch","http://i699.photobucket.com/albums/vv354/Jude714/Gregory-Peck-as-Atticus-Finch.jpg"],
     ["Dak Ralter","http://porkins.home.insightbb.com/Rebel/Pilots/DakRalter.jpg"]]
     
-PATHS = [["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
-    ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
+PERSONAS = [
+  ["Hacker", "This is the hacker.", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg"],
+  ["Explorer", "This is the explorer.", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg"],
+  ["Critic", "This is the critic.", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg"],
 ]
-PATH_SECTIONS = [["Introduction", "/images/default_section_pic_1.PNG"],
+
+PATHS = [
+  ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
+  ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
+]
+
+PATH_SECTIONS = [
+  ["Introduction", "/images/default_section_pic_1.PNG"],
   ["Application", "/images/default_section_pic_2.PNG"],
   ["Advanced", "/images/default_section_pic_3.PNG"],
-  ["Final test", "/images/default_section_pic_4.PNG"]]
+  ["Final test", "/images/default_section_pic_4.PNG"]
+]
 
 def create_user(company,user_role,name,email,image_url)
   u = company.users.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10)
@@ -81,6 +91,11 @@ namespace :db do
           t.save
         end
       end
+    end
+    
+    criteria = Path.all.to_a.collect &:id
+    PERSONAS.each do |persona|
+      new_persona = moonlite_company.personas.create!(name: persona[0], description: persona[1], image_url: persona[2], criteria: criteria)
     end
   end
 end
