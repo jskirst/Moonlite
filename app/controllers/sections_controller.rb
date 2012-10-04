@@ -253,7 +253,7 @@ class SectionsController < ApplicationController
         render :partial => "continue"
       end
     else
-      redirect_to community_path_url(@section.path, completed: "true")
+      render :partial => "finish"
     end
   end
   

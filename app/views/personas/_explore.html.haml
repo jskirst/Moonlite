@@ -1,7 +1,7 @@
 :javascript
   $(function(){
     $(".persona_select").on("ajax:success", function(xhr, data){
-      $(".exploretiledetailsarea") 
+      $(".exploretiledetailsarea").replaceWith(data);
     });
   });
 

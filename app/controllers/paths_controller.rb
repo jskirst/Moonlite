@@ -228,7 +228,8 @@ class PathsController < ApplicationController
     
     Leaderboard.reset_for_path_user(@path, current_user) if params[:completed]
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
-    @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards) 
+    @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
+    @enrolled_users = @path.enrolled_users
     
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
     @tasks = @path.tasks

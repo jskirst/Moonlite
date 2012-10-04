@@ -164,7 +164,7 @@
 .span5{ display:inline-block; vertical-align: top; }
 .span11{ display: inline-block; vertical-align: top; }
 .container.body { width: 940px; padding: 15px; }
-#content { padding-top: 42px; }
+#content { padding-top: 42px; min-height: 450px;}
 
 /* From profile */
 #homepage{

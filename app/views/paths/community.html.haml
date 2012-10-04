@@ -16,14 +16,14 @@
             %span#points #{@enrollment.total_points.to_i.to_s} pts
         %div.challengecarousel
           %ul.inlinedisplay
-            %li
-              %div.mosaic-block.bar2
-                %a.mosaic-overlay{ href: "#", target: "_blank" }
-                  %div.details
-                    %h4 New Challenge added
-                    %p Kitten Throwing!
-                %div
-                  %img.mosaic-backdrop{ src: "http://www.placekitten.com/200/80" }
+            - @enrolled_users.each do |u|
+              %li
+                %div.mosaic-block.bar2
+                  = link_to user_path(u), class: "mosaic-overlay", target: "_blank" do
+                    %div.details
+                      %h4= u.name
+                  %div
+                    %img.mosaic-backdrop{ src: u.profile_pic }
   %div.row
     %div.span5
       %div.leftbox

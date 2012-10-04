@@ -8,17 +8,17 @@
 %div#homepage
   %div#topsection
     %div#headerspace
-      %div#leftheaderspace News and updates
+      %div#leftheaderspace Enrolled Challenges
     %div#updatespace
       %ul.inlinedisplay
-        %li
-          %div.mosaic-block.bar2
-            %a{ href: "#", target: "_blank", class: "mosaic-overlay" }
-              %div.details
-                %h4 New Challenge added!
-                %p Kitten Throwing!
-                %div
-                  %img.mosaic-backdrop{ src: "http://www.placekitten.com/200/80" }
+        - @enrolled_paths.each do |p|
+          %li
+            %div.mosaic-block.bar2
+              = link_to community_path_path(p), class: "mosaic-overlay", target: "_blank" do
+                %div.details
+                  %h4= p.name
+              %div
+                %img.mosaic-backdrop{ src: p.path_pic }
   %div.row
     %div.span5
       %div.leftbox
@@ -35,13 +35,6 @@
           - @enrolled_personas.each do |p|
             = link_to p do
               = image_tag p.picture, class: "leftrailicon"
-      %div.leftbox
-        %div.leftboxheader Enrolled Challenges
-        %div.leftboxfooter
-          %li.leftrailcontent
-          - @enrolled_paths.each do |p|
-            = link_to p do
-              = image_tag p.path_pic, class: "leftrailicon"
     %div.span11
       %div.newsfeed
         %div.leftboxheader
