@@ -9,7 +9,7 @@
 }
 .launchpad{
  width:880px;
- height:550px;
+ min-height:410px;
  margin: 100px auto;
  border:10px ridge white;
  text-align:left;
@@ -60,7 +60,7 @@
     border: 1px solid rgba(0, 0, 0, .1); 
     display:inline-block; 
     width:635px; 
-    height:470px; 
+    min-height:331px; 
     margin: 0 0 0 10px; 
     padding:10px; 
     overflow:auto;

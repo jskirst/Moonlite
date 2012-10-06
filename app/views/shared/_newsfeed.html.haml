@@ -33,7 +33,7 @@
           = link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank"
         %div.postfooter
           %div.leftstuff
-            %a.comment{ onclick: "$(this).parent().parent().find('.comments').slideDown();" } Comment(#{r.submitted_answer.comments.size})
+            %a.comment{ style: "cursor: pointer;", onclick: "$(this).parent().parent().find('.comments').slideDown();" } Comment(#{r.submitted_answer.comments.size})
           %div.posttimestamp
             %p= r.created_at
           %div.comments{ style: "display:none; text-align: left;" }

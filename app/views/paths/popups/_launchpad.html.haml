@@ -3,7 +3,7 @@
     %div.launchpad
       %h1
         = image_tag(@path.path_pic)
-        %span= @path.name
+        %span #{@path.name} - #{@total_points_earned} pts, Level #{}
         %span.btn{ style: "float:right; margin: 10px 0 0 0;", onclick: "$(this).parents('.modal').modal('hide');" } Close
       %div.launchpadcontent
         %div.launchpadsectioncolumn

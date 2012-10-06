@@ -35,7 +35,7 @@ class Enrollment < ActiveRecord::Base
   end
   
   def level
-    level = total_points / 40
+    level = total_points / 1000
     return level > 0 ? level : 1
   end
   
