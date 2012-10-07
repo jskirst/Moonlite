@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class User < ActiveRecord::Base
   attr_readonly :signup_token, :company_id
   attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id
@@ -96,11 +98,40 @@ class User < ActiveRecord::Base
         image_url: auth["info"]["image"],
         is_anonymous: false
     }
+    
+    begin
+      info = auth[:extra][:raw_info]
+      if auth[:provider] == "facebook"
+        user_details[:description] = info[:bio]
+        user_details[:link] = info[:link]
+        user_details[:location] = info[:location][:name] if info[:location]
+        user_details[:company_name] = info[:work][-1][:employer][:name] if info[:work][-1]
+        user_details[:education] = info[:education][-1][:school][:name] if info[:education][-1]
+      elsif auth[:provider] == "google_oauth2"
+        url = URI.parse("https://www.googleapis.com/plus/v1/people/me?access_token=#{auth[:credentials][:token]}")
+        info = JSON.parse(open(url).read)
+        user_details[:link] = info["url"]
+        user_details[:description] = info["tagline"] || info["aboutMe"]
+        if info["organizations"]
+          info["organizations"].each { |org| user_details[:education] = [org["name"], org["title"]].compact.join(",") if org["type"] == "school" }
+          info["organizations"].each { |org| user_details[:company_name] = org["name"] if org["type"] == "work" }
+          info["organizations"].each { |org| user_details[:title] = org["title"] if org["type"] == "work" }
+        end
+        if info["placesLived"]
+          info["placesLived"].each { |place| user_details[:location] = place["value"] if place["primary"] == true }
+        end
+      else
+        raise "Cannot recognize provider."
+      end
+    rescue
+      raise "Could not get user social details."
+    end
+    
     user = User.find_by_email(auth["info"]["email"])
     if user
       user.update_attributes(user_details)
     else
-      user = Company.find(1).users.new(user_details)
+      user = Company.first.users.new(user_details)
       user.password = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
       user.password_confirmation = user.password
       user.save
@@ -111,6 +142,7 @@ class User < ActiveRecord::Base
   end
   
   def merge_with_omniauth(auth)
+    raise "GETTING HERE2"
     user = User.find_by_email(auth["info"]["email"])
     return false if user && user.id != self.id
     
