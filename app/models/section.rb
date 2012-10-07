@@ -123,6 +123,10 @@ class Section < ActiveRecord::Base
   def percentage_complete(user)
     return ((self.completed_tasks.where("user_id = ?", user.id).size.to_f / tasks.size.to_f) * 100).to_i
   end
+  
+  def points_earned(user)
+    return self.completed_tasks.where("user_id = ?", user.id).collect(&:points_awarded).reduce(0, :+)
+  end
     
   private
     def get_next_unfinished_task(user)
