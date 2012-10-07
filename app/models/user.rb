@@ -142,7 +142,6 @@ class User < ActiveRecord::Base
   end
   
   def merge_with_omniauth(auth)
-    raise "GETTING HERE2"
     user = User.find_by_email(auth["info"]["email"])
     return false if user && user.id != self.id
     

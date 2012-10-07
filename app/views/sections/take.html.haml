@@ -67,5 +67,5 @@
                 %div#answer_preview
                   = image_tag "/images/youtube_thumb.jpg", :size => "480x295", :id => "youtube_placeholder"
       %div.CRbuttonspace
-        = link_to "Back", chose_section_path(@section), class: "btn secondary"
+        = link_to "Back", community_path_path(@section.path), class: "btn secondary"
         = submit_tag "Submit", :class => "btn danger", :id => "submit_button", style: "float:right;"

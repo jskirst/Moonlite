@@ -51,10 +51,4 @@
                 %blockquote{ style: "margin:20px;" }= r.submitted_answer.content
               - elsif r.task.answer_sub_type == 101
                 = link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank"
-              %div.postfooter
-                %div.leftstuff
-                  %a.comment{ onclick: "$(this).parent().parent().find('.comments').slideDown();" } Comment(#{r.submitted_answer.comments.size})
-                %div.posttimestamp
-                  %p= r.created_at
-                %div.comments{ style: "display:none; text-align: left;" }
-                  = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id }
+              = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at}

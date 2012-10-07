@@ -1,0 +1,19 @@
+%div.postfooter
+  %div.leftstuff
+    %a.comment{ style: "cursor: pointer", onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{comment_count.to_i} Comments
+  %div.posttimestamp
+    - if created_at
+      %p= created_at
+  %div.comments{ style: "display:none; text-align: left;" }
+    - unless owner.comments.empty?
+      %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }
+        - owner.comments.each do |comment|
+          = render "comments/comment", comment: comment
+    - else
+      %p There are no comments for this yet.
+    = form_for(current_user.comments.new, remote: true) do |f|
+      %div{ style: "width: 100%" }
+        = f.text_area :content, :rows => 2, :style => "width:300px;"
+      = hidden_field :comment, :owner_type, { :value => owner_type }
+      = hidden_field :comment, :owner_id, { :value => owner_id }
+      = f.submit "Add Comment", :class => "btn secondary small", :style => "margin-top:15px;"

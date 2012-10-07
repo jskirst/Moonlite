@@ -118,7 +118,6 @@ function bind_answer_suggestion(obj){
 }
 
 function add_new_task(event, data) {
-  unblock_form_submit($(".new_task_form"));
   try {
     data = $.parseJSON(data);
     $(this).find(".new_task").find(".message_container").text(data.errors[0]).removeClass("success").addClass("error").show();

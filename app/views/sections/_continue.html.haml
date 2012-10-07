@@ -35,9 +35,9 @@
         $("#challenge_form").submit();
       });
       $("#challenge_form").on("ajax:success", function(xhr, data){
-        $("#answer_"+data.correct_answer).css("background-color", "green").css("color", "white");
+        $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white");
         if(data.correct_answer != data.supplied_answer){
-          $("#answer_"+data.supplied_answer).css("background-color", "red").css("color", "white");
+          $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
         }
       });
       $("#nextbutton").on("ajax:success", function(xhr, data){

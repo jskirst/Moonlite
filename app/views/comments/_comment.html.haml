@@ -1,0 +1,3 @@
+%li{ style: "margin-bottom: 1px;" }
+  %p{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content
+  %p{ style: "margin-left: 0;" } #{link_to comment.user.name, comment.user} about #{time_ago_in_words(comment.created_at)} ago

@@ -24,3 +24,10 @@ function is_valid_image(url, callback){
 $(function() {
     $('.hoverscroll').hoverscroll();
 });
+
+$(function(){
+  $(".comments form").bind("ajax:success", function(xhr, data){
+    $(this).parent().find("ul").append(data);
+    $(this).find("textarea").val("");
+  });
+});

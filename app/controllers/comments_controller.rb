@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.new(params[:comment])
     if @comment.save
       flash[:success] = "Comment added."
-      redirect_back_or_to root_path
+      render partial: "comment", locals: { comment: @comment }
     else
       flash[:error] = "There was an error when saving your comment. Please try again."
       redirect_back_or_to root_path
