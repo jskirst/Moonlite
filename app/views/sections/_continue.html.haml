@@ -84,7 +84,7 @@
           %span Points
         %div.streakspace.counterbox
           %span.counter
-            - streak = @streak.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
+            - streak = (@streak > 0 ? @streak : 0).to_s.split("").reverse.push("0").reverse.slice(-2, 2)
             - streak.each do |s|
               %span.digit
                 %span{ title: s }= s
