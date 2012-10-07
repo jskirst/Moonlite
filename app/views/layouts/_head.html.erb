@@ -16,7 +16,7 @@
 $(function(){
   $('.bar2').mosaic({ animation: 'slide' });
   $('.explore_link').click(function(){
-    $("#explore_modal").modal('show');
+    $("#explore_modal").modal({ show: true, backdrop: true});
   })
 })
 </script>

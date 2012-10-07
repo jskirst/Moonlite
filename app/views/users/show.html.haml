@@ -16,8 +16,9 @@
       %div.rightofbigheaderimage
         %div#topboxcontent
           = link_to "Edit Profile", edit_user_path(@user), class: "btn", style: "float:right;"
-          %div.span9{style: "margin-bottom: 40px;"}
+          %div.span9{style: "min-height: 65px;"}
             %h1= @user.name
+            %p{ style: "font-size: 16px; margin: 5px 0 7px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
         %div.challengecarousel
           %ul.inlinedisplay
             - @enrolled_paths.each do |p|
@@ -31,11 +32,11 @@
   %div.row
     %div.span5
       %div.leftbox
-        %div.leftboxheader About me
+        %div.headerspace About me
         %div.leftboxfooter
           %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
-        %div.leftboxheader My Info
+        %div.headerspace My Info
         %div.leftboxfooter
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
@@ -48,7 +49,7 @@
             - if @user.title
               %li Title: #{@user.title}
       %div.leftbox
-        %div.leftboxheader My badges
+        %div.headerspace My badges
         %div.leftboxfooter
           %li.leftrailcontent
             - @enrolled_paths.each do |c|
@@ -58,7 +59,7 @@
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader
           %div
-            %span Stream
+            %span.headerspace{ style: "padding-left: 0px;" } Stream
             = link_to "Votes", user_path(@user, order: "votes"), class: "btn leftbtn"
             = link_to "Date", user_path(@user, order: "date"), class: "btn midbtn"
             %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question

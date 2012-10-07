@@ -3,8 +3,8 @@
     %div.launchpad
       %h1
         = image_tag(@path.path_pic)
-        %span #{@path.name} - #{@total_points_earned} pts, Level #{current_user.leve(@path)}
-        %span.btn{ style: "float:right; margin: 10px 0 0 0;", onclick: "$(this).parents('.modal').modal('hide');" } Close
+        %span #{@path.name} - #{@total_points_earned} pts, Level #{current_user.level(@path)}
+        %button.close{ style: "float:right; margin: 10px 0 0 0; background-color: transparent;", onclick: "$(this).parents('.modal').modal('hide');" } &times;
       %div.launchpadcontent
         %div.launchpadsectioncolumn
           %div.launchpadcolumnheader

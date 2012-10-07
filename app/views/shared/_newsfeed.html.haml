@@ -1,7 +1,7 @@
 %div.newsfeed
   %div.leftboxheader
     %div
-      %span Stream
+      %span.headerspace{ style: "padding-left: 0px;" } Stream
       = link_to "Date", community_path_path(@path, order: "date"), class: "btn leftbtn"
       = link_to "Votes", community_path_path(@path, order: "votes"), class: "btn midbtn"
       - if @path

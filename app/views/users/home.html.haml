@@ -1,13 +1,6 @@
-:css
-  #topsection { margin: 0; border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position:relative; background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px; }
-  #headerspace { padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; }
-  #updatespace { background-color: #F9F9F9; border-bottom-left-radius: 6px; border-bottom-right-radius: 6px; padding: 12px 0 12px 12px; }
-  .inlinedisplay { list-style-type: none; position:relative; margin: 0; }
-  .inlinedisplay li{ display:inline; }
-
 %div#homepage
   %div#topsection
-    %div#headerspace
+    %div.headerspace
       %div#leftheaderspace Enrolled Challenges
     %div#updatespace
       %ul.inlinedisplay
@@ -22,14 +15,14 @@
   %div.row
     %div.span5
       %div.leftbox
-        %div.leftboxheader Suggested Challenges
+        %div.headerspace Suggested Challenges
         %div.leftboxfooter
           %li.leftrailcontent
           - @suggested_paths.each do |p|
             = link_to p do
               = image_tag p.path_pic, class: "leftrailicon"
       %div.leftbox
-        %div.leftboxheader Enrolled Personas
+        %div.headerspace Enrolled Personas
         %div.leftboxfooter
           %li.leftrailcontent
           - @enrolled_personas.each do |p|
@@ -37,7 +30,7 @@
               = image_tag p.picture, class: "leftrailicon"
     %div.span11
       %div.newsfeed
-        %div.leftboxheader
+        %div.headerspace
           %div
             %span Stream
         - @newsfeed_items.each do |r|

@@ -11,6 +11,12 @@ class Enrollment < ActiveRecord::Base
     errors[:base] << "Msg"  "Error 95" unless self.user.company_id == self.path.company_id 
   end
   
+  before_create do
+    path.personas.each do |persona|
+      user.enroll!(persona)
+    end
+  end
+  
   def retake!
     raise "Retakes for this path are not allowed." unless path.enable_path_retakes
     self.is_complete = false

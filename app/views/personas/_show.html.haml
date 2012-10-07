@@ -43,7 +43,10 @@
         = link_to path_url(path), class: "mosaic-overlay" do
           %div.details
             %h4 Challenge Title
-            %button.btn.danger Enroll
+            - if current_user.enrolled?(path)
+              %button.btn.success Enrolled
+            - else
+              %button.btn.danger Enroll
         %div 
           = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
   %div.explorenewuserfooter

@@ -158,10 +158,13 @@ class User < ActiveRecord::Base
     return enrollments.find_by_path_id(path.id)
   end
   
-  def enroll!(path)
-    enrollments.create!(path_id: path.id) unless enrollments.find_by_path_id(path.id)
-    path.personas.each do |persona|
-      user_personas.create!(persona_id: persona.id) unless user_personas.find_by_persona_id(persona.id)
+  def enroll!(obj)
+    if obj.is_a? Path
+      enrollments.create!(path_id: path.id) unless enrollments.find_by_path_id(path.id)
+    elsif obj.is_a? Persona
+      user_personas.create!(persona_id: obj.id) unless user_personas.find_by_persona_id(obj.id)
+    else
+      raise "Invalid object to enroll."
     end
   end
   
