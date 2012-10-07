@@ -5,3 +5,4 @@ tmp/**/*
 webrat.log
 test_output.txt
 .project
+.sass-cache/
