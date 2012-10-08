@@ -61,7 +61,8 @@
         %span= @task.question
       %div.questionfooter
         %div.pointbar
-          %div.pointbarfiller{ style: "text-align: left; padding-left: 3px;"} 100
+          %span 100
+          %div.pointbarfiller{ style: "display: inline-block;"}
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id

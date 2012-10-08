@@ -1,10 +1,10 @@
 %div#launchpad.modal.hide.fade{ style: "left: 38%; top: 30%;"}
   %div.overlay
     %div.launchpad
+      %button.modal_close &times;
       %h1
         = image_tag(@path.path_pic)
         %span #{@path.name} - #{@total_points_earned} pts, Level #{current_user.level(@path)}
-        %button.close{ style: "float:right; margin: 10px 0 0 0; background-color: transparent;", onclick: "$(this).parents('.modal').modal('hide');" } &times;
       %div.launchpadcontent
         %div.launchpadsectioncolumn
           %div.launchpadcolumnheader
@@ -33,6 +33,7 @@
     $(".userctrlpanel").click(function(){
       $('#launchpad').modal({
         keyboard: true,
+        backdrop: 'static',
         show: true
       });
     });

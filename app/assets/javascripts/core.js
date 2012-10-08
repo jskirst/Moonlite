@@ -31,3 +31,9 @@ $(function(){
     $(this).find("textarea").val("");
   });
 });
+
+$(function(){
+  $(".modal_close").click(function(){
+    $(this).parents('.modal').modal('hide');
+  });
+});
