@@ -66,7 +66,7 @@
 
 #topboxcontent h1 { margin:0px; line-height:28px; }
 #topboxcontent h3 { margin-bottom:9px; font-style:italic; color:#666666; }
-.userctrlpanel { display:inline-block; margin-top:-5px; float:right; }
+.userctrlpanel { display:inline-block; margin-top:-8px; right:-6px; position:relative; float:right; }
 .userctrlpanel button { float:right; }
 .userctrlpanel p { margin:31px 0 0 0; color:#404040; font-weight: bold; font-size:12px; }
 .userctrlpanel span { font-size:11px; color:#404040; }

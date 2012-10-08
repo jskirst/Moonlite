@@ -18,11 +18,11 @@
 %div.explorenewusercontent
   %div.exploreheader
     %button.btn{ style:"float:right; margin: 0 10px 0 0;", onclick: "$(this).parents('.modal').fadeOut('fast');" } Close
-    %h1{ style: "font-size: 23px; margin-bottom: 8px;" }
+    %h1{ style: "font-size: 23px; margin-bottom: -3px;" }
       %strong Explore: Pick a path...
     %div
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px" }
-      %p{ style: "font-size: 15px; line-height: 28px; display:inline; "} Which path will you choose? Challenges are organized according to path. You can always enroll in multiple paths. 
+      %p{ style: "font-size: 15px; line-height: 28px; display:inline; "} Paths organize all the MetaBright Challenges. You can always enroll in multiple paths. 
   %hr{ style: "margin:0px;" }
   %div.exploretiles
     - @personas.each do |persona|
