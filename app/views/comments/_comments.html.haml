@@ -3,7 +3,10 @@
     %a.comment{ style: "cursor: pointer", onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{comment_count.to_i} Comments
   %div.posttimestamp
     - if created_at
-      %p= created_at
+      - if created_at.today?
+        %p #{time_ago_in_words(created_at)} ago
+      - else
+        %p= created_at.strftime("%B %d, %Y")
   %div.comments{ style: "display:none; text-align: left;" }
     - unless owner.comments.empty?
       %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }

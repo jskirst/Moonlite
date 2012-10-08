@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
         raise "Cannot recognize provider."
       end
     rescue
-      raise "Could not get user social details."
+      raise $!.to_s
     end
     
     user = User.find_by_email(auth["info"]["email"])
