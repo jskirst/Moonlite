@@ -3,10 +3,10 @@
     var continue_countdown = true;
     var count_down_bar_width = 100;
     function count_down_points(){
-      points = parseInt($count_down_bar.text());
+      points = parseInt($count_down_points.text());
       if(points > 0){
         points = points - 1;
-        $count_down_bar.text(points);
+        $count_down_points.text(points);
         $("#points_remaining").val(points);
         if(continue_countdown == true){
           setTimeout(count_down_points, 300);
@@ -24,6 +24,7 @@
     
     $(function(){
       $count_down_bar = $(".pointbarfiller");
+      $count_down_points = $count_down_bar.parent().find("span");
       setTimeout(function(){
         setTimeout(count_down_bar, 300);
         setTimeout(count_down_points, 300); 
@@ -61,7 +62,7 @@
         %span= @task.question
       %div.questionfooter
         %div.pointbar
-          %span 100
+          %span{ style: "position: absolute;" } 100
           %div.pointbarfiller{ style: "display: inline-block;"}
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
