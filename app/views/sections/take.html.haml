@@ -37,13 +37,13 @@
                   });
                 });
               });
-            %div.input
+            %div.input{ style: "margin-left: 0px; " }
               %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
               %a#answer_preview_button.btn.secondary Preview
               %p{ style: "font-style:italic;" } *Points awarded by votes
-              %div#answer_preview_container{ style: "width:250px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
-                %div#answer_preview
-                  = image_tag "/images/image_thumb.png", :style => "width: 250px;", :id => "image_placeholder"
+              %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+                %div#answer_preview{ style: "text-align: center; padding: 10px;" }
+                  = image_tag "/images/image_thumb.png", :style => "width: 125px;", :id => "image_placeholder"
           - else
             :javascript
               $(function(){
@@ -59,13 +59,13 @@
                   }
                 });
               });
-            %div.input
+            %div.input{ style: "margin-left: 0px; " }
               %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to youtube video here...", autofocus: "autofocus" }
               %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px;" } Preview
               %p{ style: "font-style:italic;" } *Points awarded by votes
-              %div#answer_preview_container{ style: "width: 480px; height:295px; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+              %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                 %div#answer_preview
-                  = image_tag "/images/youtube_thumb.jpg", :size => "480x295", :id => "youtube_placeholder"
+                  = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
       %div.CRbuttonspace
         = link_to "Back", community_path_path(@section.path), class: "btn secondary"
         = submit_tag "Submit", :class => "btn danger", :id => "submit_button", style: "float:right;"
