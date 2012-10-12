@@ -7,11 +7,18 @@
     <style>
       .fill{height:40px;}
       .topbar-inner, .topbar .fill{background-image: -webkit-linear-gradient(top, #334C80, #1F2E4C)}
-      .topbar {height: 40px;position: fixed;top: 0;left: 0;right: 0; z-index: 10000;overflow: visible;}
-      .chunk.cloudy{display:inline-block; width:30px; height:44px; background-color:white;opacity:.15; margin-right:28px;z-index: 1;}
+      .topbar {height: 40px;position: fixed;top: 0;left: 0;right: 0; z-index: 10000;overflow: hidden;}
+      .chunk.cloudy{display:inline-block; width:30px; height:44px; background-color:rgba(255, 255, 255, .15); margin-right:28px;z-index: 1;}
       .container {width: 940px;margin-left: auto;margin-right: auto; zoom: 1;display:inline-block;padding:3px 0 0 142px;}
       .topbar h3 a, .topbar .brand {float: left;display: block; padding: 0px 20px 12px; margin-left: -20px;line-height: 1; text-decoration: none;font: normal 18px arial, sans-serif;}
       .container h3{left:68px;}
+      .container img{width:150px}
+      .navicons img{width:25px; display:inline; margin:2px 25px 25px; cursor: pointer; }
+      .navitem {border-right: 1px solid #020D25; border-left: 1px solid #56698B;}
+      .navitem a{opacity:.8}
+      .navitem a:hover{opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
+      .navitem a:active{bottom:0px; background-color: rgba(0,0,0, .1);}
+      .navicons li.nav_item:first-child a {border-left: 1px solid #444;}
     </style>
   </head>
   <body>
@@ -23,11 +30,32 @@
       <div class="chunk cloudy"></div>
       <div class="chunk cloudy"></div>
       <div class="chunk cloudy"></div>
-      <div class="chunk cloudy"></div>
+      <div class="chunk cloudy" style="border-right: 1px solid #020D25"></div>
     </div>
     <div class="container">
-      <h3><a href="/" style="font-size: 26px;font-family:'Dosis', sans-serif; font-weight:600;"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/littlestoney.png" style="margin-top:10px; position:absolute; left:-25px; top:-10px;"> MetaBright</a></h3>
+      <h3><a href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png" style="position:absolute; left:-23px;"></a></h3>
+      
+        <ul class="navicons" style="margin-left:177px; bottom:7px; border-right:1px solid #56698B;">
+          <li class="navitem">
+            <a href="#">
+            <img style="width:22px;" src="https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/60-signpost%402x+lightest.png">
+            </a>
+          </li>
+          <li class="navitem">
+            <a href="#">
+            <img src="https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/145-persondot%402x+lightest.png">
+            </a>
+          </li>
+          <li class="navitem">
+            <a href="#">
+            <img style="width:22px;" src="https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/91-beaker-2%402x+lightest.png">
+            </a>
+          </li>
+        </ul>
+          
+      </div>
     </div>
+    
     </div>
   </nav>
   </body>
