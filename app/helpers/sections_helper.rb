@@ -27,14 +27,16 @@ module SectionsHelper
     last_task_time = current_user.completed_tasks.last.created_at unless current_user.completed_tasks.empty?
     if status_id == 1
       points = 10
-      if streak < 0
-        points = points / ((streak-1) * -1)
-      elsif (last_task_time || Time.now) > task.time_limit.seconds.ago
-        streak += 1
-        streak_points, streak_name = calculate_streak_bonus(streak, points)
-        points += streak_points
-      else
-        points = points / 2
+      if @enable_leaderboard
+        if streak < 0
+          points = points / ((streak-1) * -1)
+        elsif (last_task_time || Time.now) > task.time_limit.seconds.ago
+          streak += 1
+          streak_points, streak_name = calculate_streak_bonus(streak, points)
+          points += streak_points
+        else
+          points = points / 2
+        end
       end
       ct.points_awarded = points
       #TODO: move this to completed task
@@ -45,7 +47,9 @@ module SectionsHelper
     
     ct.save
     Answer.increment_counter(:answer_count, chosen_answer.id) if chosen_answer
-    create_user_event_for_streak(streak_points, streak_name) if streak_name && streak >= 10
+    if @enable_leaderboard && streak_name && streak >= 10
+      create_user_event_for_streak(streak_points, streak_name)
+    end
     return ct, streak, streak_points, streak_name
   end
   

@@ -1,28 +1,16 @@
-<% if @must_register && @completed %>
-<script>
-$(function(){
-  $('a').not(".clickable_link").attr("href", "#");
-  $('#save_score, a').not(".clickable_link").click(function(){
-    $('#jumpstart_registration_modal').modal({
-      keyboard: true,
-      backdrop: 'static',
-      show: true
-    });
-  });
-});
-</script>
-<%= render "users/jumpstart_registration", { :user => current_user, :path => @path } %>
-<% end %>
 <section>
   <%= render "path_header" %>
   <hr style="margin:10px;"/>
   <section>
     <div class="row">
       <div class="span3" style="padding:8px;">
-        <%= render "side_leaderboard" %>
+        <% if @enable_leaderboard %>
+          <%= render "side_leaderboard" %>
+        <% end %>
       </div>
       <%= render "answer_board" %>
       <div class="span2" style="width:89px;padding:2px;">
+        <% if @enable_recommendations %>
         <table>
           <% @similar_paths.each do |similar_path| %>
             <tr>
@@ -35,6 +23,7 @@ $(function(){
             </tr>
           <% end %>
         </table>
+        <% end %>
       </div>
     </div>
   </section>

@@ -56,7 +56,7 @@
         </td>
       </tr>
     <% end %>
-    <% if @streak_name %>
+    <% if @leaderboard && @streak_name %>
       <tr>
         <td style="padding: 15px 15px 0 0; font-size: 20px; color:darkcyan; text-align:right; border-top:none;">
           <p style="font-size: 20px; text-decoration:underline;">Achievement: <strong style="text-transform:uppercase;"><%= @streak_name %></strong></p>

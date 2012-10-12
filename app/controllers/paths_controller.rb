@@ -235,7 +235,7 @@ class PathsController < ApplicationController
       end
       
       if @path.has_creative_response && !@path.enable_voting
-        flash[:success] = "Congratulations! You've finished this #{name_for_paths}. You should recieve an email with your final score as soon as your administrator finishes grading your answers."
+        flash[:success] = "You've finished this #{name_for_paths}. You should recieve an email with your final score as soon as your administrator finishes grading your answers."
       else
         flash[:success] = "Congratulations! You've finished this #{name_for_paths}."
       end
@@ -251,31 +251,13 @@ class PathsController < ApplicationController
   end
   
   def show
-    if signed_in?
-      @enrolled = current_user.enrolled?(@path)
-      if @path.has_creative_response
-        @completed = @path.total_remaining_tasks(current_user) == 0
-      else
-        @completed = @path.completed?(current_user)
-      end
-      @start_mode = "Continue #{name_for_paths}"
-    else
-      @user = User.create_anonymous_user(Company.find(1))
-      sign_in(@user)
-      current_user.enrollments.create!(:path_id => @path.id)
-      @enrolled = true, @completed = false
-      @start_mode = "Start #{name_for_paths}"
-    end
-  
-    store_location #So user will be redirected here after registration
-    @must_register = current_user.must_register?
+    @enrolled = current_user.enrolled?(@path)
+    @completed = @path.has_creative_response ? @path.total_remaining_tasks(current_user) == 0 : @path.completed?(current_user)
+    @start_mode = "Continue #{name_for_paths}"
     
-    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
-    if @completed
-      @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
-      # This can be optimized by grabbing the top 10 + yours and then the count between. 3 queries
+    if @enable_leaderboards
+      @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
       @skill_ranking = @path.skill_ranking(current_user)
-    
       counter = 1
       previous = nil
       @leaderboards.each do |l|
@@ -290,7 +272,9 @@ class PathsController < ApplicationController
       end
     end
     
-    @similar_paths = Path.similar_paths(@path, current_user)
+    if @enable_recommendations
+      @similar_paths = Path.similar_paths(@path, current_user)
+    end
        
     if @path.enable_voting && @path.has_creative_response
       @show_voting = true
@@ -301,44 +285,42 @@ class PathsController < ApplicationController
       @order = "submitted_answers.created_at DESC"
     end
    
-    unless @must_register
-      @task_ids = []
-      @creative_tasks = []
-      @knowledge_tasks = []
-      if params[:task_id]
-        @in_drill_down = true
-        task = @path.tasks.find(params[:task_id])
-        if task.answer_type == 0
-          @creative_tasks << { :task => task, 
-            :submitted_answers => task.submitted_answers.all(:order => @order), 
-            :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
-            :answers => task.answers }
-          @task_ids << task.id
-          @current_users_answers = current_user.submitted_answers.find_by_task_id(task.id)
-          @current_users_answers = [@current_users_answers.id] unless @current_users_answers.nil?
-        else
-          @task_ids << task.id
-          @knowledge_tasks << { :task => task,
-            :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
-            :answers => task.answers }
-        end
+    @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
+    @task_ids = []
+    @creative_tasks = []
+    @knowledge_tasks = []
+    if params[:task_id]
+      @in_drill_down = true
+      task = @path.tasks.find(params[:task_id])
+      if task.answer_type == 0
+        @creative_tasks << { :task => task, 
+          :submitted_answers => task.submitted_answers.all(:order => @order), 
+          :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
+          :answers => task.answers }
+        @task_ids << task.id
+        @current_users_answers = current_user.submitted_answers.find_by_task_id(task.id)
+        @current_users_answers = [@current_users_answers.id] unless @current_users_answers.nil?
       else
-        @path.tasks.includes(:completed_tasks, :answers)
-          .where("completed_tasks.user_id = ?", current_user.id)
-          .all(:limit => 100, :order => "tasks.id ASC").each do |t|
-          @task_ids << t.id
-          users_completed_task = t.completed_tasks.first
-          task = { :task => t, 
-            :submitted_answers => t.submitted_answers.all(:order => @order, :limit => 10), 
-            :users_completed_task => users_completed_task, 
-            :answers => t.answers }
-          
-          t.answer_type == 0 ? (@creative_tasks << task) : (@knowledge_tasks << task)
-        end
-        @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
+        @task_ids << task.id
+        @knowledge_tasks << { :task => task,
+          :users_completed_task => task.completed_tasks.find_by_user_id(current_user.id), 
+          :answers => task.answers }
       end
+    else
+      @path.tasks.includes(:completed_tasks, :answers)
+        .where("completed_tasks.user_id = ?", current_user.id)
+        .all(:limit => 100, :order => "tasks.id ASC").each do |t|
+        @task_ids << t.id
+        users_completed_task = t.completed_tasks.first
+        task = { :task => t, 
+          :submitted_answers => t.submitted_answers.all(:order => @order, :limit => 10), 
+          :users_completed_task => users_completed_task, 
+          :answers => t.answers }
+        
+        t.answer_type == 0 ? (@creative_tasks << task) : (@knowledge_tasks << task)
+      end
+      @current_users_answers = current_user.submitted_answers.where("submitted_answers.task_id IN (?)", @task_ids).to_a.collect {|c| c.id }
     end
-    
     @activity_stream = @path.activity_stream
   end
   
@@ -363,12 +345,8 @@ class PathsController < ApplicationController
       @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
     elsif @mode == "users"
       @enrolled_users = @path.enrolled_users
-      if params[:user]
-        @enrollment = @path.enrollments.find_by_user_id(params[:user])
-        @user = @enrollment.user
-      else
-        @user = @path.enrolled_users.first
-      end
+      @enrollment = params[:user] ? @path.enrollments.find_by_user_id(params[:user]) : @path.enrollments.first
+      @user = @enrollment.user
       @responses = @user.completed_tasks.joins({:task => { :section => :path}}).where("paths.id = ?", @path.id)
       @percentage_correct = @path.percentage_correct(@user)
     end
