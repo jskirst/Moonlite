@@ -6,8 +6,6 @@ class PathsController < ApplicationController
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
   before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy, :collaborator, :collaborators]
-  before_filter :can_view?, :only => [:show]
-  before_filter :can_continue?, :only => [:continue]
   
 # Begin Path Creation
   
@@ -180,42 +178,24 @@ class PathsController < ApplicationController
 # Begin Path Journey
   
   def continue
-    @section = current_user.most_recent_section_for_path(@path)
-    if @section.completed?(current_user)
-      while @section.completed?(current_user)
-        @section = @path.next_section(@section)
-        break if @section.nil?
-      end
+    unless current_user.enrolled?(@path)
+      current_user.enroll!(@path)
+    end
+    @section = current_user.most_recent_section_for_path(@path) || @path.sections.first
+    while @section && @section.completed?(current_user)
+      @section = @path.next_section(@section)
     end
     
-    unless @section.nil? || @section.is_published == false
+    if @section.nil? || @section.is_published == false
+      Leaderboard.reset_for_path_user(@path, current_user)
+      redirect_to @path
+    else
       if @section.instructions.blank? && @section.stored_resources.empty?
         redirect_to continue_section_path(@section)
       else
         redirect_to @section
       end
-    else
-      previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
-      unless @path.has_creative_response
-        current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
-        @path.create_completion_event(current_user, name_for_paths)
-      end
-      
-      if @path.has_creative_response && !@path.enable_voting
-        flash[:success] = "Congratulations! You've finished this #{name_for_paths}. You should recieve an email with your final score as soon as your administrator finishes grading your answers."
-      else
-        flash[:success] = "Congratulations! You've finished this #{name_for_paths}."
-      end
-      redirect_to @path
     end
-  end
-  
-  def retake
-    @enrollment = @path.enrollments.find_by_user_id(current_user.id)
-    @enrollment.retake!
-    @path.completed_tasks.where("user_id = ?", current_user.id).destroy_all
-    Leaderboard.reset_for_path_user(@path, current_user)
-    redirect_to @path
   end
   
   def community
@@ -364,20 +344,6 @@ class PathsController < ApplicationController
         flash[:error] = "You do not have access to this #{name_for_paths}. Please contact your administrator to gain access."
         redirect_to root_path
       end
-    end
-    
-    def can_view?
-      unless 
-      (@path.company_id == 1 && @path.is_published) ||
-      (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id) && !@path.is_locked) ||
-      (@path.user_id = current_user.id) ||
-      (@path.company_id == current_user.company_id && @enable_collaboration)
-        redirect_to root_path
-      end
-    end
-    
-    def can_continue?
-      redirect_to root_path unless current_user.enrolled?(@path)
     end
     
     def get_rank_and_next_points(leaderboards)

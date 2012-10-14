@@ -33,10 +33,12 @@ class Task < ActiveRecord::Base
     end
   end
   after_create do
-    answer_content.each do |a|
-      answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+    if answer_type > 0
+      answer_content.each do |a|
+        answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+      end
+      PhrasePairing.create_phrase_pairings(answers_to_array)
     end
-    PhrasePairing.create_phrase_pairings(answers_to_array)
   end
   
   def update_answers(params)

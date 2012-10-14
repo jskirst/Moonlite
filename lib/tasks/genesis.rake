@@ -57,8 +57,8 @@ namespace :db do
   task :genesis => :environment do
     Rake::Task['db:reset'].invoke
     moonlite_company = Company.create!(:name => "Metabright")
-    default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_user_creation: true, enable_explore: true)
-    second_role = moonlite_company.user_roles.create!(name: "Test", enable_explore: true)
+    default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_user_creation: true, enable_browsing: true)
+    second_role = moonlite_company.user_roles.create!(name: "Test", enable_browsing: true)
     moonlite_company.user_role_id = default_role.id
     moonlite_company.save
     default_cat = moonlite_company.categories.create!(:name => "Everything")
@@ -77,7 +77,7 @@ namespace :db do
       PATH_SECTIONS.each do |s|
         section = path.sections.create(:name => s[0], :category_id => default_cat.id, :instructions => "Instructions to follow.", :is_published => true, :image_url => s[1])
         NUMBER_OF_TASKS.times do |n|
-          t = section.tasks.new(
+          section.tasks.create!(
             question: "What is #{n} + #{n}?",
             answer_content: [
               { content: "#{2*n}", is_correct: true },
@@ -88,8 +88,10 @@ namespace :db do
             points: 10,
             answer_type: 2
           )
-          t.save
         end
+        section.tasks.create!(question: "This is a text question", answer_type: 0, answer_sub_type: 101)
+        section.tasks.create!(question: "This is a image question", answer_type: 0, answer_sub_type: 102)
+        section.tasks.create!(question: "This is a youtube question", answer_type: 0, answer_sub_type: 103)
       end
     end
     

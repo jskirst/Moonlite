@@ -1,12 +1,13 @@
 class Section < ActiveRecord::Base
-  attr_protected :path_id, :is_published
+  attr_protected :path_id
   attr_accessible :name, 
     :instructions, 
     :position, 
     :image_url,
     :content_type, 
     :enable_skip_content,
-    :points_to_unlock
+    :points_to_unlock,
+    :is_published
   
   belongs_to :path
   has_many :tasks, dependent: :destroy

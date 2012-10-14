@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
         raise "Cannot recognize provider."
       end
     rescue
-      raise $!.to_s
+      logger.debug $!.to_s
     end
     
     user = User.find_by_email(auth["info"]["email"])
@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
   
   def enroll!(obj)
     if obj.is_a? Path
-      enrollments.create!(path_id: path.id) unless enrollments.find_by_path_id(path.id)
+      enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
     elsif obj.is_a? Persona
       user_personas.create!(persona_id: obj.id) unless user_personas.find_by_persona_id(obj.id)
     else

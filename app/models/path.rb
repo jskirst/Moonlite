@@ -4,7 +4,7 @@ class Path < ActiveRecord::Base
   # end
   
   attr_readonly :company_id
-  attr_protected :is_published, :is_purchaseable
+  attr_protected :is_purchaseable
   attr_accessible :user_id,
     :category_id,
     :name, 
@@ -21,7 +21,8 @@ class Path < ActiveRecord::Base
     :tags, 
     :enable_voting,
     :passing_score,
-    :enable_path_retakes
+    :enable_path_retakes,
+    :is_published
   
   has_many :stored_resources, as: :owner
   belongs_to :user
