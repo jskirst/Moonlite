@@ -1,14 +1,33 @@
+:css
+  .body.container { border: 0px; background-color: transparent; box-shadow: none; margin-top: -40px; }  
+
 %div.quizcontainer
-  :css
-    .body.container { border: 0px; background-color: transparent; box-shadow: none; margin-top: -40px; }  
   %div.quizspace
     %div.quizheader
       = image_tag @section.path.path_pic, size: "40x40"
       %div{ style: "display:inline-block;" }
         %span <strong>#{@section.path.name}:</strong> #{@section.name}</span>
         %div#idprogressbar
-    %div
-      %p <strong>Congratulations!</strong> You finished all the core questions for this level and earned enough points to unlock the challenge questions. 
-      %p Unlike core questions, challenge questions are not multiple choice and are not timed. You can do them in any order at any time. 
-      %p Challenge questions have no absolute right or wrong answers - submit the best answer you can come up with and the #{current_company.name} community will vote on them.
-      = link_to "Continue", community_path_url(@section.path, completed: "true"), class: "btn large danger"
+    %div.completionmessagespace
+      %div.completionheader
+        %span Congratulations!
+      %div.completionsubheader You just scored <strong>3,298 points</strong> in this section!
+      %div.completionstats
+        %p Total Challenge points: <strong>41,298 pts</strong>
+        %p Current level: <strong>17</strong>
+        %p New rank: <strong>102 of 492</strong>
+    %div{ style: "display:inline-block; vertical-align:top;" }
+      %div.completionnextsteps
+        %h3 Continue improving your score
+        %ul
+          %li
+            Complete Challenge Questions
+            %p <a href="#">8 available</a>
+          %li Take additional sections
+          %p <a href="#">4 of 12 sections unlocked</a>
+    %span.socialiconholder
+      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"></a>
+      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"></a>
+      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"></a>
+      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Pinterest+small.png"></a>
+    = link_to "Continue", community_path_url(@section.path, completed: "true"), class: "btn info", style: "float: right;"
