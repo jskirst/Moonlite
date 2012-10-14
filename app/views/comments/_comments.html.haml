@@ -1,5 +1,5 @@
 %div.postfooter
-  %div.leftstuff
+  %div.leftstuff{ style: "margin: 10px 0 10px 0;" }
     %a.comment{ style: "cursor: pointer", onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{comment_count.to_i} Comments
   %div.posttimestamp
     - if created_at
@@ -8,10 +8,10 @@
       - else
         %p= created_at.strftime("%B %d, %Y")
   %div.comments{ style: "display:none; text-align: left;" }
+    %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }
     - unless owner.comments.empty?
-      %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }
-        - owner.comments.each do |comment|
-          = render "comments/comment", comment: comment
+      - owner.comments.each do |comment|
+        = render "comments/comment", comment: comment
     - else
       %p There are no comments for this yet.
     = form_for(current_user.comments.new, remote: true) do |f|
