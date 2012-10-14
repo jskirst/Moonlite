@@ -40,7 +40,7 @@
   %div.exploretiles
     - @paths.each do |path|
       %div.mosaic-block.bar2
-        = link_to continue_path_url(path), class: "mosaic-overlay" do
+        = link_to (current_user.enrolled?(path) ? path_url(path) : continue_path_url(path)), class: "mosaic-overlay" do
           %div.details
             %h4 Challenge Title
             - if current_user.enrolled?(path)

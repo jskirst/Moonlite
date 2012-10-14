@@ -39,7 +39,7 @@
         $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white");
         if(data.correct_answer != data.supplied_answer){
           $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
-        }
+        }$("#nextbutton").show();
       });
       $("#nextbutton").on("ajax:success", function(xhr, data){
         $(".quizcontainer").fadeOut('slow', function(){
@@ -73,7 +73,7 @@
               %li.answer_content{ id: "answer_#{a.id}" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
-        = link_to "Next", continue_section_path(@section.id), id: "nextbutton", remote: true, class: "btn danger", method: "post" 
+        = link_to "Next", continue_section_path(@section.id), id: "nextbutton", style: "display: none; float: right;", remote: true, class: "btn danger", method: "post" 
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.pointsandstreakspace
         %div.pointspace.counterbox
