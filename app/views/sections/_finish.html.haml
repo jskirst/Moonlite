@@ -11,10 +11,10 @@
     %div.completionmessagespace
       %div.completionheader
         %span Congratulations!
-      %div.completionsubheader You just scored <strong>3,298 points</strong> in this section!
+      %div.completionsubheader You just scored <strong>#{@section.points_earned(current_user)} points</strong> in this section!
       %div.completionstats
-        %p Total Challenge points: <strong>41,298 pts</strong>
-        %p Current level: <strong>17</strong>
+        %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
+        %p Current level: <strong>#{@enrollment.level}</strong>
         %p New rank: <strong>102 of 492</strong>
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.completionnextsteps
@@ -22,9 +22,9 @@
         %ul
           %li
             Complete Challenge Questions
-            %p <a href="#">8 available</a>
+            %p= link_to "8 available", path_url(@section.path, completed: true)
           %li Take additional sections
-          %p <a href="#">4 of 12 sections unlocked</a>
+          %p= link_to "4 of 12 sections unlocked", path_url(@section.path, completed: true) 
     %span.socialiconholder
       %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"></a>
       %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"></a>

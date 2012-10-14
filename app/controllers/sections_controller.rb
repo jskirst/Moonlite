@@ -253,6 +253,7 @@ class SectionsController < ApplicationController
         render :partial => "continue"
       end
     else
+      @enrollment = current_user.enrollments.find_by_path_id(@section.path.id)
       render :partial => "finish"
     end
   end
