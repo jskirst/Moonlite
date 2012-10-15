@@ -28,6 +28,7 @@ $(function() {
 $(function(){
   $(".comments form").bind("ajax:success", function(xhr, data){
     $(this).parent().find("ul").append(data);
+    $(this).parent().find(".no_comments").hide();
     $(this).find("textarea").val("");
   });
 });

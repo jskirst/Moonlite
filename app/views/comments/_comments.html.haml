@@ -9,11 +9,11 @@
         %p= created_at.strftime("%B %d, %Y")
   %div.comments{ style: "display:none; text-align: left;" }
     %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }
-    - unless owner.comments.empty?
-      - owner.comments.each do |comment|
-        = render "comments/comment", comment: comment
-    - else
-      %p There are no comments for this yet.
+      - unless owner.comments.empty?
+        - owner.comments.each do |comment|
+          = render "comments/comment", comment: comment
+      - else
+        %p.no_comments There are no comments for this yet.
     = form_for(current_user.comments.new, remote: true) do |f|
       %div{ style: "width: 100%" }
         = f.text_area :content, :rows => 2, :style => "width:300px;"
