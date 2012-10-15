@@ -262,3 +262,18 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialicon{height:14px; margin:0 2px; }
 .socialiconholder{position:relative; margin-left:300px; bottom:6px;}
 .quizspace button{float:right;}
+
+.fill{height:40px;}
+.topbar-inner, .topbar .fill{background-image: -webkit-linear-gradient(top, #334C80, #1F2E4C)}
+.topbar {height: 40px;position: fixed;top: 0;left: 0;right: 0; z-index: 10000;overflow: hidden;}
+.chunk.cloudy{display:inline-block; width:30px; height:44px; background-color:rgba(255, 255, 255, .15); margin-right:28px;z-index: 1;}
+.container {width: 940px;margin-left: auto;margin-right: auto; zoom: 1;display:inline-block;padding:3px 0 0 142px;}
+.topbar h3 a, .topbar .brand {float: left;display: block; padding: 0px 20px 12px; margin-left: -20px;line-height: 1; text-decoration: none;font: normal 18px arial, sans-serif;}
+.container h3{left:68px;}
+.container img{width:150px}
+.navicons img{width:25px; display:inline; margin:2px 25px 25px; cursor: pointer; }
+.navitem {border-right: 1px solid #020D25; border-left: 1px solid #56698B;}
+.navitem a{opacity:.8}
+.navitem a:hover{opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
+.navitem a:active{bottom:0px; background-color: rgba(0,0,0, .1);}
+.navicons li.nav_item:first-child a {border-left: 1px solid #444;}
