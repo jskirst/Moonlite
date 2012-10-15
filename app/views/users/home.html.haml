@@ -1,7 +1,7 @@
 %div#homepage
   %div#topsection
     %div.headerspace
-      %div#leftheaderspace Enrolled Challenges
+      %div#leftheaderspace Explore the world of Metabright
     %div#carouselupdatespace
       %ul.inlinedisplay
         - @enrolled_paths.each do |p|
@@ -12,6 +12,15 @@
                   %h4= p.name
               %div
                 %img.mosaic-backdrop{ src: p.path_pic }
+        - if @enrolled_paths.size < 3
+          %li
+            %div.mosaic-block.bar2
+              %a.explore_link.mosaic-overlay{ style: "cursor: pointer;" }
+                %div.details
+                  %h4 Find new challenges...
+              %div
+                %img.mosaic-backdrop{ src: "http://placekitten.com/200/300" }
+                
   %div.row
     %div.span5
       %div.leftbox
