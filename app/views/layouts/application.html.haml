@@ -15,15 +15,9 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
   %body
-    %div#fb-root
-      :javascript
-        var std_url = '#{root_url}';
-    %div.container.body
-      = render "layouts/navbar"
-      = render "layouts/explore_modal" if current_user
-      %section#content
-        - flash.each do |key, value|
-          = content_tag(:div, value, :class => "alert-message #{key}")
-        = yield
-    = render "layouts/footer"
-    = debug(params) if Rails.env.development?
+    = render "layouts/navbar"
+    = render "layouts/explore_modal" if current_user
+    %div.container.body{ style: "padding-top: 45px;" }
+      - flash.each do |key, value|
+        = content_tag(:div, value, :class => "alert-message #{key}")
+      = yield
