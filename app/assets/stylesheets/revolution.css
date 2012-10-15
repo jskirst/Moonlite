@@ -136,7 +136,7 @@
 .CRbuttonspace {margin-top:12px; }
 
 #topsection { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position:relative; background-clip: padding-box; color:#333; background-color:white; margin-bottom:12px; }
-.headerspace { padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; }
+.headerspace { padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; background-color: white;}
 #carouselupdatespace {background-color: #F9F9F9;border-bottom-left-radius: 6px;border-bottom-right-radius: 6px;padding: 16px 0 3px 12px; }
 .inlinedisplay { list-style-type: none; position:relative; margin: 0; }
 .inlinedisplay li{ display:inline; }

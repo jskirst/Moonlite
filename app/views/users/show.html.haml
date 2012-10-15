@@ -32,11 +32,11 @@
   %div.row
     %div.span5
       %div.leftbox
-        %div.leftboxheader About me
+        %div.headerspace About me
         %div.leftboxfooter
           %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
-        %div.leftboxheader My Info
+        %div.headerspace My Info
         %div.leftboxfooter
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
@@ -49,7 +49,7 @@
             - if @user.title
               %li Title: #{@user.title}
       %div.leftbox
-        %div.leftboxheader My badges
+        %div.headerspace My badges
         %div.leftboxfooter
           %li.leftrailcontent
             - @enrolled_paths.each do |c|
@@ -59,7 +59,7 @@
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader
           %div
-            %span.headerspace{ style: "padding-left: 0px;" } Stream
+            %span.headerspace{ style: "border-bottom: 0px; padding-top:1px;" } Stream
             = link_to "Votes", user_path(@user, order: "votes"), class: "btn leftbtn"
             = link_to "Date", user_path(@user, order: "date"), class: "btn midbtn"
             %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
