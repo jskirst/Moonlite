@@ -3,8 +3,6 @@ require 'uri'
 require 'fileutils.rb'
 
 class SectionsController < ApplicationController
-  include SectionsHelper
-  
   before_filter :authenticate
   before_filter :has_edit_access?, except: [:show, :continue, :results]
   before_filter :get_section_from_id, except: [:new, :create, :generate]
