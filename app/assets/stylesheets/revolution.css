@@ -25,7 +25,7 @@
 #miniposttext{ font:normal 10px arial, sans-serif; }
 .newsfeed { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; background-clip:padding-box; background-color:white; }
 .CRimage { max-width:548px; max-height:300px; border-color:#ccc; border-style:solid; border-width: 0px; display:block; margin-left:auto; margin-right:auto; }
-.crarea { background-color: transparent; background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .2),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
+.CRarea { background-color: transparent; background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .2),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
 .obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
