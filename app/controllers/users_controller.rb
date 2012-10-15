@@ -108,12 +108,12 @@ class UsersController < ApplicationController
   def destroy
     if @user == current_user
       respond_to do |f|
-        f.html { render partial: "shared/error_message", locals: { message: "Cannot delete yourself." } }
+        f.html { render "<div class='alert-message success'>User deleted.</div>" }
       end
     else
       @user.destroy
       respond_to do |f|
-        f.html { render partial: "shared/success_message", locals: { message: "User successfully deleted." } }
+        f.html { render "<div class='alert-message success'>Error.</div>" }
       end
     end
   end

@@ -1,4 +1,12 @@
 class Task < ActiveRecord::Base
+  CREATIVE  = 0
+  FIB       = 1
+  MULTIPLE  = 2
+  
+  TEXT      = 100
+  IMAGE     = 101
+  YOUTUBE   = 102
+  
   attr_readonly :section_id
   attr_accessor :answer_content
   attr_accessible :question,

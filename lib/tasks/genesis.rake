@@ -89,9 +89,9 @@ namespace :db do
             answer_type: 2
           )
         end
-        section.tasks.create!(question: "This is a text question", answer_type: 0, answer_sub_type: 101)
-        section.tasks.create!(question: "This is a image question", answer_type: 0, answer_sub_type: 102)
-        section.tasks.create!(question: "This is a youtube question", answer_type: 0, answer_sub_type: 103)
+        section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT)
+        section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE)
+        section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE)
       end
     end
     
