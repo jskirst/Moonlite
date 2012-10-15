@@ -1,0 +1,12 @@
+%title= title
+= csrf_meta_tag
+= javascript_include_tag "application"
+= stylesheet_link_tag "application"
+
+:javascript
+  $(function(){
+    $('.bar2').mosaic({ animation: 'slide' });
+    $('.explore_link').click(function(){
+      $("#explore_modal").modal({ show: true, backdrop: true});
+    })
+  });
