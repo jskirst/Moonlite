@@ -2,7 +2,7 @@
   %div#topsection
     %div.headerspace
       %div#leftheaderspace Enrolled Challenges
-    %div#updatespace
+    %div#carouselupdatespace
       %ul.inlinedisplay
         - @enrolled_paths.each do |p|
           %li
@@ -15,14 +15,14 @@
   %div.row
     %div.span5
       %div.leftbox
-        %div.headerspace Suggested Challenges
+        %div.leftboxheader Suggested Challenges
         %div.leftboxfooter
           %li.leftrailcontent
           - @suggested_paths.each do |p|
             = link_to p do
               = image_tag p.path_pic, class: "leftrailicon"
       %div.leftbox
-        %div.headerspace Enrolled Personas
+        %div.leftboxheader Enrolled Personas
         %div.leftboxfooter
           %li.leftrailcontent
           - @enrolled_personas.each do |p|
@@ -30,7 +30,7 @@
               = image_tag p.picture, class: "leftrailicon"
     %div.span11
       %div.newsfeed
-        %div.headerspace
+        %div.leftboxheader
           %div
             %span Stream
         - @newsfeed_items.each do |r|

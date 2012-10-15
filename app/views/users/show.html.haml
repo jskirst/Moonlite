@@ -32,11 +32,11 @@
   %div.row
     %div.span5
       %div.leftbox
-        %div.headerspace About me
+        %div.leftboxheader About me
         %div.leftboxfooter
           %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
-        %div.headerspace My Info
+        %div.leftboxheader My Info
         %div.leftboxfooter
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
@@ -49,7 +49,7 @@
             - if @user.title
               %li Title: #{@user.title}
       %div.leftbox
-        %div.headerspace My badges
+        %div.leftboxheader My badges
         %div.leftboxfooter
           %li.leftrailcontent
             - @enrolled_paths.each do |c|
