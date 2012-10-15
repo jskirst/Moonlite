@@ -19,7 +19,7 @@
       :javascript
         var std_url = '#{root_url}';
     %div.container.body
-      = render "layouts/header"
+      = render "layouts/navbar"
       = render "layouts/explore_modal" if current_user
       %section#content
         - flash.each do |key, value|

@@ -3,17 +3,18 @@
     %div{ style: "position:absolute;" }
       - 6.times do
         %div.chunk.cloudy
-    %div.container
+    %div
       %h3
         = link_to root_url, style: "font-size: 26px;" do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute; left:-23px;")
-      %ul.navicons{ style: "margin-left:177px; bottom:7px; border-right:1px solid #56698B;" }
-        %li.navitem
-          = link_to root_url do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/60-signpost%402x+lightest.png", style: "width:22px;"
-        %li.navitem
-          = link_to root_url do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/145-persondot%402x+lightest.png", style: "width:22px;"
-        %li.navitem
-          = link_to root_url do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/91-beaker-2%402x+lightest.png", style: "width:22px;"
+      - if current_user
+        %ul.navicons{ style: "margin-left:177px; bottom:7px; border-right:1px solid #56698B;" }
+          %li.navitem
+            = link_to root_url do
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/60-signpost%402x+lightest.png", style: "width:22px;"
+          %li.navitem
+            = link_to root_url do
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/145-persondot%402x+lightest.png", style: "width:22px;"
+          %li.navitem
+            = link_to root_url do
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/91-beaker-2%402x+lightest.png", style: "width:22px;"
