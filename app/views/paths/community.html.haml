@@ -26,7 +26,7 @@
   %div.row
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
-        %div.headerspace Leaderboard
+        %div.leftboxheader Leaderboard
         %ul#ranks
           - @leaderboards.each_with_index do |entry, i|
             %li
@@ -39,7 +39,7 @@
       %div.newsfeed
         %div.leftboxheader
           %div
-            %span.headerspace{ style: "border-bottom: 0px; padding-top:1px;" } Stream
+            %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
             = link_to "Date", community_path_path(@path, order: "date"), class: "btn leftbtn"
             = link_to "Votes", community_path_path(@path, order: "votes"), class: "btn midbtn"
             - if @path
