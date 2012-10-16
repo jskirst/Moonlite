@@ -218,8 +218,8 @@ class SectionsController < ApplicationController
     
     streak = task.section.user_streak(current_user)
     if ct.status_id == 1
-      streak_points, streak_name = calculate_streak_bonus((streak + 1), points)
-      ct.points_awarded = points + streak_points
+      #streak_points, streak_name = calculate_streak_bonus((streak + 1), points)
+      ct.points_awarded = points #+ streak_points
       current_user.award_points(task, points)
     end
     ct.save
@@ -231,7 +231,7 @@ class SectionsController < ApplicationController
       supplied_answer: answer.id, 
       earned_points: earned_points, 
       progress: percent_complete, 
-      messages: [streak_name] }
+      messages: [""] }
   end
     
   
@@ -242,7 +242,6 @@ class SectionsController < ApplicationController
       @progress = @section.percentage_complete(current_user) + 1
       @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
       @stored_resource = @task.stored_resources.first
-      @time_allotted = get_time_remaining(@task)
       @streak = @task.section.user_streak(current_user)
       
       if request.get?
