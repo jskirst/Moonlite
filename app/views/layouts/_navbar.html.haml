@@ -11,13 +11,13 @@
         %ul.navicons{ style: "margin-left:177px; bottom:7px; border-right:1px solid #56698B;" }
           %li.navitem{ style: "border-left: 0px;" }
             = link_to root_url do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:22px;"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:26px;"
           %li.navitem
             = link_to "#", class: "explore_link" do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;"
           %li.navitem
             = link_to current_user do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png", style: "width:22px;"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
           - if @enable_user_creation
             %li.navitem
               = link_to create_path do
