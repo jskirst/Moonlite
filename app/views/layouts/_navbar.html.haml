@@ -3,12 +3,12 @@
     %div{ style: "position:absolute;" }
       - 6.times do
         %div.chunk.cloudy
-    %div{ style: "margin-left: 143px;" }
-      %h3
+    %div{ style: "margin-left: 188px;" }
+      %h3{ style: "top:3px;" }
         = link_to root_url, style: "font-size: 26px;" do
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute; left:-23px;")
+          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
       - if current_user
-        %ul.navicons{ style: "margin-left:177px; bottom:7px; border-right:1px solid #56698B;" }
+        %ul.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B;" }
           %li.navitem{ style: "border-left: 0px;" }
             = link_to root_url do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:26px;"

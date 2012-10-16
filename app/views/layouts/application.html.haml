@@ -17,7 +17,7 @@
   %body
     = render "layouts/navbar"
     = render "layouts/explore_modal" if current_user
-    %div.container.body{ style: "padding-top: 45px;" }
+    %div.container.body{ style: "padding-top: 51px;" }
       - flash.each do |key, value|
         = content_tag(:div, value, :class => "alert-message #{key}")
       = yield
