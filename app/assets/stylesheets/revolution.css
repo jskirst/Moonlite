@@ -4,7 +4,7 @@
 /* Stream */
 .newsfeed h4{ margin:9px 10px 10px 10px; font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
 .newsfeed p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
-.newsfeed a { text-decoration:none; }
+.newsfeed a { text-decoration:none; cursor:pointer; }
 .post { padding:12px; }
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
 .post:hover .postspace{ background-color:#F9F9F9; border-radius: 4px; }

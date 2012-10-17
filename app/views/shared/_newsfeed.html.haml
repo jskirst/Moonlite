@@ -6,11 +6,11 @@
 - newsfeed_items.each do |r|
   %div.post
     %div.postphotospace
-      = image_tag r.user.profile_pic, class: "photo"  
+      = link_to (image_tag r.user.profile_pic, class: "photo"), r.user
     %div.postspace
       %div.postheader
         %h3
-          %a.username= r.user.to_s
+          = link_to r.user.to_s, r.user, class:"username"
         %div.votingandpointsarea
           = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
