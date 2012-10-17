@@ -7,7 +7,7 @@
         - @enrolled_paths.each do |p|
           %li
             %div.mosaic-block.bar2
-              = link_to community_path_path(p), class: "mosaic-overlay", target: "_blank" do
+              = link_to community_path_path(p), class: "mosaic-overlay" do
                 %div.details
                   %h4= p.name
               %div

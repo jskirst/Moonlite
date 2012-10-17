@@ -14,7 +14,7 @@
             - @enrolled_users.each do |u|
               %li
                 %div.mosaic-block.bar2
-                  = link_to user_path(u), class: "mosaic-overlay", target: "_blank" do
+                  = link_to user_path(u), class: "mosaic-overlay" do
                     %div.details
                       %h4= u.name
                   %div
