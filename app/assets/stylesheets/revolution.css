@@ -4,7 +4,7 @@
 /* Stream */
 .newsfeed h4{ margin:9px 10px 10px 10px; font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
 .newsfeed p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
-.newsfeed a { text-decoration:none; }
+.newsfeed a { text-decoration:none; cursor:pointer; }
 .post { padding:12px; }
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
 .post:hover .postspace{ background-color:#F9F9F9; border-radius: 4px; }
@@ -29,7 +29,7 @@
 .obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
-.postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px -6px 0; }
+.postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px 0 0; position:relative; top:4px;}
 .leftstuff { display:inline-block; float:left; }
 .leftstuff a { cursor:hover; text-decoration:none; color: #004700; }
 .posttimestamp{display:inline-block;}
@@ -40,6 +40,7 @@
 .leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
 .newsfeed>.leftboxheader{padding:6px 12px;}
 .leftboxheader>div>.btn{text-transform:none;}
+.commentphoto{width:32px;}
 
 /* Other stuff - organize by feature */
 #topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
@@ -178,14 +179,14 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .completionheader{ margin-left: 12px; }
 .completionheader span{font:normal 29px 'Muli', sans-serif;}
 .completionsubheader{margin-left:12px; font-size:16px}
-.completionstats{margin:12px 12px 0 12px; font-size:13px; font-style: italic; border: 1px solid rgba(0, 0, 0, .1); padding: 6px 9px 9px 9px; border-radius: 6px; background-color: #F9F9F9;}
+.completionstats{margin:12px 12px 0 12px; font-size:13px; font-style: italic; border: 1px solid rgba(0, 0, 0, .1); padding: 6px 9px 0 9px; border-radius: 6px; background-color: #F9F9F9;}
 .completionstats img{display:inline-block; width:40px; margin-left:6px; vertical-align: top; }
-.completionnextsteps{margin:0 0 10px 8px; height:177px; word-wrap:normal; width:289px; font-size:14px; border: 1px solid rgba(0, 0, 0, .1); padding: 0 9px; border-radius: 6px; background-color: #E5F5EA;}
+.completionnextsteps{margin:0 0 10px 8px; height:151px; word-wrap:normal; width:289px; font-size:14px; border: 1px solid rgba(0, 0, 0, .1); padding: 0 9px; border-radius: 6px; background-color: #E5F5EA;}
 .completionnextsteps ul{}
 .completionnextsteps p{text-indent:15px;}
 .completionnextsteps a{font-style: italic; }
 .socialicon{height:14px; margin:0 2px; }
-.socialiconholder{position:relative; margin-left:300px; bottom:6px;}
+.socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
 
