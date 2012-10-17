@@ -15,16 +15,15 @@
       %div.completionstats
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
         %p Current level: <strong>#{@enrollment.level}</strong>
-        %p New rank: <strong>102 of 492</strong>
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.completionnextsteps
         %h3 Continue improving your score
         %ul
           %li
             Complete Challenge Questions
-            %p= link_to "8 available", path_url(@section.path, completed: true)
+            %p= link_to "#{@available_crs} available", path_url(@section.path, completed: true)
           %li Take additional sections
-          %p= link_to "4 of 12 sections unlocked", path_url(@section.path, completed: true) 
+          %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", path_url(@section.path, completed: true) 
     %span.socialiconholder
       %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"></a>
       %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"></a>

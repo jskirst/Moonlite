@@ -226,6 +226,8 @@ class SectionsController < ApplicationController
       end
     else
       @enrollment = current_user.enrollments.find_by_path_id(@section.path.id)
+      @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
+      @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
       render :partial => "finish"
     end
   end

@@ -9,10 +9,11 @@
           - @current_section.creative_tasks.each do |t|
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
             %tr
-              %td= t.question
+              %td
+                %div= t.question
               %td.question_status
                 - if completed_task
-                  %a.label.success{ href: "#"  } Completed
+                  = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
                   %br
                   %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
                 - else

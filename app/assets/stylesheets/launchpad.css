@@ -22,7 +22,7 @@
 .launchpad h1>img{ border-radius:4px; height:36px; width:36px; }
 .launchpad h1>span{ position:relative; bottom:8px; }
 .launchpadcontent{ margin-left:10px; margin-top:10px; border-collapse:collapse; }
-.launchpadpoints{ font-weight:bold; font-size:11px; font-style:italic; white-space:nowrap; }
+.launchpadpoints{ font-weight:bold; font-size:11px; font-style:italic; white-space:nowrap; margin-right: 5px; }
 .launchpadsectioncolumn{
     display: inline-block;
     border: 1px solid rgba(0, 0, 0, .1);
