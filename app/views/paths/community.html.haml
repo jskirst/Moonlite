@@ -28,7 +28,7 @@
             %li{ style: "border-bottom: 1px solid rgb(235, 235, 235);"}
               %span.rank= (i+1).to_s
               = image_tag entry.user.profile_pic 
-              = link_to truncate(entry.user.name, length: 25), entry.user, class: "name"
+              = link_to truncate(entry.user.name, length: 16), entry.user, class: "name"
               %span.level lvl. #{entry.user.level(@path)}
               %span.points= entry.score
     %div.span11
@@ -63,10 +63,16 @@
           %ul.sectionlist
             - @path.sections.each do |s|
               %li.launchpad_link
-                = link_to truncate(s.name, length: 25), launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "") 
-                %div.pointsandprogress
-                  %div #{s.points_earned(current_user)} points
-                  %div #{s.percentage_complete(current_user)}%
+                - if s.points_until_unlock(@enrollment) <= 0
+                  = link_to launchpad_section_path(s), remote: true do
+                    %span.pointer_caret= "»" if s == @current_section
+                    %span= truncate(s.name, length: 25)
+                  %div.pointsandprogress
+                    %div #{s.points_earned(current_user)} points
+                    %div #{s.percentage_complete(current_user)}%
+                - else
+                  %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
+                  %p{ style: "font-size: 9px; line-height: 12px;" } #{s.points_until_unlock(@enrollment)} points to unlock
         = render "sections/launchpad"
 
 :javascript
@@ -76,7 +82,9 @@
     });
      
     $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
+      $("span.pointer_caret").remove();
       $(".sectioninfocontainer").replaceWith(data);
+      $(this).find("a").prepend("<span class='pointer_caret'>» </span>");
     });
   });
 

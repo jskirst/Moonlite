@@ -121,6 +121,10 @@ class Section < ActiveRecord::Base
     return enrollment.total_points.to_i >= self.points_to_unlock
   end
   
+  def points_until_unlock(enrollment)
+    self.points_to_unlock.to_i - enrollment.total_points.to_i
+  end
+  
   def percentage_complete(user)
     return ((self.completed_tasks.where("user_id = ?", user.id).size.to_f / tasks.size.to_f) * 100).to_i
   end
