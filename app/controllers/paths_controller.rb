@@ -190,11 +190,7 @@ class PathsController < ApplicationController
       Leaderboard.reset_for_path_user(@path, current_user)
       redirect_to @path
     else
-      if @section.instructions.blank? && @section.stored_resources.empty?
-        redirect_to continue_section_path(@section)
-      else
-        redirect_to @section
-      end
+      redirect_to continue_section_path(@section)
     end
   end
   
@@ -222,7 +218,7 @@ class PathsController < ApplicationController
       @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
     end
     @activity_stream = @path.activity_stream
-    @display_dashboard = params[:completed]
+    @display_launchpad = params[:completed]
   end
   
   def show

@@ -170,41 +170,16 @@ class SectionsController < ApplicationController
   def took
     task = @section.tasks.find(params[:task_id])
     raise "Task already completed" if current_user.completed_tasks.find_by_task_id(task.id)
-    if params[:answer].blank? && params[:text_answer].blank?
-      flash.now[:error] = "You must provide an answer."
-      redirect_to take_section_path(@section, task_id: task.id)
-    end
+    raise "Only CRs can be taken." if task.answer_type != 0
+    raise "Answer not provided" if (params[:answer].blank? && params[:text_answer].blank?)
     
-    ct = current_user.completed_tasks.new()
-    ct.task_id = task.id
-    if task.answer_type == 0
-      ct.status_id = 2
-      submitted_answer = task.find_or_create_submitted_answer(params[:answer])
-      ct.submitted_answer_id = submitted_answer.id 
-      flash[:success] = "Answer submitted to the community."
-    elsif task.answer_type >= 1
-      ct.answer = params[:answer]
-      status_id, chosen_answer = task.is_correct?(ct.answer)
-      ct.status_id = status_id
-      ct.answer_id = chosen_answer.id unless chosen_answer.nil?
-    else
-      raise "RUNTIME EXCEPTION: Invalid answer type for Task ##{task.id.to_s}"
-    end
+    submitted_answer = task.find_or_create_submitted_answer(params[:answer])
+    ct = current_user.completed_tasks.create!(
+      points_awarded: 100, 
+      task_id: task.id, status_id: 1, 
+      submitted_answer_id: submitted_answer.id)
+    current_user.award_points(task, 100)
     
-    if status_id == 1
-      flash[:success] = "Correct!"
-      points = 10
-      ct.points_awarded = points
-      current_user.award_points(task, points)
-    else
-      ct.points_awarded = 0
-    end
-    
-    if ct.save
-      Answer.increment_counter(:answer_count, chosen_answer.id) if chosen_answer
-    else
-      flash[:error] = @ct.errors.full_messages.join(", ")
-    end
     redirect_to community_path_path(@section.path, completed: true)
   end
   

@@ -20,7 +20,7 @@
         - if r.task.answer_sub_type == Task::TEXT
           %blockquote{ style: "margin:20px;" }= r.submitted_answer.content
         - elsif r.task.answer_sub_type == Task::IMAGE
-          = link_to image_tag(sanitize(r.submitted_answer.content), class: "CRimage"), sanitize(r.submitted_answer.content), :target => "_blank"
+          = link_to image_tag(sanitize(r.submitted_answer.content)), sanitize(r.submitted_answer.content), :target => "_blank"
         - elsif r.task.answer_sub_type == Task::YOUTUBE
           %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
       = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at}
