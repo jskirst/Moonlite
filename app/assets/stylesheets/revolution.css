@@ -30,8 +30,9 @@
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
 .postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px 0 0; position:relative; top:4px;}
-.leftstuff { display:inline-block; float:left; }
-.leftstuff a { cursor:hover; text-decoration:none; color: #004700; }
+.leftstuff { display:inline-block; float:left; margin: 10px 0 10px 0; }
+.leftstuff a { cursor:pointer; text-decoration:none; color: #004700; font-weight:bold; }
+.leftstuff a:hover { text-decoration:underline; }
 .posttimestamp{display:inline-block;}
 .leftboxheader{background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
 .leftbtn{margin-right:-7px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}

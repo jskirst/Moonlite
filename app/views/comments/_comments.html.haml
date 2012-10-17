@@ -1,6 +1,6 @@
 %div.postfooter
-  %div.leftstuff{ style: "margin: 10px 0 10px 0;" }
-    %a.comment{ style: "cursor: pointer", onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{owner.comments.size.to_i} Comments
+  %div.leftstuff
+    %a.comment{ onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{owner.comments.size.to_i} Comments
   %div.posttimestamp
     - if created_at
       - if created_at.today?
