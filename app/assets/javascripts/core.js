@@ -1,14 +1,3 @@
-$(function(){
-  $("#image_url_input").change(function(){
-    var link = $(this).val();
-    $(".image_url_preview").attr("src", link);
-    $("#image_url_preview").attr("src", link);
-  });
-});
-
-$('#topbar').scrollSpy();
-$('#topbar').dropdown();
-
 function is_valid_image(url, callback){
   if (url == ""){
     callback(false);
@@ -21,20 +10,25 @@ function is_valid_image(url, callback){
   }
 }
 
-$(function() {
-    $('.hoverscroll').hoverscroll();
-});
+function close_button(){
+  $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
+}
 
 $(function(){
+  close_button();
   $(".comments form").bind("ajax:success", function(xhr, data){
     $(this).parent().find("ul").append(data);
     $(this).parent().find(".no_comments").hide();
     $(this).find("textarea").val("");
   });
-});
-
-$(function(){
-  $(".modal_close").click(function(){
-    $(this).parents('.modal').modal('hide');
+  $('.hoverscroll').hoverscroll();
+  
+  $('#topbar').scrollSpy();
+  $('#topbar').dropdown();
+  
+  $("#image_url_input").change(function(){
+    var link = $(this).val();
+    $(".image_url_preview").attr("src", link);
+    $("#image_url_preview").attr("src", link);
   });
 });

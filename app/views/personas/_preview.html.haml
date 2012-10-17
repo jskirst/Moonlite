@@ -1,15 +1,14 @@
-:javascript
-  $(function(){
-    $(".show_persona_select").on("ajax:success", function(xhr, data){
-      $(".explorenewusercontent").fadeOut('fast', function(){
-        $(this).replaceWith(data, function(){
-          $(this).fadeIn();
+%div.exploretiledetailsarea
+  :javascript
+    $(function(){
+      $(".show_persona_select").on("ajax:success", function(xhr, data){
+        $(".explorenewusercontent").fadeOut('fast', function(){
+          $(this).replaceWith(data, function(){
+            $(this).fadeIn();
+          });
         });
       });
     });
-  });
-
-%div.exploretiledetailsarea
   %div.bigexploreimagespace
     = image_tag persona.picture, size: "140x140"
   %div.exploredetailsspace

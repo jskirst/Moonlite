@@ -1,14 +1,14 @@
-:javascript
-  $(function(){
-    $(".persona_select").on("ajax:success", function(xhr, data){
-      $(".persona_select.active").removeClass("active");
-      $(this).addClass("active");
-      $(".exploretiledetailsarea").replaceWith(data);
-    });
-    $(".persona_select:first").addClass("active");
-  });
-  
 %div.explorenewusercontent
+  :javascript
+    $(function(){
+      $(".persona_select").on("ajax:success", function(xhr, data){
+        $(".persona_select.active").removeClass("active");
+        $(this).addClass("active");
+        $(".exploretiledetailsarea").replaceWith(data);
+      });
+      $(".persona_select:first").addClass("active");
+      close_button();
+    });
   %div.exploreheader
     %button.modal_close{ style: "margin: 5px 20px 0 0;" } &times;
     %h1{ style: "font-size: 23px; margin-bottom: 8px;" }
