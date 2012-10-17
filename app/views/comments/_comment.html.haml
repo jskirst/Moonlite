@@ -1,3 +1,6 @@
 %li{ style: "margin-bottom: 1px;" }
-  %p{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content
-  %p{ style: "margin-left: 0;" } #{link_to comment.user.name, comment.user} about #{time_ago_in_words(comment.created_at)} ago
+  %div{ style: "display:inline-block;" }
+    = link_to (image_tag comment.user.profile_pic, class: "commentphoto"), comment.user
+  %div{ style: "display:inline-block;" }
+    %p{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content
+    %p{ style: "margin-left: 0;" } #{link_to comment.user.name, comment.user} about #{time_ago_in_words(comment.created_at)} ago
