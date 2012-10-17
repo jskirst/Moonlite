@@ -5,14 +5,10 @@
         = image_tag @path.path_pic, class: "bigheaderimage"
       %div.rightofbigheaderimage{ style: "width:80%;" }
         %div#topboxcontent
-          %div.span5{ style: "width: 600px;" }
+          %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level}
+          %div.span5{ style: "width: 550px;" }
             %h1= @path.name
-            %h3 #{@path.sections.size} sections - #{@path.enrolled_user_count} users
-          %div.userctrlpanel
-            %button.btn.danger{style: "margin-bottom: 5px;"} Dashboard
-            %p= current_user.name
-            %span#level Level #{@enrollment.level} - 
-            %span#points #{@enrollment.total_points.to_i.to_s} pts
+            %h3 Level #{@enrollment.level}, #{@enrollment.total_points} points
         %div.challengecarousel
           %ul.inlinedisplay
             - @enrolled_users.each do |u|
@@ -27,9 +23,9 @@
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
         %div.leftboxheader{style: "padding: 10px 12px; "} Leaderboard
-        %ul#ranks
+        %ul#ranks{ style: "padding: 0px;"}
           - @leaderboards.each_with_index do |entry, i|
-            %li
+            %li{ style: "border-bottom: 1px solid rgb(235, 235, 235);"}
               %span.rank= (i+1).to_s
               = image_tag entry.user.profile_pic 
               = link_to truncate(entry.user.name, length: 25), entry.user, class: "name"
@@ -67,7 +63,7 @@
           %ul.sectionlist
             - @path.sections.each do |s|
               %li.launchpad_link
-                = link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "") 
+                = link_to truncate(s.name, length: 25), launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "") 
                 %div.pointsandprogress
                   %div #{s.points_earned(current_user)} points
                   %div #{s.percentage_complete(current_user)}%
@@ -75,7 +71,7 @@
 
 :javascript
   $(function(){
-    $(".userctrlpanel").click(function(){
+    $(".button-actionable").click(function(){
       $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
     });
      

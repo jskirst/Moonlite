@@ -18,14 +18,14 @@
 .postspace{display: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative;font:normal 13px arial, sans-serif;padding: 0 12px;width: 520px;}
 .photo{ border-radius:4px; width: 50px; height: 50px; }
 .username{ text-decoration: none; color:#005C1F; font-size:17px; }
-.posttext { margin: -2px -12px 0 -12px; padding: 3px 12px; background-color:#E5F5EA; }
+.posttext { margin: -2px -12px 0 -12px; padding: 9px 12px; background-color:#E5F5EA; }
 .leveltext { font-weight: bold; }
 .challengetext { font-weight: bold; text-decoration:none; color:black; display:inline; }
 .enrolledminiimages { height:13px; width:13px; }
 #miniposttext{ font:normal 10px arial, sans-serif; }
 .newsfeed { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; background-clip:padding-box; background-color:white; }
 .CRimage { max-width:548px; max-height:300px; border-color:#ccc; border-style:solid; border-width: 0px; display:block; margin-left:auto; margin-right:auto; }
-.CRarea { background-color: transparent; background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .2),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
+.CRarea { background-color: transparent; background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .06),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
 .obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
@@ -83,7 +83,7 @@
 
 /* From profile */
 #homepage{
-  font-family: muli,sans-serif;
+  
   color:#333;     
 }
 #topboxcontent{ width:729px; }
@@ -202,3 +202,8 @@ nav img{width:150px}
 .navitem a:hover{opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
 .navitem a:active{bottom:0px; background-color: rgba(0,0,0, .1);}
 .navicons li.nav_item:first-child a {border-left: 1px solid #444;}
+
+.button { padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 4px; }
+.button-actionable { text-shadow: 0 1px 0px black; color: white; background-image:-webkit-linear-gradient(top, #ee5f5b, #c43c35); }
+.button:hover { box-shadow: 0px 0px 1px black }
+h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
