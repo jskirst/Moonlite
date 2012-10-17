@@ -3,7 +3,7 @@
 
 /* Stream */
 .newsfeed h4{ margin:9px 10px 10px 10px; font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
-.newsfeed p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
+.newsfeed p{ margin:0 9px 2px 0; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
 .newsfeed a { text-decoration:none; cursor:pointer; }
 .post { padding:12px; }
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
@@ -24,8 +24,8 @@
 .enrolledminiimages { height:13px; width:13px; }
 #miniposttext{ font:normal 10px arial, sans-serif; }
 .newsfeed { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; background-clip:padding-box; background-color:white; }
-.CRarea { background-color: transparent; background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .06),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
-.CRarea img { max-width: 100%; max-height: 100%; border-color:#ccc; border-style:solid; border-width: 0px; display:block; margin-left:auto; margin-right:auto; }
+.CRarea { overflow-y:auto; background-color: transparent; background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .06),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
+.CRarea img { max-width: 100%; max-height: 350px; border-color:#ccc; border-style:solid; border-width: 0px; display:block; margin-left:auto; margin-right:auto; }
 .obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
@@ -41,7 +41,8 @@
 .leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
 .newsfeed>.leftboxheader{padding:6px 12px;}
 .leftboxheader>div>.btn{text-transform:none;}
-.commentphoto{width:32px;}
+.commentphoto{width:32px; border-radius:3px; }
+.comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 
 /* Other stuff - organize by feature */
 #topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
