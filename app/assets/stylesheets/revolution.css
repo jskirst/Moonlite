@@ -29,10 +29,10 @@
 .obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
-.postfooter{ color:#999; font-size:11px; text-align: right; margin-bottom:-6px; }
-.postfooter{ text-align: right; margin-right:-13px; }
-.leftstuff { float:left; }
+.postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px -6px 0; }
+.leftstuff { display:inline-block; float:left; }
 .leftstuff a { cursor:hover; text-decoration:none; color: #004700; }
+.posttimestamp{display:inline-block;}
 .leftboxheader{background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
 .leftbtn{margin-right:-7px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
 .midbtn{margin-right:-7px; border-radius:0px;}
