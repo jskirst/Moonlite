@@ -1,6 +1,0 @@
-<%= form_for current_user.enrollments.new(:path_id => @path.id) do |f| %>
-  <%= f.hidden_field :path_id %>
-  <div class="actions">
-    <%= f.submit "Enroll", :class=> "btn primary" %>
-  </div>
-<% end %>
