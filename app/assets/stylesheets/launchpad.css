@@ -65,7 +65,7 @@
     padding:10px; 
     overflow:auto;
 }
-#sectionpointchart { width: 627px; height: 90px; margin: 0 auto; margin-bottom: 12px; }
+#sectionpointchart { width: 627px; height: 60px; margin: 0 auto; margin-bottom: 12px; }
 
 .launchpadsectioncolumn {background-color: #F9F9F9;display:inline-block;border-right: 1px solid rgba(0, 0, 0, .1); padding-right:10px; width:175px; vertical-align: top;overflow:auto; height:330px;}
 .launchpadsectionpoints {display:inline-block; vertical-align: top;}

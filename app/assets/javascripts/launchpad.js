@@ -1,6 +1,7 @@
 Highcharts.theme = {
    colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee", "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
    chart: {
+      margin: [5, 25, 20, 20],
       backgroundColor: {
          linearGradient: [0, 0, 0, 400],
          stops: [
@@ -9,7 +10,7 @@ Highcharts.theme = {
          ]
       },
       borderWidth: 0,
-      borderRadius: 15,
+      borderRadius: 8,
       plotBackgroundColor: null,
       plotShadow: false,
       plotBorderWidth: 0
@@ -55,17 +56,6 @@ Highcharts.theme = {
             color: '#AAA',
             font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
          }
-      }
-   },
-   legend: {
-      itemStyle: {
-         color: '#CCC'
-      },
-      itemHoverStyle: {
-         color: '#FFF'
-      },
-      itemHiddenStyle: {
-         color: '#333'
       }
    },
    labels: {
