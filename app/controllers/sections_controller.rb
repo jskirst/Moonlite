@@ -212,10 +212,10 @@ class SectionsController < ApplicationController
   
   def continue
     @task = @section.next_task(current_user)
+    @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
       @answers = @task.answers.to_a.shuffle
       @progress = @section.percentage_complete(current_user) + 1
-      @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
       @stored_resource = @task.stored_resources.first
       @streak = @task.section.user_streak(current_user)
       
@@ -225,7 +225,6 @@ class SectionsController < ApplicationController
         render :partial => "continue"
       end
     else
-      @enrollment = current_user.enrollments.find_by_path_id(@section.path.id)
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
       render :partial => "finish"
