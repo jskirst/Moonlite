@@ -55,7 +55,8 @@
       %button.modal_close &times;
       %h1
         = image_tag(@path.path_pic)
-        %span #{@path.name} - #{@total_points_earned} pts, Level #{current_user.level(@path)}
+        %div #{@path.name} 
+        %div{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@total_points_earned} pts, Level #{current_user.level(@path)}
       %div.launchpadcontent
         %div.launchpadsectioncolumn
           %div.launchpadcolumnheader
