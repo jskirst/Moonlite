@@ -1,4 +1,6 @@
 %div.postfooter
+  :javascript
+    $(function(){ $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); }); });
   %div.leftstuff
     %a.comment{ onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{owner.comments.size.to_i} Comments
   %div.posttimestamp

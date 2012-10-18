@@ -1,6 +1,5 @@
 class CommentsController < ApplicationController
   before_filter :authenticate
-  before_filter :get_comment_from_id, :only => [:destroy]
   
   def create
     @comment = current_user.comments.new(params[:comment])
@@ -9,24 +8,12 @@ class CommentsController < ApplicationController
     else
       raise "No comment provided"
     end
-    
   end
 
   def destroy
+    @comment = Comment.find_by_id(params[:id])
+    raise "Cannot delete what you do not own." unless @comment.user == current_user
     @comment.destroy
-    redirect_to @comment.task
+    render json: { status: "success" }
   end
-  
-  private
-    def get_comment_from_id
-      unless params[:id].nil?
-        @comment = Comment.find_by_id(params[:id])
-      end
-      
-      if @comment.nil?
-        flash[:error] = "Could not find the comment you were looking for."
-        redirect_to root_path
-      end
-      @task = @comment.task
-    end
 end

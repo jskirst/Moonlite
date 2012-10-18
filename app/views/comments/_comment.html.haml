@@ -3,4 +3,7 @@
     = link_to (image_tag comment.user.profile_pic, class: "commentphoto"), comment.user
   %div{ style: "overflow:hidden; margin: 0 0 0 43px;" }
     %p{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content
-    %p{ style: "margin-left: 0;" } #{link_to comment.user.name, comment.user} about #{time_ago_in_words(comment.created_at)} ago
+    %p{ style: "margin-left: 0;" } 
+      #{link_to comment.user.name, comment.user} about #{time_ago_in_words(comment.created_at)} ago.
+      #{link_to "Remove.", comment, class: 'comment_delete', :method => :delete, remote: true if comment.user == current_user}
+      
