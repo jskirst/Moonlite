@@ -96,6 +96,7 @@ Metabright::Application.routes.draw do
   match '/auth/:provider/callback',  :to => 'sessions#create'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
+	match '/intro' => "pages#intro"
 	match '/start' => "pages#start"
 	
 	match '/invitation',:to => 'pages#invitation'

@@ -35,6 +35,10 @@ class PagesController < ApplicationController
     end
   end
   
+  def intro
+    render "intro", layout: "landing"
+  end
+  
   def start
     @personas = current_company.personas.all
     render "start", layout: "landing"

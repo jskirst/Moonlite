@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
       else
         user = User.create_with_omniauth(auth)
         sign_in(user)
-        redirect_to start_path and return
+        redirect_to intro_path and return
       end
     else
       credentials = params[:session]
