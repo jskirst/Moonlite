@@ -21,4 +21,5 @@
       - flash.each do |key, value|
         = content_tag(:div, value, :class => "alert-message #{key}")
       = yield
-    = render "layouts/footer"
+    - unless params[:controller] == "sections"
+      = render "layouts/footer"

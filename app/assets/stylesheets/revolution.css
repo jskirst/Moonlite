@@ -201,12 +201,16 @@ nav img{width:150px}
 .navitem a:active{bottom:0px; background-color: rgba(0,0,0, .1);}
 .navicons li.nav_item:first-child a {border-left: 1px solid #444;}
 
-.button { padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 4px; }
-.button-actionable { text-shadow: 0 1px 0px black; color: white; background-image:-webkit-linear-gradient(top, #ee5f5b, #c43c35); }
+.button { text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
+.button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }
+.button.button-actionable { background-image:-webkit-linear-gradient(top, #ee5f5b, #c43c35); }
+.button.button-info { background-image: -webkit-linear-gradient(top, #5BC0DE, #339BB9); }
+.button.button-standard { background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6); color: rgb(75, 75, 75); text-shadow: 0 1px 0px whitesmoke;}
+.button.button-standard:hover { color: black; }
 .button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
 h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
 
-.intcontainer{overflow:hidden; width:695px;margin-left:auto;margin-right:auto;margin-top:100px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+.intcontainer{overflow:hidden; width:695px;margin-left:auto;margin-right:auto;margin:100px auto 200px auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .firstchallengeint{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden;}
 .firstchallengeintheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
 .firstchallengeintheader span{font: normal 21px 'Muli', sans-serif; position: relative; bottom: 3px;left:3px}
