@@ -52,7 +52,8 @@
 %div#launchpad.modal.hide.fade{ style: "left: 36%; top: 30%;"}
   %div.overlay
     %div.launchpad
-      %button.modal_close &times;
+      %div.modal_close
+        %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
       %h1
         = image_tag(@path.path_pic)
         %div #{@path.name} 
