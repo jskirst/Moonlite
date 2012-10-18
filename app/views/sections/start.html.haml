@@ -1,0 +1,6 @@
+:css
+  .body.container { border: 0px; background-color: transparent; box-shadow: none; margin-top: -40px; }
+- if @enrollment.total_points == 0
+  = render "intro"
+- else
+  = render "continue"
