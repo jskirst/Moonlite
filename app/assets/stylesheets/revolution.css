@@ -203,5 +203,17 @@ nav img{width:150px}
 
 .button { padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 4px; }
 .button-actionable { text-shadow: 0 1px 0px black; color: white; background-image:-webkit-linear-gradient(top, #ee5f5b, #c43c35); }
-.button:hover { box-shadow: 0px 0px 1px black }
+.button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
 h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
+
+.intcontainer{overflow:hidden; width:695px;margin-left:auto;margin-right:auto;margin-top:100px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+.firstchallengeint{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden;}
+.firstchallengeintheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
+.firstchallengeintheader span{font: normal 21px 'Muli', sans-serif; position: relative; bottom: 3px;left:3px}
+.firstchallengeintcontent{padding:12px; }
+.firstchallengeintcontent>ul{list-style: none; margin:0 0 0 2px;}
+.firstchallengeintcontent>ul>li{line-height:17px; padding:0 0 10px 0; }
+.firstchallengeintcontent>ul>li>img{display:inline; height:18px;margin-right:5px; position:relative; top:2px;}
+.inttitle{font-weight:bold; font-size:18px; color:#404040;}
+.intdetails{margin-left:24px; display:inline-block;}
+.firstchallengeint>button{float:right; margin: 0 12px 12px 12px;}
