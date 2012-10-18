@@ -217,13 +217,13 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
 .intcontainer{overflow:hidden; width:695px;margin-left:auto;margin-right:auto;margin:100px auto 200px auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .firstchallengeint{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden;}
 .firstchallengeintheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
-.firstchallengeintheader span{font: normal 21px 'Muli', sans-serif; position: relative; bottom: 3px;left:3px}
+.firstchallengeintheader span{font: normal 21px 'Muli', sans-serif; position: relative; bottom: 1px;left:3px}
 .firstchallengeintcontent{padding:12px; }
 .firstchallengeintcontent>ul{list-style: none; margin:0 0 0 2px;}
 .firstchallengeintcontent>ul>li{line-height:17px; padding:0 0 10px 0; }
 .firstchallengeintcontent>ul>li>img{display:inline; height:18px;margin-right:5px; position:relative; top:2px;}
 .inttitle{font-weight:bold; font-size:18px; color:#404040;}
-.intdetails{margin-left:24px; display:inline-block;}
+.intdetails{margin-left:28px; display:inline-block;}
 .firstchallengeint>button{float:right; margin: 0 12px 12px 12px;}
 
 /* Footer */

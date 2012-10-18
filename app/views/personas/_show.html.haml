@@ -30,8 +30,12 @@
     
   %div.exploreheader
     = image_tag @persona.picture
-    %h1 <strong>Explore:</strong> Pick a challenge...
-  %hr{ style: "margin:0" }
+    %h1{ style: "font-size: 23px; margin-bottom: 3px;" }
+      %strong Explore: Choose your Challenge...
+    %div
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; position:relative; top:1px;" }
+      %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Each Challenge represents a skillset where you can prove what you know, and be inspired by others. 
+  %hr{ style: "margin:0px;" }
   %div.exploretiles
     - @paths.each do |path|
       %div.mosaic-block.bar2
