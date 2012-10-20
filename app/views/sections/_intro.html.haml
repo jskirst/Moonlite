@@ -1,0 +1,30 @@
+%div.intcontainer
+  :javascript
+    $(function(){
+      $("#nextbutton").on("ajax:success", function(xhr, data){
+        $(".intcontainer").fadeOut('slow', function(){
+          $(this).replaceWith(data).fadeIn();
+        });
+      });
+    })
+  %div.firstchallengeint
+    %div.firstchallengeintheader
+      %span You're about to start your first Challenge!
+    %div.firstchallengeintcontent
+      %ul
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon" }
+          %span.inttitle Streak bonus
+          %br
+          %span.intdetails Get multiple questions correct consecutively and you'll earn streak multipliers!
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon" }
+          %span.inttitle Questions are timed
+          %br
+          %span.intdetails As time decreases, so do your possible points. If time expires before you respond, you'll lose your streak bonus.
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon" }
+          %span.inttitle This is just the beginning!
+          %br
+          %span.intdetails Continue to improve your score by taking <strong>Challenge Questions</strong> and unlocking new sections.
+    = link_to "Begin now", continue_section_path(@section.id), id: "nextbutton", style: "float: right; margin: 0 10px 10px 0;", remote: true, class: "button button-actionable", method: "post"

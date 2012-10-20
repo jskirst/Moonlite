@@ -10,26 +10,18 @@ class SessionsController < ApplicationController
   def create
     auth = request.env["omniauth.auth"]
     if auth
-      if current_user
-        if current_user.merge_with_omniauth(auth)
-          track_session(:register, current_user, auth)
+      if user = User.find_with_omniauth(auth)
+        sign_in(user) and track_session(:login, user, auth)
+      elsif user = User.find_by_email(auth["info"]["email"])
+        if user.merge_with_omniauth(auth)
+          sign_in(user) and track_session(:login, user, auth)
         else
           flash[:error] = "An error occured. Please try another form of authentication."
         end
       else
-        if user = User.find_with_omniauth(auth)
-          sign_in(user) and track_session(:login, user, auth)
-        elsif user = User.find_by_email(auth["info"]["email"])
-          if user.merge_with_omniauth(auth)
-            sign_in(user) and track_session(:login, user, auth)
-          else
-            flash[:error] = "An error occured. Please try another form of authentication."
-          end
-        else
-          flash.now[:info] = "Please login with your normal email and password before connecting with #{auth["provider"] == "facebook" ? "Facebook" : "Google" }."
-          @hide_social = true
-          render('new') and return
-        end
+        user = User.create_with_omniauth(auth)
+        sign_in(user)
+        redirect_to intro_path and return
       end
     else
       credentials = params[:session]
@@ -70,7 +62,7 @@ class SessionsController < ApplicationController
   
   private
     def track_session(action, user, auth = {})
-      unless user.admin? || user.is_test_user
+      unless user.nil? || user.admin? || user.is_test_user
         if action == :register
           track! :registration_facebook if auth["provider"] == "facebook"
           track! :registration_google if auth["provider"] == "google_oauth2"

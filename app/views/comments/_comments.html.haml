@@ -1,0 +1,24 @@
+%div.postfooter
+  :javascript
+    $(function(){ $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); }); });
+  %div.leftstuff
+    %a.comment{ onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{owner.comments.size.to_i} Comments
+  %div.posttimestamp
+    - if created_at
+      - if created_at.today?
+        %p #{time_ago_in_words(created_at)} ago
+      - else
+        %p= created_at.strftime("%B %d, %Y")
+  %div.comments{ style: "display:none; text-align: left;" }
+    %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }
+      - unless owner.comments.empty?
+        - owner.comments.each do |comment|
+          = render "comments/comment", comment: comment
+      - else
+        %p.no_comments There are no comments for this yet.
+    = form_for(current_user.comments.new, remote: true) do |f|
+      %div{ style: "width: 100%" }
+        = f.text_area :content, :rows => 2, :style => "width: 510px; height: 55px; "
+      = hidden_field :comment, :owner_type, { :value => owner_type }
+      = hidden_field :comment, :owner_id, { :value => owner_id }
+      = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"

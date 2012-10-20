@@ -1,0 +1,183 @@
+<html>
+<head>
+<link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+<link href="revolution.css" media="screen" rel="stylesheet" type="text/css">
+<link href="mockup.css" media="screen" rel="stylesheet" type="text/css">
+<link href="other.css" media="screen" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="mosaic/js/mosaic.1.0.1.js"></script>
+<script type="text/javascript">     
+jQuery(function($){   
+  $('.bar2').mosaic({
+    animation : 'slide'   //fade or slide
+  });
+  $('.comment').click({
+    animation : 'slide',  //fade or slide
+    hover_x   : '400px'   //Horizontal position on hover
+  });
+  
+  $("li:odd").css("background-color", "white");
+  $("li:even").css("background-color", "whitesmoke");
+}); 
+</script>
+</head>
+<body>
+  <nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown">
+    <div class="fill">
+      <div class="container">
+        <h3><a href="/" style="font-size: 26px;">MetaBright</a></h3>
+      </div>
+    </div>
+  </nav>
+    <div id="homepage">
+      <div id="topsection">
+        <div id="updatespace">
+          <img class="bigheaderimage" src="http://www.placekitten.com/900/900">
+          <div class="rightofbigheaderimage">
+            <div id="topboxcontent">
+              <div class="span5">
+                <h1>Kittens</h1>
+                <h3>4 sections � 174,092 users</h3>
+              </div>
+              <div class="userctrlpanel">
+                <button class="btn danger">Enroll</button>
+                <p>Rebecca Freeman</p>
+                <span id="level">Level 19</span> � <span id="points">12,439 pts</span>          
+              </div>
+            </div>
+            <div class="challengecarousel">
+              <ul class="inlinedisplay">
+                <li>
+                  <div class="mosaic-block bar2">
+                    <a href="#" target="_blank" class="mosaic-overlay">
+                      <div class="details">
+                        <h4>New Challenge added!</h4>
+                        <p>Kitten Throwing!</p>
+                      </div>
+                    </a>
+                    <div><img class="mosaic-backdrop" src="http://www.placekitten.com/200/80"/></div>
+                  </div>
+                </li>
+                <li>
+                  <div class="mosaic-block bar2">
+                    <a href="#" target="_blank" class="mosaic-overlay">
+                      <div class="details">
+                        <h4>Just 1 level away...</h4>
+                        <p>From unlocking the Hacker persona!</p>
+                      </div>
+                    </a>
+                    <div><img class="mosaic-backdrop" src="http://www.placekitten.com/g/200/80"/></div>
+                  </div>
+                </li>
+                <li>
+                  <div class="mosaic-block bar2">
+                    <a href="#" target="_blank" class="mosaic-overlay">
+                      <div class="details">
+                        <h4>Our site just got updated!</h4>
+                        <p>Take the grand tour!</p>
+                      </div>
+                    </a>
+                    <div><img class="mosaic-backdrop" src="http://www.placekitten.com/200/80"/></div>
+                  </div>
+                </li>
+              </ul>  
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="span5">
+        <div class="leftbox">
+          <div class="leftboxheader">Leaderboard</div>
+          <ul id="ranks">
+            <li><span class="rank">1.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 19</span> <span class="points">43,090</span></li>
+            <li><span class="rank">2.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 18</span> <span class="points">43,090</span></li>
+            <li><span class="rank">3.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 13</span> <span class="points">43,090</span></li>
+            <li><span class="rank">4.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 12</span> <span class="points">43,090</span></li>
+            <li><span class="rank">5.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 8</span> <span class="points">43,090</span></li>
+            <li><span class="rank">6.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 6</span> <span class="points">43,090</span></li>
+            <li><span class="rank">7.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 5</span> <span class="points">43,090</span></li>
+            <li><span class="rank">8.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 3</span> <span class="points">43,090</span></li>
+            <li><span class="rank">9.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 3</span> <span class="points">43,090</span></li>
+            <li><span class="rank">10.</span> <img src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s250-c-k/photo.jpg"> <a href="#" class="name">Nathaniel</a> <span class="level">lvl 2</span> <span class="points">43,090</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="span11">
+        <div class="newsfeed">
+          <div class="post">
+            <div class="postphotospace">
+              <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+            </div>
+            <div class="postspace">
+              <div class="postheader">
+                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+              </div>
+              <div class="posttext">
+                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+              </div>
+              <div class="postfooter">
+                <div class="leftstuff">
+                  <a class="stoney" href="#">Stoney</a> � <a class="comment" href="#">Comment</a>
+                </div>
+              <div class="posttimestamp">
+                <p>July 23, 2012 3:12pm</p>
+              </div>
+            </div> 
+          </div>
+        </div>
+        <div class="post">
+          <div class="postphotospace">
+            <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+          </div>
+          <div class="postspace">
+            <div class="postheader">
+              <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+            </div>
+            <div class="posttext">
+              Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+            </div>
+            <div class="CRarea">
+              <img src="http://chzderp.files.wordpress.com/2012/07/hurr-durr-derp-face-bertmern.jpg" alt class="CRimage">
+              <div class="pointbox">+ 3,400 pts</div>
+            </div>
+            <div class="postfooter">
+              <div class="leftstuff">
+                <a class="stoney" href="#">Stoney</a> � <a class="comment" href="#">Comment</a>
+              </div>
+              <div class="posttimestamp">
+                <p>July 23, 2012 3:12pm</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="post">
+          <div class="postphotospace">
+            <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+          </div>
+          <div class="postspace">
+            <div class="postheader">
+              <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+            </div>
+            <div class="posttext">
+              Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+            </div>
+            <div class="CRarea">
+              <img src="http://www.placekitten.com/550/300" alt class="CRimage">
+              <div class="commentfeed">Comments go here.</div>
+                <div class="pointbox">+ 3,400 pts</div>
+              </div>
+              <div class="postfooter">
+                <div class="leftstuff">
+                  <a class="stoney" href="#">Stoney</a> � <a class="comment" href="#">Comment</a>
+                </div>
+                <div class="posttimestamp">
+                  <p>July 23, 2012 3:12pm</p>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

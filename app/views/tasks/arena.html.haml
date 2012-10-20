@@ -1,0 +1,50 @@
+= form_tag({ :controller => :sections, :action => "continue" }, :remote => true, :method => "post", "data-type" => "html", :id => "challenge_form") do
+  %div.quizcontainer
+    %div.quizspace
+      %div.quizheader
+        = image_tag @path.path_pic, size: "40x40"
+        %div{ style: "display:inline-block;" }
+          %span <strong>#{@path.name}:</strong> #{@section.name}</span>
+          %div#idprogressbar
+      %div.questionandresponsespace{ style: "width: 430px;" }
+        %div.questionspace
+          %span= @task.question
+        %div.questionfooter
+          %div.pointbar 100 points
+        %div.responsespace
+          %ol{ style: "list-style-position: inside; margin-left: 0px;" }
+            - @answers.each do |a|
+              %li= a.content
+          %button.btn.danger.nextbutton Next
+      %div{ style: "display:inline-block; vertical-align:top;" }
+        %div.pointsandstreakspace
+          %div.pointspace.counterbox
+            %span.counter
+              - (1..4).each do
+                %span.digit
+                  %span{ title: "0" } 0
+            %br
+            %span Points
+          %div.streakspace.counterbox
+            %span.counter
+              - (1..2).each do
+                %span.digit
+                  %span{ title: "0" } 0
+            %br
+            %span Streak
+        %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
+          - if !@free_response && @points_awarded   
+            - if @correct == true
+              %p{ style: "text-decoration:underline; font-weight: bold; color:#57A957;" } Correct!
+              %p{ style: "color: green;" } <strong>+#{@points_awarded >= 10 ? 10 : @points_awarded} points</strong>
+            - elsif @correct == false
+              %p{ style: "color: red;" } Incorrect
+          - if @streak_name
+            %p{ style: "text-decoration:underline;color:darkcyan;" } Achievement: <strong style="text-transform:uppercase;">#{@streak_name}
+            %p
+              %strong +#{@streak_points.to_i}
+              %span points
+          - if @leaderboard
+            %p{ style: "color:darkgoldenrod;" } Passed #{@leaderboard.user.name}'s score #{@leaderboard.score}
+          - unless @section.instructions.blank?
+            %p= link_to "Review Section Content", @section, style: "float:right;"

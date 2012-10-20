@@ -1,0 +1,44 @@
+%div#homepage
+  %div#topsection
+    %div.headerspace
+      %div#leftheaderspace Explore the world of Metabright
+    %div#carouselupdatespace
+      %ul.inlinedisplay
+        - @enrolled_paths.each do |p|
+          %li
+            %div.mosaic-block.bar2
+              = link_to community_path_path(p), class: "mosaic-overlay" do
+                %div.details
+                  %h4= p.name
+              %div
+                %img.mosaic-backdrop{ src: p.path_pic }
+        - if @enrolled_paths.size < 3
+          %li
+            %div.mosaic-block.bar2
+              %a.explore_link.mosaic-overlay{ style: "cursor: pointer;" }
+                %div.details
+                  %h4 Find new challenges...
+              %div
+                %img.mosaic-backdrop{ src: "http://placekitten.com/200/300" }
+                
+  %div.row
+    %div.span5
+      %div.leftbox
+        %div.leftboxheader Suggested Challenges
+        %div.leftboxfooter
+          %li.leftrailcontent
+          - @suggested_paths.each do |p|
+            = link_to p do
+              = image_tag p.path_pic, class: "leftrailicon"
+      %div.leftbox
+        %div.leftboxheader Enrolled Personas
+        %div.leftboxfooter
+          %li.leftrailcontent
+          - @enrolled_personas.each do |p|
+            = link_to p do
+              = image_tag p.picture, class: "leftrailicon"
+    %div.span11
+      %div.newsfeed
+        %div
+          %div.leftboxheader Stream
+        = render "shared/newsfeed", { newsfeed_items: @newsfeed_items }

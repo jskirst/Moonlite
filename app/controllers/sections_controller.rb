@@ -3,17 +3,11 @@ require 'uri'
 require 'fileutils.rb'
 
 class SectionsController < ApplicationController
-  include OrderHelper
-  include GeneratorHelper
-  include SectionsHelper
-  
   before_filter :authenticate
-  before_filter :has_edit_access?, :except => [:show, :continue, :results]
-  before_filter :get_section_from_id, :except => [:new, :create, :generate]
-  before_filter :can_edit?, :except => [:show, :continue, :results, :new, :create, :generate] 
-  before_filter :enrolled?, :only => [:continue, :results]
-  
-  respond_to :json, :html
+  before_filter :has_edit_access?, except: [:show, :continue, :results]
+  before_filter :get_section_from_id, except: [:new, :create, :generate]
+  #before_filter :can_edit?, except: [:show, :continue, :complete, :launchpade, :new, :create] 
+  before_filter :enrolled?, only: [:complete, :continue, :take, :took]
 
   def show
     if current_user.enrolled?(@section.path) && @section.enable_skip_content
@@ -126,16 +120,6 @@ class SectionsController < ApplicationController
     redirect_to edit_path_path(@section.path)
   end
   
-  def reorder_tasks
-    old_order = @section.tasks.map { |t| [t.id, t.position] }
-    new_order = params[:tasks][:positions].map { |id, position| [id.to_i, position.to_i] }
-    revised_order = reorder(old_order, new_order)
-    revised_order.each do |t|
-      @section.tasks.find(t[0]).update_attribute(:position, t[1])
-    end
-    redirect_to edit_section_path(@section, :m => "tasks")
-  end
-  
   def confirm_delete
   end
   
@@ -166,155 +150,84 @@ class SectionsController < ApplicationController
   
   def html_editor
   end
-  
-  def research
-    @mode = params[:m]
-    if params[:m] == "clear"
-      if @section.update_attribute("instructions", nil)
-        flash[:success] = "Instructions cleared."
-      else
-        flash[:error] = "Oops! An error occurred and we couldn't clear your instructions. Please try again."
-      end
-      redirect_to edit_section_path(@section, :m => "instructions")
-    elsif params[:m] == "create"
-      @topics = params[:topics].split(",")
-      if params[:main_topic]
-        @topics << @section.name
-      end
-      @topics = @topics.map {|t| t.strip}
-      @quoted_topics = @topics.map {|t| '"'+t+'"'}
-      
-      @use_wikipedia = params[:use_wikipedia] ? true : false;
-      @use_youtube = params[:use_youtube] ? true : false;
-      @use_google_images = params[:use_google_images] ? true : false;
-    elsif params[:m] == "topics"
-      @answers = []
-      @section.tasks.all.each do |t|
-        @answers << t.describe_correct_answer
-      end
-      @answers = @answers.uniq.join(", ")
-      render "research_settings"
-    else
-      @topics = []
-      @quoted_topics = []
-    end
-  end
-  
-  def questions
-    @title = "Generate Questions"
-    @url = "http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate"
-    @limit = params[:limit]
-    if params[:hidden_content]
-      text = clean_text(@section.hidden_content)
-    else
-      text = clean_text(@section.instructions)
-    end
-    if text.nil?
-      flash[:info] = "You need to add some content to your section before we can automatically generate tasks for you."
-      redirect_to edit_section_path(@section, :m => "instructions")
-    else
-      @split_paragraphs = split_and_clean_text(text)
-      @quoted_paragraphs = @split_paragraphs.map {|t| '"'+t+'"'}
-    end
-  end
-  
-  def generate
-    @text = params[:text]
-    uri = URI.parse("http://ec2-50-19-152-110.compute-1.amazonaws.com:3000/generate")
-    http = Net::HTTP.new(uri.host, uri.port)
-
-    http.read_timeout = 90
-    request = Net::HTTP::Post.new(uri.request_uri)
-    request.set_form_data({'text' => @text})
-    resp, @data = http.request(request)
-    
-    unless @data.nil?
-      logger.debug @data
-      respond_to do |format|
-        format.json
-      end
-    end
-  end
-  
-  def review
-    @title = "Review Questions"
-    raw_questions = params[:questions]
-    @processed_questions = {}
-    raw_questions.each do |key, value|
-      value = value.split("?")
-      question = value[0].to_s + "?"
-      answer = value[1].to_s
-      @processed_questions[key] = {:question => question, :answer1 => answer}
-    end
-    logger.debug "PQ:"
-    logger.debug @processed_questions.to_s
-  end
-  
-  def bulk_tasks
-    raw_questions = params[:questions]
-    @processed_questions = {}
-    raw_questions.each do |key, values|
-      new_task = @section.tasks.build(values.merge(:points => 10))
-      unless new_task.save
-        @processed_questions[key] = values.merge(:errors => new_task.errors.full_messages)
-      end
-    end
-    if @processed_questions.size > 0
-      flash[:error] = "Could not save the following tasks. Please review and resubmit."
-      render "review"
-    else
-      flash[:success] = "All tasks successfully added!"
-      redirect_to edit_section_path(@section, :m => "tasks")
-    end
-  end
 
 # Begin Section Journey
+
+  def launchpad
+    @current_section = @section
+    @unlocked = @section.unlocked?(current_user)
+    render partial: "launchpad"
+  end
+  
+  def take
+    @task = @section.tasks.find(params[:task_id])
+    @path = @section.path
+    @answers = @task.answers
+    @answers = @answers.to_a.shuffle unless @answers.empty?
+    @stored_resource = @task.stored_resources.first
+  end
+  
+  def took
+    task = @section.tasks.find(params[:task_id])
+    raise "Task already completed" if current_user.completed_tasks.find_by_task_id(task.id)
+    raise "Only CRs can be taken." if task.answer_type != 0
+    raise "Answer not provided" if (params[:answer].blank? && params[:text_answer].blank?)
+    
+    submitted_answer = task.find_or_create_submitted_answer(params[:answer])
+    ct = current_user.completed_tasks.create!(
+      points_awarded: 100, 
+      task_id: task.id, status_id: 1, 
+      submitted_answer_id: submitted_answer.id)
+    current_user.award_points(task, 100)
+    
+    redirect_to community_path_path(@section.path, completed: true)
+  end
+  
+  def complete
+    task = Task.find(params[:task_id])
+    answer = task.answers.find(params[:answer])
+    correct_answer = task.correct_answer
+    points = params[:points_remaining].to_i
+    status = (answer == correct_answer) ? Answer::CORRECT : Answer::INCORRECT
+    ct = current_user.completed_tasks.new(task_id: task.id, answer_id: answer.id, status_id: status, points_awarded: 0)
+    
+    streak = task.section.user_streak(current_user)
+    if ct.status_id == 1
+      #streak_points, streak_name = calculate_streak_bonus((streak + 1), points)
+      ct.points_awarded = points #+ streak_points
+      current_user.award_points(task, points)
+    end
+    ct.save
+    
+    percent_complete = @section.percentage_complete(current_user) + 1
+    earned_points = current_user.enrollments.find_by_path_id(@section.path.id).total_points
+    
+    render json: { correct_answer: correct_answer.id, 
+      supplied_answer: answer.id, 
+      earned_points: earned_points, 
+      progress: percent_complete, 
+      messages: [""] }
+  end
+    
   
   def continue
-    start_time = Time.now
-    last_question, @streak, @streak_points, @streak_name = create_completed_task
-    @streak ||= @section.user_streak(current_user)
     @task = @section.next_task(current_user)
-    
+    @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
-      @answers = @task.answers
-      unless @answers.empty?
-        @answers = @answers.to_a.shuffle
-      end
-      if last_question
-        @free_response = last_question.status_id == 2
-        @correct = last_question.status_id == 1
-        @points_awarded = last_question.points_awarded
-      end
-      @progress = @path.percent_complete(current_user) + 1
-      @earned_points = current_user.enrollments.find_by_path_id(@path.id).total_points
-      @possible_points = 10
-      if @streak < 0
-        @possible_points = @possible_points/(-1*@streak)
-      end
-      if @path.enable_retakes
-        generate_hint
-      else
-        @hints = []
-      end
+      @answers = @task.answers.to_a.shuffle
+      @progress = @section.percentage_complete(current_user) + 1
       @stored_resource = @task.stored_resources.first
-      if @correct
-        @leaderboard = Leaderboard.includes(:user).where("path_id = ? and score < ? and score > ?", @path.id, @earned_points, @earned_points - 10).first
-      end
+      @streak = @task.section.user_streak(current_user)
       
-      @time_allotted = get_time_remaining(@task)
-      
-      if params[:task_id].nil?
+      if request.get?
         render "start" 
       else
-        render :partial => "continue", :locals => @locals
+        render :partial => "continue"
       end
-      logger.debug "CONTINE TIME ELAPSED:" + (Time.now - start_time).to_s
     else
-      redirect_url = "Redirecting to results:" + continue_path_url(@section.path)
-      render :text => redirect_url
-      logger.debug "CONTINE TIME ELAPSED:" + (Time.now - start_time).to_s
-      return
+      @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
+      @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
+      render :partial => "finish"
     end
   end
   

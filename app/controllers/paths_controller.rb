@@ -1,13 +1,11 @@
 class PathsController < ApplicationController
   include OrderHelper
   
-  before_filter :authenticate, :except => [:hero, :show, :jumpstart]
-  before_filter :admin_only, :only => [:index, :change_company]
+  before_filter :authenticate, :except => [:show, :jumpstart]
+  before_filter :admin_only, :only => [:index]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
   before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy, :collaborator, :collaborators]
-  before_filter :can_view?, :only => [:show]
-  before_filter :can_continue?, :only => [:continue]
   
 # Begin Path Creation
   
@@ -77,16 +75,6 @@ class PathsController < ApplicationController
     redirect_to edit_path_path(@path)
   end
   
-  def reorder_sections
-    old_order = @path.sections.map { |s| [s.id, s.position] }
-    new_order = params[:sections][:positions].map { |id, position| [id.to_i, position.to_i] }
-    revised_order = reorder(old_order, new_order)
-    revised_order.each do |s|
-      @path.sections.find(s[0]).update_attribute(:position, s[1])
-    end
-    redirect_to edit_path_path(@path, :m => "sections")
-  end
-  
   def update_roles
     @path = current_user.company.paths.find(params[:id])
     all_roles = current_user.company.user_roles
@@ -152,14 +140,12 @@ class PathsController < ApplicationController
     flash[:success] = "#{name_for_paths} successfully deleted."
     redirect_back_or_to root_path
   end
-  
-  #GET
+
   def collaborators
     @collaborators = @path.collaborating_users
     @collaborator = @path.collaborations.new
   end
-  
-  #PUT
+
   def collaborator
     @collaborators = @path.collaborating_users
     flash[:error] = "No collaborator stated."and render "collaborators" and return if params[:collaborator].nil?
@@ -174,83 +160,69 @@ class PathsController < ApplicationController
       flash.now[:success] = "#{@user.name} successfully added as a collaborator."
     else
       flash.now[:error] = @collaborator.errors.full_messages.join(". ")
-      render "collaborators"
-      return
+      render "collaborators" and return
     end
     redirect_to collaborators_path_path(@path)
   end
-  
-  #GET
+
   def undo_collaboration
-    if @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
-      if @collaboration.destroy
-        flash[:sad_success] = "User will no longer have access."
-      else
-        flash[:error] = @collaboration.errors.full_messages.join(". ")
-      end
+    @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
+    if @collaboration.destroy
+      flash[:sad_success] = "User will no longer have access."
     else
-      flash[:error] = "No such user."
+      flash[:error] = @collaboration.errors.full_messages.join(". ")
     end
     redirect_to collaborators_path_path(@path)
   end
 
 # Begin Path Journey
- 
-  def jumpstart
-    @company = Company.find(1)
-    @path = @company.paths.find(params[:id])
-    unless signed_in?
-      store_location
-      @user = User.create_anonymous_user(@company)
-      sign_in(@user)
-      @user.enrollments.create!(:path_id => @path.id)
-      if(ab_test :slow_start_v2)
-        redirect_to @path
-        return
-      end
-    end
-    redirect_to continue_path_path(@path)
-  end
   
   def continue
-    @section = current_user.most_recent_section_for_path(@path)
-    if @section.completed?(current_user)
-      while @section.completed?(current_user)
-        @section = @path.next_section(@section)
-        break if @section.nil?
-      end
+    unless current_user.enrolled?(@path)
+      current_user.enroll!(@path)
+    end
+    @section = current_user.most_recent_section_for_path(@path) || @path.sections.first
+    while @section && @section.completed?(current_user)
+      @section = @path.next_section(@section)
     end
     
-    unless @section.nil? || @section.is_published == false
-      if @section.instructions.blank? && @section.stored_resources.empty?
-        redirect_to continue_section_path(@section)
-      else
-        redirect_to @section
-      end
-    else
-      previous_ranking = Leaderboard.reset_for_path_user(@path, current_user)
-      unless @path.has_creative_response
-        current_user.enrollments.find_by_path_id(@path.id).update_attribute(:is_complete, true)
-        @path.create_completion_event(current_user, name_for_paths)
-      end
-      
-      if @path.has_creative_response && !@path.enable_voting
-        flash[:success] = "You've finished this #{name_for_paths}. You should recieve an email with your final score as soon as your administrator finishes grading your answers."
-      else
-        flash[:success] = "Congratulations! You've finished this #{name_for_paths}."
-      end
+    if @section.nil? || @section.is_published == false
+      Leaderboard.reset_for_path_user(@path, current_user)
       redirect_to @path
+    else
+      redirect_to continue_section_path(@section)
     end
   end
   
-  def retake
-    @enrollment = @path.enrollments.find_by_user_id(current_user.id)
-    @enrollment.retake!
-    @path.completed_tasks.where("user_id = ?", current_user.id).destroy_all
-    redirect_to @path
+  def community
+    @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
+    @total_points_earned = @enrollment.total_points
+    @skill_ranking = @enrollment.skill_ranking
+    
+    @current_section = current_user.most_recent_section_for_path(@path)
+    @unlocked = @current_section.unlocked?(current_user)
+    
+    Leaderboard.reset_for_path_user(@path, current_user) if params[:completed]
+    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
+    @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
+    @enrolled_users = @path.enrolled_users
+    
+    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
+    @tasks = @path.tasks
+    
+    if params[:task]
+      @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+    elsif params[:order] && params[:order] == "date"
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+    else
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    end
+    @activity_stream = @path.activity_stream
+    @display_launchpad = params[:completed]
   end
   
   def show
+<<<<<<< HEAD
     @enrolled = current_user.enrolled?(@path)
     @completed = @path.has_creative_response ? @path.total_remaining_tasks(current_user) == 0 : @path.completed?(current_user)
     @start_mode = "Continue #{name_for_paths}"
@@ -270,6 +242,29 @@ class PathsController < ApplicationController
           counter += 1
         end
       end
+=======
+    redirect_to community_path_path(@path, completed: params[:completed]) if current_company.id == 1
+    if signed_in?
+      @enrolled = current_user.enrolled?(@path)
+      @completed = @path.has_creative_response ? @path.total_remaining_tasks(current_user) == 0 : @path.completed?(current_user)
+      @start_mode = "Continue #{name_for_paths}"
+    else
+      @user = User.create_anonymous_user(Company.find(1))
+      sign_in(@user)
+      current_user.enrollments.create!(:path_id => @path.id)
+      @enrolled = true, @completed = false
+      @start_mode = "Start #{name_for_paths}"
+    end
+  
+    store_location #So user will be redirected here after registration
+    @must_register = current_user.must_register?
+    
+    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
+    if @completed
+      @total_points_earned = @path.enrollments.find_by_user_id(current_user.id).total_points
+      @skill_ranking = @enrolled.skill_ranking
+      @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
+>>>>>>> revolution
     end
     
     if @enable_recommendations
@@ -325,15 +320,6 @@ class PathsController < ApplicationController
   end
   
 # Administration #
-  def index
-    if params[:search]
-      @paths = Path.paginate(:page => params[:page], 
-        :conditions => ["name ILIKE ? or description ILIKE ? or tags ILIKE ?", 
-          "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%"], :order => "id DESC")
-    else
-      @paths = Path.paginate(:page => params[:page], :order => "id DESC")
-    end
-  end
   
   def dashboard
     @page = params[:page] || 1
@@ -351,7 +337,6 @@ class PathsController < ApplicationController
       @percentage_correct = @path.percentage_correct(@user)
     end
   end
-  
 
   private
     def get_path_from_id
@@ -375,18 +360,22 @@ class PathsController < ApplicationController
       end
     end
     
-    def can_view?
-      unless 
-      (@path.company_id == 1 && @path.is_published) ||
-      (@path.is_published && @path.user_roles.find_by_id(current_user.user_role.id) && !@path.is_locked) ||
-      (@path.user_id = current_user.id) ||
-      (@path.company_id == current_user.company_id && @enable_collaboration)
-        redirect_to root_path
+    def get_rank_and_next_points(leaderboards)
+      counter = 1
+      previous = nil
+      user_rank = nil
+      next_rank_points = nil
+      leaderboards.each do |l|
+        if l.user_id == current_user.id
+          user_rank = ActiveSupport::Inflector::ordinalize(counter)
+          next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
+          break
+        else
+          previous = l
+          counter += 1
+        end
       end
-    end
-    
-    def can_continue?
-      redirect_to root_path unless current_user.enrolled?(@path)
+      return user_rank, next_rank_points 
     end
     
     def calculate_path_statistics(path, time)

@@ -1,3 +1,5 @@
+require 'open-uri'
+
 class User < ActiveRecord::Base
   attr_readonly :signup_token, :company_id
   attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id
@@ -8,7 +10,13 @@ class User < ActiveRecord::Base
     :password, 
     :password_confirmation, 
     :catch_phrase,
-    :is_anonymous
+    :is_anonymous,
+    :description,
+    :title,
+    :company_name,
+    :education,
+    :link,
+    :location
 
   belongs_to :company
   belongs_to :user_role
@@ -19,6 +27,7 @@ class User < ActiveRecord::Base
   has_many :completed_tasks, :dependent => :destroy
   has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
   has_many :user_personas, :dependent => :destroy
+  has_many :personas, through: :user_personas
   has_many :achievements, :through => :user_achievements
   has_many :comments, :dependent => :destroy
   has_many :leaderboards, :dependent => :destroy
@@ -53,8 +62,13 @@ class User < ActiveRecord::Base
   
   before_save :encrypt_password
   before_save :set_tokens
+  before_save :set_default_user_role
   before_save :check_image_url
   before_save :check_user_type
+  
+  def to_s
+    return self.name
+  end
   
   def self.find_with_omniauth(auth)
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
@@ -84,11 +98,40 @@ class User < ActiveRecord::Base
         image_url: auth["info"]["image"],
         is_anonymous: false
     }
+    
+    begin
+      info = auth[:extra][:raw_info]
+      if auth[:provider] == "facebook"
+        user_details[:description] = info[:bio]
+        user_details[:link] = info[:link]
+        user_details[:location] = info[:location][:name] if info[:location]
+        user_details[:company_name] = info[:work][-1][:employer][:name] if info[:work][-1]
+        user_details[:education] = info[:education][-1][:school][:name] if info[:education][-1]
+      elsif auth[:provider] == "google_oauth2"
+        url = URI.parse("https://www.googleapis.com/plus/v1/people/me?access_token=#{auth[:credentials][:token]}")
+        info = JSON.parse(open(url).read)
+        user_details[:link] = info["url"]
+        user_details[:description] = info["tagline"] || info["aboutMe"]
+        if info["organizations"]
+          info["organizations"].each { |org| user_details[:education] = [org["name"], org["title"]].compact.join(",") if org["type"] == "school" }
+          info["organizations"].each { |org| user_details[:company_name] = org["name"] if org["type"] == "work" }
+          info["organizations"].each { |org| user_details[:title] = org["title"] if org["type"] == "work" }
+        end
+        if info["placesLived"]
+          info["placesLived"].each { |place| user_details[:location] = place["value"] if place["primary"] == true }
+        end
+      else
+        raise "Cannot recognize provider."
+      end
+    rescue
+      logger.debug $!.to_s
+    end
+    
     user = User.find_by_email(auth["info"]["email"])
     if user
       user.update_attributes(user_details)
     else
-      user = Company.find(1).users.new(user_details)
+      user = Company.first.users.new(user_details)
       user.password = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
       user.password_confirmation = user.password
       user.save
@@ -143,11 +186,17 @@ class User < ActiveRecord::Base
   end
   
   def enrolled?(path)
-    return true unless enrollments.find_by_path_id(path.id).nil?
+    return enrollments.find_by_path_id(path.id)
   end
   
-  def enroll!(path)
-    enrollments.create!(path_id: path.id) unless enrollments.find_by_path_id(path.id)
+  def enroll!(obj)
+    if obj.is_a? Path
+      enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
+    elsif obj.is_a? Persona
+      user_personas.create!(persona_id: obj.id) unless user_personas.find_by_persona_id(obj.id)
+    else
+      raise "Invalid object to enroll."
+    end
   end
   
   def unenroll!(path)
@@ -164,6 +213,13 @@ class User < ActiveRecord::Base
       self.update_attribute('earned_points', self.earned_points + points)
       enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
     end
+  end
+  
+  def retract_points(task, points)
+    log_transaction(task.id, points * -1)
+    self.update_attribute('earned_points', self.earned_points - points)
+    enrollment = enrollments.find_by_path_id(task.section.path_id)
+    enrollment.update_attribute(:total_points, enrollment.total_points - points)
   end
   
   def debit_points(points)
@@ -200,7 +256,17 @@ class User < ActiveRecord::Base
     return enrolled_paths.to_a.count { |p| p.completed?(self) } if stat == "completed_paths"
   end
   
-  private  
+  def level(path)
+    return enrollments.find_by_path_id(path).level
+  end
+  
+  private
+    def set_default_user_role
+      if self.user_role_id.nil?
+        self.user_role_id = self.company.user_role_id
+      end
+    end
+    
     def check_image_url
       unless self.image_url.nil?
         self.image_url = nil if self.image_url.length < 9

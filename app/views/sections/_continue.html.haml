@@ -1,0 +1,94 @@
+%div.quizcontainer
+  :javascript
+    var continue_countdown = true;
+    var count_down_bar_width = 100;
+    function count_down_points(){
+      var points = $count_down_points.text().replace(" points", "");
+      points = parseInt(points);
+      if(points > 0){
+        points = points - 1;
+        $count_down_points.text(points + " points");
+        $("#points_remaining").val(points);
+        if(continue_countdown == true){
+          setTimeout(count_down_points, 300);
+        }
+      }
+    }
+    
+    function count_down_bar(){
+      if(continue_countdown == true){
+        count_down_bar_width = count_down_bar_width - .1
+        $count_down_bar.css("width", count_down_bar_width+"%")
+        setTimeout(count_down_bar, 30);
+      }
+    }
+    
+    $(function(){
+      $count_down_bar = $(".pointbarfiller");
+      $count_down_points = $count_down_bar.parent().find("span");
+      setTimeout(function(){
+        setTimeout(count_down_bar, 300);
+        setTimeout(count_down_points, 300); 
+      }, 2000);
+      
+      $(".answer_content").click(function(){
+        continue_countdown = false;
+        $(this).find("input").attr("checked", "checked");
+        $("#challenge_form").submit();
+      });
+      $("#challenge_form").on("ajax:success", function(xhr, data){
+        $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white");
+        if(data.correct_answer != data.supplied_answer){
+          $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
+        }$("#nextbutton").show();
+      });
+      $("#nextbutton").on("ajax:success", function(xhr, data){
+        $(".quizcontainer").fadeOut('slow', function(){
+          $(this).replaceWith(data).fadeIn();
+        });
+      });
+    });  
+  %div.quizspace
+    %div.quizheader
+      = image_tag @section.path.path_pic, size: "40x40"
+      %div{ style: "display:inline-block;" }
+        %span <strong>#{@section.path.name}:</strong> #{@section.name}</span>
+        %div#idprogressbar
+    %div{ style: "margin: auto;" }
+      = render "stored_resource", { :stored_resource => @stored_resource }
+    %div.questionandresponsespace{ style: "width: 425px;" }
+      %div.questionspace
+        %span= @task.question
+      %div.questionfooter
+        %div.pointbar
+          %span{ style: "position: absolute;" } 100 points
+          %div.pointbarfiller{ style: "display: inline-block;"}
+      %div.responsespace
+        = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
+          = hidden_field_tag :task_id, @task.id
+          = hidden_field_tag :points_remaining, 100
+          %ol{ style: "list-style-position: inside; margin-left: 0px;" }
+            - @answers.each do |a|
+              %li.answer_content{ id: "answer_#{a.id}" }
+                = radio_button_tag :answer, a.id, false, style: "display: none;"
+                %span= a.content
+        = link_to "Next", continue_section_path(@section.id), id: "nextbutton", style: "display: none; float: right;", remote: true, class: "button button-actionable", method: "post" 
+    %div{ style: "display:inline-block; vertical-align:top;" }
+      %div.pointsandstreakspace
+        %div.pointspace.counterbox
+          %span.counter
+            - earned_points_digits = @enrollment.total_points.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
+            - earned_points_digits.each do |d|
+              %span.digit
+                %span{ title: "#{d}" }= d
+          %br
+          %span Points
+        %div.streakspace.counterbox
+          %span.counter
+            - streak = (@streak > 0 ? @streak : 0).to_s.split("").reverse.push("0").reverse.slice(-2, 2)
+            - streak.each do |s|
+              %span.digit
+                %span{ title: s }= s
+          %br
+          %span Streak
+      %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }

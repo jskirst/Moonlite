@@ -1,22 +1,22 @@
 var streak_countdown;
 var start_modal_countdown;
 
-function get_next_task(event, data){
-  unblock_form_submit($('#challenge_form'));
-  if(data.indexOf("Redirecting to results:") >= 0){
-    redirect_url = data.substring(data.indexOf(":")+1);
-    window.location = redirect_url;
-  } else if (data.errors){
-    alert("You have an error.");
-  } else {
-    $('body').data("needs_reload", false);
-    $("section#content").html(data);
-    $('#challenge_form').on('ajax:success', get_next_task);
-    
-    start_question_timer();
-    expose_help_button();
-  }
-}
+// function get_next_task(event, data){
+  // unblock_form_submit($('#challenge_form'));
+  // if(data.indexOf("Redirecting to results:") >= 0){
+    // redirect_url = data.substring(data.indexOf(":")+1);
+    // window.location = redirect_url;
+  // } else if (data.errors){
+    // alert("You have an error.");
+  // } else {
+    // $('body').data("needs_reload", false);
+    // $("section#content").html(data);
+    // $('#challenge_form').on('ajax:success', get_next_task);
+//     
+    // start_question_timer();
+    // expose_help_button();
+  // }
+// }
 
 function show_start_modal(){
   clearInterval(start_modal_countdown);
@@ -87,7 +87,7 @@ function set_youtube_preview(youtube_link, preview_id){
   var youtube_id = get_youtube_id_from_link(youtube_link);
   var params = { allowScriptAccess: "always", wmode: "transparent" }
   var attr = { id: preview_id };
-  swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "480", "295", "8", null, null, params, attr);
+  swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "320", "265", "8", null, null, params, attr);
 }
 
 function check_youtube_before_submit(){
@@ -128,9 +128,3 @@ function check_image_before_submit(){
     return false;
   });
 }
-
-$(document).ready(function() {
-  var page_needs_reload = false;
-  $('body').data("needs_reload", false);
-  $('#challenge_form').on('ajax:success', get_next_task);
-});

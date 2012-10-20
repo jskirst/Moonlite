@@ -1,0 +1,48 @@
+%div.explorenewusercontent
+  :javascript
+    $(function(){
+      $(".back_to_preview_index").on("ajax:success", function(xhr, data){
+        $(".explorenewusercontent").fadeOut('fast', function(){
+          $(this).replaceWith(data, function(){
+            $(this).fadeIn();
+          });
+        });
+      });
+      $('.bar2').mosaic({ animation : 'slide' });
+      $('.comment').click({ animation : 'slide', hover_x: '400px' });
+    });
+
+  :css
+    .exploreheader{ margin:0px; width:669px;padding:12px 0 0px 12px; background-color:#F9F9F9;}
+    .exploreheader h1 {font-size: 21px; margin-bottom: 10px;}
+    .exploreheader img {width:40px; height: 40px; border-radius:4px; float:left; margin-right: 8px;}
+    .exploretiles {padding:12px;}
+    .exploretiledetailsarea{border-radius:10px; padding:10px 10px 0 10px;}
+    .exploretiles .bigexploreimagespace{display:inline-block; vertical-align: top;}
+    .exploretiles .bigexploreimagespace img{width:120px; margin-right:10px}
+    .exploredetailsspace{display:inline-block; width:485px;vertical-align: top;}
+    .exploredetailsspace button{float:right; margin-top:10px}
+    .exploretextdetails span{font-size:20px; font-weight:bold; font-style:italic;}
+    .details button{ padding:3px; float:right; position:relative; right:6px; font-size:10px; font-weight:bold; opacity:1;}
+    .exploretiles .bar2 .mosaic-overlay { bottom:-28px; height:48px;}
+    .exploretiles .mosaic-block {width:130px; height:130px;}
+    .explorenewuserfooter{position:relative; bottom:12px; left:12px;}
+    
+  %div.exploreheader
+    = image_tag @persona.picture
+    %h1 <strong>Explore:</strong> Pick a challenge...
+  %hr{ style: "margin:0" }
+  %div.exploretiles
+    - @paths.each do |path|
+      %div.mosaic-block.bar2
+        = link_to path_url(path), class: "mosaic-overlay" do
+          %div.details
+            %h4 #{truncate(path.name,length: 17, separator: ' ')}
+            - if current_user.enrolled?(path)
+              %button.btn.success Enrolled
+            - else
+              %button.btn.danger Enroll
+        %div 
+          = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
+  %div.explorenewuserfooter
+    = link_to "Back", explore_path, class: "button button-standard back_to_preview_index", remote: true

@@ -5,4 +5,8 @@ tmp/**/*
 webrat.log
 test_output.txt
 .project
+<<<<<<< HEAD
 .sass-cache
+=======
+.sass-cache/
+>>>>>>> revolution

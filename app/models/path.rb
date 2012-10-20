@@ -4,7 +4,7 @@ class Path < ActiveRecord::Base
   # end
   
   attr_readonly :company_id
-  attr_protected :is_published, :is_purchaseable
+  attr_protected :is_purchaseable
   attr_accessible :user_id,
     :category_id,
     :name, 
@@ -21,7 +21,8 @@ class Path < ActiveRecord::Base
     :tags, 
     :enable_voting,
     :passing_score,
-    :enable_path_retakes
+    :enable_path_retakes,
+    :is_published
   
   has_many :stored_resources, as: :owner
   belongs_to :user
@@ -38,6 +39,8 @@ class Path < ActiveRecord::Base
   has_many :user_events
   has_many :collaborations
   has_many :collaborating_users, through: :collaborations, source: :user
+  has_many :path_personas
+  has_many :personas, through: :path_personas
   
   validates :name, length: { within: 2..140 }
   validates :description, length: { maximum: 2500 }
@@ -100,20 +103,14 @@ class Path < ActiveRecord::Base
   end
   
   def self.suggested_paths(user, excluded_path_id = -1)
-    paths = user.enrolled_paths
-    enrolled_path_ids = []
-    if paths.empty?
-      return Path.with_category(user.company.categories.first.id, user)
-    else
-      category_counter = {}
-      paths.each do |p|
-        enrolled_path_ids << p.id
-        category_counter[p.category_id] = category_counter[p.category_id].to_i + 1
-      end
-      category_counter = category_counter.sort_by { |k,v| v }
-      category_counter = category_counter
-      return Path.with_category(category_counter.to_a[-1][0].to_i, user, enrolled_path_ids)
+    #TODO: suggest most popular 
+    personas = user.personas
+    personas = user.company.personas.to_a.last(3) if personas.empty?
+    enrolled_paths = user.enrolled_paths.to_a.collect &:id
+    suggested_paths = personas.to_a.collect do |persona|
+      persona.paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
     end
+    return suggested_paths.flatten.compact
   end
   
   def has_creative_response
@@ -196,28 +193,6 @@ class Path < ActiveRecord::Base
   
   def tags_to_array
     return self.tags.blank? ? [] : (self.tags.split(",").collect { |t| t.strip })
-  end
-  
-  def skill_ranking(user)
-    enrollment = enrollments.find_by_user_id(user.id)
-    return nil if enrollment.nil?
-    
-    points = enrollment.total_points.to_i
-    possible = tasks.count * 10
-    case
-      when points > 1.3 * possible
-        return "Master"
-      when points > 1.1 * possible
-        return "Elite"
-      when points > 0.9 * possible
-        return "Expert"
-      when points > 0.7 * possible
-        return "Highly Knowledgeable"
-      when points > 0.5 * possible
-        return "Intermediate"
-      else
-        return "Beginner"
-      end
   end
   
   def activity_stream

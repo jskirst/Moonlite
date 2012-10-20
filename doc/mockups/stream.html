@@ -2,274 +2,171 @@
 <head>
 <link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
 <style>
-   .details 
-            h4{ margin:9px 10px 10px 10px; font:300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
-            p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
-            a{ text-decoration:none; }
-   .post{
-            padding:12px;
-            
-    }
-    .post:hover{
-            background-color:#F9F9F9;
-            border-radius: 4px;
-    }
-    .post:hover .postspace{
-            background-color:#F9F9F9;
-            border-radius: 4px;
-            
-    }
-    .postheader h3{
-      display:inline-block;
-    }
-    .votingandpointsarea{
-      display:inline-block;
-      float:right;
-      margin-top:4px;
-    }
-    .votingandpointsarea a{
-      padding: 2px 7px 0 7px;
-    }
-    .votingandpointsarea div {
-      display: inline-block;
-    }
-    .btn div{
-      margin: 0 1px 0 8px;
-      position:relative;
-      bottom:3px;
-    }
-    .points{
-      font-style:italic;
-      font-weight:bold;
-      font-size:15px;
-      position:relative;
-      bottom:3px;
-      margin-left:4px;
-    }
-
-    .postphotospace{
-           display:inline-block;
-           vertical-align: top;
-           margin-right:12px;
-    }
-    .postspace{
-           display: inline-block;
-           vertical-align: top;
-            border-radius: 3px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
-            background-color:white;
-            border-color:#ccc;
-            border-style:solid;
-            border-width: 1px;
-            margin:0;
-            vertical-align: top;
-            position:relative;
-            font:normal 13px arial, sans-serif;
-            margin-right:auto;
-            margin-left:auto;
-            padding: 0 12px;
-            width:524px;
-    }
-    .photo{
-            border-radius:4px;
-            width=50px;
-            height=50px;
-    }
-    .username{
-            text-decoration: none;
-            color:#005C1F;
-            font-size:17px;
-    }
-    .posttext{
-            margin: -2px -12px 0 -12px;
-            padding: 3px 12px;
-            background-color:#E5F5EA;
-    }
-    .leveltext{
-            font-weight: bold;
-    }
-    .challengetext{
-            font-weight: bold;
-            text-decoration:none;
-            color:black;
-            display:inline;
-    }
-    .enrolledminiimages{
-            height:13px;
-            width:13px;
-    }
-    #miniposttext{
-            font:normal 10px arial, sans-serif;
-    }
-    .newsfeed{
-            border: 1px solid rgba(0, 0, 0, .1);
-            border-radius: 6px;
-            background-clip:padding-box;
-            background-color:white;
-    }
-    .CRimage{
-            max-width:548px;
-            max-height:300px;
-            border-color:#ccc;
-            border-style:solid;
-            border-width: 0px;
-            display:block;
-            margin-left:auto;
-            margin-right:auto;
-            
-    }
-    .crarea{
-            background-color: transparent;
-            background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .2),transparent);
-            border-top: 1px solid rgba(0, 0, 0, .2);
-            top:0;
-            border-bottom: 1px solid rgba(0, 0, 0, .1);
-            bottom:0;
-            right: 0;
-            left:0;
-            margin:12px -12px -7px -12px;
-    }
-    .obfuscation{
-      height:250px;
-      background-color:whitesmoke;
-      background-image:none;
-      text-align: center;      
-    }
-    .obfuscation img{
-      margin-top:38px;
-    }
-    .obfuscation a{
-      color:gray;
-    }
-    .postfooter{
-        color:#999;
-        font-size:11px;
-        text-align: right;
-        margin-bottom:-6px;
-    }
-    .postfooter{
-        text-align: right;
-        margin-right:-13px;
-    }
-    .leftstuff{ 
-        float:left;
-    }
-    .leftstuff a{
-        cursor:hover;
-        text-decoration:none;
-        color: #004700;
-    }
-    .span11{
-        display: inline-block;
-        vertical-align: top;
-
-    }
-    </style>
-    </head>
+h4{ margin:9px 10px 10px 10px; font:300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
+p{ margin:9px 12px; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
+a{ text-decoration:none; }
+.post { padding:12px; }
+.post:hover { background-color:#F9F9F9; border-radius: 4px; }
+.post:hover .postspace{ background-color:#F9F9F9; border-radius: 4px; }
+.postheader h3 { display:inline-block; }
+.votingandpointsarea { display:inline-block; float:right; margin-top:4px; }
+.votingandpointsarea a { padding: 2px 7px 0 7px; }
+.votingandpointsarea div { display: inline-block; }
+.btn div { margin: 0 1px 0 8px; position:relative; bottom:3px; }
+.points { font-style:italic; font-weight:bold; font-size:15px; position:relative; bottom:3px; margin-left:4px; }
+.postphotospace { display:inline-block; vertical-align: top; margin-right:12px; }
+.postspace{
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);
+  background-color:white;
+  border: 1px solid #ccc;
+  margin:0;
+  vertical-align: top;
+  position:relative;
+  font:normal 13px arial, sans-serif;
+  margin-right:auto;
+  margin-left:auto;
+  padding: 0 12px;
+  width:524px;
+}
+.photo{ border-radius:4px; width: 50px; height: 50px; }
+.username{ text-decoration: none; color:#005C1F; font-size:17px; }
+.posttext { margin: -2px -12px 0 -12px; padding: 3px 12px; background-color:#E5F5EA; }
+.leveltext { font-weight: bold; }
+.challengetext { font-weight: bold; text-decoration:none; color:black; display:inline; }
+.enrolledminiimages { height:13px; width:13px; }
+#miniposttext{ font:normal 10px arial, sans-serif; }
+.newsfeed { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; background-clip:padding-box; background-color:white; }
+.CRimage { max-width:548px; max-height:300px; border-color:#ccc; border-style:solid; border-width: 0px; display:block; margin-left:auto; margin-right:auto; }
+.crarea { 
+  background-color: transparent; 
+  background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .2),transparent);
+  border-top: 1px solid rgba(0, 0, 0, .2);
+  top:0;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+  bottom:0;
+  right: 0;
+  left:0;
+  margin:12px -12px -7px -12px;
+}
+.obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
+.obfuscation img{ margin-top:38px; }
+.obfuscation a{ color:gray; }
+.postfooter{ color:#999; font-size:11px; text-align: right; margin-bottom:-6px; }
+.postfooter{ text-align: right; margin-right:-13px; }
+.leftstuff { float:left; }
+.leftstuff a { cursor:hover; text-decoration:none; color: #004700; }
+.span11 { display: inline-block; vertical-align: top; }
+.leftboxheader{background-color: #F9F9F9; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 12px; line-height: 16px;}
+.leftbtn{margin-right:-4px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
+.midbtn{margin-right:-4px; border-radius:0px;}
+.rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
+.leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+.newsfeed>.leftboxheader{padding:6px 12px;}
     
+</style>
+</head>
 <body>
 
-        <div class="span11">
-                 <div class="newsfeed">
-                        <div class="post">
-                                <div class="postphotospace">
-                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
-                                </div>
-                                <div class="postspace">
-                                        <div class="postheader">
-                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
-                                        </div>
-                                        <div class="posttext">
-                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
-                                        </div>
-                                        <div class="postfooter">
-                                                <div class="leftstuff">
-                                                    <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
-                                                </div>
-                                                    <p>July 23, 2012 3:12pm</p>
-                                        </div> 
-                                </div>
-                        </div>
-                        <div class="post">
-                                <div class="postphotospace">
-                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
-                                </div>
-                                <div class="postspace">
-                                        <div class="postheader">
-                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
-                                                <div class="votingandpointsarea">
-                                                   <a class="btn" href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"><div>102</div></a>
-                                                   <div class="points">
-                                                      <span>12,300 pts</span>
-                                                   </div>
-                                                </div>
-                                        </div>
-                                        <div class="posttext">
-                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
-                                        </div>
-                                        <div class="CRarea">
-                                                <img src="http://chzderp.files.wordpress.com/2012/07/hurr-durr-derp-face-bertmern.jpg" alt class="CRimage">
-                                            <div class="pointbox">
-                                                + 3,400 pts
-                                            </div>
-                                        </div>
-                                        <div class="postfooter">
-                                                <div class="leftstuff">
-                                                    <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
-                                                </div>
-                                                    <p>July 23, 2012 3:12pm</p>
-                                        </div>
-                                      
-                                </div>
-                        </div>
-                        <div class="post">
-                                <div class="postphotospace">
-                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
-                                </div>
-                                <div class="postspace">
-                                        <div class="postheader">
-                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
-                                        </div>
-                                        <div class="posttext">
-                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
-                                        </div>
-                                        <div class="CRarea">
-                                            <img src="http://www.placekitten.com/550/300" alt class="CRimage">
-                                        </div>
-                                        <div class="postfooter">
-                                                <div class="leftstuff">
-                                                    <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
-                                                </div>
-                                                    <p>July 23, 2012 3:12pm</p>
-                                        </div>
-                                      
-                                </div>
-                        </div>
-                        <div class="post">
-                                <div class="postphotospace">
-                                      <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
-                                </div>
-                                <div class="postspace">
-                                        <div class="postheader">
-                                                <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
-                                        </div>
-                                        <div class="posttext">
-                                                Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
-                                        </div>
-                                        <div class="CRarea obfuscation">
-                                          <a href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/question+mark.png"></a>
-                                          <p><span>Unlock by completing <a href="#">this question</a> of the challenge.</span></p>
-                                        </div>
-                                        <div class="postfooter">
-                                                <div class="leftstuff">
-                                                    <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
-                                                </div>
-                                                    <p>July 23, 2012 3:12pm</p>
-                                        </div>
-                                      
-                                </div>
-                        </div>
-                </div>
+<div class="span11">
+  <div class="newsfeed">
+    <div class="leftboxheader">
+      Stream <a class="btn leftbtn">Question</a> <a class="btn midbtn">Date</a> <a class="btn rightbtn">Votes</a> <a href="#">clear filters</a>
+    </div>
+    <div class="post">
+      <div class="postphotospace">
+        <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+      </div>
+      <div class="postspace">
+        <div class="postheader">
+          <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
         </div>
-        </body>
+        <div class="posttext">
+          Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+        </div>
+        <div class="postfooter">
+          <div class="leftstuff">
+            <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
+          </div>
+          <p>July 23, 2012 3:12pm</p>
+        </div> 
+      </div>
+    </div>
+    <div class="post">
+      <div class="postphotospace">
+        <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+      </div>
+      <div class="postspace">
+        <div class="postheader">
+          <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+          <div class="votingandpointsarea">
+             <a class="btn" href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"><div>102</div></a>
+             <div class="points"><span>12,300 pts</span></div>
+          </div>
+        </div>
+        <div class="posttext">
+          Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+        </div>
+        <div class="CRarea">
+          <img src="http://chzderp.files.wordpress.com/2012/07/hurr-durr-derp-face-bertmern.jpg" alt class="CRimage">
+          <div class="pointbox">+ 3,400 pts</div>
+        </div>
+        <div class="postfooter">
+          <div class="leftstuff">
+            <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
+          </div>
+          <p>July 23, 2012 3:12pm</p>
+        </div>
+      </div>
+    </div>
+    <div class="post">
+      <div class="postphotospace">
+        <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+      </div>
+      <div class="postspace">
+        <div class="postheader">
+          <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+        </div>
+        <div class="posttext">
+          Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+        </div>
+        <div class="CRarea">
+          <img src="http://www.placekitten.com/550/300" alt class="CRimage">
+        </div>
+        <div class="postfooter">
+          <div class="leftstuff">
+              <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
+          </div>
+          <p>July 23, 2012 3:12pm</p>
+        </div>
+      </div>
+    </div>
+    <div class="post">
+      <div class="postphotospace">
+        <img class="photo" src="https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAAHE/cENhQKSkN3Q/s48-c-k/photo.jpg">  
+      </div>
+      <div class="postspace">
+        <div class="postheader">
+          <h3><a href="www.metabright.com/userprofile" class="username">Nathaniel Sokoll-Ward</a><span id="miniposttext">: <img src="http://mouseclickerstudio.files.wordpress.com/2011/07/free_wrench_vector_art_5.png" class="enrolledminiimages"> 8 <img src="http://en.clipart-fr.com/data/clipart/tool/tool_106.jpg" class="enrolledminiimages"> 17</span></h3>
+        </div>
+        <div class="posttext">
+          Achieved <span class="leveltext">Level 17</span> in the <a href="www.metabright.com/challenge" class="challengetext">Yugioh Challenge</a>!
+        </div>
+        <div class="CRarea obfuscation">
+          <a href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/question+mark.png"></a>
+          <p><span>Unlock by completing <a href="#">this question</a> of the challenge.</span></p>
+        </div>
+        <div class="postfooter">
+          <div class="leftstuff">
+            <a class="stoney" href="#">Stoney</a> ? <a class="comment" href="#">Comment</a>
+          </div>
+          <p>July 23, 2012 3:12pm</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
 </html>

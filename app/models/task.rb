@@ -1,4 +1,12 @@
 class Task < ActiveRecord::Base
+  CREATIVE  = 0
+  FIB       = 1
+  MULTIPLE  = 2
+  
+  TEXT      = 100
+  IMAGE     = 101
+  YOUTUBE   = 102
+  
   attr_readonly :section_id
   attr_accessor :answer_content
   attr_accessible :question,
@@ -33,10 +41,12 @@ class Task < ActiveRecord::Base
     end
   end
   after_create do
-    answer_content.each do |a|
-      answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+    if answer_type > 0
+      answer_content.each do |a|
+        answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+      end
+      PhrasePairing.create_phrase_pairings(answers_to_array)
     end
-    PhrasePairing.create_phrase_pairings(answers_to_array)
   end
   
   def update_answers(params)
@@ -61,28 +71,13 @@ class Task < ActiveRecord::Base
     return submitted_answers.create!(:content => content)
   end
   
-  def is_correct?(user_answer)
-    if self.answer_type == 1
-      correct_answer = answers.first
-      possible_correct_answers = correct_answer.content.split(",")
-      possible_correct_answers.each do |pca|
-        return [1, correct_answer] if same_letters?(user_answer, pca)
-      end
-      return [0, nil]
-    else
-      chosen_answer = answers.find(user_answer)
-      raise "Answer not an option" if chosen_answer.nil?
-      return [chosen_answer.is_correct? ? 1 : 0, chosen_answer]
-    end
-  end
-  
   def describe_answer(answer)
     answers = [nil,answer1,answer2,answer3,answer4]
     return answers[Integer(answer)]
   end
   
   def correct_answer
-    answers.find_by_is_correct(true).content
+    answers.find_by_is_correct(true)
   end
   
   def describe_answers

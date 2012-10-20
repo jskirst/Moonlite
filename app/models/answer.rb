@@ -1,4 +1,7 @@
 class Answer < ActiveRecord::Base
+  INCORRECT = 0
+  CORRECT = 1
+  
   attr_protected :task_id
   attr_accessible :content, :is_correct, :answer_count
   

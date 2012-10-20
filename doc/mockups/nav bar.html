@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script type="text/javascript" src="buildinternet-mosaic-ef45e11/js/mosaic.1.0.1.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Dosis:400,600|Arvo:700italic|Muli' rel='stylesheet' type='text/css'>
+    <style>
+      .fill{height:40px;}
+      .topbar-inner, .topbar .fill{background-image: -webkit-linear-gradient(top, #334C80, #1F2E4C)}
+      .topbar {height: 40px;position: fixed;top: 0;left: 0;right: 0; z-index: 10000;overflow: hidden;}
+      .chunk.cloudy{display:inline-block; width:30px; height:44px; background-color:rgba(255, 255, 255, .15); margin-right:28px;z-index: 1;}
+      .container {width: 940px;margin-left: auto;margin-right: auto; zoom: 1;display:inline-block;padding:3px 0 0 142px;}
+      .topbar h3 a, .topbar .brand {float: left;display: block; padding: 0px 20px 12px; margin-left: -20px;line-height: 1; text-decoration: none;font: normal 18px arial, sans-serif;}
+      .container h3{left:68px;}
+      .container img{width:150px}
+      .navicons img{width:25px; display:inline; margin:2px 25px 25px; cursor: pointer; }
+      .navitem {border-right: 1px solid #020D25; border-left: 1px solid #56698B;}
+      .navitem a{opacity:.8}
+      .navitem a:hover{opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
+      .navitem a:active{bottom:0px; background-color: rgba(0,0,0, .1);}
+      .navicons li.nav_item:first-child a {border-left: 1px solid #444;}
+    </style>
+  </head>
+  <body>
+    <nav class="topbar" data-scollspy="scrollspy" data-dropdown="dropdown">
+    <div class="fill">
+      <div style="position:absolute;">
+      <div class="chunk cloudy"></div>
+      <div class="chunk cloudy"></div>
+      <div class="chunk cloudy"></div>
+      <div class="chunk cloudy"></div>
+      <div class="chunk cloudy"></div>
+      <div class="chunk cloudy" style="border-right: 1px solid #020D25"></div>
+    </div>
+    <div class="container">
+      <h3><a href="#"><img src="https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png" style="position:absolute; left:-23px;"></a></h3>
+      
+        <ul class="navicons" style="margin-left:177px; bottom:7px; border-right:1px solid #56698B;">
+          <li class="navitem">
+            <a href="#">
+            <img style="width:22px;" src="https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png">
+            </a>
+          </li>
+          <li class="navitem">
+            <a href="#">
+            <img src="https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png">
+            </a>
+          </li>
+          <li class="navitem">
+            <a href="#">
+            <img style="width:22px;" src="https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png">
+            </a>
+          </li>
+        </ul>
+          
+      </div>
+    </div>
+    
+    </div>
+  </nav>
+  </body>
+</html>

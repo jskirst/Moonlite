@@ -18,14 +18,14 @@ $(function(){
       if(data.errors){
         alert(data.errors);
       } else {
-        var $vote_counter = $(this).parents("li:first").children("div.vote_count");
+        var $vote_counter = $(this).find("div.vote_count");
         var votes = parseInt($vote_counter.text());
         if($(this).hasClass("primary")){
-          $(this).removeClass("primary").addClass("secondary").text("Vote");
-          $vote_counter.html("<span class='label notice' style='font-size: 16px;'>+"+(votes-1)+"</span>");
-        } else if($(this).hasClass("secondary")){
-          $(this).removeClass("secondary").addClass("primary").text("Voted");
-          $vote_counter.html("<span class='label notice' style='font-size: 16px;'>+"+(votes+1)+"</span>");
+          $(this).removeClass("primary");
+          $vote_counter.text(votes-1);
+        } else {
+          $(this).addClass("primary");
+          $vote_counter.text(votes+1);
         }
       }
     }

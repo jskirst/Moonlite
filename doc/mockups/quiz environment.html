@@ -1,0 +1,507 @@
+<html>
+  <head>
+    <link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+    <link href='http://fonts.googleapis.com/css?family=Dosis:400,600|Arvo:700italic|Muli:400,400italic' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+    <script src="Highcharts/js/highcharts.js"></script>
+    <script src="Highcharts/js/modules/exporting.js"></script>
+    <script>;
+(function($) {
+/*
+        Function: initCounter
+
+        Initializes the scrolling counter using the value currently displayed in the element.
+
+        Parameters:
+
+            $this - the counter container
+            e - jQuery Event object
+
+        See Also:
+
+            <animateDigit>
+    */
+
+    function initCounter($this, e) {
+        $this.find('.digit').each(function() {
+            var $display = $(this);
+            var $digit = $display.find('span');
+
+            $digit.html([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0].reverse().join('<br/>'))
+            $digit.css({
+                top: '-' + (parseInt($display.height()) * (10 - parseInt($digit.attr('title')))) + 'px'
+            });
+        });
+
+        animateDigit($this.find('.digit:last'), e);
+    }
+
+/*
+        Function: animateDigit
+
+        Moves the digit indicated by $this one step. If the end of the counter has been reach, the subsequent digit(s) will also be rotated
+
+        Parameters:
+
+            $this - digit to be rotated
+            e - jQuery Event object
+    */
+
+    function animateDigit($this, e) {
+        var $counter = $this.closest('.counter');
+        var $display = $this;
+        var $digit = $display.find('span');
+
+        // If we've reached the end of the counter, tick the previous digit
+        if (parseInt($digit.css('top')) == -1 * parseInt($display.height())) {
+            animateDigit($display.prevAll('.digit:first'), e);
+        }
+
+        $digit.animate({
+            top: '+=' + $display.height() + 'px'
+        }, 500, function() {
+            // Repeat the animation on a semi-random interval
+            if ($display.index('.counter .digit') == $counter.find('.digit').length - 1) {
+                setTimeout(function() {
+                    animateDigit($display, e);
+                }, Math.max(550, Math.random() * 10000));
+            }
+
+            // If we've reached the end of the counter, loop back to the top
+            if (parseInt($digit.css('top')) > -1 * parseInt($display.height())) {
+                $digit.css({
+                    top: '-' + (parseInt($display.height()) * 10) + 'px'
+                });
+            }
+        });
+    }
+
+    $(function() {
+        initCounter($('.counter'), $.Event('load'));
+    });
+})(jQuery);
+    </script>
+    
+    <script type="text/javascript">
+$(function() {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'progressbar',
+                type: 'bar',
+                margin: [10, 40, 30, 30]
+            },
+            credits: {
+            enabled: false
+            },
+            title: {
+                text: null
+            },
+            xAxis: {
+                min:0,
+                categories: ['Your Progress'],
+                labels: {
+                    enabled:false,
+                }
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: null
+                }
+            },
+            legend: {
+                backgroundColor: '#FFFFFF',
+                reversed: true,
+                align:'right',
+                layout:'vertical',
+                verticalAlign: 'top',
+                enabled:false
+            },
+            tooltip: {
+                formatter: function() {
+                    return '' + this.series.name + ': ' + this.y + '';
+                }
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal'
+                }
+            },
+            navigation: {
+            buttonOptions: {
+                enabled: false
+                }
+            },
+            series: [{
+                name: 'Percent Complete',
+                data: [67]}]
+        });
+    });
+
+});
+
+Highcharts.theme = {
+   colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee",
+      "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
+   chart: {
+      backgroundColor: {
+         linearGradient: [0, 0, 0, 400],
+         stops: [
+            [0, 'rgb(96, 96, 96)'],
+            [1, 'rgb(16, 16, 16)']
+         ]
+      },
+      borderWidth: 0,
+      borderRadius: 15,
+      plotBackgroundColor: null,
+      plotShadow: false,
+      plotBorderWidth: 0
+   },
+   title: {
+      style: {
+         color: '#FFF',
+         font: '16px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+      }
+   },
+   subtitle: {
+      style: {
+         color: '#DDD',
+         font: '12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+      }
+   },
+   xAxis: {
+      gridLineWidth: 0,
+      lineColor: '#999',
+      tickColor: '#999',
+      labels: {
+         style: {
+            color: '#999',
+            fontWeight: 'bold'
+         }
+      },
+      title: {
+         style: {
+            color: '#AAA',
+            font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+         }
+      }
+   },
+   yAxis: {
+      alternateGridColor: null,
+      minorTickInterval: null,
+      gridLineColor: 'rgba(255, 255, 255, .1)',
+      lineWidth: 0,
+      tickWidth: 0,
+      labels: {
+         style: {
+            color: '#999',
+            fontWeight: 'bold'
+         }
+      },
+      title: {
+         style: {
+            color: '#AAA',
+            font: 'bold 12px Lucida Grande, Lucida Sans Unicode, Verdana, Arial, Helvetica, sans-serif'
+         }
+      }
+   },
+   legend: {
+      itemStyle: {
+         color: '#CCC'
+      },
+      itemHoverStyle: {
+         color: '#FFF'
+      },
+      itemHiddenStyle: {
+         color: '#333'
+      }
+   },
+   labels: {
+      style: {
+         color: '#CCC'
+      }
+   },
+   tooltip: {
+      backgroundColor: {
+         linearGradient: [0, 0, 0, 50],
+         stops: [
+            [0, 'rgba(96, 96, 96, .8)'],
+            [1, 'rgba(16, 16, 16, .8)']
+         ]
+      },
+      borderWidth: 0,
+      style: {
+         color: '#FFF'
+      }
+   },
+
+
+   plotOptions: {
+      line: {
+         dataLabels: {
+            color: '#CCC'
+         },
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      spline: {
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      scatter: {
+         marker: {
+            lineColor: '#333'
+         }
+      },
+      candlestick: {
+         lineColor: 'white'
+      }
+   },
+
+   toolbar: {
+      itemStyle: {
+         color: '#CCC'
+      }
+   },
+
+   navigation: {
+      buttonOptions: {
+         backgroundColor: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#606060'],
+               [0.6, '#333333']
+            ]
+         },
+         borderColor: '#000000',
+         symbolStroke: '#C0C0C0',
+         hoverSymbolStroke: '#FFFFFF'
+      }
+   },
+
+   exporting: {
+      buttons: {
+         exportButton: {
+            symbolFill: '#55BE3B'
+         },
+         printButton: {
+            symbolFill: '#7797BE'
+         }
+      }
+   },
+
+   // scroll charts
+   rangeSelector: {
+      buttonTheme: {
+         fill: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#888'],
+               [0.6, '#555']
+            ]
+         },
+         stroke: '#000000',
+         style: {
+            color: '#CCC',
+            fontWeight: 'bold'
+         },
+         states: {
+            hover: {
+               fill: {
+                  linearGradient: [0, 0, 0, 20],
+                  stops: [
+                     [0.4, '#BBB'],
+                     [0.6, '#888']
+                  ]
+               },
+               stroke: '#000000',
+               style: {
+                  color: 'white'
+               }
+            },
+            select: {
+               fill: {
+                  linearGradient: [0, 0, 0, 20],
+                  stops: [
+                     [0.1, '#000'],
+                     [0.3, '#333']
+                  ]
+               },
+               stroke: '#000000',
+               style: {
+                  color: 'yellow'
+               }
+            }
+         }
+      },
+      inputStyle: {
+         backgroundColor: '#333',
+         color: 'silver'
+      },
+      labelStyle: {
+         color: 'silver'
+      }
+   },
+
+   navigator: {
+      handles: {
+         backgroundColor: '#666',
+         borderColor: '#AAA'
+      },
+      outlineColor: '#CCC',
+      maskFill: 'rgba(16, 16, 16, 0.5)',
+      series: {
+         color: '#7798BF',
+         lineColor: '#A6C7ED'
+      }
+   },
+
+   scrollbar: {
+      barBackgroundColor: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#888'],
+               [0.6, '#555']
+            ]
+         },
+      barBorderColor: '#CCC',
+      buttonArrowColor: '#CCC',
+      buttonBackgroundColor: {
+            linearGradient: [0, 0, 0, 20],
+            stops: [
+               [0.4, '#888'],
+               [0.6, '#555']
+            ]
+         },
+      buttonBorderColor: '#CCC',
+      rifleColor: '#FFF',
+      trackBackgroundColor: {
+         linearGradient: [0, 0, 0, 10],
+         stops: [
+            [0, '#000'],
+            [1, '#333']
+         ]
+      },
+      trackBorderColor: '#666'
+   },
+
+   // special colors for some of the demo examples
+   legendBackgroundColor: 'rgba(48, 48, 48, 0.8)',
+   legendBackgroundColorSolid: 'rgb(70, 70, 70)',
+   dataLabelsColor: '#444',
+   textColor: '#E0E0E0',
+   maskColor: 'rgba(255,255,255,0.3)'
+};
+
+
+
+// Apply the theme
+var highchartsOptions = Highcharts.setOptions(Highcharts.theme);
+    </script>
+
+    <style>
+      
+    /*    CSS for counters*/
+  .counter {display:block;float:left;font-size:2em;line-height:1.2em; -webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255,255,255,0.3)));}
+  .counter span.digit {background:#161616;background: #3F3F3F; /* Old browsers */background: linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -o-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -moz-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -webkit-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -ms-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%); background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0A0A0A), color-stop(0.5, #2B2B2B), color-stop(1, #3F3F3F)); filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F'); /* IE6 & IE7 */-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F')"; /* IE8 */zoom:1; background-clip:border; color:#FFF;display:block;float:left; height:44px;overflow:hidden; padding:0; position:relative;text-align:center;width:30px;}
+  .counter span.digit span {line-height:44px;position:relative;top:0;}
+  .counter span.digit hr {border-color: transparent;-webkit-box-shadow: inset 0 2px 1px  rgba(0,0,0,0.5);-moz-box-shadow: inset 0 2px 1px  rgba(0,0,0,0.5);box-shadow: inset 0 2px 1px   rgba(0,0,0,0.5);  height: 3px; margin: -2px 0 0 0;  position: absolute;top: 50%; width: 100%;z-index: 1;}
+  .counter span.separator {display:block;float:left; font-family:Georgia, serif; font-size:0.5em;position:relative; top:0.5em;}
+  .counter span.separator hr {display:none;}
+
+    body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif;}
+    .quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top:100px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+    .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
+    .quizheader{margin-bottom:12px;}
+    .quizheader img{width:78px; display:inline-block; margin-right:4px;}
+    .quizheader span{ font:normal 29px'Muli', sans-serif; position:relative; left:5px;}
+    #progressbar{width:632px; height: 40px; margin: 0 auto;}
+    .questionandresponsespace{display:inline-block; }
+    .questionspace{}
+    .questionspace span{font:normal 18px 'Muli', sans-serif;}
+    .questionfooter{}
+    .pointbar{height:20px; background-color:#FFA366; text-align: center; margin:3px 0px;}
+    .pointbar span{}
+    .nextbutton{float:right;}
+    .responsespace{margin-top:8px;}
+    .responsespace li{background-color: #F9F9F9; padding:5px 8px; border-radius:6px; margin-bottom:5px; cursor:pointer;border:1px solid rgba(0, 0, 0, .1) }
+    .responsespace li:hover{background-color:whitesmoke; border:1px solid rgba(0, 0, 0, .1);}
+    .pointsandstreakspace{margin:25px 0 0 25px; border:1px solid rgba(0, 0, 0, .1);vertical-align: top; padding:9px; border-radius:6px; width:241px; background-color:#F9F9F9;}
+    .pointspace{display:inline-block; text-align:center;}
+    .streakspace{display:inline-block; text-align:center; margin-left:25px;}
+    .counterbox{border:1px solid rgba(0, 0, 0, .1); background-color:white; border-radius:4px; padding: 7px 7px 0;}
+    .messagespace{margin:12px 9px 0 37px; font-size:15px; word-wrap:normal; width:240px; font-weight:bold;}
+    
+    
+    </style>
+  </head>
+  <body>
+    <div class="quizcontainer">
+      <div class="quizspace">
+        <div class="quizheader">
+          <img src="http://www.placedog.com/150/150">
+            <div style="display:inline-block;">
+              <span><strong>Challenge:</strong> Section</span>
+              <div id="progressbar"></div>
+            </div>
+        </div>
+        <div class="questionandresponsespace">
+          <div class="questionspace"><span>This is a multiple choice question to this challenge?</span></div>
+          <div class="questionfooter">
+            <div class="pointbar"><span>100 points</span></div>
+          </div>
+          <div class="responsespace">
+            <ol style="list-style-position: inside">
+              <li>Yes</li>
+              <li>No</li>
+              <li>Maybe</li>
+              <li>I don't care</li>
+            </ol>
+            <!--/*this should only appear after the question has been answered*/-->
+            <button class="btn danger nextbutton">Next</button>
+          </div>
+        </div>
+        <div style="display:inline-block; vertical-align:top;">
+          <div class="pointsandstreakspace">
+            <div class="pointspace counterbox">
+              <span class="counter">
+                <span class="digit">
+                  <span title="0">0</span>
+                </span>
+                <span class="digit">
+                  <span title="0">0</span>
+                </span>
+                <span class="digit">
+                  <span title="0">0</span>
+                </span>
+                <span class="digit">
+                  <span title="0">0</span>
+                </span>
+              </span>
+              <br />
+              <span>Points</span></div>
+            <div class="streakspace counterbox">
+              <span class="counter">
+                <span class="digit">
+                  <span title="0">0</span>
+                </span>
+                <span class="digit">
+                  <span title="0">0</span>
+                </span>
+              </span>
+              <br />
+              <span>Streak</span></div>
+          </div>
+          <div class="messagespace">
+            <span>If we want messages, place them here. Oooooo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

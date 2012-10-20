@@ -21,7 +21,7 @@ module SessionsHelper
   end
   
   def current_company
-    current_user.company
+    current_user.company if current_user
   end
   
   def sign_out

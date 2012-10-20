@@ -3,6 +3,7 @@ Metabright::Application.routes.draw do
 	resources :sessions
 	resources :users do
 		member do
+		  get :home
 			get :accept
 			put :join
 			get :set_type
@@ -22,6 +23,7 @@ Metabright::Application.routes.draw do
 	resources :custom_styles
   resources :paths do
 		member do
+		  get :community
       get :dashboard
       get :publish
       get :unpublish
@@ -42,16 +44,14 @@ Metabright::Application.routes.draw do
       get :confirm_delete
 			get :continue
 			post :continue
-      put :reorder_tasks
-      get :research
-      get :questions
-      post :generate
-      post :review
-      post :bulk_tasks
       get :import_content
       post :preview_content
       post :save_content
       get :html_editor
+      get :take
+      put :took
+      get :launchpad
+      put :complete
 		end
 	end
 	resources :enrollments do
@@ -61,13 +61,21 @@ Metabright::Application.routes.draw do
 	end
 	resources :tasks do
     member do
+      get :arena
       put :resolve
       get :vote
       put :add_stored_resource
     end
   end
   match '/suggest', to: "tasks#suggest"
-	resources :personas
+	
+	resources :personas do
+	  member do
+	    get :preview
+	  end
+	end
+	match '/explore', to: "personas#explore"
+	
 	resources :stored_resources
   resources :comments
   resources :leaderboards
@@ -88,10 +96,11 @@ Metabright::Application.routes.draw do
   match '/auth/:provider/callback',  :to => 'sessions#create'
 	match '/signin',	:to => 'sessions#new'
 	match '/signout',	:to => 'sessions#destroy'
+	match '/intro' => "pages#intro"
+	match '/start' => "pages#start"
 	
 	match '/invitation',:to => 'pages#invitation'
 
-  match '/explore',:to => 'pages#explore'
   match '/create',:to => 'pages#create'
   
 	match '/password_reset', :to => 'users#request_send'

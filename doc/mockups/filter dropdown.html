@@ -1,0 +1,47 @@
+<html>
+  <head>
+<link href="bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script type="text/javascript" src="buildinternet-mosaic-ef45e11/js/mosaic.1.0.1.js"></script>
+    <style>
+    /*filter header*/
+    .span11{display: inline-block;vertical-align: top;}
+    .leftbtn{margin-right:-4px;border-top-right-radius: 0px;border-bottom-right-radius: 0px;margin-left:18px;}
+    .midbtn{margin-right:-4px;border-radius:0px;}
+    .rightbtn{border-top-left-radius: 0px;border-bottom-left-radius: 0px;}
+    .leftboxheader a{text-shadow: 0 1px 0 white;font-size: 11px;line-height: 16px;padding:3px 7px;font-weight:normal;}
+    .newsfeed>.leftboxheader{padding:6px 12px;}
+    .leftboxheader{background-color: #F9F9F9;border-top-right-radius: 5px;border-top-left-radius: 5px;padding:10px 12px;border-bottom: 1px solid #DDD;font-weight: bold;text-shadow: 0 1px 0 white;font-size: 12px;line-height: 16px;}
+    
+    /*filter dropdown*/
+    .filterbox{padding:12px 12px 36px;background-color: #B8B8B8;text-shadow:1px 1px 0 rgba(255,255,255,.2);font-size:12px;}
+    .crfilter{list-style: none;}
+    .completedcr{color:#404040;}
+    .incompletecr{font-style:italic;}
+    .incompletecr a{font-size: 11px;}
+    .filterbox>.btn{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;float: right;}
+    </style>
+  </head>
+  <body>
+    <div class="span11">
+      <div class="leftboxheader">
+         Stream <a class="btn leftbtn">Question</a> <a class="btn midbtn">Date</a> <a class="btn rightbtn">Votes</a> <a href="#">clear filters</a>
+      </div>
+      <div class="filterbox">
+        *check* Only display CR questions in stream
+        <div style="border-bottom: 1px solid rgba(0, 0, 0, .1); margin:6px;"></div>
+        <span style="font-weight:bold; font-size:12px;">Show responses for:</span><br />
+        <ul class="crfilter">
+          <li class="completedcr">*check* Question I have taken</li>
+          <li class="incompletecr">*check* Question I have not taken <a href="#">Complete now</a></li>
+          <li class="completedcr">*check* Question I have taken</li>
+          <li class="incompletecr">*check* Question I have not taken <a href="#">Complete now</a></li>
+          <li class="completedcr">*check* Question I have taken</li>
+          <li class="completedcr">*check* Question I have taken</li>
+          <li class="incompletecr">*check* Question I have not taken <a href="#">Complete now</a></li>
+          <li class="completedcr">*check* Question I have taken</li>
+        </ul>
+        <a class="btn">Apply filter</a>
+    </div>
+  </body>
+</html>

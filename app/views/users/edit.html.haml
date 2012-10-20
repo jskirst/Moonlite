@@ -1,0 +1,51 @@
+%div.span16{ style: "background-color: white; border-radius: 4px; padding:8px;" }
+  %h1{ style: "border-bottom: 1px solid whitesmoke;" } Edit Profile
+  = form_for(@user) do |f|
+    = render 'shared/error_messages', :object => f.object
+    %div.field.clearfix
+      = f.label :name
+      %div.input
+        = f.text_field :name
+    %div.field.clearfix
+      = f.label :email
+      %div.input
+        = f.text_field :email
+    %div.field.clearfix
+      = f.label :description
+      %div.input
+        = f.text_area :description, rows: "3", style: "width: 400px;", placeholder: "Tell us about yourself..."
+    %div.field.clearfix
+      = f.label :location
+      %div.input
+        = f.text_field :location
+    %div.field.clearfix
+      = f.label :education
+      %div.input
+        = f.text_field :education
+    %div.field.clearfix
+      = f.label :company_name
+      %div.input
+        = f.text_field :company_name
+    %div.field.clearfix
+      = f.label :title
+      %div.input
+        = f.text_field :title
+    %div.field.clearfix
+      = f.label "Profile Picture URL"
+      %div.input
+        = f.text_field :image_url, :id => "image_url_input", :class => "xxlarge"
+        %a.btn.secondary{ style: "margin-left:10px;" } Preview
+    %div.field.clearfix
+      %div.input
+        = image_tag @user.profile_pic, :id => "image_url_preview", :width => "210"
+    %div.field.clearfix
+      = f.label :password
+      %div.input
+        = f.password_field :password
+    %div.field.clearfix
+      = f.label :password_confirmation, "Confirm Password"
+      %div.input
+        = f.password_field :password_confirmation
+    %div.actions
+      = f.submit "Save", :class => "button button-info"
+      = link_to "Cancel", current_user, :class => "button button-standard"

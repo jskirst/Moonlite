@@ -1,6 +1,6 @@
 class Persona < ActiveRecord::Base
   attr_accessor :criteria
-  attr_accessible :company_id, :name, :description, :criteria, :points
+  attr_accessible :company_id, :name, :description, :image_url, :criteria
 
   belongs_to :company
   
@@ -12,13 +12,11 @@ class Persona < ActiveRecord::Base
   
   validates :name, length: { :within => 1..255 }
   validates :description, length: { :within => 1..255 }
-  validates :points, presence: true
+  validates :image_url, presence: true
   
-  after_create { :criteria.each { |c| path_personas.create!(:path_id => c) } }
-  
-  default_scope :order => 'points ASC'
+  after_create { criteria.each { |c| path_personas.create!(:path_id => c) } }
     
-  def pic
+  def picture
     return self.image_url unless self.image_url.nil?
     return "/images/default_achievement_pic.jpg"
   end

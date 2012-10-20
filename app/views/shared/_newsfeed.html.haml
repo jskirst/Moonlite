@@ -1,0 +1,26 @@
+:javascript
+  $(function(){ $(".youtube_viewer").each(function(){ set_youtube_preview($(this).attr("alt"), $(this).attr("id")); }); });
+- if newsfeed_items.empty?
+  %div.post{ style: "height: 300px;"}
+    %p There are no responses yet.
+- newsfeed_items.each do |r|
+  %div.post
+    %div.postphotospace
+      = link_to (image_tag r.user.profile_pic, class: "photo"), r.user
+    %div.postspace
+      %div.postheader
+        %h3
+          = link_to r.user.to_s, r.user, class:"username"
+        %div.votingandpointsarea
+          = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
+            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
+            %div.vote_count= r.submitted_answer.total_votes.to_i
+      %div.posttext.leveltext= r.task.question
+      %div.CRarea
+        - if r.task.answer_sub_type == Task::TEXT
+          %blockquote{ style: "margin:20px;" }= r.submitted_answer.content
+        - elsif r.task.answer_sub_type == Task::IMAGE
+          = link_to image_tag(sanitize(r.submitted_answer.content)), sanitize(r.submitted_answer.content), :target => "_blank"
+        - elsif r.task.answer_sub_type == Task::YOUTUBE
+          %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
+      = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at}

@@ -1,0 +1,26 @@
+%div.explorenewusercontent
+  :javascript
+    $(function(){
+      $(".persona_select").on("ajax:success", function(xhr, data){
+        $(".persona_select.active").removeClass("active");
+        $(this).addClass("active");
+        $(".exploretiledetailsarea").replaceWith(data);
+      });
+      $(".persona_select:first").addClass("active");
+      close_button();
+    });
+  %div.exploreheader
+    %button.modal_close{ style: "margin: 5px 20px 0 0;" } &times;
+    %h1{ style: "font-size: 23px; margin-bottom: 8px;" }
+      %strong Explore: Pick a challenge...
+    %div
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px" }
+      %p{ style: "font-size: 15px; line-height: 28px; display:inline; "} Personas organize all the MetaBright Challenges. You can always enroll in multiple paths. 
+  %hr{ style: "margin:0px;" }
+  %div.exploretiles
+    - @personas.each do |persona|
+      %div.singleexploretile
+        = link_to preview_persona_path(persona), class: "persona_select", remote: true do
+          %div.exploretileimage
+            = image_tag persona.picture, size: "85x85"
+  = render "personas/preview", { persona: @personas.first }

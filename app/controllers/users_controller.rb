@@ -6,8 +6,21 @@ class UsersController < ApplicationController
   before_filter :admin_only, only: [:adminize, :index, :set_type]
   
   def show
-   @enrolled_paths = @user.enrolled_paths.where("paths.is_public = ?", true)
-   @title = @user.name
+    if params[:task]
+      all_responses = @user.completed_tasks.joins(:submitted_answer)
+      @newsfeed_items = [all_responses.find_by_task_id(params[:task])]
+    elsif params[:order] && params[:order] == "date"
+      all_responses = @user.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+    else
+      all_responses = @user.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    end  
+    @newsfeed_items = all_responses if @newsfeed_items.nil?
+    
+    @creative_tasks = all_responses.collect { |item| item.task }
+    @enrolled_paths = @user.enrolled_paths.where("paths.is_public = ?", true)
+    @enrolled_personas = @user.personas
+    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @title = @user.name
   end
   
   def index
@@ -44,29 +57,10 @@ class UsersController < ApplicationController
   
   def update
     if @user.update_attributes(params[:user])
-      respond_to do |format|
-        format.html do
-          if request.xhr?
-            render :json => {:status => "success"}
-          else params[:user][:path_id]
-            flash[:success] = "Profile successfully updated."
-            redirect_back_or_to @user
-          end
-        end
-      end
+      flash[:success] = "Profile successfully updated."
+      redirect_to @user
     else
-      flash[:error] = @user.errors.full_messages.join(". ")
-      respond_to do |format|
-        format.html do
-          if request.xhr?
-            render :json => @user.errors
-          elsif params[:user][:path_id]
-            redirect_back_or_to continue_path_path(id: params[:user][:path_id])
-          else
-            render 'edit'
-          end
-        end
-      end
+      render 'edit'
     end
   end
   
@@ -114,12 +108,12 @@ class UsersController < ApplicationController
   def destroy
     if @user == current_user
       respond_to do |f|
-        f.html { render partial: "shared/error_message", locals: { message: "Cannot delete yourself." } }
+        f.html { render "<div class='alert-message success'>User deleted.</div>" }
       end
     else
       @user.destroy
       respond_to do |f|
-        f.html { render partial: "shared/success_message", locals: { message: "User successfully deleted." } }
+        f.html { render "<div class='alert-message success'>Error.</div>" }
       end
     end
   end

@@ -1,11 +1,13 @@
 class Section < ActiveRecord::Base
-  attr_protected :path_id, :is_published
+  attr_protected :path_id
   attr_accessible :name, 
     :instructions, 
     :position, 
     :image_url,
     :content_type, 
-    :enable_skip_content
+    :enable_skip_content,
+    :points_to_unlock,
+    :is_published
   
   belongs_to :path
   has_many :tasks, dependent: :destroy
@@ -45,13 +47,7 @@ class Section < ActiveRecord::Base
   end
     
   def next_task(user)
-    if path.enable_retakes
-      next_task = get_next_incorrectly_finished_task(user)
-      next_task = get_next_unfinished_task(user) if next_task.nil?
-    else
-      next_task = get_next_unfinished_task(user)
-    end
-    return next_task
+    return get_next_unfinished_task(user)
   end
   
   def completed?(user)
@@ -105,12 +101,47 @@ class Section < ActiveRecord::Base
     end
     return streak
   end
+  
+  def quiz_complete?(user)
+    incomplete_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type > ?", user.id, 0])
+    return incomplete_tasks.size == 0
+  end
+  
+  def creative_tasks
+    return tasks.where("answer_type = ?", 0)
+  end
+  
+  def core_tasks
+    return tasks.where("answer_type in ?", [1,2])
+  end
+  
+  def unlocked?(user)
+    enrollment = user.enrollments.find_by_path_id(self.path_id)
+    return false if enrollment.nil?
+    return enrollment.total_points.to_i >= self.points_to_unlock
+  end
+  
+  def points_until_unlock(enrollment)
+    self.points_to_unlock.to_i - enrollment.total_points.to_i
+  end
+  
+  def percentage_complete(user)
+    return ((self.completed_tasks.where("user_id = ?", user.id).size.to_f / tasks.size.to_f) * 100).to_i
+  end
+  
+  def points_earned(user)
+    return self.completed_tasks.where("user_id = ?", user.id).collect(&:points_awarded).reduce(0, :+)
+  end
     
   private
     def get_next_unfinished_task(user)
       previous_task = tasks.joins(:completed_tasks).where(["completed_tasks.user_id = ?", user.id]).last(:order => "position ASC")
       previous_task_position = previous_task.nil? ? 0 : previous_task.position
-      return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
+      if user.company_id > 1
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
+      else
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type > 0", user.id]).first(:order => "position ASC")
+      end
     end
     
     def get_next_incorrectly_finished_task(user)

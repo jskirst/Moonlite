@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'MuliRegular';
+    src: url('font/Muli-Regular-webfont.eot');
+    src: url('font/Muli-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Muli-Regular-webfont.woff') format('woff'),
+         url('font/Muli-Regular-webfont.ttf') format('truetype'),
+         url('font/Muli-Regular-webfont.svg#MuliRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'MuliItalic';
+    src: url('font/Muli-Italic-webfont.eot');
+    src: url('font/Muli-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('font/Muli-Italic-webfont.woff') format('woff'),
+         url('font/Muli-Italic-webfont.ttf') format('truetype'),
+         url('font/Muli-Italic-webfont.svg#MuliItalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+body{font-family: MuliRegular;}

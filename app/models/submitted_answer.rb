@@ -1,4 +1,6 @@
 class SubmittedAnswer < ActiveRecord::Base
+  POINTS_PER_VOTE = 5
+  
   attr_protected :task_id, :total_votes
   attr_accessible :content
   
@@ -12,6 +14,10 @@ class SubmittedAnswer < ActiveRecord::Base
   def add_vote(user)
     if vote = user.votes.create!(submitted_answer_id: self.id)
       self.total_votes += 1
+      completed_tasks.each do |ct| 
+        ct.update_attribute(:points_awarded, (ct.points_awarded += POINTS_PER_VOTE))
+        user.award_points(ct.task, POINTS_PER_VOTE)
+      end
       return vote if save
     end
     return false
@@ -20,6 +26,10 @@ class SubmittedAnswer < ActiveRecord::Base
   def subtract_vote(user)
     if self.total_votes > 0
       self.total_votes -= 1
+      completed_tasks.each do |ct| 
+        ct.update_attribute(:points_awarded, (ct.points_awarded -= POINTS_PER_VOTE))
+        user.retract_points(ct.task, POINTS_PER_VOTE)
+      end
       return true if save
     end
     return false
