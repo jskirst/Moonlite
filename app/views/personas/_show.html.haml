@@ -29,9 +29,14 @@
     .explorenewuserfooter{position:relative; bottom:12px; left:12px;}
     
   %div.exploreheader
-    = image_tag @persona.picture
-    %h1 <strong>Explore:</strong> Pick a challenge...
-  %hr{ style: "margin:0" }
+    %div{ style: "padding-bottom:8px;" }
+      = image_tag @persona.picture
+      %h1{ style: "font-size: 23px; position:relative; top:8px;" }
+        %strong Explore: Choose your Challenge...
+    %div
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; height:15px; margin:4px 4px 0 0;" }
+      %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Challenges represent skillsets where you can prove what you know, and be inspired by others. 
+  %hr{ style: "margin:0px;" }
   %div.exploretiles
     - @paths.each do |path|
       %div.mosaic-block.bar2
