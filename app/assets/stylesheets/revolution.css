@@ -226,6 +226,16 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
 .intdetails{margin-left:28px; display:inline-block;}
 .firstchallengeint>button{float:right; margin: 0 12px 12px 12px;}
 
+.introintcontent{padding:12px; }
+.introintcontent>ul{list-style: none; margin:0 0 0 2px;}
+.introintcontent>ul>li{line-height:17px; padding:0 0 10px 0; }
+.introintcontent>ul>li>img{display:inline; height:35px;margin-right:5px; position:relative; top:19px; opacity:.8;}
+.introintcontent>ul>li>.inttitle{}
+.introintcontent>ul>li>.intdetails{margin-left:45px;}
+
+
+
+
 /* Footer */
 .footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D}
 .copyright{}
