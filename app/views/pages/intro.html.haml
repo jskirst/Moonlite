@@ -1,22 +1,39 @@
 %div.intcontainer
   %div.firstchallengeint
-    %div.firstchallengeintheader
-      %span You're about to start your first Challenge!
-    %div.firstchallengeintcontent
+    %div.firstchallengeintheader{ style:"padding: 7px 0 0 9px" }
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style: "width:42px; height:47px; margin:4px 4px 0 0;" }
+      %span{ style:"font-size:35px; position:relative; bottom:9px;" } Welcome to MetaBright!
+    %hr{ style:"margin:0" }
+    %div.introintcontent
+      %p{ style:"font-size:18px; margin-bottom:0;" } Here's how it works:
       %ul
         %li
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon" }
-          %span.inttitle Streak bonus
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png" }
+          %span.inttitle Enroll in Challenges
           %br
-          %span.intdetails Get multiple questions correct consecutively and you'll earn streak multipliers!
+          %span.intdetails
+            Topics in MetaBright are called Challenges. Each Challenge is broken down into
+            %strong multiple sections
+            with varying subject matter and difficulty.
         %li
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon" }
-          %span.inttitle Questions are timed
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png" }
+          %span.inttitle Prove yourself
           %br
-          %span.intdetails As time decreases, so do your possible points. If time expires before you respond, you'll lose your streak bonus.
+          %span.intdetails 
+            Demonstrate your progress or mastery in Challenges by 
+            %strong earning points
+            and 
+            = succeed "." do
+              %strong moving up levels
+            Collect points by completing quiz-type questions and social
+            = succeed "." do
+              %strong Challenge Questions
         %li
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon" }
-          %span.inttitle This is just the beginning!
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png" }
+          %span.inttitle Grow!
           %br
-          %span.intdetails Continue to improve your score by taking <strong>Challenge Questions</strong> and unlocking new sections.
-    = link_to "Continue", start_path, style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
+          %span.intdetails 
+            Check out the 
+            %strong leaderboard
+            and see who the experts are in your Challenge. Learn what they know by studying their responses to Challenge Questions.
+    = link_to "Let's go!", start_path, style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
