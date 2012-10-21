@@ -1,0 +1,40 @@
+hacker:
+  name: Hacker
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hacker_130.png
+  description: This is the hacker.
+maker:
+  name: Maker
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Maker_130.png
+  description: This is the description
+explorer:
+  name: Explorer
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Explorer_130.PNG
+  description: This is the explorer
+designer:
+  name: Designer
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Designer_130.png
+  description: Designer. Takes Challenges on things like typography, graphic design, interior consulting.
+musichead:
+  name: Music Head
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_MusicHead_130.png
+  description: Person who loves making/listening to/seeing music. Take Challenges on things like The Beatles, The Fillmore, Guitar
+foodie:
+  name: Foodie
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Foodie_130.png
+  description: Loves eating/preparing food. Takes Challenges on things like French cuisine, vegetarian cooking, foraging.
+critic:
+  name: Critic
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Critic_130.png
+  description: Lover of video media like television, YouTube, and movies. Takes Challenges on things like Mad Men, Fight Club, Fred.
+strategist:
+  name: Strategist
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Strategist_130.PNG
+  description: Corporate type who may be confused with a consultant. Takes Challenges on things like corporate finance, day trading, start-up strategy
+locked:
+  name: Locked
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hidden_130.png
+  description: Unlockable at Level 15
+locked2:
+  name: Locked
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hidden_130.png
+  description: Unlockable at Level 30

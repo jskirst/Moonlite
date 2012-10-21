@@ -27,11 +27,7 @@ FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt
     ["Atticus Finch","http://i699.photobucket.com/albums/vv354/Jude714/Gregory-Peck-as-Atticus-Finch.jpg"],
     ["Dak Ralter","http://porkins.home.insightbb.com/Rebel/Pilots/DakRalter.jpg"]]
     
-PERSONAS = [
-  ["Hacker", "This is the hacker.", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg"],
-  ["Explorer", "This is the explorer.", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg"],
-  ["Critic", "This is the critic.", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg"],
-]
+PERSONAS = YAML.load(File.read(File.join(Rails.root, "/lib/tasks/personas.yml")))
 
 PATHS = [
   ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
@@ -97,7 +93,8 @@ namespace :db do
     
     criteria = Path.all.to_a.collect &:id
     PERSONAS.each do |persona|
-      new_persona = moonlite_company.personas.create!(name: persona[0], description: persona[1], image_url: persona[2], criteria: criteria)
+      persona = persona[1]
+      new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"], criteria: criteria)
     end
   end
 end
