@@ -180,7 +180,7 @@ class SectionsController < ApplicationController
       submitted_answer_id: submitted_answer.id)
     current_user.award_points(task, 100)
     
-    redirect_to community_path_path(@section.path, completed: true)
+    redirect_to path_path(@section.path, completed: true)
   end
   
   def complete

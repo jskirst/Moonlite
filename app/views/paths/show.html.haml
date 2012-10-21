@@ -36,8 +36,8 @@
         %div.leftboxheader
           %div
             %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
-            = link_to "Date", community_path_path(@path, order: "date"), class: "btn leftbtn"
-            = link_to "Votes", community_path_path(@path, order: "votes"), class: "btn midbtn"
+            = link_to "Date", path_path(@path, order: "date"), class: "btn leftbtn"
+            = link_to "Votes", path_path(@path, order: "votes"), class: "btn midbtn"
             - if @path
               %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
           -if @path

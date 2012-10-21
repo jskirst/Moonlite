@@ -194,7 +194,7 @@ class PathsController < ApplicationController
     end
   end
   
-  def community
+  def show
     @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
     @total_points_earned = @enrollment.total_points
     @skill_ranking = @enrollment.skill_ranking
