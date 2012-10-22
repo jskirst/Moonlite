@@ -1,4 +1,8 @@
 %div.intcontainer
+  :css
+    h3 { display: inline; margin-bottom: 2px; }
+    p { font-size: 15px; }
+    strong { color: #404040; }
   %div.firstchallengeint
     %div.firstchallengeintheader{ style:"padding: 7px 0 0 9px" }
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style: "width:42px; height:47px; margin:4px 4px 0 0;" }
@@ -9,21 +13,17 @@
       %ul
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png" }
-          %span.inttitle Choose a Persona
-          %br
-          %span.intdetails
-            The world of Metabright is made up of Personas. Personas represent who you are or who you want to be. Some are serious, some are for education, and some are just for fun. New personas are will be unlocked every week.
+          %h3.inttitle Choose a Persona
+          %p.intdetails
+            The world of Metabright is filled with Personas. Personas represent <strong>who you are</strong> or who you <strong>want to be</strong>. New personas will be unlocked every week.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png" }
-          %span.inttitle Prove yourself
-          %br
-          %span.intdetails 
-            Personas are made up of challenges, skills and adventures. As you progress through each, you will also improve your persona. Sometimes the way to progress will be a quiz, or a test of your creative skills - sometimes it will be a call to a larger adventure.
+          %h3.inttitle Prove yourself
+          %p.intdetails 
+            Personas are made up of <strong>challenges, skills and adventures</strong>. As you progress through each, you will also improve your Persona.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png" }
-          %span.inttitle Grow!
-          %br
-          %span.intdetails 
-            There is no end to the world of Metabright. Aquire new personas, help (or challenge) others, and even build your own personas and challenges for others to take.
-          %p Good luck.
+          %h3.inttitle Grow
+          %p.intdetails 
+            There is no end to the world of Metabright. Aquire new Personas, compete with and help others progress, or build your even own Personas and challenges for others to take. <strong>Be who you want to be.</strong>
     = link_to "Let's go!", start_path, style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
