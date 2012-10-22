@@ -232,9 +232,10 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
 .introintcontent>ul>li>img{display:inline; height:35px;margin-right:5px; position:relative; top:19px; opacity:.8;}
 .introintcontent>ul>li>.inttitle{}
 .introintcontent>ul>li>.intdetails{margin-left:45px;}
+#explore_modal { width: 100%; background-color: transparent; border: 0; box-shadow: 0 0 0; margin-left: auto; margin-right: auto; top: 45%; left: inherit; }
 
-
-
+/* Create and Administer */
+.single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
 
 /* Footer */
 .footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D}

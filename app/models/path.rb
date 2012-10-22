@@ -53,14 +53,14 @@ class Path < ActiveRecord::Base
   end
   
   def default_pic?
-    return path_pic == "/images/default_path_pic.jpg"
+    return path_pic == "/images/image_thumb.png"
   end
   
   def path_pic
     sr = stored_resources.first
     return sr.obj.url if sr
     return self.image_url if self.image_url
-    return "/images/default_path_pic.jpg"
+    return "/images/image_thumb.png"
   end
   
   def self.with_category(type, user, excluded_ids = -2, order = "id DESC")

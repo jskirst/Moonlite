@@ -46,7 +46,7 @@
               %ol
                 - @path.sections.each do |s|
                   - s.creative_tasks.each do |task|
-                    %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), community_path_path(@path, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
+                    %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), path_path(@path, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
         = render "shared/newsfeed", { newsfeed_items: @responses }
 
 %div#launchpad.modal.hide.fade{ style: "left: 36%; top: 30%;"}

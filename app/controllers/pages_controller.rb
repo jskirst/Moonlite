@@ -18,20 +18,7 @@ class PagesController < ApplicationController
       @newsfeed_items = @newsfeed_items.flatten.sort { |a, b| a.created_at <=> b.created_at }
       render "users/home"
     else
-      if params[:m]
-        @first_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).first(4)
-        @last_four_challenges = Path.where("company_id = ? and is_published = ? ", 1, true).last(4)
-        render "consumer_landing", layout: "landing"
-      elsif @is_company
-        if @possible_company && @possible_company.enable_custom_landing
-          render "company_landing"
-        else
-          render "landing"
-        end
-      else
-        render "consumer_landing", layout: "landing"
-      end
-      return
+      render "landing", layout: "landing"
     end
   end
   
@@ -44,19 +31,8 @@ class PagesController < ApplicationController
     render "start", layout: "landing"
   end
   
-  def explore
-    @title = "Explore"
-    @personas = current_user.company.personas
-  end
-  
   def create
-    @published_paths = current_user.paths.where("is_published = ?", true).all(:order => "updated_at DESC")
-    @unpublished_paths = current_user.paths.where("is_published = ?", false).all(:order => "updated_at DESC")
-    if @enable_collaboration
-      @collaborating_paths = current_user.company.paths.all(:order => "updated_at DESC")
-    else
-      @collaborating_paths = current_user.collaborating_paths.all(:order => "updated_at DESC")
-    end
+    @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
   end
   
   def invitation
