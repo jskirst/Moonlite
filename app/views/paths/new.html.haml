@@ -1,0 +1,20 @@
+%div.single_pane
+  %h2{ style: "border-bottom: 1px solid #DDD; margin-bottom: 20px;"} New Challenge
+  = form_for(@path) do |f|
+    = render "shared/error_messages", object: f.object
+    %div.field.clearfix
+      %label Name
+      %div.input
+        = f.text_field :name, autofocus: "autofocus"
+    %div.field.clearfix
+      %label Logo image
+      %div.input
+        = f.text_field :image_url, id: "image_url_input", class: "xxlarge", placeholder: "URL to picture..."
+        %a.button.button-standard{ style: "margin-left:10px;" } Preview
+        %p Image should convey what the challenge will be about
+    %div.field.clearfix
+      %div.input
+        = image_tag @path.path_pic, id: "image_url_preview", width: "210", style: "margin:10px 0 20px 0;"
+    %div.actions
+      = link_to "Cancel", root_path, class: "button button-standard"
+      = f.submit "Save", class: "button button-info"

@@ -1,0 +1,22 @@
+<section>
+  <h2 style="margin-bottom:10px;"><%= @path.sections.empty? ? "Create a Section" : "Add a Section" %></h2>
+  <h4>What are sections?</h4>
+  <p style="margin: 5px 0 20px 0;padding: 0 200px 0 0;">Every <%= name_for_paths.downcase %> is made up of a series of sections  that are <strong>organized by content</strong> or <strong>question difficulty</strong>. Having more than one section is completely optional, in fact most <%= name_for_paths.downcase.pluralize %> have between 1 and 3 sections. The only requirement is that every <%= name_for_paths.downcase %> have at <strong>least one section</strong>.</p>
+  <h4>Choosing a name</h4>
+  <p style="margin: 5px 0 20px 0;padding: 0 200px 0 0;">If you only plan on having one section, the section name won't be very important and can be the same name as your <%= name_for_paths.downcase %>. Or, if you do plan on having multiple sections, you can name your sections based on topic or by order.</p>
+  <%= form_for @section do |f| %>
+    <%= render "shared/error_messages", :object => f.object %>
+    <%= f.hidden_field :path_id, :value => @path.id %><br/>
+    <div class="field" style="margin-top:5px;">
+      <label for="section_name" style="font-weight: bold;">Section Name</label>
+      <div class="input">
+        <%= f.text_field :name, :class => "xlarge", :placeholder => "", :style => "margin-bottom: 5px;", :autofocus => "autofocus" %><br>
+        <span style="font-style: italic;">Examples: Level 1, Beginner Lessons, Fried food of the Midwest</span>
+      </div>
+    </div>
+    <div class="actions" style="margin-top: 125px;">
+      <%= f.submit "Next", :class => "btn primary" %>
+      <%= link_to "Cancel", edit_path_path(@path.id, :m=>"sections"), :class => "btn secondary" %>
+    </div>
+  <% end %>
+</section>
