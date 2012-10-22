@@ -1,4 +1,0 @@
-<p>You’ve signed out of your MetaBright account. Why not sign <%= link_to "back in?", signin_path %></p>
-<a href="http://www.linkedin.com/shareArticle?mini=true&url=<%=u signin_url %>&title=Moonlite Achievement Unlocked!&summary=<%= current_user.name %> is now a certified expert in <%= @path.name %>. Can you beat their score?&source=<%= hero_path_path(@path.id, :hero => current_user.id)%>" target="_blank"><img src="/images/linkedin-connect.gif" width="150" height="45"></a>
-<a href="http://www.facebook.com/sharer.php?u=<%=u signin_url %>" target="_blank"><img src="/images/facebook-connect.gif" width="150" height="55"></a>
-<a href="https://twitter.com/intent/tweet?url=<%=u signin_url %>&text=I just rocked this <%= name_for_paths %> on MetaBright!" target="_blank"><img src="/images/twitter-connect.png" width="150" height="45"></a>

@@ -1,4 +1,8 @@
 %div.intcontainer
+  :css
+    h3 { display: inline; margin-bottom: 2px; }
+    p { font-size: 15px; }
+    strong { color: #404040; }
   %div.firstchallengeint
     %div.firstchallengeintheader{ style:"padding: 7px 0 0 9px" }
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style: "width:42px; height:47px; margin:4px 4px 0 0;" }
@@ -9,31 +13,17 @@
       %ul
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png" }
-          %span.inttitle Enroll in Challenges
-          %br
-          %span.intdetails
-            Topics in MetaBright are called Challenges. Each Challenge is broken down into
-            %strong multiple sections
-            with varying subject matter and difficulty.
+          %h3.inttitle Choose a Persona
+          %p.intdetails
+            The world of Metabright is filled with Personas. Personas represent <strong>who you are</strong> or who you <strong>want to be</strong>. New personas will be unlocked every week.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png" }
-          %span.inttitle Prove yourself
-          %br
-          %span.intdetails 
-            Demonstrate your progress or mastery in Challenges by 
-            %strong earning points
-            and 
-            = succeed "." do
-              %strong moving up levels
-            Collect points by completing quiz-type questions and social
-            = succeed "." do
-              %strong Challenge Questions
+          %h3.inttitle Prove yourself
+          %p.intdetails 
+            Personas are made up of <strong>challenges, skills and adventures</strong>. As you progress through each, you will also improve your Persona.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png" }
-          %span.inttitle Grow!
-          %br
-          %span.intdetails 
-            Check out the 
-            %strong leaderboard
-            and see who the experts are in your Challenge. Learn what they know by studying their responses to Challenge Questions.
+          %h3.inttitle Grow
+          %p.intdetails 
+            There is no end to the world of Metabright. Aquire new Personas, compete with and help others progress, or build your even own Personas and challenges for others to take. <strong>Be who you want to be.</strong>
     = link_to "Let's go!", start_path, style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
