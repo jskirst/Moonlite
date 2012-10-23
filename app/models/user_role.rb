@@ -32,9 +32,17 @@ class UserRole < ActiveRecord::Base
   
   def signup_link
     if Rails.env.production?
-      return "http://www.metabright.com/companies/#{self.signup_token}/join"
+      if company.custom_domain
+        return "http://#{company.custom_domain}/companies/#{self.signup_token}/join"
+      else
+        return "http://www.metabright.com/companies/#{self.signup_token}/join"
+      end
     else
-      return "http://localhost:3000/companies/#{self.signup_token}/join"
+      if company.custom_domain
+        return "http://#{company.custom_domain}/companies/#{self.signup_token}/join"
+      else
+        return "http://localhost:3000/companies/#{self.signup_token}/join"
+      end
     end
   end
   

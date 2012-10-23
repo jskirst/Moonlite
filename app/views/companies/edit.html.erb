@@ -61,6 +61,12 @@
         </div>
       </div>
       <div class="field clearfix">
+        <%= f.label "Custom domain" %>
+        <div class="input">
+          <p><%= f.text_field :custom_domain, class: "xlarge" %></p>
+        </div>
+      </div>
+      <div class="field clearfix">
         <%= f.label "Enable custom landing page" %>
         <div class="input">
           <p><%= f.check_box :enable_custom_landing %></p>

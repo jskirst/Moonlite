@@ -10,7 +10,8 @@ class Company < ActiveRecord::Base
     :small_logo_link,
     :enable_custom_landing,
     :user_role_id,
-    :custom_email_from
+    :custom_email_from,
+    :custom_domain
   
   has_many :users
   has_many :rewards
