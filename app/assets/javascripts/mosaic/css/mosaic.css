@@ -22,7 +22,7 @@
 	width:400px;
 	height:250px;
 	margin:10px;
-	background:#111 url(../img/progress.gif) no-repeat center center;
+	background:#111 no-repeat center center;
 	border:1px solid #fff;
 	-webkit-box-shadow:0 1px 3px rgba(0,0,0,0.5);
 }
