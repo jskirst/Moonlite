@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   before_filter :authenticate, :except => [:accept, :join]
-  before_filter :get_company_from_id, :except => [:new, :create, :index, :accept, :join]
+  before_filter :get_company_from_id, :except => [:show, :new, :create, :index, :accept, :join]
   before_filter :admin_only, :only => [:new, :create, :index]
   before_filter :has_access?, :only => [:show, :edit, :update]
   
@@ -21,6 +21,7 @@ class CompaniesController < ApplicationController
   end
   
   def show
+    @company = current_user.company
     @user_roles = current_user.company.user_roles
     if params[:search]
       @users = User.paginate(:page => params[:page], 
@@ -116,11 +117,9 @@ class CompaniesController < ApplicationController
     end
   
     def has_access?
-      unless current_user.admin?
-        unless @company.id == current_user.company_id && @enable_administration
-          flash[:error] = "You do not have access to this data."
-          redirect_to root_path
-        end
+      unless @enable_administration
+        flash[:error] = "You do not have access to this data."
+        redirect_to root_path
       end
     end
 end

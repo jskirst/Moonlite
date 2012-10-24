@@ -89,6 +89,7 @@ Metabright::Application.routes.draw do
 	root 				:to => "pages#home"
 	
   match '/usage', :to => 'users#usage_reports'
+  match '/admin', :to => 'companies#show'
   
   match '/locallink',  :to => 'sessions#locallink'
   match '/auth/failure',  :to => 'sessions#auth_failure'
