@@ -27,15 +27,15 @@
         %div.leftboxheader Suggested Challenges
         %div.leftboxfooter
           %li.leftrailcontent
-          - @suggested_paths.each do |p|
-            = link_to p do
-              = image_tag p.path_pic, class: "leftrailicon"
+            - @suggested_paths.each do |p|
+              = link_to p do
+                = image_tag p.path_pic, class: "leftrailicon"
       %div.leftbox
         %div.leftboxheader Enrolled Personas
         %div.leftboxfooter
           %li.leftrailcontent
           - @enrolled_personas.each do |p|
-            = link_to p do
+            %a.explore_link{ style: "cursor: pointer; text-decoration: none;" }
               = image_tag p.picture, class: "leftrailicon"
     %div.span11
       %div.newsfeed
