@@ -46,10 +46,7 @@
               %ol
                 - @path.sections.each do |s|
                   - s.creative_tasks.each do |task|
-                    %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), path_path(@path, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
-          %div{ style: "display:inline; float:right; cursor:pointer; position:relative; top:5px; margin-right:4px;" }
-            %span{ style: "font-weight:normal;"} Sort
-            %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/down_arrow.png", :style => "width:10px; position:relative; bottom:2px;"}
+                    %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), task_details_path(@path, task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
         = render "shared/newsfeed", { newsfeed_items: @responses }
 
 %div#launchpad.modal.hide.fade{ style: "left: 36%; top: 30%;"}

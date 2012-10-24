@@ -186,7 +186,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .completionnextsteps ul{}
 .completionnextsteps p{text-indent:15px;}
 .completionnextsteps a{font-style: italic; }
-.socialicon{height:14px; margin:0 2px; }
+.social_toolbar img {height:14px; margin:0 2px; }
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 

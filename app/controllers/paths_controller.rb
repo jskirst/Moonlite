@@ -210,7 +210,10 @@ class PathsController < ApplicationController
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
     @tasks = @path.tasks
     
-    if params[:task]
+    if params[:cp]
+      @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.id = ?", params[:cp])
+      @sharing = true
+    elsif params[:t]
       @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
     elsif params[:order] && params[:order] == "date"
       @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")

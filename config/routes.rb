@@ -36,6 +36,8 @@ Metabright::Application.routes.draw do
 			get :retake
 		end
 	end
+	match "/paths/:id/cp/:cp/" => "paths#show", as: "cp_details"
+	match "/paths/:id/task/:task/" => "paths#show", as: "task_details"
 	resources :sections do
 		member do
       get :publish

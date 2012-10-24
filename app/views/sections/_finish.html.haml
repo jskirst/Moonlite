@@ -24,9 +24,5 @@
             %p= link_to "#{@available_crs} available", path_url(@section.path, completed: true)
           %li Take additional sections
           %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", path_url(@section.path, completed: true) 
-    %span.socialiconholder
-      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"></a>
-      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"></a>
-      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"></a>
-      %a <img class="socialicon" src="https://s3.amazonaws.com/moonlite-nsdub/static/icon+Pinterest+small.png"></a>
+    = render "shared/sharing"
     = link_to "Continue", path_url(@section.path, completed: "true"), class: "button button-info", style: "float: right;"

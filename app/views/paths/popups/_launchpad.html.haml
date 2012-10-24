@@ -22,25 +22,15 @@
 
 - if display
   :javascript
-    $(function(){
-      $('#launchpad').modal({
-        keyboard: true,
-        backdrop: 'static',
-        show: true
-      });
-    });
+    open_launchpad();
 
 :javascript
   $(function(){
     $(".button-actionable").click(function(){
-      $('#launchpad').modal({
-        keyboard: true,
-        backdrop: 'static',
-        show: true
-      });
+      open_launchpad();
     });
      
     $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
       $(".sectioninfocontainer").replaceWith(data);
     });
-  });                      
+  });

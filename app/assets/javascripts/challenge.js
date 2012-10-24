@@ -18,25 +18,6 @@ var start_modal_countdown;
   // }
 // }
 
-function show_start_modal(){
-  clearInterval(start_modal_countdown);
-  $('#start_modal').modal({
-    keyboard: true,
-    backdrop: 'static',
-    show: true
-  });
-  var count = parseInt($("#starting_timer").text());
-  start_modal_countdown = setInterval(function(){
-    $("#starting_timer").html("<strong>"+count+"</strong>");
-    if(count==0){
-      $('#start_modal').modal('hide');
-      clearInterval(start_modal_countdown);
-      start_question_timer();
-      return;
-    }count --;
-  }, 1000);
-}
-
 function set_answer_status(previously_correct){
   var $correct_status = $("#correct_status");
   if(previously_correct){

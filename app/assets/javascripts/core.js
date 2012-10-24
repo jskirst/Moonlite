@@ -10,6 +10,14 @@ function is_valid_image(url, callback){
   }
 }
 
+function open_launchpad(){
+  $('#launchpad').modal({
+    keyboard: true,
+    backdrop: 'static',
+    show: true
+  });
+}
+
 function close_button(){
   $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
 }
