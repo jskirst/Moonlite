@@ -94,6 +94,7 @@ namespace :db do
     criteria = Path.all.to_a.collect &:id
     PERSONAS.each do |persona|
       persona = persona[1]
+      next if persona["name"].include?("lock")
       new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"], criteria: criteria)
     end
   end

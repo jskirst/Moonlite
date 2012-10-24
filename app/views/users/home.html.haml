@@ -23,13 +23,14 @@
                 
   %div.row
     %div.span5
-      %div.leftbox
-        %div.leftboxheader Suggested Challenges
-        %div.leftboxfooter
-          %li.leftrailcontent
-            - @suggested_paths.each do |p|
-              = link_to p do
-                = image_tag p.path_pic, class: "leftrailicon"
+      - unless @suggested_paths.empty?
+        %div.leftbox
+          %div.leftboxheader Suggested Challenges
+          %div.leftboxfooter
+            %li.leftrailcontent
+              - @suggested_paths.each do |p|
+                = link_to p do
+                  = image_tag p.path_pic, class: "leftrailicon"
       %div.leftbox
         %div.leftboxheader Enrolled Personas
         %div.leftboxfooter

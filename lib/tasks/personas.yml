@@ -5,12 +5,11 @@ hacker:
 maker:
   name: Maker
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Maker_130.png
-  description: You are the master of your reality -- and it's a reality that you construct. With your hands you shape, bake, and animate the world around you. 
-   
+  description: You are the master of your reality -- and it's a reality that you construct. With your hands you shape, bake, and animate the world around you.
 explorer:
   name: Explorer
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Explorer_130.PNG
-  description: Taking the path less traveled isn't just bumper sticker wisdom, it's the way you live your life. You know that the only way to learn is to do, and do you do. World traveller, thrill seeker, urban adventurer. You are the person your friends go to when they need advice on the things they should do.
+  description: Taking the path less traveled isn't just bumper sticker wisdom, it's the way you live your life. You know that the only way to learn is to do, and do you do. World traveller, thrill seeker, urban adventurer.
 designer:
   name: Designer
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Designer_130.png
@@ -18,7 +17,7 @@ designer:
 musichead:
   name: Music Head
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_MusicHead_130.png
-  description: You're the one with the lighter in the front row 30 minutes after the show has ended <em>demanding</em> an encore. You didn't drive 600 miles from Fargo for nothing. Whether it's going to shows, rocking out on your iPod, or making your own tunes, life just isn't worth living without music.
+  description: You're the one with the lighter in the front row <em>demanding</em> an encore. Whether it's concerts, rocking out on your iPod, or making your own tunes, life just isn't worth living without music.
 foodie:
   name: Foodie
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Foodie_130.png
