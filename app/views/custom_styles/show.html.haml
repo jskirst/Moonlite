@@ -1,0 +1,17 @@
+%div.single_pane
+  = render "companies/tab_header", { company: current_company, mode: "styles" }
+  = link_to "Edit", edit_custom_style_path(@custom_style), class: "button button-info", style: "float:right;"
+  %h2 Custom Styles
+  %p{ style: "margin-top:10px;" }
+    - if @custom_style.mode == 1
+      These custom styles are currently <strong>active</strong>. These styles are now active for all users. Click <strong>Edit</strong> to deactivate them.
+    - elsif @custom_style.mode == 2
+      These custom styles are currently in <strong>preview mode</strong>. Only administrators can see these styles. Click <strong>Edit</strong> to activate them or turn off preview mode.
+    - else
+      These custom styles are currently <strong>inactive</strong>. Click <strong>Edit</strong> to deactivate or preview them.
+  %div{ style: "margin:20px 40px;" }
+    %pre{ style: "min-height: 100px;" }
+      - unless @custom_style.styles.blank?
+        = @custom_style.styles
+      - else
+        %p You do not have any custom styles yet. #{link_to "Create some.", edit_custom_style_path(@custom_style)}

@@ -1,0 +1,17 @@
+%div.single_pane
+  = render "companies/tab_header", { company: @company, mode: "users" }
+  = form_for @custom_style do |f|
+    %h2 Custom Styles
+    %p{ style: "margin-top:10px;" } Edit the styles below. Note that you must save before these styles will take effect.
+    = render "shared/error_messages", object: f.object
+    %div{ style: "margin:20px 0 0 40px;" }
+      %span{ style: "margin-right:5px; font-weight:bold;" } Status
+      %select.small{ name: "custom_style[mode]" }
+        %option{ value: "0", selected: "#{@custom_style.mode == 0 ? 'selected' : ''}" } Off
+        %option{ value: "0", selected: "#{@custom_style.mode == 1 ? 'selected' : ''}" } On
+        %option{ value: "0", selected: "#{@custom_style.mode == 2 ? 'selected' : ''}" } Preview
+    %div.field.clearfix
+      = f.text_area :styles, rows: "15", placeholder: "Add CSS styles here...", style: "margin:20px 40px; width: 800px; min-height: 200px;"
+    %div.actions
+      = link_to "Cancel", @custom_style, class: "button button-standard"
+      = f.submit "Save", class: "button button-actionable"

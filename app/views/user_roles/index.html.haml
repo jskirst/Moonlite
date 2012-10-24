@@ -1,0 +1,25 @@
+%div.single_pane
+  = render "companies/tab_header", { company: current_company, mode: "roles" }
+  %h2{ style: "margin-bottom:15px;" } User roles
+  %table
+    %thead
+      %tr
+        %th #
+        %th Name
+        %th User Type
+        %th Num. of Users
+        %th Status
+    %tbody
+      - counter = 0
+      - @user_roles.each do |ur|
+        %tr
+          %td= counter.to_s
+          %td= link_to ur.name, edit_user_role_path(ur)
+          %td= ur.enable_administration ? "Admin" : "User"
+          %td= ur.users.count
+          %td= link_to "Delete", ur, method: "delete", confirm: "Are you sure you want to delete this user role?"
+        - counter += 1
+  = link_to "New role", new_user_role_path, class: "button button-actionable"
+  %div{ style: "margin-top:30px;" }
+    %h4 Note: Adding Users
+    %p Users must be added to a specific user role. To invite new users, click on one of the user roles in the table above. From there, you'll find a link to use to invite new users to your organization.

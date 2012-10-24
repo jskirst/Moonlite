@@ -10,13 +10,12 @@ $(function(){
 <div class="single_pane" id="company-profile">
   <%= render "companies/tab_header", { :company => @company, :mode => "users" } %>
   <section id="users">
-    <a href="#adding_users" class="btn primary" style="float:right;">Add Users</a>
     <h2 style="margin-bottom:15px;">Registered Users</h2>
     <%= will_paginate @users, :style => "float:left; margin-bottom:0; margin-top: 0;" %>
     <div style="float:right; margin: 0 0 0px 0;">
       <%= form_tag @company, :method => "get" do %>
         <%= text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name or email..." %>
-        <%= submit_tag "Search", :class => "btn secondary" %>
+        <%= submit_tag "Search", :class => "button button-standard" %>
       <% end %>
     </div>
     <table>
@@ -45,8 +44,7 @@ $(function(){
             <td>
               <% unless current_user == u %>
                 <%= link_to "Delete", u, :method => "delete", :remote => true, "data-type" => "html", 
-                :confirm => "Are you sure you want to delete this user?", 
-                :class => "btn secondary delete_user_button" %>
+                :confirm => "Are you sure you want to delete this user?" %>
               <% end %>
             </td>
           </tr>
@@ -82,13 +80,13 @@ $(function(){
           <td><%= link_to ur.name, edit_user_role_path(ur) %></td>
           <td><%= ur.signup_link %></td>
           <td><%= ur.users.size %></td>
-          <td><%= link_to "Invite", invite_user_role_path(ur), :class => "btn secondary" %></td>
+          <td><%= link_to "Invite", invite_user_role_path(ur) %></td>
         </tr>
         <% counter += 1 %>
       <% end %>
       </tbody>
     </table>
-    <p style="margin-top:20px;">Want to create a different user role?</p>
-    <%= link_to "Create New Role", new_user_role_path, :class => "btn secondary" %>
+    <p style="margin-top:20px; margin-bottom: 20px;">Want to create a different user role?</p>
+    <%= link_to "Create New Role", new_user_role_path, :class => "button button-info" %>
   </section>
 </section>
