@@ -15,6 +15,8 @@
       %div.completionstats
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
         %p Current level: <strong>#{@enrollment.level}</strong>
+      %div{ style: "float: right; margin: 15px 10px 0 0;" }
+        = render "shared/sharing"
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.completionnextsteps
         %h3 Continue improving your score
@@ -24,5 +26,4 @@
             %p= link_to "#{@available_crs} available", path_url(@section.path, completed: true)
           %li Take additional sections
           %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", path_url(@section.path, completed: true) 
-    = render "shared/sharing"
     = link_to "Continue", path_url(@section.path, completed: "true"), class: "button button-info", style: "float: right;"
