@@ -203,10 +203,6 @@ class User < ActiveRecord::Base
     enrollments.find_by_path_id(path.id).destroy
   end
   
-  def admin?
-    return self.admin
-  end
-  
   def award_points(task, points)
     if points.to_i > 0
       log_transaction(task.id, points)

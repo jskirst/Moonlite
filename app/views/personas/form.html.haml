@@ -1,0 +1,31 @@
+%div.single_pane
+  %h1{ style: "border-bottom: 1px solid #DDD" }= @persona.name || "New Persona"
+  = form_for @persona do |f|
+    = render "shared/error_messages", :object => f.object
+    %div.field.clearfix
+      = f.label :name
+      %div.input= f.text_field :name, maxlength: 255, size: 75
+    %div.field.clearfix
+      = f.label :description
+      %div.input= f.text_area :description, rows: 4, style: "width:300px;"
+    %div.field.clearfix
+      = f.label :image_url
+      %div.input= f.text_field :image_url, maxlength: 255
+    %div.field.clearfix
+      = image_tag @persona.image_url, size: "100x100", class: "input"
+    %div.input
+      - if current_company.paths.empty?
+        %p You have not yet created any Challenges yet. You need to create at least one Challenge to create a Persona.
+      - else
+        %p Select Challenges
+        %ul
+          - current_company.paths.each do |p|
+            %li
+              %span= p.name
+              - if @persona.path_personas && @persona.path_personas.find_by_path_id(p.id)
+                %input{ type: "checkbox", name: "persona[paths][#{p.id.to_s}]", style: "margin-left: 5px;", checked: "true" }
+              - else
+                %input{ type: "checkbox", name: "persona[paths][#{p.id.to_s}]", style: "margin-left: 5px;" }
+    %div.actions
+      = link_to "Back", personas_path, class: "button button-standard"
+      = f.submit "Save", class: "button button-actionable"

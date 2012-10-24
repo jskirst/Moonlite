@@ -7,7 +7,7 @@
       %h3{ style: "top:3px;" }
         = link_to root_url, style: "font-size: 26px;" do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
-      - if current_user
+      - unless current_user.nil? || no_bar
         %ul.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B;" }
           %li.navitem{ style: "border-left: 0px;" }
             = link_to root_url do
@@ -23,5 +23,8 @@
               = link_to create_path do
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px;" }
+          - if @enable_administration
+            %li
+              = link_to "Admin", admin_path
           %li
             = link_to "Sign out", signout_path

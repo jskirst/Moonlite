@@ -14,7 +14,18 @@ class Persona < ActiveRecord::Base
   validates :description, length: { :within => 1..255 }
   validates :image_url, presence: true
   
-  after_create { criteria.each { |c| path_personas.create!(:path_id => c) } }
+  after_save do
+    unless criteria.nil?
+      path_personas.each do |pp|
+        pp.destroy unless criteria.include?(pp.id)
+      end
+      criteria.each do |c|
+        unless path_personas.find_by_id(c)
+          path_personas.create!(:path_id => c)
+        end
+      end
+    end
+  end
     
   def picture
     return self.image_url unless self.image_url.nil?
