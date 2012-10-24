@@ -132,6 +132,18 @@ module SessionsHelper
     end
   end
   
+  def social_image
+    @social_image || "https://s3-us-west-1.amazonaws.com/moonlite/static/logo.png"
+  end
+  
+  def social_title
+    @social_title || "Metabright - Bowties are cool"
+  end
+  
+  def social_description
+    @social_description || "If you're not a nerd about something, do you really exist?"
+  end
+  
   def store_location(location = nil)
     session[:return_to] = location || request.fullpath
   end
