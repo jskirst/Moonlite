@@ -13,7 +13,8 @@
           %ul.sectionlist
             - @path.sections.each do |s|
               %li.launchpad_link
-                = link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "") 
+                %div{ style: "display:inline-block; width:75%;" }
+                  = link_to s.name, launchpad_section_path(s), remote: true, style: "text-decoration: none;"+(s.unlocked?(current_user) ? "font-weight: bold" : "") 
                 %div.pointsandprogress
                   %div #{s.points_earned(current_user)} points
                   %div #{s.percentage_complete(current_user)}%   

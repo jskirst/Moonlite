@@ -28,7 +28,7 @@
             %li{ style: "border-bottom: 1px solid rgb(235, 235, 235);"}
               %span.rank= (i+1).to_s
               = image_tag entry.user.profile_pic 
-              = link_to truncate(entry.user.name, length: 16), entry.user, class: "name"
+              = link_to truncate(entry.user.name, length: 20), entry.user, class: "name"
               %span.level lvl. #{entry.user.level(@path)}
               %span.points= entry.score
     %div.span11
@@ -69,9 +69,10 @@
             - @path.sections.each do |s|
               %li.launchpad_link
                 - if s.points_until_unlock(@enrollment) <= 0
-                  = link_to launchpad_section_path(s), remote: true do
-                    %span.pointer_caret= "»" if s == @current_section
-                    %span= truncate(s.name, length: 25)
+                  %div{ style: "display:inline-block; width:75%;" }
+                    = link_to launchpad_section_path(s), remote: true do
+                      %span.pointer_caret= "»" if s == @current_section
+                      %span= truncate(s.name, length: 25)
                   %div.pointsandprogress
                     %div #{s.points_earned(current_user)} points
                     %div #{s.percentage_complete(current_user)}%
