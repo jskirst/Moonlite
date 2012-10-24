@@ -1,12 +1,18 @@
 class Mailer < ActionMailer::Base
   default from: "metabot@metabright.com"
+  
 
-  def welcome(details)
-    @user_email = details[:email]
-    @accept_url = details[:signup_link]
-    mail(to: details[:email], subject: "Welcome to MetaBright!")
+
+  def welcome(email)
+    @user = User.find_by_email(email)
+    mail(to: @user.email, subject: "Welcome to MetaBright!")
   end
   
+  def comment_alert(email)
+    @commenting_user = details[:email]
+    @commented_question = details[:email]
+  end
+
   def reset(details)
     @user_email = details[:email]
     if Rails.env.production?
