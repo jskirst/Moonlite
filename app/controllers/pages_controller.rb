@@ -35,11 +35,10 @@ class PagesController < ApplicationController
     @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
   end
   
-  def invitation
-    @title = "Request an invite"
-    if params[:pages] && params[:pages][:email]
-      send_invitation_alert(params[:pages][:email])
-      render "invitation_sent"
+  def email_test
+    if params[:email]
+      eval("Mailer.#{params[:test_method]}('#{params[:email]}').deliver")
+      flash[:success] = "Email should have been sent."
     end
   end
   

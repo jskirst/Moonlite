@@ -1,0 +1,14 @@
+%div.single_pane
+  %h2 Pirate Email Test
+  %hr
+  = form_tag("/emailtest") do
+    %div.inputs.clearfix
+      %label Email Address
+      %div.input
+        = text_field_tag :email
+    %div.inputs.clearfix
+      %label Test
+      %div.input
+        = text_field_tag :test_method
+    %div.input
+      = submit_tag "Send", class: "button button-actionable"

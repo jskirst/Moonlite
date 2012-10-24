@@ -9,7 +9,7 @@
         });
       });
       $('.bar2').mosaic({ animation : 'slide' });
-      $('.comment').click({ animation : 'slide', hover_x: '400px' });
+      close_button();
     });
 
   :css
@@ -44,6 +44,8 @@
       %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Challenges represent skillsets where you can prove what you know, and be inspired by others. 
   %hr{ style: "margin:0px;" }
   %div.exploretiles
+    - if @paths.empty?
+      %p You must achieve a higher Metabright Level before you can unlock this Persona.
     - @paths.each do |path|
       %div.mosaic-block.bar2
         = link_to path_url(path), class: "mosaic-overlay" do

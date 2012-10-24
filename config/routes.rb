@@ -99,7 +99,7 @@ Metabright::Application.routes.draw do
 	match '/intro' => "pages#intro"
 	match '/start' => "pages#start"
 	
-	match '/invitation',:to => 'pages#invitation'
+	match '/emailtest', :to => 'pages#email_test', as: "email"
 
   match '/create',:to => 'pages#create'
   
