@@ -1,0 +1,21 @@
+%div#company-settings.single_pane
+  = render "companies/tab_header", { :company => current_user.company, :mode => "personas" }
+  %table
+    %thead
+      %th Name
+      %th Personas
+      %th
+      %th
+    %tbody
+      - @personas.each do |p|
+        %tr
+          %td
+            %p= p.name
+          %td
+            %p= p.paths.collect {|p| p.name }.join(",")
+          %td
+            %p= link_to "edit", edit_persona_path(p)
+          %td
+            %p= link_to "delete", p, :method => :delete, :confirm => "Are you certain you want to delete this persona?"
+      
+  = link_to "New Persona", new_persona_path, :class => "btn primary"
