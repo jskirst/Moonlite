@@ -5,36 +5,37 @@ hacker:
 maker:
   name: Maker
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Maker_130.png
-  description: This is the description
+  description: You are the master of your reality -- and it's a reality that you construct. With your hands you shape, bake, and animate the world around you. 
+   
 explorer:
   name: Explorer
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Explorer_130.PNG
-  description: This is the explorer
+  description: Taking the path less traveled isn't just bumper sticker wisdom, it's the way you live your life. You know that the only way to learn is to do, and do you do. World traveller, thrill seeker, urban adventurer. You are the person your friends go to when they need advice on the things they should do.
 designer:
   name: Designer
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Designer_130.png
-  description: Designer. Takes Challenges on things like typography, graphic design, interior consulting.
+  description: You make the world a more beautiful and functional place to reside. You never don't have an opinion, and if something should be fixed, you're the one to do it.  
 musichead:
   name: Music Head
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_MusicHead_130.png
-  description: Person who loves making/listening to/seeing music. Take Challenges on things like The Beatles, The Fillmore, Guitar
+  description: You're the one with the lighter in the front row 30 minutes after the show has ended <em>demanding</em> an encore. You didn't drive 600 miles from Fargo for nothing. Whether it's going to shows, rocking out on your iPod, or making your own tunes, life just isn't worth living without music.
 foodie:
   name: Foodie
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Foodie_130.png
-  description: Loves eating/preparing food. Takes Challenges on things like French cuisine, vegetarian cooking, foraging.
+  description: Your catchphrase might as well be 'Om nom nom nom.' Cooking, eating, drinking, you don't care, you do it all. 
 critic:
   name: Critic
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Critic_130.png
-  description: Lover of video media like television, YouTube, and movies. Takes Challenges on things like Mad Men, Fight Club, Fred.
+  description: YouTube, television, movies, theatre -- if it's visually engaging, you know all about it. People can tell just by looking at you. Black is never out of style, and it's always worthwhile to drive across state lines to buy your clove cigarettes. 
 strategist:
   name: Strategist
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Strategist_130.PNG
-  description: Corporate type who may be confused with a consultant. Takes Challenges on things like corporate finance, day trading, start-up strategy
+  description: A white-collar athlete, the three-piece-suit is your uniform. Some people call you the 'Human Calculator,' others just call you 'Boss.' When stuff needs to get done and done well, people turn to you to lead and execute at the highest level. 
 locked:
   name: Locked
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hidden_130.png
-  description: Unlockable at Level 15
+  description: This persona is currently locked. Achieve level 15 in any other persona to unlock.
 locked2:
   name: Locked
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hidden_130.png
-  description: Unlockable at Level 30
+  description: This persona is currently locked. Achieve level 30 in any other persona to unlock.
