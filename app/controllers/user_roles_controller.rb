@@ -4,6 +4,7 @@ class UserRolesController < ApplicationController
   before_filter :has_access?
   
   def index
+    @mode = "roles"
     @user_roles = current_user.company.user_roles.all
     @company = current_user.company
   end

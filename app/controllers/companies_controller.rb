@@ -1,6 +1,5 @@
 class CompaniesController < ApplicationController
   before_filter :authenticate, :except => [:accept, :join]
-  before_filter :get_company_from_id, :except => [:show, :new, :create, :index, :accept, :join]
   before_filter :admin_only, :only => [:new, :create, :index]
   before_filter :has_access?, :only => [:show, :edit, :update]
   
@@ -21,6 +20,7 @@ class CompaniesController < ApplicationController
   end
   
   def show
+    @mode = "overview"
     @company = current_user.company
     @user_roles = current_user.company.user_roles
     if params[:search]
@@ -33,9 +33,16 @@ class CompaniesController < ApplicationController
   end
   
   def edit
-    @title = "Company Settings"
+    @mode = "settings"
+    @company = current_company
     @categories = @company.categories.all
     @user_roles = @company.user_roles.all
+  end
+  
+  def users
+    @mode = "users"
+    @company = current_company
+    @users = @company.users.order("earned_points DESC")
   end
   
   def update
@@ -48,7 +55,7 @@ class CompaniesController < ApplicationController
       render "edit"
     end
   end
-  
+
   def index
     @companies = Company.paginate(:page => params[:page])
     @title = "All companies"
@@ -104,14 +111,6 @@ class CompaniesController < ApplicationController
   end
   
   private
-    def get_company_from_id
-      @company = Company.find_by_id(params[:id])
-      if @company.nil?
-        flash[:error] = "This is not a valid company."
-        redirect_to root_path
-      end
-    end
-  
     def admin_only
       redirect_to(root_path) unless (current_user.admin?)
     end

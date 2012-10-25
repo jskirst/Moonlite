@@ -1,10 +1,6 @@
 <script>
 $(function(){
-  $(".delete_user_button").on("ajax:success",
-    function(event, data){
-      $(this).parents("tr").html(data);
-    }
-  );
+  $(".delete_user_button").on("ajax:success", function(event, data){ $(this).parents("tr").html(data); });
 });
 </script>
 <div class="single_pane" id="company-profile">

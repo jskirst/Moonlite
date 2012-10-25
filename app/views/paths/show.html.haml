@@ -72,9 +72,9 @@
                     %div{ style: "display:inline-block; width:75%;" }
                       = link_to launchpad_section_path(s), remote: true do
                         %span.pointer_caret= "»" if s == @current_section
-                        %span= truncate(s.name, length: 25)
+                        %span= truncate(s.name, length: 17)
                     %div.pointsandprogress
-                      %div #{s.points_earned(current_user)} points
+                      %div #{s.points_earned(current_user)} pts
                       %div #{s.percentage_complete(current_user)}%
                   - else
                     %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
