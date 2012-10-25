@@ -7,13 +7,13 @@ class PagesController < ApplicationController
     @title = "Home"
     if signed_in?
       redirect_to start and return if params[:go] == "start"
-      @enrolled_paths = current_user.enrolled_paths
+      @enrollments = current_user.enrollments.includes(:path)
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
       @newsfeed_items = []
-      @enrolled_paths.each do |p|
-        @newsfeed_items << p.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 10)
+      @enrollments.each do |e|
+        @newsfeed_items << e.path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 10)
       end
       @newsfeed_items = @newsfeed_items.flatten.sort { |a, b| a.created_at <=> b.created_at }
       render "users/home"

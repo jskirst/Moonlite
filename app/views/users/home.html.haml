@@ -4,15 +4,16 @@
       %div#leftheaderspace Explore the world of Metabright
     %div#carouselupdatespace
       %ul.inlinedisplay
-        - @enrolled_paths.each do |p|
+        - @enrollments.each do |e|
           %li
             %div.mosaic-block.bar2
-              = link_to path_path(p), class: "mosaic-overlay" do
+              = link_to path_path(e.path), class: "mosaic-overlay" do
                 %div.details
-                  %h4= p.name
+                  %h4{ style: "margin-bottom: 0px;" }= e.path.name
+                  %h5{ style: "margin-left: 10px; color: white; font-size: 12px;" } Level #{e.level}, #{e.total_points} points
               %div
-                %img.mosaic-backdrop{ src: p.path_pic }
-        - if @enrolled_paths.size < 3
+                %img.mosaic-backdrop{ src: e.path.path_pic }
+        - if @enrollments.size < 3
           %li
             %div.mosaic-block.bar2
               %a.explore_link.mosaic-overlay{ style: "cursor: pointer;" }

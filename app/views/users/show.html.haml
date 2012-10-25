@@ -21,14 +21,15 @@
             %p{ style: "font-size: 16px; margin: 5px 0 7px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
         %div.challengecarousel
           %ul.inlinedisplay
-            - @enrolled_paths.each do |p|
+            - @enrollments.each do |e|
               %li
                 %div.mosaic-block.bar2
-                  = link_to path_path(p), class: "mosaic-overlay" do
+                  = link_to path_path(e.path), class: "mosaic-overlay" do
                     %div.details
-                      %h4= p.name
+                      %h4{ style: "margin-bottom: 0px;" }= e.path.name
+                      %h5{ style: "margin-left: 10px; color: white; font-size: 12px;" } Level #{e.level}, #{e.total_points} points
                   %div
-                    %img.mosaic-backdrop{ src: p.path_pic }
+                    %img.mosaic-backdrop{ src: e.path.path_pic }
   %div.row
     %div.span5
       %div.leftbox
@@ -52,9 +53,9 @@
         %div.leftboxheader My Challenges
         %div.leftboxfooter
           %li.leftrailcontent
-            - @enrolled_paths.each do |c|
-              = link_to c do
-                = image_tag c.path_pic, class: "leftrailicon"
+            - @enrollments.each do |e|
+              = link_to e do
+                = image_tag e.path.path_pic, class: "leftrailicon"
     %div.span11
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader

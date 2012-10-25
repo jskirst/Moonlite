@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
     @creative_tasks = all_responses.collect { |item| item.task }
-    @enrolled_paths = @user.enrolled_paths.where("paths.is_public = ?", true)
+    @enrollments = @user.enrollments.includes(:path)
     @enrolled_personas = @user.personas
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
