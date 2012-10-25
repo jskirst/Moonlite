@@ -9,7 +9,7 @@
       = link_to (image_tag r.user.profile_pic, class: "photo"), r.user
     %div.postspace
       %div.postheader
-        %h3{ style: "width: 175px;" }
+        %h3
           = link_to truncate(r.user.to_s, length: 50), r.user, class:"username"
         %div.votingandpointsarea
           - if @sharing
