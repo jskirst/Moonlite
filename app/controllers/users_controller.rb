@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     @creative_tasks = all_responses.collect { |item| item.task }
     @enrolled_paths = @user.enrolled_paths.where("paths.is_public = ?", true)
     @enrolled_personas = @user.personas
-    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
   end
   

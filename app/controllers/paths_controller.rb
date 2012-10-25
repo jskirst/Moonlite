@@ -1,7 +1,7 @@
 class PathsController < ApplicationController
   include OrderHelper
   
-  before_filter :authenticate, :except => [:show, :jumpstart]
+  before_filter :authenticate, except: [:show]
   before_filter :admin_only, :only => [:index]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
@@ -195,20 +195,25 @@ class PathsController < ApplicationController
   end
   
   def show
-    @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
-    @total_points_earned = @enrollment.total_points
-    @skill_ranking = @enrollment.skill_ranking
-    
-    @current_section = current_user.most_recent_section_for_path(@path)
-    @unlocked = @current_section.unlocked?(current_user)
-    
-    Leaderboard.reset_for_path_user(@path, current_user) if params[:completed]
-    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, current_user, false).first[1]
-    @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
+    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, false).first[1]
     @enrolled_users = @path.enrolled_users
-    
-    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
     @tasks = @path.tasks
+    @votes = []
+    
+    if current_user
+      @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
+      @total_points_earned = @enrollment.total_points
+      @skill_ranking = @enrollment.skill_ranking
+    
+      @current_section = current_user.most_recent_section_for_path(@path)
+      @unlocked = @current_section.unlocked?(current_user)
+    
+      #Leaderboard.reset_for_path_user(@path, current_user) if params[:completed]
+      @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
+    
+      @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
+      @display_launchpad = params[:completed]
+    end
     
     if params[:cp]
       @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.id = ?", params[:cp])
@@ -221,7 +226,6 @@ class PathsController < ApplicationController
       @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
     end
     @activity_stream = @path.activity_stream
-    @display_launchpad = params[:completed]
   end
   
 # Administration #

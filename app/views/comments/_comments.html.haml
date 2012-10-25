@@ -16,9 +16,10 @@
           = render "comments/comment", comment: comment
       - else
         %p.no_comments There are no comments for this yet.
-    = form_for(current_user.comments.new, remote: true) do |f|
-      %div{ style: "width: 100%" }
-        = f.text_area :content, :rows => 2, :style => "width: 510px; height: 55px; "
-      = hidden_field :comment, :owner_type, { :value => owner_type }
-      = hidden_field :comment, :owner_id, { :value => owner_id }
-      = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"
+    - if current_user
+      = form_for(current_user.comments.new, remote: true) do |f|
+        %div{ style: "width: 100%" }
+          = f.text_area :content, :rows => 2, :style => "width: 510px; height: 55px; "
+        = hidden_field :comment, :owner_type, { :value => owner_type }
+        = hidden_field :comment, :owner_id, { :value => owner_id }
+        = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"

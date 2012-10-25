@@ -30,14 +30,14 @@ class Leaderboard < ActiveRecord::Base
     return Leaderboard.includes(:user).where("category_id = ? and users.user_role_id = ?", category.id, user.user_role_id).all(:order => "score DESC")
   end
   
-  def self.get_leaderboards_for_path(path, user, get_sections = true)
+  def self.get_leaderboards_for_path(path, get_sections = true)
     sections = path.sections
     leaderboards = []
-    overall_leaderboard = Leaderboard.includes(:user).where("path_id = ? and users.user_role_id = ?", path.id, user.user_role_id).all(:order => "score DESC")
+    overall_leaderboard = Leaderboard.includes(:user).where("path_id = ?", path.id).all(:order => "score DESC")
     leaderboards << ["overall", overall_leaderboard]
     if get_sections
       sections.each do |s|
-        sl = Leaderboard.includes(:user).where("section_id = ? and users.user_role_id = ?", s.id, user.user_role_id).all(:order => "score DESC")
+        sl = Leaderboard.includes(:user).where("section_id = ?", s.id).all(:order => "score DESC")
         leaderboards << [s.id, sl]
       end
     end
