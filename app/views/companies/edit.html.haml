@@ -1,5 +1,5 @@
 %div.single_pane
-  = render "companies/tab_header", { company: @company, mode: "settings" }
+  = render "companies/tab_header"
   %h2{ style: "margin-bottom:15px;" } Settings
   = form_for(@company, html: { style: "margin-left: 30px;" }) do |f|
     = render "shared/error_messages", object: f.object

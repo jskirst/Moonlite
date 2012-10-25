@@ -101,9 +101,7 @@ class PathsController < ApplicationController
   end
   
   def publish
-    if @path.sections.where(["is_published = ?", true]).count.zero?
-      flash[:error] = "You need to publish at least one section before you can make your challenge publicly available."
-    elsif @path.default_pic?
+    if @path.default_pic?
       flash[:info] = "You need to set a custom picture for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
     elsif @path.description.blank?
       flash[:info] = "You need to create a description for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."

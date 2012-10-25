@@ -1,0 +1,17 @@
+%div.single_pane
+  = render "companies/tab_header"
+  %h2{ style: "margin-bottom:15px;" } Users
+  %table
+    %thead
+      %tr
+        %th Rank
+        %th Name
+        %th Email
+        %th Points
+    %tbody
+      - @users.to_a.each_with_index do |u, i|
+        %tr
+          %td= i
+          %td= u.name
+          %td= u.email
+          %td= u.earned_points

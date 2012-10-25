@@ -1,0 +1,10 @@
+%div
+  %h1= current_company.name
+  %ul.tabs
+    - admin_tabs.each do |header|
+      - if @mode == header[0]
+        %li.active
+          %a= header[1]
+      - else
+        %li
+          = link_to header[1], header[2]
