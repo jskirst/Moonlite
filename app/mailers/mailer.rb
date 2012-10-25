@@ -10,7 +10,22 @@ class Mailer < ActionMailer::Base
   
   def comment_alert(email)
     @commenting_user = details[:email]
-    @commented_question = details[:email]
+    @commenting_user_profile = details[:email]
+    @users_response = details[:email]
+    @commented_question = details[:email] 
+  end
+  
+  def section_unlock(email)
+    @challenge_name = details[:email]
+    @section_name = details[:email]
+    @challenge_link = details[:email]
+    @section_link = details[:email]
+  end
+  
+  def challenge_unlock(email)
+    @persona_name = details[:email]
+    @challenge_name = details[:email]
+    @challenge_link = details[:email]
   end
 
   def reset(details)
