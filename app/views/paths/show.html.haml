@@ -11,6 +11,8 @@
             %h1= @path.name
             - if current_user
               %h3 Level #{@enrollment.level}, #{@enrollment.total_points} points
+            - else
+              %h3{ style:"height:36px;" }
         %div.challengecarousel
           %ul.inlinedisplay
             - @enrolled_users.each do |u|
