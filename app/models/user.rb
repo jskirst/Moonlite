@@ -170,6 +170,10 @@ class User < ActiveRecord::Base
     return company.default_profile_picture_link
   end
   
+  def profile_complete?
+    !self.description.nil?
+  end
+  
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
   end
