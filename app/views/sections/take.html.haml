@@ -16,7 +16,7 @@
         = image_tag @path.path_pic, size: "40x40"
         %div{ style: "display:inline-block;" }
           %span <strong>#{@path.name}:</strong> #{@section.name}</span>
-      %div{ style: "margin: auto;" }
+      %div{ style: "text-align:center;" }
         = render "stored_resource", { :stored_resource => @stored_resource }
       %div.CRquestionandresponsespace
         %div.CRquestionspace
