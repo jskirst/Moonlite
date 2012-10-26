@@ -109,4 +109,7 @@ Metabright::Application.routes.draw do
   
 	match '/password_reset', :to => 'users#request_send'
 	match '/send_reset', :to => 'users#send_reset'
+	
+	match '/about' => "pages#about"
+	match '/tos' => "pages#tos"
 end
