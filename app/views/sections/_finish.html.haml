@@ -16,7 +16,7 @@
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
         %p Current level: <strong>#{@enrollment.level}</strong>
       %div{ style: "float: right; margin: 15px 10px 0 0;" }
-        = render "shared/sharing"
+        = render "shared/sharing", { custom_style: "" }
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.completionnextsteps
         %h3 Continue improving your score

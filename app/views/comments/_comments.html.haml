@@ -1,18 +1,22 @@
 %div.postfooter
   :javascript
     $(function(){ $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); }); });
-  %div.leftstuff
-    %a.comment{ onclick: "$(this).hide().parent().parent().find('.comments').slideDown();" } #{owner.comments.size.to_i} Comments
-    %span
-      %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", :style => "cursor:pointer; position:relative; top:4px; left:5px; width:19px;"}
-  %div.posttimestamp
-    - if created_at
+  %div.leftstuff{ style: "height: 27px; width: 100%; padding-top: 5px;" }
+    %div.displayin.floatl
+      %a.comment{ style: "position: relative; top: 5px;", onclick: "$(this).parents('.postfooter').find('.comments').slideDown();" } #{owner.comments.size.to_i} Comments
+    - if @sharing
+      = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;" }
+    - else
+      %div.displayin.floatl{ style: "margin-left: 10px;" }
+        %img.display_sharing_icon{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", style: "height: 20px; cursor: pointer;" }
+      = render "shared/sharing", { custom_style: "display: none; margin-left: 10px; float: left;" }
+    %div.displayin.floatr{ style: "position: relative; top: 5px;" }
       - if created_at.today?
         %p #{time_ago_in_words(created_at)} ago
       - else
         %p= created_at.strftime("%B %d, %Y")
   %div.comments{ style: "display:none; text-align: left;" }
-    %ul{ style: "list-style: none; margin: 20px 0 20px 0;" }
+    %ul{ style: "list-style: none; margin: 0 0 20px 0;" }
       - unless owner.comments.empty?
         - owner.comments.each do |comment|
           = render "comments/comment", comment: comment
