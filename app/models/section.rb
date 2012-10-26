@@ -132,7 +132,9 @@ class Section < ActiveRecord::Base
   end
   
   def points_earned(user)
-    return self.completed_tasks.where("user_id = ?", user.id).collect(&:points_awarded).reduce(0, :+)
+    user_completed_tasks = self.completed_tasks.where("user_id = ? and status_id >= 0 and points_awarded is not ?", user.id, nil)
+    return 0 if user_completed_tasks.size == 0
+    return user_completed_tasks.collect(&:points_awarded).reduce(0, :+)
   end
     
   private
