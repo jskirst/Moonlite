@@ -131,9 +131,9 @@ body {background-color: whitesmoke; }
 
 ul.pills {  }
 .pills a:hover { background-color: darkgray; }
-table td { border-top: 5px solid #DDD; }
-table tr { padding: 50px; }
-table p { font-size: 15px; }
+.section_overview table td { border-top: 5px solid #DDD; }
+.section_overview table tr { padding: 50px; }
+.section_overview table p { font-size: 15px; }
 .editable { padding: 8px; }
 .section_editable { padding: 3px; width: 400px; }
 .editable:hover, .section_editable:hover { background-color: lightgray; cursor: pointer }

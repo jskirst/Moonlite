@@ -42,7 +42,19 @@ class CompaniesController < ApplicationController
   def users
     @mode = "users"
     @company = current_company
-    @users = @company.users.order("earned_points DESC")
+    if params[:search]
+      @users = User.paginate(
+        page: params[:page], 
+        conditions: ["company_id = ? and (name ILIKE ? or email ILIKE ?)", 
+        @company.id, "%#{params[:search]}%", "%#{params[:search]}%"]
+      )
+    else
+      @users = User.paginate(
+        page: params[:page], 
+        conditions: ["company_id = ?", @company.id],
+        order: "earned_points DESC"
+      )
+    end
   end
   
   def update

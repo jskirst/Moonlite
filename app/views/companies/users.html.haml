@@ -1,17 +1,28 @@
 %div.single_pane
   = render "companies/tab_header"
   %h2{ style: "margin-bottom:15px;" } Users
+  = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
+  %div{ style: "float:right; margin: 0 0 0px 0;" }
+    = form_tag admin_users_path, method: "get" do
+      = text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name or email..."
+      = submit_tag "Search", :class => "button button-standard"
   %table
     %thead
       %tr
         %th Rank
         %th Name
         %th Email
+        %th Enrollments
         %th Points
+        %th Votes
+        %th Comments
     %tbody
       - @users.to_a.each_with_index do |u, i|
         %tr
           %td= i
           %td= u.name
           %td= u.email
+          %td= u.enrollments.size
           %td= u.earned_points
+          %td= u.votes.size
+          %td= u.comments.size

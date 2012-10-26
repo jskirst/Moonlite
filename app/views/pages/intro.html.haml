@@ -1,9 +1,15 @@
+:css
+  div.intcontainer{ display: none; }
+  #landingbox{ margin-top: 90px; background: transparent; background-color: none; border: 0; }
+  h3 { display: inline; margin-bottom: 2px; }
+  p { font-size: 15px; }
+  strong { color: #404040; }
+:javascript
+  $(function(){
+    $(".intcontainer").fadeIn(1000);
+  });
+
 %div.intcontainer
-  :css
-    #landingbox{ margin-top: 90px; background: transparent; background-color: none; border: 0; }
-    h3 { display: inline; margin-bottom: 2px; }
-    p { font-size: 15px; }
-    strong { color: #404040; }
   %div.firstchallengeint
     %div.firstchallengeintheader{ style:"padding: 7px 0 0 9px" }
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style: "width:42px; height:47px; margin:4px 4px 0 0;" }
