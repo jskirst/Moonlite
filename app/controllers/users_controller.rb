@@ -118,6 +118,17 @@ class UsersController < ApplicationController
     end
   end
   
+  def lock
+    lock = params[:lock]
+    if lock == "true"
+      @user.is_locked = true
+    else
+      @user.is_locked = false
+    end
+    @user.save!
+    redirect_to admin_users_path, alert: "User successfully locked."
+  end
+  
   private
     def find_by_id
       @user = User.find(params[:id]) if params[:id]
