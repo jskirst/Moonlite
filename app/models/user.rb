@@ -2,7 +2,7 @@ require 'open-uri'
 
 class User < ActiveRecord::Base
   attr_readonly :signup_token, :company_id
-  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id
+  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :is_locked
   attr_accessor :password, :password_confirmation
   attr_accessible :name,
     :email, 
@@ -168,6 +168,10 @@ class User < ActiveRecord::Base
     return self.image_url if self.image_url != nil
     return "/images/default_profile_pic.png"  if company.default_profile_picture_link.blank?
     return company.default_profile_picture_link
+  end
+  
+  def profile_complete?
+    !self.description.nil?
   end
   
   def has_password?(submitted_password)

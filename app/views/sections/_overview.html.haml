@@ -1,0 +1,40 @@
+%div.section_overview{ style: "padding:25px 0 0 0px;" }
+  %table{ style: "margin: 2px 0 15px 0px; border: 3px solid #DDD;" }
+    %tr
+      %td{ style: "padding: 0px 10px 10px 15px; border-top:none; min-width: 270px;" }
+        %h5 ACTIVITY
+        - if !s.is_published
+          %p You have not published this section yet.
+          %p <strong>NOTE:</strong> Publishing a section will not make the entire Challenge visible.
+          %p= link_to "Publish", publish_section_path(s), confirm: "Are you sure you want to publish this section?"
+        - elsif s.path.enrolled_users.empty?
+          %p You do not have any users yet.
+        - else
+          %p Answered Questions: #{s.completed_tasks.size}
+          %p Last Activity: #{s.completed_tasks.empty? ? "N/A" : time_ago_in_words(s.completed_tasks.last.created_at) +" ago"}
+      %td{ style: "padding: 0px 10px 10px 15px; border-right: 3px solid #DDD; border-left: 3px solid #DDD; border-top:none; min-width: 270px;" }
+        %h5 QUESTIONS
+        - if s.tasks.empty?
+          %p You don't have any questions created yet.
+          %p
+            %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style: "cursor: pointer;" } Get Started
+        - else
+          %ol{ style: "margin: 0 0 5px 20px;" }
+            - s.tasks.first(3).each do |t|
+              %li{ style: "padding:5px;" }= truncate(t.question, :length => 70)
+          %p
+            %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style: "cursor: pointer;" } View all
+      %td{ style: "padding: 0px 10px 10px 15px; border-top:none; min-width: 270px;" }
+        %h5 CONTENT
+        - if s.stored_resources.empty? && s.instructions.blank?
+          %p You do not have any attached content for this section.
+          %p
+            %a.edit_section_content_pill{ onclick: "display_section_content($(this).parents('td.section'));", style: "cursor: pointer;" } Add Content
+        - else
+          - unless s.instructions.blank?
+            = truncate(s.instructions, :length => 140)
+          - else
+            - s.stored_resources.first(2).each do |t|
+              %p #{t.obj_file_name}, #{t.obj_content_type}
+        %p
+          %a.edit_section_content_pill{ onclick: "display_section_content($(this).parents('td.section'));", style: "cursor: pointer;" } View all

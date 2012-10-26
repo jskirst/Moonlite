@@ -1,5 +1,12 @@
 :javascript
-  $(function(){ $(".youtube_answer").each(function(){ set_youtube_preview($(this).attr("alt"), $(this).attr("id")); }); });
+  $(function(){ 
+    $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
+    $(".display_sharing_icon").click(function(){ 
+      $(this).parents(".leftstuff").find(".social_toolbar").css("display", "inline");
+      $(this).parent().remove(); 
+    }); 
+  });
+  
 - if newsfeed_items.empty?
   %div.post{ style: "height: 300px;"}
     %p There are no responses yet.
@@ -12,8 +19,6 @@
         %h3
           = link_to truncate(r.user.to_s, length: 50), r.user, class:"username"
         %div.votingandpointsarea
-          - if @sharing
-            = render "shared/sharing"
           = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
             %div.vote_count= r.submitted_answer.total_votes.to_i

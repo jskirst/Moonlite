@@ -11,6 +11,7 @@ Metabright::Application.routes.draw do
 			put :reset_password
 			get :edit_role
 			put :update_role
+			get :lock
 		end
 	end
 	resources :companies do
@@ -90,8 +91,10 @@ Metabright::Application.routes.draw do
 	
 	root 				:to => "pages#home"
 	
-  match '/usage', :to => 'users#usage_reports'
   match '/admin', :to => 'companies#show'
+  match '/admin_settings' => "companies#edit"
+  match '/styles' => "custom_styles#show"
+  match '/admin_users' => "companies#users"
   
   match '/locallink',  :to => 'sessions#locallink'
   match '/auth/failure',  :to => 'sessions#auth_failure'
@@ -107,6 +110,7 @@ Metabright::Application.routes.draw do
   
 	match '/password_reset', :to => 'users#request_send'
 	match '/send_reset', :to => 'users#send_reset'
-  
-  match '/vanity(/:action(/:id(.:format)))', :controller=>:vanity
+	
+	match '/about' => "pages#about"
+	match '/tos' => "pages#tos"
 end

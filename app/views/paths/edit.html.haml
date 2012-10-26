@@ -1,0 +1,54 @@
+= render "settings_modal", { :path => @path, :categories => @categories }
+- @sections.each do |s|
+  = render "section_settings_modal", { :section => s }
+%div.single_pane
+  %div.row{ style: "vertical-align: top; margin: 0 0 20px 0;"}
+    %div.span3
+      %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }
+        %div.path-caption{ style: "opacity: .75; width: 150px; height: inherit; margin-top: 90px; display: none;" }
+          %span.caption-title{ style: "font-size:20px; line-height:24px;" } Edit
+        = image_tag(@path.path_pic, class: "bigheaderimage")
+    %div.span6
+      %h1.editable{ style: "margin-bottom:5px;", title: "Click to edit" }= @path.name
+      %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
+    %div.floatr{ style: "margin-top:10px;"}
+      - if @path.is_published
+        = link_to "View", @path, class: "button button-actionable", style: "margin:10px 0 10px 10px;"
+      - else
+        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", style: "margin:10px 0 10px 10px;", confirm: "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes."
+      = link_to "Dashboard", dashboard_path_path(@path), class: "button button-info", style: "margin:10px 0 10px 10px;"
+      %span.button.button-standard.edit_path_settings_button{ style: "margin:10px 0 0 10px;" } Settings
+  %div
+    = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
+    %h2{ style: "font-size: 20px; color: darkgray;" } SECTIONS
+    %table
+      - @sections.to_a.each_with_index do |s, i|
+        %tr
+          %td.section
+            %section{ style: "min-height: 290px;" }
+              %div.row
+                %div.floatr
+                  %ul.pills
+                    %li.active
+                      %a.edit_section_overview_pill{ onclick: "close_section_container(this);" } Overview
+                    %li
+                      %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));" } Questions
+                    %li
+                      %a.edit_section_content_pill{ onclick: "display_section_content($(this).parents('td.section'));" } Content
+                    %li
+                      %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" } Settings
+                %div.span14
+                  - if s.has_custom_image?
+                    = image_tag(s.pic, size: "70x70", style: "float:left; margin-right: 10px;")
+                  %h2.section_editable{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
+                  %div
+                    %span.label{ style: "font-size: 12px; vertical-align:middle;" }
+                      %span#question_counter= s.tasks.size 
+                      questions
+                    - unless s.is_published
+                      %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
+                  = render "sections/overview", { :s => s }
+              %div.section_questions_container.row{ style: "display:none;" }
+                = render "sections/edit_tasks", { :section => s, :tasks => s.tasks, :display_new_task_form => true, :new_task => s.tasks.new }
+              %div.section_content_container.row{ style: "margin: 10px 0px 0px 0px; display:none;" }
+                = render "sections/edit_content", { :section => s, :stored_resources => s.stored_resources}

@@ -185,11 +185,15 @@ class SectionsController < ApplicationController
   
   def complete
     task = Task.find(params[:task_id])
+    ct = current_user.completed_tasks.find_by_task_id(task.id)
+    raise "Already answered" unless ct.status_id == Answer::INCOMPLETE
+    points = params[:points_remaining].to_i
+    raise "Out of time" if points > 0 and ct.created_at <= 45.seconds.ago
     answer = task.answers.find(params[:answer])
     correct_answer = task.correct_answer
     points = params[:points_remaining].to_i
     status = (answer == correct_answer) ? Answer::CORRECT : Answer::INCORRECT
-    ct = current_user.completed_tasks.new(task_id: task.id, answer_id: answer.id, status_id: status, points_awarded: 0)
+    ct.task_id = task.id; ct.answer_id = answer.id; ct.status_id = status; ct.points_awarded = 0;
     
     streak = task.section.user_streak(current_user)
     if ct.status_id == 1
@@ -214,6 +218,7 @@ class SectionsController < ApplicationController
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
+      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE )
       @answers = @task.answers.to_a.shuffle
       @progress = @section.percentage_complete(current_user) + 1
       @stored_resource = @task.stored_resources.first

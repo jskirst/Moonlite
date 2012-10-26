@@ -1,4 +1,5 @@
 class Answer < ActiveRecord::Base
+  INCOMPLETE = -1
   INCORRECT = 0
   CORRECT = 1
   

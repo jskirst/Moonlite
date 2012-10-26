@@ -1,7 +1,6 @@
 #content { padding-top: 75px; }
 .tab_header h1 { padding: 4px 0px 0px 0px; margin-left: 50px; }
 .tab_header img { float:left; width: 40px; height: 40px; }
-.tab_content { min-height: 300px; }
 .tabs .active > a { border-bottom-color: #DDD; }
 
 /* Section Continue */
@@ -129,3 +128,17 @@ section.wiki { margin-bottom: 50px; }
 .container.body { width:990px; padding:0 10px 0 30px;  background-color:rgba(254,254,254,.9); border:1px solid #DDD; box-shadow: 0px 0px 7px 5px rgba(0,0,0,0.25); }
 .shadow { background-color:white; box-shadow: 4px 4px 3px 2px rgba(0,0,0,0.25); }
 body {background-color: whitesmoke; }
+
+ul.pills {  }
+.pills a:hover { background-color: darkgray; }
+.section_overview table td { border-top: 5px solid #DDD; }
+.section_overview table tr { padding: 50px; }
+.section_overview table p { font-size: 15px; }
+.editable { padding: 8px; }
+.section_editable { padding: 3px; width: 400px; }
+.editable:hover, .section_editable:hover { background-color: lightgray; cursor: pointer }
+h5 { font-weight: bold; }
+
+.floatr { float: right; }
+.floatl { float: left; }
+.displayin { display: inline; }

@@ -5,6 +5,7 @@ class PersonasController < ApplicationController
   before_filter :authorized, except: [:show]
   
   def index
+    @mode = "personas"
     @personas = current_company.personas
   end
   

@@ -4,23 +4,12 @@
       %div#leftheaderspace Explore the world of Metabright
     %div#carouselupdatespace
       %ul.inlinedisplay
-        - @enrolled_paths.each do |p|
-          %li
-            %div.mosaic-block.bar2
-              = link_to path_path(p), class: "mosaic-overlay" do
-                %div.details
-                  %h4= p.name
-              %div
-                %img.mosaic-backdrop{ src: p.path_pic }
-        - if @enrolled_paths.size < 3
-          %li
-            %div.mosaic-block.bar2
-              %a.explore_link.mosaic-overlay{ style: "cursor: pointer;" }
-                %div.details
-                  %h4 Find new challenges...
-              %div
-                %img.mosaic-backdrop{ src: "http://placekitten.com/200/300" }
-                
+        - @enrollments.each do |e|
+          = render "shared/mosaic", { pic: e.path.path_pic, link: path_path(e.path), title: e.path.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
+        - if @enrollments.size < 4
+          = render "shared/mosaic", { custom_class: "explore_link", link: "#", title: "The world awaits...", subtitle: "Explore new challenges!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/stoney_image_carousel.png" }
+        - unless current_user.profile_complete?
+          = render "shared/mosaic", { link: edit_user_path(current_user), title: "Whoooo are you?", subtitle: "Tell your story to the world!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/complete_profile_pic_carousel_gray.png" }
   %div.row
     %div.span5
       - unless @suggested_paths.empty?

@@ -30,7 +30,12 @@ module SessionsHelper
   end
   
   def authenticate
-    deny_access unless signed_in?
+    if not signed_in?
+      deny_access 
+    elsif current_user.is_locked?
+      sign_out
+      redirect_to root_url
+    end
   end
   
   def admin_only
