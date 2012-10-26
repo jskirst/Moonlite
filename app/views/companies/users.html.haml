@@ -16,6 +16,7 @@
         %th Points
         %th Votes
         %th Comments
+        %th Lock
     %tbody
       - @users.to_a.each_with_index do |u, i|
         %tr
@@ -26,3 +27,7 @@
           %td= u.earned_points
           %td= u.votes.size
           %td= u.comments.size
+          - if u.is_locked
+            %td= link_to "unlock", lock_user_path(u, lock: "false")
+          - else
+            %td= link_to "lock", lock_user_path(u, lock: "true")

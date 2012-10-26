@@ -11,6 +11,7 @@ Metabright::Application.routes.draw do
 			put :reset_password
 			get :edit_role
 			put :update_role
+			get :lock
 		end
 	end
 	resources :companies do
