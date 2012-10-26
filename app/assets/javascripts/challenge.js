@@ -71,6 +71,13 @@ function set_youtube_preview(youtube_link, preview_id){
   swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "320", "265", "8", null, null, params, attr);
 }
 
+function set_large_youtube_preview(youtube_link, preview_id){
+  var youtube_id = get_youtube_id_from_link(youtube_link);
+  var params = { allowScriptAccess: "always", wmode: "transparent" }
+  var attr = { id: preview_id };
+  swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "520", "315", "8", null, null, params, attr);
+}
+
 function check_youtube_before_submit(){
   $("#challenge_form").submit(function(){  
     $('body').data("needs_reload", false);

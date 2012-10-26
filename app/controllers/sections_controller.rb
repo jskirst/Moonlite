@@ -188,7 +188,7 @@ class SectionsController < ApplicationController
     ct = current_user.completed_tasks.find_by_task_id(task.id)
     raise "Already answered" unless ct.status_id == Answer::INCOMPLETE
     points = params[:points_remaining].to_i
-    raise "Out of time" if points > 0 and ct.created_at > 45.seconds.ago
+    raise "Out of time" if points > 0 and ct.created_at <= 45.seconds.ago
     answer = task.answers.find(params[:answer])
     correct_answer = task.correct_answer
     points = params[:points_remaining].to_i
