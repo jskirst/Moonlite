@@ -1,13 +1,13 @@
 %div.footer
   %span.copyright © 2012 MetaBright, Inc. /
   %span.footerlinks
-    %a About 
+    = link_to "About", about_path 
     \/
-    %a Blog
+    %a{href: "http://metabright.blogspot.com/", target: "_blank"} Blog
     \/
-    %a Feedback
+    %a{:href => "https://metabright.uservoice.com/", :target => "_blank"} Feedback
     \/
-    %a Terms of Service
+    = link_to "Terms of Service", tos_path 
     
 :javascript
   var uvOptions = {};

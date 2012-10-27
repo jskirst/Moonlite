@@ -27,6 +27,11 @@ class Mailer < ActionMailer::Base
     @challenge_name = details[:email]
     @challenge_link = details[:email]
   end
+  
+  def content_voted_on(email)
+    @voting_user
+    @users_response
+  end
 
   def reset(details)
     @user_email = details[:email]
