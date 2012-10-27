@@ -227,7 +227,7 @@ class PathsController < ApplicationController
     if params[:cp]
       @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.id = ?", params[:cp])
       @sharing = true
-    elsif params[:t]
+    elsif params[:task]
       @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
     elsif params[:order] && params[:order] == "votes"
       @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
