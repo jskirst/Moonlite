@@ -27,7 +27,7 @@
           %span Your response:
           - if @task.answer_sub_type == 100
             %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
-            %p{ style: "font-style:italic;" }= @path.enable_voting ? "*Points awarded by number of votes" : "Points awarded by Administrator"
+            %p{ style: "font-style:italic;" } *Points awarded by number of votes
           - elsif @task.answer_sub_type == 101
             :javascript
               $(function(){
@@ -70,5 +70,5 @@
                 %div#answer_preview
                   = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
       %div.CRbuttonspace
-        = link_to "Back", path_path(@section.path), class: "btn secondary"
+        = link_to "Back", path_path(@section.path, completed: true), class: "btn secondary"
         = submit_tag "Submit", :class => "btn danger", :id => "submit_button", style: "float:right;"

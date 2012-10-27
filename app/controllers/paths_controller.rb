@@ -174,6 +174,18 @@ class PathsController < ApplicationController
   end
 
 # Begin Path Journey
+
+  def enroll
+    unless current_user.enrolled?(@path)
+      current_user.enroll!(@path)
+    end
+    
+    if current_user.earned_points == 0
+      redirect_to continue_path_path(@path)
+    else
+      redirect_to path_path(@path)
+    end
+  end
   
   def continue
     unless current_user.enrolled?(@path)
@@ -206,7 +218,6 @@ class PathsController < ApplicationController
       @current_section = current_user.most_recent_section_for_path(@path)
       @unlocked = @current_section.unlocked?(current_user)
     
-      #Leaderboard.reset_for_path_user(@path, current_user) if params[:completed]
       @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
     
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
@@ -218,10 +229,10 @@ class PathsController < ApplicationController
       @sharing = true
     elsif params[:t]
       @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
-    elsif params[:order] && params[:order] == "date"
-      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
-    else
+    elsif params[:order] && params[:order] == "votes"
       @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+    else
+      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
     end
     @activity_stream = @path.activity_stream
   end

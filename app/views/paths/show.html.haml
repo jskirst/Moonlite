@@ -43,7 +43,7 @@
             - if @path
               %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
           -if @path
-            %div.questions_filter{ style: "display:none;" }
+            %div.questions_filter{ style: "display:none; text-transform: none;" }
               %p{ style: "font-size: 13px; margin: 10px 5px; color: black;" } Click on one of the questions below to see responses only for that question.
               %ol
                 - @path.sections.each do |s|

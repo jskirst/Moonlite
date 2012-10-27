@@ -15,7 +15,8 @@
       = image_tag @user.profile_pic, class: "bigheaderimage"
       %div.rightofbigheaderimage
         %div#topboxcontent
-          = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard", style: "float:right;"
+          - if @user == current_user
+            = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard", style: "float:right;"
           %div.span9{style: "min-height: 65px;"}
             %h1= @user.name
             %p{ style: "font-size: 16px; margin: 5px 0 7px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)

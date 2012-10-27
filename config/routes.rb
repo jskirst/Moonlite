@@ -32,7 +32,7 @@ Metabright::Application.routes.draw do
       get :collaborators
       put :collaborator
       get :undo_collaboration
-      get :jumpstart
+      get :enroll
 			get :continue
 			get :retake
 		end

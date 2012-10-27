@@ -218,14 +218,14 @@ class SectionsController < ApplicationController
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
-      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE )
+      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
       @answers = @task.answers.to_a.shuffle
       @progress = @section.percentage_complete(current_user) + 1
       @stored_resource = @task.stored_resources.first
       @streak = @task.section.user_streak(current_user)
       
       if request.get?
-        @partial = @enrollment.total_points == 0 ? "intro" : "continue"
+        @partial = current_user.earned_points == 0 ? "intro" : "continue"
         render "start" 
       else
         render :partial => "continue"
@@ -233,6 +233,7 @@ class SectionsController < ApplicationController
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
+      Leaderboard.reset_for_path_user(@path, current_user)
       if request.get?
         @partial = "finish"
         render "start"

@@ -28,7 +28,12 @@ class CompaniesController < ApplicationController
         :conditions => ["company_id = ? and (name ILIKE ? or email ILIKE ?)", 
           @company.id, "%#{params[:search]}%", "%#{params[:search]}%"])
     else
-      @users = User.paginate(:page => params[:page], :conditions => ["company_id = ?", @company.id])
+      if params[:sort] == "votes"
+        @users = User.paginate(:page => params[:page], :conditions => ["company_id = ?", @company.id])
+      else
+        @sort = "points"
+        @users = User.paginate(:page => params[:page], :conditions => ["company_id = ?", @company.id])
+      end
     end
   end
   
