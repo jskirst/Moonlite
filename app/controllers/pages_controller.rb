@@ -35,6 +35,18 @@ class PagesController < ApplicationController
     @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
   end
   
+  def about
+    @no_bar = false
+    @show_footer = true
+    render "about", layout: "landing"
+  end
+  
+  def tos
+    @no_bar = false
+    @show_footer = true
+    render "tos", layout: "landing"
+  end
+  
   def email_test
     if params[:email]
       eval("Mailer.#{params[:test_method]}('#{params[:email]}').deliver")

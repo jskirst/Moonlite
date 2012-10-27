@@ -1,3 +1,8 @@
+# Amazon S3
+ENV['AWS_ACCESS_KEY_ID']      = "AKIAJQGM5NKT235MHP3A"
+ENV['AWS_SECRET_ACCESS_KEY']  = "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"
+ENV['S3_BUCKET_NAME']         = "moonlite-staging"
+
 Metabright::Application.configure do
 	# Settings specified here will take precedence over those in config/environment.rb
 
@@ -35,7 +40,7 @@ Metabright::Application.configure do
 	# config.action_controller.asset_host = "http://assets.example.com"
 
 	# Disable delivery errors, bad email addresses will be ignored
-	# config.action_mailer.raise_delivery_errors = false
+	config.action_mailer.raise_delivery_errors = false
 
 	# Enable threaded mode
 	# config.threadsafe!
