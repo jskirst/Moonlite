@@ -11,7 +11,7 @@
       %div.input
         = f.text_field :email
     %div.field.clearfix
-      = f.label :description
+      = f.label :about
       %div.input
         = f.text_area :description, rows: "3", style: "width: 400px;", placeholder: "Tell us about yourself..."
     %div.field.clearfix
@@ -38,14 +38,6 @@
     %div.field.clearfix
       %div.input
         = image_tag @user.profile_pic, :id => "image_url_preview", :width => "210"
-    %div.field.clearfix
-      = f.label :password
-      %div.input
-        = f.password_field :password
-    %div.field.clearfix
-      = f.label :password_confirmation, "Confirm Password"
-      %div.input
-        = f.password_field :password_confirmation
     %div.actions
       = f.submit "Save", :class => "button button-info"
       = link_to "Cancel", current_user, :class => "button button-standard"
