@@ -1,6 +1,5 @@
 %div.single_pane
   = render "companies/tab_header"
-  %h2{ style: "margin-bottom:15px;" } Users
   = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
   %div{ style: "float:right; margin: 0 0 0px 0;" }
     = form_tag admin_users_path, method: "get" do
