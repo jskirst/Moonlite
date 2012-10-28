@@ -3,10 +3,12 @@
 %div.explorenewusercontent
   :javascript
     $(function(){
-      $(".persona_select").on("ajax:success", function(xhr, data){
+      $(".persona_select").click(function(){
         $(".persona_select.active").removeClass("active");
         $(this).addClass("active");
-        $(".exploretiledetailsarea").replaceWith(data);
+        var id = $(this).attr("id").substring(15);
+        $(".persona_preview").html($(".persona_preview_"+id).html());
+        show_persona_challenges();
       });
       $(".persona_select:first").addClass("active");
       close_button();
@@ -26,7 +28,11 @@
   %div.exploretiles
     - @personas.each do |persona|
       %div.singleexploretile
-        = link_to preview_persona_path(persona), class: "persona_select", remote: true do
+        %a{ href: "#", class: "persona_select", id: "persona_select_#{persona.id}" }
           %div.exploretileimage
             = image_tag persona.picture, size: "85x85"
-  = render "personas/preview", { persona: @personas.first }
+  %div.persona_preview
+    = render "personas/preview", { persona: @personas.first }
+  %div.hidden_persona_previews{ style: "display: none;" }
+    - @personas.each do |persona|
+      = render "personas/preview", { persona: persona }

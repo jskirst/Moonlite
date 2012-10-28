@@ -1,22 +1,13 @@
-%div.exploretiledetailsarea
-  :javascript
-    $(function(){
-      $(".show_persona_select").on("ajax:success", function(xhr, data){
-        $(".explorenewusercontent").fadeOut('fast', function(){
-          $(this).replaceWith(data, function(){
-            $(this).fadeIn();
-          });
-        });
-      });
-    });
-  %div.bigexploreimagespace
-    = image_tag persona.picture, size: "140x140"
-  %div.exploredetailsspace
-    %div.exploretextdetails{ style: "min-height: 95px;" }
-      %h2= persona.name
-      %p= persona.description
-    - if persona.path_personas.empty?
-      %button.button.button-actionable{ style: "float: right; opacity: 0.5" } Choose
-    - else
-      = link_to persona_path(persona), class: "show_persona_select", remote: true do
-        %button.button.button-actionable{ style: "float: right;" } Choose
+%div{ class: "persona_preview_#{persona.id}" }
+  %div.exploretiledetailsarea
+    %div.bigexploreimagespace
+      = image_tag persona.picture, size: "140x140"
+    %div.exploredetailsspace
+      %div.exploretextdetails{ style: "min-height: 95px;" }
+        %h2= persona.name
+        %p= persona.description
+      - if persona.path_personas.empty?
+        %button.button.button-actionable{ style: "float: right; opacity: 0.5" } Choose
+      - else
+        = link_to persona_path(persona), class: "show_persona_select", remote: true do
+          %button.button.button-actionable{ style: "float: right;" } Choose
