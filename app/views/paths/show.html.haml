@@ -16,13 +16,7 @@
         %div.challengecarousel
           %ul.inlinedisplay
             - @enrolled_users.each do |u|
-              %li
-                %div.mosaic-block.bar2
-                  = link_to user_path(u), class: "mosaic-overlay" do
-                    %div.details
-                      %h4= u.name
-                  %div
-                    %img.mosaic-backdrop{ src: u.profile_pic }
+              = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "" }
   %div.row
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }

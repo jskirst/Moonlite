@@ -3,7 +3,7 @@
   %div.mosaic-block.bar2
     = link_to link, class: "mosaic-overlay #{custom_class}" do
       %div.details
-        %h4= title
-        %h5= subtitle
+        %h4= truncate(title, length: 22)
+        %h5= truncate(subtitle, length: 22)
     %div
       %img.mosaic-backdrop{ src: pic }

@@ -1,54 +1,34 @@
 %div.quizcontainer
-  :javascript
-    var continue_countdown = true;
-    var count_down_bar_width = 100;
-    function count_down_points(){
-      var points = $count_down_points.text().replace(" points", "");
-      points = parseInt(points);
-      if(points > 0){
-        points = points - 1;
-        $count_down_points.text(points + " points");
-        $("#points_remaining").val(points);
-        if(continue_countdown == true){
-          setTimeout(count_down_points, 300);
-        }
-      }
-    }
-    
-    function count_down_bar(){
-      if(continue_countdown == true){
-        count_down_bar_width = count_down_bar_width - .1
-        $count_down_bar.css("width", count_down_bar_width+"%")
-        setTimeout(count_down_bar, 30);
-      }
-    }
-    
-    $(function(){
-      $count_down_bar = $(".pointbarfiller");
-      $count_down_points = $count_down_bar.parent().find("span");
-      setTimeout(function(){
-        setTimeout(count_down_bar, 300);
-        setTimeout(count_down_points, 300); 
-      }, 1000);
+  %div.quizspace
+    :javascript
+      var continue_countdown = true;
+      var count_down_bar_width = 100;
       
-      $(".answer_content").click(function(){
-        continue_countdown = false;
-        $(this).find("input").attr("checked", "checked");
-        $("#challenge_form").submit();
-      });
-      $("#challenge_form").on("ajax:success", function(xhr, data){
-        $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white");
-        if(data.correct_answer != data.supplied_answer){
-          $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
-        }$("#nextbutton").show();
-      });
-      $("#nextbutton").on("ajax:success", function(xhr, data){
-        $(".quizcontainer").fadeOut('slow', function(){
-          $(this).replaceWith(data).fadeIn();
+      $(function(){
+        $count_down_bar = $(".pointbarfiller");
+        $count_down_points = $count_down_bar.parent().find("div.pointbartext");
+        setTimeout(function(){
+          setTimeout(count_down_bar, 300);
+          setTimeout(count_down_points, 300); 
+        }, 1000);
+        
+        $(".answer_content").click(function(){
+          continue_countdown = false;
+          $(this).find("input").attr("checked", "checked");
+          $("#challenge_form").submit();
+        });
+        $("#challenge_form").on("ajax:success", function(xhr, data){
+          $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white");
+          if(data.correct_answer != data.supplied_answer){
+            $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
+          }$("#nextbutton").show();
+        });
+        $("#nextbutton").on("ajax:success", function(xhr, data){
+          $(".quizcontainer").fadeOut('slow', function(){
+            $(this).replaceWith(data).fadeIn();
+          });
         });
       });
-    });  
-  %div.quizspace
     %div.quizheader
       = image_tag @section.path.path_pic, size: "40x40"
       %div{ style: "display:inline-block;" }
@@ -60,9 +40,9 @@
       %div.questionspace
         %span= @task.question
       %div.questionfooter
-        %div.pointbar
-          %span{ style: "position: absolute;" } 100 points
+        %div.pointbar{ style: "position: relative;" }
           %div.pointbarfiller{ style: "display: inline-block;"}
+          %div.pointbartext{ style: "position: absolute; left: 44%;" } 100 points
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id

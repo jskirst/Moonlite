@@ -116,3 +116,24 @@ function check_image_before_submit(){
     return false;
   });
 }
+
+function count_down_points(){
+  var points = $count_down_points.text().replace(" points", "");
+  points = parseInt(points);
+  if(points > 0){
+    points = points - 1;
+    $count_down_points.text(points + " points");
+    $("#points_remaining").val(points);
+    if(continue_countdown == true){
+      setTimeout(count_down_points, 300);
+    }
+  }
+}
+
+function count_down_bar(){
+  if(continue_countdown == true){
+    count_down_bar_width = count_down_bar_width - .1
+    $count_down_bar.css("width", count_down_bar_width+"%")
+    setTimeout(count_down_bar, 30);
+  }
+}

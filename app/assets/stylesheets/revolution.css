@@ -19,7 +19,7 @@
 .photo{ border-radius:4px; width: 50px; height: 50px; }
 .username{ text-decoration: none; color:#005C1F; font-size:17px; }
 .posttext { margin: -2px -12px 0 -12px; padding: 9px 12px; background-color:#E5F5EA; }
-.leveltext { font-weight: bold; }
+.leveltext { font-weight: normal; }
 .challengetext { font-weight: bold; text-decoration:none; color:black; display:inline; }
 .enrolledminiimages { height:13px; width:13px; }
 #miniposttext{ font:normal 10px arial, sans-serif; }
@@ -30,11 +30,11 @@
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
 .postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px 0 0; position:relative; top:4px;}
-.leftstuff { display:inline-block; float:left; margin: 4px 0 10px 0; }
-.leftstuff a { cursor:pointer; text-decoration:none; color: #004700; font-weight:bold; }
+.leftstuff { display:inline-block; margin: 4px 0 10px 0; }
+.leftstuff a { cursor:pointer; text-decoration:none; color: #004700; font-weight:normal; }
 .leftstuff a:hover { text-decoration:underline; }
 .posttimestamp{display:inline-block; top:10px; position:relative; }
-.leftboxheader{background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: bold; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
+.leftboxheader{background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: normal; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
 .leftbtn{margin-right:-7px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
 .midbtn{margin-right:-7px; border-radius:0px;}
 .rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
@@ -50,7 +50,7 @@
 .bigheaderimage{ height:160px; width:160px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
 .rightofbigheaderimage{ display:inline-block; width: 729px; }
 
-#topboxcontent h1 { margin:0px; line-height:28px; }
+#topboxcontent h1 { margin:0; line-height:28px; }
 #topboxcontent h3 { margin-bottom:9px; font-style:italic; color:#666666; }
 .userctrlpanel { display:inline-block; margin-top:-8px; right:-6px; position:relative; float:right; }
 .userctrlpanel button { float:right; }
@@ -209,12 +209,12 @@ nav img{width:150px}
 
 .button { text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }
-.button.button-actionable { background-image:-webkit-linear-gradient(top, #ee5f5b, #c43c35); }
-.button.button-info { background-image: -webkit-linear-gradient(top, #5BC0DE, #339BB9); }
-.button.button-standard { background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6); color: rgb(75, 75, 75); text-shadow: 0 1px 0px whitesmoke;}
+.button.button-actionable { background-image:-webkit-linear-gradient(top, #ee5f5b, #c43c35); background-image:linear-gradient(to top, #ee5f5b, #c43c35)}
+.button.button-info { background-image: -webkit-linear-gradient(top, #5BC0DE, #339BB9); background-image:linear-gradient(to top, #5BC0DE, #339BB9)}
+.button.button-standard { border:1px solid darkgray; background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6); background-image:linear-gradient(to top, white 5%, #E6E6E6); color: rgb(75, 75, 75); text-shadow: 0 1px 0px whitesmoke;}
 .button.button-standard:hover { color: black; }
 .button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
-h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular' }
+h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weight: lighter; }
 
 .intcontainer{overflow:hidden; width:695px;margin-left:auto;margin-right:auto;margin:100px auto 200px auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .firstchallengeint{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden;}

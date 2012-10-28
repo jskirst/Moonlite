@@ -20,7 +20,6 @@
       - flash.each do |key, value|
         = content_tag(:div, value, :class => "alert-message #{key}")
       = yield
-      <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-508487fa4f941f4a"></script>
         
     - unless params[:controller] == "sections"
       = render "layouts/footer"
