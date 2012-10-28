@@ -10,7 +10,10 @@
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
             %tr
               %td
-                %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                - if completed_task
+                  %div= link_to t.question, user_path(current_user, task: t.id)
+                - else
+                  %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
               %td.question_status
                 - if completed_task
                   = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
