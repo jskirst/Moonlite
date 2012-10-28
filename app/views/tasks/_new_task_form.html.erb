@@ -42,8 +42,8 @@ $(function(){
 </script>
 <%= form_tag("/tasks", {:remote => true, "data-type" => "html"}) %>
   <div style="float:right;">
-    <%= submit_tag "Save", :id => "save_question_button", :class => "btn primary" %>
-    <span id="close_question_button" class="btn secondary" onclick="clear_form();">Clear</span>
+    <%= submit_tag "Save", :id => "save_question_button", :class => "button button-info" %>
+    <span id="close_question_button" class="button button-standard" onclick="clear_form();">Clear</span>
   </div>
   <div class="new_task" style="margin-top:10px;">
     <h3 style="margin-left:10px;" id="form_title">Add Question</h3>
@@ -55,7 +55,7 @@ $(function(){
       </div>
     </div>
     <div class="row">
-      <div class="span8 answers">
+      <div class="span8 answers" style="margin-left: 20px;">
         <div class="field clearfix">
           <%= label_tag "Answer type" %>
           <div class="input">

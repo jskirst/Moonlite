@@ -2,7 +2,7 @@
   .container.body { background-color: transparent; border: 0px; box-shadow: none;}
   #content { padding-top: 0px; }
 
-= form_for(@task, url: took_section_path(@section, task_id: @task.id)) do |f|
+= form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form" }) do |f|
   :javascript
     $(function(){
       $('#challenge_form').submit(function(){
@@ -26,6 +26,10 @@
         %div.CRresponsespace 
           %span Your response:
           - if @task.answer_sub_type == 100
+            :javascript
+              $(function(){
+                check_text_before_submit();
+              });
             %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
             %p{ style: "font-style:italic;" } *Points awarded by number of votes
           - elsif @task.answer_sub_type == 101
@@ -70,5 +74,5 @@
                 %div#answer_preview
                   = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
       %div.CRbuttonspace
-        = link_to "Back", path_path(@section.path, completed: true), class: "btn secondary"
-        = submit_tag "Submit", :class => "btn danger", :id => "submit_button", style: "float:right;"
+        = link_to "Back", path_path(@section.path, completed: true), class: "button button-standard", style: "float: left;"
+        = submit_tag "Submit", :class => "button button-actionable", :id => "submit_button", style: "float:right;"

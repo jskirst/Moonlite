@@ -235,10 +235,9 @@ class SectionsController < ApplicationController
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
       Leaderboard.reset_for_path_user(@path, current_user)
       if request.get?
-        @partial = "finish"
-        render "start"
+        render "finish"
       else
-        render :partial => "finish"
+        render :js => "window.location.reload(true);"
       end
     end
   end

@@ -78,6 +78,22 @@ function set_large_youtube_preview(youtube_link, preview_id){
   swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "544", "320", "8", null, null, params, attr);
 }
 
+function check_text_before_submit(){
+  $("#challenge_form").submit(function(){
+    console.log($("#answer_input").val());
+    if($("#answer_input").val() != ""){
+      $("#challenge_form").unbind("submit");
+      $("#challenge_form").submit();
+      $("#submit_button").attr("disabled","disabled");
+      return true;
+    } else {
+      alert("Please enter an answer before submitting.");
+      $("#submit_button").removeAttr("disabled");
+      return false;
+    }
+  });
+}
+
 function check_youtube_before_submit(){
   $("#challenge_form").submit(function(){  
     $('body').data("needs_reload", false);
@@ -91,6 +107,7 @@ function check_youtube_before_submit(){
       return true;
     } else {
       alert("Please provide a link to a valid Youtube video.");
+      $("#submit_button").removeAttr("disabled");
       return false;
     }
   });
@@ -109,7 +126,7 @@ function check_image_before_submit(){
         return true;
       } else {
         alert("Please provide a link to a valid image.");
-        unblock_form_submit($('#challenge_form'));
+        $("#submit_button").removeAttr("disabled");
         return false;
       }
     });

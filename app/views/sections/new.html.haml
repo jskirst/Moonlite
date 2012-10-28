@@ -15,5 +15,5 @@
         %br
         %span{ style: "font-style: italic;" } Examples: Level 1, Beginner Lessons, Fried food of the Midwest
     %div.actions{ style: "margin-top: 125px;" }
-      = f.submit "Next", class: "button button-actionable"
       = link_to "Cancel", edit_path_path(@path.id, :m=>"sections"), class: "button button-standard"
+      = f.submit "Next", class: "button button-info"
