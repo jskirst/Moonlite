@@ -27,11 +27,11 @@
   %div.row
     %div.span5
       %div.leftbox
-        %div.leftboxheader About me
+        %div.leftboxheader About
         %div.leftboxfooter
           %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
-        %div.leftboxheader My Info
+        %div.leftboxheader Vital stats
         %div.leftboxfooter
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
@@ -43,13 +43,6 @@
               %li Company: #{@user.company_name}  
             - if @user.title
               %li Title: #{@user.title}
-      %div.leftbox
-        %div.leftboxheader My Challenges
-        %div.leftboxfooter
-          %li.leftrailcontent
-            - @enrollments.each do |e|
-              = link_to e do
-                = image_tag e.path.path_pic, class: "leftrailicon"
     %div.span11
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader
