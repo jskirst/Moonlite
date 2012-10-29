@@ -1,31 +1,29 @@
 class Mailer < ActionMailer::Base
   default from: "metabot@metabright.com"
   
-
-
   def welcome(email)
     @user = User.find_by_email(email)
     mail(to: @user.email, subject: "Welcome to MetaBright!")
   end
   
   def comment_alert(email)
-    @commenting_user = details[:email]
-    @commenting_user_profile = details[:email]
-    @users_response = details[:email]
-    @commented_question = details[:email] 
+    @commenting_user 
+    @commenting_user_profile 
+    @users_response 
+    @commented_question 
   end
   
   def section_unlock(email)
-    @challenge_name = details[:email]
-    @section_name = details[:email]
-    @challenge_link = details[:email]
-    @section_link = details[:email]
+    @challenge_name 
+    @section_name 
+    @challenge_link 
+    @section_link 
   end
   
   def challenge_unlock(email)
-    @persona_name = details[:email]
-    @challenge_name = details[:email]
-    @challenge_link = details[:email]
+    @persona_name 
+    @challenge_name
+    @challenge_link 
   end
   
   def content_voted_on(email)
