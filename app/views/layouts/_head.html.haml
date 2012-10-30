@@ -1,10 +1,12 @@
 %title= title
+
 = csrf_meta_tag
 = javascript_include_tag "application"
 = stylesheet_link_tag "application"
 %meta{ property: "og:title", content: "#{social_title}" } 
 %meta{ property: "og:description", content: "#{social_description}" } 
-%meta{ property: "og:image", content: "#{social_image}" } 
+%meta{ property: "og:image", content: "#{social_image}" }
+
 
 :javascript
   $(function(){
