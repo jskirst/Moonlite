@@ -1,7 +1,7 @@
 hacker:
   name: Hacker
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hacker_130.png
-  description: This is the hacker.
+  description: Fueled by Doritos and caffeine, you are the god of the internets, precipitating the rise and fall of nations... or at least GeoCities websites.
 maker:
   name: Maker
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Maker_130.png
@@ -13,11 +13,11 @@ explorer:
 designer:
   name: Designer
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Designer_130.png
-  description: You make the world a more beautiful and functional place to reside. You never don't have an opinion, and if something should be fixed, you're the one to do it.  
+  description: You make the world a more beautiful and functional place to reside. You never don't have an opinion, and you're certainly not afraid to let others know. You get to make your imagination other people's reality every day. 
 musichead:
   name: Music Head
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_MusicHead_130.png
-  description: You're the one with the lighter in the front row <em>demanding</em> an encore. Whether it's concerts, rocking out on your iPod, or making your own tunes, life just isn't worth living without music.
+  description: You're the one with the lighter in the front row demanding an encore. Whether it's going to concerts, rocking out on your iPod, or making your own tunes, music just seems to make everything better.
 foodie:
   name: Foodie
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Foodie_130.png
