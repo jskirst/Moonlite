@@ -3,7 +3,6 @@
 :javascript
   function show_persona_challenges(){
     $(".show_persona_select").on("ajax:success", function(xhr, data){
-      console.log("Attempting...");
       $(".explorenewusercontent").fadeOut('fast', function(){
         $(this).replaceWith(data, function(){
           $(this).fadeIn();

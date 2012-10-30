@@ -80,7 +80,6 @@ function set_large_youtube_preview(youtube_link, preview_id){
 
 function check_text_before_submit(){
   $("#challenge_form").submit(function(){
-    console.log($("#answer_input").val());
     if($("#answer_input").val() != ""){
       $("#challenge_form").unbind("submit");
       $("#challenge_form").submit();
