@@ -101,7 +101,7 @@ class User < ActiveRecord::Base
     begin
       info = auth[:extra][:raw_info]
       if auth[:provider] == "facebook"
-        user_details[:image_url] = auth["info"]["image"].gsub("type=small", "type=large")
+        user_details[:image_url] = auth["info"]["image"].gsub("type=small", "type=large").gsub("type=square", "type=large")
         user_details[:description] = info[:bio]
         user_details[:link] = info[:link]
         user_details[:location] = info[:location][:name] if info[:location]
