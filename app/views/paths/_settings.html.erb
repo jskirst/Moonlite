@@ -25,14 +25,6 @@
       <%= image_tag(path.path_pic, :class => "image_url_preview", :height => "50px", :style=>"margin:30px 0px 20px 0  px") %>
     </div>
   </div>
-  <% if true %>
-  <div class="field clearfix" style="margin-top:10px;">
-    <label>Passing Score (optional)</label>
-    <div class="input">
-      <%= f.text_field :passing_score, :class=>"small" %>
-    </div>
-  </div>
-  <% end %>
   <div class="field clearfix" style="margin-bottom: 5px;">
     <%= f.label :tags %>
     <div class="input">
@@ -50,64 +42,9 @@
     </div>
   </div>
   <% end %>
-  <div class="field clearfix" style="margin-bottom: 5px;">
-    <%= f.label :category %>
-    <div class="input">
-      <select id="path_category_id" name="path[category_id]">
-        <% categories.each do |c| %>
-          <% selected_value = c.id == path.category_id ? "selected='selected'" : "" %>
-          <option value="<%= c.id %>" <%= selected_value %>><%= c.name %></option>
-        <% end %>
-      </select>
-    </div>
-  </div>
-  <div class="field clearfix" style="margin-bottom: 0px;">
-    <label>Permissions</label>
-    <div class="input">
-      <ul class="inputs-list" style="margin-bottom: 0px;">
-        <li>
-          <label>
-            <%= f.check_box :enable_voting %>
-            <span>Allow users to vote on creative response answers</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <%= f.check_box :is_public %>
-            <span>Allow users to post this <%= name_for_paths %> to their public profile</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <%= f.check_box :enable_section_display %>
-            <span>Display section previews on the main <%= name_for_paths %> page</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <%= f.check_box :enable_retakes %>
-            <span>Allow users retake questions until they get them right</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <%= f.check_box :is_locked %>
-            <span>Make visible but only accessible by creators and collaborators</span>
-          </label>
-        </li>
-        <li>
-          <label>
-            <%= f.check_box :enable_path_retakes %>
-            <span>Allow users to retake the <%= name_for_paths %></span>
-          </label>
-        </li>
-      </ul>
-    </div>
-  </div>
   <hr>
   <div style="margin: 10px 0; padding-bottom:20px;">
     <div style="float:left;">
-    <%= link_to "Access Control", edit_path_path(path, :m => "access_control"), :class => "btn secondary" %>
     <% if path.is_published %>
       <%= link_to "Unpublish", unpublish_path_path(@path), :class => "btn danger", :style => "margin-left: 10px;", :confirm => "Are you certain you want to unpublish this "+name_for_paths+"?" %>
     <% else %>

@@ -22,6 +22,8 @@ class PathsController < ApplicationController
   def create
     @path = current_user.company.paths.new(params[:path])
     @path.user_id = current_user.id
+    @path.is_approved = false
+    @path.is_published = false
     if @path.save
       flash[:success] = "#{name_for_paths} created."
       redirect_to new_section_path(:path_id => @path.id)
@@ -63,6 +65,7 @@ class PathsController < ApplicationController
   
   def update
     params[:path].delete("image_url") if params[:path][:image_url].blank?
+    params[:path].delete("is_approved")
     begin
       if @path.update_attributes(params[:path])
         flash[:success] = "Changes saved."

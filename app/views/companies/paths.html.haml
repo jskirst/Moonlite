@@ -14,7 +14,7 @@
         %th Sections
         %th Tasks
         %th User Name
-        %th User Email
+        %th Published
         %th Approve
     %tbody
       - @paths.to_a.each_with_index do |p, i|
@@ -24,8 +24,8 @@
           %td= p.personas.first.name
           %td= p.sections.size
           %td= p.tasks.size
-          %td= p.user.name
-          %td= p.user.email
+          %td= link_to p.user.name, p.user
+          %td= p.is_published.to_s 
           - if p.is_approved
             %td= link_to "remove", approve_path_path(p, approve: "false")
           - else

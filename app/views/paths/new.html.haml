@@ -7,6 +7,10 @@
       %div.input
         = f.text_field :name, autofocus: "autofocus"
     %div.field.clearfix
+      %label Persona
+      %div.input
+        = f.select :persona_id, current_company.personas.collect{|p|[p.name, p.id]}
+    %div.field.clearfix
       %label Logo image
       %div.input
         = f.text_field :image_url, id: "image_url_input", class: "xxlarge", placeholder: "URL to picture..."
