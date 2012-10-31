@@ -94,20 +94,21 @@ class User < ActiveRecord::Base
     
     user_details = { 
         name: auth["info"]["name"], 
-        email: auth["info"]["email"], 
-        image_url: auth["info"]["image"],
+        email: auth["info"]["email"],
         is_anonymous: false
     }
     
     begin
       info = auth[:extra][:raw_info]
       if auth[:provider] == "facebook"
+        user_details[:image_url] = auth["info"]["image"].gsub("type=small", "type=large")
         user_details[:description] = info[:bio]
         user_details[:link] = info[:link]
         user_details[:location] = info[:location][:name] if info[:location]
         user_details[:company_name] = info[:work][-1][:employer][:name] if info[:work][-1]
         user_details[:education] = info[:education][-1][:school][:name] if info[:education][-1]
       elsif auth[:provider] == "google_oauth2"
+        user_details[:image_url] = auth["info"]["image"]
         url = URI.parse("https://www.googleapis.com/plus/v1/people/me?access_token=#{auth[:credentials][:token]}")
         info = JSON.parse(open(url).read)
         user_details[:link] = info["url"]
