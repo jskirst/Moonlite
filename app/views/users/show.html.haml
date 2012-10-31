@@ -28,11 +28,11 @@
     %div.span5
       %div.leftbox
         %div.leftboxheader About
-        %div.leftboxfooter
+        %div.leftboxfooter{style:"padding-top: 6px"}
           %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
         %div.leftboxheader Vital stats
-        %div.leftboxfooter
+        %div.leftboxfooter{style:"padding-top: 6px"}
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
             - if @user.link
