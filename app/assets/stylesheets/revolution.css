@@ -97,6 +97,7 @@ code,pre{font:inherit;}
 .profilepersonaicons li{ display:inline-block; margin-right:8px; height:30px; width:30px; }
 .profilepersonaicons img{ margin-right:8px; height:30px; width:30px; }
 .leftrailcontent{ list-style-type: none; display:list-item; margin-top:3px; }
+.leftrailcontent a:hover{text-decoration:none;}
 .leftrailicon{ height:46px; width:46px; border-radius:3px; margin-right:3px; margin-top:5px; }
 .leftbox{text-shadow: 0 1px 0 white; border: 1px solid rgba(0, 0, 0, .1);font-size:12px; position: relative; margin-bottom: 12px;line-height: 16px;border-radius: 6px; display:block;}
 .leftboxfooter ul{ list-style-type:none; margin:0; }
