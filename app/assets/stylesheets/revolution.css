@@ -147,10 +147,19 @@ code,pre{font:inherit;}
 .inlinedisplay { list-style-type: none; position:relative; margin: 0; }
 .inlinedisplay li{ display:inline; }
 
-.explorenewusercontent{margin-top:40px; background-color:white; overflow:hidden; width:681px;margin-left:auto;margin-right:auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1); box-shadow: 0 0 30px 12px #888;}
+.explorecontainer{overflow: hidden;margin-left: auto;margin-right: auto;width: 706px;margin-top: 110px;}
+.explorenewusercontent{background-color:white; overflow:hidden; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1); margin:12px; box-shadow: 0 0 30px 12px #888;}
 .exploreheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
 .exploreheader span{font: normal 21px 'Muli', sans-serif;}
-.exploretiles{margin-top:17px;}
+
+.personatiles{ margin-top:18px;}
+
+.challengetiles{ margin-top:18px; padding: 0 16px 36px 16px;}
+.challengetiles .bar2 .mosaic-overlay { bottom:-28px; height:48px;}
+.challengetiles .mosaic-block {width:130px; height:130px; margin-right:35px;}
+.challengetiles .bigexploreimagespace{display:inline-block; vertical-align: top;}
+.challengetiles .bigexploreimagespace img{width:120px; margin-right:10px}
+
 .singleexploretile{display:inline-block; padding:0 27px 0 21px;}
 .singleexploretile img{padding:6px 0 8px 0;}
 .singleexploretile a{margin:2px; text-decoration:none;}
