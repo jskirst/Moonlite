@@ -6,10 +6,10 @@ Metabright::Application.initialize!
 
 ActionMailer::Base.smtp_settings = { 
 	:enable_starttls_auto => true,
-	:address => "smtp.gmail.com",
+	:address => "smtp.sendgrid.net",
 	:domain => "metabright.com",
 	:port => 587, 
-	:user_name => "infoarmy@metabright.com", 
-	:password => "disrupt11",
+	:user_name => "metabright-production", 
+	:password => "projectmoonlite",
 	:authentication => :plain
 }

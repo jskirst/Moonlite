@@ -20,6 +20,7 @@ class SessionsController < ApplicationController
         end
       else
         user = User.create_with_omniauth(auth)
+        Mailer.welcome(user.email).deliver
         sign_in(user)
         redirect_to intro_path and return
       end
