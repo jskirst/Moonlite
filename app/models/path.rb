@@ -4,7 +4,7 @@ class Path < ActiveRecord::Base
   # end
   
   attr_readonly :company_id
-  attr_protected :is_purchaseable
+  attr_protected :is_approved
   attr_accessible :user_id,
     :category_id,
     :name, 

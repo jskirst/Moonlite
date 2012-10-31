@@ -1,6 +1,6 @@
 class Persona < ActiveRecord::Base
   attr_accessor :criteria
-  attr_accessible :company_id, :name, :description, :image_url, :criteria
+  attr_accessible :company_id, :name, :description, :image_url, :criteria, :is_locked
 
   belongs_to :company
   

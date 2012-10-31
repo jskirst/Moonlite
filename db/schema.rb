@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026042142) do
+ActiveRecord::Schema.define(:version => 20121031024850) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -152,7 +152,7 @@ ActiveRecord::Schema.define(:version => 20121026042142) do
     t.boolean  "is_public",                  :default => false
     t.integer  "purchased_path_id"
     t.boolean  "is_published",               :default => false
-    t.boolean  "is_purchaseable",            :default => false
+    t.boolean  "is_approved",                :default => false
     t.integer  "category_id",                :default => 0
     t.boolean  "enable_section_display",     :default => false
     t.integer  "default_timer",              :default => 30
@@ -174,12 +174,13 @@ ActiveRecord::Schema.define(:version => 20121026042142) do
     t.string   "description"
     t.string   "criteria"
     t.integer  "points"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.string   "image_url"
     t.integer  "company_id"
     t.integer  "parent_id"
     t.integer  "unlock_threshold"
+    t.boolean  "is_locked",        :default => true
   end
 
   create_table "phrase_pairings", :force => true do |t|

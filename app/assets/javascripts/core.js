@@ -22,6 +22,16 @@ function close_button(){
   $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
 }
 
+function show_persona_challenges(){
+  $(".show_persona_select").on("ajax:success", function(xhr, data){
+    $(".explorenewusercontent").fadeOut('fast', function(){
+      $(this).replaceWith(data, function(){
+        $(this).fadeIn();
+      });
+    });
+  });
+}
+
 $(function(){
   close_button();
   $(".comments form").bind("ajax:success", function(xhr, data){

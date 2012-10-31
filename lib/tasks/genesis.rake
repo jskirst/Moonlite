@@ -64,30 +64,32 @@ namespace :db do
     PHRASE_PAIRINGS.each do |pp|
       PhrasePairing.create_phrase_pairings(pp)
     end
-      
-    PATHS.each do |p|
-      moonlite_company.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :user_id => moonlite_admin.id, :is_published => true, :is_public => true, :category_id => default_cat.id)
-    end
     
-    Path.all.each do |path|
-      PATH_SECTIONS.each do |s|
-        section = path.sections.create(:name => s[0], :category_id => default_cat.id, :instructions => "Instructions to follow.", :is_published => true, :image_url => s[1])
-        NUMBER_OF_TASKS.times do |n|
-          section.tasks.create!(
-            question: "What is #{n} + #{n}?",
-            answer_content: [
-              { content: "#{2*n}", is_correct: true },
-              { content: "#{n-10}", is_correct: false },
-              { content: "#{n-10}", is_correct: false },
-              { content: "#{(4*n)+2}", is_correct: false }
-            ],
-            points: 10,
-            answer_type: 2
-          )
+    unless ENV['DISABLE_FAKE']  
+      PATHS.each do |p|
+        moonlite_company.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :user_id => moonlite_admin.id, :is_published => true, :is_public => true, :category_id => default_cat.id)
+      end
+    
+      Path.all.each do |path|
+        PATH_SECTIONS.each do |s|
+          section = path.sections.create(:name => s[0], :category_id => default_cat.id, :instructions => "Instructions to follow.", :is_published => true, :image_url => s[1])
+          NUMBER_OF_TASKS.times do |n|
+            section.tasks.create!(
+              question: "What is #{n} + #{n}?",
+              answer_content: [
+                { content: "#{2*n}", is_correct: true },
+                { content: "#{n-10}", is_correct: false },
+                { content: "#{n-10}", is_correct: false },
+                { content: "#{(4*n)+2}", is_correct: false }
+              ],
+              points: 10,
+              answer_type: 2
+            )
+          end
+          section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT)
+          section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE)
+          section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE)
         end
-        section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT)
-        section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE)
-        section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE)
       end
     end
     
