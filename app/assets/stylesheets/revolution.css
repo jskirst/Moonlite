@@ -112,9 +112,9 @@ code,pre{font:inherit;}
 
 .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
 .quizheader{margin-bottom:12px;}
-.quizheader img{width:78px; display:inline-block; margin-right:4px;}
+.quizheader img{display:inline-block; margin-right:4px;}
 .quizheader span{ font:normal 29px'Muli', sans-serif; position:relative; left:5px;}
-.quizheader div{position:relative; bottom:9px; display:inline-block;}
+.quizheader div{position:relative; bottom:16px; display:inline-block;}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
 .questionspace span{font:normal 18px 'Muli', sans-serif;}
@@ -146,7 +146,7 @@ code,pre{font:inherit;}
 .inlinedisplay { list-style-type: none; position:relative; margin: 0; }
 .inlinedisplay li{ display:inline; }
 
-.explorenewusercontent{background-color:white; overflow:hidden; width:681px;margin-left:auto;margin-right:auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1); box-shadow: 0 0 30px 12px #888;}
+.explorenewusercontent{margin-top:100px; background-color:white; overflow:hidden; width:681px;margin-left:auto;margin-right:auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1); box-shadow: 0 0 30px 12px #888;}
 .exploreheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
 .exploreheader span{font: normal 21px 'Muli', sans-serif;}
 .exploretiles{margin-bottom:15px; }

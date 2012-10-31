@@ -30,7 +30,7 @@
         });
       });
     %div.quizheader
-      = image_tag @section.path.path_pic, size: "40x40"
+      = image_tag @section.path.path_pic, size: "50x50"
       %div{ style: "display:inline-block;" }
         %span <strong>#{@section.path.name}:</strong> #{@section.name}</span>
         %div#idprogressbar
@@ -56,13 +56,13 @@
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.pointsandstreakspace
         %div.pointspace.counterbox
-          %span.counter
+          %p.counter{style: "display:block"}
             - earned_points_digits = @enrollment.total_points.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
             - earned_points_digits.each do |d|
               %span.digit
                 %span{ title: "#{d}" }= d
           %br
-          %span Points
+          %p Points
         %div.streakspace.counterbox
           %span.counter
             - streak = (@streak > 0 ? @streak : 0).to_s.split("").reverse.push("0").reverse.slice(-2, 2)
