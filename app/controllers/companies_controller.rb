@@ -62,6 +62,23 @@ class CompaniesController < ApplicationController
     end
   end
   
+  def paths
+    @mode = "paths"
+    @company = current_company
+    if params[:search]
+      @paths = @company.all_paths.paginate(
+        page: params[:page], 
+        conditions: ["company_id = ? and name ILIKE ?", 
+        @company.id, "%#{params[:search]}%"]
+      )
+    else
+      @paths = @company.all_paths.paginate(
+        page: params[:page], 
+        conditions: ["company_id = ?", @company.id]
+      )
+    end
+  end
+  
   def update
     if @company.update_attributes(params[:company])
       flash[:success] = "Company update successful."

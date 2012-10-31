@@ -9,5 +9,6 @@
     .explorecontainer{border-radius: 6px;border: 1px solid rgba(0, 0, 0, 0.0980392);background: rgba(255, 255, 255, 0.8);}
 %body
   = render "layouts/navbar", { no_bar: (@no_bar.nil? ? true : @no_bar) }
+  = render "layouts/explore_modal" if @show_footer
   = yield
   = render "layouts/footer" if @show_footer

@@ -14,7 +14,8 @@ class Company < ActiveRecord::Base
   
   has_many :users
   has_many :rewards
-  has_many :paths
+  has_many :paths, conditions: { is_published: true, is_approved: true }
+  has_many :all_paths, class_name: "Path"
   has_many :categories
   has_many :user_roles
   has_many :usage_reports

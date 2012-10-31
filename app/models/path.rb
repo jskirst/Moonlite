@@ -3,6 +3,7 @@ class Path < ActiveRecord::Base
     # "#{id} #{name}".parameterize
   # end
   
+  attr_accessor :persona_id
   attr_readonly :company_id
   attr_protected :is_approved
   attr_accessible :user_id,
@@ -22,7 +23,8 @@ class Path < ActiveRecord::Base
     :enable_voting,
     :passing_score,
     :enable_path_retakes,
-    :is_published
+    :is_published,
+    :persona_id
   
   has_many :stored_resources, as: :owner
   belongs_to :user
@@ -50,6 +52,10 @@ class Path < ActiveRecord::Base
     unless self.image_url.nil?
       self.image_url = nil if self.image_url.length < 9
     end
+  end
+  
+  after_create do
+    self.path_personas.create(persona_id: self.persona_id)
   end
   
   def default_pic?
