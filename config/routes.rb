@@ -35,6 +35,7 @@ Metabright::Application.routes.draw do
       get :enroll
 			get :continue
 			get :retake
+			get :approve
 		end
 	end
 	match "/paths/:id/cp/:cp/" => "paths#show", as: "cp_details"
@@ -95,6 +96,7 @@ Metabright::Application.routes.draw do
   match '/admin_settings' => "companies#edit"
   match '/styles' => "custom_styles#show"
   match '/admin_users' => "companies#users"
+  match '/admin_paths' => "companies#paths"
   
   match '/locallink',  :to => 'sessions#locallink'
   match '/auth/failure',  :to => 'sessions#auth_failure'

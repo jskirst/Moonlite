@@ -8,7 +8,7 @@ class Persona < ActiveRecord::Base
   has_many :user_personas, include: :user
   has_many :users, through: :user_personas
   has_many :path_personas, include: :path
-  has_many :paths, through: :path_personas
+  has_many :paths, through: :path_personas, conditions: { is_published: true, is_approved: true }
   
   validates :name, length: { :within => 1..255 }
   validates :description, length: { :within => 1..255 }

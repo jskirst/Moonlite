@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031024850) do
+ActiveRecord::Schema.define(:version => 20121031030500) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -389,6 +389,7 @@ ActiveRecord::Schema.define(:version => 20121031024850) do
     t.string   "location"
     t.string   "link"
     t.boolean  "is_locked",          :default => false
+    t.string   "large_image_url"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

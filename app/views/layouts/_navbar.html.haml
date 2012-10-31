@@ -7,7 +7,7 @@
       %h3{ style: "top:3px;" }
         = link_to root_url, style: "font-size: 26px;" do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
-      - unless current_user.nil? || no_bar
+      - unless current_user.nil? || no_bar || params[:controller] == "sections"
         %ul.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B;" }
           %li.navitem{ style: "border-left: 0px;" }
             = link_to root_url do
