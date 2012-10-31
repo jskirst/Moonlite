@@ -1,0 +1,32 @@
+%div.single_pane
+  = render "companies/tab_header"
+  = will_paginate @paths, style: "float:left; margin-bottom:0; margin-top: 0;"
+  %div{ style: "float:right; margin: 0 0 0px 0;" }
+    = form_tag admin_paths_path, method: "get" do
+      = text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name..."
+      = submit_tag "Search", :class => "button button-standard"
+  %table
+    %thead
+      %tr
+        %th Rank
+        %th Name
+        %th Persona
+        %th Sections
+        %th Tasks
+        %th User Name
+        %th User Email
+        %th Approve
+    %tbody
+      - @paths.to_a.each_with_index do |p, i|
+        %tr
+          %td= i
+          %td= p.name
+          %td= p.personas.first.name
+          %td= p.sections.size
+          %td= p.tasks.size
+          %td= p.user.name
+          %td= p.user.email
+          - if p.is_approved
+            %td= link_to "remove", approve_path_path(p, approve: "false")
+          - else
+            %td= link_to "approve", approve_path_path(p, approve: "true")

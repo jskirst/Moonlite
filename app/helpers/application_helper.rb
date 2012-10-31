@@ -15,6 +15,7 @@ module ApplicationHelper
       ["roles", "User Roles", user_roles_path],
       ["styles", "Custom Styles", styles_path],
       ["personas", "Personas", personas_path],
+      ["paths", "Paths", admin_paths_path],
       ["users", "Users", admin_users_path],
     ]
   end
