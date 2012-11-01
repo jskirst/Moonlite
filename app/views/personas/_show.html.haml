@@ -2,7 +2,7 @@
   :javascript
     $(function(){
       $(".back_to_preview_index").on("ajax:success", function(xhr, data){
-        $(".explorenewusercontent").fadeOut('fast', function(){
+        $(".explorecontainer").fadeOut('fast', function(){
           $(this).replaceWith(data, function(){
             $(this).fadeIn();
           });
