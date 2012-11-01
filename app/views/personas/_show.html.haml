@@ -32,16 +32,16 @@
       = image_tag @persona.picture
       %h1{ style: "font-size: 23px; position:relative; top:8px; line-height:1;" }
         - if current_user.enrollments.size == 0
-          #{@persona.name}: Choose your first Challenge...
+          <strong>#{@persona.name}:</strong> Choose your first Challenge...
         - else
-          #{@persona.name}: Choose your Challenge...
+          <strong>#{@persona.name}:</strong> Choose your Challenge...
     %div
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; height:15px; margin:4px 4px 0 0;" }
       %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Challenges represent skillsets where you can prove what you know, and be inspired by others. 
   %hr{ style: "margin:0px;" }
   %div.challengetiles
     - if @paths.empty?
-      %p You must achieve a higher Metabright Level before you can unlock this Persona.
+      %p You must achieve a higher MetaBright level before you can unlock this Persona.
     - @paths.each do |path|
       %div.mosaic-block.bar2
         = link_to enroll_path_url(path), class: "mosaic-overlay" do
