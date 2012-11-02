@@ -42,6 +42,7 @@ class PagesController < ApplicationController
   end
   
   def challenges
+    @personas = current_company.personas
     @no_bar = false
     @show_footer = true
     render "challenges", layout: "landing"

@@ -6,9 +6,9 @@
     %hr{:style => "margin:0"}
       .aboutbody
         - @personas.each do |persona|
-          %h4 persona.name
+          %h4= persona.name
           %div
-            - @paths.each do |path|
+            - persona.paths.each do |path|
               %div.mosaic-block.bar2
                 = link_to enroll_path_url(path), class: "mosaic-overlay" do
                   %div.details
