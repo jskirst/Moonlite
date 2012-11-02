@@ -1,0 +1,23 @@
+.aboutcontainer
+  .aboutbox
+    .aboutheader
+      %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+        %span Challenges of MetaBright
+    %hr{:style => "margin:0"}
+      .aboutbody
+        - @personas.each do |persona|
+          %h4 persona.name
+          %div
+            - @paths.each do |path|
+              %div.mosaic-block.bar2
+                = link_to enroll_path_url(path), class: "mosaic-overlay" do
+                  %div.details
+                    %h4 #{truncate(path.name,length: 17, separator: ' ')}
+                    - if current_user.enrolled?(path)
+                      %button.btn.success Enrolled
+                    - else
+                      %button.btn.danger Enroll
+                %div 
+                  = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
+                    
+                

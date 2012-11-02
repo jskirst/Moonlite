@@ -41,6 +41,12 @@ class PagesController < ApplicationController
     render "about", layout: "landing"
   end
   
+  def challenges
+    @no_bar = false
+    @show_footer = true
+    render "challenges", layout: "landing"
+  end
+  
   def tos
     @no_bar = false
     @show_footer = true

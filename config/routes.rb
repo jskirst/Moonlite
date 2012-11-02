@@ -115,4 +115,5 @@ Metabright::Application.routes.draw do
 	
 	match '/about' => "pages#about"
 	match '/tos' => "pages#tos"
+	match '/challenges' => "pages#challenges"
 end
