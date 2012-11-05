@@ -71,12 +71,6 @@ class Task < ActiveRecord::Base
     return errors
   end
   
-  def find_or_create_submitted_answer(content)
-    sa = submitted_answers.find_by_task_id_and_content(self.id, content)
-    return sa unless sa.nil?
-    return submitted_answers.create!(:content => content)
-  end
-  
   def describe_answer(answer)
     answers = [nil,answer1,answer2,answer3,answer4]
     return answers[Integer(answer)]

@@ -8,8 +8,9 @@ class SubmittedAnswer < ActiveRecord::Base
   has_many :completed_tasks, dependent: :destroy
   has_many :users, through: :completed_task
   has_many :comments, as: :owner
+  has_many :stored_resources, as: :owner
  
-  validates :content, length: { within: 1..2500 }
+  validates :content, length: { maximum: 2500 }
     
   def add_vote(user)
     if vote = user.votes.create!(submitted_answer_id: self.id)

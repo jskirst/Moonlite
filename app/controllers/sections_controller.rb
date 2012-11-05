@@ -171,16 +171,25 @@ class SectionsController < ApplicationController
     raise "Task already completed" if current_user.completed_tasks.find_by_task_id(task.id)
     raise "Only CRs can be taken." unless task.is_challenge_question?
     
-    unless params[:answer].blank? || params[:answer] == "false"
-      submitted_answer = task.find_or_create_submitted_answer(params[:answer])
+    if !params[:answer].blank? || params[:answer] != "false" || params[:obj]
+      unless params[:obj]
+        submitted_answer = task.submitted_answers.create!(content: params[:answer])
+      else
+        submitted_answer = task.submitted_answers.create!
+        sr = submitted_answer.stored_resources.new(params)
+        sr.save
+        submitted_answer.content = sr.obj.url
+        submitted_answer.save
+      end
       ct = current_user.completed_tasks.create!(
         points_awarded: 100, 
         task_id: task.id, status_id: 1, 
         submitted_answer_id: submitted_answer.id)
       current_user.award_points(task, 100)
+      redirect_to path_path(@section.path, completed: true)
+    else
+      redirect_to path_path(@section.path), alert: "You must supply a valid answer."
     end
-    
-    redirect_to path_path(@section.path, completed: true)
   end
   
   def complete

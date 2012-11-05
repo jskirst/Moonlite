@@ -2,7 +2,7 @@
   .container.body { background-color: transparent; border: 0px; box-shadow: none;}
   #content { padding-top: 0px; }
 
-= form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form" }) do |f|
+= form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
   :javascript
     $(function(){
       $('#challenge_form').submit(function(){
@@ -48,6 +48,7 @@
               %div.input{ style: "margin-left: 0px; " }
                 %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary Preview
+                %p{ style: "margin:4px; line-height:18px; font-size: 13px;"} or #{file_field_tag("obj")}
                 %p{ style: "font-style:italic;" } *Points awarded by votes
                 %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                   %div#answer_preview{ style: "text-align: center; padding: 10px;" }

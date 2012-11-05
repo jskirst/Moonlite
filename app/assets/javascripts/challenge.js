@@ -109,7 +109,7 @@ function check_youtube_before_submit(){
 
 function check_image_before_submit(){
   $("#challenge_form").submit(function(){
-    $('body').data("needs_reload", false);
+    if($("#uploaded_object").val() != ""){ return true; }
     var url = $("#answer_input").val();
     is_valid_image(url, function(valid){
       if(valid == true){
