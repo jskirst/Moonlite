@@ -103,12 +103,12 @@ class Section < ActiveRecord::Base
   end
   
   def quiz_complete?(user)
-    incomplete_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type > ?", user.id, 0])
+    incomplete_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type in (?)", user.id, [1,2]])
     return incomplete_tasks.size == 0
   end
   
-  def creative_tasks
-    return tasks.where("answer_type = ?", 0)
+  def challenge_tasks
+    return tasks.where("answer_type in (?)", [0,3])
   end
   
   def core_tasks
@@ -144,17 +144,8 @@ class Section < ActiveRecord::Base
       if user.company_id > 1
         return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
       else
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type > 0", user.id]).first(:order => "position ASC")
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type in [0,3]", user.id]).first(:order => "position ASC")
       end
-    end
-    
-    def get_next_incorrectly_finished_task(user)
-      incorrect_answers = tasks.joins(:completed_tasks).where(["status_id = 0 and user_id = ?", user.id]).all(:order => "position ASC")
-      incorrect_answers.each do |a|
-        other_answers = user.completed_tasks.where(["completed_tasks.task_id = ? and (status_id = 1 or status_id = 2)", a.id]).count
-        return a if other_answers == 0
-      end
-      return nil
     end
   
     def get_next_position_for_path

@@ -2,10 +2,16 @@ class Task < ActiveRecord::Base
   CREATIVE  = 0
   FIB       = 1
   MULTIPLE  = 2
+  CHECKIN   = 3
   
+  # Creative Subtypes
   TEXT      = 100
   IMAGE     = 101
   YOUTUBE   = 102
+  
+  # Challenge Subtypes
+  CHECKIN_CONFIRM   = 200
+  CHECKIN_IMAGE     = 201
   
   attr_readonly :section_id
   attr_accessor :answer_content
@@ -104,6 +110,11 @@ class Task < ActiveRecord::Base
     else
       raise "RUNTIME EXCEPTION: Using fib_guess_breakdown when not FIB"
     end
+  end
+  
+  def is_challenge_question?
+    return true if self.answer_type == 0 || self.answer_type == 3
+    return false
   end
   
   private

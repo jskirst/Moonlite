@@ -20,22 +20,32 @@ $(function(){
   });
 
   $(".task_answer_type").change(function(){
-    if($(this).val()== 0){
+    var type = $(this).val();
+    if(type == 0){
       $(".task_answer_sub_type").parents("div.field").show();
       $(".creative").show();
       $(".multiple_choice").hide();
       $(".fib").hide();
+      $(".checkin").hide();
       display_sub_type_message();
-    } else if ($(this).val()== 1){
+    } else if (type == 1){
       $(".task_answer_sub_type").parents("div.field").hide();
       $(".fib").show();
       $(".creative").hide();
       $(".multiple_choice").hide();
-    } else {
+      $(".checkin").hide();
+    } else if(type == 2) {
       $(".task_answer_sub_type").parents("div.field").hide();
       $(".multiple_choice").show();
       $(".fib").hide();
       $(".creative").hide();
+      $(".checkin").hide();
+    } else if(type == 3) {
+      $(".task_answer_sub_type").parents("div.field").hide();
+      $(".multiple_choice").hide();
+      $(".fib").hide();
+      $(".creative").hide();
+      $(".checkin").show();
     }
   });
 });
@@ -63,6 +73,7 @@ $(function(){
               <option value="2" selected="selected">Multiple choice</option>
               <option value="1">Fill in the blank</option>
               <option value="0">Creative response</option>
+              <option value="3">Checkin</option>
             </select>
           </div>
         </div>
@@ -100,6 +111,10 @@ $(function(){
           <p class="image_link_note answer_note hide">To answer this question, the user will be asked to copy and paste a link to an image from the internet.</p>
           <p class="youtube_link_note answer_note hide">To answer this question, the user will be asked to copy and paste a link to a video from Youtube.</p>
           <p style="margin: 20px 0 0 150px; font-style: italic; width:300px;">All creative response questions will need to be evaluated from the <%= name_for_paths %> Dashboard by the <%= name_for_paths %> creator before the user will be rewarded any points.</p>
+        </div>
+        <div class="checkin hide">
+          <p class="answer_note">Users can only answer this question in the affirmative, and may do so at any time.</p>
+          <p class="answer_note">They can, for example, confirm at any time that they have surfed at Maverick's, or explored Central Park.</p>
         </div>
       </div>
       <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
