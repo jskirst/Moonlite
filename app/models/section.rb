@@ -144,7 +144,7 @@ class Section < ActiveRecord::Base
       if user.company_id > 1
         return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
       else
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type in [0,3]", user.id]).first(:order => "position ASC")
+        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type in (0,3)", user.id]).first(:order => "position ASC")
       end
     end
   
