@@ -1,23 +1,6 @@
 var streak_countdown;
 var start_modal_countdown;
 
-// function get_next_task(event, data){
-  // unblock_form_submit($('#challenge_form'));
-  // if(data.indexOf("Redirecting to results:") >= 0){
-    // redirect_url = data.substring(data.indexOf(":")+1);
-    // window.location = redirect_url;
-  // } else if (data.errors){
-    // alert("You have an error.");
-  // } else {
-    // $('body').data("needs_reload", false);
-    // $("section#content").html(data);
-    // $('#challenge_form').on('ajax:success', get_next_task);
-//     
-    // start_question_timer();
-    // expose_help_button();
-  // }
-// }
-
 function set_answer_status(previously_correct){
   var $correct_status = $("#correct_status");
   if(previously_correct){
@@ -76,6 +59,18 @@ function set_large_youtube_preview(youtube_link, preview_id){
   var params = { allowScriptAccess: "always", wmode: "transparent" }
   var attr = { id: preview_id };
   swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "544", "320", "8", null, null, params, attr);
+}
+
+function check_checkin_before_submit(){
+  $("#checkin_button").click(function(){
+    if($('#checkin').val() == "true"){
+      $(this).removeClass('button-info').addClass('button-standard').text("Confirm");
+      $('#checkin').val(false)  
+    } else {
+      $(this).removeClass('button-standard').addClass('button-info').text("Confirmed");
+      $('#checkin').val(true)
+    } 
+  });
 }
 
 function check_text_before_submit(){

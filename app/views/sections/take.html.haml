@@ -23,56 +23,64 @@
           %span.CRquestionheader Challenge question:
           %br
           %span.CRquestion= @task.question
-        %div.CRresponsespace 
+        %div.CRresponsespace{ style: "min-height: 175px;" } 
           %span Your response:
-          - if @task.answer_sub_type == 100
-            :javascript
-              $(function(){
-                check_text_before_submit();
-              });
-            %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
-            %p{ style: "font-style:italic;" } *Points awarded by number of votes
-          - elsif @task.answer_sub_type == 101
-            :javascript
-              $(function(){
-                check_image_before_submit();
-                $("#answer_preview_button").click(function(){
-                  var url = $("#answer_input").val();
-                  is_valid_image(url, function(valid){
-                    if(valid == true) { $("#image_placeholder").attr("src", url);
-                    } else { alert("Please provide a link to a valid image."); }
+          - if @task.answer_type == Task::CREATIVE
+            - if @task.answer_sub_type == Task::TEXT
+              :javascript
+                $(function(){
+                  check_text_before_submit();
+                });
+              %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
+              %p{ style: "font-style:italic;" } *Points awarded by number of votes
+            - elsif @task.answer_sub_type == Task::IMAGE
+              :javascript
+                $(function(){
+                  check_image_before_submit();
+                  $("#answer_preview_button").click(function(){
+                    var url = $("#answer_input").val();
+                    is_valid_image(url, function(valid){
+                      if(valid == true) { $("#image_placeholder").attr("src", url);
+                      } else { alert("Please provide a link to a valid image."); }
+                    });
                   });
                 });
-              });
-            %div.input{ style: "margin-left: 0px; " }
-              %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
-              %a#answer_preview_button.btn.secondary Preview
-              %p{ style: "font-style:italic;" } *Points awarded by votes
-              %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
-                %div#answer_preview{ style: "text-align: center; padding: 10px;" }
-                  = image_tag "/images/image_thumb.png", :style => "width: 125px;", :id => "image_placeholder"
-          - else
-            :javascript
-              $(function(){
-                check_youtube_before_submit();
-                $("#answer_preview_button").click(function(){
-                  var url = $("#answer_input").val();
-                  var youtube_id = get_youtube_id_from_link(url);
-                  if(is_valid_youtube_id(youtube_id)){
-                    $("#youtube_placeholder").remove();
-                    set_youtube_preview(url, "answer_preview");
-                  } else {
-                    alert("Please provide a link to a valid Youtube video.");
-                  }
+              %div.input{ style: "margin-left: 0px; " }
+                %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
+                %a#answer_preview_button.btn.secondary Preview
+                %p{ style: "font-style:italic;" } *Points awarded by votes
+                %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+                  %div#answer_preview{ style: "text-align: center; padding: 10px;" }
+                    = image_tag "/images/image_thumb.png", :style => "width: 125px;", :id => "image_placeholder"
+            - elsif @task.answer_sub_type == Task::YOUTUBE
+              :javascript
+                $(function(){
+                  check_youtube_before_submit();
+                  $("#answer_preview_button").click(function(){
+                    var url = $("#answer_input").val();
+                    var youtube_id = get_youtube_id_from_link(url);
+                    if(is_valid_youtube_id(youtube_id)){
+                      $("#youtube_placeholder").remove();
+                      set_youtube_preview(url, "answer_preview");
+                    } else {
+                      alert("Please provide a link to a valid Youtube video.");
+                    }
+                  });
                 });
-              });
-            %div.input{ style: "margin-left: 0px; " }
-              %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to youtube video here...", autofocus: "autofocus" }
-              %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px;" } Preview
-              %p{ style: "font-style:italic;" } *Points awarded by votes
-              %div#answer_preview_container{ style: "text-align: center;padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
-                %div#answer_preview
-                  = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
+              %div.input{ style: "margin-left: 0px; " }
+                %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to youtube video here...", autofocus: "autofocus" }
+                %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px;" } Preview
+                %p{ style: "font-style:italic;" } *Points awarded by votes
+                %div#answer_preview_container{ style: "text-align: center;padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+                  %div#answer_preview
+                    = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
+          - elsif @task.answer_type == Task::CHECKIN
+            :javascript
+              $(function(){ check_checkin_before_submit(); });
+            %div.input{ style: "margin: 10px 0 0 0; " }
+              %p Been there, done that.
+              %input#checkin{ type: "hidden", name: "answer", value: false }
+              %a#checkin_button.button.button-standard Confirm
       %div.CRbuttonspace
         = link_to "Back", path_path(@section.path, completed: true), class: "button button-standard", style: "float: left;"
         = submit_tag "Submit", :class => "button button-actionable", :id => "submit_button", style: "float:right;"

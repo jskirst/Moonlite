@@ -161,24 +161,24 @@ class SectionsController < ApplicationController
   
   def take
     @task = @section.tasks.find(params[:task_id])
+    raise "Not a challenge." unless @task.is_challenge_question?
     @path = @section.path
-    @answers = @task.answers
-    @answers = @answers.to_a.shuffle unless @answers.empty?
     @stored_resource = @task.stored_resources.first
   end
   
   def took
     task = @section.tasks.find(params[:task_id])
     raise "Task already completed" if current_user.completed_tasks.find_by_task_id(task.id)
-    raise "Only CRs can be taken." if task.answer_type != 0
-    raise "Answer not provided" if (params[:answer].blank? && params[:text_answer].blank?)
+    raise "Only CRs can be taken." unless task.is_challenge_question?
     
-    submitted_answer = task.find_or_create_submitted_answer(params[:answer])
-    ct = current_user.completed_tasks.create!(
-      points_awarded: 100, 
-      task_id: task.id, status_id: 1, 
-      submitted_answer_id: submitted_answer.id)
-    current_user.award_points(task, 100)
+    unless params[:answer].blank? || params[:answer] == "false"
+      submitted_answer = task.find_or_create_submitted_answer(params[:answer])
+      ct = current_user.completed_tasks.create!(
+        points_awarded: 100, 
+        task_id: task.id, status_id: 1, 
+        submitted_answer_id: submitted_answer.id)
+      current_user.award_points(task, 100)
+    end
     
     redirect_to path_path(@section.path, completed: true)
   end

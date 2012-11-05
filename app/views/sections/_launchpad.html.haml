@@ -6,7 +6,7 @@
     - if @unlocked
       - if @current_section.quiz_complete?(current_user)
         %table
-          - @current_section.creative_tasks.each do |t|
+          - @current_section.challenge_tasks.each do |t|
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
             %tr
               %td
