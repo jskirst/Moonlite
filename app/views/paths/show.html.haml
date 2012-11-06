@@ -16,7 +16,7 @@
         %div.challengecarousel
           %ul.inlinedisplay
             - @enrolled_users.each do |u|
-              = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "" }
+              = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "Level #{@level_achieved}, #{@total_points_earned} points" }
   %div.row
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }

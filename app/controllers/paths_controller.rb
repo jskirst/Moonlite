@@ -217,6 +217,7 @@ class PathsController < ApplicationController
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
       @total_points_earned = @enrollment.total_points
       @skill_ranking = @enrollment.skill_ranking
+      @level_achieved = @enrollment.level
     
       @current_section = current_user.most_recent_section_for_path(@path)
       @unlocked = @current_section.unlocked?(current_user)
