@@ -33,3 +33,5 @@
             %center
               %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
       = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at}
+%div.post{ style: "text-align: center; margin: auto;" }
+  %button.button.button-standard.view_more{ style: "text-align: center; margin: auto;", alt: (newsfeed_items.last.id) } View More

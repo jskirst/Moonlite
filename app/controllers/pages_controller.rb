@@ -13,7 +13,7 @@ class PagesController < ApplicationController
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
       @newsfeed_items = []
       @enrollments.each do |e|
-        @newsfeed_items << e.path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 10)
+        @newsfeed_items << e.path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 30)
       end
       @newsfeed_items = @newsfeed_items.flatten.sort { |a, b| a.created_at <=> b.created_at }
       render "users/home"
