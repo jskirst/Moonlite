@@ -12,11 +12,25 @@ class PagesController < ApplicationController
       @suggested_paths = Path.suggested_paths(current_user)
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
       @newsfeed_items = []
-      @enrollments.each do |e|
-        @newsfeed_items << e.path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC", limit: 10)
+      challenge_questions = current_user.completed_tasks
+        .joins(:task)
+        .where("tasks.answer_type = ?", Task::CREATIVE)
+        .select(:task_id)
+        .to_a.collect &:task_id
+      unless challenge_questions.empty?
+        @page = params[:page].to_i
+        @newsfeed_items = CompletedTask.joins(:submitted_answer)
+          .where("completed_tasks.task_id in (?)", challenge_questions)
+          .order("completed_tasks.created_at DESC")
+          .limit(30)
+          .offset(@page * 30)
+        @more_available = @newsfeed_items.size == 30
       end
-      @newsfeed_items = @newsfeed_items.flatten.sort { |a, b| a.created_at <=> b.created_at }
-      render "users/home"
+      if request.xhr?
+        render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
+      else
+        render "users/home"
+      end
     else
       render "landing", layout: "landing"
     end
