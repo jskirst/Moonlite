@@ -226,18 +226,26 @@ class PathsController < ApplicationController
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
       @display_launchpad = params[:completed]
     end
-    
+    @page = params[:page].to_i
+    offset = @page * 30
     if params[:cp]
-      @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.id = ?", params[:cp])
+      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("completed_tasks.id = ?", params[:cp])
       @sharing = true
     elsif params[:task]
-      @responses = @path.completed_tasks.joins(:submitted_answer).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
     elsif params[:order] && params[:order] == "votes"
-      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).all(order: "total_votes DESC")
     else
-      @responses = @path.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).all(order: "completed_tasks.created_at DESC")
     end
+    @more_available = @responses.size == 30
     @activity_stream = @path.activity_stream
+    
+    if request.xhr?
+      render partial: "shared/newsfeed", locals: { newsfeed_items: @responses }
+    else
+      render "show"
+    end
   end
   
 # Administration #

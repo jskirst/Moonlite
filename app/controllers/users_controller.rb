@@ -6,13 +6,15 @@ class UsersController < ApplicationController
   before_filter :admin_only, only: [:adminize, :index, :set_type]
   
   def show
+    @page = params[:page].to_i
+    offset = @page * 30
     if params[:task]
       all_responses = @user.completed_tasks.joins(:submitted_answer)
       @newsfeed_items = [all_responses.find_by_task_id(params[:task])]
     elsif params[:order] && params[:order] == "date"
-      all_responses = @user.completed_tasks.joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
+      all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
     else
-      all_responses = @user.completed_tasks.joins(:submitted_answer).all(order: "total_votes DESC")
+      all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer).all(order: "total_votes DESC")
     end  
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
@@ -21,6 +23,12 @@ class UsersController < ApplicationController
     @enrolled_personas = @user.personas
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
+    @more_available = @newsfeed_items.size == 30
+    if request.xhr?
+      render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
+    else
+      render "users/show"
+    end
   end
   
   def index
