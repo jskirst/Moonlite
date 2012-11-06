@@ -42,7 +42,6 @@ class SessionsController < ApplicationController
   end
   
   def destroy
-    track_session(:logout, current_user)
     sign_out
     if @is_consumer
       redirect_to root_path(:m => "c")
