@@ -11,17 +11,15 @@ class SessionsController < ApplicationController
     auth = request.env["omniauth.auth"]
     if auth
       if current_user
-        if current_user.merge_with_omniauth(auth)
-          track_session(:register, current_user, auth)
-        else
+        unless current_user.merge_with_omniauth(auth)
           flash[:error] = "An error occured. Please try another form of authentication."
         end
       else
         if user = User.find_with_omniauth(auth)
-          sign_in(user) and track_session(:login, user, auth)
+          sign_in(user)
         elsif user = User.find_by_email(auth["info"]["email"])
           if user.merge_with_omniauth(auth)
-            sign_in(user) and track_session(:login, user, auth)
+            sign_in(user)
           else
             flash[:error] = "An error occured. Please try another form of authentication."
           end
@@ -34,7 +32,7 @@ class SessionsController < ApplicationController
     else
       credentials = params[:session]
       if user = User.authenticate(credentials[:email],credentials[:password])
-        sign_in(user) and track_session(:login_conventional, user)
+        sign_in(user)
       else
         flash.now[:error] = "Invalid email/password combination."
         render('new') and return
@@ -67,23 +65,4 @@ class SessionsController < ApplicationController
     flash[:error] = params[:message]
     redirect_to new_session_path
   end
-  
-  private
-    def track_session(action, user, auth = {})
-      unless user.admin? || user.is_test_user
-        if action == :register
-          track! :registration_facebook if auth["provider"] == "facebook"
-          track! :registration_google if auth["provider"] == "google_oauth2"
-        elsif action == :login
-          track! :login_facebook if auth["provider"] == "facebook"
-          track! :login_google if auth["provider"] == "google_oauth2"
-        elsif action == :login_conventional
-          track! :login_conventional
-        elsif action == :logout
-          track! :logout
-        else
-          raise [action.to_s, user.to_s, auth.to_s].join("::").to_s
-        end
-      end
-    end
 end
