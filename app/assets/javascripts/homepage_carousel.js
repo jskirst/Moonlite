@@ -57,7 +57,9 @@ if(key_slide == 1){
   
 //FUNCTIONS BELLOW  
   
-//slide function  
+//slide function
+
+  
 function slide(where){  
   
             //get the item width  

@@ -7,7 +7,7 @@
   #left_scroll img, #right_scroll img{ margin: 28px 0 0 10px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
   #left_scroll img {margin-left:10px;}
   #right_scroll img{margin-left:1px;}
-  %script{:src => "app/assets/javascripts/carousel.js", :type => "text/javascript"}
+  %script{:src => "app/assets/javascripts/homepage_carousel.js", :type => "text/javascript"}
 
 %div#homepage
   %div#topsection
@@ -18,7 +18,7 @@
         %a{href: "javascript:slide(\"left\");"}
           %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
       %div#carousel_inner
-        %ul#carousel_ul{style: "left:-216px"}
+        %ul#carousel_ul
           - @enrollments.each do |e|
             = render "shared/mosaic", { pic: e.path.path_pic, link: path_path(e.path), title: e.path.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
           - if @enrollments.size < 4

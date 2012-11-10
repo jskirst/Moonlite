@@ -1,9 +1,23 @@
+:css
+  #challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
+  #challengecarousel_inner { position:relative; top:6px; margin-left:12px; float:left; /* important for inline positioning */ width:672px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */}   
+  #challengecarousel_ul { position:relative; left:-224px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
+  #challengecarousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:6px 12px 10px 12px; }  
+  #challengeleft_scroll, #challengeright_scroll{ float:left; height:80px;  width:15px; }  
+  #challengeleft_scroll img, #challengeright_scroll img{ margin-top: 28px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
+  #challengeright_scroll img{margin-left:6px;}
+  .bigheaderimage{height:159px; width:159px;}
+  .rightofbigheaderimage{float:right; width:81%;}
+  #topboxcontent{margin-top:8px;}
+  %script{:src => "app/assets/javascripts/challenge_carousel.js", :type => "text/javascript"}
+    
+
 %section
   %div#topsection
     %div#updatespace
-      %div{ style: "display:inline; width:20%;" }
+      %div{ style: "display:inline;" }
         = image_tag @path.path_pic, class: "bigheaderimage"
-      %div.rightofbigheaderimage{ style: "width:80%;" }
+      %div.rightofbigheaderimage{ style: "width:81%;" }
         %div#topboxcontent
           - if current_user
             %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level}
@@ -13,10 +27,18 @@
               %h3 Level #{@enrollment.level}, #{@enrollment.total_points} points
             - else
               %h3{ style:"height:36px;" }
-        %div.challengecarousel
-          %ul.inlinedisplay
-            - @enrolled_users.each do |u|
-              = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "Level #{@level_achieved}, #{@total_points_earned} points" }
+        %div#challengecarousel_container
+          %div#challengeleft_scroll
+            %a{href: "javascript:challengeslide(\"left\");"}
+              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
+          %div#challengecarousel_inner
+            %ul#challengecarousel_ul
+              - @enrolled_users.each do |u|
+                = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "Level #{@level_achieved}, #{@total_points_earned} points" }
+          %div#challengeright_scroll
+            %a{href: "javascript:challengeslide(\"right\");"}
+              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
+      %input#challengehidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
   %div.row
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
