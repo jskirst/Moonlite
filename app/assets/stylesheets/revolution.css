@@ -51,8 +51,8 @@ code,pre{font:inherit;}
 /* Other stuff - organize by feature */
 #topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
 #updatespace{ background-color: white; border-radius: 6px; padding: 12px 0 9px 13px; overflow: hidden;}
-.bigheaderimage{ height:160px; width:160px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
-.rightofbigheaderimage{ display:inline-block; width: 729px; }
+.bigheaderimage{ height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
+.rightofbigheaderimage{ display:inline-block; width: 81%; float:right; }
 
 #topboxcontent h1 { margin:0; line-height:28px; }
 #topboxcontent h3 { margin-bottom:9px; font-style:italic; color:#666666; }
@@ -93,7 +93,7 @@ code,pre{font:inherit;}
 
 /* From profile */
 #homepage{color:#333;}
-#topboxcontent{ width:729px; }
+#topboxcontent{ width:729px; margin-top:8px; }
 #topboxcontent h1{ margin:0px; font-size:30px; display:inline; }
 .profilepersonaicons{ list-style-type: none; margin:3px 0px 13px 0px; display:inline; margin-left:4px; }
 .profilepersonaicons li{ display:inline-block; margin-right:8px; height:30px; width:30px; }
@@ -104,6 +104,15 @@ code,pre{font:inherit;}
 .leftbox{text-shadow: 0 1px 0 white; border: 1px solid rgba(0, 0, 0, .1);font-size:12px; position: relative; margin-bottom: 12px;line-height: 16px;border-radius: 6px; display:block;}
 .leftboxfooter ul{ list-style-type:none; margin:0; }
 .leftboxfooter span{ font-size:11px; color:gray; }
+
+/* Profile and challenge page carousels */
+  #challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
+  #challengecarousel_inner { position:relative; top:6px; margin-left:12px; float:left; /* important for inline positioning */ width:672px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */}   
+  #challengecarousel_ul { position:relative; left:-224px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
+  #challengecarousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:6px 12px 10px 12px; }  
+  #challengeleft_scroll, #challengeright_scroll{ float:left; height:80px;  width:15px; }  
+  #challengeleft_scroll img, #challengeright_scroll img{ margin-top: 28px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
+  #challengeright_scroll img{margin-left:6px;}
 
 /* Arena */
 .counter {display:block;float:left;font-size:2em;line-height:1.2em; -webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255,255,255,0.3)));}
