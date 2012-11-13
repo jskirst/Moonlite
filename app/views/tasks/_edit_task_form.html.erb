@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="span8 answers" style="margin: 15px 0 0 172px;">
+      <div class="span8 answers" style="margin: 15px 0 0 20px;">
         <% @answers.each do |a|%>
         <div class="field clearfix">
           <%= f.label (a.is_correct ? "Correct answer" : "Wrong answer") %>
@@ -23,12 +23,16 @@
           </div>
         </div>
         <% end %>
-        <% if @stored_resource %>
-          <%= image_tag @stored_resource.obj.url, :style => "height: 100px; margin: 20px 0px 0px 150px;" %>
-          <%= link_to "Remove Attachment", @stored_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?", :style => "margin:10px 0 0 150px;" %>
-        <% else %>
-          <%= link_to "Attachments", add_stored_resource_task_path(@task), :class => "button button-standard edit_button", :method => :put %>
-        <% end %>
+        <div class="field clearfix" style="margin-top:15px;">
+          <div class="input">
+            <% if @stored_resource %>
+              <%= image_tag @stored_resource.obj.url, :style => "height: 100px;" %>
+              <%= link_to "Remove", @stored_resource, :method => :delete, :confirm => "Are you sure you want to remove this attachment?" %>
+            <% else %>
+              <%= link_to "Add Image", add_stored_resource_task_path(@task) %>
+            <% end %>
+          </div>
+        </div>
       </div>
       <div class="span8 suggestions" style="padding-top:10px; margin-left:150px;">
         <p class="not_found_message" style="display: none;">No suggestions found.</p>

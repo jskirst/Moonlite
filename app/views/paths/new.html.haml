@@ -1,24 +1,28 @@
+:css
+  legend { font-size: 16px; }
+  .form_field { margin: 20px 20px 30px 30px; }
+  input, select { padding: 7px; font-size: 16px; color: #404040; }
 %div.single_pane
-  %h2{ style: "border-bottom: 1px solid #DDD; margin-bottom: 20px;"} New Challenge
+  %div
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: "height: 60px; display: inline; vertical-align: middle"
+    %h1{ style: "display: inline; vertical-align: middle;" } Create a Challenge
+  %hr{ style: "margin: 5px 0 20px 0;"}
   = form_for(@path) do |f|
     = render "shared/error_messages", object: f.object
-    %div.field.clearfix
-      %label Name
-      %div.input
-        = f.text_field :name, autofocus: "autofocus"
-    %div.field.clearfix
-      %label Persona
-      %div.input
-        = f.select :persona_id, current_company.personas.collect{|p|[p.name, p.id]}
-    %div.field.clearfix
-      %label Logo image
-      %div.input
-        = f.text_field :image_url, id: "image_url_input", class: "xxlarge", placeholder: "URL to picture..."
-        %a.button.button-standard{ style: "margin-left:10px;" } Preview
-        %p Image should convey what the challenge will be about
-    %div.field.clearfix
-      %div.input
-        = image_tag @path.path_pic, id: "image_url_preview", width: "210", style: "margin:10px 0 20px 0;"
-    %div.actions
+    %div{ style: "margin-left: 50px;" }
+      %legend 1. What is the name of your Challenge?
+      %div.field.clearfix
+        %div.form_field
+          = f.text_field :name, autofocus: "autofocus"
+          %p Examples: 'Advanced jQuery Techniques' or just 'Jimmy Hendrix'
+      %legend 2. Choose a Persona for your Challenge to belong to
+      %div.field.clearfix
+        %div.form_field
+          = f.select :persona_id, current_company.personas.collect{|p|[p.name, p.id]}
+          %p Every Challenge belongs to one Persona - so choose wisely...
+      %legend 3. Upload an image for to represent your challenge
+      %div.field.clearfix
+        %div.form_field
+          = render "stored_resources/new_image"
       = link_to "Cancel", root_path, class: "button button-standard"
-      = f.submit "Save", class: "button button-info"
+      = f.submit "Next", class: "button button-info", style: "margin-left: 15px;"

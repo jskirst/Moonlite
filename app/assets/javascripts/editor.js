@@ -49,13 +49,10 @@ function display_section_content($row){
 
 /* Task Editing */
 function clear_form(){
-  $("#task_question").val("");
-  $("#task_answer1").val("");
-  $("#task_answer2").val("");
-  $("#task_answer3").val("");
-  $("#task_answer4").val("");
-  $("#task_fib_answer").val("");
-  $('.suggestions').find('p,ol').each(function(){ $(this).hide(); });
+  $(".question_input").val("");
+  $(".answers").find("input").val("");
+  $(".image_preview").attr("src","").hide();
+  $(".image_input_field").val("");
 }
 
 function bind_delete_task(obj){
@@ -83,7 +80,7 @@ function bind_edit_task(obj){
       $row.find(".edit_button").removeAttr("disabled");
       $row.append(data);
       bind_update_task($row.find("form:first"));
-      bind_answer_suggestion($row.find(".correct_answer:first"));
+      //bind_answer_suggestion($row.find(".correct_answer:first"));
     }
   );
 }
@@ -108,14 +105,14 @@ function bind_update_task(obj){
   );
 }
 
-function bind_answer_suggestion(obj){
-  var $answer = $(obj);
-  var $suggestions = $answer.parents(".row:first").children(".suggestions:first");
-  get_suggestions($answer, $suggestions);
-  $answer.change(function(){
-    bind_answer_suggestion(this);
-  });
-}
+// function bind_answer_suggestion(obj){
+  // var $answer = $(obj);
+  // var $suggestions = $answer.parents(".row:first").children(".suggestions:first");
+  // get_suggestions($answer, $suggestions);
+  // $answer.change(function(){
+    // bind_answer_suggestion(this);
+  // });
+// }
 
 function add_new_task(event, data) {
   try {

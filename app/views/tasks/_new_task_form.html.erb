@@ -50,18 +50,19 @@ $(function(){
   });
 });
 </script>
-<%= form_tag("/tasks", {:remote => true, "data-type" => "html"}) %>
+<%= form_tag("/tasks", {remote: true, "data-type" => "html"}) %>
   <div style="float:right;">
     <%= submit_tag "Save", :id => "save_question_button", :class => "button button-info" %>
     <span id="close_question_button" class="button button-standard" onclick="clear_form();">Clear</span>
   </div>
   <div class="new_task" style="margin-top:10px;">
+    <div class="message_container alert-message" style="display: none; width:350px; margin-left: 70px; margin-top:10px;"></div>
     <h3 style="margin-left:10px;" id="form_title">Add Question</h3>
     <%= hidden_field_tag "task[section_id]", section.id %><br/>
     <div class="field clearfix">
       <%= label_tag :question %>
       <div class="input">
-        <%= text_area_tag("task[question]", nil, { :class => "xxlarge", :rows => "3", :placeholder => "Type your question here..." })%>
+        <%= text_area_tag("task[question]", nil, { :class => "xxlarge question_input", :rows => "3", :placeholder => "Type your question here..." })%>
       </div>
     </div>
     <div class="row">
@@ -82,8 +83,8 @@ $(function(){
           <div class="input">
             <select name="task[answer_sub_type]" class="task_answer_sub_type">
               <option value="100" selected="selected">Free text</option>
-              <option value="101">Link to image (JPEG, PNG, GIF)</option>
-              <option value="102">Link to Youtube video</option>          
+              <option value="101">Image (JPEG, PNG, GIF)</option>
+              <option value="102">Youtube video</option>          
             </select>
           </div>
         </div>
@@ -124,6 +125,10 @@ $(function(){
         <ol style="margin-top:10px; display: none;"></ol>
       </div>
     </div>
-    <div class="message_container alert-message" style="display: none; width:350px; margin-left: 70px; margin-top:10px;"></div>
+    <div class="field clearfix">
+      <div class="input">
+        <%= render "stored_resources/new_image" %>
+      </div>
+    </div>
   </div>
 </form>
