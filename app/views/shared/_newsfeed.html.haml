@@ -32,7 +32,7 @@
           - elsif r.task.answer_sub_type == Task::YOUTUBE
             %center
               %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
-      = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at}
+      = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at, sharing_url: cp_details_url(r.path, r.id), sharing_title: "Great response to the #{r.path.name} Challenge on @MetaBright. #{cp_details_url(r.path, r.id)}" }
 - if @more_available
   %div.post{ style: "text-align: center; margin: auto;" }
     :javascript

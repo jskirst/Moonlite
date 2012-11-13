@@ -242,6 +242,10 @@ class PathsController < ApplicationController
     @more_available = @responses.size == 30
     @activity_stream = @path.activity_stream
     
+    @social_title = @path.name
+    @social_description = @path.description
+    @social_image = @path.path_pic
+    
     if request.xhr?
       render partial: "shared/newsfeed", locals: { newsfeed_items: @responses }
     else
