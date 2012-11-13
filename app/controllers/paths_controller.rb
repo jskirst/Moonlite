@@ -25,7 +25,13 @@ class PathsController < ApplicationController
     @path.is_approved = false
     @path.is_published = false
     if @path.save
-      flash[:success] = "#{name_for_paths} created."
+      if params[:stored_resource_id]
+        sr = StoredResource.find(params[:stored_resource_id])
+        raise "FATAL: STEALING RESOURCE" if sr.owner_id
+        sr.owner_id = @path.id
+        sr.owner_type = @path.class.to_s
+        sr.save
+      end
       redirect_to new_section_path(:path_id => @path.id)
     else
       @categories = current_user.company.categories

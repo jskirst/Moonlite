@@ -26,7 +26,7 @@ class Path < ActiveRecord::Base
     :is_published,
     :persona_id
   
-  has_many :stored_resources, as: :owner
+  has_one :stored_resource, as: :owner
   belongs_to :user
   belongs_to :company
   belongs_to :category
@@ -63,8 +63,7 @@ class Path < ActiveRecord::Base
   end
   
   def path_pic
-    sr = stored_resources.first
-    return sr.obj.url if sr
+    return stored_resource.obj.url if stored_resource
     return self.image_url if self.image_url
     return "/images/image_thumb.png"
   end

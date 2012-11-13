@@ -32,6 +32,13 @@ class TasksController < ApplicationController
     @task = @section.tasks.new(params[:task])
     @task.answer_content = gather_answers(params[:task])
     if @task.save
+      unless params[:stored_resource_id].blank?
+        sr = StoredResource.find(params[:stored_resource_id])
+        raise "FATAL: STEALING RESOURCE" if sr.owner_id
+        sr.owner_id = @task.id
+        sr.owner_type = @task.class.to_s
+        sr.save
+      end
       respond_to do |f|
         f.html { render :partial => "task", :locals => {:task => @task } }
         f.json { render :json => @task }

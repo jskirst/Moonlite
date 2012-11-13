@@ -17,8 +17,6 @@ class StoredResource < ActiveRecord::Base
       :secret_access_key => ENV['AWS_SECRET_ACCESS_KEY']
     }
   
-  validates :owner_id, presence: true
-  validates :owner_type, presence: true
   validates :description, length: { maximum: 255 }
   validates :link, length: { maximum: 255 }
 end
