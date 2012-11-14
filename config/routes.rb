@@ -38,7 +38,7 @@ Metabright::Application.routes.draw do
 			get :approve
 		end
 	end
-	match "/paths/:id/cp/:cp/" => "paths#show", as: "cp_details"
+	match "/paths/:id/submission/:submission/" => "paths#show", as: "submission_details"
 	match "/paths/:id/task/:task/" => "paths#show", as: "task_details"
 	resources :sections do
 		member do
@@ -106,6 +106,7 @@ Metabright::Application.routes.draw do
 	match '/signout',	:to => 'sessions#destroy'
 	match '/intro' => "pages#intro"
 	match '/start' => "pages#start"
+	match '/notifications' => "pages#notifications"
 	
 	match '/emailtest', :to => 'pages#email_test', as: "email"
 

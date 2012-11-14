@@ -235,8 +235,8 @@ class PathsController < ApplicationController
     end
     @page = params[:page].to_i
     offset = @page * 30
-    if params[:cp]
-      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("completed_tasks.id = ?", params[:cp])
+    if params[:submission]
+      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("submitted_answers.id = ?", params[:submission])
       @sharing = true
     elsif params[:task]
       @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")

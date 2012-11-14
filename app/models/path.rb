@@ -201,14 +201,7 @@ class Path < ActiveRecord::Base
   end
   
   def activity_stream
-    start_time = Time.now
-    events = user_events.joins(:user).last(8).to_a.collect  do |e| 
-      {:user => e.user, 
-      :type => :event, 
-      :content => e,
-      :date => e.created_at}
-    end
-    answers = submitted_answers.joins(:task).where("tasks.answer_sub_type in (?)", [100,101]).last(8).to_a.collect do |a| 
+    return submitted_answers.joins(:task).where("tasks.answer_sub_type in (?)", [100,101]).last(8).to_a.collect do |a| 
       {:user => nil,
       :type => (a.task.answer_sub_type == 100 ? :text : :image),
       :content => a.content,
@@ -216,9 +209,6 @@ class Path < ActiveRecord::Base
       :date => a.created_at,
       :votes => a.total_votes}
     end
-    stream = (events + answers).sort {|a,b| b[:date] <=> a[:date]}
-    # raise stream.to_yaml
-    return stream
   end
   
   def percentage_correct(user = nil)
