@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121031030500) do
+ActiveRecord::Schema.define(:version => 20121114200153) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -90,6 +90,8 @@ ActiveRecord::Schema.define(:version => 20121031030500) do
     t.integer  "submitted_answer_id"
     t.integer  "answer_id"
   end
+
+  add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"
 
   create_table "custom_styles", :force => true do |t|
     t.integer  "company_id"
@@ -304,10 +306,13 @@ ActiveRecord::Schema.define(:version => 20121031030500) do
 
   create_table "user_events", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "path_id"
     t.string   "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "is_read",     :default => false
+    t.string   "link"
+    t.integer  "actioner_id"
+    t.string   "image_link"
   end
 
   create_table "user_personas", :force => true do |t|
