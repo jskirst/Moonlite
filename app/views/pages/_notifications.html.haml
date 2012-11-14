@@ -8,10 +8,10 @@
       %h1{ style: "font-size: 23px; margin-bottom: 3px;" } Notifications 
       %hr{ style: "margin: 0;" }
     %div.explorebody{ style: "min-height: 250px; max-height: 450px; overflow-y: auto;" }
-      - current_user.user_events.each do |event|
+      - @events.each do |event|
         %div.post
           %div.postphotospace
-            = link_to event.actioner do
+            = link_to (event.actioner.nil? ? root_url : event.actioner) do
               = image_tag event.image_link, class: "photo"
           %div.postspace{ style: "width: 390px; padding: 8px;" }
             = link_to event.link do

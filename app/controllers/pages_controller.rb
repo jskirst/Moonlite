@@ -51,6 +51,7 @@ class PagesController < ApplicationController
   
   def notifications
     current_user.user_events.update_all(is_read: true)
+    @events = current_user.user_events.all(order: "id DESC")
     render partial: "notifications"
   end
   

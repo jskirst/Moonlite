@@ -22,6 +22,7 @@ class SessionsController < ApplicationController
         user = User.create_with_omniauth(auth)
         Mailer.welcome(user.email).deliver
         sign_in(user)
+        log_event(nil, root_url, nil, "Welcome to Metabright! Check your email for a welcome message from the Metabright team.")
         redirect_to intro_path and return
       end
     else
