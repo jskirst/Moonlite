@@ -1,7 +1,7 @@
 :css
   legend { font-size: 16px; }
   .form_field { margin: 20px 20px 30px 30px; }
-  input, select { padding: 7px; font-size: 16px; color: #404040; }
+  input, select { padding: 3px; font-size: 16px; color: #404040; }
 %div.single_pane
   %div
     = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: "height: 60px; display: inline; vertical-align: middle"
@@ -14,13 +14,13 @@
       %div.field.clearfix
         %div.form_field
           = f.text_field :name, autofocus: "autofocus"
-          %p Examples: 'Advanced jQuery Techniques' or just 'Jimmy Hendrix'
-      %legend 2. Choose a Persona for your Challenge to belong to
+          %p Examples: 'Advanced jQuery Techniques' or just 'Jimi Hendrix'
+      %legend 2. Choose a Persona for your Challenge to belong to:
       %div.field.clearfix
         %div.form_field
           = f.select :persona_id, current_company.personas.collect{|p|[p.name, p.id]}
-          %p Every Challenge belongs to one Persona - so choose wisely...
-      %legend 3. Upload an image for to represent your challenge
+          %p Every Challenge belongs to just one Persona - so choose wisely...
+      %legend 3. Upload an image to represent your Challenge:
       %div.field.clearfix
         %div.form_field
           = render "stored_resources/new_image"
