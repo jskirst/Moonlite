@@ -15,7 +15,7 @@
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
         %p Current level: <strong>#{@enrollment.level}</strong>
       %div{ style: "float: right; margin: 15px 10px 0 0;" }
-        = render "shared/sharing", { custom_style: "" }
+        = render "shared/sharing", { custom_style: "", title: "Just finished a section of the #{@path.name} challenge on @MetaBright and scored #{@enrollment.total_points} points", url: path_url(@path) }
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.completionnextsteps
         %h3 Continue improving your score

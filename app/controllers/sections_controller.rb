@@ -48,7 +48,6 @@ class SectionsController < ApplicationController
       end
       @section = @path.sections.build(params[:section])
       if @section.save
-        flash[:success] = "Section created."
         redirect_to edit_path_path(@path)
       else
         @title = "New section"
