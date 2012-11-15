@@ -260,7 +260,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .introintcontent>ul>li>img{display:inline; height:35px;margin-right:5px; position:relative; top:19px; opacity:.8;}
 .introintcontent>ul>li>.inttitle{}
 .introintcontent>ul>li>.intdetails{margin-left:45px;}
-.dropdown_modal.modal.fade.in { width: 100%; top: 0%; background-color: transparent; border: 0; box-shadow: 0 0 0; margin-left: auto; margin-right: auto; left: inherit; margin-top: 0px; }
+.dropdown_modal.modal.fade { width: 100%; top: 0%; background-color: transparent; border: 0; box-shadow: 0 0 0; margin-left: auto; margin-right: auto; left: inherit; margin-top: 0px; }
 
 /* Create and Administer */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
