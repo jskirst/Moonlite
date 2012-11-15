@@ -16,28 +16,6 @@ class EnrollmentsController < ApplicationController
     end
   end
   
-  def grade
-    @enrollment = Enrollment.find_by_id(params[:id])
-    raise "Permission denied." unless @enable_administration
-    @enrollment.is_passed = params[:commit] == "Pass" ? true : false
-    @enrollment.is_complete = true
-    @enrollment.percentage_correct = @enrollment.path.percentage_correct(@enrollment.user)
-    if @enrollment.save
-      if params[:send_email] == "1"
-        if @enrollment.send_result_email
-          @enrollment.is_score_sent = true
-          @enrollment.save
-          flash[:success] = "Email sent."
-        else
-          flash[:error] = "Email could not be sent."
-        end
-      end
-      redirect_to dashboard_path_path(@enrollment.path, mode: "users", user: @enrollment.user)
-    else
-      raise "Could not save grade for enrollment: #{params[:pass]}"
-    end
-  end
-  
   def destroy
     @enrollment = Enrollment.find_by_id(params[:id])
     @path = @enrollment.path

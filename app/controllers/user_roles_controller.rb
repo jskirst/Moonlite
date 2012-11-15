@@ -10,7 +10,6 @@ class UserRolesController < ApplicationController
   end
   
   def new
-    @title = "New user role"
     @form_mode = "new"
     @user_role = UserRole.new
     render "form"
@@ -21,7 +20,6 @@ class UserRolesController < ApplicationController
     if @user_role.save
       redirect_to user_roles_path, notice: "User role created."
     else
-      @title = "New user role"
       @form_mode = "new"
       render "form"
     end
@@ -29,7 +27,6 @@ class UserRolesController < ApplicationController
   
   def edit
     @users = @user_role.users
-    @title = "Edit user role"
     @form_mode = "edit"
     render "form"
   end
@@ -38,7 +35,6 @@ class UserRolesController < ApplicationController
     if @user_role.update_attributes(params[:user_role])
       redirect_to user_roles_path, notice: "User Role updated."
     else
-      @title = "Edit User Role"
       @form_mode = "edit"
       render "form"
     end

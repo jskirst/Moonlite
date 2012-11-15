@@ -277,18 +277,6 @@ class PathsController < ApplicationController
       @percentage_correct = @path.percentage_correct(@user)
     end
   end
-  
-  def approve
-    redirect_to root_url unless @enable_administration
-    approve = params[:approve]
-    if approve == "true"
-      @path.is_approved = true
-    else
-      @path.is_approved = false
-    end
-    @path.save!
-    redirect_to admin_paths_path, alert: "Path updated."
-  end
 
   private
     def get_path_from_id

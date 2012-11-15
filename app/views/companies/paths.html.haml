@@ -1,10 +1,10 @@
 %div.single_pane
-  = render "companies/tab_header"
+  = render "tab_header"
   = will_paginate @paths, style: "float:left; margin-bottom:0; margin-top: 0;"
   %div{ style: "float:right; margin: 0 0 0px 0;" }
     = form_tag admin_paths_path, method: "get" do
-      = text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name..."
-      = submit_tag "Search", :class => "button button-standard"
+      = text_field_tag :search, params[:search], class: "large", placeholder: "Search by name..."
+      = submit_tag "Search", class: "button button-standard"
   %table
     %thead
       %tr
@@ -15,7 +15,7 @@
         %th Tasks
         %th User Name
         %th Published
-        %th Approve
+        %th Status
     %tbody
       - @paths.to_a.each_with_index do |p, i|
         %tr
@@ -26,7 +26,19 @@
           %td= p.tasks.size
           %td= link_to p.user.name, p.user
           %td= p.is_published.to_s 
-          - if p.is_approved
-            %td= link_to "remove", approve_path_path(p, approve: "false")
-          - else
-            %td= link_to "approve", approve_path_path(p, approve: "true")
+          %td
+            - if p.is_approved
+              = link_to "approved", admin_update_path_path(p, approve: "false"), class: "mark_approved", remote: true, method: "put"
+            - else
+              = link_to "locked", admin_update_path_path(p, approve: "true"), class: "mark_approved", remote: true, method: "put"
+:javascript
+  $(function(){
+    $(".mark_approved").on("ajax:success", function(xhr, data){
+      console.log(data.status);
+      if(data.status == true){
+        $(this).text("approved");
+      } else {
+        $(this).text("locked");
+      }
+    });
+  });

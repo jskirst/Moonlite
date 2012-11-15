@@ -1,27 +1,14 @@
 Metabright::Application.routes.draw do
-	
 	resources :sessions
 	resources :users do
 		member do
 		  get :home
-			get :accept
-			put :join
-			get :set_type
 			get :request_reset
 			put :reset_password
 			get :edit_role
 			put :update_role
-			get :lock
 		end
 	end
-	resources :companies do
-		member do
-			get :join
-			put :accept
-			get :edit_roles
-		end
-	end
-	resources :custom_styles
   resources :paths do
 		member do
       get :dashboard
@@ -34,8 +21,6 @@ Metabright::Application.routes.draw do
       get :undo_collaboration
       get :enroll
 			get :continue
-			get :retake
-			get :approve
 		end
 	end
 	match "/paths/:id/submission/:submission/" => "paths#show", as: "submission_details"
@@ -57,65 +42,52 @@ Metabright::Application.routes.draw do
       put :complete
 		end
 	end
-	resources :enrollments do
-	  member do
-	    put :grade
-	  end
-	end
+	resources :enrollments
 	resources :tasks do
     member do
-      get :arena
-      put :resolve
       get :vote
       get :add_stored_resource
       put :add_stored_resource
     end
   end
-  match '/suggest', to: "tasks#suggest"
 	
 	resources :personas do
 	  member do
 	    get :preview
 	  end
 	end
-	match '/explore', to: "personas#explore"
 	
 	resources :stored_resources
   resources :comments
-  resources :leaderboards
-	resources :categories
-	resources :phrases
-	resources :user_roles do
-    member do
-      get :invite
-    end
-  end
+	resources :user_roles
 	
-	root 				:to => "pages#home"
+	root :to => "pages#home"
+  match '/intro' => "pages#intro"
+  match '/start' => "pages#start"
+  match '/notifications' => "pages#notifications"
+  match '/create' => 'pages#create'
+  match '/explore', to: "personas#explore"
+  match '/about' => "pages#about"
+  match '/tos' => "pages#tos"
+  match '/challenges' => "pages#challenges"
 	
-  match '/admin', :to => 'companies#show'
-  match '/admin_settings' => "companies#edit"
-  match '/styles' => "custom_styles#show"
+  match '/admin_overview' => 'companies#overview'
+  match '/admin_settings' => "companies#settings"
   match '/admin_users' => "companies#users"
+  match '/admin_users/:id/' => "companies#users", as: "admin_update_user"
   match '/admin_paths' => "companies#paths"
+  match '/admin_paths/:id' => "companies#paths", as: "admin_update_path"
+  match '/admin_submissions' => "companies#submissions"
+  match '/admin_submissions/:id' => "companies#submissions", as: "admin_update_submission"
+  match '/admin_styles' => "companies#styles"
   
-  match '/locallink',  :to => 'sessions#locallink'
-  match '/auth/failure',  :to => 'sessions#auth_failure'
-  match '/auth/:provider/callback',  :to => 'sessions#create'
-	match '/signin',	:to => 'sessions#new'
-	match '/signout',	:to => 'sessions#destroy'
-	match '/intro' => "pages#intro"
-	match '/start' => "pages#start"
-	match '/notifications' => "pages#notifications"
-	
-	match '/emailtest', :to => 'pages#email_test', as: "email"
+  match '/locallink' => 'sessions#locallink'
+  match '/auth/failure' => 'sessions#auth_failure'
+  match '/auth/:provider/callback' => 'sessions#create'
+	match '/signin' => 'sessions#new'
+	match '/signout' => 'sessions#destroy'
 
-  match '/create',:to => 'pages#create'
-  
-	match '/password_reset', :to => 'users#request_send'
-	match '/send_reset', :to => 'users#send_reset'
-	
-	match '/about' => "pages#about"
-	match '/tos' => "pages#tos"
-	match '/challenges' => "pages#challenges"
+  match '/emailtest' => 'pages#email_test', as: "email"
+	match '/password_reset' => 'users#request_send'
+	match '/send_reset' => 'users#send_reset'
 end

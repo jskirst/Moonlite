@@ -39,21 +39,12 @@ class SessionsController < ApplicationController
   
   def destroy
     sign_out
-    if @is_consumer
-      redirect_to root_path(:m => "c")
-    else
-      redirect_to root_path
-    end
+    redirect_to root_path
   end
   
   # Secret methods to help with testing
   def locallink
     redirect_to "http://localhost:3000/auth/facebook/callback?code=#{params[:code]}"
-  end
-  
-  def out_and_delete
-    current_user.destroy if signed_in?
-    redirect_to root_path
   end
   
   def auth_failure

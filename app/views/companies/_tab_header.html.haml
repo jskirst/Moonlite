@@ -1,8 +1,7 @@
 %div
-  %h1= current_company.name
   %ul.tabs
     - admin_tabs.each do |header|
-      - if @mode == header[0]
+      - if (@mode || params[:action]) == header[0]
         %li.active
           %a= header[1]
       - else

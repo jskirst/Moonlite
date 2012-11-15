@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121114200153) do
+ActiveRecord::Schema.define(:version => 20121115003903) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -258,10 +258,11 @@ ActiveRecord::Schema.define(:version => 20121114200153) do
 
   create_table "submitted_answers", :force => true do |t|
     t.text     "content"
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.integer  "total_votes", :default => 0
     t.integer  "task_id"
+    t.boolean  "is_reviewed", :default => false
   end
 
   create_table "tasks", :force => true do |t|

@@ -26,7 +26,7 @@
         - if current_user
           - if @enable_administration
             %li
-              = link_to "Admin", admin_path
+              = link_to "Admin", admin_overview_path
           %li
             = link_to current_user do
               = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"

@@ -1,0 +1,34 @@
+%div.single_pane
+  = render "companies/tab_header"
+  = will_paginate @submissions, style: "float:left; margin-bottom:0; margin-top: 0;"
+  %div{ style: "float:right; margin:0;" }
+    :javascript
+      $(".mark_approved").on("ajax:success", function(){
+        $(this).text("approved").parents("tr").css("background-color", "green");
+      });
+    = form_tag admin_submissions_path, style: "margin: 0;", method: "get" do
+      = text_field_tag :search, params[:search], class: "large", placeholder: "Search by content..."
+      = submit_tag "Search", class: "button button-standard"
+  %table
+    %thead
+      %tr
+        %th{ style: "width: 10%" } id
+        %th{ style: "width: 10%" } Path
+        %th{ style: "width: 10%" } User Name
+        %th{ style: "width: 60%" } Content
+        %th{ style: "width: 10%" } Approve
+    %tbody
+      - @submissions.to_a.each do |s|
+        %tr
+          %td= s.id
+          %td= s.path.name
+          %td= link_to s.user.name, s.user
+          %td= s.content
+          %td= link_to "approve", admin_update_submission_path(s), class: "mark_reviewed", remote: true, method: "put"
+  = link_to "Refresh", admin_submissions_path, class: "button button-standard"
+:javascript
+  $(function(){
+    $(".mark_reviewed").on("ajax:success", function(xhr, data){
+      $(this).parents("tr").hide("fast");
+    });
+  });

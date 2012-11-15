@@ -1,0 +1,40 @@
+%div.single_pane
+  :css
+    .overview td{ text-align: center; border: 1px solid #DDD; }
+  = render "companies/tab_header"
+  %h3 Overview
+  %table.overview
+    %tr
+      %td
+        %h3= @user_count
+        %p Total Users
+      %td
+        %h3= @ct_count
+        %p Total CTs
+      %td
+        %h3= @submission_count
+        %p Total Submissions
+      %td
+        %h3= @vote_count
+        %p Total Votes
+      %td
+        %h3= @comment_count
+        %p Total Comments
+  %h3 Recent Activity
+  %table.overview
+    %tr
+      %td
+        %h3= @new_user_count
+        %p New Users
+      %td
+        %h3= @new_ct_count
+        %p New CTs
+      %td
+        %h3= @new_submission_count
+        %p New Submissions
+      %td
+        %h3= @new_vote_count
+        %p New Votes
+      %td
+        %h3= @new_comment_count
+        %p New Comments

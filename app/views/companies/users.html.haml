@@ -15,7 +15,7 @@
         %th Points
         %th Votes
         %th Comments
-        %th Lock
+        %th Status
     %tbody
       - @users.to_a.each_with_index do |u, i|
         %tr
@@ -27,6 +27,16 @@
           %td= u.votes.size
           %td= u.comments.size
           - if u.is_locked
-            %td= link_to "unlock", lock_user_path(u, lock: "false")
+            %td= link_to "locked", admin_update_user_path(u, lock: "false"), class: "mark_locked", remote: true, method: "put"
           - else
-            %td= link_to "lock", lock_user_path(u, lock: "true")
+            %td= link_to "open", admin_update_user_path(u, lock: "true"),  class: "mark_locked", remote: true, method: "put"
+:javascript
+  $(function(){
+    $(".mark_locked").on("ajax:success", function(xhr, data){
+      if(data.status == true){
+        $(this).text("locked");
+      } else {
+        $(this).text("open");
+      }
+    });
+  });
