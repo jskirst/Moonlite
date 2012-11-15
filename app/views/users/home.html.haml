@@ -38,14 +38,14 @@
             %li.leftrailcontent
               - @suggested_paths.each do |p|
                 = link_to p do
-                  = image_tag p.path_pic, class: "leftrailicon"
+                  = image_tag p.path_pic, class: "leftrailicon", title: "#{p.name}"
       %div.leftbox
         %div.leftboxheader Enrolled Personas
         %div.leftboxfooter
           %li.leftrailcontent
           - @enrolled_personas.each do |p|
             %a.explore_link{ style: "cursor: pointer; text-decoration: none;" }
-              = image_tag p.picture, class: "leftrailicon"
+              = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
     %div.span11
       %div.newsfeed
         %div
