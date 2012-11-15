@@ -52,7 +52,7 @@ namespace :db do
   desc "Fill database with production data"
   task :genesis => :environment do
     Rake::Task['db:reset'].invoke
-    moonlite_company = Company.create!(:name => "Metabright")
+    moonlite_company = Company.create!(:name => "MetaBright")
     default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_user_creation: true, enable_browsing: true)
     second_role = moonlite_company.user_roles.create!(name: "Test", enable_browsing: true)
     moonlite_company.user_role_id = default_role.id

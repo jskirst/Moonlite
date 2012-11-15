@@ -77,7 +77,7 @@ module SessionsHelper
     unless current_user.nil?
       return current_user.company.name
     else
-      @possible_company ? @possible_company.name : "Metabright"
+      @possible_company ? @possible_company.name : "MetaBright"
     end
   end
   
@@ -146,7 +146,7 @@ module SessionsHelper
   end
   
   def social_title
-    @social_title || "Metabright - Bowties are cool"
+    @social_title || "MetaBright - Bowties are cool"
   end
   
   def social_description
