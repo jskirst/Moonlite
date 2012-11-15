@@ -283,3 +283,4 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .aboutbody h4{font-weight:bold;}
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
+div.footer { bottom: inherit; }
