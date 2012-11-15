@@ -24,6 +24,10 @@ module SessionsHelper
     current_user.company if current_user
   end
   
+  def notifications
+    current_user.user_events.where("is_read = ?", false)
+  end
+  
   def sign_out
     cookies.delete(:remember_token)
     self.current_user = nil

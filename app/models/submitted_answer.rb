@@ -5,8 +5,9 @@ class SubmittedAnswer < ActiveRecord::Base
   attr_accessible :content
   
   belongs_to :task
-  has_many :completed_tasks, dependent: :destroy
-  has_many :users, through: :completed_task
+  has_one :completed_task, dependent: :destroy
+  has_one :path, through: :completed_task
+  has_one :user, through: :completed_task
   has_many :comments, as: :owner
   has_many :stored_resources, as: :owner
  
@@ -15,10 +16,8 @@ class SubmittedAnswer < ActiveRecord::Base
   def add_vote(user)
     if vote = user.votes.create!(submitted_answer_id: self.id)
       self.total_votes += 1
-      completed_tasks.each do |ct| 
-        ct.update_attribute(:points_awarded, (ct.points_awarded += POINTS_PER_VOTE))
-        user.award_points(ct.task, POINTS_PER_VOTE)
-      end
+      completed_task.update_attribute(:points_awarded, (completed_task.points_awarded += POINTS_PER_VOTE))
+      user.award_points(completed_task.task, POINTS_PER_VOTE)
       return vote if save
     end
     return false
@@ -27,13 +26,10 @@ class SubmittedAnswer < ActiveRecord::Base
   def subtract_vote(user)
     if self.total_votes > 0
       self.total_votes -= 1
-      completed_tasks.each do |ct| 
-        ct.update_attribute(:points_awarded, (ct.points_awarded -= POINTS_PER_VOTE))
-        user.retract_points(ct.task, POINTS_PER_VOTE)
-      end
+      completed_task.update_attribute(:points_awarded, (completed_task.points_awarded -= POINTS_PER_VOTE))
+      user.retract_points(completed_task.task, POINTS_PER_VOTE)
       return true if save
     end
     return false
   end
-    
 end

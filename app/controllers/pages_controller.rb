@@ -49,6 +49,12 @@ class PagesController < ApplicationController
     @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
   end
   
+  def notifications
+    current_user.user_events.update_all(is_read: true)
+    @events = current_user.user_events.all(order: "id DESC")
+    render partial: "notifications"
+  end
+  
   def about
     @no_bar = false
     @show_footer = true
