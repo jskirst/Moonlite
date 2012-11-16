@@ -1,6 +1,6 @@
 - custom_class = "" unless custom_class
 %li
-  %div.mosaic-block.bar2
+  %div.mosaic-block.bar2{title:"#{title}"}
     = link_to link, class: "mosaic-overlay #{custom_class}" do
       %div.details
         %h4= truncate(title, length: 22)
