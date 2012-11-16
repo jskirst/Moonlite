@@ -1,5 +1,5 @@
 <% if stored_resource && stored_resource.obj %>
   <% if stored_resource.obj.content_type.include?("image") %>
-    <img src="<%= stored_resource.obj.url.gsub("::",":") %>" style="max-width: 500px; max-height: 400px; margin: 20px auto 30px auto;">
+    <img src="<%= stored_resource.obj.url.gsub("::",":") %>" style="max-width: 700px; max-height: 250px; margin: 0 auto 15px auto;">
   <% end %>
 <% end %>
