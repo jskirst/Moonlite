@@ -9,8 +9,8 @@
           %h4= persona.name
           %div{style: "margin-bottom:5px;"}
             - persona.paths.each do |path|
-              %div.mosaic-block.bar2{style: "margin-bottom:10px;", title: "#{path.name}"}
-                = link_to enroll_path_url(path), class: "mosaic-overlay" do
+              %div.mosaic-block.bar2{style: "margin-bottom:10px;"}
+                = link_to enroll_path_url(path), class: "mosaic-overlay", title: "#{path.name}" do
                   %div.details
                     %h4{style: "font-weight:normal"} #{truncate(path.name,length: 17, separator: ' ')}
                     - if current_user.enrolled?(path)
