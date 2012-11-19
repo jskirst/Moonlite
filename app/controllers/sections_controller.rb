@@ -226,11 +226,11 @@ class SectionsController < ApplicationController
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
+      calculate_streak
       @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
       @answers = @task.answers.to_a.shuffle
       @progress = @section.percentage_complete(current_user) + 1
       @stored_resource = @task.stored_resources.first
-      @streak = @task.section.user_streak(current_user)
       
       if request.get?
         @partial = current_user.earned_points == 0 ? "intro" : "continue"
@@ -251,29 +251,45 @@ class SectionsController < ApplicationController
   end
   
   private
-    def has_edit_access?
-      unless @enable_user_creation
-        flash[:error] = "You do not have the ability to edit this section."
-        redirect_to root_path
-      end
-    end
   
-    def enrolled?
-      unless current_user.enrolled?(@section.path)
-        flash[:warning] = "You must be enrolled in a path before you can begin."
-        redirect_to root_path
+  def calculate_streak
+    if current_user.earned_points == 0
+      @streak = 0
+    else
+      @streak = session[:ssf].to_i
+      @last_task = CompletedTask.joins(:task).where("section_id = ?", @section.id).last
+      if @last_task.nil? || @last_task.status_id == Answer::INCORRECT
+        @streak = 0
+      else
+        @streak = @streak + 1
       end
     end
+    session[:ssf] = @streak 
+  end
     
-    def get_section_from_id
-      @section = Section.find(params[:id], :include => :path)
-      @path = @section.path
+  def has_edit_access?
+    unless @enable_user_creation
+      flash[:error] = "You do not have the ability to edit this section."
+      redirect_to root_path
     end
-    
-    def can_edit?
-      unless can_edit_path(@section.path)
-        flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
-        redirect_to root_path
-      end
+  end
+
+  def enrolled?
+    unless current_user.enrolled?(@section.path)
+      flash[:warning] = "You must be enrolled in a path before you can begin."
+      redirect_to root_path
     end
+  end
+  
+  def get_section_from_id
+    @section = Section.find(params[:id], :include => :path)
+    @path = @section.path
+  end
+  
+  def can_edit?
+    unless can_edit_path(@section.path)
+      flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
+      redirect_to root_path
+    end
+  end
 end

@@ -215,7 +215,7 @@ class PathsController < ApplicationController
   
   def show
     @leaderboards = Leaderboard.get_leaderboards_for_path(@path, false).first[1]
-    @enrolled_users = @path.enrolled_users
+    @enrolled_users = @path.enrolled_users.limit(15)
     @tasks = @path.tasks
     @votes = []
     
