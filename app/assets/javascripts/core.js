@@ -32,6 +32,17 @@ function show_persona_challenges(){
   });
 }
 
+function open_comments(comment){
+  var $comments = $(comment).parents('.postfooter').find('.comments')
+  console.log("opening");
+  console.log($comments);
+  if($comments.is(":visible")){
+    $comments.slideUp();
+  } else {
+    $comments.slideDown(); 
+  }
+}
+
 $(function(){
   close_button();
   $(".comments form").bind("ajax:success", function(xhr, data){
