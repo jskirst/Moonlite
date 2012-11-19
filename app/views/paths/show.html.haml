@@ -23,7 +23,7 @@
           %div#challengecarousel_inner
             %ul#challengecarousel_ul
               - @enrolled_users.each do |u|
-                = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "Level #{@level_achieved}, #{@total_points_earned} points" }
+                = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "Level #{u.level(@path)}, #{u.points(@path)} points" }
           %div#challengeright_scroll
             %a{href: "javascript:challengeslide(\"right\");"}
               %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/

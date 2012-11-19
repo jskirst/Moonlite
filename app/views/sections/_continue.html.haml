@@ -25,7 +25,11 @@
         });
         $("#nextbutton").on("ajax:success", function(xhr, data){
           $(".quizcontainer").fadeOut('slow', function(){
-            $(this).replaceWith(data).fadeIn();
+            if(data.status == "reload"){
+              window.location.reload(true);
+            } else {
+              $(this).replaceWith(data).fadeIn();
+            }
           });
         });
       });

@@ -245,7 +245,7 @@ class SectionsController < ApplicationController
       if request.get?
         render "finish"
       else
-        render :js => "window.location.reload(true);"
+        render json: { status: "reload" };
       end
     end
   end

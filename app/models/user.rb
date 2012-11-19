@@ -261,6 +261,10 @@ class User < ActiveRecord::Base
     return enrollments.find_by_path_id(path).level
   end
   
+  def points(path)
+    return enrollments.find_by_path_id(path).total_points
+  end
+  
   private
     def set_default_user_role
       if self.user_role_id.nil?

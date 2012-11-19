@@ -22,6 +22,7 @@ module SessionsHelper
   
   def current_company
     current_user.company if current_user
+    Company.find(1)
   end
   
   def notifications
@@ -65,7 +66,7 @@ module SessionsHelper
   def deny_access
     store_location
     flash[:notice] = "Please sign in to access this page."
-    redirect_to signin_path
+    redirect_to root_path
   end
   
   def redirect_back_or_to(default)
