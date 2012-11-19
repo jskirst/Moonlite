@@ -9,13 +9,13 @@ class ApplicationController < ActionController::Base
   private
   
   def log_event(user, link, image_link, content)
-    unless current_user == user
-      user.user_events.create!(
-        actioner_id: current_user.id,
-        link: link,
-        image_link: image_link,
-        content: content
-      )
-    end
+    return false if user == current_user
+    user = current_user if user.nil?
+    user.user_events.create!(
+      actioner_id: current_user.id,
+      link: link,
+      image_link: image_link,
+      content: content
+    )
   end
 end
