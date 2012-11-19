@@ -6,6 +6,10 @@ class Mailer < ActionMailer::Base
     mail(to: @user.email, subject: "Welcome to MetaBright!")
   end
   
+  def intro_drop_off(email)
+    mail(to: @user.email, subject: "Complete your first Challenge!")
+  end
+  
   def comment_alert(email)
     @commenting_user 
     @commenting_user_profile 
