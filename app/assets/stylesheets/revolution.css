@@ -33,7 +33,7 @@ a:active, a:focus{ outline: none; }
 .obfuscation img{ margin-top:38px; }
 .obfuscation a{ color:gray; }
 .postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px 0 0; position:relative; top:4px;}
-.leftstuff { display:inline-block; margin: 4px 0 10px 0; }
+.leftstuff { display:inline-block; margin: 4px 0 4px 0; }
 .leftstuff a { cursor:pointer; text-decoration:none; color: #004700; font-weight:normal; }
 .leftstuff a:hover { text-decoration:underline; }
 .posttimestamp{display:inline-block; top:10px; position:relative; }

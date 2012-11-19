@@ -8,7 +8,7 @@
       %div.displayin.floatl{ style: "margin-left: 10px;" }
         %img.display_sharing_icon{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", style: "height: 20px; cursor: pointer; position:relative; top:2px;" }
       = render "shared/sharing", { custom_style: "display: none; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
-    %div.displayin.floatr{ style: "position: relative; top: 5px; position:relative; top:2px;" }
+    %div.displayin.floatr{ style: "position: relative; top: 5px; position:relative; top:4px;" }
       - if created_at.today?
         %p #{time_ago_in_words(created_at)} ago
       - else
