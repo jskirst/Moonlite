@@ -1,6 +1,3 @@
-%script{:src => "app/assets/javascripts/challenge_carousel.js", :type => "text/javascript"}
-    
-
 :javascript
   jQuery(function($){
     $('.bar2').mosaic({
@@ -24,16 +21,20 @@
             %h1= @user.name
             %p{ style: "font-size: 16px; margin: 5px 0 7px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
         %div#challengecarousel_container
-          %div#challengeleft_scroll
-            %a{href: "javascript:challengeslide(\"left\");"}
-              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
+          - if @enrollments.size > 3
+            %div#challengeleft_scroll
+              %a{href: "javascript:challengeslide(\"left\");"}
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
           %div#challengecarousel_inner
             %ul#challengecarousel_ul
+              - if @enrollments.size < 4
+                = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the Metabright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
               - @enrollments.each do |e|
                 = render "shared/mosaic", { custom_class: "clip_pic", pic: e.path.path_pic, link: path_path(e.path), title: e.path.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
-          %div#challengeright_scroll
-            %a{href: "javascript:challengeslide(\"right\");"}
-              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
+          - if @enrollments.size > 3
+            %div#challengeright_scroll
+              %a{href: "javascript:challengeslide(\"right\");"}
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
       %input#challengehidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
 
   %div.row

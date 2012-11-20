@@ -54,7 +54,7 @@
           = hidden_field_tag :streak, @streak
           %ol{ style: "list-style-position: inside; margin-left: 0px;" }
             - @answers.each do |a|
-              %li.answer_content{ id: "answer_#{a.id}" }
+              %li.answer_content{ id: "answer_#{a.id}", onclick: "$(this).css('background-color', '#C6C6DA');" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
         = link_to "Next", continue_section_path(@section.id), id: "nextbutton", style: "display: none; float: right;", remote: true, class: "button button-actionable", method: "post" 
