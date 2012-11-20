@@ -26,6 +26,7 @@ module SessionsHelper
   end
   
   def notifications
+    return [] unless current_user
     current_user.user_events.where("is_read = ?", false)
   end
   

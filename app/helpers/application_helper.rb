@@ -1,6 +1,11 @@
 module ApplicationHelper
   def title
-    base_title = company_logo || "MetaBright"
+    if notifications.size > 0
+      base_title = "Metabright(#{notifications.size})"
+    else
+      base_title = "MetaBright"
+    end
+    
     if @title.nil?
       base_title
     else
