@@ -21,7 +21,7 @@
           %div#challengecarousel_inner{ style: "#{@enrolled_users.size < 4 ? 'margin-left: -12px;' : ''}" }
             %ul#challengecarousel_ul
               - if @enrolled_users.size < 4
-                = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the Metabright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/Stoney_image_carousel_altered.png" }
+                = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the Metabright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
               - @enrolled_users.each do |u|
                 = render "shared/mosaic", { pic: u.profile_pic, link: user_path(u), title: u.name, subtitle: "Level #{u.level(@path)}, #{u.points(@path)} points" }
           - if @enrolled_users.size > 4
