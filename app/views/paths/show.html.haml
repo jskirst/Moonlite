@@ -78,10 +78,10 @@
               - @path.sections.each do |s|
                 %li.launchpad_link{ title:"#{s.name}"}
                   - if s.points_until_unlock(@enrollment) <= 0
-                    %div{ style: "display:inline-block; width:75%;" }
+                    %div{ style: "display:inline-block; width:75%; line-height:16px;" }
                       = link_to launchpad_section_path(s), remote: true do
                         %span.pointer_caret= "»" if s == @current_section
-                        %span= truncate(s.name, length: 17)
+                        %span= truncate(s.name, length: 40)
                     %div.pointsandprogress
                       %div #{s.points_earned(current_user)} pts
                       %div #{s.percentage_complete(current_user)}%
