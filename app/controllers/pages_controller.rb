@@ -15,12 +15,12 @@ class PagesController < ApplicationController
       challenge_questions = current_user.completed_tasks
         .joins(:task)
         .where("tasks.answer_type = ?", Task::CREATIVE)
-        .select(:task_id)
-        .to_a.collect &:task_id
+        .select(:section_id)
+        .to_a.collect &:section_id
       unless challenge_questions.empty?
         @page = params[:page].to_i
-        @newsfeed_items = CompletedTask.joins(:submitted_answer)
-          .where("completed_tasks.task_id in (?)", challenge_questions)
+        @newsfeed_items = CompletedTask.joins(:task, :submitted_answer)
+          .where("tasks.section_id in (?)", challenge_questions)
           .order("completed_tasks.created_at DESC")
           .limit(30)
           .offset(@page * 30)

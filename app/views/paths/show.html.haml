@@ -12,7 +12,8 @@
             - if current_user
               %h3 Level #{@enrollment.level}, #{@enrollment.total_points} points
             - else
-              %h3{ style:"height:36px;" }
+              %h4{ style: "height: 46px; cursor: pointer;" }
+                %a.login_link Login or Register to join this challenge!
         %div#challengecarousel_container
           - if @enrolled_users.size > 4
             %div#challengeleft_scroll
@@ -31,15 +32,6 @@
       %input#challengehidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
   %div.row
     %div.span5
-      %div.leftbox.newsfeed
-        %div.leftboxheader{style: "padding: 10px 12px;"} About This Challenge
-        %div.leftboxfooter{style: "padding-top:6px; background-color:white;"}
-          %ul
-            %li Author: <img src="#"> <a href="#"><strong>Some dude</strong></a>
-            %li Description: This is an awesome Challenge for many reasons. I shall begin elucidating them now...
-            %li Last updated: Today
-            %li Total users: 4,192
-            %li Newest member: <a href="#">Bra McBra</a>
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
         %div.leftboxheader{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}

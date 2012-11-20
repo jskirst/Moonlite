@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
         link = submission_details_path(owner.path, owner)
         content = "#{current_user} commented on your submission"
       end
-      log_event(comment.owner.user, link, comment.owner.user.profile_pic, content)
+      log_event(comment.owner.user, link, current_user.profile_pic, content)
       render partial: "comment", locals: { comment: comment }
     else
       raise "No comment provided"

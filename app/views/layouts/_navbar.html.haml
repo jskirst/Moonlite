@@ -33,6 +33,6 @@
               %span{ style: "vertical-align: middle;" }= current_user.name
           %li
             = link_to "Sign out", signout_path
-        - else
+        - elsif params[:controller] == "paths"
           %li
-            = link_to "Sign in", root_url, class: "btn danger", style: "padding:3px 7px; border-radius:2px; margin-top:6px;"
+            %a.btn.danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px;" } Sign in

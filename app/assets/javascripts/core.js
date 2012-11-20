@@ -60,4 +60,9 @@ $(function(){
     $(".image_url_preview").attr("src", link);
     $("#image_url_preview").attr("src", link);
   });
+  
+  $(".login_link").click(function(){
+    console.log("Shoudl see");
+    $("#login_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+  });
 });

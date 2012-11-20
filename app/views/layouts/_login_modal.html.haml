@@ -1,0 +1,21 @@
+%div#login_modal.dropdown_modal.modal.hide.fade
+  %div.explorecontainer{ style: "width: 425px; background:none; border:none;" }
+    :javascript
+      $(function(){ close_button(); });
+    %div.explorenewusercontent
+      %div.exploreheader{ style: "width: inherit;" }
+        %div.modal_close
+          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
+        %h1{ style: "font-size: 23px; margin-bottom: 3px;" } Welcome to Metabright! 
+        %hr{ style: "margin: 0;" }
+      %div.explorebody{ style: "min-height: 250px; max-height: 450px; overflow-y: auto;" }
+        %center
+          %p{ style: "padding: 10px; font-size: 14px;" } We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.
+          %div{ style: "margin-bottom: 20px;"}
+            = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px;" do
+              %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png" }
+              %span.landingbuttontext{ style: "color:white; font-size:13px; display:inline-block; position:relative; bottom:9px; left:5px; font-family:'MuliRegular'; font-weight: bold;" } Sign in with Google »
+          %div
+            = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
+              %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png" }
+              %span.landingbuttontext{ style: "color:white; font-size:13px; display:inline-block; position:relative; bottom:9px; left:5px; font-family:'MuliRegular'; font-weight: bold;" } Sign in with Facebook »

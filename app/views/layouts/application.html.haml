@@ -6,6 +6,7 @@
     = render "layouts/navbar", { no_bar: false }
     = render "layouts/explore_modal" if current_user
     = render "layouts/notifications_modal" if current_user
+    = render "layouts/login_modal" if not current_user
     %div.container.body{ style: "padding-top: 51px;" }
       - flash.each do |key, value|
         = content_tag(:div, value, :class => "alert-message #{key}")

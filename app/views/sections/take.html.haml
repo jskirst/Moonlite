@@ -10,7 +10,7 @@
         $("#submit_button").attr("disabled","disabled");
       });
     });
-  %div.quizcontainer
+  %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
     %div.CRquizspace
       %div.quizheader
         = image_tag @path.path_pic, size: "40x40"
