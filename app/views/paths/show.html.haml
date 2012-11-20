@@ -39,8 +39,8 @@
             %li{ style: "border-bottom: 1px solid rgb(235, 235, 235);"}
               %span.rank= (i+1).to_s
               = image_tag entry.user.profile_pic 
-              = link_to truncate(entry.user.name, length: 20), entry.user, class: "name"
-              %span.level lvl. #{entry.user.level(@path)}
+              = link_to truncate(entry.user.name, length: 22), entry.user, class: "name", style: "font-size:14px; position:relative; bottom:1px;"
+              %span.level{style: "position:relative; bottom:1px;"} lvl. #{entry.user.level(@path)}
               %span.points= entry.score
     %div.span11
       %div.newsfeed
