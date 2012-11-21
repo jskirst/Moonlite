@@ -1,3 +1,5 @@
+%script{:src => "app/assets/javascripts/truncate.js", :type => "text/javascript"}
+
 %div.sectioninfocontainer
   %div#sectionpointchart
   %div.launchpadCRcolumn
@@ -70,6 +72,8 @@
 
 
   :javascript
+    var name = '#{@current_section.name}'
+    var trunc_name = truncate(name, 15)
     $(function(){
       $("#arena_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#arena_tab").show(); });
       $("#questions_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#questions_tab").show(); });
@@ -93,7 +97,7 @@
         tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
         plotOptions: { series: { stacking: 'normal' } },
         navigation: { buttonOptions: { enabled: false } },
-        series: [ { name: '#{@current_section.name}', data: [#{@current_section.percentage_complete(current_user)}] } ]
+        series: [ { name: trunc_name, data: [#{@current_section.percentage_complete(current_user)}] } ]
       });
       apply_hightcharts_theme();
     });
