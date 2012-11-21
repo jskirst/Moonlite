@@ -108,11 +108,15 @@ class Section < ActiveRecord::Base
   end
   
   def challenge_tasks
-    return tasks.where("answer_type in (?)", [0,3])
+    return tasks.where("answer_type in (?)", [0])
   end
   
   def core_tasks
-    return tasks.where("answer_type in ?", [1,2])
+    return tasks.where("answer_type in (?)", [1,2])
+  end
+  
+  def achievement_tasks
+    return tasks.where("answer_type in (?)", [3])
   end
   
   def unlocked?(user)
