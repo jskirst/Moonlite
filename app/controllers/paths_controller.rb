@@ -63,7 +63,7 @@ class PathsController < ApplicationController
       @path.user_roles.each { |pur| @path_user_roles << pur.id }
       render "edit_roles"
     else
-      @sections = @path.sections.includes({ :tasks => :answers })
+      @sections = @path.sections.includes({ :tasks => :answers }).all(order: "id ASC")
       @categories = current_user.company.categories
       render "edit"
     end
@@ -228,7 +228,7 @@ class PathsController < ApplicationController
     @page = params[:page].to_i
     offset = @page * 30
     if params[:submission]
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("submitted_answers.id = ?", params[:submission])
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
       @sharing = true
     elsif params[:task]
       @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
