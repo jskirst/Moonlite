@@ -16,7 +16,7 @@
       </p>
     </blockquote>
     <% if task.stored_resources.first %>
-      <%= image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 20px; max-width: 500px;" %>
+      <%= image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 40px; max-width: 500px;" %>
     <% end %>
     <ol style="padding-left:20px;">
       <% task.answers.each do |a| %>

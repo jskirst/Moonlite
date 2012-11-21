@@ -1,7 +1,7 @@
 = render "settings_modal", { :path => @path, :categories => @categories }
 - @sections.each do |s|
   = render "section_settings_modal", { :section => s }
-%div.single_pane
+%div.single_pane{ style: "min-height: 600px;" }
   %div.row{ style: "vertical-align: top; margin: 0 0 20px 0;"}
     %div.span3
       %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }
@@ -16,25 +16,23 @@
         = link_to "View", @path, class: "button button-actionable", style: "margin:10px 0 10px 10px;"
       - else
         = link_to "Publish", publish_path_path(@path), class: "button button-actionable", style: "margin:10px 0 10px 10px;", confirm: "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes."
-      = link_to "Dashboard", dashboard_path_path(@path), class: "button button-info", style: "margin:10px 0 10px 10px;"
       %span.button.button-standard.edit_path_settings_button{ style: "margin:10px 0 0 10px;" } Settings
   %div
     = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
     %h2{ style: "font-size: 20px; color: darkgray;" } SECTIONS
+    %hr{ style: "margin: 5px 0 0 0;" }
     %table
       - @sections.to_a.each_with_index do |s, i|
         %tr
-          %td.section
-            %section{ style: "min-height: 290px;" }
-              %div.row
+          %td.section{ style: "border-bottom: 1px solid #EEE; border-top: 0px;" }
+            %section
+              %div.row{ style: "min-height: 75px;" }
                 %div.floatr
                   %ul.pills
                     %li.active
                       %a.edit_section_overview_pill{ onclick: "close_section_container(this);" } Overview
                     %li
                       %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));" } Questions
-                    %li
-                      %a.edit_section_content_pill{ onclick: "display_section_content($(this).parents('td.section'));" } Content
                     %li
                       %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" } Settings
                 %div.span14
@@ -47,8 +45,5 @@
                       questions
                     - unless s.is_published
                       %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
-                  = render "sections/overview", { :s => s }
               %div.section_questions_container.row{ style: "display:none;" }
                 = render "sections/edit_tasks", { :section => s, :tasks => s.tasks, :display_new_task_form => true, :new_task => s.tasks.new }
-              %div.section_content_container.row{ style: "margin: 10px 0px 0px 0px; display:none;" }
-                = render "sections/edit_content", { :section => s, :stored_resources => s.stored_resources}
