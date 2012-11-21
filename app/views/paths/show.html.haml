@@ -69,13 +69,13 @@
         %h1
           = image_tag(@path.path_pic)
           %div #{@path.name} 
-          %div{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@total_points_earned} pts, Level #{current_user.level(@path)}
+          %div{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@enrollment.total_points} pts, Level #{current_user.level(@path)}
         %div.launchpadcontent
           %div.launchpadsectioncolumn
             %div.launchpadcolumnheader
               Sections
             %ul.sectionlist
-              - @path.sections.each do |s|
+              - @path.sections.all(order: "id ASC").each do |s|
                 %li.launchpad_link{ title:"#{s.name}"}
                   - if s.points_until_unlock(@enrollment) <= 0
                     %div{ style: "display:inline-block; width:75%; line-height:16px;" }

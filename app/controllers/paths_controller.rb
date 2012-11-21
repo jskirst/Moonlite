@@ -63,7 +63,7 @@ class PathsController < ApplicationController
       @path.user_roles.each { |pur| @path_user_roles << pur.id }
       render "edit_roles"
     else
-      @sections = @path.sections.includes({ :tasks => :answers })
+      @sections = @path.sections.includes({ :tasks => :answers }).all(order: "id ASC")
       @categories = current_user.company.categories
       render "edit"
     end
@@ -218,32 +218,24 @@ class PathsController < ApplicationController
     @enrolled_users = @path.enrolled_users.limit(15)
     @tasks = @path.tasks
     @votes = []
-    
     if current_user
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
-      @total_points_earned = @enrollment.total_points
-      @skill_ranking = @enrollment.skill_ranking
-      @level_achieved = @enrollment.level
-    
       @current_section = current_user.most_recent_section_for_path(@path)
-      @unlocked = @current_section.unlocked?(current_user)
-    
-      @next_rank_points, @user_rank = get_rank_and_next_points(@leaderboards)
-    
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
       @display_launchpad = params[:completed]
     end
+    
     @page = params[:page].to_i
     offset = @page * 30
     if params[:submission]
-      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("submitted_answers.id = ?", params[:submission])
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
       @sharing = true
     elsif params[:task]
-      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
     elsif params[:order] && params[:order] == "votes"
-      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).all(order: "total_votes DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
     else
-      @responses = @path.completed_tasks.joins(:submitted_answer).offset(offset).limit(30).all(order: "completed_tasks.created_at DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
     end
     @more_available = @responses.size == 30
     @activity_stream = @path.activity_stream
