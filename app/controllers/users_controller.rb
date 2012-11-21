@@ -10,10 +10,10 @@ class UsersController < ApplicationController
     if params[:task]
       all_responses = @user.completed_tasks.joins(:submitted_answer)
       @newsfeed_items = [all_responses.find_by_task_id(params[:task])]
-    elsif params[:order] && params[:order] == "date"
-      all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
-    else
+    elsif params[:order] && params[:order] == "votes"
       all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer).all(order: "total_votes DESC")
+    else
+      all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer).all(order: "completed_tasks.created_at DESC")
     end  
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
