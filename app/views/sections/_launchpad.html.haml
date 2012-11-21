@@ -1,5 +1,3 @@
-%script{:src => "app/assets/javascripts/truncate.js", :type => "text/javascript"}
-
 %div.sectioninfocontainer
   %div#sectionpointchart
   %div.launchpadCRcolumn
@@ -72,8 +70,8 @@
 
 
   :javascript
-    var name = '#{@current_section.name}'
-    var trunc_name = truncate(name, 15)
+    var name = "#{@current_section.name}";
+    var trunc_name = truncate(name, 15);
     $(function(){
       $("#arena_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#arena_tab").show(); });
       $("#questions_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#questions_tab").show(); });
