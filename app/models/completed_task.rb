@@ -27,4 +27,8 @@ class CompletedTask < ActiveRecord::Base
     return nil if submitted_answer.nil
     return submitted_answer.content
   end
+  
+  def correct?
+    return self.status_id == Answer::CORRECT
+  end
 end

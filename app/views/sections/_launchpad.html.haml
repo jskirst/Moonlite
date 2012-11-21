@@ -2,51 +2,98 @@
   %div#sectionpointchart
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
-      Challenge Questions
-    - if @unlocked
-      - if @current_section.quiz_complete?(current_user)
-        %table
-          - @current_section.challenge_tasks.each do |t|
-            - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
-            %tr
-              %td
-                - if completed_task
-                  %div= link_to t.question, user_path(current_user, task: t.id)
-                - else
-                  %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
-              %td.question_status
-                - if completed_task
-                  = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
-                  %br
-                  %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
-                - else
-                  = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
-      - else
-        %p Complete the knowledge test to unlock the rest of this section.
-        %p{ style: "margin-top: 15px;" }= link_to "Continue", continue_section_path(@current_section), class: "button button-info"
-    - else
-      %p This section is coming soon!
+      %ul.tabs
+        %li.active
+          %a#arena_tab_link Arena
+        %li
+          %a#questions_tab_link Questions
+        %li
+          %a#achievements_tab_link Achievements
+      %div#arena_tab.tab_content
+        - if @current_section.challenge_tasks.empty?
+          %p{ style: "padding-left: 10px;" } There are no arena questions for this section yet. Check back in later!
+        - else
+          - if @current_section.quiz_complete?(current_user)
+            %table
+              - @current_section.core_tasks.each do |t|
+                - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+                %tr
+                  %td
+                    %p= t.question
+                  %td.question_status
+                    - if completed_task.correct?
+                      %span.label.success Correct
+                    - else
+                      %span.label.important Incorrect
+          - else
+            %p{ style: "margin-top: 15px;" }= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
+      %div#questions_tab.tab_content{ style: "display: none;" }
+        - if @current_section.challenge_tasks.empty?
+          %p{ style: "padding-left: 10px;" } There are no challenge questions for this section yet. Check back in later!
+        - else
+          %table
+            - @current_section.challenge_tasks.each do |t|
+              - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+              %tr
+                %td
+                  - if completed_task
+                    %div= link_to t.question, user_path(current_user, task: t.id)
+                  - else
+                    %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                %td.question_status
+                  - if completed_task
+                    = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
+                    %br
+                    %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                  - else
+                    = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
+      %div#achievements_tab.tab_content{ style: "display: none;" }
+        - if @current_section.achievement_tasks.empty?
+          %p{ style: "padding-left: 10px;" } There are no achievements for this section yet. Check back in later!
+        - else
+          %table
+            - @current_section.achievement_tasks.each do |t|
+              - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+              %tr
+                %td
+                  - if completed_task
+                    %div= link_to t.question, user_path(current_user, task: t.id)
+                  - else
+                    %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                %td.question_status
+                  - if completed_task
+                    = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
+                    %br
+                    %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                  - else
+                    = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
 
-:javascript
-  $(function(){
-    var chart;
-    chart = new Highcharts.Chart({
-      chart: { renderTo: 'sectionpointchart', type: 'bar' },
-      credits: { enabled: false },
-      title: { text: null },
-      xAxis: { min:0, categories: [''] },
-      yAxis: { min: 0, max: 100, width: 450, title: { text: 'Percent Complete' } },
-      legend: {
-          backgroundColor: '#FFFFFF',
-          reversed: true,
-          align:'right',
-          layout:'vertical',
-          verticalAlign: 'top',
-      },
-      tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
-      plotOptions: { series: { stacking: 'normal' } },
-      navigation: { buttonOptions: { enabled: false } },
-      series: [ { name: '#{@current_section.name}', data: [#{@current_section.percentage_complete(current_user)}] } ]
+
+  :javascript
+    $(function(){
+      $("#arena_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#arena_tab").show(); });
+      $("#questions_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#questions_tab").show(); });
+      $("#achievements_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#achievements_tab").show(); });
     });
-    apply_hightcharts_theme();
-  });
+    $(function(){
+      var chart;
+      chart = new Highcharts.Chart({
+        chart: { renderTo: 'sectionpointchart', type: 'bar' },
+        credits: { enabled: false },
+        title: { text: null },
+        xAxis: { min:0, categories: [''] },
+        yAxis: { min: 0, max: 100, width: 450, title: { text: 'Percent Complete' } },
+        legend: {
+            backgroundColor: '#FFFFFF',
+            reversed: true,
+            align:'right',
+            layout:'vertical',
+            verticalAlign: 'top',
+        },
+        tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
+        plotOptions: { series: { stacking: 'normal' } },
+        navigation: { buttonOptions: { enabled: false } },
+        series: [ { name: '#{@current_section.name}', data: [#{@current_section.percentage_complete(current_user)}] } ]
+      });
+      apply_hightcharts_theme();
+    });

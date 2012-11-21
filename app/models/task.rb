@@ -71,21 +71,8 @@ class Task < ActiveRecord::Base
     return errors
   end
   
-  def describe_answer(answer)
-    answers = [nil,answer1,answer2,answer3,answer4]
-    return answers[Integer(answer)]
-  end
-  
   def correct_answer
     answers.find_by_is_correct(true)
-  end
-  
-  def describe_answers
-    all_answers = answers_to_array
-    answer = correct_answer
-    all_answers = all_answers.unshift(answer).unshift(nil)
-    all_answers = all_answers.uniq
-    return all_answers
   end
   
   def total_answers
