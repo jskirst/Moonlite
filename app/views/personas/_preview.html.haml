@@ -6,6 +6,9 @@
       %div.exploretextdetails{ style: "min-height: 95px;" }
         %h2= persona.name
         %p= persona.description
+        - if current_user && persona.level(current_user)
+          %p
+            %strong Your Rating: Level #{persona.level(current_user)}
       - if persona.path_personas.empty?
         %button.button.button-actionable{ style: "float: right; opacity: 0.5" } Choose
       - else

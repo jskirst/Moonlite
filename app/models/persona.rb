@@ -31,4 +31,11 @@ class Persona < ActiveRecord::Base
     return self.image_url unless self.image_url.nil?
     return "/images/default_achievement_pic.jpg"
   end
+  
+  def level(user)
+    return nil unless user
+    up = user_personas.find_by_user_id(user.id)
+    return nil unless up
+    return up.level
+  end
 end

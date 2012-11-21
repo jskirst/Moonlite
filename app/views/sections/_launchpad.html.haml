@@ -26,7 +26,8 @@
                     - else
                       %span.label.important Incorrect
           - else
-            %p{ style: "margin-top: 15px;" }= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
+            %p{ style: "margin: 15px 0 15px 0;" } Enter the arena to see where you stack up!
+            %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
       %div#questions_tab.tab_content{ style: "display: none;" }
         - if @current_section.challenge_tasks.empty?
           %p{ style: "padding-left: 10px;" } There are no challenge questions for this section yet. Check back in later!
