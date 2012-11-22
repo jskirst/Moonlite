@@ -10,7 +10,7 @@
         %li
           %a#achievements_tab_link Achievements
       %div#arena_tab.tab_content
-        - if @current_section.challenge_tasks.empty?
+        - if @current_section.core_tasks.empty?
           %p{ style: "padding-left: 10px;" } There are no arena questions for this section yet. Check back in later!
         - else
           - if @current_section.quiz_complete?(current_user)
