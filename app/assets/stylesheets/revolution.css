@@ -232,6 +232,7 @@ nav img{width:150px}
 .navitem a:hover{opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
 .navitem a:active{bottom:0px; background-color: rgba(0,0,0, .1);}
 .navicons li.nav_item:first-child a {border-left: 1px solid #444;}
+.notifications img{width:25px; position:relative; top:5px;}
 
 .button { text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }

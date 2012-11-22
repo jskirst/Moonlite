@@ -31,6 +31,8 @@
             = link_to current_user do
               = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
               %span{ style: "vertical-align: middle;" }= current_user.name
+          %li.notifications
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications.png"
           %li
             = link_to "Sign out", signout_path
         - elsif params[:controller] == "paths"
