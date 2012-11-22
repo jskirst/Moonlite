@@ -3,6 +3,17 @@
   .form_field { margin: 20px 20px 30px 30px; }
   input, select { padding: 3px; font-size: 16px; color: #404040; }
 %div.single_pane
+  :javascript
+    $(function(){
+      $("#new_path").submit(function(){
+        if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
+          alert("You must provide an image and a name before you can create a challenge.");
+          return false;
+        } else {
+          return true;
+        }
+      });
+    });
   %div
     = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: "height: 60px; display: inline; vertical-align: middle"
     %h1{ style: "display: inline; vertical-align: middle;" } Create a Challenge

@@ -20,7 +20,7 @@
       - @users.to_a.each_with_index do |u, i|
         %tr
           %td= i
-          %td= u.name
+          %td= link_to u.name, u
           %td= u.email
           %td= u.enrollments.size
           %td= u.earned_points
