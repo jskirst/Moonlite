@@ -12,6 +12,8 @@ class Task < ActiveRecord::Base
   # Challenge Subtypes
   CHECKIN_CONFIRM   = 200
   CHECKIN_IMAGE     = 201
+  CHECKIN_TEXT      = 201
+  CHECKIN_LINK      = 201
   
   attr_readonly :section_id
   attr_accessor :answer_content
@@ -47,7 +49,7 @@ class Task < ActiveRecord::Base
     end
   end
   after_create do
-    if answer_type > 0
+    if answer_type == 2
       answer_content.each do |a|
         answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
       end
