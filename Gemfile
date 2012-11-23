@@ -19,6 +19,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'taps'
 gem 'haml'
+gem 'faker'
 
 group :assets do
   gem 'sass-rails'
@@ -38,6 +39,5 @@ group :test do
 	gem 'webrat'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
-	gem 'faker'
 	gem 'simplecov', :require => false
 end
