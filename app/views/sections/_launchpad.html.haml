@@ -4,14 +4,14 @@
     %div.launchpadcolumnheader
       %ul.tabs
         %li.active
-          %a#arena_tab_link Arena
+          %a#arena_tab_link{title: "Arena"} Arena
         %li
-          %a#questions_tab_link Questions
+          %a#questions_tab_link{title: "Creative Responses"}  CR's
         %li
-          %a#achievements_tab_link Achievements
+          %a#achievements_tab_link{title: "Tasks"} Tasks
       %div#arena_tab.tab_content
         - if @current_section.challenge_tasks.empty?
-          %p{ style: "padding-left: 10px;" } There are no arena questions for this section yet. Check back in later!
+          %p{ style: "padding-left: 10px;" } There are no Arena questions for this section yet. Check back in later!
         - else
           - if @current_section.quiz_complete?(current_user)
             %table
@@ -26,11 +26,11 @@
                     - else
                       %span.label.important Incorrect
           - else
-            %p{ style: "margin: 15px 0 15px 0;" } Enter the arena to see where you stack up!
+            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
             %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
       %div#questions_tab.tab_content{ style: "display: none;" }
         - if @current_section.challenge_tasks.empty?
-          %p{ style: "padding-left: 10px;" } There are no challenge questions for this section yet. Check back in later!
+          %p{ style: "padding-left: 10px;" } There are no Creative Responses for this section yet. Check back in later!
         - else
           %table
             - @current_section.challenge_tasks.each do |t|
@@ -50,7 +50,7 @@
                     = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
       %div#achievements_tab.tab_content{ style: "display: none;" }
         - if @current_section.achievement_tasks.empty?
-          %p{ style: "padding-left: 10px;" } There are no achievements for this section yet. Check back in later!
+          %p{ style: "padding-left: 10px;" } There are no Tasks for this section yet. Check back in later!
         - else
           %table
             - @current_section.achievement_tasks.each do |t|
