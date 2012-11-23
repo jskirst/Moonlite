@@ -156,10 +156,6 @@ class User < ActiveRecord::Base
     return true
   end
   
-  def must_register?
-    self.email.include?("@anonymous.metabright.com")
-  end
-  
   def send_password_reset
     email_details = { :email => self.email, :token1 => self.signup_token }
     Mailer.reset(email_details).deliver
