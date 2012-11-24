@@ -28,7 +28,7 @@ task :send_alerts => :environment do
   
   puts "Sending comment alerts..."
   comments = Comment.where("created_at > ?", 10.minutes.ago)
-  comments.each do |vote|
+  comments.each do |comment|
     puts "Sending comment alert..."
     Mailer.content_comment_alert(comment).deliver
   end
