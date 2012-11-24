@@ -67,7 +67,7 @@ namespace :db do
     
     unless ENV['DISABLE_FAKE']  
       PATHS.each do |p|
-        moonlite_company.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :user_id => moonlite_admin.id, :is_published => true, :is_public => true, :category_id => default_cat.id)
+        moonlite_company.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :user_id => moonlite_admin.id, :is_published => true, :is_public => true, :is_approved => true, :category_id => default_cat.id)
       end
     
       Path.all.each do |path|

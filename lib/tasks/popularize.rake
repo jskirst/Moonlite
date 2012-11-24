@@ -1,29 +1,37 @@
-def create_user
+def new_user
   u = User.new
-  u.name = Faker::Name.name
+  u.name = Faker::Name.first_name + " " + Faker::Name.last_name
   u.email = "#{u.name.split[0][0]}#{u.name.split[1]}@gmail.com".downcase
   u.is_fake_user = true
   u.password = "awdrgy"
   u.password_confirmation = u.password
   u.company_id = Company.first.id
   u.user_role_id = UserRole.first.id
-  u.save
-  return u
+  u.save!
+  return u.reload
 end
     
 namespace :db do
   desc "Fill database with user data"
   task :popularize => :environment do
-    users = (1..20).map { create_user }
+    users = (1..5).map { new_user }
     
-    open_paths = Paths.where("is_published = ? and is_approved = ?")
+    open_paths = Path.where("is_published = ? and is_approved = ?", true, true)
     users.each do |u|
       open_paths.each do |p|
-        if rand(5) == 4
+        if rand(2) > 0
           e = u.enroll!(p)
-          tasks = p.sections.first(order: "id ASC").tasks
+          tasks = p.sections.first(order: "id ASC").tasks.where("tasks.answer_type = ?", Task::MULTIPLE)
           tasks.each do |t|
-            ct =  
+            if rand(2) > 0
+              answer = t.correct_answer
+            else
+              answer = t.answers.to_a.shuffle.first
+            end
+            rand_range = Random.new(12923847)
+            score = rand_range.rand(51..100)
+            ct = u.completed_tasks.create!(task_id: t.id, status_id: Answer::INCOMPLETE)
+            ct.complete_multiple_choice(answer.id, score)
           end
         end
       end

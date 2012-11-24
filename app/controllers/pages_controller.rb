@@ -75,6 +75,7 @@ class PagesController < ApplicationController
   end
   
   def email_test
+    raise "FUCK NO" unless @enable_administration
     if params[:email]
       eval("Mailer.#{params[:test_method]}('#{params[:email]}').deliver")
       flash[:success] = "Email should have been sent."

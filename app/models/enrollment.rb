@@ -11,7 +11,7 @@ class Enrollment < ActiveRecord::Base
     errors[:base] << "Msg"  "Error 95" unless self.user.company_id == self.path.company_id 
   end
   
-  before_create do
+  after_create do
     path.personas.each do |persona|
       user.enroll!(persona)
     end

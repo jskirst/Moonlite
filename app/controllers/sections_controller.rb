@@ -192,36 +192,11 @@ class SectionsController < ApplicationController
   end
   
   def complete
-    task = Task.find(params[:task_id])
-    ct = current_user.completed_tasks.find_by_task_id(task.id)
-    raise "Already answered" unless ct.status_id == Answer::INCOMPLETE
-    points = params[:points_remaining].to_i
-    raise "Out of time" if points > 0 and ct.created_at <= 45.seconds.ago
-    answer = task.answers.find(params[:answer])
-    correct_answer = task.correct_answer
-    points = params[:points_remaining].to_i
-    status = (answer == correct_answer) ? Answer::CORRECT : Answer::INCORRECT
-    ct.task_id = task.id; ct.answer_id = answer.id; ct.status_id = status; ct.points_awarded = 0;
-    
-    streak = task.section.user_streak(current_user)
-    if ct.status_id == 1
-      #streak_points, streak_name = calculate_streak_bonus((streak + 1), points)
-      ct.points_awarded = points #+ streak_points
-      current_user.award_points(task, points)
-    end
-    ct.save
-    
-    percent_complete = @section.percentage_complete(current_user) + 1
-    earned_points = current_user.enrollments.find_by_path_id(@section.path.id).total_points
-    
-    render json: { correct_answer: correct_answer.id, 
-      supplied_answer: answer.id, 
-      earned_points: earned_points, 
-      progress: percent_complete, 
-      messages: [""] }
+    ct = current_user.completed_tasks.find_by_task_id(params[:task_id])
+    results = ct.complete_multiple_choice(params[:answer], params[:points_remaining].to_i)
+    render json: results
   end
     
-  
   def continue
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
