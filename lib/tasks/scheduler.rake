@@ -17,3 +17,19 @@ task :refresh_staging => :environment do
   ending_time = Time.now
   puts "Total run time: #{ending_time - starting_time} seconds."
 end
+
+task :send_alerts => :environment do
+  desc "Sending alerts..."
+  votes = Vote.where("created_at > ?", 10.minutes.ago)
+  votes.each do |vote|
+    puts "Sending vote alert..."
+    Mailer.content_vote_alert(vote).deliver
+  end
+  
+  puts "Sending comment alerts..."
+  comments = Comment.where("created_at > ?", 10.minutes.ago)
+  comments.each do |vote|
+    puts "Sending comment alert..."
+    Mailer.content_comment_alert(comment).deliver
+  end
+end

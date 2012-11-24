@@ -9,6 +9,7 @@ class SubmittedAnswer < ActiveRecord::Base
   has_one :path, through: :completed_task
   has_one :user, through: :completed_task
   has_many :comments, as: :owner
+  has_many :votes
   has_many :stored_resources, as: :owner
  
   validates :content, length: { maximum: 2500 }
