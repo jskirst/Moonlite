@@ -28,7 +28,8 @@ namespace :db do
             else
               answer = t.answers.to_a.shuffle.first
             end
-            score = rand(51..100)
+            rand_range = Random.new(12923847)
+            score = rand_range.rand(51..100)
             ct = u.completed_tasks.create!(task_id: t.id, status_id: Answer::INCOMPLETE)
             ct.complete_multiple_choice(answer.id, score)
           end
