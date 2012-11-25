@@ -1,22 +1,13 @@
 class PathsController < ApplicationController
-  include OrderHelper
-  
   before_filter :authenticate, except: [:show]
-  before_filter :admin_only, :only => [:index]
   before_filter :get_path_from_id, :except => [:index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
-  before_filter :can_edit?, :only => [:edit, :update, :reorder_sections, :destroy, :collaborator, :collaborators]
+  before_filter :can_edit?, :only => [:edit, :update, :destroy, :collaborator, :collaborators]
   
 # Begin Path Creation
   
   def new
     @path = Path.new
-    @categories = current_user.company.categories
-    @title = "New #{name_for_paths}"
-    if params[:type] == "question"
-      @path.is_question = true
-      render "new_question"
-    end
   end
 
   def create
@@ -42,71 +33,25 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
-    store_location
-    @path.reload
     if @path.sections.empty?
-      redirect_to new_section_path(:path_id => @path.id)
-      return
+      redirect_to new_section_path(:path_id => @path.id) and return
     end
-    @title = "Edit"
-    @categories = current_user.company.categories
-    @file_upload_possible = @path.sections.size == 0 ? true : false
-    @mode = params[:m]
-    if @mode == "settings"
-      render "edit_settings"
-    elsif @mode == "achievements" && @enable_achievements
-      @achievements = @path.achievements
-      render "edit_achievements"
-    elsif @mode == "access_control"
-      @user_roles = @path.company.user_roles
-      @path_user_roles = [] 
-      @path.user_roles.each { |pur| @path_user_roles << pur.id }
-      render "edit_roles"
-    else
-      @sections = @path.sections.includes({ :tasks => :answers }).all(order: "id ASC")
-      @categories = current_user.company.categories
-      render "edit"
-    end
+    @sections = @path.sections.includes({ :tasks => :answers }).all(order: "id ASC")
   end
   
   def update
-    params[:path].delete("image_url") if params[:path][:image_url].blank?
-    params[:path].delete("is_approved")
-    begin
-      if @path.update_attributes(params[:path])
-        flash[:success] = "Changes saved."
-      else
-        flash[:error] = "Error occurred: "+@path.errors.full_messages.join(". ")
-      end
-    rescue
-      flash[:error] = "An error prevented your changes from being saved. Please try again."
+    @path.name = params[:path][:name]
+    @path.description = params[:path][:description]
+    @path.save
+    unless params[:stored_resource_id].blank?
+      @path.stored_resource.destroy if @path.stored_resource
+      sr = StoredResource.find(params[:stored_resource_id])
+      raise "FATAL: STEALING RESOURCE" if sr.owner_id
+      sr.owner_id = @path.id
+      sr.owner_type = @path.class.to_s
+      sr.save
     end
     redirect_to edit_path_path(@path)
-  end
-  
-  def update_roles
-    @path = current_user.company.paths.find(params[:id])
-    all_roles = current_user.company.user_roles
-    allowed_roles = []
-    unless params[:path].nil?
-      params[:path][:user_roles].each do |id, status|
-        allowed_roles << id
-      end
-    end
-    
-    all_roles.each do |r|
-      path_user_role = @path.path_user_roles.find_by_user_role_id(r.id)
-      if allowed_roles.include?(r.id.to_s)
-        new_role = @path.path_user_roles.create!(:user_role_id => r.id) if path_user_role.nil?
-        if params[:commit] = "Save & Enroll"
-          r.users.each {|u| u.enroll!(@path) }
-        end
-      else
-        @path.path_user_roles.delete(path_user_role) unless path_user_role.nil?
-      end
-    end
-    flash[:success] = "Path access control updated."
-    redirect_to edit_path_path(:id => @path, :m => "access_control")
   end
   
   def publish
@@ -148,38 +93,34 @@ class PathsController < ApplicationController
     redirect_back_or_to root_path
   end
 
-  def collaborators
-    @collaborators = @path.collaborating_users
-    @collaborator = @path.collaborations.new
-  end
-
   def collaborator
-    @collaborators = @path.collaborating_users
-    flash[:error] = "No collaborator stated."and render "collaborators" and return if params[:collaborator].nil?
-    
-    @user = User.find_by_email(params[:collaborator][:email])
-    flash[:error] = "User does not exist." and render "collaborators" and return if @user.nil?
-    params[:collaborator][:user_id] = @user.id
-    params[:collaborator][:granting_user_id] = current_user.id
-    
-    @collaborator = @path.collaborations.new(params[:collaborator])
-    if @collaborator.save
-      flash.now[:success] = "#{@user.name} successfully added as a collaborator."
+    if request.get?
+      @collaborators = @path.collaborating_users
+      @collaborator = @path.collaborations.new
     else
-      flash.now[:error] = @collaborator.errors.full_messages.join(". ")
-      render "collaborators" and return
+      if params[:collaborator].nil? || !(@user = User.find_by_email(params[:collaborator][:email]))
+        flash[:error] = "MetaBright user does not exist."
+        return
+      end 
+      
+      @collaboration = @path.collaborations.new(user_id: @user.id, granting_user_id: current_user.id)
+      if @collaboration.save
+        flash.now[:success] = "#{@user.name} successfully added as a collaborator."
+      else
+        flash.now[:error] = @collaborator.errors.full_messages.join(". ")
+      end
+      redirect_to collaborator_path_path(@path)
     end
-    redirect_to collaborators_path_path(@path)
   end
 
   def undo_collaboration
     @collaboration = @path.collaborations.find_by_user_id(params[:user_id])
     if @collaboration.destroy
-      flash[:sad_success] = "User will no longer have access."
+      flash[:alert] = "User will no longer have access."
     else
       flash[:error] = @collaboration.errors.full_messages.join(". ")
     end
-    redirect_to collaborators_path_path(@path)
+    redirect_to collaborator_path_path(@path)
   end
 
 # Begin Path Journey
@@ -250,25 +191,6 @@ class PathsController < ApplicationController
       render "show"
     end
   end
-  
-# Administration #
-  
-  def dashboard
-    @page = params[:page] || 1
-    @time = (params[:time] || 7).to_i
-    @mode = params[:mode] || "statistics"
-    if @mode == "statistics"
-      @user_points, @activity_over_time, @path_score = calculate_path_statistics(@path, @time)
-    elsif @mode == "tasks"
-      @unresolved_tasks = @path.completed_tasks.includes(:submitted_answer).where("status_id = ?", 2).paginate(:page => params[:page], :per_page => 80)
-    elsif @mode == "users"
-      @enrolled_users = @path.enrolled_users
-      @enrollment = params[:user] ? @path.enrollments.find_by_user_id(params[:user]) : @path.enrollments.first
-      @user = @enrollment.user
-      @responses = @user.completed_tasks.joins({:task => { :section => :path}}).where("paths.id = ?", @path.id)
-      @percentage_correct = @path.percentage_correct(@user)
-    end
-  end
 
   private
     def get_path_from_id
@@ -287,58 +209,8 @@ class PathsController < ApplicationController
     
     def can_edit?
       unless can_edit_path(@path)
-        flash[:error] = "You do not have access to this #{name_for_paths}. Please contact your administrator to gain access."
+        flash[:error] = "You do not have access to this Challenge. Please contact your administrator to gain access."
         redirect_to root_path
       end
-    end
-    
-    def get_rank_and_next_points(leaderboards)
-      counter = 1
-      previous = nil
-      user_rank = nil
-      next_rank_points = nil
-      leaderboards.each do |l|
-        if l.user_id == current_user.id
-          user_rank = ActiveSupport::Inflector::ordinalize(counter)
-          next_rank_points = (counter == 1 ? 0 : previous.score - l.score + 1)
-          break
-        else
-          previous = l
-          counter += 1
-        end
-      end
-      return user_rank, next_rank_points 
-    end
-    
-    def calculate_path_statistics(path, time)
-      # User points
-      user_points = {"0-50" => 0, "51-100" => 0, "101-500" => 0, "501-2000" => 0, "2000+" => 0 }
-      path.enrollments.select(:total_points).each do |e|
-        if e.total_points <= 50
-          user_points["0-50"] += 1
-        elsif e.total_points <= 100
-          user_points["51-100"] += 1
-        elsif e.total_points <= 500
-          user_points["101-500"] += 1
-        elsif e.total_points <= 2000
-          user_points["501-2000"] += 1
-        else
-          user_points["2000+"] += 1
-        end
-      end
-      
-      # Completed tasks over time
-      activity_over_time = []
-      (0..@time).each do |d|
-        completed_tasks = @path.completed_tasks.where("completed_tasks.updated_at <= ? and completed_tasks.updated_at > ?", d.days.ago, (d+1).days.ago).count
-        enrollments = @path.enrollments.where("enrollments.created_at <= ? and enrollments.created_at > ?", d.days.ago, (d+1).days.ago).count
-        activity_over_time << {:date => d.days.ago.strftime("%b %d"), :completed_tasks => completed_tasks, :enrollments => enrollments}
-      end
-      activity_over_time.reverse!
-      
-      # Path score
-      path_score = ((@path.completed_tasks.average("status_id", :conditions => ["completed_tasks.updated_at > ?", @time.days.ago]) || 0) * 100).to_i
-      
-      return [user_points, activity_over_time, path_score]
     end
 end
