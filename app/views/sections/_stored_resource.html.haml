@@ -1,0 +1,3 @@
+- if stored_resource && stored_resource.obj
+  - if stored_resource.obj.content_type.include?("image")
+    = image_tag stored_resource.obj.url.gsub("::",":"), style: "max-width: 700px; max-height: 250px; margin: 0 auto 15px auto;"
