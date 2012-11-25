@@ -11,14 +11,11 @@ Metabright::Application.routes.draw do
 	end
   resources :paths do
 		member do
-      get :dashboard
       get :publish
       get :unpublish
-      get :change_company
-      put :update_roles
-      get :collaborators
+      get :collaborator
       put :collaborator
-      get :undo_collaboration
+      put :undo_collaboration
       get :enroll
 			get :continue
 		end
@@ -32,10 +29,6 @@ Metabright::Application.routes.draw do
       get :confirm_delete
 			get :continue
 			post :continue
-      get :import_content
-      post :preview_content
-      post :save_content
-      get :html_editor
       get :take
       put :took
       get :launchpad
@@ -57,7 +50,6 @@ Metabright::Application.routes.draw do
 	  end
 	end
 	
-	resources :stored_resources
   resources :comments
 	resources :user_roles
 	
@@ -70,6 +62,10 @@ Metabright::Application.routes.draw do
   match '/about' => "pages#about"
   match '/tos' => "pages#tos"
   match '/challenges' => "pages#challenges"
+	
+	match '/stored_resources' => "stored_resources#create", via: :post
+	match '/stored_resources' => "stored_resources#create", via: :put
+	match '/stored_resources/id' => "stored_resources#destroy", via: :delete
 	
   match '/admin_overview' => 'companies#overview'
   match '/admin_settings' => "companies#settings"

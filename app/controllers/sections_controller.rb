@@ -128,28 +128,6 @@ class SectionsController < ApplicationController
     redirect_to edit_path_path(@section.path, :m => "sections")
   end
 
-# Begin Section Construction
-
-  def import_content
-    if params[:previous]
-      StoredResource.delete(params[:previous])
-    end
-    render "import_content"
-  end
-  
-  def preview_content
-    @stored_resource = @section.stored_resources.new(:obj => params[:section][:file])
-    if @stored_resource.save
-      render "preview_content"
-    else
-      flash[:error] = "Could not load content. Please try again."
-      render "import_content"
-    end
-  end
-  
-  def html_editor
-  end
-
 # Begin Section Journey
 
   def launchpad
