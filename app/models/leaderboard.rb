@@ -98,6 +98,7 @@ class Leaderboard < ActiveRecord::Base
     excluded_users = path.excluded_from_leaderboards
     l = user.leaderboards.find_by_path_id(path.id)
     l.destroy unless l.nil?
+    return false unless user.enrolled?(path)
      
     unless excluded_users.blank?
       return false if excluded_users.include?(user.email)

@@ -100,14 +100,13 @@ class PathsController < ApplicationController
     else
       if params[:collaborator].nil? || !(@user = User.find_by_email(params[:collaborator][:email]))
         flash[:error] = "MetaBright user does not exist."
-        return
-      end 
-      
-      @collaboration = @path.collaborations.new(user_id: @user.id, granting_user_id: current_user.id)
-      if @collaboration.save
-        flash.now[:success] = "#{@user.name} successfully added as a collaborator."
-      else
-        flash.now[:error] = @collaborator.errors.full_messages.join(". ")
+      else 
+        @collaboration = @path.collaborations.new(user_id: @user.id, granting_user_id: current_user.id)
+        if @collaboration.save
+          flash.now[:success] = "#{@user.name} successfully added as a collaborator."
+        else
+          flash.now[:error] = @collaborator.errors.full_messages.join(". ")
+        end
       end
       redirect_to collaborator_path_path(@path)
     end
