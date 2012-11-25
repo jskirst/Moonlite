@@ -265,7 +265,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 
 /* Create and Administer */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
-.pills a { line-height: 23px; }
+.pills a { line-height: 23px; cursor: pointer }
 
 /* Footer */
 .footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position:absolute; bottom:0; width:100%;}

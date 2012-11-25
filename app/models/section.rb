@@ -2,8 +2,7 @@ class Section < ActiveRecord::Base
   attr_protected :path_id
   attr_accessible :name, 
     :instructions, 
-    :position, 
-    :image_url,
+    :position,
     :content_type, 
     :enable_skip_content,
     :points_to_unlock,
@@ -12,10 +11,8 @@ class Section < ActiveRecord::Base
   belongs_to :path
   has_many :tasks, dependent: :destroy
   has_many :completed_tasks, through: :tasks, source: :completed_tasks
-  has_many :stored_resources, as: :owner
   
   validates :name, length: { within: 1..255 }
-  validates :instructions, length: { maximum: 1000000 }
   validates :path_id, presence: true
     
   before_create { self.position = get_next_position_for_path }
@@ -36,16 +33,7 @@ class Section < ActiveRecord::Base
       end
     end
   end
-  
-  def has_custom_image?
-    return !self.image_url.nil?
-  end
-  
-  def pic
-    return self.image_url if self.image_url != nil
-    return "/images/default_section_pic.jpg"
-  end
-    
+      
   def next_task(user)
     return get_next_unfinished_task(user)
   end
