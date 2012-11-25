@@ -1,8 +1,0 @@
-<h2 style="margin-bottom:20px;">Are you sure?</h2>
-<p>Make sure you are absolutely certain you want to delete this Section. Once you delete it, all questions and user progress for this section will be deleted.</p>
-<p>If you're unsure, you can always unpublish the section, which will hide it from others but still give you access to it.</p>
-<div class="actions" style="margin-top:50px;">
-  <%= link_to "Back", edit_path_path(@section.path), :class => "btn secondary", :style => "margin-right:10px;" %>
-  <%= link_to "Unpublish", unpublish_section_path(@section), :class => "btn primary" %>
-  <%= link_to "Permanently Delete", @section, :method => :delete, :class => "btn danger", :style => "float:right;" %>
-</div>
