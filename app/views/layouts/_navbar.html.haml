@@ -22,7 +22,7 @@
             %li.navitem
               = link_to create_path do
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
-      %ul.nav.pull-right{ style: "float:right; margin-right: 197px; margin-top:-81px" }
+      %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
         - if current_user
           - if @enable_administration
             %li
@@ -32,11 +32,7 @@
               = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
               %span{ style: "vertical-align: middle;" }= current_user.name
           %li.notifications
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications1.png"
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications2.png"
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png"
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications4.png"
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications5.png", style: "width:16px;"
           %li
             = link_to "Sign out", signout_path
         - elsif params[:controller] == "paths"
