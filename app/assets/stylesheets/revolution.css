@@ -168,7 +168,7 @@ code,pre{font:inherit;}
 .challengetiles .bigexploreimagespace img{width:120px; margin-right:10px}
 
 .singleexploretile{display:inline-block; padding:0 25px 0 21px;}
-.singleexploretile img{padding:6px 0 8px 0;}
+.singleexploretile img{padding:6px 0 8px 0; max-width:none;}
 .singleexploretile a{margin:2px; text-decoration:none;}
 .singleexploretile a:hover img{border:2px solid rgba(51, 153, 255, 0.5); border-radius:4px; margin:-2px}
 .singleexploretile .active img{border:2px solid rgba(51, 153, 255, 0.5); border-radius:4px; margin:-2px; background:whitesmoke;}
