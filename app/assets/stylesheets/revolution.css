@@ -259,12 +259,12 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .aboutcontainer{margin-top:85px; margin-bottom:10px; overflow:hidden; width:695px;margin-left:auto;margin-right:auto;border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .aboutbox{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:20px 20px 5px 20px;}
 .aboutheader span{font-size:50px; position:relative; bottom:42px;}
-.aboutheader img{height:115px;}
+.aboutheader img{height:115px; vertical-align:baseline;}
 .aboutheader{margin: -4% -2.8% -2.8%;}
 .aboutbody{overflow: hidden; padding-top:1%;}
 .aboutbody p{font-size:14px; line-height:20px;}
 .aboutbody span{font-size:11px; line-height:18px;}
-.aboutbody h4{font-weight:bold;}
+.aboutbody h4{font-weight:bold; line-height:32px; font-size:16px}
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
