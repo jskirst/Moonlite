@@ -34,8 +34,6 @@ function show_persona_challenges(){
 
 function open_comments(comment){
   var $comments = $(comment).parents('.postfooter').find('.comments')
-  console.log("opening");
-  console.log($comments);
   if($comments.is(":visible")){
     $comments.slideUp();
   } else {
@@ -79,7 +77,6 @@ $(function(){
   });
   
   $(".login_link").click(function(){
-    console.log("Shoudl see");
     $("#login_modal").modal({ keyboard: true, backdrop: 'static', show: true });
   });
 });
