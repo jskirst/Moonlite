@@ -12,7 +12,7 @@
               %div.mosaic-block.bar2{style: "margin-bottom:10px;"}
                 = link_to path_path(path), class: "mosaic-overlay", title: "#{path.name}" do
                   %div.details
-                    %h4{style: "font-weight:normal"} #{truncate(path.name,length: 17, separator: ' ')}
+                    %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
                 %div 
                   = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
           %hr{:style => "margin:0"}
