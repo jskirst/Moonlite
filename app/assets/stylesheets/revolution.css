@@ -87,6 +87,7 @@ code,pre{font:inherit;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 .navbar .nav.pull-right a:hover {color:white;}
+.landingbuttontext{color:white; font-size:13px; display:inline-block; position:relative; left:5px; font-family:'MuliRegular'; font-weight: bold;}
 
 /* From profile */
 #homepage{color:#333;}
