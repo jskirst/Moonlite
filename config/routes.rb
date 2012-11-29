@@ -65,7 +65,7 @@ Metabright::Application.routes.draw do
 	
 	match '/stored_resources' => "stored_resources#create", via: :post
 	match '/stored_resources' => "stored_resources#create", via: :put
-	match '/stored_resources/id' => "stored_resources#destroy", via: :delete
+	match '/stored_resources/:id' => "stored_resources#destroy", via: :delete, as: "delete_stored_resource"
 	
   match '/admin_overview' => 'companies#overview'
   match '/admin_settings' => "companies#settings"

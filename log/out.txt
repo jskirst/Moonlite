@@ -1,3 +1,0 @@
-
-Quitting...
-Terminate batch job (Y/N)? 

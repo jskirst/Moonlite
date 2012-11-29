@@ -1,5 +1,5 @@
 %div
-  %ul.tabs
+  %ul.nav.nav-tabs
     - admin_tabs.each do |header|
       - if (@mode || params[:action]) == header[0]
         %li.active

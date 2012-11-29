@@ -93,10 +93,6 @@ section.wiki { margin-bottom: 50px; }
 #path_explore h2 { float: left; text-transform: uppercase; font-size: 19px; font-weight: bold; color: slategray; }
 .caption-title { font-size: 12px; font-weight: bold; line-height: 13px; }
 
-/* Leaderboard */
-.jumpstart_leaderboard td {padding:3px;}
-.jumpstart_leaderboard th {padding:3px;}
-
 /* Hoverscroll (Path Header) */
 .hoverscroll { position: relative; }
 .hoverscroll .hoverscroll_container { position: relative; overflow: hidden; }
@@ -111,15 +107,6 @@ section.wiki { margin-bottom: 50px; }
 .pagination .disabled { display:none; }
 .pagination em.current { display: none; }
 .alert-message { font-size: 16px; }
-/*.error,.alert,.notice,.success,.info { padding: 0.8em; margin-bottom: 1em; border: 2px solid #ddd; }
-.error, .alert { background: #fbe3e4; color: #8a1f11; border-color: #fbc2c4; }
-.notice        { background: #fff6bf; color: #514721; border-color: #ffd324; }
-.success       { background: #e6efc2; color: #264409; border-color: #c6d880; }
-.info          { background: #d5edf8; color: #205791; border-color: #92cae4; }
-.error a, .alert a { color: #8a1f11; }
-.notice a, .notice        { color: #514721; }
-.success a         { color: #264409; }
-.info a          { color: #205791; } */
 .selected-time { text-decoration:underline; }
 #unresolved_tasks_list li:hover { background-color:whitesmoke; }
 .underlined { text-decoration:underline; }
