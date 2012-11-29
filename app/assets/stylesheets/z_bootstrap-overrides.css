@@ -13,6 +13,7 @@
 
 .fill { height: 40px; }
 .navbar-inner, .navbar .fill {
+  border: 0;
   background-image: -moz-linear-gradient(top, #334C80, #1F2E4C); 
   background-image: -ms-linear-gradient(top, #334C80, #1F2E4C); 
   background-image: -o-linear-gradient(top, #334C80, #1F2E4C);
@@ -21,7 +22,7 @@
   background-image: linear-gradient(top, #334C80, #1F2E4C);
 }
 
-.navbar { height: 40px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; overflow: hidden; }
+.navbar { height: 40px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
 .chunk.cloudy { display:inline-block; width:30px; height:44px; background-color:rgba(255, 255, 255, .15); margin-right:28px;z-index: 1;}
 .navbar h3 a, .navbar .brand { float: left;display: block; padding: 0; margin:0; line-height: 1; text-decoration: none;font: normal 18px arial, sans-serif;}
 .container h3 { left:68px;}
