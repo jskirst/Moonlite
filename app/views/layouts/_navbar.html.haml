@@ -4,7 +4,7 @@
       - 6.times do
         %div.chunk.cloudy
     %div{ style: "margin-left: 188px;" }
-      %h3.brand{ style: "top:3px;" }
+      %h3.brand{ style: "top:3px; position:relative;" }
         = link_to root_url, style: "font-size: 26px;" do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
       - unless current_user.nil? || no_bar || params[:controller] == "sections"

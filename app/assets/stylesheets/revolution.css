@@ -85,6 +85,7 @@ code,pre{font:inherit;}
 .container.body { margin-bottom:11px; border-radius:6px; width: 940px; padding: 15px; background-color: rgba(255, 255, 255, .3); border:none; box-shadow:none; }
 #content { padding-top: 42px; min-height: 450px;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
+.navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 
 /* From profile */
 #homepage{color:#333;}
@@ -192,7 +193,7 @@ code,pre{font:inherit;}
 .counter span.separator {display:block;float:left; font-family:Georgia, serif; font-size:0.5em;position:relative; top:0.5em;}
 .counter span.separator hr {display:none;}
 
-body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif;}
+body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif; line-height:18px; font-size:13px;}
 .quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 60px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .completionmessagespace{display:inline-block; width:396px;overflow: hidden; border-right:1px solid rgba(0, 0, 0, .1);}
