@@ -1,0 +1,47 @@
+.btn.danger { 
+  background-color: #971D1C; 
+  background-repeat: repeat-x;
+  background-image: -moz-linear-gradient(top, #EE5F5B, #971D1C);
+  background-image: -ms-linear-gradient(top, #EE5F5B, #971D1C); 
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #EE5F5B), color-stop(100%, #971D1C)); 
+  background-image: -webkit-linear-gradient(top, #EE5F5B, #971D1C);
+  background-image: -o-linear-gradient(top, #EE5F5B, #971D1C);
+  background-image: linear-gradient(top, #EE5F5B, #971D1C);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  border-color: #C43C35 #C43C35 #971D1C; 
+}
+
+.fill { height: 40px; }
+.navbar-inner, .navbar .fill {
+  background-image: -moz-linear-gradient(top, #334C80, #1F2E4C); 
+  background-image: -ms-linear-gradient(top, #334C80, #1F2E4C); 
+  background-image: -o-linear-gradient(top, #334C80, #1F2E4C);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#334C80), to(#1F2E4C)); 
+  background-image: -webkit-linear-gradient(top, #334C80, #1F2E4C);
+  background-image: linear-gradient(top, #334C80, #1F2E4C);
+}
+
+.navbar { height: 40px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; overflow: hidden; }
+.chunk.cloudy { display:inline-block; width:30px; height:44px; background-color:rgba(255, 255, 255, .15); margin-right:28px;z-index: 1;}
+.navbar h3 a, .navbar .brand { float: left;display: block; padding: 0; margin:0; line-height: 1; text-decoration: none;font: normal 18px arial, sans-serif;}
+.container h3 { left:68px;}
+nav img { width:150px}
+.navicons img { width:25px; display:inline; margin:2px 25px 25px; cursor: pointer; }
+.navitem { border-right: 1px solid #020D25; border-left: 1px solid #56698B;}
+.navitem a { opacity:.8}
+.navitem a:hover { opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
+.navitem a:active { bottom:0px; background-color: rgba(0,0,0, .1);}
+.navicons li.nav_item:first-child a { border-left: 1px solid #444;}
+
+.span5{ display:inline-block; vertical-align: top; width:288px;}
+.span11{ display: inline-block; vertical-align: top; width: 640px;} 
+.row .span5{margin-left:20px;}
+.row .span11{margin-left:12px;}
+.container.body { margin-bottom:11px; border-radius:6px; width: 940px; padding: 15px; background-color: rgba(255, 255, 255, .3); border:none; box-shadow:none; }
+#content { padding-top: 42px; min-height: 450px;}
+.navbar .nav.pull-right li a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
+
+/* browser compatibility */
+a:active, a:focus{ outline: none; }
+
+h1, h2, h3, h4, h5 { margin-top: 0px; margin-bottom: 0px; }

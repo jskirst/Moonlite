@@ -1,14 +1,14 @@
-%nav.topbar{ "data-scollspy" => "scrollspy", "data-dropdown" => "dropdown" }
-  %div.fill
+%nav.navbar.navbar-fixed-top
+  %div.fill.navbar-inner
     %div{ style: "position:absolute;" }
       - 6.times do
         %div.chunk.cloudy
     %div{ style: "margin-left: 188px;" }
-      %h3{ style: "top:3px;" }
+      %h3.brand{ style: "top:3px;" }
         = link_to root_url, style: "font-size: 26px;" do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
       - unless current_user.nil? || no_bar || params[:controller] == "sections"
-        %ul.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B;" }
+        %ul.nav.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B;" }
           %li.navitem{ style: "border-left: 0px;" }
             = link_to root_url do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:26px;"

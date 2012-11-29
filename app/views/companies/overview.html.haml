@@ -3,7 +3,7 @@
     .overview td{ text-align: center; border: 1px solid #DDD; }
   = render "companies/tab_header"
   %h3 Overview
-  %table.overview
+  %table.table.overview
     %tr
       %td
         %h3= @user_count
@@ -21,7 +21,7 @@
         %h3= @comment_count
         %p Total Comments
   %h3 Recent Activity
-  %table.overview
+  %table.table.overview
     %tr
       %td
         %h3= @new_user_count

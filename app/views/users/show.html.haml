@@ -17,9 +17,9 @@
         %div#topboxcontent
           - if @user == current_user
             = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard", style: "float:right;"
-          %div.span9{style: "min-height: 65px; vertical-align: top; margin-bottom: 10px;"}
+          %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0;"}
             %h1= @user.name
-            %p{ style: "font-size: 16px; margin: 5px 0 7px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
+            %p{ style: "font-size: 16px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
         %div#challengecarousel_container
           - if @enrollments.size > 3
             %div#challengeleft_scroll

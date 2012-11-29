@@ -1,30 +1,29 @@
-%div#settings_modal.modal.hide.fade{ style: "top: 5%; margin-top: 0px; width: 600px;" }
+%div#settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
   %div.modal-header
     %a.close{ href: "#" }
     %h3 Challenge Settings
   %div.modal-body
-    = form_for(@path) do |f|
+    = form_for(@path, html: { class: "form-horizontal" }) do |f|
       = render "shared/error_messages", object: f.object
-      %div.field.clearfix
-        = f.label "Challenge Name"
-        %div.input= f.text_field :name
-      %div.field.clearfix
-        = f.label :description
-        %div.input= f.text_area :description, style: "width: 300px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
-      %div.field.clearfix{ style: "margin-top:10px;" }
-        = f.label "Image"
-        %div.input= render "stored_resources/new_image"
-      %div.field.clearfix
-        %div.input= image_tag(@path.path_pic, class: "original_image_preview", style: "height: 75px; max-width: 150px;")
+      %div.control-group
+        %label.control-label Challenge Name
+        %div.controls= f.text_field :name
+      %div.control-group
+        %label.control-label Description
+        %div.controls= f.text_area :description, style: "width: 300px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
+      %div.control-group{ style: "margin-bottom: 5px;" }
+        %label.control-label Image
+        %div.controls= render "stored_resources/new_image"
+      %div.control-group
+        %div.controls= image_tag(@path.path_pic, class: "original_image_preview", style: "height: 75px; max-width: 150px;")
       - if @path.user == current_user
-        %div.field.clearfix{ style: "margin-bottom: 5px;" }
-          = f.label :collaborators, style: "padding-top:0px;"
-          %div.input= link_to "View and add collaborators", collaborator_path_path(@path), style: "line-height:18px;"
+        %div.control-group{ style: "margin-bottom: 5px;" }
+          %label.control-label Collaborators
+          %div.controls= link_to "View and add collaborators", collaborator_path_path(@path), style: "line-height:18px;"
       %hr
-      %div{ style: "margin: 10px 0; padding-bottom:20px;" }
-        %div{ style: "float:right;" }
-          = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
-          %span.button.button-standard{ onclick: "$('#settings_modal').modal('hide');" } Close
+      %div{ style: "float:right;" }
+        = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
+        %span.button.button-standard{ onclick: "$('#settings_modal').modal('hide');" } Close
 
 - @sections.each do |s|
   %div{ id: "section_settings_modal_#{s.id}", class: "modal hide fade", style: "top: 50%;" }
@@ -32,16 +31,16 @@
       %a.close
       %h3 Section Settings
     %div.modal-body
-      = form_for(s) do |f|
-        %div.field.clearfix
-          = f.label :name
-          %div.input= f.text_field :name, class: "xlarge"
-        %div.field.clearfix
-          = f.label "Points to unlock"
-          %div.input= f.text_field :points_to_unlock, placeholder: "optional..."
-        %div.field.clearfix
-          = f.label "Delete Section"
-          %div.input{ style: "padding-top: 8px;" }= link_to "Delete", confirm_delete_section_path(s)
+      = form_for(s, html: { class: "form-horizontal" }) do |f|
+        %div.control-group
+          %label.control-label Name
+          %div.controls= f.text_field :name, class: "xlarge"
+        %div.control-group
+          %label.control-label Points to unlock
+          %div.controls= f.text_field :points_to_unlock, placeholder: "optional..."
+        %div.control-group
+          %label.control-label "Delete Section"
+          %div.controls{ style: "padding-top: 8px;" }= link_to "Delete", confirm_delete_section_path(s)
         %div{ style: "float:left; margin: 20px 20px 10px 0;" }
           - if s.is_published
             = link_to "Unpublish", unpublish_section_path(s), class: "button button-info", confirm: "Are you sure you want to unpublish this section?"
@@ -53,13 +52,13 @@
 
 %div.single_pane{ style: "min-height: 600px;" }
   %div.row{ style: "vertical-align: top; margin: 0 0 20px 0;"}
-    %div.span3
+    %div.span3{ style: "width: 160px; "}
       %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }
         %div.path-caption{ style: "opacity: .75; width: 150px; height: inherit; margin-top: 90px; display: none;" }
           %span.caption-title{ style: "font-size:20px; line-height:24px;" } Edit
         = image_tag(@path.path_pic, class: "bigheaderimage")
-    %div.span6
-      %h1.editable{ style: "margin-bottom:5px;", title: "Click to edit" }= @path.name
+    %div.span4{ style: "margin-left: 5px;" }
+      %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
       %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
     %div.floatr{ style: "margin-top:10px;"}
       - if @path.is_published
@@ -71,26 +70,26 @@
     = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
     %h2{ style: "font-size: 20px; color: darkgray;" } SECTIONS
     %hr{ style: "margin: 5px 0 0 0;" }
-    %table
+    %table.table
       - @sections.to_a.each_with_index do |s, i|
         %tr
           %td.section{ style: "border-bottom: 1px solid #EEE; border-top: 0px;" }
             %section
               %div.row{ style: "min-height: 75px;" }
                 %div.floatr
-                  %ul.pills
+                  %ul.nav.nav-pills
                     %li.active
                       %a.edit_section_overview_pill{ onclick: "close_section_container(this);" } Overview
                     %li
                       %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));" } Questions
                     %li
                       %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" } Settings
-                %div.span14
-                  %h2.section_editable{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
+                %div.span8
+                  %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
                   %div
                     %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                      %span#question_counter #{s.tasks.size} questions
+                      %span#question_counter #{s.tasks.size} Questions
                     - unless s.is_published
                       %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
-              %div.section_questions_container.row{ style: "display:none;" }
+              %div.section_questions_container.row{ style: "display:none; margin-top: 20px;" }
                 = render "sections/edit_tasks", { :section => s, :tasks => s.tasks, :display_new_task_form => true, :new_task => s.tasks.new }

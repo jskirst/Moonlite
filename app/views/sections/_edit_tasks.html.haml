@@ -34,7 +34,7 @@
   });
 
 = render "tasks/new_task_form", { new_task: new_task, display: display_new_task_form, section: section }
-%table.task_list
+%table.task_list.table{ style: "margin: 0 0 0 10px;" }
   - tasks.each do |t|
     - next if t.id.nil?
     %tr

@@ -5,7 +5,7 @@
     = form_tag admin_paths_path, method: "get" do
       = text_field_tag :search, params[:search], class: "large", placeholder: "Search by name..."
       = submit_tag "Search", class: "button button-standard"
-  %table
+  %table.table
     %thead
       %tr
         %th Rank

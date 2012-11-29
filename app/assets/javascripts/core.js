@@ -72,9 +72,6 @@ $(function(){
   });
   $('.hoverscroll').hoverscroll();
   
-  $('#topbar').scrollSpy();
-  $('#topbar').dropdown();
-  
   $("#image_url_input").change(function(){
     var link = $(this).val();
     $(".image_url_preview").attr("src", link);
