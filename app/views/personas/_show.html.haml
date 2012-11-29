@@ -47,9 +47,9 @@
           %div.details
             %h4 #{truncate(path.name,length: 17, separator: ' ')}
             - if current_user.enrolled?(path)
-              %button.btn.success Enrolled
+              %button.btn.btn-success Enrolled
             - else
-              %button.btn.danger Enroll
+              %button.btn.btn-danger Enroll
         %div 
           = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
   %div.explorenewuserfooter
