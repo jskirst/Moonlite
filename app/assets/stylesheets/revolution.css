@@ -5,7 +5,7 @@
 .post { padding:12px; }
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
 .post:hover .postspace{ background-color:#F9F9F9; border-radius: 4px; }
-.postheader h3 { display:inline-block; margin: 0px; }
+.postheader h3 { display:inline-block; margin: 0px; font-size:18px; line-height:36px; }
 .votingandpointsarea { display:inline-block; float:right; margin-top:4px; }
 .votingandpointsarea a { padding: 3px 7px 2px 7px;}
 .votingandpointsarea div { display: inline-block; margin: 0 1px 0 8px; position:relative; top:1px;}
@@ -86,6 +86,7 @@ code,pre{font:inherit;}
 #content { padding-top: 42px; min-height: 450px;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
+.navbar .nav.pull-right a:hover {color:white;}
 
 /* From profile */
 #homepage{color:#333;}
