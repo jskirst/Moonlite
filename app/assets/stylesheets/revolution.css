@@ -134,7 +134,7 @@ code,pre{font:inherit;}
 .quizheader{margin-bottom:12px;}
 .quizheader img{display:inline-block; margin-right:4px;}
 .quizheader span{ font:normal 29px'Muli', sans-serif; position:relative; left:5px;}
-.quizheader div{position:relative; bottom:16px; display:inline-block;}
+.quizheader div{position:relative; top:4px; display:inline-block;}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
 .questionspace span{font:normal 18px 'Muli', sans-serif;}
