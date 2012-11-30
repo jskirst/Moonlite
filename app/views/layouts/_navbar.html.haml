@@ -35,7 +35,10 @@
             %div.dropdown.pull-right{ style: "padding-top: 12px;" }
               %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown" }
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;"
-              %ul.dropdown-menu{ role: "button", style: "padding:0;" }
+              %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px;" }
+                %div
+                  %div.nub
+                %div.leftboxheader Notifications
                 - notifications.each do |event|
                   %li.notification_space
                     %div.notification
