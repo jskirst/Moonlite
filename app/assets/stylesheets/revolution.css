@@ -4,7 +4,6 @@
 .newsfeed a { text-decoration:none; cursor:pointer; }
 .post { padding:12px; }
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
-.post:hover .postspace{ background-color:#F9F9F9; border-radius: 4px; }
 .postheader h3 { display:inline-block; margin: 0px; font-size:18px; line-height:36px; }
 .votingandpointsarea { display:inline-block; float:right; margin-top:4px; }
 .votingandpointsarea a { padding: 3px 7px 2px 7px;}
@@ -223,8 +222,13 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
+.notification_space { padding:12px 12px 22px 12px;}
+.notification_space:hover { background-color:#F9F9F9; border-radius: 4px; }
+.notification{isplay: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative; font-size:13px; width: 270px; padding: 8px;}
 .notifications img{width:20px; position:relative; top:12px; opacity: .8; display:inline; margin-right:6px; cursor:pointer;}
 .notifications img:hover{opacity:1;}
+.notification_body{margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right; text-shadow:none; line-height:17px;}
+.notification_time{margin: 0; font-size: 11px; float: right; text-shadow:none; cursor:default; margin-right:2px;}
 
 .button { text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }

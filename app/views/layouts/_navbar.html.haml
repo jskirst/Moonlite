@@ -35,14 +35,14 @@
             %div.dropdown.pull-right{ style: "padding-top: 12px;" }
               %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown" }
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;"
-              %ul.dropdown-menu{ role: "button" }
+              %ul.dropdown-menu{ role: "button", style: "padding:0;" }
                 - notifications.each do |event|
-                  %li.post
-                    %div.postspace{ style: "width: 270px; padding: 8px;" }
+                  %li.notification_space
+                    %div.notification
                       = link_to event.link do
                         = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;"
-                        %p{ style: "margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right;" }= event.content
-                        %p{ style: "margin: 0; font-size: 11px; float: right;"} #{time_ago_in_words(event.created_at)} ago
+                        %p.notification_body= event.content
+                    %p.notification_time #{time_ago_in_words(event.created_at)} ago
           %li
             = link_to "Sign out", signout_path
         - elsif params[:controller] == "paths"
