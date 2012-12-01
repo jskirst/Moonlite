@@ -51,7 +51,7 @@
             = link_to "Votes", path_path(@path, order: "votes"), class: "btn midbtn"
             - if @path
               %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
-          -if @path
+          - if @path
             %div.questions_filter{ style: "display:none; text-transform: none;" }
               %p{ style: "font-size: 13px; margin: 10px 5px; color: black;" } Click on one of the questions below to see responses only for that question.
               %ol
@@ -59,53 +59,3 @@
                   - s.challenge_tasks.each do |task|
                     %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), task_details_path(@path, task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
         = render "shared/newsfeed", { newsfeed_items: @responses }
-
-- if current_user
-  %div#launchpad.dropdown_modal.modal.hide.fade{ style: "top: 5%;"}
-    %div.overlay
-      %div.launchpad
-        %div.modal_close
-          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
-        %h1
-          = image_tag(@path.path_pic)
-          %div #{@path.name} 
-          %div{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@enrollment.total_points} pts, Level #{current_user.level(@path)}
-        %div.launchpadcontent
-          %div.launchpadsectioncolumn
-            %div.launchpadcolumnheader
-              Sections
-            %ul.sectionlist
-              - @path.sections.all(order: "id ASC").each do |s|
-                %li.launchpad_link{ title:"#{s.name}"}
-                  - if s.points_until_unlock(@enrollment) <= 0
-                    %div{ style: "display:inline-block; width:75%; line-height:16px;" }
-                      = link_to launchpad_section_path(s), remote: true do
-                        %span.pointer_caret= "»" if s == @current_section
-                        %span= truncate(s.name, length: 40)
-                    %div.pointsandprogress
-                      %div #{s.points_earned(current_user)} pts
-                      %div #{s.percentage_complete(current_user)}%
-                  - elsif s.points_to_unlock == 9999
-                    %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
-                    %p{ style: "font-size: 9px; line-height: 12px;" } Coming soon!
-                  - else
-                    %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
-                    %p{ style: "font-size: 9px; line-height: 12px;" } #{s.points_until_unlock(@enrollment)} more points to unlock
-          = render "sections/launchpad"
-  
-  :javascript
-    $(function(){
-      $("#topboxcontent .button-actionable").click(function(){
-        $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
-      });
-       
-      $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
-        $("span.pointer_caret").remove();
-        $(".sectioninfocontainer").replaceWith(data);
-        $(this).find("a").prepend("<span class='pointer_caret'>» </span>");
-      });
-    });
-  
-  - if @display_launchpad
-    :javascript
-      $(function(){ $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true }); });
