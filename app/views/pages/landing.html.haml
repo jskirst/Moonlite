@@ -14,10 +14,10 @@
     %span We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.
   %div#buttonspace{ style: "margin-top:30px;" }
     %center
-      = link_to "/auth/google_oauth2", class: "btn danger", style: "margin-right: 40px; width:205px;" do
+      = link_to "/auth/google_oauth2", class: "btn danger", style: "margin-right: 40px; width:205px; padding-top:7px; padding-bottom:7px;" do
         %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png" }
-        %span.landingbuttontext{ style: "color:white; font-size:13px; display:inline-block; position:relative; bottom:9px; left:5px; font-family:'MuliRegular'; font-weight: bold;" } Sign in with Google »
-      = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
+        %span.landingbuttontext Sign in with Google »
+      = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
         %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png" }
-        %span.landingbuttontext{ style: "color:white; font-size:13px; display:inline-block; position:relative; bottom:9px; left:5px; font-family:'MuliRegular'; font-weight: bold;" } Sign in with Facebook »
+        %span.landingbuttontext Sign in with Facebook »
 = render "layouts/footer"
