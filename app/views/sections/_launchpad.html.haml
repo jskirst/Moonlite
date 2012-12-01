@@ -2,7 +2,7 @@
   %div#sectionpointchart
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
-      %ul.tabs
+      %ul.nav.nav-tabs
         %li.active
           %a#arena_tab_link{title: "Arena"} Arena
         %li
@@ -14,7 +14,7 @@
           %p{ style: "padding-left: 10px;" } There are no Arena questions for this section yet. Check back in later!
         - else
           - if @current_section.quiz_complete?(current_user)
-            %table
+            %table.table
               - @current_section.core_tasks.each do |t|
                 - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
                 %tr
