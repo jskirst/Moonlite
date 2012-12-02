@@ -2,83 +2,82 @@
   %div#sectionpointchart
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
-      %ul.tabs
+      %ul.nav.nav-tabs
         %li.active
           %a#arena_tab_link{title: "Arena"} Arena
         %li
           %a#questions_tab_link{title: "Creative Responses"}  Creative Response
         %li
           %a#achievements_tab_link{title: "Tasks"} Tasks
-      %div#arena_tab.tab_content
-        - if @current_section.core_tasks.empty?
-          %p{ style: "padding-left: 10px;" } There are no Arena questions for this section yet. Check back in later!
-        - else
-          - if @current_section.quiz_complete?(current_user)
-            %table
-              - @current_section.core_tasks.each do |t|
-                - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
-                %tr
-                  %td
-                    %p= t.question
-                  %td.question_status
-                    - if completed_task.correct?
-                      %span.label.success Correct
-                    - else
-                      %span.label.important Incorrect
-          - else
-            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
-            %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
-      %div#questions_tab.tab_content{ style: "display: none;" }
-        - if @current_section.challenge_tasks.empty?
-          %p{ style: "padding-left: 10px;" } There are no Creative Responses for this section yet. Check back in later!
-        - else
-          %table
-            - @current_section.challenge_tasks.each do |t|
+    %div#arena_tab.tab_content
+      - if @current_section.core_tasks.empty?
+        %p{ style: "padding-left: 10px;" } There are no Arena questions for this section yet. Check back in later!
+      - else
+        - if @current_section.quiz_complete?(current_user)
+          %table.table
+            - @current_section.core_tasks.each do |t|
               - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
               %tr
                 %td
-                  - if completed_task
-                    %div= link_to t.question, user_path(current_user, task: t.id)
-                  - else
-                    %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                  %p= t.question
                 %td.question_status
-                  - if completed_task
-                    = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
-                    %br
-                    %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                  - if completed_task.correct?
+                    %span.label.label-success Correct
                   - else
-                    = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
-      %div#achievements_tab.tab_content{ style: "display: none;" }
-        - if @current_section.achievement_tasks.empty?
-          %p{ style: "padding-left: 10px;" } There are no Tasks for this section yet. Check back in later!
+                    %span.label.label-important Incorrect
         - else
-          %table
-            - @current_section.achievement_tasks.each do |t|
-              - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
-              %tr
-                %td
-                  - if completed_task
-                    %div= link_to t.question, user_path(current_user, task: t.id)
-                  - else
-                    %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
-                %td.question_status
-                  - if completed_task
-                    = link_to "Completed", user_path(current_user, task: t.id), class: "label success", target: "_blank"
-                    %br
-                    %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
-                  - else
-                    = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label important"
+          %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
+          %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
+    %div#questions_tab.tab_content{ style: "display: none;" }
+      - if @current_section.challenge_tasks.empty?
+        %p{ style: "padding-left: 10px;" } There are no Creative Responses for this section yet. Check back in later!
+      - else
+        %table
+          - @current_section.challenge_tasks.each do |t|
+            - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+            %tr
+              %td
+                - if completed_task
+                  %div= link_to t.question, user_path(current_user, task: t.id)
+                - else
+                  %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+              %td.question_status
+                - if completed_task
+                  = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                  %br
+                  %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                - else
+                  = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
+    %div#achievements_tab.tab_content{ style: "display: none;" }
+      - if @current_section.achievement_tasks.empty?
+        %p{ style: "padding-left: 10px;" } There are no Tasks for this section yet. Check back in later!
+      - else
+        %table
+          - @current_section.achievement_tasks.each do |t|
+            - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+            %tr
+              %td
+                - if completed_task
+                  %div= link_to t.question, user_path(current_user, task: t.id)
+                - else
+                  %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+              %td.question_status
+                - if completed_task
+                  = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                  %br
+                  %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                - else
+                  = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
 
   :javascript
     var name = "#{@current_section.name}";
     var trunc_name = truncate(name, 15);
+    var chart;
     $(function(){
-      $("#arena_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#arena_tab").show(); });
-      $("#questions_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#questions_tab").show(); });
-      $("#achievements_tab_link").click(function(){ $("ul.tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#achievements_tab").show(); });
-    });
-    $(function(){
-      var chart;
+      $("#arena_tab_link").click(function(){ $("ul.nav-tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#arena_tab").show(); });
+      $("#questions_tab_link").click(function(){ $("ul.nav-tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#questions_tab").show(); });
+      $("#achievements_tab_link").click(function(){ $("ul.nav-tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#achievements_tab").show(); });
+
       chart = new Highcharts.Chart({
         chart: { renderTo: 'sectionpointchart', type: 'bar' },
         credits: { enabled: false },

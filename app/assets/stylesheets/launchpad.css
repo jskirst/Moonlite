@@ -27,7 +27,7 @@
 .launchpadsectionpoints {display:inline-block; vertical-align: top;}
 .launchpadCRcolumn {display:inline-block;vertical-align: top; overflow:auto;}
 .launchpadCRcolumn td {font-style:italic;}
-.launchpadcolumnheader {font-weight:bold; text-align: left; font-size:16px; margin-bottom:10px;}
+.launchpadcolumnheader {font-weight:bold; text-align: left; margin-bottom:10px;}
 .launchpadcolumnsubheader {font-weight:bold; text-align:right; font-style:italic;}
 .sectionlist {margin: 0 0 18px 2px; text-align:left;}
 .sectionlist li {list-style: none; line-height: 28px;}
@@ -37,9 +37,9 @@
 .pointsandprogress div { margin-bottom:-16px;}
 .launchpad_link { border-bottom: 1px solid #EEE; margin: 4px 0px;}
 
-.launchpadcolumnheader ul.tabs li { font-size: 14px; }
-.launchpadcolumnheader ul.tabs li { font-size: 14px; }
-.launchpadcolumnheader ul.tabs li a { border-bottom-color: transparent }
+.launchpadcolumnheader ul.nav-tabs li { font-size: 14px; }
+.launchpadcolumnheader ul.nav-tabs li { font-size: 14px; }
+.launchpadcolumnheader ul.nav-tabs li a { border-bottom-color: transparent }
 .tab_content table td { padding: 10px 10px 0px 10px; height: 40px; border: 0px; border-bottom: 1px solid #DDD }
 .tab_content table td p { margin-bottom: 0px; }
 .tabs > li > a:hover {cursor:pointer; }

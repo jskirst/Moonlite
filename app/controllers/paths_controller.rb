@@ -154,7 +154,7 @@ class PathsController < ApplicationController
   end
   
   def show
-    @leaderboards = Leaderboard.get_leaderboards_for_path(@path, false).first[1]
+    @leaderboards = Leaderboard.includes(:user).where("path_id = ?", @path.id).all(order: "score DESC", limit: 10)
     @enrolled_users = @path.enrolled_users.limit(15)
     @tasks = @path.tasks
     @votes = []
