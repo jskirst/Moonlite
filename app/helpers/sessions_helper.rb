@@ -26,6 +26,7 @@ module SessionsHelper
   end
   
   def unread_notification_count
+    return 0 unless current_user
     current_user.user_events.unread.count
   end
   
