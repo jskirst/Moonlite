@@ -222,14 +222,14 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
-.notifications_header{border-bottom: 1px solid rgba(0, 0, 0, 0.2);}
-.notification_space { padding:12px 12px 22px 12px;}
-.notification {display: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative; font-size:13px; width: 270px; padding: 8px;}
+.notifications_header{ border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+.notification_space { padding: 12px 12px 0px 12px; }
+.notification { display: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative; font-size:13px; width: 270px; padding: 8px;}
 .notification-unread { background-color: #EEE; }
 .notification:hover { background-color: #EEE; }
-.notification_body{margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right; text-shadow:none; line-height:17px;}
-.notification_time{margin: 0; font-size: 11px; float: right; text-shadow:none; cursor:default; margin-right:2px; color: #BBB; line-height: 5px;}
-.nub{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
+.notification_body { margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right; text-shadow:none; line-height:17px;}
+.notification_time { margin: 0; font-size: 11px; float: right; text-shadow:none; cursor:default; margin-right:2px; color: #BBB; line-height: 5px;}
+.nub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
 
 .button { text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }
