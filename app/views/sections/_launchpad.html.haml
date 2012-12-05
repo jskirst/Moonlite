@@ -3,16 +3,17 @@
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       %ul.nav.nav-tabs
-        %li.active
-          %a#arena_tab_link{title: "Arena"} Arena
-        %li
-          %a#questions_tab_link{title: "Creative Responses"}  Creative Response
-        %li
-          %a#achievements_tab_link{title: "Tasks"} Tasks
-    %div#arena_tab.tab_content
-      - if @current_section.core_tasks.empty?
-        %p{ style: "padding-left: 10px;" } There are no Arena questions for this section yet. Check back in later!
-      - else
+        - unless @current_section.core_tasks.empty?
+          %li.active
+            %a{ href: "#arena_tab", title: "Arena"} Arena
+        - unless @current_section.challenge_tasks.empty?
+          %li
+            %a{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
+        - unless @current_section.achievement_tasks.empty?
+          %li
+            %a{ href: "#achievements_tab", title: "Tasks"} Tasks
+    - unless @current_section.core_tasks.empty?
+      %div#arena_tab.tab_content
         - if @current_section.quiz_complete?(current_user)
           %table.table
             - @current_section.core_tasks.each do |t|
@@ -28,10 +29,8 @@
         - else
           %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
           %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
-    %div#questions_tab.tab_content{ style: "display: none;" }
-      - if @current_section.challenge_tasks.empty?
-        %p{ style: "padding-left: 10px;" } There are no Creative Responses for this section yet. Check back in later!
-      - else
+    - unless @current_section.challenge_tasks.empty?
+      %div#questions_tab.tab_content{ style: "display: none;" }
         %table
           - @current_section.challenge_tasks.each do |t|
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
@@ -48,10 +47,8 @@
                   %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
                 - else
                   = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
-    %div#achievements_tab.tab_content{ style: "display: none;" }
-      - if @current_section.achievement_tasks.empty?
-        %p{ style: "padding-left: 10px;" } There are no Tasks for this section yet. Check back in later!
-      - else
+    - unless @current_section.achievement_tasks.empty?
+      %div#achievements_tab.tab_content{ style: "display: none;" }
         %table
           - @current_section.achievement_tasks.each do |t|
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
@@ -74,10 +71,13 @@
     var trunc_name = truncate(name, 15);
     var chart;
     $(function(){
-      $("#arena_tab_link").click(function(){ $("ul.nav-tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#arena_tab").show(); });
-      $("#questions_tab_link").click(function(){ $("ul.nav-tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#questions_tab").show(); });
-      $("#achievements_tab_link").click(function(){ $("ul.nav-tabs li.active").removeClass("active"); $(this).parent().addClass("active"); $(".tab_content").hide(); $("#achievements_tab").show(); });
-
+      $(".nav-tabs li a").click(function(){
+        $(".tab_content").hide();
+        $("ul.nav-tabs li.active").removeClass("active");
+        $(this).parent().addClass("active");
+        $($(this).attr("href")).show();
+      });
+      
       chart = new Highcharts.Chart({
         chart: { renderTo: 'sectionpointchart', type: 'bar' },
         credits: { enabled: false },

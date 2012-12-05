@@ -3,7 +3,7 @@
   %head
     = render "layouts/head"
   %body
-    = render "layouts/navbar", { no_bar: false }
+    = render "layouts/navbar"
     - if current_user
       = render "layouts/explore_modal"
       = render "layouts/launchpad_modal"
@@ -13,6 +13,5 @@
       - flash.each do |key, value|
         = content_tag(:div, value, :class => "alert-message #{key}")
       = yield
-        
-    - unless params[:controller] == "sections"
+    - if show_footer
       = render "layouts/footer"

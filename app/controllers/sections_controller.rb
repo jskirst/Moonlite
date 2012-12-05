@@ -137,6 +137,8 @@ class SectionsController < ApplicationController
   end
   
   def take
+    @show_nav_bar = false
+    @show_footer = false
     @task = @section.tasks.find(params[:task_id])
     raise "Not a challenge." unless @task.is_challenge_question?
     @path = @section.path
@@ -163,7 +165,7 @@ class SectionsController < ApplicationController
         task_id: task.id, status_id: 1, 
         submitted_answer_id: submitted_answer.id)
       current_user.award_points(task, 100)
-      redirect_to path_path(@section.path, completed: true)
+      redirect_to path_path(@section.path, completed: true, type: task.answer_type)
     else
       redirect_to path_path(@section.path), alert: "You must supply a valid answer."
     end
@@ -176,6 +178,8 @@ class SectionsController < ApplicationController
   end
     
   def continue
+    @show_nav_bar = false
+    @show_footer = false
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task

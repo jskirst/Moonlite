@@ -41,12 +41,12 @@
         %div.control-group
           %label.control-label "Delete Section"
           %div.controls{ style: "padding-top: 8px;" }= link_to "Delete", confirm_delete_section_path(s)
-        %div{ style: "float:left; margin: 20px 20px 10px 0;" }
+        %div{ style: "float:left; margin: 20px 20px 0px 0;" }
           - if s.is_published
             = link_to "Unpublish", unpublish_section_path(s), class: "button button-info", confirm: "Are you sure you want to unpublish this section?"
           - else
             = link_to "Publish", publish_section_path(s), class: "button button-info", confirm: "Are you sure you want to publish this section?"
-        %div{ style: "float:right; margin: 10px 0 10px 0;" }
+        %div{ style: "float:right; margin: 20px 0 0px 0;" }
           %span.button.button-standard{ onclick: "$(this).parents('.modal').modal('hide');", style: "margin-right: 8px;" } Close
           = f.submit "Save", class: "button button-actionable"
 
@@ -62,10 +62,10 @@
       %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
     %div.floatr{ style: "margin-top:10px;"}
       - if @path.is_published
-        = link_to "View", @path, class: "button button-actionable", style: "margin:10px 0 10px 10px;"
+        = link_to "View", @path, class: "button button-actionable"
       - else
-        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", style: "margin:10px 0 10px 10px;", confirm: "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes."
-      %span.button.button-standard.edit_path_settings_button{ style: "margin:10px 0 0 10px;" } Settings
+        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes."
+      %span.button.button-standard.edit_path_settings_button Settings
   %div
     = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
     %h2{ style: "font-size: 20px; color: darkgray;" } SECTIONS

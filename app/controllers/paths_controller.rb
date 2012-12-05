@@ -163,6 +163,7 @@ class PathsController < ApplicationController
       @current_section = current_user.most_recent_section_for_path(@path)
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
       @display_launchpad = params[:completed]
+      @display_type = params[:type]
     end
     
     @page = params[:page].to_i
