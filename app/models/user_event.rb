@@ -1,4 +1,6 @@
 class UserEvent < ActiveRecord::Base
+  scope :unread, where(is_read: false)
+  
   DEFAULT_IMAGE_LINK = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
   attr_accessible :actioner_id, :content, :link, :image_link, :is_read
   

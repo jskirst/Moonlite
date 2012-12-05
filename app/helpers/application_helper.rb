@@ -1,7 +1,7 @@
 module ApplicationHelper
   def title
-    if notifications.size > 0
-      base_title = "MetaBright (#{notifications.size})"
+    if unread_notification_count > 0
+      base_title = "MetaBright (#{unread_notification_count})"
     else
       base_title = "MetaBright"
     end
