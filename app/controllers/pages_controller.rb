@@ -60,15 +60,18 @@ class PagesController < ApplicationController
   end
   
   def about
+    @show_footer = true
     render "about", layout: "landing"
   end
   
   def challenges
+    @show_footer = true
     @personas = current_company.personas
     render "challenges", layout: "landing"
   end
   
   def tos
+    @show_footer = true
     render "tos", layout: "landing"
   end
   
