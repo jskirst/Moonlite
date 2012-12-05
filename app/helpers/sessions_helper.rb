@@ -25,6 +25,18 @@ module SessionsHelper
     Company.find(1)
   end
   
+  def show_sign_in
+    return @show_sign_in.nil? ? true : @show_sign_in
+  end
+  
+  def show_footer
+    return @show_footer.nil? ? true : @show_footer
+  end
+  
+  def show_nav_bar
+    return @show_nav_bar.nil? ? true : @show_nav_bar
+  end
+  
   def unread_notification_count
     return 0 unless current_user
     current_user.user_events.unread.count

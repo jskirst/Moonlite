@@ -32,15 +32,20 @@ class PagesController < ApplicationController
         render "users/home"
       end
     else
+      @show_sign_in = false
       render "landing", layout: "landing"
     end
   end
   
   def intro
+    @show_nav_bar = false
+    @show_footer = false
     render "intro", layout: "landing"
   end
   
   def start
+    @show_nav_bar = false
+    @show_footer = false
     @personas = current_company.personas.all
     render "start", layout: "landing"
   end
@@ -55,21 +60,15 @@ class PagesController < ApplicationController
   end
   
   def about
-    @no_bar = false
-    @show_footer = true
     render "about", layout: "landing"
   end
   
   def challenges
     @personas = current_company.personas
-    @no_bar = false
-    @show_footer = true
     render "challenges", layout: "landing"
   end
   
   def tos
-    @no_bar = false
-    @show_footer = true
     render "tos", layout: "landing"
   end
   

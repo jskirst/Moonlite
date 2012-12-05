@@ -137,6 +137,8 @@ class SectionsController < ApplicationController
   end
   
   def take
+    @show_nav_bar = false
+    @show_footer = false
     @task = @section.tasks.find(params[:task_id])
     raise "Not a challenge." unless @task.is_challenge_question?
     @path = @section.path
@@ -176,6 +178,8 @@ class SectionsController < ApplicationController
   end
     
   def continue
+    @show_nav_bar = false
+    @show_footer = false
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
