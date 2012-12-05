@@ -34,7 +34,7 @@
 :javascript
   $(function(){
     $(".mark_approved").on("ajax:success", function(xhr, data){
-      console.log(data.status);
+      log(data.status);
       if(data.status == true){
         $(this).text("approved");
       } else {

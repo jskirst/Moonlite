@@ -25,6 +25,10 @@ module SessionsHelper
     Company.find(1)
   end
   
+  def unread_notification_count
+    current_user.user_events.unread.count
+  end
+  
   def notifications
     return [] unless current_user
     current_user.user_events

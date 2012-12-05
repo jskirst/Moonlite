@@ -56,7 +56,7 @@ Metabright::Application.routes.draw do
 	root :to => "pages#home"
   match '/intro' => "pages#intro"
   match '/start' => "pages#start"
-  match '/notifications' => "pages#notifications"
+  match '/mark_read' => "pages#mark_read"
   match '/create' => 'pages#create'
   match '/explore', to: "personas#explore"
   match '/about' => "pages#about"

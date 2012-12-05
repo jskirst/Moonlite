@@ -41,5 +41,5 @@
 - if @more_available
   %div.post{ style: "text-align: center; margin: auto;" }
     :javascript
-      $(function(){ $(".view_more").on("ajax:success", function(xhr, data){ console.log(data); $(this).parent().replaceWith(data); }); });
+      $(function(){ $(".view_more").on("ajax:success", function(xhr, data){ $(this).parent().replaceWith(data); }); });
     = link_to "View More", "#{request.url}?page=#{(@page+1)}", class: "button button-standard view_more", style: "text-align: center; margin: auto;", remote: true
