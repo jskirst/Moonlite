@@ -1,3 +1,13 @@
+:javascript
+  function mark_notifications_as_read(){
+    $.ajax({
+      type: "GET",
+      url: "#{mark_read_path}",
+      success: function(){ log("Marked as read success.") },
+      complete: function(){ log("Marked as read complete.") }
+    })
+  }
+
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner
     %div{ style: "position:absolute; height: 40px; overflow-y: hidden;" }
@@ -33,7 +43,7 @@
               %span{ style: "vertical-align: middle;" }= current_user.name
           %li
             %div.dropdown.pull-right{ style: "padding-top: 12px;" }
-              %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown" }
+              %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();" }
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;"
               %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px; min-width: 312px;" }
                 %div
@@ -41,11 +51,11 @@
                 %div.leftboxheader Notifications
                 - notifications.each do |event|
                   %li.notification_space
-                    %div.notification
+                    %div.notification{ class: "#{event.is_read ? '' : 'notification-unread'}" }
                       = link_to event.link do
                         = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;"
                         %p.notification_body= event.content
-                    %p.notification_time #{time_ago_in_words(event.created_at)} ago
+                        %p.notification_time #{time_ago_in_words(event.created_at)} ago
           %li
             = link_to "Sign out", signout_path
         - elsif params[:controller] == "paths"
