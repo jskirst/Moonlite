@@ -165,7 +165,7 @@ class SectionsController < ApplicationController
         task_id: task.id, status_id: 1, 
         submitted_answer_id: submitted_answer.id)
       current_user.award_points(task, 100)
-      redirect_to path_path(@section.path, completed: true)
+      redirect_to path_path(@section.path, completed: true, type: task.answer_type)
     else
       redirect_to path_path(@section.path), alert: "You must supply a valid answer."
     end

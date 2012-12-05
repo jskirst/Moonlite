@@ -1,8 +1,6 @@
 class PersonasController < ApplicationController
-  before_filter :authenticate
-  before_filter :company_admin, except: [:show]
   before_filter :get_from_id, only: [:show, :edit, :preview, :destroy]
-  before_filter :authorized, except: [:show]
+  before_filter :authorized, only: [:index, :edit, :update, :new, :create, :destroy]
   
   def index
     @mode = "personas"
@@ -59,7 +57,7 @@ class PersonasController < ApplicationController
   end
   
   def explore
-    @personas = current_company.personas
+    @personas = Persona.all
     render partial: "explore"
   end
   
