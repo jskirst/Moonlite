@@ -1,7 +1,7 @@
 - if current_user
   %div#explore_modal.dropdown_modal.modal.hide.fade
     :css
-      .explorecontainer{ background:none; margin-top: 40px; border:none; width:749px; }
+      .explorecontainer { width: 750px; margin-top: 0px; }
       .explorenewusercontent{ margin:38px; }
     - @personas ||= current_company.personas
     = render "personas/explore"

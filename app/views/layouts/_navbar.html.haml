@@ -1,11 +1,6 @@
 :javascript
   function mark_notifications_as_read(){
-    $.ajax({
-      type: "GET",
-      url: "#{mark_read_path}",
-      success: function(){ log("Marked as read success.") },
-      complete: function(){ log("Marked as read complete.") }
-    })
+    $.ajax({ type: "GET", url: "#{mark_read_path}" });
   }
 
 %nav.navbar.navbar-fixed-top

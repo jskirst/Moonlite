@@ -4,12 +4,12 @@
     = submit_tag "Save", :id => "save_question_button", :class => "button button-info"
     %span#close_question_button.button.button-standard{ onclick: "clear_form();" } Clear
   %div.new_task{ style: "margin-top:10px;" }
-    %div.message_container.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
+    %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
     %h4#form_title{ style: "margin-left:46px;" } Add Question
     %div.control-group
       %label.control-label Question
       %div.controls
-        = text_area_tag("task[question]", nil, { class: "xxlarge question_input", rows: "3", placeholder: "Type your question here..." })
+        = text_area_tag("task[question]", nil, { class: "input-xlarge question_input", rows: "3", placeholder: "Type your question here..." })
     %div.row
       %div.answers{ style: "margin-left: 20px;" }
         %div.control-group
@@ -62,32 +62,34 @@
   
   $(function(){
     $(".task_answer_sub_type").change(function(){
+      log("Changin sub type.");
       display_sub_type_message();
     });
   
     $(".task_answer_type").change(function(){
       var type = $(this).val();
+      log("Changin type.");
       if(type == 0){
-        $(".task_answer_sub_type").parents("div.field").show();
+        $(".task_answer_sub_type").parents("div.control-group").show();
         $(".creative").show();
         $(".multiple_choice").hide();
         $(".fib").hide();
         $(".checkin").hide();
         display_sub_type_message();
       } else if (type == 1){
-        $(".task_answer_sub_type").parents("div.field").hide();
+        $(".task_answer_sub_type").parents("div.control-group").hide();
         $(".fib").show();
         $(".creative").hide();
         $(".multiple_choice").hide();
         $(".checkin").hide();
       } else if(type == 2) {
-        $(".task_answer_sub_type").parents("div.field").hide();
+        $(".task_answer_sub_type").parents("div.control-group").hide();
         $(".multiple_choice").show();
         $(".fib").hide();
         $(".creative").hide();
         $(".checkin").hide();
       } else if(type == 3) {
-        $(".task_answer_sub_type").parents("div.field").hide();
+        $(".task_answer_sub_type").parents("div.control-group").hide();
         $(".multiple_choice").hide();
         $(".fib").hide();
         $(".creative").hide();
