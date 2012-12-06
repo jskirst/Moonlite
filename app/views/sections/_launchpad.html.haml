@@ -5,13 +5,13 @@
       %ul.nav.nav-tabs
         - unless @current_section.core_tasks.empty?
           %li.active
-            %a{ href: "#arena_tab", title: "Arena"} Arena
+            %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
         - unless @current_section.challenge_tasks.empty?
           %li
-            %a{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
+            %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
         - unless @current_section.achievement_tasks.empty?
           %li
-            %a{ href: "#achievements_tab", title: "Tasks"} Tasks
+            %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks
     - unless @current_section.core_tasks.empty?
       %div#arena_tab.tab_content
         - if @current_section.quiz_complete?(current_user)
@@ -70,7 +70,18 @@
     var name = "#{@current_section.name}";
     var trunc_name = truncate(name, 15);
     var chart;
+    var display_type = #{@display_type};
+    var open_tab;
     $(function(){
+      if(display_type == 0){ open_tab = "#questions_tab_link"; } 
+      if(display_type == 2){ open_tab = "#arena_tab_link"; } 
+      if(display_type == 3){ open_tab = "#achievement_tab_link"; }
+      
+      $(".tab_content").hide();
+      $("ul.nav-tabs li.active").removeClass("active");
+      $(open_tab).parent().addClass("active");
+      $($(open_tab).attr("href")).show();
+    
       $(".nav-tabs li a").click(function(){
         $(".tab_content").hide();
         $("ul.nav-tabs li.active").removeClass("active");
