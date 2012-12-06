@@ -165,6 +165,7 @@ class PathsController < ApplicationController
       @display_launchpad = params[:completed]
       @display_type = params[:type] || 2
     else
+      @display_sign_in = true
       session[:referer] = @path.id 
     end
     
