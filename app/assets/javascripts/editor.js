@@ -62,8 +62,7 @@ function bind_delete_task(obj){
       if(data.errors){
         $(obj).parents("td.task:first").prepend("<div class='alert-message error'>"+data.error+"</div>");
       } else if(data.success){
-        $(obj).parents("td.task:first").html("<div class='alert-message success'>"+data.success+"</div>");
-        $('.alert-message').fadeOut(3000);
+        $(obj).parents("td.task:first").remove();
       } else {
         alert("Unknown error occurred");
       }

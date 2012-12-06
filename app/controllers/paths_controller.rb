@@ -155,7 +155,7 @@ class PathsController < ApplicationController
   
   def show
     @leaderboards = Leaderboard.includes(:user).where("path_id = ?", @path.id).all(order: "score DESC", limit: 10)
-    @enrolled_users = @path.enrolled_users.limit(15)
+    @enrolled_users = @path.enrolled_users.limit(15).to_a.shuffle
     @tasks = @path.tasks
     @votes = []
     if current_user
@@ -164,6 +164,8 @@ class PathsController < ApplicationController
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
       @display_launchpad = params[:completed]
       @display_type = params[:type] || 2
+    else
+      session[:referer] = @path.id 
     end
     
     @page = params[:page].to_i

@@ -23,7 +23,14 @@ class SessionsController < ApplicationController
         Mailer.welcome(user.email).deliver
         sign_in(user)
         log_event(nil, root_url, nil, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
-        redirect_to intro_path and return
+        if session[:referer]
+          path = Path.find_by_id(session[:referer])
+          user.enroll!(path)
+          redirect_to path
+        else
+          redirect_to intro_path
+        end
+        return true
       end
     else
       credentials = params[:session]
