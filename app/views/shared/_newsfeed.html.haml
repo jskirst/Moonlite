@@ -31,7 +31,7 @@
       = link_to submission_details_path(r.path, r.submitted_answer.id), style: "text-transform: none; color: inherit;" do
         %div.CRarea
           - if r.task.answer_sub_type == Task::TEXT
-            %pre{ style: "margin:20px;" }= r.submitted_answer.content
+            %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
           - elsif r.task.answer_sub_type == Task::IMAGE
             = image_tag(sanitize(r.submitted_answer.content))
           - elsif r.task.answer_sub_type == Task::YOUTUBE
