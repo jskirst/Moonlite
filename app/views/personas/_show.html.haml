@@ -22,6 +22,7 @@
     .exploretextdetails span{font-size:20px; font-weight:bold; font-style:italic;}
     .explorenewuserfooter{position:relative; bottom:12px; left:16px; margin-bottom:8px;}
     .modal_close img{width:20px; height:20px;}
+    .challengetiles .mosaic-block.bar2 { margin-bottom: 12px; }
     
   %div.exploreheader
     - unless current_user.personas.empty?
@@ -41,15 +42,21 @@
   %div.challengetiles
     - if @paths.empty?
       %p You must achieve a higher MetaBright level before you can unlock this Persona.
-    - @paths.each do |path|
-      %div.mosaic-block.bar2
-        = link_to enroll_path_url(path), class: "mosaic-overlay", title: "#{path.name}" do
-          %div.details
-            %h4 #{truncate(path.name,length: 17, separator: ' ')}
-            - if current_user.enrolled?(path)
-              %button.btn.btn-success Enrolled
-            - else
-              %button.btn.btn-danger Enroll
+    - @paths.to_a.each_with_index do |path, i|
+      %div.mosaic-block.bar2{ style: (((i+1) % 4 == 0) ? "margin-right: 0px;" : "") }
+        %div.details
+          - if path.is_public
+            = link_to enroll_path_url(path), class: "mosaic-overlay", title: "#{path.name}" do
+              %h4 #{truncate(path.name,length: 17, separator: ' ')}
+              - if current_user.enrolled?(path)
+                %button.btn.btn-success Enrolled
+              - else
+                %button.btn.btn-danger Enroll
+          - else
+            %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
+              %h4 #{truncate(path.name,length: 17, separator: ' ')}
+              %h5 Coming Soon!
+            
         %div 
           = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
   %div.explorenewuserfooter
