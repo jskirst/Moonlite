@@ -1,7 +1,7 @@
 class Path < ActiveRecord::Base
-  # def to_param
-    # "#{id} #{name}".parameterize
-  # end
+  def to_param
+    "#{id} #{name}".parameterize
+  end
   
   attr_accessor :persona_id
   attr_readonly :company_id
