@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_filter :authenticate, except: [:request_send, :send_reset, :request_reset, :reset_password, :show]
   before_filter :find_by_id, except: [:request_reset, :request_send, :reset_password]
   before_filter :has_access?, only: [:lock, :edit_role, :update_role]
-  before_filter :user_only,  only: [:edit, :update]
+  before_filter :user_only,  only: [:edit, :update, :destroy]
   
   def show
     @page = params[:page].to_i
@@ -55,6 +55,11 @@ class UsersController < ApplicationController
     else
       raise "Runtime error" + current_user.to_yaml + @user.to_yaml
     end
+  end
+  
+  def destroy
+    @user.destroy
+    redirect_to root_url
   end
   
   private
