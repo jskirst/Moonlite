@@ -107,12 +107,11 @@ class Path < ActiveRecord::Base
   end
   
   def self.suggested_paths(user, excluded_path_id = -1)
-    #TODO: suggest most popular 
     personas = user.personas
     personas = user.company.personas.to_a.last(3) if personas.empty?
     enrolled_paths = user.enrolled_paths.to_a.collect &:id
     suggested_paths = personas.to_a.collect do |persona|
-      persona.paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
+      persona.public_paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
     end
     return suggested_paths.flatten.compact
   end

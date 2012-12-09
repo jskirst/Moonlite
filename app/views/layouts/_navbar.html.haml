@@ -10,8 +10,12 @@
         %div.chunk.cloudy
     %div{ style: "margin-left: 188px;" }
       %h3.brand{ style: "top:3px; position:relative;" }
-        = link_to root_url, style: "font-size: 26px;" do
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
+        - if current_user
+          = link_to root_url, style: "font-size: 26px;" do
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
+        - else
+          %a.login_link{ href: "#" }
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
       - if current_user && show_nav_bar
         %ul.nav.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B; height: 45px; overflow-y: hidden;" }
           %li.navitem{ style: "border-left: 0px;" }
