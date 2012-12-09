@@ -28,15 +28,14 @@
               %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
               %div.vote_count= r.submitted_answer.total_votes.to_i
       %div.posttext.leveltext= link_to r.task.question, task_details_path(r.path, r.submitted_answer.id), style: "color: inherit;"
-      = link_to submission_details_path(r.path, r.submitted_answer.id), style: "text-transform: none; color: inherit;" do
-        %div.CRarea
-          - if r.task.answer_sub_type == Task::TEXT
-            %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
-          - elsif r.task.answer_sub_type == Task::IMAGE
-            = image_tag(sanitize(r.submitted_answer.content))
-          - elsif r.task.answer_sub_type == Task::YOUTUBE
-            %center
-              %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
+      %div.CRarea
+        - if r.task.answer_sub_type == Task::TEXT
+          %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
+        - elsif r.task.answer_sub_type == Task::IMAGE
+          = image_tag(sanitize(r.submitted_answer.content))
+        - elsif r.task.answer_sub_type == Task::YOUTUBE
+          %center
+            %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
       = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at, sharing_url: submission_details_url(r.path, r.submitted_answer.id), sharing_title: "Great response to the #{r.path.name} Challenge on @MetaBright." }
 - if @more_available
   %div.post{ style: "text-align: center; margin: auto;" }
