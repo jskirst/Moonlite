@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115003903) do
+ActiveRecord::Schema.define(:version => 20121209205945) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -380,7 +380,7 @@ ActiveRecord::Schema.define(:version => 20121115003903) do
     t.integer  "company_id"
     t.boolean  "company_admin",      :default => false
     t.integer  "user_role_id"
-    t.string   "catch_phrase"
+    t.string   "username"
     t.boolean  "is_fake_user",       :default => false
     t.string   "provider"
     t.string   "uid"

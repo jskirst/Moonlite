@@ -17,7 +17,7 @@
     %div.postspace
       %div.postheader
         %h3
-          = link_to truncate(r.user.to_s, length: 50), r.user, class:"username"
+          = link_to truncate(r.user.to_s, length: 50), profile_path(r.user.username), class:"username"
         %div.votingandpointsarea
           - if current_user
             = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
