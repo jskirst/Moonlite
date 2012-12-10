@@ -232,6 +232,19 @@ class User < ActiveRecord::Base
     return enrollments.find_by_path_id(path).total_points
   end
   
+  def grant_username
+    if self.username.blank?
+      new_username = self.name.downcase.gsub(/[^a-z]/,'')
+      new_combined_username = new_username
+      username_count = User.where(username: new_combined_username).size
+      while User.where(username: new_combined_username).size > 0
+        username_count += 1
+        new_combined_username = "#{new_username}#{username_count}"
+      end
+      self.username = new_combined_username
+    end
+  end
+  
   private
     def set_default_user_role
       if self.user_role_id.nil?
@@ -274,18 +287,5 @@ class User < ActiveRecord::Base
     
     def log_transaction(task_id, points)
       user_transactions.create!(owner_id: task_id, owner_type: "Task", amount: points, status: 1)
-    end
-    
-    def grant_username
-      if self.username.blank?
-        new_username = self.name.downcase.gsub(/[^a-z]/,'')
-        new_combined_username = new_username
-        username_count = User.where(username: new_combined_username).size
-        while User.where(username: new_combined_username).size > 0
-          username_count += 1
-          new_combined_username = "#{new_username}#{username_count}"
-        end
-        self.username = new_combined_username
-      end
     end
 end
