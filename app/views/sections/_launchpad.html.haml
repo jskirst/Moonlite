@@ -70,7 +70,7 @@
     var name = "#{@current_section.name}";
     var trunc_name = truncate(name, 15);
     var chart;
-    var display_type = #{@display_type};
+    var display_type = #{@display_type || 0};
     var open_tab;
     $(function(){
       if(display_type == 0){ open_tab = "#questions_tab_link"; } 

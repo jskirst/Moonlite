@@ -25,7 +25,7 @@
             = link_to "#", class: "explore_link" do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;"
           %li.navitem
-            = link_to current_user do
+            = link_to profile_path(current_user.username) do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
           - if @enable_user_creation
             %li.navitem
@@ -37,14 +37,14 @@
               %li
                 = link_to "Admin", admin_overview_path
             %li
-              = link_to current_user do
+              = link_to profile_path(current_user.username) do
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
                 %span{ style: "vertical-align: middle;" }= current_user.name
             %li
-              %div.dropdown.pull-right{ style: "padding-top: 12px;" }
+              %div.dropdown.pull-right{ style: "padding-top: 10px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();" }
                   = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;"
-                %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px; min-width: 312px;" }
+                %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px; min-width: 312px; min-height: 135px;" }
                   %div
                     %div.nub
                   %div.leftboxheader Notifications

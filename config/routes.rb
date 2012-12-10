@@ -86,4 +86,6 @@ Metabright::Application.routes.draw do
   match '/emailtest' => 'pages#email_test', as: "email"
 	match '/password_reset' => 'users#request_send'
 	match '/send_reset' => 'users#send_reset'
+	
+	match '/:username' => "users#show", as: "profile"
 end

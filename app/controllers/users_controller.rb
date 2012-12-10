@@ -1,10 +1,13 @@
 class UsersController < ApplicationController
   before_filter :authenticate, except: [:request_send, :send_reset, :request_reset, :reset_password, :show]
-  before_filter :find_by_id, except: [:request_reset, :request_send, :reset_password]
+  before_filter :find_by_id, except: [:show, :request_reset, :request_send, :reset_password]
   before_filter :has_access?, only: [:lock, :edit_role, :update_role]
   before_filter :user_only,  only: [:edit, :update, :destroy]
   
   def show
+    @user = User.find_by_username(params[:username]) if params[:username]
+    @user = User.find_by_id(params[:id]) if params[:id]
+    
     @page = params[:page].to_i
     offset = @page * 30
     if params[:task]
@@ -18,7 +21,7 @@ class UsersController < ApplicationController
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
     @creative_tasks = all_responses.collect { |item| item.task }
-    @enrollments = @user.enrollments.includes(:path).sort { |a,b| b.level <=> a.level }
+    @enrollments = @user.enrollments.includes(:path).where("total_points > ?", 100).sort { |a,b| b.level <=> a.level }
     @enrolled_personas = @user.personas
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
@@ -64,7 +67,7 @@ class UsersController < ApplicationController
   
   private
     def find_by_id
-      @user = User.find(params[:id]) if params[:id]
+      @user = User.find_by_id(params[:id]) if params[:id]
     end
     
     def has_access?

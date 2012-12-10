@@ -11,7 +11,7 @@
       = render "layouts/login_modal"
     %div.container.body{ style: "padding-top: 51px;" }
       - flash.each do |key, value|
-        = content_tag(:div, value, :class => "alert-message #{key}")
+        = content_tag(:div, value, :class => "alert alert-#{key}")
       = yield
     - if show_footer
       = render "layouts/footer"
