@@ -112,34 +112,11 @@ module SessionsHelper
     return "Path"
   end
   
-  def analyze_visitor
-    if current_user
-      if current_user.company_id == 1
-        @is_consumer = true
-      else
-        @is_company = true
-        cookies.permanent[:mb_c] = current_company.id
-      end
-    elsif params[:c]
-      @possible_company = Company.where("referrer_url like ?", "%#{params[:c]}%").first
-      @is_company = true if @possible_company
-      @is_consumer = false
-      cookies.permanent[:mb_c] = @possible_company.id
-    elsif cookies[:mb_c]
-      @possible_company = Company.find(cookies[:mb_c].to_i)
-      @is_company = true if @possible_company
-      @is_consumer = false
-    else
-      http_host = request.env["HTTP_HOST"]
-      domain = http_host.split(".")[-2].to_s.downcase
-      @possible_company = Company.where("referrer_url ILIKE ?", "%#{domain}%").first
-      @is_company = true if @possible_company
-    end
-  end
-  
   def determine_enabled_features
     unless current_user.nil?
+      current_user.update_attribute(:login_at, DateTime.now())
       role = current_user.user_role
+      @is_consumer = true
       @enable_administration = role.enable_administration
       @enable_rewards = role.enable_company_store
       @enable_leaderboard = role.enable_leaderboard
