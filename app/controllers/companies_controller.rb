@@ -20,9 +20,9 @@ class CompaniesController < ApplicationController
     if request.get?
       if params[:search]
         search = "%#{params[:search]}%"
-        @users = User.paginate(page: params[:page], conditions: ["name ILIKE ? or email ILIKE ?", search, search])
+        @users = User.paginate(page: params[:page], conditions: ["name ILIKE ? or email ILIKE ? and is_fake_user = ?", search, search, false])
       else
-        @users = User.paginate(page: params[:page], order: "earned_points DESC")
+        @users = User.paginate(page: params[:page], conditions: ["is_fake_user = ?", false], order: "earned_points DESC")
       end
     else
       status = params[:lock] == "true" ? true : false
