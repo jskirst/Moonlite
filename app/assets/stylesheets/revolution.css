@@ -222,6 +222,9 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
+.notification-icon { opacity: 0.8; }
+.notification-icon:hover { opacity: 1.0; }
+.notification-icon-unread { box-shadow: 0 2px 0 0 white; }
 .notifications_header{ border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
 .notification_space { padding: 12px 12px 0px 12px; }
 .notification { display: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative; font-size:13px; width: 270px; padding: 8px;}

@@ -44,7 +44,7 @@ module SessionsHelper
   
   def notifications
     return [] unless current_user
-    current_user.user_events
+    current_user.user_events.order("created_at DESC")
   end
   
   def sign_out
