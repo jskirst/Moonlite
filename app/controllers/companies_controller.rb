@@ -9,11 +9,11 @@ class CompaniesController < ApplicationController
     @vote_count = Vote.count
     @comment_count = Comment.count
     
-    @new_user_count = User.where("created_at > ?", Date.yesterday).count
-    @new_ct_count = CompletedTask.where("created_at > ?", Date.yesterday).count
-    @new_submission_count = SubmittedAnswer.where("created_at > ?", Date.yesterday).count
-    @new_vote_count = Vote.where("created_at > ?", Date.yesterday).count
-    @new_comment_count = Comment.where("created_at > ?", Date.yesterday).count
+    @new_user_count = User.where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_ct_count = CompletedTask.where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_submission_count = SubmittedAnswer.where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_vote_count = Vote.where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_comment_count = Comment.where("DATE(created_at) = DATE(?)", Time.now).count
   end
   
   def users
