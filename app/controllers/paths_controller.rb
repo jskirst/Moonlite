@@ -155,7 +155,7 @@ class PathsController < ApplicationController
   
   def show
     @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
-    @path = Path.find_by_permalink(params[:id]) if params[:id]
+    @path = Path.find(params[:id]) if params[:id]
     
     redirect_to root_path and return unless @path.is_public == true
     @leaderboards = Leaderboard.includes(:user).where("path_id = ?", @path.id).all(order: "score DESC", limit: 10)
