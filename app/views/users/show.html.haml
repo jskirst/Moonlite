@@ -31,7 +31,7 @@
               - if @enrollments.size < 4
                 = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the Metabright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
               - @enrollments.each do |e|
-                = render "shared/mosaic", { custom_class: "clip_pic", pic: e.path.path_pic, link: path_path(e.path), title: e.path.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
+                = render "shared/mosaic", { custom_class: "clip_pic", pic: e.path.path_pic, link: challenge_path(e.path.permalink), title: e.path.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
           - if @enrollments.size > 3
             %div#challengeright_scroll
               %a{href: "javascript:challengeslide(\"right\");"}

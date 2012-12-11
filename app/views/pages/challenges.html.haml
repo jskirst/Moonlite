@@ -10,7 +10,7 @@
           %div{style: "margin-bottom:5px;"}
             - persona.paths.each do |path|
               %div.mosaic-block.bar2{style: "margin-bottom:10px;"}
-                = link_to path_path(path), class: "mosaic-overlay", title: "#{path.name}" do
+                = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
                   %div.details
                     %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
                 %div 

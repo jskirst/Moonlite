@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121209205945) do
+ActiveRecord::Schema.define(:version => 20121211035711) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -147,8 +147,8 @@ ActiveRecord::Schema.define(:version => 20121209205945) do
     t.string   "name"
     t.text     "description",                :default => ""
     t.integer  "user_id"
-    t.datetime "created_at",                                      :null => false
-    t.datetime "updated_at",                                      :null => false
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
     t.integer  "company_id"
     t.string   "image_url"
     t.boolean  "is_public",                  :default => false
@@ -162,11 +162,11 @@ ActiveRecord::Schema.define(:version => 20121209205945) do
     t.boolean  "enable_nonlinear_sections",  :default => false
     t.boolean  "is_locked",                  :default => false
     t.boolean  "enable_retakes",             :default => true
-    t.string   "game_type",                  :default => "basic"
     t.string   "tags"
     t.boolean  "enable_voting",              :default => false
     t.integer  "passing_score"
     t.boolean  "enable_path_retakes",        :default => false
+    t.string   "permalink"
   end
 
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
