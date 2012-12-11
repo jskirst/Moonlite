@@ -222,6 +222,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
+.notifications_bubble{background-color: #F56C7E;height: 16px;width: 16px;background: #F56C7E url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_bubble_background.png) no-repeat center center scroll;background-image: none 9;position: absolute;right: -7px;top: 7px;color: white;text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);text-align: center;font-size: 9px;line-height: 17px;box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .17), 0 1px 1px rgba(0, 0, 0, .2);-moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .17), 0 1px 1px rgba(0, 0, 0, .2);-webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .17), 0 1px 1px rgba(0, 0, 0, .2);border-radius: 13px;cursor: pointer;display: inline;}
 .notifications_header{ border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
 .notification_space { padding: 12px 12px 0px 12px; }
 .notification { display: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative; font-size:13px; width: 270px; padding: 8px;}
