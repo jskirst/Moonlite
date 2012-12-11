@@ -7,7 +7,7 @@ class PagesController < ApplicationController
     @title = "Home"
     if signed_in?
       redirect_to start and return if params[:go] == "start"
-      @enrollments = current_user.enrollments.includes(:path)
+      @enrollments = current_user.enrollments.includes(:path).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 

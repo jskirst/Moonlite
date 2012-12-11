@@ -216,14 +216,6 @@ class User < ActiveRecord::Base
     return true unless my_completed_tasks.where(["section_id = ?", section.id]).empty?
   end
   
-  def usage(stat)
-    return enrolled_paths.count if stat == "enrolled_paths"
-    return completed_tasks.where("status_id = ?", 0).count if stat == "incorrect_answers"
-    return completed_tasks.where("status_id = ?", 1).count if stat == "correct_answers"
-    return completed_tasks.last.created_at unless completed_tasks.last.nil? if stat == "last_action"
-    return enrolled_paths.to_a.count { |p| p.completed?(self) } if stat == "completed_paths"
-  end
-  
   def level(path)
     return enrollments.find_by_path_id(path).level
   end

@@ -1,6 +1,6 @@
 class PathsController < ApplicationController
   before_filter :authenticate, except: [:show]
-  before_filter :get_path_from_id, :except => [:index, :new, :create]
+  before_filter :get_path_from_id, :except => [:show, :index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
   before_filter :can_edit?, :only => [:edit, :update, :destroy, :collaborator, :collaborators]
   
@@ -154,6 +154,9 @@ class PathsController < ApplicationController
   end
   
   def show
+    @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
+    @path = Path.find_by_permalink(params[:id]) if params[:id]
+    
     redirect_to root_path and return unless @path.is_public == true
     @leaderboards = Leaderboard.includes(:user).where("path_id = ?", @path.id).all(order: "score DESC", limit: 10)
     @enrolled_users = @path.enrolled_users.limit(15).to_a.shuffle

@@ -11,6 +11,7 @@
         %th Rank
         %th Name
         %th Email
+        %th Last Login
         %th Enrollments
         %th Points
         %th Votes
@@ -22,6 +23,7 @@
           %td= i
           %td= link_to u.name, u
           %td= u.email
+          %td #{time_ago_in_words(u.login_at || u.created_at)} ago
           %td= u.enrollments.size
           %td= u.earned_points
           %td= u.votes.size

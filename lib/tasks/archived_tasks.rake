@@ -1,11 +1,3 @@
-task :check_is_complete => :environment do
-  User.includes(:enrollments).all.each do |u|
-    u.enrollments.each do |e|
-      e.update_attribute(:is_complete, true) if e.path.total_remaining_tasks(u) <= 0
-    end
-  end
-end
-
 task :stored_resource_switch => :environment do
   StoredResource.all.each do |sr|
     if !sr.path_id.nil?

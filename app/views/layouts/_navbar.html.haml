@@ -1,6 +1,13 @@
 :javascript
   function mark_notifications_as_read(){
-    $.ajax({ type: "GET", url: "#{mark_read_path}" });
+    $.ajax({ 
+      type: "GET", 
+      url: "#{mark_read_path}", 
+      complete: function(){ 
+        $("title").text($("title").text().replace(/\([0-9]+\)/,''));
+        $(".notifications_bubble").remove();
+      } 
+    });
   }
 
 %nav.navbar.navbar-fixed-top
@@ -41,11 +48,12 @@
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
                 %span{ style: "vertical-align: middle;" }= current_user.name
             %li
-              %div.dropdown.pull-right{ style: "padding-top: 10px;" }
+              %div.dropdown.pull-right.notification-icon{ style: "padding-top: 10px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();" }
                   = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;"
-                  %span.notifications_bubble 3
-                %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px; min-width: 312px; min-height: 135px;" }
+                  - if unread_notification_count > 0
+                    %span.notifications_bubble= unread_notification_count
+                %ul.dropdown-menu{ role: "button", style: "padding: 0 0 10px 0; top:42px; right:-110px; min-width: 312px; min-height: 135px;" }
                   %div
                     %div.nub
                   %div.leftboxheader Notifications
