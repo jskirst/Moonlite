@@ -256,7 +256,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .introintcontent{padding:12px; }
 .introintcontent>ul{list-style: none; margin:0 0 0 2px;}
 .introintcontent>ul>li{line-height:17px; padding:0 0 10px 0; }
-.introintcontent>ul>li>img{display:inline; height:35px;margin-right:5px; position:relative; top:19px; opacity:.8;}
+.introintcontent>ul>li>img{display:inline; height:35px;margin-right:5px; position:relative; top:19px; opacity:.8; vertical-align:baseline;}
 .introintcontent>ul>li>.inttitle{}
 .introintcontent>ul>li>.intdetails{margin-left:45px;}
 .dropdown_modal.modal.fade { width: 100%; top: 0%; background-color: transparent; border: 0; box-shadow: 0 0 0; margin-left: auto; margin-right: auto; left: inherit; margin-top: 0px; }
