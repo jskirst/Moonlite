@@ -20,7 +20,7 @@ function animate_point_change($target, addition, limit){
   window.setTimeout(function(){ animate_point_change($target, addition, limit) }, 3);
 }
 
-$(function(){
+function init_voting(){
   $(".vote_button").on("ajax:success",
     function(event, data){
       if(data.errors){
@@ -38,4 +38,4 @@ $(function(){
       }
     }
   );
-});
+}
