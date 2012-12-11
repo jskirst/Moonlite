@@ -54,8 +54,8 @@
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
                 %span{ style: "vertical-align: middle;" }= current_user.name
             %li
-              %div.dropdown.pull-right.notification-icon{ style: "padding-top: 10px;" }
-                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();" }
+              %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
+                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
                   = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;", title: "Notifications"
                   - if unread_notification_count > 0
                     %span.notifications_bubble= unread_notification_count
@@ -71,7 +71,7 @@
                           %p.notification_body= event.content
                           %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
-              %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px; padding-left:7px;" }
+              %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:10px;" }
                   %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png", style: "height:20px; width:20px;", title:"Settings"}
                 %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-15px; min-width: 25px; min-height: 50px;" }
