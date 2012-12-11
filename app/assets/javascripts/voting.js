@@ -12,20 +12,28 @@ function show_knowledge_list(){
   $('.knowledge_link').siblings('a').removeClass('underlined');
 }
 
+function animate_point_change($target, addition, limit){
+  var points = parseInt($target.text());
+  if(points == limit || points <= 0 || points >= 100000){ return false; }
+  points = points + addition;
+  $target.text(points);
+  window.setTimeout(function(){ animate_point_change($target, addition, limit) }, 3);
+}
+
 $(function(){
   $(".vote_button").on("ajax:success",
     function(event, data){
       if(data.errors){
         alert(data.errors);
       } else {
-        var $vote_counter = $(this).find("div.vote_count");
-        var votes = parseInt($vote_counter.text());
-        if($(this).hasClass("primary")){
-          $(this).removeClass("primary");
-          $vote_counter.text(votes-1);
+        var $vote_points = $(this).siblings("span:first");
+        var points = parseInt($vote_points.text());
+        if($(this).hasClass("btn-primary")){
+          $(this).removeClass("btn-primary");
+          animate_point_change($vote_points, -1, (points-50));
         } else {
-          $(this).addClass("primary");
-          $vote_counter.text(votes+1);
+          $(this).addClass("btn-primary");
+          animate_point_change($vote_points, +1, (points+50));
         }
       }
     }
