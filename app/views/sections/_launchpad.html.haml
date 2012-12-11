@@ -31,6 +31,8 @@
           %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
     - unless @current_section.challenge_tasks.empty?
       %div#questions_tab.tab_content{ style: "display: none;" }
+        %div{style:"background-color:#A04545; width:600px; height:80px; color:#C5C5C5; margin-left: auto; margin-right: auto; color: #C5C5C5; text-align: center; margin-bottom: 12px;"}
+          %span *Lightbulb* Remember, CR's and tasks are there to guide your improvement. Go ahead, look up answers!
         %table
           - @current_section.challenge_tasks.each do |t|
             - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
