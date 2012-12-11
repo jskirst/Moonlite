@@ -6,9 +6,9 @@
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
 .postheader h3 { display:inline-block; margin: 0px; font-size:18px; line-height:36px; }
 .votingandpointsarea { display:inline-block; float:right; margin-top:4px; }
-.votingandpointsarea a { padding: 3px 7px 2px 7px;}
+.votingandpointsarea a { padding: 2px 3px 1px 3px;}
 .votingandpointsarea div { display: inline-block; margin: 0 1px 0 8px; position:relative; top:1px;}
-.votingandpointsarea img{ position:relative; bottom: 2px; }
+.votingandpointsarea img{ position:relative; bottom: 2px; height:15px; width:15px;}
 .points { font-style:italic; font-weight:bold; font-size:15px; position:relative; bottom:3px; margin-left:4px; }
 .postphotospace { display:inline-block; vertical-align: top; margin-right:12px; }
 .postspace{display: inline-block;  border-radius: 3px;  box-shadow: 0 2px 4px rgba(0, 0, 0, .05);  background-color:white;  border: 1px solid #ccc;  margin:0 auto 0 auto;  position:relative;font:normal 13px arial, sans-serif;padding: 0 12px;width: 520px;}

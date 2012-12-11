@@ -20,9 +20,9 @@
           = link_to truncate(r.user.to_s, length: 50), profile_path(r.user.username), class:"username"
         %div.votingandpointsarea
           - if current_user
+            %span{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} 4,180 pts
             = link_to vote_task_path(r.task.id, sa_id: r.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(r.submitted_answer.id) ? "primary" : "")) do
-              %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
-              %div.vote_count= r.submitted_answer.total_votes.to_i
+              %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }            
           - else
             %a.btn.vote_button
               %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
