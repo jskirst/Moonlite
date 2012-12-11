@@ -9,7 +9,9 @@
       } 
     });
   }
-
+:css
+  .profile_dropdown li:hover { color: white; }
+  
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner
     %div{ style: "position:absolute; height: 40px; overflow-y: hidden;" }
@@ -40,9 +42,13 @@
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           - if current_user
-            - if @enable_administration
-              %li
-                = link_to "Admin", admin_overview_path
+            - up = current_user.user_personas.all.sort{|a,b| b.level <=> a.level }.first
+            - persona = up.persona unless up.nil?
+            %li
+              - unless up.nil?
+                = link_to "#", class: "explore_link" do
+                  = image_tag persona.picture, style: "width: 17px; height: 17px; vertical-align: middle;"
+                  %span{ style: "vertical-align: middle;" } #{persona.name} lvl #{persona.level(current_user)}
             %li
               = link_to profile_path(current_user.username) do
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
@@ -65,7 +71,19 @@
                           %p.notification_body= event.content
                           %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
-              = link_to "Sign out", signout_path
+              %div.dropdown.pull-right.notification-icon{ style: "padding: 10px;" }
+                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
+                  %span.caret{ style: "color: whitesmoke; border-top-width: 5px; border-right-width: 5px; border-left-width: 5px; border-top-color: whitesmoke;" }
+                %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:42px; right:-10px; min-width: 25px; min-height: 50px;" }
+                  %li
+                    %div
+                      %div.nub{ style: "left: 62px;"}
+                    %div{ style: "padding: 3px 0px;"}
+                      %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
+                        - if @enable_administration
+                          %li= link_to "Admin", admin_overview_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
+                        %li= link_to "Edit Profile", edit_user_path(current_user), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
+                        %li= link_to "Sign out", signout_path, style: "color: inherit; text-shadow: none;"
       - if current_user.nil? && show_sign_in
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           %li

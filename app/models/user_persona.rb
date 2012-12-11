@@ -10,10 +10,9 @@ class UserPersona < ActiveRecord::Base
   default_scope order: 'updated_at desc'
   
   def level
-    paths = persona.paths.select("paths.id").all
-    paths = paths.to_a.collect &:id
-    enrollments = user.enrollments.where("path_id in (?)", paths)
+    enrollments = persona.paths.joins(:enrollments).where("enrollments.user_id = ?", user.id).select("enrollments.total_points")
     return 1 if enrollments.empty?
-    return enrollments.to_a.inject(0) { |count, e| e.level }
+    levels = enrollments.to_a.inject(0) { |count, e| e.total_points.to_i / 300 }
+    return levels == 0 ? 1 : levels
   end
 end
