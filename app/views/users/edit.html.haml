@@ -1,44 +1,46 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  %h1{ style: "border-bottom: 1px solid whitesmoke;" } Edit Profile
-  = form_for(@user) do |f|
-    = render 'shared/error_messages', :object => f.object
-    %div.field.clearfix
-      = f.label :name
-      %div.input
+  %h1{ style: "border-bottom: 1px solid whitesmoke;padding:5px;" } Edit Profile
+  = form_for(@user, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
+    = render 'shared/error_messages', object: f.object
+    %div.control-group
+      %label.control-label Name
+      %div.controls
         = f.text_field :name
-    %div.field.clearfix
-      = f.label :email
-      %div.input
+    %div.control-group
+      %label.control-label Email
+      %div.controls
         = f.text_field :email
-    %div.field.clearfix
-      = f.label :about
-      %div.input
+    %div.control-group
+      %label.control-label About
+      %div.controls
         = f.text_area :description, rows: "5", style: "width: 400px;", placeholder: "Tell us about yourself..."
-    %div.field.clearfix
-      = f.label :location
-      %div.input
+    %div.control-group
+      %label.control-label Location
+      %div.controls
         = f.text_field :location
-    %div.field.clearfix
-      = f.label :education
-      %div.input
+    %div.control-group
+      %label.control-label Education
+      %div.controls
         = f.text_field :education
-    %div.field.clearfix
-      = f.label :company_name
-      %div.input
+    %div.control-group
+      %label.control-label Company Name
+      %div.controls
         = f.text_field :company_name
-    %div.field.clearfix
-      = f.label :title
-      %div.input
+    %div.control-group
+      %label.control-label Title
+      %div.controls
         = f.text_field :title
-    %div.field.clearfix
-      = f.label "Profile Picture URL"
-      %div.input
-        = f.text_field :image_url, :id => "image_url_input", :class => "xxlarge"
+    %div.control-group
+      %label.control-label Profile Picture URL
+      %div.controls
+        = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
         %a.btn.secondary{ style: "margin-left:10px;" } Preview
-    %div.field.clearfix
-      %div.input
-        = image_tag @user.profile_pic, :id => "image_url_preview", :width => "210"
-    %div.actions
-      = f.submit "Save", :class => "button button-info"
-      = link_to "Cancel", current_user, :class => "button button-standard"
-      = link_to "Remove Account", current_user, method: :delete, confirm: "Are you absolutely certain you would like to delete your account?", :class => "button button-actionable", style: "float: right;"
+    %div.control-group
+      %div.controls
+        = image_tag @user.profile_pic, id: "image_url_preview", width: "210"
+    %hr
+    %div.control-group
+      %div.controls
+      = link_to "Remove Account", current_user, method: :delete, confirm: "Are you absolutely certain you would like to delete your account?", class: "button button-actionable", style: "margin-left: 20px; float: left;"
+      = f.submit "Save", class: "button button-info", style: "float: right; margin-left: 10px; margin-right: 20px;"
+      = link_to "Cancel", current_user, class: "button button-standard", style: "float: right;"
