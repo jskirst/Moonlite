@@ -154,6 +154,7 @@ class PathsController < ApplicationController
   end
   
   def show
+    redirect_to root_path and return unless @path.is_public == true
     @leaderboards = Leaderboard.includes(:user).where("path_id = ?", @path.id).all(order: "score DESC", limit: 10)
     @enrolled_users = @path.enrolled_users.limit(15).to_a.shuffle
     @tasks = @path.tasks
@@ -165,6 +166,7 @@ class PathsController < ApplicationController
       @display_launchpad = params[:completed]
       @display_type = params[:type] || 2
     else
+      @display_sign_in = true
       session[:referer] = @path.id 
     end
     

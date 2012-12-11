@@ -41,3 +41,4 @@
     %div.actions
       = f.submit "Save", :class => "button button-info"
       = link_to "Cancel", current_user, :class => "button button-standard"
+      = link_to "Remove Account", current_user, method: :delete, confirm: "Are you absolutely certain you would like to delete your account?", :class => "button button-actionable", style: "float: right;"

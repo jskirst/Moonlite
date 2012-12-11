@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
     :image_url,
     :password, 
     :password_confirmation, 
-    :catch_phrase,
+    :username,
     :is_anonymous,
     :description,
     :title,
@@ -20,51 +20,34 @@ class User < ActiveRecord::Base
 
   belongs_to :company
   belongs_to :user_role
-  has_many :user_auths, :dependent => :destroy
+  has_many :user_auths, dependent: :destroy
   has_many :paths
-  has_many :enrollments, :dependent => :destroy
-  has_many :enrolled_paths, :through => :enrollments, :source => :path
-  has_many :completed_tasks, :dependent => :destroy
-  has_many :my_completed_tasks, :through => :completed_tasks, :source => :task
-  has_many :user_personas, :dependent => :destroy
+  has_many :enrollments, dependent: :destroy
+  has_many :enrolled_paths, through: :enrollments, source: :path
+  has_many :completed_tasks, dependent: :destroy
+  has_many :my_completed_tasks, through: :completed_tasks, source: :task
+  has_many :user_personas, dependent: :destroy
   has_many :personas, through: :user_personas
-  has_many :achievements, :through => :user_achievements
-  has_many :comments, :dependent => :destroy
-  has_many :leaderboards, :dependent => :destroy
-  has_many :user_events, :dependent => :destroy
+  has_many :achievements, through: :user_achievements
+  has_many :comments, dependent: :destroy
+  has_many :leaderboards, dependent: :destroy
+  has_many :user_events, dependent: :destroy
   has_many :collaborations
-  has_many :collaborating_paths, :through => :collaborations, :source => :path
-  has_many :submitted_answers, :through => :completed_tasks
+  has_many :collaborating_paths, through: :collaborations, source: :path
+  has_many :submitted_answers, through: :completed_tasks
   has_many :votes
   has_many :user_transactions
-
-  email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   
-  validates :name, length: { :within => 3..50 }
-    
-  validates :catch_phrase, length: { :maximum => 140 }
-
-  validates :email,
-    presence: true,
-    format: { :with => email_regex },
-    uniqueness: { :case_sensitive => false }
-
-  validates :password,
-    confirmation: true,
-    length: { :within => 6..40 },
-    on: :create
-    
-  validates :password,
-    confirmation: true,
-    length: { :within => 6..40 },
-    on: :update,
-    if: Proc.new { self.password.present? }
+  validates :name, length: { within: 3..100 }
+  validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
+  validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: { case_sensitive: false }
+  validates :password, confirmation: true, length: { within: 6..40 }, on: :create
+  validates :password, confirmation: true, length: { within: 6..40 }, on: :update, if: Proc.new { self.password.present? }
   
   before_save :encrypt_password
   before_save :set_tokens
   before_save :set_default_user_role
-  before_save :check_image_url
-  before_save :check_user_type
+  before_validation :grant_username
   
   def to_s
     return self.name
@@ -74,18 +57,6 @@ class User < ActiveRecord::Base
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
     return user_auth.user if user_auth
     return nil
-  end
-  
-  def self.create_anonymous_user(company)
-    u = company.users.new
-    u.is_anonymous = true
-    u.password = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
-    u.password_confirmation = u.password
-    u.name = generate_username
-    u.email = "#{u["name"]}@anonymous.metabright.com"
-    u.user_role_id = company.user_role_id
-    u.save
-    return u
   end
   
   def self.create_with_omniauth(auth)
@@ -261,6 +232,19 @@ class User < ActiveRecord::Base
     return enrollments.find_by_path_id(path).total_points
   end
   
+  def grant_username
+    if self.username.blank?
+      new_username = self.name.downcase.gsub(/[^a-z]/,'')
+      new_combined_username = new_username
+      username_count = User.where(username: new_combined_username).size
+      while User.where(username: new_combined_username).size > 0
+        username_count += 1
+        new_combined_username = "#{new_username}#{username_count}"
+      end
+      self.username = new_combined_username
+    end
+  end
+  
   private
     def set_default_user_role
       if self.user_role_id.nil?
@@ -272,12 +256,6 @@ class User < ActiveRecord::Base
       unless self.image_url.nil?
         self.image_url = nil if self.image_url.length < 9
       end
-    end
-    
-    def check_user_type
-      self.is_fake_user = true if self.email.include?("@demo.moonlite.com")
-      #self.is_anonymous = true if !self.email.include?("anonymous")
-      self.is_test_user = true if self.name.include?("test_user")
     end
   
     def encrypt_password
@@ -309,17 +287,5 @@ class User < ActiveRecord::Base
     
     def log_transaction(task_id, points)
       user_transactions.create!(owner_id: task_id, owner_type: "Task", amount: points, status: 1)
-    end
-    
-    def self.generate_random_username()
-      num = 11 + rand(1000)
-      [USERNAME_ADJS.sample.capitalize,USERNAME_NOUNS.sample.capitalize,num].join
-    end
-    
-    def self.generate_username
-      loop do
-        username = generate_random_username()
-        return username unless User.find_by_name(username)
-      end
     end
 end

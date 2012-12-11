@@ -10,8 +10,12 @@
         %div.chunk.cloudy
     %div{ style: "margin-left: 188px;" }
       %h3.brand{ style: "top:3px; position:relative;" }
-        = link_to root_url, style: "font-size: 26px;" do
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
+        - if current_user
+          = link_to root_url, style: "font-size: 26px;" do
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
+        - else
+          %a.login_link{ href: "#" }
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
       - if current_user && show_nav_bar
         %ul.nav.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B; height: 45px; overflow-y: hidden;" }
           %li.navitem{ style: "border-left: 0px;" }
@@ -21,7 +25,7 @@
             = link_to "#", class: "explore_link" do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;"
           %li.navitem
-            = link_to current_user do
+            = link_to profile_path(current_user.username) do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
           - if @enable_user_creation
             %li.navitem
@@ -33,14 +37,14 @@
               %li
                 = link_to "Admin", admin_overview_path
             %li
-              = link_to current_user do
+              = link_to profile_path(current_user.username) do
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
                 %span{ style: "vertical-align: middle;" }= current_user.name
             %li
-              %div.dropdown.pull-right{ style: "padding-top: 12px;" }
+              %div.dropdown.pull-right{ style: "padding-top: 10px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();" }
                   = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;"
-                %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px; min-width: 312px;" }
+                %ul.dropdown-menu{ role: "button", style: "padding:0; top:42px; right:-110px; min-width: 312px; min-height: 135px;" }
                   %div
                     %div.nub
                   %div.leftboxheader Notifications
@@ -53,7 +57,7 @@
                           %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
               = link_to "Sign out", signout_path
-        - if current_user.nil? && show_sign_in
-          %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
-            %li
-              %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in
+      - if current_user.nil? && show_sign_in
+        %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
+          %li
+            %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in

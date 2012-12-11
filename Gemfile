@@ -20,6 +20,7 @@ gem 'omniauth-google-oauth2'
 gem 'taps'
 gem 'haml'
 gem 'faker'
+gem 'quiet_assets'
 
 group :assets do
   gem 'sass-rails'

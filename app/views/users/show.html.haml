@@ -14,10 +14,11 @@
     %div#updatespace
       = image_tag @user.profile_pic, class: "bigheaderimage"
       %div.rightofbigheaderimage
-        %div#topboxcontent
-          - if @user == current_user
-            = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard", style: "float:right;"
-          %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0;"}
+        %div#topboxcontent{ style: "height: 83px;" }
+          %div{ style: "width: 118px; float:right;" }
+            - if @user == current_user
+              = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard"
+          %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
             %p{ style: "font-size: 16px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
         %div#challengecarousel_container
@@ -48,13 +49,13 @@
         %div.leftboxfooter{style:"padding-top: 6px"}
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
-            - if @user.link
+            - unless @user.link.blank?
               %li Link: <a href='#{@user.link}' target='_newtab'>#{truncate(@user.link)}</a>
-            - if @user.education 
+            - unless @user.education.blank? 
               %li Education: #{@user.education}
-            - if @user.company_name
+            - unless @user.company_name.blank?
               %li Company: #{@user.company_name}  
-            - if @user.title
+            - unless @user.title.blank?
               %li Title: #{@user.title}
     %div.span11
       %div.newsfeed{ style: "min-height: 285px;" }
