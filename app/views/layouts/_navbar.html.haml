@@ -18,17 +18,17 @@
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
       - if current_user && show_nav_bar
         %ul.nav.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B; height: 45px; overflow-y: hidden;" }
-          %li.navitem{ style: "border-left: 0px;" }
+          %li.navitem{ style: "border-left: 0px;", title: "Home" }
             = link_to root_url do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:26px;"
-          %li.navitem
+          %li.navitem{ title: "Explore"}
             = link_to "#", class: "explore_link" do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;"
-          %li.navitem
+          %li.navitem{ title: "Profile"}
             = link_to profile_path(current_user.username) do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
           - if @enable_user_creation
-            %li.navitem
+            %li.navitem{ title: "Create"}
               = link_to create_path do
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
