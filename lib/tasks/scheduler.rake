@@ -43,3 +43,11 @@ task :reset_leaderboard => :environment do
     end
   end
 end
+
+task :test_notifications => :environment do
+  desc "Resetting notifications..."
+  UserEvent.all.each do |u|
+    u.is_read = false
+    u.save
+  end
+end
