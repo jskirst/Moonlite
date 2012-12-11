@@ -88,4 +88,5 @@ Metabright::Application.routes.draw do
 	match '/send_reset' => 'users#send_reset'
 	
 	match '/:username' => "users#show", as: "profile"
+	match '/challenges/:permalink' => "paths#show", as: "challenge"
 end

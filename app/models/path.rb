@@ -17,13 +17,13 @@ class Path < ActiveRecord::Base
     :enable_nonlinear_sections,
     :is_locked, 
     :enable_retakes, 
-    :game_type, 
     :tags, 
     :enable_voting,
     :passing_score,
     :enable_path_retakes,
     :is_published,
-    :persona_id
+    :persona_id,
+    :permalink
   
   has_one :stored_resource, as: :owner
   belongs_to :user
@@ -53,26 +53,17 @@ class Path < ActiveRecord::Base
     end
   end
   
+  before_validation :grant_permalink
   after_create do
     self.path_personas.create(persona_id: self.persona_id)
   end
   
-  def default_pic?
-    return path_pic == "/images/image_thumb.png"
-  end
+  def default_pic?() path_pic == "/images/image_thumb.png" end
   
   def path_pic
     return stored_resource.obj.url if stored_resource
     return self.image_url if self.image_url
     return "/images/image_thumb.png"
-  end
-  
-  def self.with_category(type, user, excluded_ids = -2, order = "id DESC")
-    if excluded_ids.is_a?(Integer)
-      return Path.joins(:path_user_roles).where("path_user_roles.user_role_id = ? and is_published = ? and category_id = ? and paths.id != ?", user.user_role_id, true, "#{type}", excluded_ids).all(:order => "is_locked, "+order)
-    else
-      return Path.where("is_published = ? and category_id = ? and id NOT IN (?)", true, "#{type}", excluded_ids).all(:order => "is_locked, "+order)
-    end
   end
   
   def self.with_name_like(name, user)
@@ -99,10 +90,7 @@ class Path < ActiveRecord::Base
     paths = Set.new
     unless path.nil?
       Path.with_tags_like(path.tags_to_array, user, path.id).each {|p| paths << p}
-      Path.with_category(path.category_id, user, path.id, "id DESC").each {|p| paths << p}
       return paths.to_a
-    else
-      return Path.with_category(user.company.categories.first.id, user)
     end
   end
   
@@ -116,9 +104,7 @@ class Path < ActiveRecord::Base
     return suggested_paths.flatten.compact
   end
   
-  def has_creative_response
-    return tasks.where("answer_type = ?", 0).count > 0
-  end
+  def has_creative_response() tasks.where("answer_type = ?", 0).count > 0 end
   
   def current_section(current_user)
     last_task = current_user.completed_tasks.includes(:section).where(["sections.path_id = ?", self.id]).first(:order => "sections.position DESC")
@@ -129,69 +115,6 @@ class Path < ActiveRecord::Base
   
   def next_section(section=nil)
     return sections.where(["position > ? and is_published = ?", section.position, true]).first(:order => "position ASC")
-  end
-  
-  def completed?(user)
-    enrollment = enrollments.find_by_user_id(user.id)
-    return false if enrollment.nil?
-    return enrollments.find_by_user_id(user.id).is_complete?
-  end
-  
-  def total_remaining_tasks(user)
-    remaining_tasks = 0
-    if self.enable_retakes
-      remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id IN (?))", user.id, [1,2]]).count
-    else
-      remaining_tasks = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
-    end
-    return remaining_tasks
-  end
-  
-  def percent_complete(user)
-    total_tasks = tasks.size
-    total_remaining = total_remaining_tasks(user)
-    return (((total_tasks - total_remaining.to_f) / total_tasks.to_f) * 100).to_i
-  end
- 
-  def enrolled_user_count
-    return enrollments.count
-  end
-  
-  def difficulty_rating
-    task_count = tasks.count
-    return "Easy" if task_count < 50
-    return "Medium" if task_count < 150
-    return "Hard"
-  end
-  
-  def deep_clone(company)
-    cloned_path = self.dup
-    cloned_path.company_id = company.id
-    cloned_path.user_id = company.users.first.id
-    cloned_path.category_id = nil
-    cloned_path.save
-    
-    sections.each do |s|
-      cloned_section = s.dup
-      cloned_section.path_id = cloned_path.id
-      cloned_section.save
-      s.tasks.each do |t|
-        cloned_task = t.dup
-        cloned_task.section_id = cloned_section.id
-        cloned_task.save
-      end
-    end
-    return cloned_path
-  end
-  
-  def import_tasks_from(from_path)
-    from_path.tasks.each do |t|
-      if tasks.find_by_question(t.question).nil?
-        imported_task = t.dup
-        imported_task.section_id = sections.first.id
-        imported_task.save
-      end
-    end
   end
   
   def tags_to_array
@@ -209,24 +132,16 @@ class Path < ActiveRecord::Base
     end
   end
   
-  def percentage_correct(user = nil)
-    if user.nil?
-      number_of_tasks = completed_tasks.where("status_id = ?", 1).size
-      correct_answers = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)"]).count
-      return 0 if correct_answers == 0 || number_of_tasks == 0
-    else
-      number_of_tasks = tasks.size
-      correct_answers = tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.status_id = 0)", user.id]).count
-      return 0 if correct_answers == 0 || number_of_tasks == 0
-    end
-    return ((correct_answers.to_f / number_of_tasks.to_f) * 100).to_i
-  end
-  
-  def create_completion_event(user, name_for_paths)
-    if user.user_events.where("path_id = ? and content LIKE ?", self.id, "%completed%").empty?
-      total_earned_points = enrollments.find_by_user_id(user.id).total_points.to_i
-      event = "<%u%> completed the <%p%> #{name_for_paths} with a score of #{total_earned_points.to_s}."
-      user.user_events.create!(path_id: self.id, content: event)
+  def grant_permalink
+    if self.permalink.blank?
+      new_permalink = self.name.downcase.gsub(/[^a-z]/,'')
+      new_combined_permalink = new_permalink
+      permalink_count = Path.where(permalink: new_combined_permalink).size
+      while Path.where(permalink: new_combined_permalink).size > 0
+        permalink_count += 1
+        new_combined_permalink = "#{new_permalink}#{permalink_count}"
+      end
+      self.permalink = new_combined_permalink
     end
   end
 end

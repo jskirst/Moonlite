@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
     @creative_tasks = all_responses.collect { |item| item.task }
-    @enrollments = @user.enrollments.includes(:path).where("total_points > ?", 100).sort { |a,b| b.level <=> a.level }
+    @enrollments = @user.enrollments.includes(:path).where("total_points > ?", 100).sort { |a,b| b.total_points <=> a.total_points }
     @enrolled_personas = @user.personas
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
