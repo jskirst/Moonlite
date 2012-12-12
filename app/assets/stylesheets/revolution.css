@@ -41,6 +41,14 @@
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
 
+/* Progress rails */
+.singleprogressentry{ margin-bottom:10px; }
+.singleprogressentry:last-child{ margin-bottom:10px; }
+.singleprogressentry>img{ height:50px; width:50px; display:inline-block; }
+.personaprogress{ display:inline-block; position:relative; top:5px; margin-left:5px;}
+.progresscontainer{ height:10px; width:200px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;}
+.progressbar{ height:10px; background-color:#5fb052; border-radius:6px; }
+
 /* Other stuff - organize by feature */
 #topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
 #updatespace{ background-color: white; border-radius: 6px; padding: 12px 0 9px 13px; overflow: hidden;}
@@ -222,9 +230,9 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
-.pull-right>.dropdown-toggle{opacity:.8;}
-.pull-right>.dropdown-toggle:hover{opacity:1;}
-.pull-right>.dropdown-toggle:focus{opacity:1;}
+.pull-right>.dropdown-toggle>img{opacity:.8;}
+.pull-right>.dropdown-toggle:hover img{opacity:1;}
+.pull-right>.dropdown-toggle:focus img{opacity:1;}
 .notifications_bubble{opacity:1; background-color: #F56C7E;height: 16px;width: 16px;background: #F56C7E url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_bubble_background.png) no-repeat center center scroll;background-image: none 9;position: absolute;right: -7px;top: 7px;color: white;text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);text-align: center;font-size: 9px;line-height: 17px;box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .17), 0 1px 1px rgba(0, 0, 0, .2);-moz-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .17), 0 1px 1px rgba(0, 0, 0, .2);-webkit-box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .17), 0 1px 1px rgba(0, 0, 0, .2);border-radius: 13px;cursor: pointer;display: inline;}
 .notifications_header{ border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
 .notification_space { padding: 12px 12px 0px 12px; }

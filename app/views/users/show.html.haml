@@ -45,7 +45,7 @@
         %div.leftboxfooter{style:"padding-top: 6px"}
           %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
-        %div.leftboxheader Vital stats
+        %div.leftboxheader Vital Stats
         %div.leftboxfooter{style:"padding-top: 6px"}
           %ul
             %li Location: #{@user.location || "A galaxy far, far away..."}
@@ -57,6 +57,43 @@
               %li Company: #{@user.company_name}  
             - unless @user.title.blank?
               %li Title: #{@user.title}
+      %div.leftbox
+        %div.leftboxheader Progress
+        %div.leftboxfooter{style:"padding-top: 6px"}
+          %div.singleprogressentry
+            %img{ src: "http://www.placekitten.com/50/50"}              
+            %div.personaprogress
+              %span{ style: "font-size:20px;display:block; margin-bottom:3px;"} Hacker - Level 4
+              %span{ style: "position:relative; bottom:2px;"} 300 points to go!
+              %div.progresscontainer
+                %div.progressbar{ style: "width:150px;"}
+          %div.singleprogressentry
+            %div.personaimage{ style: "display:inline-block;"}
+              %img{ src: "http://www.placekitten.com/50/50", style:"height:50px; width:50px;"}
+            %div.rightstuffprogress{ style: "display:inline-block; position:relative; top:5px; margin-left:5px;"}
+              %span.personaname{ style: "font-size:20px;display:"} Hacker
+              %br
+              %span.personasubtext{style: "position:relative; bottom:2px;"} Level 4
+              %div.progresscontainer{ style: "height:10px; width:200px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;"}
+                %div.progressbar{ style: "height:10px; width:150px; background-color:#5fb052; border-radius:6px;"}
+          %div.singleprogressentry
+            %div.personaimage{ style: "display:inline-block;"}
+              %img{ src: "http://www.placekitten.com/50/50", style:"height:50px; width:50px;"}
+            %div.rightstuffprogress{ style: "display:inline-block; position:relative; top:5px; margin-left:5px;"}
+              %span.personaname{ style: "font-size:20px;display:"} Hacker
+              %br
+              %span.personasubtext{style: "position:relative; bottom:2px;"} Level 4
+              %div.progresscontainer{ style: "height:10px; width:200px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;"}
+                %div.progressbar{ style: "height:10px; width:150px; background-color:#5fb052; border-radius:6px;"}
+          %div.singleprogressentry
+            %div.personaimage{ style: "display:inline-block;"}
+              %img{ src: "http://www.placekitten.com/50/50", style:"height:50px; width:50px;"}
+            %div.rightstuffprogress{ style: "display:inline-block; position:relative; top:5px; margin-left:5px;"}
+              %span.personaname{ style: "font-size:20px;display:"} Hacker
+              %br
+              %span.personasubtext{style: "position:relative; bottom:2px;"} Level 4
+              %div.progresscontainer{ style: "height:10px; width:200px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;"}
+                %div.progressbar{ style: "height:10px; width:150px; background-color:#5fb052; border-radius:6px;"}         
     %div.span11
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader
