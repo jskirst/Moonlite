@@ -57,7 +57,7 @@
               %li Company: #{@user.company_name}  
             - unless @user.title.blank?
               %li Title: #{@user.title}
-      %div.leftbox
+      %div.leftbox{ style: "display: none;" }
         %div.leftboxheader Progress
         %div.leftboxfooter{style:"padding-top: 6px"}
           %div.singleprogressentry

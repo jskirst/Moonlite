@@ -10,32 +10,32 @@ class PagesController < ApplicationController
       @enrollments = current_user.enrollments.includes(:path).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
-      @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
-      @newsfeed_items = []
-      challenge_questions = current_user.completed_tasks
-        .joins(:task)
-        .where("tasks.answer_type = ?", Task::CREATIVE)
-        .select(:section_id)
-        .to_a.collect &:section_id
-      unless challenge_questions.empty?
-        @page = params[:page].to_i
-        @newsfeed_items = CompletedTask.joins(:task, :submitted_answer)
-          .where("tasks.section_id in (?)", challenge_questions)
-          .order("completed_tasks.created_at DESC")
-          .limit(30)
-          .offset(@page * 30)
-        @more_available = @newsfeed_items.size == 30
-        @more_available_url = root_path(page: @page+1)
-      end
-      if request.xhr?
-        render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
-      else
-        render "users/home"
-      end
+      render "users/home"
     else
       @show_sign_in = false
       render "landing", layout: "landing"
     end
+  end
+  
+  def newsfeed
+    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @newsfeed_items = []
+    challenge_questions = current_user.completed_tasks
+      .joins(:task)
+      .where("tasks.answer_type = ?", Task::CREATIVE)
+      .select(:section_id)
+      .to_a.collect &:section_id
+    unless challenge_questions.empty?
+      @page = params[:page].to_i
+      @newsfeed_items = CompletedTask.joins(:task, :submitted_answer)
+        .where("tasks.section_id in (?)", challenge_questions)
+        .order("completed_tasks.created_at DESC")
+        .limit(30)
+        .offset(@page * 30)
+    end
+    @more_available = @newsfeed_items.size == 30
+    @more_available_url = newsfeed_path(page: @page+1)
+    render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
   end
   
   def intro

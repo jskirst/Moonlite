@@ -55,6 +55,7 @@ Metabright::Application.routes.draw do
 	resources :user_roles
 	
 	root :to => "pages#home"
+	match '/newsfeed' => "pages#newsfeed"
   match '/intro' => "pages#intro"
   match '/start' => "pages#start"
   match '/mark_read' => "pages#mark_read"
