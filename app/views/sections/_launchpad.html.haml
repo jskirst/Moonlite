@@ -3,65 +3,63 @@
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       %ul.nav.nav-tabs
-        - unless @current_section.core_tasks.empty?
+        - unless @core_tasks.empty?
           %li.active
             %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
-        - unless @current_section.challenge_tasks.empty?
+        - unless @challenge_tasks.empty?
           %li
             %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
-        - unless @current_section.achievement_tasks.empty?
+        - unless @achievement_tasks.empty?
           %li
             %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks
-    - unless @current_section.core_tasks.empty?
+    - unless @core_tasks.empty?
       %div#arena_tab.tab_content
-        - if @current_section.quiz_complete?(current_user)
+        - if @core_tasks.select{ |t| t.status_id.nil? }.size > 0
+          %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
+          %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
+        - else
           %table.table
-            - @current_section.core_tasks.each do |t|
-              - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+            - @core_tasks.each do |t|
+              - next if t.status_id.nil? || t.status_id == Answer::INCOMPLETE.to_s
               %tr
                 %td
                   %p= t.question
                 %td.question_status
-                  - if completed_task.correct?
+                  - if t.status_id == Answer::CORRECT.to_s
                     %span.label.label-success Correct
                   - else
                     %span.label.label-important Incorrect
-        - else
-          %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
-          %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
-    - unless @current_section.challenge_tasks.empty?
+    - unless @challenge_tasks.empty?
       %div#questions_tab.tab_content{ style: "display: none;" }
         %div{style:"display: none; background-color:#A04545; width:600px; height:80px; color:#C5C5C5; margin-left: auto; margin-right: auto; color: #C5C5C5; text-align: center; margin-bottom: 12px;"}
           %span *Lightbulb* Remember, CR's and tasks are there to guide your improvement. Go ahead, look up answers!
         %table
-          - @current_section.challenge_tasks.each do |t|
-            - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+          - @challenge_tasks.each do |t|
             %tr
               %td
-                - if completed_task
+                - if t.status_id
                   %div= link_to t.question, user_path(current_user, task: t.id)
                 - else
                   %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
               %td.question_status
-                - if completed_task
+                - if t.status_id
                   = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
                   %br
-                  %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                  %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
                 - else
                   = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
-    - unless @current_section.achievement_tasks.empty?
+    - unless @achievement_tasks.empty?
       %div#achievements_tab.tab_content{ style: "display: none;" }
         %table
-          - @current_section.achievement_tasks.each do |t|
-            - completed_task = t.completed_tasks.find_by_user_id(current_user.id)
+          - @achievement_tasks.each do |t|
             %tr
               %td
-                - if completed_task
+                - if t.status_id
                   %div= link_to t.question, user_path(current_user, task: t.id)
                 - else
                   %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
               %td.question_status
-                - if completed_task
+                - if t.status_id
                   = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
                   %br
                   %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"

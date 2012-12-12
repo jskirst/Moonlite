@@ -114,7 +114,9 @@ module SessionsHelper
   
   def determine_enabled_features
     unless current_user.nil?
-      current_user.update_attribute(:login_at, DateTime.now())
+      unless request.xhr?
+        current_user.update_attribute(:login_at, DateTime.now())
+      end
       role = current_user.user_role
       @is_consumer = true
       @enable_administration = role.enable_administration

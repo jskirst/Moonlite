@@ -1,16 +1,17 @@
-:javascript
-  $(function(){ 
-    $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
-    $(".display_sharing_icon").click(function(){ 
-      $(this).parents(".leftstuff").find(".social_toolbar").css("display", "inline");
-      $(this).parent().remove(); 
-    });
-    init_voting();
-  });
-  
 - if newsfeed_items.empty?
-  %div.post{ style: "height: 300px;"}
+  %div.post.empty_post{ style: "height: 300px;"}
     %p There are no responses yet.
+- else
+  :javascript
+    $(function(){ 
+      $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
+      $(".display_sharing_icon").click(function(){ 
+        $(this).parents(".leftstuff").find(".social_toolbar").css("display", "inline");
+        $(this).parent().remove(); 
+      });
+      init_voting();
+    });
+
 - newsfeed_items.each do |r|
   %div.post
     %div.postphotospace
@@ -39,8 +40,9 @@
           %center
             %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
       = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at, sharing_url: submission_details_url(r.path, r.submitted_answer.id), sharing_title: "Great response to the #{r.path.name} Challenge on @MetaBright." }
+
 - if @more_available
   %div.post{ style: "text-align: center; margin: auto;" }
     :javascript
       $(function(){ $(".view_more").on("ajax:success", function(xhr, data){ $(this).parent().replaceWith(data); }); });
-    = link_to "View More", "#{request.url}?page=#{(@page+1)}", class: "button button-standard view_more", style: "text-align: center; margin: auto;", remote: true
+    = link_to "View More", "#{@more_available_url}", class: "button button-standard view_more", style: "text-align: center; margin: auto;", remote: true

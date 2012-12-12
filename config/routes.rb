@@ -18,6 +18,7 @@ Metabright::Application.routes.draw do
       put :undo_collaboration
       get :enroll
 			get :continue
+			get :newsfeed
 		end
 	end
 	match "/paths/:id/submission/:submission/" => "paths#show", as: "submission_details"
