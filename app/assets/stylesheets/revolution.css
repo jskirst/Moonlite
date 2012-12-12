@@ -41,6 +41,14 @@
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
 
+/* Progress rails */
+.singleprogressentry{ margin-bottom:10px; }
+.singleprogressentry:last-child{ margin-bottom:10px; }
+.singleprogressentry>img{ height:50px; width:50px; display:inline-block; }
+.personaprogress{ display:inline-block; position:relative; top:5px; margin-left:5px;}
+.progresscontainer{ height:10px; width:200px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;}
+.progressbar{ height:10px; background-color:#5fb052; border-radius:6px; }
+
 /* Other stuff - organize by feature */
 #topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
 #updatespace{ background-color: white; border-radius: 6px; padding: 12px 0 9px 13px; overflow: hidden;}
