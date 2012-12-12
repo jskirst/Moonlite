@@ -6,11 +6,11 @@ class CleanUpCompletedTask < ActiveRecord::Migration
     
     drop_table    :company_users
     
-    remove_column :paths, :is_complete
-    remove_column :paths, :level
-    remove_column :paths, :is_score_sent
-    remove_column :paths, :is_passed
-    remove_column :paths, :percentage_correct
+    remove_column :enrollments, :is_complete
+    remove_column :enrollments, :level
+    remove_column :enrollments, :is_score_sent
+    remove_column :enrollments, :is_passed
+    remove_column :enrollments, :percentage_correct
     
     drop_table    :leaderboards
     
@@ -18,7 +18,6 @@ class CleanUpCompletedTask < ActiveRecord::Migration
     
     remove_column :paths, :purchased_path_id
     remove_column :paths, :enable_section_display
-    remove_column :paths, :purchased_path_id
     remove_column :paths, :default_timer
     remove_column :paths, :enable_nonlinear_sections
     remove_column :paths, :enable_retakes
@@ -58,7 +57,7 @@ class CleanUpCompletedTask < ActiveRecord::Migration
     remove_column :user_roles, :enable_company_store
     remove_column :user_roles, :enable_auto_generate
     
-    rename_column :user_roles, :enable_content_creation
+    rename_column :user_roles, :enable_user_creation, :enable_content_creation
 
     remove_column :users, :provider
     remove_column :users, :uid

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121211035711) do
+ActiveRecord::Schema.define(:version => 20121212212538) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -67,28 +67,18 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
     t.string   "custom_email_from"
   end
 
-  create_table "company_users", :force => true do |t|
-    t.string   "email"
-    t.integer  "user_id"
-    t.integer  "company_id"
-    t.string   "token1"
-    t.string   "token2"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "is_admin"
-  end
-
   create_table "completed_tasks", :force => true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
-    t.datetime "created_at",                         :null => false
-    t.datetime "updated_at",                         :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.integer  "status_id",           :default => 0
-    t.datetime "quiz_session"
     t.integer  "points_awarded"
     t.string   "answer"
     t.integer  "submitted_answer_id"
     t.integer  "answer_id"
+    t.boolean  "is_private",          :default => false
+    t.boolean  "is_restricted",       :default => false
   end
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"
@@ -104,44 +94,19 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
-    t.integer  "total_points",       :default => 0
-    t.boolean  "is_complete",        :default => false
-    t.integer  "level"
-    t.boolean  "is_score_sent",      :default => false
-    t.boolean  "is_passed",          :default => false
-    t.integer  "percentage_correct"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "total_points", :default => 0
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
 
-  create_table "leaderboards", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "completed_tasks", :default => 0
-    t.integer  "score",           :default => 0
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.integer  "category_id"
-    t.integer  "path_id"
-    t.integer  "section_id"
-  end
-
   create_table "path_personas", :force => true do |t|
     t.integer "path_id"
     t.integer "persona_id"
   end
-
-  create_table "path_user_roles", :force => true do |t|
-    t.integer  "user_role_id"
-    t.integer  "path_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "path_user_roles", ["user_role_id", "path_id"], :name => "index_path_user_roles_on_user_role_id_and_path_id"
 
   create_table "paths", :force => true do |t|
     t.string   "name"
@@ -152,20 +117,13 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
     t.integer  "company_id"
     t.string   "image_url"
     t.boolean  "is_public",                  :default => false
-    t.integer  "purchased_path_id"
     t.boolean  "is_published",               :default => false
     t.boolean  "is_approved",                :default => false
     t.integer  "category_id",                :default => 0
-    t.boolean  "enable_section_display",     :default => false
-    t.integer  "default_timer",              :default => 30
     t.string   "excluded_from_leaderboards"
-    t.boolean  "enable_nonlinear_sections",  :default => false
     t.boolean  "is_locked",                  :default => false
-    t.boolean  "enable_retakes",             :default => true
     t.string   "tags"
     t.boolean  "enable_voting",              :default => false
-    t.integer  "passing_score"
-    t.boolean  "enable_path_retakes",        :default => false
     t.string   "permalink"
   end
 
@@ -174,7 +132,6 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
   create_table "personas", :force => true do |t|
     t.string   "name"
     t.string   "description"
-    t.string   "criteria"
     t.integer  "points"
     t.datetime "created_at",                         :null => false
     t.datetime "updated_at",                         :null => false
@@ -204,29 +161,15 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
 
   add_index "phrases", ["content"], :name => "index_phrases_on_content", :unique => true
 
-  create_table "rewards", :force => true do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.string   "description"
-    t.integer  "points"
-    t.string   "image_url"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
-
   create_table "sections", :force => true do |t|
     t.integer  "path_id"
     t.string   "name"
     t.text     "instructions"
     t.integer  "position"
-    t.datetime "created_at",                             :null => false
-    t.datetime "updated_at",                             :null => false
-    t.boolean  "is_published",        :default => false
-    t.string   "image_url"
-    t.string   "content_type"
-    t.text     "hidden_content"
-    t.boolean  "enable_skip_content", :default => false
-    t.integer  "points_to_unlock",    :default => 0
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "is_published",     :default => false
+    t.integer  "points_to_unlock", :default => 0
   end
 
   create_table "sent_emails", :force => true do |t|
@@ -267,15 +210,11 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
 
   create_table "tasks", :force => true do |t|
     t.text     "question"
-    t.string   "answer1"
     t.string   "resource"
     t.integer  "points"
     t.integer  "section_id"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
-    t.string   "answer2"
-    t.string   "answer3"
-    t.string   "answer4"
     t.integer  "correct_answer",     :default => 1
     t.integer  "position"
     t.integer  "answer_type",        :default => 2
@@ -285,17 +224,6 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
-
-  create_table "usage_reports", :force => true do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.string   "report_file_name"
-    t.string   "report_content_type"
-    t.integer  "report_file_size"
-    t.datetime "report_updated_at"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
 
   create_table "user_auths", :force => true do |t|
     t.integer  "user_id"
@@ -328,23 +256,7 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
     t.string   "name"
     t.integer  "company_id"
     t.boolean  "enable_administration",   :default => false
-    t.boolean  "enable_leaderboard",      :default => false
-    t.boolean  "enable_dashboard",        :default => false
-    t.boolean  "enable_tour",             :default => false
-    t.boolean  "enable_rewards",          :default => false
-    t.boolean  "enable_comments",         :default => false
-    t.boolean  "enable_feedback",         :default => false
-    t.boolean  "enable_news",             :default => false
-    t.boolean  "enable_achievements",     :default => false
-    t.boolean  "enable_recommendations",  :default => false
-    t.boolean  "enable_printer_friendly", :default => false
-    t.boolean  "enable_browsing",         :default => false
-    t.boolean  "enable_user_creation",    :default => false
-    t.boolean  "enable_auto_enroll",      :default => false
-    t.boolean  "enable_collaboration",    :default => false
-    t.boolean  "enable_one_signup",       :default => false
-    t.boolean  "enable_company_store",    :default => false
-    t.boolean  "enable_auto_generate",    :default => false
+    t.boolean  "enable_content_creation", :default => false
     t.string   "signup_token"
     t.datetime "created_at",                                 :null => false
     t.datetime "updated_at",                                 :null => false
@@ -378,14 +290,10 @@ ActiveRecord::Schema.define(:version => 20121211035711) do
     t.string   "image_url"
     t.string   "signup_token"
     t.integer  "company_id"
-    t.boolean  "company_admin",      :default => false
     t.integer  "user_role_id"
     t.string   "username"
     t.boolean  "is_fake_user",       :default => false
-    t.string   "provider"
-    t.string   "uid"
     t.boolean  "is_test_user",       :default => false
-    t.boolean  "is_anonymous",       :default => false
     t.datetime "login_at"
     t.datetime "logout_at"
     t.string   "description"
