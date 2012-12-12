@@ -182,18 +182,18 @@ class PathsController < ApplicationController
     end
     
     @page = params[:page].to_i
-    offset = @page * 30
+    offset = @page * 20
     if params[:submission]
       @responses = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
       @sharing = true
     elsif params[:task]
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
     elsif params[:order] && params[:order] == "votes"
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
     else
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(30).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
+      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
     end
-    @more_available = @responses.size == 30
+    @more_available = @responses.size == 20
     @activity_stream = @path.activity_stream
     #@activity_stream = []
     
