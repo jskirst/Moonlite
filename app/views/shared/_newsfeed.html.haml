@@ -9,7 +9,7 @@
   });
   
 - if newsfeed_items.empty?
-  %div.post{ style: "height: 300px;"}
+  %div.post.empty_post{ style: "height: 300px;"}
     %p There are no responses yet.
 - newsfeed_items.each do |r|
   %div.post
