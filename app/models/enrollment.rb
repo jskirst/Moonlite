@@ -40,8 +40,12 @@ class Enrollment < ActiveRecord::Base
     Mailer.path_result(email_details).deliver
   end
   
-  def level
-    level = total_points / 300
+  def self.points_to_level(points)
+    level = points / 300
     return level > 0 ? level : 1
+  end
+  
+  def level
+    Enrollment.points_to_level(self.total_points)
   end
 end

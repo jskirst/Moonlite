@@ -15,17 +15,17 @@
               %h4{ style: "height: 46px; cursor: pointer;" }
                 %a.login_link Login or register to join this Challenge!
         %div#challengecarousel_container
-          - if @enrolled_users.size > 4
+          - if @enrollments.size > 4
             %div#challengeleft_scroll
               %a{href: "javascript:challengeslide(\"left\");"}
                 %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
-          %div#challengecarousel_inner{ style: "#{@enrolled_users.size < 4 ? 'margin-left: -12px;' : ''}" }
+          %div#challengecarousel_inner{ style: "#{@enrollments.size < 4 ? 'margin-left: -12px;' : ''}" }
             %ul#challengecarousel_ul
-              - if @enrolled_users.size < 4
+              - if @enrollments.size < 4
                 = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the Metabright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
-              - @enrolled_users.each do |u|
-                = render "shared/mosaic", { pic: u.profile_pic, link: profile_path(u.username), title: u.name, subtitle: "Level #{u.level(@path)}, #{u.points(@path)} points" }
-          - if @enrolled_users.size > 4
+              - @enrollments.shuffle.each do |e|
+                = render "shared/mosaic", { pic: e.user.profile_pic, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
+          - if @enrollments.size > 4
             %div#challengeright_scroll
               %a{href: "javascript:challengeslide(\"right\");"}
                 %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
@@ -35,13 +35,13 @@
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
         %div.leftboxheader{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
-          - @leaderboards.each_with_index do |entry, i|
+          - @enrollments.each_with_index do |entry, i|
             %li
               %span.rank= (i+1).to_s
               = image_tag entry.user.profile_pic 
               = link_to truncate(entry.user.name, length: 22), profile_path(entry.user.username), class: "name"
-              %span.level lvl. #{entry.user.level(@path)}
-              %span.points= entry.score
+              %span.level lvl. #{entry.level}
+              %span.points= entry.total_points
     %div.span11
       %div.newsfeed
         %div.leftboxheader

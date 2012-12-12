@@ -42,6 +42,7 @@ class Path < ActiveRecord::Base
   has_many :collaborating_users, through: :collaborations, source: :user
   has_many :path_personas
   has_many :personas, through: :path_personas
+  has_many :leaderboards
   
   validates :name, length: { within: 2..140 }
   validates :description, length: { maximum: 2500 }

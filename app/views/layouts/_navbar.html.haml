@@ -42,13 +42,6 @@
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           - if current_user
-            - up = current_user.user_personas.all.sort{|a,b| b.level <=> a.level }.first
-            - persona = up.persona unless up.nil?
-            %li
-              - unless up.nil?
-                = link_to "#", class: "explore_link" do
-                  = image_tag persona.picture, style: "width: 17px; height: 17px; vertical-align: middle;"
-                  %span{ style: "vertical-align: middle;" } #{persona.name} lvl #{persona.level(current_user)}
             %li
               = link_to profile_path(current_user.username) do
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"

@@ -181,8 +181,7 @@ class PathsController < ApplicationController
     @display_launchpad = params[:completed]
     @display_type = params[:type] || 2
     
-    @leaderboards = Leaderboard.includes(:user).where("path_id = ?", @path.id).all(order: "score DESC", limit: 10)
-    @enrolled_users = @path.enrolled_users.limit(15).to_a.shuffle
+    @enrollments = @path.enrollments.includes(:user).order("total_points DESC").limit(10).eager_load.to_a
     render "show"
   end
   
