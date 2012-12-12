@@ -164,7 +164,15 @@ class PathsController < ApplicationController
     @votes = []
     if current_user
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
+      
       @current_section = current_user.most_recent_section_for_path(@path)
+      @tasks = @current_section.tasks
+        .joins("LEFT OUTER JOIN completed_tasks on completed_tasks.task_id = tasks.id")
+        .select("status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
+      @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
+      @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
+      @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
+      
       @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id }
       @display_launchpad = params[:completed]
       @display_type = params[:type] || 2
@@ -187,6 +195,7 @@ class PathsController < ApplicationController
     end
     @more_available = @responses.size == 30
     @activity_stream = @path.activity_stream
+    #@activity_stream = []
     
     @social_title = @path.name
     @social_description = @path.description

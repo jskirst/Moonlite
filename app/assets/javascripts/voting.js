@@ -28,11 +28,11 @@ function init_voting(){
       } else {
         var $vote_points = $(this).siblings("span:first");
         var points = parseInt($vote_points.text());
-        if($(this).hasClass("btn-primary")){
-          $(this).removeClass("btn-primary");
+        if($(this).hasClass("btn-info")){
+          $(this).removeClass("btn-info");
           animate_point_change($vote_points, -1, (points-50));
         } else {
-          $(this).addClass("btn-primary");
+          $(this).addClass("btn-info");
           animate_point_change($vote_points, +1, (points+50));
         }
       }
