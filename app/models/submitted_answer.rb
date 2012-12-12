@@ -14,8 +14,8 @@ class SubmittedAnswer < ActiveRecord::Base
  
   validates :content, length: { maximum: 2500 }
     
-  def add_vote(user)
-    if vote = user.votes.create!(submitted_answer_id: self.id)
+  def add_vote(voting_user)
+    if vote = voting_user.votes.create!(submitted_answer_id: self.id)
       self.total_votes += 1
       completed_task.update_attribute(:points_awarded, (completed_task.points_awarded += POINTS_PER_VOTE))
       user.award_points(completed_task.task, POINTS_PER_VOTE)

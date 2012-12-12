@@ -192,14 +192,18 @@ class SectionsController < ApplicationController
     @task = @section.next_task(current_user)
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     if @task
-      calculate_streak
-      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
-      @answers = @task.answers.to_a.shuffle
-      @progress = @section.percentage_complete(current_user) + 1
-      @stored_resource = @task.stored_resources.first
+      if request.get? && @enrollment.total_points == 0
+        @partial = "intro"
+      else
+        calculate_streak
+        @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
+        @answers = @task.answers.to_a.shuffle
+        @progress = @section.percentage_complete(current_user) + 1
+        @stored_resource = @task.stored_resources.first
+        @partial = "continue"
+      end
       
       if request.get?
-        @partial = current_user.earned_points == 0 ? "intro" : "continue"
         render "start" 
       else
         render :partial => "continue"
