@@ -1,7 +1,14 @@
 - if current_user
+  :css
+    .explorecontainer { width: 750px; margin-top: 0px; }
+    .explorenewusercontent{ margin:38px; }
+  :javascript
+    $(function(){
+      $.get("#{explore_path}", function(data){
+        console.log("Success");
+        $("#explore_modal").html(data);
+      });
+    })
+    
   %div#explore_modal.dropdown_modal.modal.hide.fade
-    :css
-      .explorecontainer { width: 750px; margin-top: 0px; }
-      .explorenewusercontent{ margin:38px; }
-    - @personas ||= current_company.personas
-    = render "personas/explore"
+      
