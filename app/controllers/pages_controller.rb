@@ -25,6 +25,7 @@ class PagesController < ApplicationController
           .limit(30)
           .offset(@page * 30)
         @more_available = @newsfeed_items.size == 30
+        @more_available_url = root_path(page: @page+1)
       end
       if request.xhr?
         render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }

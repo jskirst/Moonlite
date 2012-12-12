@@ -60,6 +60,7 @@
                     %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), task_details_path(@path, task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
         :javascript
           $(function(){
-            $.ajax({ type: "GET", url: "#{request.url}", success: function(data){ $(".empty_post").replaceWith(data); } });
+            $.ajax({ type: "GET", url: "#{newsfeed_path_path(@path.id)}", success: function(data){ $(".empty_post").replaceWith(data); } });
           });
-        = render "shared/newsfeed", { newsfeed_items: @responses }
+        %div.post.empty_post{ style: "height: 300px;"}
+          %p There are no responses yet.
