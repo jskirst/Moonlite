@@ -44,15 +44,44 @@
           - if current_user
             - up = current_user.user_personas.all.sort{|a,b| b.level <=> a.level }.first
             - persona = up.persona unless up.nil?
-            %li
-              - unless up.nil?
-                = link_to "#", class: "explore_link" do
-                  = image_tag persona.picture, style: "width: 17px; height: 17px; vertical-align: middle;"
-                  %span{ style: "vertical-align: middle;" } #{persona.name} lvl #{persona.level(current_user)}
-            %li
-              = link_to profile_path(current_user.username) do
-                = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
-                %span{ style: "vertical-align: middle;" }= current_user.name
+            %li.navuser
+              %div.dropdown.pull-right
+                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown"}
+                  = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
+                  %span{ style: "vertical-align: middle;" }= current_user.name 
+                  %span.caret{ style: " border-top-color: #c7ced6; border-bottom-color: #c7ced6; color: #c7ced6; margin-top:7px;"}
+                %ul.dropdown-menu{ role: "button", style: "padding: 0; top:42px; right:-138px; min-width: 312px; min-height: 135px;" }
+                  %div
+                    %div.nub{ style: "left:150px;"}
+                  %div.leftboxheader Your Challenges
+                  %div.leftboxfooter{style:"padding:0; background-color:white;"}
+                    %div.singleprogressentry
+                      %img{ src: "http://www.placekitten.com/50/50"}              
+                      %div.personaprogress
+                        %span{ style: "font-size:18px;"} Challenge Name 
+                        %span{style: "font-size:14px; float:right; "}Level 4
+                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
+                        %div.progresscontainer{ style: "width:220px;" }
+                          %div.progressbar{ style: "width:150px;"} 
+                            -# = The width of this div should be dynamically changed based on the user's progress in current level.
+                    %div.singleprogressentry
+                      %img{ src: "http://www.placekitten.com/50/50"}              
+                      %div.personaprogress
+                        %span{ style: "font-size:18px;"} Challenge Name 
+                        %span{style: "font-size:14px; float:right; "}Level 4
+                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
+                        %div.progresscontainer{ style: "width:220px;" }
+                          %div.progressbar{ style: "width:150px;"} 
+                            -# = The width of this div should be dynamically changed based on the user's progress in current level. Ideally each progress bar is a different color.
+                    %div.singleprogressentry
+                      %img{ src: "http://www.placekitten.com/50/50"}              
+                      %div.personaprogress
+                        %span{ style: "font-size:18px;"} Challenge Name 
+                        %span{style: "font-size:14px; float:right; "}Level 4
+                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
+                        %div.progresscontainer{ style: "width:220px;" }
+                          %div.progressbar{ style: "width:150px;"} 
+                            -# = The width of this div should be dynamically changed based on the user's progress in current level. Ideally each progress bar is a different color.
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }

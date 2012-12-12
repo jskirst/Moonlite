@@ -42,11 +42,13 @@
 code,pre{font:inherit;}
 
 /* Progress rails */
-.singleprogressentry{ margin-bottom:10px; }
-.singleprogressentry:last-child{ margin-bottom:10px; }
-.singleprogressentry>img{ height:50px; width:50px; display:inline-block; }
+.singleprogressentry{ padding: 4px 0 9px 12px;}
+.singleprogressentry:hover{background-color:#eee;}
+.singleprogressentry:last-child{ padding-bottom:10px; }
+.singleprogressentry:first-child{padding-top:6px;}
+.singleprogressentry>img{ height:50px; width:50px; display:inline-block; border-radius:3px;}
 .personaprogress{ display:inline-block; position:relative; top:5px; margin-left:5px;}
-.progresscontainer{ height:10px; width:200px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;}
+.progresscontainer{ height:10px; background-color:#dfdfdf; overflow:hidden; border-radius:6px;}
 .progressbar{ height:10px; background-color:#5fb052; border-radius:6px; }
 
 /* Other stuff - organize by feature */
@@ -95,6 +97,8 @@ code,pre{font:inherit;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 .navbar .nav.pull-right a:hover {color:white;}
+.navuser>div>a>.caret{ border-top-width: 5px; border-right-width: 5px; border-left-width: 5px; margin-left:1px;}
+.navuser>div>a{ text-decoration:none; display: block;float: none;padding: 10px 10px;line-height: 19px;}
 .landingbuttontext{color:white; font-size:13px; display:inline-block; position:relative; left:5px; font-family:'MuliRegular'; font-weight: bold;}
 
 /* From profile */
