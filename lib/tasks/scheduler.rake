@@ -34,16 +34,6 @@ task :send_alerts => :environment do
   end
 end
 
-task :reset_leaderboard => :environment do
-  desc "Resetting leaderboard..."
-  users = User.all
-  users.each do |u|
-    Path.all.each do |p|
-      Leaderboard.reset_for_path_user(p, u)
-    end
-  end
-end
-
 task :test_notifications => :environment do
   desc "Resetting notifications..."
   UserEvent.all.each do |u|

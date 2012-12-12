@@ -157,7 +157,7 @@ class TasksController < ApplicationController
     end
     
     def has_access?
-      unless @enable_user_creation
+      unless @enable_content_creation
         flash[:error] = "You do not have the ability to edit this task."
         redirect_to root_path
       end

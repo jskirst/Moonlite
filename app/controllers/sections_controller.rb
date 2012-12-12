@@ -10,7 +10,7 @@ class SectionsController < ApplicationController
   before_filter :enrolled?, only: [:complete, :continue, :take, :took]
 
   def show
-    if current_user.enrolled?(@section.path) && @section.enable_skip_content
+    if current_user.enrolled?(@section.path)
       redirect_to continue_section_path(@section)
     else
       @path_name = @section.path.name
@@ -211,7 +211,6 @@ class SectionsController < ApplicationController
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
-      Leaderboard.reset_for_path_user(@path, current_user)
       if request.get?
         render "finish"
       else
@@ -238,7 +237,7 @@ class SectionsController < ApplicationController
   end
     
   def has_edit_access?
-    unless @enable_user_creation
+    unless @enable_content_creation
       flash[:error] = "You do not have the ability to edit this section."
       redirect_to root_path
     end

@@ -15,7 +15,7 @@ class Collaboration < ActiveRecord::Base
   
   private
     def granting_user_can_grant_collaboration
-      if !granting_user.user_role.enable_user_creation
+      if !granting_user.user_role.enable_content_creation
         errors[:base] << "You must be able to create to add collaborators."
       elsif self.granting_user_id != path.user_id
         errors[:base] << "Only creators can add additional collaborators."
@@ -23,7 +23,7 @@ class Collaboration < ActiveRecord::Base
     end
     
     def user_can_collaborate
-      if !user.user_role.enable_user_creation
+      if !user.user_role.enable_content_creation
         errors[:base] << "You must be able to create to become a collaborator."
       elsif user.company_id != path.company_id
         errors[:base] << "Cross organization access is not allowed."

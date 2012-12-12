@@ -2,10 +2,8 @@
 <p>You are about to invite a new user to your account. They will be a(n) <%= link_to "#{@user_role.name} user", edit_user_role_path(@user_role) %>.</p> 
 <p>They will have the follwing permissions once they join.</p>
 <ul>
-  <li style="color:#404040; padding:5px;">They <strong><%= @user_role.enable_auto_enroll ? "WILL" : "WILL NOT" %></strong> be automatically enrolled in all published paths that this user role has access to.</li>
   <li style="color:#404040; padding:5px;">They <strong><%= @user_role.enable_administration ? "WILL" : "WILL NOT" %></strong> be able to administer your account settings and add/remove users.</li>
-  <li style="color:#404040; padding:5px;">They <strong><%= @user_role.enable_user_creation ? "WILL" : "WILL NOT" %></strong> be able to create and edit <%= name_for_paths.pluralize %>.</li>
-  <li style="color:#404040; padding:5px;">They <strong><%= @user_role.enable_comments ? "WILL" : "WILL NOT" %></strong> be able to share their achievements over social networks.</li>
+  <li style="color:#404040; padding:5px;">They <strong><%= @user_role.enable_content_creation ? "WILL" : "WILL NOT" %></strong> be able to create and edit <%= name_for_paths.pluralize %>.</li>
 </ul>
 <%= form_tag({:controller => :user_roles, :action => :invite }, :method => "get") %>
   <div class="field clearfix">

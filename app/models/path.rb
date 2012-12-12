@@ -12,15 +12,8 @@ class Path < ActiveRecord::Base
     :description, 
     :image_url,
     :is_public,
-    :enable_section_display,
-    :default_timer,
-    :enable_nonlinear_sections,
-    :is_locked, 
-    :enable_retakes, 
-    :tags, 
-    :enable_voting,
-    :passing_score,
-    :enable_path_retakes,
+    :is_locked,  
+    :tags,
     :is_published,
     :persona_id,
     :permalink
@@ -35,14 +28,11 @@ class Path < ActiveRecord::Base
   has_many :submitted_answers, through: :tasks
   has_many :enrollments, dependent: :destroy
   has_many :enrolled_users, through: :enrollments, source: :user
-  has_many :path_user_roles, dependent: :destroy
-  has_many :user_roles, through: :path_user_roles
   has_many :user_events
   has_many :collaborations
   has_many :collaborating_users, through: :collaborations, source: :user
   has_many :path_personas
   has_many :personas, through: :path_personas
-  has_many :leaderboards
   
   validates :name, length: { within: 2..140 }
   validates :description, length: { maximum: 2500 }
@@ -68,14 +58,14 @@ class Path < ActiveRecord::Base
   end
   
   def self.with_name_like(name, user)
-    return Path.joins(:path_user_roles).where("is_locked = ? and path_user_roles.user_role_id = ? and is_published = ? and name ILIKE ?", false, user.user_role_id, true, "%#{name}%")
+    return Path.where("is_locked = ? and is_published = ? and name ILIKE ?", false, true, "%#{name}%")
   end
   
   def self.with_tags_like(tags, user, excluded_path_id)
     return [] if tags.empty?
     conditions = []
-    base_query = ["is_locked = ?", "is_published = ?", "path_user_roles.user_role_id = ?", "paths.id != ?"]
-    query_variables = [false, true, user.user_role_id, excluded_path_id]
+    base_query = ["is_locked = ?", "is_published = ?", "paths.id != ?"]
+    query_variables = [false, true, excluded_path_id]
     
     tags_query = []
     tags.each do |t|
@@ -84,7 +74,7 @@ class Path < ActiveRecord::Base
     end
     query = "(#{base_query.join(" and ")}) and (#{tags_query.join(" or ")})"
     conditions = [query] + query_variables
-    return Path.joins(:path_user_roles).where(conditions)
+    return Path.where(conditions)
   end
   
   def self.similar_paths(path, user)

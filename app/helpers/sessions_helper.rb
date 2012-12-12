@@ -66,17 +66,9 @@ module SessionsHelper
     redirect_to(root_path) unless current_user.admin?
   end
   
-  def company_admin
-    unless @enable_administration
-      flash[:error] = "You do not have access rights to that resource. Please contact your administrator."
-      redirect_to(root_path)
-    end
-  end
-  
   def can_edit_path(path)
-    return false unless @enable_user_creation #creation enabled for your user role and...
+    return false unless @enable_content_creation #creation enabled for your user role and...
     return true if path.user == current_user #1) You are the path creator or...
-    return true if path.company_id = current_user.company_id && @enable_collaboration #2) Your org enables org wide collaboration
     return true if path.collaborations.find_by_user_id(current_user.id) #3) Your listed as a collaborator
     return false
   end
@@ -92,25 +84,8 @@ module SessionsHelper
     clear_return_to
   end
   
-  def company_logo
-    unless current_user.nil?
-      return current_user.company.name
-    else
-      @possible_company ? @possible_company.name : "MetaBright"
-    end
-  end
-  
-  def name_for_paths
-    unless current_user.nil? || current_user.company.name_for_paths.nil?
-      return current_user.company.name_for_paths.capitalize
-    else
-      return "Challenge"
-    end
-  end
-  
-  def name_for_personas
-    return "Path"
-  end
+  def name_for_paths() "Challenge" end
+  def name_for_personas() "Persona" end
   
   def determine_enabled_features
     unless current_user.nil?
@@ -120,22 +95,7 @@ module SessionsHelper
       role = current_user.user_role
       @is_consumer = true
       @enable_administration = role.enable_administration
-      @enable_rewards = role.enable_company_store
-      @enable_leaderboard = role.enable_leaderboard
-      @enable_dashboard = role.enable_dashboard
-      @enable_tour = role.enable_tour
-      @enable_browsing = role.enable_browsing
-      @enable_comments = role.enable_comments
-      @enable_news = role.enable_news
-      @enable_feedback = role.enable_feedback
-      @enable_achievements = role.enable_achievements
-      @enable_recommendations = role.enable_recommendations
-      @enable_printer_friendly = role.enable_printer_friendly
-      @enable_user_creation = role.enable_user_creation
-      @enable_auto_enroll = role.enable_auto_enroll
-      @enable_one_signup = role.enable_one_signup
-      @enable_collaboration = role.enable_collaboration
-      @enable_auto_generate = role.enable_auto_generate
+      @enable_content_creation = true
     end
   end
   

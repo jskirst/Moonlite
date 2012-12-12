@@ -61,15 +61,10 @@ class PathsController < ApplicationController
       flash[:info] = "You need to create a description for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
     else
       @path.sections.each { |s| s.update_attribute(:is_published, true) }
-      current_user.company.user_roles.each do |ur|
-        if @path.user_roles.find_by_id(ur.id).nil?
-          @path.path_user_roles.create!(:user_role_id => ur.id)
-        end
-      end
       @path.is_published = true
       @path.is_public = true
       if @path.save
-        flash[:success] = "#{@path.name} has been successfully published. It is now visible to the #{ company_logo } community."
+        flash[:success] = "#{@path.name} has been successfully published. It is now visible to the MetaBright community."
       else
         flash[:error] = "There was an error publishing."
       end
@@ -146,7 +141,6 @@ class PathsController < ApplicationController
     end
     
     if @section.nil? || @section.is_published == false
-      Leaderboard.reset_for_path_user(@path, current_user)
       redirect_to @path
     else
       redirect_to continue_section_path(@section)
@@ -217,7 +211,7 @@ class PathsController < ApplicationController
     end
     
     def can_create?
-      unless @enable_user_creation
+      unless @enable_content_creation
         flash[:error] = "You do not have the ability to create new challenges."
         redirect_to root_path
       end

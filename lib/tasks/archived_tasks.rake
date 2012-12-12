@@ -83,9 +83,6 @@ task :user_transaction_switch => :environment do
     if ut.path_id
       ut.owner_type = "Path"
       ut.owner_id = ut.path_id
-    elsif ut.reward_id
-      ut.owner_type = "Reward"
-      ut.owner_id = ut.reward_id
     elsif ut.task_id
       ut.owner_type = "Task"
       ut.owner_id = ut.task_id

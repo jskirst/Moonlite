@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
     :password, 
     :password_confirmation, 
     :username,
-    :is_anonymous,
     :description,
     :title,
     :company_name,
@@ -30,7 +29,6 @@ class User < ActiveRecord::Base
   has_many :personas, through: :user_personas
   has_many :achievements, through: :user_achievements
   has_many :comments, dependent: :destroy
-  has_many :leaderboards, dependent: :destroy
   has_many :user_events, dependent: :destroy
   has_many :collaborations
   has_many :collaborating_paths, through: :collaborations, source: :path
@@ -66,7 +64,6 @@ class User < ActiveRecord::Base
     user_details = { 
         name: auth["info"]["name"], 
         email: auth["info"]["email"],
-        is_anonymous: false
     }
     
     begin
@@ -122,7 +119,6 @@ class User < ActiveRecord::Base
     self.name = auth["info"]["name"]
     self.email = auth["info"]["email"]
     self.image_url = auth["info"]["image"]
-    self.is_anonymous = false
     raise "User Auth save failed. " + self.errors.full_messages.join(". ") unless self.save
     return true
   end
