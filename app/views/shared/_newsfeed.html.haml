@@ -45,4 +45,4 @@
   %div.post{ style: "text-align: center; margin: auto;" }
     :javascript
       $(function(){ $(".view_more").on("ajax:success", function(xhr, data){ $(this).parent().replaceWith(data); }); });
-    = link_to "View More", "#{more_available_url}", class: "button button-standard view_more", style: "text-align: center; margin: auto;", remote: true
+    = link_to "View More", "#{@more_available_url}", class: "button button-standard view_more", style: "text-align: center; margin: auto;", remote: true
