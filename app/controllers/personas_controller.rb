@@ -57,7 +57,7 @@ class PersonasController < ApplicationController
   end
   
   def explore
-    @personas = Persona.all
+    @personas = Persona.includes(:path_personas).all
     render partial: "explore"
   end
   
