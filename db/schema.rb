@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121212212538) do
+ActiveRecord::Schema.define(:version => 20121212223205) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.datetime "created_at",                      :null => false
     t.datetime "updated_at",                      :null => false
   end
+
+  add_index "answers", ["task_id"], :name => "index_answers_on_task_id"
 
   create_table "categories", :force => true do |t|
     t.integer  "company_id"
@@ -82,6 +84,7 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
   end
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"
+  add_index "completed_tasks", ["user_id", "task_id"], :name => "index_completed_tasks_on_user_id_and_task_id"
 
   create_table "custom_styles", :force => true do |t|
     t.integer  "company_id"
@@ -108,6 +111,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.integer "persona_id"
   end
 
+  add_index "path_personas", ["path_id", "persona_id"], :name => "index_path_personas_on_path_id_and_persona_id"
+
   create_table "paths", :force => true do |t|
     t.string   "name"
     t.text     "description",                :default => ""
@@ -127,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.string   "permalink"
   end
 
+  add_index "paths", ["permalink"], :name => "index_paths_on_permalink"
   add_index "paths", ["user_id"], :name => "index_modules_on_user_id"
 
   create_table "personas", :force => true do |t|
@@ -172,6 +178,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.integer  "points_to_unlock", :default => 0
   end
 
+  add_index "sections", ["path_id"], :name => "index_sections_on_path_id"
+
   create_table "sent_emails", :force => true do |t|
     t.text     "content"
     t.integer  "user_id"
@@ -208,6 +216,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.boolean  "is_reviewed", :default => false
   end
 
+  add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
+
   create_table "tasks", :force => true do |t|
     t.text     "question"
     t.string   "resource"
@@ -233,6 +243,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "user_auths", ["user_id"], :name => "index_user_auths_on_user_id"
+
   create_table "user_events", :force => true do |t|
     t.integer  "user_id"
     t.string   "content"
@@ -244,6 +256,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.string   "image_link"
   end
 
+  add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
+
   create_table "user_personas", :force => true do |t|
     t.integer  "persona_id"
     t.integer  "user_id"
@@ -251,6 +265,8 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
     t.datetime "updated_at", :null => false
     t.integer  "level"
   end
+
+  add_index "user_personas", ["user_id", "persona_id"], :name => "index_user_personas_on_user_id_and_persona_id"
 
   create_table "user_roles", :force => true do |t|
     t.string   "name"
@@ -307,6 +323,7 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username"
 
   create_table "votes", :force => true do |t|
     t.integer  "submitted_answer_id"
@@ -316,5 +333,6 @@ ActiveRecord::Schema.define(:version => 20121212212538) do
   end
 
   add_index "votes", ["user_id", "submitted_answer_id"], :name => "index_votes_on_user_id_and_submitted_answer_id"
+  add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
 
 end
