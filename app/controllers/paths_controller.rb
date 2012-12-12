@@ -166,9 +166,9 @@ class PathsController < ApplicationController
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
       
       @current_section = current_user.most_recent_section_for_path(@path)
-      @tasks = @current_section.tasks
-        .joins("LEFT OUTER JOIN completed_tasks on completed_tasks.task_id = tasks.id")
-        .select("status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
+      @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
+        .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
+        .where("tasks.section_id = ?", @current_section.id)
       @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
       @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
       @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
