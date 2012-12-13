@@ -56,6 +56,8 @@ code,pre{font:inherit;}
 #updatespace{ background-color: white; border-radius: 6px; padding: 12px 0 9px 13px; overflow: hidden;}
 .bigheaderimage{ height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
 .rightofbigheaderimage{ display:inline-block; width: 81%; float:right; }
+#newuserbox{border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position: relative;background-clip: padding-box;color: #333;background-color: white;margin-bottom: 12px; }
+#newuserbox span{font-size:18px; padding:10px 0;}
 
 #topboxcontent h1 { margin:0; line-height:28px; }
 #topboxcontent h3 { margin-bottom:9px; font-style:italic; color:#666666; }
