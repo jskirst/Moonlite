@@ -1,6 +1,6 @@
 class PathsController < ApplicationController
-  before_filter :authenticate, except: [:show]
-  before_filter :get_path_from_id, :except => [:show, :index, :new, :create]
+  before_filter :authenticate, except: [:show, :newsfeed]
+  before_filter :get_path_from_id, :except => [:show, :newsfeed, :index, :new, :create]
   before_filter :can_create?, :only => [:new, :create]
   before_filter :can_edit?, :only => [:edit, :update, :destroy, :collaborator, :collaborators]
   
