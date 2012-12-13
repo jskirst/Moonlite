@@ -3,8 +3,6 @@ class Section < ActiveRecord::Base
   attr_accessible :name, 
     :instructions, 
     :position,
-    :content_type, 
-    :enable_skip_content,
     :points_to_unlock,
     :is_published
   
@@ -45,11 +43,7 @@ class Section < ActiveRecord::Base
   
   def remaining_tasks(user)
     unless self.is_published == false
-      if path.enable_retakes
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and (completed_tasks.status_id = ? or completed_tasks.status_id = ?))", user.id, 1, 2]).count
-      else
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
-      end
+      return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
     else
       return 0
     end

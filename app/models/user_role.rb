@@ -1,24 +1,9 @@
 class UserRole < ActiveRecord::Base
   attr_readonly :signup_token
+  attr_accessor :enable_content_creation
   attr_accessible :company_id, 
     :name,  
     :enable_administration,
-    :enable_rewards,
-    :enable_leaderboard,
-    :enable_dashboard,
-    :enable_tour,
-    :enable_browsing,
-    :enable_comments,
-    :enable_news,
-    :enable_feedback,
-    :enable_achievements,
-    :enable_recommendations,
-    :enable_printer_friendly,
-    :enable_user_creation,
-    :enable_auto_enroll,
-    :enable_one_signup,
-    :enable_collaboration,
-    :enable_auto_generate,
     :signup_token
   
   has_many :users

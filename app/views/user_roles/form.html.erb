@@ -26,26 +26,8 @@
           </li>
           <li>
             <label>
-              <%= f.check_box :enable_leaderboard %>
-              <span>Enable Leaderboard</span>
-            </label>
-          </li>
-          <li>
-            <label>
-              <%= f.check_box :enable_dashboard %>
-              <span>Enable Dashboard</span>
-            </label>
-          </li>          
-          <li>
-            <label>
-              <%= f.check_box :enable_browsing %>
-              <span>Enable Explore</span>
-            </label>
-          </li>
-          <li>
-            <label>
-              <%= f.check_box :enable_user_creation %>
-              <span>Enable Create</span>
+              <%= f.check_box :enable_content_creation %>
+              <span>Enable Content Creation</span>
             </label>
           </li>
         </ul>
@@ -54,43 +36,7 @@
     <div class="field clearfix">
       <label>Secondary Features</label>
       <div class="input">
-        <ul class="inputs-list">        
-          <li>
-            <label>
-              <%= f.check_box :enable_comments %>
-              <span>Enable Facebook comment threads for <%= name_for_paths.pluralize %></span>
-            </label>
-          </li>            
-          <li>
-            <label>
-              <%= f.check_box :enable_news %>
-              <span>Enable news feed</span>
-            </label>
-          </li>      
-          <li>
-            <label>
-              <%= f.check_box :enable_recommendations %>
-              <span>Enable <%= name_for_paths %> recommendations</span>
-            </label>
-          </li>
-          <li>
-            <label>
-              <%= f.check_box :enable_collaboration %>
-              <span>Enable all users of this user role to collaborate on <%= name_for_paths %> creation</span>
-            </label>
-          </li>
-          <li>
-            <label>
-              <%= f.check_box :enable_auto_enroll %>
-              <span>Enable auto-enrollment of new users in any published <%= name_for_paths.pluralize %></span>
-            </label>
-          </li>
-          <li>
-            <label>
-              <%= f.check_box :enable_auto_generate %>
-              <span>Enable automatic question generator</span>
-            </label>
-          </li>
+        <ul class="inputs-list">
         </ul>
       </div>
     </div>

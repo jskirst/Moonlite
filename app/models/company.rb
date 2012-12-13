@@ -13,7 +13,6 @@ class Company < ActiveRecord::Base
     :custom_email_from
   
   has_many :users
-  has_many :rewards
   has_many :paths, conditions: { is_published: true, is_approved: true }
   has_many :all_paths, class_name: "Path"
   has_many :categories

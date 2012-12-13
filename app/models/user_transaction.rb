@@ -4,7 +4,6 @@ class UserTransaction < ActiveRecord::Base
     :owner_id,
     :owner_type, 
     :task_id, 
-    :reward_id,
     :path_id, 
     :amount, 
     :status

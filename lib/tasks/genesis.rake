@@ -32,6 +32,8 @@ PERSONAS = YAML.load(File.read(File.join(Rails.root, "/lib/tasks/personas.yml"))
 PATHS = [
   ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
   ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
+  ["Challenge ","Our solar system is a cool place.", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Moons_of_solar_system_v7.jpg/1024px-Moons_of_solar_system_v7.jpg", 0],
+  ["Pelopponesian War","Brutal stuff.", "http://upload.wikimedia.org/wikipedia/commons/a/a9/Peloponnesian_war_alliances_431_BC.png", 0]
 ]
 
 PATH_SECTIONS = [
@@ -53,8 +55,8 @@ namespace :db do
   task :genesis => :environment do
     Rake::Task['db:reset'].invoke
     moonlite_company = Company.create!(:name => "MetaBright")
-    default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_user_creation: true, enable_browsing: true)
-    second_role = moonlite_company.user_roles.create!(name: "Test", enable_browsing: true)
+    default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_content_creation: true)
+    second_role = moonlite_company.user_roles.create!(name: "Test")
     moonlite_company.user_role_id = default_role.id
     moonlite_company.save
     default_cat = moonlite_company.categories.create!(:name => "Everything")
@@ -98,6 +100,7 @@ namespace :db do
       persona = persona[1]
       next if persona["name"].include?("lock")
       new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"], criteria: criteria)
+      criteria = nil if criteria
     end
   end
 end

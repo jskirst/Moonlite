@@ -33,18 +33,8 @@
             %br
             %span Streak
         %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
-          - if !@free_response && @points_awarded   
-            - if @correct == true
-              %p{ style: "text-decoration:underline; font-weight: bold; color:#57A957;" } Correct!
-              %p{ style: "color: green;" } <strong>+#{@points_awarded >= 10 ? 10 : @points_awarded} points</strong>
-            - elsif @correct == false
-              %p{ style: "color: red;" } Incorrect
           - if @streak_name
             %p{ style: "text-decoration:underline;color:darkcyan;" } Achievement: <strong style="text-transform:uppercase;">#{@streak_name}
             %p
               %strong +#{@streak_points.to_i}
               %span points
-          - if @leaderboard
-            %p{ style: "color:darkgoldenrod;" } Passed #{@leaderboard.user.name}'s score #{@leaderboard.score}
-          - unless @section.instructions.blank?
-            %p= link_to "Review Section Content", @section, style: "float:right;"

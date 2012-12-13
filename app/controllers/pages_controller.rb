@@ -1,7 +1,6 @@
 class PagesController < ApplicationController
   before_filter :authenticate, :only => [:explore, :start]
   before_filter :user_creation_enabled?, :only => [:create]
-  before_filter :browsing_enabled?, :only => [:explore]
   
   def home
     @title = "Home"
@@ -20,13 +19,13 @@ class PagesController < ApplicationController
   def newsfeed
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @newsfeed_items = []
+    @page = params[:page].to_i
     challenge_questions = current_user.completed_tasks
       .joins(:task)
       .where("tasks.answer_type = ?", Task::CREATIVE)
       .select(:section_id)
       .to_a.collect &:section_id
     unless challenge_questions.empty?
-      @page = params[:page].to_i
       @newsfeed_items = CompletedTask.joins(:task, :submitted_answer)
         .where("tasks.section_id in (?)", challenge_questions)
         .order("completed_tasks.created_at DESC")
@@ -85,20 +84,9 @@ class PagesController < ApplicationController
   end
   
   private
-    def send_invitation_alert(email)
-      Mailer.invitation_alert(email).deliver
-    end
-    
     def user_creation_enabled?
-      unless @enable_user_creation
+      unless @enable_content_creation
         flash[:error] = "You do not have access to #{name_for_paths} editing functionality."
-        redirect_to root_path
-      end
-    end
-    
-    def browsing_enabled?
-      unless @enable_browsing
-        flash[:error] = "You do not have access to #{name_for_paths} browsing functionality."
         redirect_to root_path
       end
     end
