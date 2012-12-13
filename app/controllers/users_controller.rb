@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
     @more_available = @newsfeed_items.size == 30
-    @more_available_url = profile_path(current_user.username, page: @page+1)
+    @more_available_url = profile_path(@user.username, page: @page+1)
     if request.xhr?
       render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
     else
