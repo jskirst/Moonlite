@@ -4,9 +4,8 @@ require 'fileutils.rb'
 
 class SectionsController < ApplicationController
   before_filter :authenticate
-  #before_filter :has_edit_access?, except: [:show, :continue, :results]
-  before_filter :get_section_from_id, except: [:new, :create, :generate]
-  #before_filter :can_edit?, except: [:show, :continue, :complete, :launchpade, :new, :create] 
+  before_filter :get_section
+  before_filter :can_edit?, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete] 
   before_filter :enrolled?, only: [:complete, :continue, :take, :took]
 
   def show
@@ -23,15 +22,13 @@ class SectionsController < ApplicationController
 # Begin Section Creation  
   
   def new
-    @section = Section.new
-    @title = "New section"
     @path = Path.find(params[:path_id])
-    unless can_edit_path(@path)
-      flash[:error] = "You cannot add sections to this #{name_for_paths}."
+    if can_edit_path(@path)
+      @section = @path.sections.new
+      @title = "New section"
+    else
       redirect_to root_path
-      return
     end
-    @section.path = @path
   end
   
   def create
@@ -235,13 +232,6 @@ class SectionsController < ApplicationController
     end
     session[:ssf] = @streak 
   end
-    
-  def has_edit_access?
-    unless @enable_content_creation
-      flash[:error] = "You do not have the ability to edit this section."
-      redirect_to root_path
-    end
-  end
 
   def enrolled?
     unless current_user.enrolled?(@section.path)
@@ -250,14 +240,20 @@ class SectionsController < ApplicationController
     end
   end
   
-  def get_section_from_id
-    @section = Section.find(params[:id], :include => :path)
-    @path = @section.path
+  def get_section
+    if params[:id]
+      @section = Section.find(params[:id], :include => :path)
+      @path = @section.path
+    elsif params[:path_id] || params[:section][:path_id]
+      @path = Path.find(params[:path_id] || params[:section][:path_id])
+      @section = @path.sections.new
+    else
+      raise "FATAL ERROR: attempt to access unknown path."
+    end
   end
   
   def can_edit?
-    unless can_edit_path(@section.path)
-      flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
+    unless can_edit_path(@path)
       redirect_to root_path
     end
   end
