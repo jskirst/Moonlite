@@ -1,4 +1,5 @@
 class PersonasController < ApplicationController
+  before_filter :authenticate
   before_filter :get_from_id, only: [:show, :edit, :preview, :destroy]
   before_filter :authorized, only: [:index, :edit, :update, :new, :create, :destroy]
   
