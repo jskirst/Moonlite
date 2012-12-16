@@ -14,7 +14,6 @@ class Section < ActiveRecord::Base
   validates :path_id, presence: true
     
   before_create { self.position = get_next_position_for_path }
-  before_save { self.image_url = nil if ( self.image_url && self.image_url.length < 9) }
   
   def randomize_tasks
     old_task_array = tasks.all(:order => "position ASC").to_a
