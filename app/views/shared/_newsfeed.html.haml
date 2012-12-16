@@ -15,7 +15,7 @@
 - newsfeed_items.each do |r|
   %div.post
     %div.postphotospace
-      = link_to (image_tag r.user.profile_pic, class: "photo"), r.user
+      = link_to (image_tag r.user.profile_pic, class: "photo"), profile_path(r.user.username)
     %div.postspace
       %div.postheader
         %h3

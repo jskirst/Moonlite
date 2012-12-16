@@ -7,6 +7,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_username(params[:username]) if params[:username]
     @user = User.find_by_id(params[:id]) if params[:id]
+    redirect_to root_path and return if @user.nil?
     
     @page = params[:page].to_i
     offset = @page * 30
