@@ -5,9 +5,10 @@
         %div.modal_close
           %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
         %h1
-          = image_tag(@path.path_pic)
-          %div #{@path.name} 
-          %div{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@enrollment.total_points} pts, Level #{current_user.level(@path)}
+          = image_tag(@path.path_pic, style:"vertical-align:baseline;")
+          %div{style:"position:relative; bottom:10px; "}
+            %span{ } #{@path.name} 
+            %span{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@enrollment.total_points} pts, Level #{current_user.level(@path)}
         %div.launchpadcontent
           %div.launchpadsectioncolumn
             %div.launchpadcolumnheader

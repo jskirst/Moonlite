@@ -16,7 +16,7 @@
       %div#arena_tab.tab_content
         - if @core_tasks.select{ |t| t.status_id.nil? }.size > 0
           %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
-          %p= link_to "Start", continue_section_path(@current_section), class: "button button-info"  
+          %p= link_to "Start", continue_section_path(@current_section), class: "button button-actionable"  
         - else
           %table.table
             - @core_tasks.each do |t|
