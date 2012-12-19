@@ -1,3 +1,7 @@
+:css
+  div.dropdown:hover ul.dropdown-menu{display: block;}
+  a.menu:after, .dropdown-toggle:after {content: none;}
+
 - if newsfeed_items.empty?
   %div.post.empty_post{ style: "height: 300px;"}
     %p There are no responses yet.
@@ -30,7 +34,15 @@
             %a.btn.vote_button
               %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
               %div.vote_count= r.submitted_answer.total_votes.to_i
-      %div.posttext.leveltext= link_to r.task.question, task_details_path(r.path, r.submitted_answer.id), style: "color: inherit;"
+      %div.posttext.leveltext.dropdown.nav
+        %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit;" } #{r.task.question}
+        %ul.dropdown-menu{ role: "menu", style: "left:102%; top:-70%; display:none;"}
+          %li 
+            %a{href:"#"} Answer this CR
+          %li
+            %a{href:"#"} Filter by this question
+          %li
+            %a{href:"#"} View response in new tab
       %div.CRarea
         - if r.task.answer_sub_type == Task::TEXT
           %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
@@ -38,7 +50,7 @@
           = image_tag(sanitize(r.submitted_answer.content))
         - elsif r.task.answer_sub_type == Task::YOUTUBE
           %center
-            %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }
+            %div.youtube_answer{ id: "youtube_answer_#{r.id}", alt: r.submitted_answer.content }        
       = render "comments/comments", { owner: r.submitted_answer, owner_type: "SubmittedAnswer", owner_id: r.submitted_answer_id, comment_count: r.submitted_answer.comments.size, created_at: r.created_at, sharing_url: submission_details_url(r.path, r.submitted_answer.id), sharing_title: "Great response to the #{r.path.name} Challenge on @MetaBright." }
 
 - if @more_available
