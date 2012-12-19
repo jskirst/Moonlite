@@ -96,6 +96,7 @@ code,pre{font:inherit;}
 .row .span11{margin-left:12px;}
 .container.body { margin-bottom:11px; border-radius:6px; width: 940px; padding: 15px; background-color: rgba(255, 255, 255, .3); border:none; box-shadow:none; }
 #content { padding-top: 42px; min-height: 450px;}
+.navbar{z-index:1001;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 .navbar .nav.pull-right a:hover {color:white;}
@@ -248,6 +249,8 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .notification_body { margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right; text-shadow:none; line-height:17px;}
 .notification_time { margin: 0; font-size: 11px; float: right; text-shadow:none; cursor:default; margin-right:2px; color: #BBB; line-height: 5px;}
 .nub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
+.sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:27px; left: -11px;}
+.CR_dropdown_option{width: 88%; padding-left: 12px;}
 
 .button { margin-bottom: 0px; margin-top: 0px; vertical-align: middle; display: inline-block; text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }

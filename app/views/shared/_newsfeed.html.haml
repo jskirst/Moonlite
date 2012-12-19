@@ -34,15 +34,20 @@
             %a.btn.vote_button
               %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
               %div.vote_count= r.submitted_answer.total_votes.to_i
-      %div.posttext.leveltext.dropdown.nav
-        %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit;" } #{r.task.question}
-        %ul.dropdown-menu{ role: "menu", style: "left:102%; top:-70%; display:none;"}
-          %li 
-            %a{href:"#"} Answer this CR
+      %div.posttext.leveltext.dropdown
+        %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{r.task.question}
+        %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; display:none;"}
           %li
-            %a{href:"#"} Filter by this question
-          %li
-            %a{href:"#"} View response in new tab
+            %div
+              %div.sidenub
+            %div{ style: "padding: 3px 0px;"}
+              %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
+                %li.CR_dropdown_option 
+                  %a{href:"#"} Answer this CR
+                %li.CR_dropdown_option
+                  %a{href:"#"} Filter by this question
+                %li.CR_dropdown_option
+                  %a{href:"#"} View response in new tab          
       %div.CRarea
         - if r.task.answer_sub_type == Task::TEXT
           %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
