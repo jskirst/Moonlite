@@ -46,7 +46,7 @@
               = link_to profile_path(current_user.username) do
                 = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
                 %span{ style: "vertical-align: middle;" }= current_user.name
-            %li.navuser{ style: "display: none;" }
+            %li.navuser{ style:"display:none;" }
               %div.dropdown.pull-right
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown"}
                   = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
@@ -63,8 +63,8 @@
                         %span{ style: "font-size:18px;"} Challenge Name 
                         %span{style: "font-size:14px; float:right; "}Level 4
                         %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-                        %div.progresscontainer{ style: "width:220px;" }
-                          %div.progressbar{ style: "width:150px;"} 
+                        %div.progress.progress-info
+                          %div.bar{ style: "width:30%;"} 
                             -# = The width of this div should be dynamically changed based on the user's progress in current level.
                     %div.singleprogressentry
                       %img{ src: "http://www.placekitten.com/50/50"}              
@@ -72,19 +72,18 @@
                         %span{ style: "font-size:18px;"} Challenge Name 
                         %span{style: "font-size:14px; float:right; "}Level 4
                         %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-                        %div.progresscontainer{ style: "width:220px;" }
-                          %div.progressbar{ style: "width:150px;"} 
-                            -# = The width of this div should be dynamically changed based on the user's progress in current level. Ideally each progress bar is a different color.
+                        %div.progress.progress-success
+                          %div.bar{ style: "width:70%;"} 
+                            -# = The width of this div should be dynamically changed based on the user's progress in current level.
                     %div.singleprogressentry
                       %img{ src: "http://www.placekitten.com/50/50"}              
                       %div.personaprogress
                         %span{ style: "font-size:18px;"} Challenge Name 
                         %span{style: "font-size:14px; float:right; "}Level 4
                         %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-                        %div.progresscontainer{ style: "width:220px;" }
-                          %div.progressbar{ style: "width:150px;"} 
-                            -# = The width of this div should be dynamically changed based on the user's progress in current level. Ideally each progress bar is a different color.
-
+                        %div.progress.progress-warning
+                          %div.bar{ style: "width:45%;"} 
+                            -# = The width of this div should be dynamically changed based on the user's progress in current level.
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
