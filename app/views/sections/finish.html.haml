@@ -3,7 +3,7 @@
 %div.quizcontainer
   %div.quizspace
     %div.quizheader
-      = image_tag @section.path.path_pic, size: "40x40"
+      = image_tag @section.path.path_pic, style: "height:50px; width:50px;"
       %div{ style: "display:inline-block;" }
         %span <strong>#{@section.path.name}:</strong> #{@section.name}</span>
         %div#idprogressbar

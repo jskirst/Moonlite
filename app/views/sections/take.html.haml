@@ -13,18 +13,18 @@
   %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
     %div.CRquizspace
       %div.quizheader
-        = image_tag @path.path_pic, size: "40x40"
+        = image_tag @path.path_pic, style: "height:50px; width:50px;"
         %div{ style: "display:inline-block;" }
           %span <strong>#{@path.name}:</strong> #{@section.name}</span>
       %div{ style: "text-align:center;" }
         = render "stored_resource", { :stored_resource => @stored_resource }
       %div.CRquestionandresponsespace
         %div.CRquestionspace
-          %span.CRquestionheader Challenge question:
+          %span.CRquestionheader Creative response:
           %br
           %span.CRquestion= @task.question
         %div.CRresponsespace{ style: "min-height: 175px;" } 
-          %span Your response:
+          %span Your answer:
           - if @task.answer_type == Task::CREATIVE
             - if @task.answer_sub_type == Task::TEXT
               :javascript
