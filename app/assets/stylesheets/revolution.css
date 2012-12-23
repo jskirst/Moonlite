@@ -251,6 +251,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .button.button-standard:hover { color: black; }
 .button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
 h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weight: lighter; }
+.button.disabled { opacity: 0.70; box-shadow: 0px 0px 1px black; }
 
 .intcontainer{overflow:hidden; width:695px;margin-left:auto;margin-right:auto;margin:100px auto 200px auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .firstchallengeint{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden;}

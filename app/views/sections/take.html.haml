@@ -6,8 +6,9 @@
   :javascript
     $(function(){
       $('#challenge_form').submit(function(){
-        $(".loading_image").show();
-        $("#submit_button").attr("disabled","disabled");
+        $("#loading_image").show();
+        $("#submit_button").attr("disabled","disabled").addClass("disabled").text("Submitting...";
+        return false;
       });
     });
   %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
@@ -85,3 +86,4 @@
       %div.CRbuttonspace
         = link_to "Back", path_path(@section.path, completed: true), class: "button button-standard", style: "float: left;"
         = submit_tag "Submit", :class => "button button-actionable", :id => "submit_button", style: "float:right;"
+        = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image"

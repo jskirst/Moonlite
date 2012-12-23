@@ -1,7 +1,7 @@
 class UserRolesController < ApplicationController
   before_filter :authenticate
-  before_filter :get_user_role_from_id, :except => [:index, :new, :create]
-  before_filter :has_access?
+  before_filter :load_resource, except: [:index, :new, :create, :update_user]
+  before_filter :authorize_resource
   
   def index
     @mode = "roles"
@@ -61,19 +61,30 @@ class UserRolesController < ApplicationController
     redirect_to user_roles_path
   end
   
+  def update_user
+    if request.get?
+      @user_roles = current_company.user_roles
+      @user = User.find(params[:user_id])
+      render "update_user"
+    else
+      @user = User.find(params[:user_id])
+      @user_role = current_company.user_roles.find(params[:user][:user_role_id])
+      @user.user_role_id = @user_role.id
+      if @user.save
+        redirect_to admin_users_path, flash: { success: "User role changed successfully." }
+      else
+        raise "Runtime error" + current_user.to_yaml + @user.to_yaml
+      end
+    end
+  end
+  
   private
-    def get_user_role_from_id
+    def load_resource
       @user_role = current_user.company.user_roles.find(params[:id])
       @company = @user_role.company
     end
   
-    def has_access?
-      unless @enable_administration
-        redirect_to root_path, alert: "You do not have the ability edit user roles."
-      end
-      
-      if @company && @company != current_user.company
-        redirect_to root_path, alert: "You do not have access to this organizations data."
-      end
+    def authorize_resource
+      raise "Access Denied" unless @enable_administration
     end
 end

@@ -1,14 +1,9 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, except: [:request_send, :send_reset, :request_reset, :reset_password, :show]
-  before_filter :find_by_id, except: [:show, :request_reset, :request_send, :reset_password]
-  before_filter :has_access?, only: [:lock, :edit_role, :update_role]
-  before_filter :user_only,  only: [:edit, :update, :destroy]
+  before_filter :authenticate, except: [:show]
+  before_filter :load_resource, except: [:retract]
+  before_filter :authorize_resource, except: [:show, :retract]
   
   def show
-    @user = User.find_by_username(params[:username]) if params[:username]
-    @user = User.find_by_id(params[:id]) if params[:id]
-    redirect_to root_path and return if @user.nil?
-    
     @page = params[:page].to_i
     offset = @page * 30
     if params[:task]
@@ -48,32 +43,27 @@ class UsersController < ApplicationController
     end
   end
   
-  def edit_role
-    @user_roles = current_company.user_roles
-  end
-  
-  def update_role
-    @user_role = current_company.user_roles.find(params[:user][:user_role_id])
-    @user.user_role_id = @user_role.id
-    if @user.save
-      redirect_to current_user.company, flash: { success: "User role changed successfully." }
-    else
-      raise "Runtime error" + current_user.to_yaml + @user.to_yaml
-    end
-  end
-  
   def destroy
     @user.destroy
     redirect_to root_url
   end
   
+  def retract
+    @submitted_answer = CompletedTask.find(params[:submission_id])
+    raise "Access Denied" unless @submitted_answer.user == current_user
+    @submitted_answer.destroy
+    render json: { status: "success" }
+  end
+  
   private
-    def find_by_id
+    def load_resource
+      @user = User.find_by_username(params[:username]) if params[:username]
       @user = User.find_by_id(params[:id]) if params[:id]
+      redirect_to root_path and return if @user.nil?
     end
     
-    def has_access?
-      raise "ACCESS DENIED" unless @enable_administration
+    def authorize_resource
+      raise "Access Denied" unless @user == current_user
     end
   
     def user_only

@@ -10,6 +10,7 @@
       %tr
         %th Rank
         %th Name
+        %th Role
         %th Email
         %th Last Login
         %th Enrollments
@@ -22,8 +23,9 @@
         %tr
           %td= i
           %td= link_to u.name, u
+          %td= link_to u.user_role.name, update_users_role_path(u.id)
           %td= u.email
-          %td #{time_ago_in_words(u.login_at || u.created_at)} ago
+          %td= (u.login_at || u.created_at).strftime("%m/%d/%Y")
           %td= u.enrollments.size
           %td= u.earned_points
           %td= u.votes.size
