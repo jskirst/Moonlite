@@ -34,7 +34,7 @@
 .leftbtn{margin-right:-7px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; margin-left:18px;}
 .midbtn{margin-right:-7px; border-radius:0px;}
 .rightbtn{border-top-left-radius: 0px; border-bottom-left-radius: 0px;} 
-.leftboxheader a{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+.leftboxheader a, .leftboxheader button{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
 .newsfeed>.leftboxheader{padding:6px 12px;}
 .leftboxheader>div>.btn{text-transform:none;}
 .commentphoto{width:32px; border-radius:3px; }
@@ -102,6 +102,8 @@ code,pre{font:inherit;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 .navbar .nav.pull-right a:hover {color:white;}
+.nav.pull-right .caret{ border-top-color: #c7ced6; border-bottom-color: #c7ced6; color: #c7ced6; margin-top:7px; }
+.navbar .nav.pull-right a:hover .caret{border-top-color:white; border-bottom-color:white; color:white;}
 .navuser>div>a>.caret{ border-top-width: 5px; border-right-width: 5px; border-left-width: 5px; margin-left:1px;}
 .navuser>div>a{ text-decoration:none; display: block;float: none;padding: 10px 10px;line-height: 19px;}
 .landingbuttontext{color:white; font-size:13px; display:inline-block; position:relative; left:5px; font-family:'MuliRegular'; font-weight: bold;}
