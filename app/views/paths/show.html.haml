@@ -1,11 +1,14 @@
 %section
-  %div#newuserbox{style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;"}
-    %div{ style: "margin-top:-6px;"}
-      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:115px; "}
-      %h1{style:"display:inline; position:relative; top:12px;"} Looks like you're new here...
-    %div{style:"margin-left:20px; margin-top:-10px;"}
-      %h4{style:""} MetaBright is a place to showcase your skills and get better at the stuff you're passionate about.
-      %h4{style:"margin-top:15px;"} Poke around a little bit. When you're ready to take the Challenge yourself, come back here to <a class="login_link" style="cursor:pointer;">sign up</a>. It only takes five seconds. Honest!
+  - unless current_user
+    %div#newuserbox.help_box{ style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;" }
+      %div.help_close
+        %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png" }
+      %div{ style: "margin-top:-6px;"}
+        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:90px; "}
+        %h1{style:"display:inline; position:relative; top:12px; font-size: 30px;"} Looks like you're new here...
+      %div{style:"margin-left:20px; margin-top:-10px;"}
+        %h4 MetaBright is a place to showcase your skills and get better at the stuff you're passionate about.
+        %h4{style:"margin-top:15px;"} Poke around a little bit, and when you're ready to join the Challenge yourself, come back here to <a class="login_link">sign up</a>. It only takes five seconds. Honest!
   %div#topsection
     %div#updatespace
       %div{ style: "display:inline;" }

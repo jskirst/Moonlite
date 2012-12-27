@@ -22,6 +22,10 @@ function close_button(){
   $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
 }
 
+function help_button(){
+  $(".help_close").click(function(){ $(this).parents('.help_box').fadeOut(); });
+}
+
 function show_persona_challenges(){
   $(".show_persona_select").on("ajax:success", function(xhr, data){
     $(".explorenewusercontent").fadeOut('fast', function(){
@@ -63,6 +67,7 @@ function truncate(text, length, ellipsis) {
 
 $(function(){
   close_button();
+  help_button();
   $(".comments form").bind("ajax:success", function(xhr, data){
     $(this).parent().find("ul").append(data);
     $(this).parent().find(".no_comments").hide();
