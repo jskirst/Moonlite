@@ -32,7 +32,7 @@ class Section < ActiveRecord::Base
   end
       
   def next_task(user)
-    return get_next_unfinished_task(user)
+    return tasks.where(["answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", Task::MULTIPLE, user.id]).first
   end
   
   def completed?(user)
@@ -123,16 +123,6 @@ class Section < ActiveRecord::Base
   end
     
   private
-    def get_next_unfinished_task(user)
-      previous_task = tasks.joins(:completed_tasks).where(["completed_tasks.user_id = ?", user.id]).last(:order => "position ASC")
-      previous_task_position = previous_task.nil? ? 0 : previous_task.position
-      if user.company_id > 1
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).first(:order => "position ASC")
-      else
-        return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id) and tasks.answer_type not in (0,3)", user.id]).first(:order => "position ASC")
-      end
-    end
-  
     def get_next_position_for_path
      return (path.sections.last.position + 1) unless path.sections.empty?
      return 1

@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
     comment = current_user.comments.new(params[:comment])
     if comment.save
       owner = comment.owner
+      link = root_url
       if owner.is_a? SubmittedAnswer
         link = submission_details_path(owner.path, owner)
         content = "#{current_user} commented on your submission."
@@ -18,7 +19,7 @@ class CommentsController < ApplicationController
 
   def destroy
     comment = Comment.find_by_id(params[:id])
-    raise "Cannot delete what you do not own." unless comment.user == current_user
+    raise "Access Denied" unless comment.user_id == current_user.id
     comment.destroy
     render json: { status: "success" }
   end

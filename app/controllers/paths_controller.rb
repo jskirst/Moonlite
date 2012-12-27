@@ -1,8 +1,8 @@
 class PathsController < ApplicationController
   before_filter :authenticate, except: [:show, :newsfeed]
-  before_filter :get_path_from_id, :except => [:show, :newsfeed, :index, :new, :create]
-  before_filter :can_create?, :only => [:new, :create]
-  before_filter :can_edit?, :only => [:edit, :update, :destroy, :collaborator, :collaborators]
+  before_filter :load_resource, except: [:index, :new, :create]
+  before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators]
+  before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
 # Begin Path Creation
   
@@ -118,23 +118,9 @@ class PathsController < ApplicationController
   end
 
 # Begin Path Journey
-
-  def enroll
-    unless current_user.enrolled?(@path)
-      current_user.enroll!(@path)
-    end
-    
-    if current_user.earned_points == 0
-      redirect_to continue_path_path(@path)
-    else
-      redirect_to path_path(@path)
-    end
-  end
   
   def continue
-    unless current_user.enrolled?(@path)
-      current_user.enroll!(@path)
-    end
+    current_user.enroll!(@path) unless current_user.enrolled?(@path)
     @section = current_user.most_recent_section_for_path(@path) || @path.sections.first
     while @section && @section.completed?(current_user)
       @section = @path.next_section(@section)
@@ -148,15 +134,10 @@ class PathsController < ApplicationController
   end
   
   def show
-    @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
-    @path = Path.find(params[:id]) if params[:id]
-    redirect_to root_path and return unless @path.is_public == true
-    
     @tasks = @path.tasks
     @responses = []
     if current_user
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
-      
       @current_section = current_user.most_recent_section_for_path(@path)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
@@ -180,10 +161,6 @@ class PathsController < ApplicationController
   end
   
   def newsfeed
-    @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
-    @path = Path.find(params[:id]) if params[:id]
-    redirect_to root_path and return unless @path.is_public == true
-    
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @page = params[:page].to_i
     offset = @page * 20
@@ -203,24 +180,18 @@ class PathsController < ApplicationController
   end
 
   private
-    def get_path_from_id
-      if !@path = Path.find_by_id(params[:id])
-        flash[:error] = "No #{name_for_paths} found for the argument supplied."
-        redirect_to root_path and return
-      end
+    def load_resource
+      @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
+      @path = Path.find_by_id(params[:id]) if params[:id]
+      redirect_to root_path unless @path
     end
     
-    def can_create?
-      unless @enable_content_creation
-        flash[:error] = "You do not have the ability to create new challenges."
-        redirect_to root_path
-      end
+    def authorize_edit
+      raise "Creation Access Denied" unless @enable_content_creation
+      raise "Edit Access Denied" unless @path.nil? || can_edit_path(@path)
     end
     
-    def can_edit?
-      unless can_edit_path(@path)
-        flash[:error] = "You do not have access to this Challenge. Please contact your administrator to gain access."
-        redirect_to root_path
-      end
+    def authorize_view
+      raise "View Access Denied" unless @path.is_public || can_edit_path(@path)
     end
 end
