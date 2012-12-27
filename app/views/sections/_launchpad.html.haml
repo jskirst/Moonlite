@@ -64,7 +64,7 @@
                 - if t.status_id
                   = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
                   %br
-                  %span.launchpadpoints= completed_task.points_awarded.to_i.to_s + " points"
+                  %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
                 - else
                   = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
 

@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, :only => [:explore, :start]
-  before_filter :user_creation_enabled?, :only => [:create]
+  before_filter :authenticate, except: [:home, :about, :challenges, :tos]
+  before_filter :authorize_resource, only: [:create]
   
   def home
     @title = "Home"
@@ -76,7 +76,7 @@ class PagesController < ApplicationController
   end
   
   def email_test
-    raise "FUCK NO" unless @enable_administration
+    raise "Access Denied" unless @enable_administration
     if params[:email]
       eval("Mailer.#{params[:test_method]}('#{params[:email]}').deliver")
       flash[:success] = "Email should have been sent."
@@ -84,7 +84,7 @@ class PagesController < ApplicationController
   end
   
   private
-    def user_creation_enabled?
+    def authorize_resource
       unless @enable_content_creation
         flash[:error] = "You do not have access to #{name_for_paths} editing functionality."
         redirect_to root_path

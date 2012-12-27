@@ -1,37 +1,16 @@
-require 'net/http'
-require 'uri'
-require 'fileutils.rb'
-
 class SectionsController < ApplicationController
   before_filter :authenticate
-  #before_filter :has_edit_access?, except: [:show, :continue, :results]
-  before_filter :get_section_from_id, except: [:new, :create, :generate]
-  #before_filter :can_edit?, except: [:show, :continue, :complete, :launchpade, :new, :create] 
-  before_filter :enrolled?, only: [:complete, :continue, :take, :took]
-
-  def show
-    if current_user.enrolled?(@section.path)
-      redirect_to continue_section_path(@section)
-    else
-      @path_name = @section.path.name
-      @title = @section.name
-      @section_started = current_user.section_started?(@section)
-      @stored_resources = @section.stored_resources.all
-    end
-  end
-
-# Begin Section Creation  
+  before_filter :load_resource
+  before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]  
   
   def new
-    @section = Section.new
-    @title = "New section"
     @path = Path.find(params[:path_id])
-    unless can_edit_path(@path)
-      flash[:error] = "You cannot add sections to this #{name_for_paths}."
+    if can_edit_path(@path)
+      @section = @path.sections.new
+      @title = "New section"
+    else
       redirect_to root_path
-      return
     end
-    @section.path = @path
   end
   
   def create
@@ -181,24 +160,46 @@ class SectionsController < ApplicationController
   end
   
   def complete
-    ct = current_user.completed_tasks.find_by_task_id(params[:task_id])
-    results = ct.complete_multiple_choice(params[:answer], params[:points_remaining].to_i)
-    render json: results
+    task_id = params[:task_id]
+    answer_id = params[:answer]
+    points = params[:points_remaining].to_i
+    
+    completed_task = current_user.completed_tasks.find_by_task_id(task_id)
+    raise "Already answered" if completed_task.status_id != Answer::INCOMPLETE
+    raise "Out of time" if points > 0 and completed_task.created_at <= 45.seconds.ago
+    
+    supplied_answer = Answer.find(answer_id)
+    completed_task.answer_id = answer_id
+    if supplied_answer.is_correct == true
+      correct_answer = supplied_answer
+      completed_task.status_id = Answer::CORRECT
+      completed_task.points_awarded = points
+      current_user.award_points(supplied_answer.task, points)
+      session[:ssf] = session[:ssf].to_i + 1
+    else
+      correct_answer = Answer.where(task_id: task_id, is_correct: true).first
+      completed_task.status_id = Answer::INCORRECT
+      completed_task.points_awarded = 0
+      session[:ssf] = 0
+    end
+    completed_task.save!
+    Answer.increment_counter(:answer_count, answer_id)
+    render json: { correct_answer: correct_answer.id, supplied_answer: answer_id }
   end
     
   def continue
     @show_nav_bar = false
     @show_footer = false
-    @task = @section.next_task(current_user)
+    @streak = 0
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
+    @task = @section.next_task(current_user)
     if @task
       if request.get? && @enrollment.total_points == 0
         @partial = "intro"
       else
-        calculate_streak
+        @streak = session[:ssf].to_i
         @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
         @answers = @task.answers.to_a.shuffle
-        @progress = @section.percentage_complete(current_user) + 1
         @stored_resource = @task.stored_resources.first
         @partial = "continue"
       end
@@ -206,7 +207,7 @@ class SectionsController < ApplicationController
       if request.get?
         render "start" 
       else
-        render :partial => "continue"
+        render partial: "continue"
       end
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
@@ -217,48 +218,24 @@ class SectionsController < ApplicationController
         render json: { status: "reload" };
       end
     end
+    session[:ssf] = @streak
   end
   
   private
   
-  def calculate_streak
-    if current_user.earned_points == 0
-      @streak = 0
+  def load_resource
+    if params[:id]
+      @section = Section.find(params[:id])
+      @path = @section.path
+    elsif params[:path_id] || params[:section][:path_id]
+      @path = Path.find(params[:path_id] || params[:section][:path_id])
+      @section = @path.sections.new
     else
-      @streak = session[:ssf].to_i
-      @last_task = CompletedTask.joins(:task).where("section_id = ?", @section.id).last
-      if @last_task.nil? || @last_task.status_id == Answer::INCORRECT
-        @streak = 0
-      else
-        @streak = @streak + 1
-      end
-    end
-    session[:ssf] = @streak 
-  end
-    
-  def has_edit_access?
-    unless @enable_content_creation
-      flash[:error] = "You do not have the ability to edit this section."
-      redirect_to root_path
-    end
-  end
-
-  def enrolled?
-    unless current_user.enrolled?(@section.path)
-      flash[:warning] = "You must be enrolled in a path before you can begin."
-      redirect_to root_path
+      raise "FATAL: attempt to access unknown path."
     end
   end
   
-  def get_section_from_id
-    @section = Section.find(params[:id], :include => :path)
-    @path = @section.path
-  end
-  
-  def can_edit?
-    unless can_edit_path(@section.path)
-      flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
-      redirect_to root_path
-    end
+  def authorize_edit
+    raise "Edit Access Denied" unless can_edit_path(@path)
   end
 end

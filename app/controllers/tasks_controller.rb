@@ -1,33 +1,13 @@
 class TasksController < ApplicationController
   before_filter :authenticate
-  before_filter :has_access?
-  before_filter :get_task_from_id, :only => [:arena, :edit, :update, :destroy, :resolve, :vote, :add_stored_resource]
-  before_filter :can_edit?, :only => [:edit, :update, :destroy, :resolve]
+  before_filter :load_resource, except: [:create]
+  before_filter :authorize_resource, except: [:vote]
   
   respond_to :json, :html
   
-  def arena
-    @answers  = @task.answers
-    @section  = @task.section
-    @path     = @section.path
-  end
-  
-  def new
-    @section = Section.find(@section_id)
-    unless can_edit_path(@section.path)
-      redirect_to root_path, alert: "You cannot add tasks to this path."
-      return
-    end    
-    @task = Task.new
-    @form_title = "New Question"
-    render "tasks/task_form"
-  end
-  
   def create
     @section = Section.find(params[:task][:section_id])
-    unless can_edit_path(@section.path)
-      respond_with({ :error => "No access." }) and return
-    end
+    raise "Access Denied" unless can_edit_path(@section.path)
     
     @task = @section.tasks.new(params[:task])
     @task.answer_content = gather_answers(params[:task])
@@ -72,49 +52,12 @@ class TasksController < ApplicationController
     end
   end
   
-  def suggest
-    @phrase = Phrase.search(params[:phrase].downcase)
-    @associated_phrases = []
-    unless @phrase.nil?
-      @associated_phrases = @phrase.associated_phrases
-      @original_content = @phrase.original_content
-    else
-      @original_content = ""
-    end
-    respond_to { |f| f.json }
-  end
-  
   def destroy
     if @task.destroy
       respond_to { |f| f.json { render :json => { :success => "Question deleted." } } }
     else
       respond_to { |f| f.json { render :json => { :errors => "Question could not be deleted." } } }
     end
-  end
-  
-  def resolve
-    @completed_task = @task.completed_tasks.find(params[:completed_task][:id])
-    if params[:commit] == "Delete"
-      @completed_task.submitted_answer.destroy
-      render json: { status: "success" }
-    else
-      unless points = (params[:completed_task][:points]).to_i
-        render json: { status: "error", error: "You must specify a point amount to award." } 
-      else
-        if points > 0
-          @completed_task.user.award_points(@completed_task.task, points)
-          @completed_task.status_id = 1
-        else
-          @completed_task.status_id = 0
-        end
-        @completed_task.points_awarded = points
-        if @completed_task.save
-          render json: { status: "success" }
-        else
-          raise "Error, could save resolution."
-        end
-      end
-    end        
   end
   
   def vote
@@ -152,22 +95,12 @@ class TasksController < ApplicationController
   end
   
   private
-    def get_task_from_id
+    def load_resource
       @task = Task.find(params[:id])
     end
-    
-    def has_access?
-      unless @enable_content_creation
-        flash[:error] = "You do not have the ability to edit this task."
-        redirect_to root_path
-      end
-    end
   
-    def can_edit?
-      unless can_edit_path(@task.path)
-        flash[:error] = "You do not have access to this Path. Please contact your administrator to gain access."
-        redirect_to root_path
-      end
+    def authorize_resource
+      raise "Access Denied" unless can_edit_path(@task.path)
     end
     
     def gather_answers(task)
