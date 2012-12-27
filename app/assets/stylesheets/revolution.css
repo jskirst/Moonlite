@@ -45,6 +45,7 @@ code,pre{font:inherit;}
 .singleprogressentry{ padding: 4px 0 9px 12px;}
 .singleprogressentry:hover{background-color:#eee;}
 .singleprogressentry:last-child{ padding-bottom:10px; }
+.singleprogressentry:last-child:hover{border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
 .singleprogressentry:first-child{padding-top:6px;}
 .singleprogressentry>img{ height:50px; width:50px; display:inline-block; border-radius:3px;}
 .personaprogress{ display:inline-block; position:relative; top:5px; margin-left:5px; width:74%;}
