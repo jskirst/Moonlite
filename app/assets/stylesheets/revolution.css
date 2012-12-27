@@ -48,8 +48,11 @@ code,pre{font:inherit;}
 .singleprogressentry:last-child:hover{border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
 .singleprogressentry:first-child{padding-top:6px;}
 .singleprogressentry>img{ height:50px; width:50px; display:inline-block; border-radius:3px;}
-.personaprogress{ display:inline-block; position:relative; top:5px; margin-left:5px; width:74%;}
+.personaprogress, .challengeprogress{ display:inline-block; position:relative; top:5px; margin-left:5px; }
+.challengeprogress{ width: 74%; }
+.personaprogress{ width:77%; }
 .personaprogress .progress{height:10px;}
+.challengeprogress .progress{height:10px;}
 
 /* Other stuff - organize by feature */
 #topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
