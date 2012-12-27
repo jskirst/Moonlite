@@ -23,6 +23,9 @@
             $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
           }$("#nextbutton").show();
         });
+        $("#nextbutton").click(function(){
+          $(this).addClass("disabled").attr("disabled", "disabled");
+        });
         $("#nextbutton").on("ajax:success", function(xhr, data){
           $(".quizcontainer").fadeOut('slow', function(){
             if(data.status == "reload"){
