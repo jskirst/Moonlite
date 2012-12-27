@@ -42,11 +42,7 @@
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           - if current_user
-            %li
-              = link_to profile_path(current_user.username) do
-                = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
-                %span{ style: "vertical-align: middle;" }= current_user.name
-            %li.navuser{ style:"display:none;" }
+            %li.navuser
               %div.dropdown.pull-right
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown"}
                   = image_tag current_user.profile_pic, style: "width: 17px; height: 17px; vertical-align: middle;"
