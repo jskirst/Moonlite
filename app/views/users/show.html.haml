@@ -40,7 +40,7 @@
 
   %div.row
     %div.span5
-      %div.leftbox
+      %div.leftbox{style:"display:none;"}
         %div.leftboxheader
           Completed Tasks
           %a{href:"#"}
@@ -56,6 +56,43 @@
             %div
               %span{style: "font-weight:bold; display:inline-block;"} Challenge name
               %span{style: "display:block;"} Task description
+      %div.leftbox{}
+        %div.leftboxheader
+          Completed Tasks
+        %div.leftboxfooter
+          %div#accordion2.accordion
+            %div.accordion-group
+              %div.accordion-heading
+                %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
+                  Challenge Name
+              %div#collapseOne.accordion-body.collapse
+                %div.accordion-inner
+                  %div.singletaskentry
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check.png" }
+                    %div
+                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
+                      %span{style: "display:block;"} Task description
+                  %div.singletaskentry
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_circle.png" }
+                    %div
+                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
+                      %span{style: "display:block;"} Task description
+            %div.accordion-group
+              %div.accordion-heading
+                %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseTwo"}
+                  Challenge Name
+              %div#collapseTwo.accordion-body.collapse
+                %div.accordion-inner
+                  %div.singletaskentry
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check.png" }
+                    %div
+                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
+                      %span{style: "display:block;"} Task description
+                  %div.singletaskentry
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_circle.png" }
+                    %div
+                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
+                      %span{style: "display:block;"} Task description                
       %div.leftbox
         %div.leftboxheader About
         %div.leftboxfooter{style:"padding-top: 6px"}
