@@ -121,6 +121,9 @@ code,pre{font:inherit;}
 .leftbox{text-shadow: 0 1px 0 white; border: 1px solid rgba(0, 0, 0, .1);font-size:12px; position: relative; margin-bottom: 12px;line-height: 16px;border-radius: 6px; display:block;}
 .leftboxfooter ul{ list-style-type:none; margin:0; }
 .leftboxfooter span{ font-size:11px; color:gray; }
+.singletaskentry{margin-bottom:6px;}
+.singletaskentry > div{display:inline-block;}
+.singletaskentry img{vertical-align:top; width:19px;}
 
 /* Profile and challenge page carousels */
   #challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
