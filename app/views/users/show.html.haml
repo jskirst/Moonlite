@@ -8,6 +8,17 @@
       hover_x   : '400px'   //Horizontal position on hover
     });
   });
+  
+:javascript
+  jQuery(function($){
+    $('.accordion-toggle').click(function() {
+      if($(this).hasClass("active_accordion") == false ) {
+        $('.accordion-toggle').removeClass('active_accordion');
+        $(this).addClass('active_accordion');}
+      else {
+        $('.accordion-toggle').removeClass('active_accordion');}
+      });
+    });
 
 %div#homepage
   %div#topsection
@@ -40,22 +51,6 @@
 
   %div.row
     %div.span5
-      %div.leftbox{style:"display:none;"}
-        %div.leftboxheader
-          Completed Tasks
-          %a{href:"#"}
-            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/filter4.png", style: "float:right; height:17px; opacity:.6;" }
-        %div.leftboxfooter{style:"padding-top: 6px"}
-          %div.singletaskentry
-            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check.png" }
-            %div
-              %span{style: "font-weight:bold; display:inline-block;"} Challenge name
-              %span{style: "display:block;"} Task description
-          %div.singletaskentry
-            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_circle.png" }
-            %div
-              %span{style: "font-weight:bold; display:inline-block;"} Challenge name
-              %span{style: "display:block;"} Task description
       %div.leftbox{}
         %div.leftboxheader
           Completed Tasks
@@ -64,52 +59,34 @@
             %div.accordion-group
               %div.accordion-heading
                 %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
-                  Challenge Name
+                  %div.expand_contract
+                  %span Challenge Name
               %div#collapseOne.accordion-body.collapse
                 %div.accordion-inner
                   %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check.png" }
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
                     %div
-                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
-                      %span{style: "display:block;"} Task description
+                      %span{style: "display:block;"} Run a marathon.
                   %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_circle.png" }
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_green3.png" }
                     %div
-                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
-                      %span{style: "display:block;"} Task description
+                      %span{style: "display:block;"} Run a marathon naked in the rain with a pack of wolves chasing after you.
+            // section below is basically duplicated for demo purposes. i'm totally gonna learn loops soon
             %div.accordion-group
               %div.accordion-heading
                 %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseTwo"}
-                  Challenge Name
+                  %div.expand_contract
+                  %span Challenge Name
               %div#collapseTwo.accordion-body.collapse
                 %div.accordion-inner
                   %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check.png" }
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
                     %div
-                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
-                      %span{style: "display:block;"} Task description
+                      %span{style: "display:block;"} Run a marathon.
                   %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_circle.png" }
+                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_green3.png" }
                     %div
-                      %span{style: "font-weight:bold; display:inline-block;"} Challenge name
-                      %span{style: "display:block;"} Task description                
-      %div.leftbox
-        %div.leftboxheader About
-        %div.leftboxfooter{style:"padding-top: 6px"}
-          %span= @user.description || "Person of mystery is a mystery..."
-      %div.leftbox
-        %div.leftboxheader Vital Stats
-        %div.leftboxfooter{style:"padding-top: 6px"}
-          %ul
-            %li Location: #{@user.location || "A galaxy far, far away..."}
-            - unless @user.link.blank?
-              %li Link: <a href='#{@user.link}' target='_newtab'>#{truncate(@user.link)}</a>
-            - unless @user.education.blank? 
-              %li Education: #{@user.education}
-            - unless @user.company_name.blank?
-              %li Company: #{@user.company_name}  
-            - unless @user.title.blank?
-              %li Title: #{@user.title}
+                      %span{style: "display:block;"} Run a marathon naked in the rain with a pack of wolves chasing after you. 
       %div.leftbox{ style: "" }
         %div.leftboxheader Progress
         %div.leftboxfooter{style:"padding-top: 6px"}
@@ -139,7 +116,24 @@
               %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
               %div.progress.progress-info
                 %div.bar{ style: "width:30%;"} 
-                  -# = The width of this div should be dynamically changed based on the user's progress in current level. 
+                  -# = The width of this div should be dynamically changed based on the user's progress in current level.
+      %div.leftbox
+        %div.leftboxheader About
+        %div.leftboxfooter{style:"padding-top: 6px"}
+          %span= @user.description || "Person of mystery is a mystery..."
+      %div.leftbox
+        %div.leftboxheader Vital Stats
+        %div.leftboxfooter{style:"padding-top: 6px"}
+          %ul
+            %li Location: #{@user.location || "A galaxy far, far away..."}
+            - unless @user.link.blank?
+              %li Link: <a href='#{@user.link}' target='_newtab'>#{truncate(@user.link)}</a>
+            - unless @user.education.blank? 
+              %li Education: #{@user.education}
+            - unless @user.company_name.blank?
+              %li Company: #{@user.company_name}  
+            - unless @user.title.blank?
+              %li Title: #{@user.title} 
     %div.span11
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader

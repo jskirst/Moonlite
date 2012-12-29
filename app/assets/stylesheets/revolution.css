@@ -122,8 +122,15 @@ code,pre{font:inherit;}
 .leftboxfooter ul{ list-style-type:none; margin:0; }
 .leftboxfooter span{ font-size:11px; color:gray; }
 .singletaskentry{margin-bottom:6px;}
-.singletaskentry > div{display:inline-block;}
-.singletaskentry img{vertical-align:top; width:19px;}
+.singletaskentry > div{display:inline-block; width:92%;}
+.singletaskentry img{vertical-align:top; width:14px;}
+.leftboxfooter .accordion-group{ border-bottom: 1px solid #E5E5E5; border-top:none; border-right:none; border-left:none; border-radius:0; -webkit-border-radius: 0; -moz-border-radius: 0;}
+.leftboxfooter .accordion-toggle{text-decoration:none; padding:8px 2px 1px 2px;}
+.leftboxfooter .accordion-toggle span{font-size:14px; color:#404040;}
+.leftboxfooter .accordion-inner{padding:9px 15px 3px 15px;}
+.leftboxfooter .accordion{margin-bottom:4px;}
+.expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/plus.png); background-repeat:no-repeat; display:inline-block; width:11px; height:11px; vertical-align:middle; position:relative; bottom:2px; margin-right:2px; opacity:.8;}
+.active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
 
 /* Profile and challenge page carousels */
   #challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
