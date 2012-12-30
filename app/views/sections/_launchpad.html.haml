@@ -31,7 +31,9 @@
                     %span.label.label-important Incorrect
     - unless @challenge_tasks.empty?
       %div#questions_tab.tab_content{ style: "" }
-        %div{style:"background-color:#C0E6C0; width:600px; height:80px; margin-left: auto; margin-right: auto; padding:4px 10px 10px 10px; text-align: left; margin-bottom: 12px;"}
+        %div.help_box{style:"background-color:#C0E6C0; width:600px; height:80px; margin-left: auto; margin-right: auto; padding:4px 10px 10px 10px; text-align: left; margin-bottom: 12px;"}
+          %div.help_close
+            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png" }
           %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "display:inline; bottom:6px; height:30px;"}
           %h3{style: "font-size:24px; display:inline;"} Go ahead, look up answers!
           %h5{style: "font-size:15px;"} CR's and Tasks are here to guide your improvement. If you don't know an answer, go figure it out and share what you learned with the rest of us!

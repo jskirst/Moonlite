@@ -224,8 +224,8 @@ code,pre{font:inherit;}
 /* modal/help close button*/
 .exploreheader>.modal_close{ margin: -4px 19px 0 0; }
 .modal_close, .help_close { float:right; cursor:pointer;}
-.modal_close, .help_close img{ width:20px; }
-.help_close { margin: 10px 0 0 0; }
+.modal_close, .help_close img{ width:20px; height: inherit;}
+.help_close { margin: 4px 0 0 0; }
 
 .login_link { cursor: pointer; }
 
