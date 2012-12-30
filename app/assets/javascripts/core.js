@@ -18,6 +18,14 @@ function open_launchpad(){
   });
 }
 
+function init_comments(){
+  $(".comments form").bind("ajax:success", function(xhr, data){
+    $(this).parent().find("ul").append(data);
+    $(this).parent().find(".no_comments").hide();
+    $(this).find("textarea").val("");
+  });
+}
+
 function close_button(){
   $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
 }
@@ -68,11 +76,6 @@ function truncate(text, length, ellipsis) {
 $(function(){
   close_button();
   help_button();
-  $(".comments form").bind("ajax:success", function(xhr, data){
-    $(this).parent().find("ul").append(data);
-    $(this).parent().find(".no_comments").hide();
-    $(this).find("textarea").val("");
-  });
   $('.hoverscroll').hoverscroll();
   
   $("#image_url_input").change(function(){
