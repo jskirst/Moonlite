@@ -54,33 +54,16 @@
                     %div.nub{ style: "left:150px;" }
                   %div.leftboxheader Your Challenges
                   %div.leftboxfooter{style:"padding:0; background-color:white;"}
-                    %div.singleprogressentry
-                      %img{ src: "http://www.placekitten.com/50/50"}              
-                      %div.challengeprogress
-                        %span{ style: "font-size:18px;"} Challenge Name 
-                        %span{style: "font-size:14px; float:right; "}Level 4
-                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-                        %div.progress.progress-info
-                          %div.bar{ style: "width:30%;"} 
-                            -# = The width of this div should be dynamically changed based on the user's progress in current level.
-                    %div.singleprogressentry
-                      %img{ src: "http://www.placekitten.com/50/50"}              
-                      %div.challengeprogress
-                        %span{ style: "font-size:18px;"} Challenge Name 
-                        %span{style: "font-size:14px; float:right; "}Level 4
-                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-                        %div.progress.progress-success
-                          %div.bar{ style: "width:70%;"} 
-                            -# = The width of this div should be dynamically changed based on the user's progress in current level.
-                    %div.singleprogressentry
-                      %img{ src: "http://www.placekitten.com/50/50"}              
-                      %div.challengeprogress
-                        %span{ style: "font-size:18px;"} Challenge Name 
-                        %span{style: "font-size:14px; float:right; "}Level 4
-                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-                        %div.progress.progress-warning
-                          %div.bar{ style: "width:45%;"} 
-                            -# = The width of this div should be dynamically changed based on the user's progress in current level.
+                    - current_user.enrollments.includes(:path).all(order: "total_points DESC").each do |e|
+                      = link_to challenge_path(e.path.permalink) do
+                        %div.singleprogressentry
+                          = image_tag e.path.image, style: "width: 50px; height: 50px;"              
+                          %div.challengeprogress
+                            %span{ style: "font-size:18px;"}= e.path.name
+                            %span{style: "font-size:14px; float:right; "} Level #{e.level}
+                            %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{e.points_to_next_level} more points to level up!
+                            %div.progress.progress-info
+                              %div.bar{ style: "width: #{e.level_percent}%;"}
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
