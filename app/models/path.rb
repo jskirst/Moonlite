@@ -57,6 +57,10 @@ class Path < ActiveRecord::Base
     return "/images/image_thumb.png"
   end
   
+  def image
+    return path_pic
+  end
+  
   def self.with_name_like(name, user)
     return Path.where("is_locked = ? and is_published = ? and name ILIKE ?", false, true, "%#{name}%")
   end

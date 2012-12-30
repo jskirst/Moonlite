@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate
   before_filter :load_resource, except: [:create]
-  before_filter :authorize_resource, except: [:vote]
+  before_filter :authorize_resource, except: [:vote, :create]
   
   respond_to :json, :html
   
