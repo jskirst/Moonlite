@@ -16,9 +16,18 @@ class UsersController < ApplicationController
     end  
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
+    @completed_tasks = current_user.completed_tasks
+      .joins(:task, :path)
+      .select("tasks.question, tasks.answer_type, paths.name")
+      .where("tasks.answer_type = ?", Task::CHECKIN)
+    @completed_tasks = @completed_tasks.group_by(&:name)
+    
+    @enrolled_personas = @user.personas
+    @user_personas = @user.user_personas.includes(:persona)
+    
     @creative_tasks = all_responses.collect { |item| item.task }
     @enrollments = @user.enrollments.includes(:path).where("total_points > ?", 100).sort { |a,b| b.total_points <=> a.total_points }
-    @enrolled_personas = @user.personas
+    
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
     @more_available = @newsfeed_items.size == 30

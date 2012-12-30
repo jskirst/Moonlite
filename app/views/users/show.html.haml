@@ -56,67 +56,33 @@
           Completed Tasks
         %div.leftboxfooter
           %div#accordion2.accordion
-            %div.accordion-group
-              %div.accordion-heading
-                %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
-                  %div.expand_contract
-                  %span Challenge Name
-              %div#collapseOne.accordion-body.collapse
-                %div.accordion-inner
-                  %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
-                    %div
-                      %span{style: "display:block;"} Run a marathon.
-                  %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_green3.png" }
-                    %div
-                      %span{style: "display:block;"} Run a marathon naked in the rain with a pack of wolves chasing after you.
-            // section below is basically duplicated for demo purposes. i'm totally gonna learn loops soon
-            %div.accordion-group
-              %div.accordion-heading
-                %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseTwo"}
-                  %div.expand_contract
-                  %span Challenge Name
-              %div#collapseTwo.accordion-body.collapse
-                %div.accordion-inner
-                  %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
-                    %div
-                      %span{style: "display:block;"} Run a marathon.
-                  %div.singletaskentry
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_green3.png" }
-                    %div
-                      %span{style: "display:block;"} Run a marathon naked in the rain with a pack of wolves chasing after you. 
+            - @completed_tasks.each do |challenge_name, tasks|
+              %div.accordion-group
+                %div.accordion-heading
+                  %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
+                    %div.expand_contract
+                    %span= challenge_name
+                %div#collapseOne.accordion-body.collapse
+                  %div.accordion-inner
+                    - tasks.each do |task|
+                      %div.singletaskentry
+                        %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
+                        %div
+                          %span{ style: "display:block;" }= task.question
+                           
       %div.leftbox{ style: "" }
-        %div.leftboxheader Progress
+        %div.leftboxheader Persona Progress
         %div.leftboxfooter{style:"padding-top: 6px"}
-          %div
-            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Explorer_130.PNG", style:"width:50px; height:50px;"}              
-            %div.personaprogress
-              %span{ style: "font-size:18px;"} Persona Name 
-              %span{style: "font-size:14px; float:right; "}Level 4
-              %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-              %div.progress.progress-info
-                %div.bar{ style: "width:30%;"} 
-                  -# = The width of this div should be dynamically changed based on the user's progress in current level. 
-          %div
-            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Explorer_130.PNG", style:"width:50px; height:50px;"}              
-            %div.personaprogress
-              %span{ style: "font-size:18px;"} Persona Name 
-              %span{style: "font-size:14px; float:right; "}Level 4
-              %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-              %div.progress.progress-info
-                %div.bar{ style: "width:30%;"} 
-                  -# = The width of this div should be dynamically changed based on the user's progress in current level. 
-          %div
-            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Explorer_130.PNG", style:"width:50px; height:50px;"}              
-            %div.personaprogress
-              %span{ style: "font-size:18px;"} Persona Name 
-              %span{style: "font-size:14px; float:right; "}Level 4
-              %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} 300 more points to level up!
-              %div.progress.progress-info
-                %div.bar{ style: "width:30%;"} 
-                  -# = The width of this div should be dynamically changed based on the user's progress in current level.
+          - @user_personas.each do |user_persona|
+            %div
+              = image_tag user_persona.persona.image, style:"width:50px; height:50px;"              
+              %div.personaprogress
+                %span{ style: "font-size:18px;" }= user_persona.persona.name
+                %span{style: "font-size:14px; float:right; "} Level #{user_persona.level}
+                %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{user_persona.points_to_next_level} more points to level up!
+                %div.progress.progress-info
+                  %div.bar{ style: "width: #{user_persona.percent_level}%;"} 
+
       %div.leftbox
         %div.leftboxheader About
         %div.leftboxfooter{style:"padding-top: 6px"}
