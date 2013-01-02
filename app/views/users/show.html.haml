@@ -54,22 +54,26 @@
       %div.leftbox{}
         %div.leftboxheader
           Completed Tasks
-        %div.leftboxfooter
-          %div#accordion2.accordion
-            - @completed_tasks.each do |challenge_name, tasks|
-              %div.accordion-group
-                %div.accordion-heading
-                  %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
-                    %div.expand_contract
-                    %span= challenge_name
-                %div#collapseOne.accordion-body.collapse
-                  %div.accordion-inner
-                    - tasks.each do |task|
-                      %div.singletaskentry
-                        %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
-                        %div
-                          %span{ style: "display:block;" }= task.question
-                           
+        - if @completed_tasks.count > 0
+          %div.leftboxfooter
+            %div#accordion2.accordion
+              - @completed_tasks.each do |challenge_name, tasks|
+                %div.accordion-group
+                  %div.accordion-heading
+                    %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
+                      %div.expand_contract
+                      %span= challenge_name
+                  %div#collapseOne.accordion-body.collapse
+                    %div.accordion-inner
+                      - tasks.each do |task|
+                        %div.singletaskentry
+                          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
+                          %div
+                            %span{ style: "display:block;" }= task.question
+        - else
+          %div.leftboxfooter{style: "padding-top:6px;"}
+            %span
+              No tasks have been completed yet.                           
       %div.leftbox{ style: "" }
         %div.leftboxheader Persona Progress
         %div.leftboxfooter{style:"padding-top: 6px"}
@@ -83,10 +87,6 @@
                 %div.progress.progress-info
                   %div.bar{ style: "width: #{user_persona.percent_level}%;"} 
 
-      %div.leftbox
-        %div.leftboxheader About
-        %div.leftboxfooter{style:"padding-top: 6px"}
-          %span= @user.description || "Person of mystery is a mystery..."
       %div.leftbox
         %div.leftboxheader Vital Stats
         %div.leftboxfooter{style:"padding-top: 6px"}
