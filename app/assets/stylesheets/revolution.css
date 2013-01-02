@@ -102,7 +102,7 @@ code,pre{font:inherit;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 .navbar .nav.pull-right a:hover {color:white;}
-.navbar .nav.pull-right li a {text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);}
+.navbar .nav.pull-right .leftboxfooter a {text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);}
 .nav.pull-right .caret{ border-top-color: #c7ced6; border-bottom-color: #c7ced6; color: #c7ced6; margin-top:7px; }
 .navbar .nav.pull-right a:hover .caret{border-top-color:white; border-bottom-color:white; color:white;}
 .navuser>div>a>.caret{ border-top-width: 5px; border-right-width: 5px; border-left-width: 5px; margin-left:1px;}
