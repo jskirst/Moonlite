@@ -34,7 +34,7 @@ class Mailer < ActionMailer::Base
   end
   
   def create_cr_unlock(email)
-    @user = User.find_by_email(email)
+    @challenge_name
     mail(to: @user.email, subject: "[UNLOCKED] Create your own MetaBright CR's!")
   end
   
