@@ -4,10 +4,10 @@
     %div.launchpadcolumnheader
       %ul.nav.nav-tabs
         - unless @core_tasks.empty?
-          %li
+          %li.active
             %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
         - unless @challenge_tasks.empty?
-          %li.active
+          %li
             %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
         - unless @achievement_tasks.empty?
           %li
