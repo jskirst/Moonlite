@@ -1,7 +1,7 @@
 - if current_user
   :css
-    .explorecontainer { width: 750px; margin-top: 0px; }
-    .explorenewusercontent{ margin:38px; }
+    .explorecontainer { width: 750px; margin-top: 0px; background:none; }
+    .explorenewusercontent{ margin:38px; box-shadow: 0 0 30px 12px #888;}
   :javascript
     $(function(){
       $.get("#{explore_path}", function(data){
