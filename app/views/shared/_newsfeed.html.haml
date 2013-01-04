@@ -16,6 +16,22 @@
       init_voting();
       init_comments();
     });
+    $(function(){
+      $('#points_pop').popover({
+        trigger: 'manual',
+        placement:'right',  
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>',
+        content: 'Vote on answers you like so they earn more points.',            
+        });
+      $('#points_pop').popover('show');
+      $('#CR_pop').popover({
+        trigger: 'manual',
+        placement:'left',  
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>',
+        content: 'This is an answer to the above Creative Response question.',            
+        });
+      $('#CR_pop').popover('show');
+     });
 
 - newsfeed_items.each do |r|
   %div.post
@@ -25,7 +41,7 @@
       %div.postheader
         %h3
           = link_to truncate(r.user.to_s, length: 50), profile_path(r.user.username), class:"username"
-        %div.votingandpointsarea
+        %div.votingandpointsarea#points_pop
           - if current_user
             %span.vote_points{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= r.points_awarded
             %span{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
@@ -60,7 +76,7 @@
                   %a{href:"#"} Filter by this question
                 %li.CR_dropdown_option
                   %a{href:"#"} View response in new tab          
-      %div.CRarea
+      %div.CRarea#CR_pop
         - if r.task.answer_sub_type == Task::TEXT
           %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
         - elsif r.task.answer_sub_type == Task::IMAGE

@@ -325,5 +325,13 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .challengeset{margin-bottom:5px;}
 .challengepagechallenge:nth-child(4n){margin-right:0px;}
 
+/* Popover -- guided help */
+.popover{background-color: #FFECBD;border-width: 10px;border-style: solid;border-color: #FDD05B;}
+.popover.left .arrow{right:-20px; border-left-color:#FDD05B;}
+.popover.right .arrow{left:-20px; border-right-color:#FDD05B;}
+.popover-content p{color:#404040; margin:0; font-size:13px;}
+.popover-content{padding:6px;}
+.popover{width:150px;}
+
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
