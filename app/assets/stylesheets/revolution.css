@@ -255,6 +255,12 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
+/*cr completion page */
+.completioncontent{margin: 12px;font-size: 13px;border: 1px solid rgba(0, 0, 0, .1);padding: 9px 9px 0 9px;border-radius: 6px;background-color: #F9F9F9;}
+.completioncontent h4{display:inline;}
+.completioncontent ul{margin-left:43px; margin-top:3px;}
+.completioncontent li {line-height:25px;}
+
 .pull-right>.dropdown-toggle>img{opacity:.8;}
 .pull-right>.dropdown-toggle:hover img{opacity:1;}
 .pull-right>.dropdown-toggle:focus img{opacity:1;}
