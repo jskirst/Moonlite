@@ -15,7 +15,8 @@ class User < ActiveRecord::Base
     :company_name,
     :education,
     :link,
-    :location
+    :location,
+    :viewed_help
 
   belongs_to :company
   belongs_to :user_role
@@ -231,6 +232,22 @@ class User < ActiveRecord::Base
       end
       self.username = new_combined_username
     end
+  end
+  
+  def get_viewed_help
+    return [] if self.viewed_help.blank?
+    return self.viewed_help.split(",")
+  end
+  
+  def set_viewed_help(help_id)
+    if self.viewed_help.blank?
+      self.viewed_help = help_id
+    else
+      help = self.viewed_help.split(",")
+      help.push(help_id)
+      self.viewed_help = help.join(",")
+    end
+    self.save!
   end
   
   private

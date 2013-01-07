@@ -24,4 +24,13 @@ module ApplicationHelper
       ["submissions", "Submissions", admin_submissions_path]
     ]
   end
+  
+  def get_all_help
+    {
+      leaderboard_pop: {
+        content: "The people who have dominated this Challenge appear here.",
+        placement: "left"
+      }
+    }
+  end
 end

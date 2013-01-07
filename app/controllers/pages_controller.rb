@@ -59,6 +59,11 @@ class PagesController < ApplicationController
     render json: { status: "success" }
   end
   
+  def mark_help_read
+    current_user.set_viewed_help(params[:id])
+    render json: { status: "success" }
+  end
+  
   def about
     @show_footer = true
     render "about", layout: "landing"
