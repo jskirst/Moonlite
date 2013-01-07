@@ -1,11 +1,14 @@
+:css
+  .body.container { border: 0px; background-color: transparent; box-shadow: none; }
+
 %div.quizcontainer{style:"width:641px; margin-top:110px;"}
   %div.quizspace
     %div.quizheader{style:"margin-bottom:9px;"}
       = image_tag  @task.path.picture, style: "height:50px; width:50px;"
-        %div{style: "display:inline-block;"}
-          %span
-            %strong #{task.path.name}:        
-            = @task.section.name
+      %div{style: "display:inline-block;"}
+        %span
+          %strong #{@task.path.name}:        
+          = @task.section.name
     %div.completionmessagespace{style:"border-right:none; width:auto;"}
       %div.completionheader{style:"margin-bottom:4px;"}
         %span Nice work on that Creative Response!
@@ -26,4 +29,4 @@
             %li
               %strong Track your growth:
               Use them to guide your development through a Challenge.
-    = link_to "Continue", challenge_path(@task.path.permalink, completed:true, type:0)
+    = link_to "Continue", challenge_path(@task.path.permalink, completed:true, type:0), class:"btn btn-info", style: "float:right; margin-right:12px;"
