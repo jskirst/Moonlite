@@ -332,7 +332,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .challengepagechallenge:nth-child(4n){margin-right:0px;}
 
 /* Popover -- guided help */
-.popover{background-color: #FFECBD;border-width: 10px;border-style: solid;border-color: #FDD05B;}
+.popover{background-color: #FFECBD;border-width: 10px;border-style: solid;border-color: #FDD05B; z-index:1001;}
 .popover.left .arrow{right:-20px; border-left-color:#FDD05B;}
 .popover.right .arrow{left:-20px; border-right-color:#FDD05B;}
 .popover-content p{color:#404040; margin:0; font-size:13px;}
