@@ -21,7 +21,11 @@ class UserPersona < ActiveRecord::Base
     return (total_points % 300) / 3
   end
   
-  def points_to_next_level
+  def points_in_level
     return total_points < 300 ? total_points : total_points % 300
+  end
+  
+  def points_to_next_level
+    (points_in_level - 300) * -1
   end
 end
