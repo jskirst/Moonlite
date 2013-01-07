@@ -134,15 +134,15 @@ class SectionsController < ApplicationController
   end
   
   def took
-    task = @section.tasks.find(params[:task_id])
-    raise "Task already completed" if current_user.completed_tasks.find_by_task_id(task.id)
-    raise "Only CRs can be taken." unless task.is_challenge_question?
+    @task = @section.tasks.find(params[:task_id])
+    raise "Task already completed" if current_user.completed_tasks.find_by_task_id(@task.id)
+    raise "Only CRs can be taken." unless @task.is_challenge_question?
     
     if !params[:answer].blank? || params[:answer] != "false" || params[:obj]
       unless params[:obj]
-        submitted_answer = task.submitted_answers.create!(content: params[:answer])
+        submitted_answer = @task.submitted_answers.create!(content: params[:answer])
       else
-        submitted_answer = task.submitted_answers.create!
+        submitted_answer = @task.submitted_answers.create!
         sr = submitted_answer.stored_resources.new(params)
         sr.save
         submitted_answer.content = sr.obj.url
@@ -150,10 +150,14 @@ class SectionsController < ApplicationController
       end
       ct = current_user.completed_tasks.create!(
         points_awarded: 100, 
-        task_id: task.id, status_id: 1, 
+        task_id: @task.id, status_id: 1, 
         submitted_answer_id: submitted_answer.id)
-      current_user.award_points(task, 100)
-      redirect_to path_path(@section.path, completed: true, type: task.answer_type)
+      current_user.award_points(@task, 100)
+      if current_user.completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::CREATIVE).size == 1
+        render "completed_cr"
+      else
+        redirect_to path_path(@section.path, completed: true, type: @task.answer_type)
+      end
     else
       redirect_to path_path(@section.path), alert: "You must supply a valid answer."
     end

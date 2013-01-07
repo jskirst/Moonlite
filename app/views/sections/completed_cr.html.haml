@@ -1,11 +1,11 @@
 %div.quizcontainer{style:"width:641px; margin-top:110px;"}
   %div.quizspace
     %div.quizheader{style:"margin-bottom:9px;"}
-      %img{src:"http://www.placekitten.com/50/50", style: "height:50px; width:50px;"}
+      = image_tag  @task.path.picture, style: "height:50px; width:50px;"
         %div{style: "display:inline-block;"}
           %span
-            %strong #Challenge Name:
-            Section Name
+            %strong #{task.path.name}:        
+            = @task.section.name
     %div.completionmessagespace{style:"border-right:none; width:auto;"}
       %div.completionheader{style:"margin-bottom:4px;"}
         %span Nice work on that Creative Response!
@@ -26,4 +26,4 @@
             %li
               %strong Track your growth:
               Use them to guide your development through a Challenge.
-    %a.button.button-info{href: "#", style: "float: right; margin-right:12px;"} Continue
+    = link_to "Continue", challenge_path(@task.path.permalink, completed:true, type:0)
