@@ -30,7 +30,30 @@
               %p Continue on to the <strong>Creative Reponse</strong> and <strong>Tasks</strong> tabs to earn additional points and level-up.          
       %div#questions_tab.tab_content{ style: "" }
         %div.editor_view{ style: "display: none;" }
-          %p Content creator
+          %form{style: "width:625px; padding:0 0 0 10px;"}
+            %fieldset{style: "display: inline-block; margin-right:28px;"}
+              %legend Create a CR
+              %label What's your question?
+              %input.span5{placeholder: "Question...", type: "text"}
+                %label What section does this question belong in?
+                %select
+                  %option Section name1
+                  %option Section name2
+                  %option Section name3
+                  %option Section name4
+                %label What type of response should people give?
+                %select
+                  %option Response type 1
+                  %option Response type 2
+                  %option Response type 3
+                %label
+                %button.btn-danger{style: "float:right;"} Submit
+            %div{style: "display:inline-block; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+              %h4 Tips:
+              %ul{style:"font-size:13px;"}
+                %li Write questions that allow people to demonstrate their knowledge or passion for the Challenge.
+                %li Keep the tone informal but direct.
+                %li Make sure you check for spelling and grammar.
         %div.task_view
           - if @challenge_tasks.empty?
             %p No challenge tasks available.
