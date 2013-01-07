@@ -39,7 +39,7 @@ class Enrollment < ActiveRecord::Base
     Enrollment.points_to_level(self.total_points)
   end
   
-  def points_to_next_level
+  def points_in_level
     points_remaining = self.total_points
     until points_remaining < 300
       points_remaining -= 300
@@ -47,7 +47,11 @@ class Enrollment < ActiveRecord::Base
     return points_remaining
   end
   
+  def points_to_next_level
+    (points_in_level - 300) * -1
+  end
+  
   def level_percent
-    return points_to_next_level / 3
+    return points_in_level / 3
   end
 end
