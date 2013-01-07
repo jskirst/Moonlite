@@ -16,7 +16,7 @@
       %div.rightofbigheaderimage{ style: "width:81%;" }
         %div#topboxcontent
           - if current_user
-            %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level}
+            %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level} »
           %div{ style: "width: 550px; margin-top: 10px;" }
             %h1= @path.name
             - if current_user
@@ -43,7 +43,7 @@
   %div.row
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
-        %div.leftboxheader{style: "padding: 10px 12px; "} Leaderboard
+        %div.leftboxheader#leaderboard_pop{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
           - @enrollments.each_with_index do |entry, i|
             %li
@@ -68,8 +68,18 @@
                 - @path.sections.each do |s|
                   - s.challenge_tasks.each do |task|
                     %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), task_details_path(@path, task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
+
         :javascript
           $(function(){
             $.ajax({ type: "GET", url: "#{newsfeed_path_path(@path.id)}", success: function(data){ $(".empty_post").replaceWith(data); } });
           });
+          $(function(){
+            $('#leaderboard_pop').popover({
+              trigger: 'manual',
+              placement:'left',  
+              template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>',
+              content: 'The people who have dominated this Challenge appear here.',            
+              });
+            $('#leaderboard_pop').popover('show');
+           });
         %div.post.empty_post{ style: "height: 300px;"}

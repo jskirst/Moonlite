@@ -63,6 +63,7 @@ Metabright::Application.routes.draw do
   match '/about' => 'pages#about'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
+  match '/completed_cr' => 'pages#completed_cr'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put

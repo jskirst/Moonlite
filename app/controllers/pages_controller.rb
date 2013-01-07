@@ -74,6 +74,12 @@ class PagesController < ApplicationController
     @show_footer = true
     render "tos", layout: "landing"
   end
+    
+  def completed_cr
+    @show_nav_bar = false
+    @show_footer = false
+    render "completed_cr", layout: "landing"
+  end
   
   def email_test
     raise "Access Denied" unless @enable_administration

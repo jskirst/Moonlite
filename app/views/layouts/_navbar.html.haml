@@ -59,7 +59,7 @@
                         %div.singleprogressentry
                           = image_tag e.path.image, style: "width: 50px; height: 50px;"              
                           %div.challengeprogress
-                            %span{ style: "font-size:18px;"}= e.path.name
+                            %span{ style: "font-size:18px;"} #{truncate(e.path.name,length: 18, separator: ' ')}
                             %span{style: "font-size:14px; float:right; "} Level #{e.level}
                             %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{e.points_to_next_level} more points to level up!
                             %div.progress.progress-info

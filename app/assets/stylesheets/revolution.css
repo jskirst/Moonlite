@@ -102,6 +102,7 @@ code,pre{font:inherit;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 .navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
 .navbar .nav.pull-right a:hover {color:white;}
+.navbar .nav.pull-right .leftboxfooter a {text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);}
 .nav.pull-right .caret{ border-top-color: #c7ced6; border-bottom-color: #c7ced6; color: #c7ced6; margin-top:7px; }
 .navbar .nav.pull-right a:hover .caret{border-top-color:white; border-bottom-color:white; color:white;}
 .navuser>div>a>.caret{ border-top-width: 5px; border-right-width: 5px; border-left-width: 5px; margin-left:1px;}
@@ -254,6 +255,12 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
+/*cr completion page */
+.completioncontent{margin: 12px;font-size: 13px;border: 1px solid rgba(0, 0, 0, .1);padding: 9px 9px 0 9px;border-radius: 6px;background-color: #F9F9F9;}
+.completioncontent h4{display:inline;}
+.completioncontent ul{margin-left:43px; margin-top:3px;}
+.completioncontent li {line-height:25px;}
+
 .pull-right>.dropdown-toggle>img{opacity:.8;}
 .pull-right>.dropdown-toggle:hover img{opacity:1;}
 .pull-right>.dropdown-toggle:focus img{opacity:1;}
@@ -268,7 +275,8 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .nub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
 .sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:27px; left: -11px;}
 .graynub{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_post_gear_dropdown.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; }
-.CR_dropdown_option{width: 88%; padding-left: 12px;}
+.CR_dropdown_option{width: 88%; padding: 3px 10px;}
+.dropdown-menu .CR_dropdown_option a{padding: 0px 9px 0px 5px;}
 
 .button { margin-bottom: 0px; margin-top: 0px; vertical-align: middle; display: inline-block; text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }
@@ -320,6 +328,16 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .aboutbody p{font-size:14px; line-height:20px;}
 .aboutbody span{font-size:11px; line-height:18px;}
 .aboutbody h4{font-weight:bold; line-height:32px; font-size:16px}
+.challengeset{margin-bottom:5px;}
+.challengepagechallenge:nth-child(4n){margin-right:0px;}
+
+/* Popover -- guided help */
+.popover{background-color: #FFECBD;border-width: 10px;border-style: solid;border-color: #FDD05B;}
+.popover.left .arrow{right:-20px; border-left-color:#FDD05B;}
+.popover.right .arrow{left:-20px; border-right-color:#FDD05B;}
+.popover-content p{color:#404040; margin:0; font-size:13px;}
+.popover-content{padding:6px;}
+.popover{width:150px;}
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
