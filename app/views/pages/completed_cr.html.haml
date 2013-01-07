@@ -1,13 +1,13 @@
-%div.quizcontainer
+%div.quizcontainer{style:"width:641px; margin-top:110px;"}
   %div.quizspace
-    %div.quizheader
-      = image_tag @section.path.path_pic, style: "height:50px; width:50px;"
+    %div.quizheader{style:"margin-bottom:9px;"}
+      %img{src:"http://www.placekitten.com/50/50", style: "height:50px; width:50px;"}
         %div{style: "display:inline-block;"}
           %span
-            %strong #{@section.path.name}:
-            #{@section.name}
-    %div.completionmessagespace
-      %div.completionheader
+            %strong #Challenge Name:
+            Section Name
+    %div.completionmessagespace{style:"border-right:none; width:auto;"}
+      %div.completionheader{style:"margin-bottom:4px;"}
         %span Nice work on that Creative Response!
       %div.completionsubheader
         %span
