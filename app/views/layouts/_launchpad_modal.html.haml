@@ -33,35 +33,9 @@
           = render "sections/launchpad"
   
   :javascript
-    function display_progress_bar(){
-      var name = "#{@current_section.name}";
-      var trunc_name = truncate(name, 15);
-      var chart;
-      chart = new Highcharts.Chart({
-        chart: { renderTo: 'sectionpointchart', type: 'bar' },
-        credits: { enabled: false },
-        title: { text: null },
-        xAxis: { min:0, categories: [''] },
-        yAxis: { min: 0, max: 100, width: 450, title: { text: 'Percent Complete' } },
-        legend: {
-            backgroundColor: '#FFFFFF',
-            reversed: true,
-            align:'right',
-            layout:'vertical',
-            verticalAlign: 'top',
-        },
-        tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
-        plotOptions: { series: { stacking: 'normal' } },
-        navigation: { buttonOptions: { enabled: false } },
-        series: [ { name: trunc_name, data: [#{@current_section.percentage_complete(current_user)}] } ]
-      });
-      apply_hightcharts_theme();
-    }
-    
     $(function(){
       $("#topboxcontent .button-actionable").click(function(){
         $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
-        display_progress_bar();
       });
        
       $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
@@ -75,5 +49,4 @@
     :javascript
       $(function(){ 
         $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
-        display_progress_bar(); 
       });

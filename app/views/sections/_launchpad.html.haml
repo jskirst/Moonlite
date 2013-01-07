@@ -1,78 +1,78 @@
 %div.sectioninfocontainer
-  %div#sectionpointchart
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
-      %button.btn-info Create a Question
+      %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px;" } Create a Question
       %ul.nav.nav-tabs
-        - unless @core_tasks.empty?
-          %li.active
-            %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
-        - unless @challenge_tasks.empty?
-          %li
-            %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
-        - unless @achievement_tasks.empty?
-          %li
-            %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks      
-    - unless @core_tasks.empty?
+        %li.active
+          %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
+        %li
+          %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
+        %li
+          %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks      
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
-        - if @core_tasks.select{ |t| t.status_id.nil? }.size > 0
-          %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
-          %p= link_to "Start", continue_section_path(@current_section), class: "button button-actionable"  
-        - else
-          - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
-          - incorrect_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::INCORRECT }.size
-          %p You got <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> questions right, and scored <strong>#{@current_section.points_earned(current_user)} points</strong> in this section!
-          - if @achievement_tasks.count == 0 and @challenge_tasks.count > 0
-            %p Continue on to the <strong>Creative Reponse</strong> tab to earn additional points and level-up.
-          - if @challenge_tasks.count == 0 and @achievement_tasks.count > 0
-            %p Continue on to the <strong>Tasks</strong> tab to earn additional points and level-up.
-          - if @challenge_tasks.count > 0 and @achievement_tasks.count > 0
-            %p Continue on to the <strong>Creative Reponse</strong> and <strong>Tasks</strong> tabs to earn additional points and level-up.          
-    - unless @challenge_tasks.empty?
+        %div.editor_view{ style: "display: none;" }
+          %p Content creator
+        %div.task_view
+          - if @core_tasks.empty?
+            %p No core tasks available.
+          - elsif @core_tasks.select{ |t| t.status_id.nil? }.size > 0
+            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
+            %p= link_to "Start", continue_section_path(@current_section), class: "button button-actionable"  
+          - else
+            - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
+            - incorrect_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::INCORRECT }.size
+            %p You got <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> questions right, and scored <strong>#{@current_section.points_earned(current_user)} points</strong> in this section!
+            - if @achievement_tasks.count == 0 and @challenge_tasks.count > 0
+              %p Continue on to the <strong>Creative Reponse</strong> tab to earn additional points and level-up.
+            - if @challenge_tasks.count == 0 and @achievement_tasks.count > 0
+              %p Continue on to the <strong>Tasks</strong> tab to earn additional points and level-up.
+            - if @challenge_tasks.count > 0 and @achievement_tasks.count > 0
+              %p Continue on to the <strong>Creative Reponse</strong> and <strong>Tasks</strong> tabs to earn additional points and level-up.          
       %div#questions_tab.tab_content{ style: "" }
-        %div.help_box{style:"background-color:#C0E6C0; width:600px; height:80px; margin-left: auto; margin-right: auto; padding:4px 10px 10px 10px; text-align: left; margin-bottom: 12px;"}
-          %div.help_close
-            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png" }
-          %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "display:inline; bottom:6px; height:30px;"}
-          %h3{style: "font-size:24px; display:inline;"} Go ahead, look up answers!
-          %h5{style: "font-size:15px;"} CR's and Tasks are here to guide your improvement. If you don't know an answer, go figure it out and share what you learned with the rest of us!
-        %table
-          - @challenge_tasks.each do |t|
-            %tr
-              %td
-                - if t.status_id
-                  %div= link_to t.question, user_path(current_user, task: t.id)
-                - else
-                  %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
-              %td.question_status
-                - if t.status_id
-                  = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
-                  %br
-                  %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
-                - else
-                  = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
-    - unless @achievement_tasks.empty?
+        %div.editor_view{ style: "display: none;" }
+          %p Content creator
+        %div.task_view
+          - if @challenge_tasks.empty?
+            %p No challenge tasks available.
+          - else
+            %table
+              - @challenge_tasks.each do |t|
+                %tr
+                  %td
+                    - if t.status_id
+                      %div= link_to t.question, user_path(current_user, task: t.id)
+                    - else
+                      %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                  %td.question_status
+                    - if t.status_id
+                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                      %br
+                      %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
+                    - else
+                      = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
       %div#achievements_tab.tab_content{ style: "display: none;" }
-        %table
-          - @achievement_tasks.each do |t|
-            %tr
-              %td
-                - if t.status_id
-                  %div= link_to t.question, user_path(current_user, task: t.id)
-                - else
-                  %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
-              %td.question_status
-                - if t.status_id
-                  = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
-                  %br
-                  %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
-                - else
-                  = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
-
+        %div.editor_view{ style: "display: none;" }
+          %p Content creator
+        %div.task_view
+          - if @achievement_tasks.empty?
+            %p No tasks available.
+          - else
+            %table
+              - @achievement_tasks.each do |t|
+                %tr
+                  %td
+                    - if t.status_id
+                      %div= link_to t.question, user_path(current_user, task: t.id)
+                    - else
+                      %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                  %td.question_status
+                    - if t.status_id
+                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                      %br
+                      %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
+                    - else
+                      = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
   :javascript
-    var name = "#{@current_section.name}";
-    var trunc_name = truncate(name, 15);
-    var chart;
     var display_type = #{@display_type || 0};
     var open_tab;
     $(function(){
@@ -89,26 +89,16 @@
         $(".tab_content").hide();
         $("ul.nav-tabs li.active").removeClass("active");
         $(this).parent().addClass("active");
-        $($(this).attr("href")).show();
+        $(".active_tab").removeClass("active_tab");
+        var $open_tab = $($(this).attr("href"));
+        $open_tab.addClass("active_tab");
+        $open_tab.find(".task_view").show();
+        $open_tab.find(".editor_view").hide();
+        $open_tab.show();
       });
       
-      chart = new Highcharts.Chart({
-        chart: { renderTo: 'sectionpointchart', type: 'bar' },
-        credits: { enabled: false },
-        title: { text: null },
-        xAxis: { min:0, categories: [''] },
-        yAxis: { min: 0, max: 100, width: 450, title: { text: 'Percent Complete' } },
-        legend: {
-            backgroundColor: '#FFFFFF',
-            reversed: true,
-            align:'right',
-            layout:'vertical',
-            verticalAlign: 'top',
-        },
-        tooltip: { formatter: function() { return '' + this.series.name + ': ' + this.y + ''; } },
-        plotOptions: { series: { stacking: 'normal' } },
-        navigation: { buttonOptions: { enabled: false } },
-        series: [ { name: trunc_name, data: [#{@current_section.percentage_complete(current_user)}] } ]
+      $("#editor_link").click(function(){
+        $(".active_tab").find(".task_view").hide();
+        $(".active_tab").find(".editor_view").show();
       });
-      apply_hightcharts_theme();
     });
