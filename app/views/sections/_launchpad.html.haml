@@ -2,6 +2,7 @@
   %div#sectionpointchart
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
+      %button.btn-info Create a Question
       %ul.nav.nav-tabs
         - unless @core_tasks.empty?
           %li.active
@@ -11,7 +12,7 @@
             %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
         - unless @achievement_tasks.empty?
           %li
-            %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks
+            %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks      
     - unless @core_tasks.empty?
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
         - if @core_tasks.select{ |t| t.status_id.nil? }.size > 0

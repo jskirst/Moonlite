@@ -37,6 +37,7 @@
 .pointsandprogress div { margin-bottom:-16px;}
 .launchpad_link { border-bottom: 1px solid #EEE; margin: 4px 0px;}
 
+.launchpadcolumnheader button{position:relative; top:5px; float:right;}
 .launchpadcolumnheader ul.nav-tabs li { font-size: 14px; }
 .launchpadcolumnheader ul.nav-tabs li { font-size: 14px; }
 .launchpadcolumnheader ul.nav-tabs li a { border-bottom-color: transparent }
