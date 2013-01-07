@@ -336,8 +336,10 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .popover.left .arrow{right:-20px; border-left-color:#FDD05B;}
 .popover.right .arrow{left:-20px; border-right-color:#FDD05B;}
 .popover-content p{color:#404040; margin:0; font-size:13px;}
-.popover-content{padding:6px;}
+.popover-content{padding:6px 6px 3px 6px;}
 .popover{width:150px;}
+.popover-close{float:right;margin-right: 5px;font-size: 11px;text-shadow: none;}
+.popover-close:after{content:"Close";}
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
