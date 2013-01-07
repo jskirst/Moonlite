@@ -20,14 +20,14 @@
       $('#points_pop').popover({
         trigger: 'manual',
         placement:'right',  
-        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>',
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div><a class="popover-close"></a></div></div>',
         content: 'Vote on answers you like so they earn more points.',            
         });
       $('#points_pop').popover('show');
       $('#CR_pop').popover({
         trigger: 'manual',
         placement:'left',  
-        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div></div></div>',
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div><a class="popover-close"></a></div></div>',
         content: 'This is an answer to the above Creative Response question.',            
         });
       $('#CR_pop').popover('show');
@@ -69,13 +69,13 @@
             %div
               %div.sidenub
             %div{ style: "padding: 3px 0px;"}
-              %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
+              %ul.profile_dropdown{ style: "list-style: none; margin: 0 0 0 4px;"}
                 %li.CR_dropdown_option 
-                  %a{href:"#"} Answer this CR
+                  %a{href:"#"} Answer this Creative Response
                 %li.CR_dropdown_option
                   %a{href:"#"} Filter by this question
                 %li.CR_dropdown_option
-                  %a{href:"#"} View response in new tab          
+                  %a{href:"#"} View all comments         
       %div.CRarea#CR_pop
         - if r.task.answer_sub_type == Task::TEXT
           %pre{ style: "margin:20px; word-break:normal;" }= r.submitted_answer.content
