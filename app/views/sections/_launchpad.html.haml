@@ -29,29 +29,30 @@
             - if @challenge_tasks.count > 0 and @achievement_tasks.count > 0
               %p Continue on to the <strong>Creative Reponse</strong> and <strong>Tasks</strong> tabs to earn additional points and level-up.          
       %div#questions_tab.tab_content{ style: "" }
-        %div.editor_view{ style: "display: none;" }
-          %form{style: "width:625px; padding:0 0 0 10px;"}
-            %fieldset{style: "display: inline-block; margin-right:28px;"}
+        %div.editor_view{ style: "display: none; height:100%;" }
+          %form{style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;"}
+            %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
               %legend Create a CR
               %label What's your question?
-              %input.span5{placeholder: "Question...", type: "text"}
-                %label What section does this question belong in?
-                %select
-                  %option Section name1
-                  %option Section name2
-                  %option Section name3
-                  %option Section name4
-                %label What type of response should people give?
-                %select
-                  %option Response type 1
-                  %option Response type 2
-                  %option Response type 3
-                %label
-                %button.btn-danger{style: "float:right;"} Submit
+              %textarea{class:"rows2", placeholder:"Question...", style:"width:100%;"}
+              %label What type of response should people give?
+              %label.radio
+                %input{type:"radio", name:"optionsRadios", id:"optionsRadios1", value:"YouTube"}
+                YouTube video
+              %label.radio
+                %input{type:"radio", name:"optionsRadios", id:"optionsRadios1", value:"Image"}
+                Image upload
+              %label.radio
+                %input{type:"radio", name:"optionsRadios", id:"optionsRadios1", value:"Text"}
+                Text response             
+              %label
+              %button.btn-danger{style: "float:right;"} Submit
             %div{style: "display:inline-block; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
-              %h4 Tips:
+              %h4 
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                Tips:
               %ul{style:"font-size:13px;"}
-                %li Write questions that allow people to demonstrate their knowledge or passion for the Challenge.
+                %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
                 %li Keep the tone informal but direct.
                 %li Make sure you check for spelling and grammar.
         %div.task_view
