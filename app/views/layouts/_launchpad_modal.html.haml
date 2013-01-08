@@ -7,8 +7,7 @@
         %h1
           = image_tag(@path.path_pic, style:"vertical-align:baseline;")
           %div{style:"position:relative; bottom:10px; "}
-            %span{ } #{@path.name} 
-            %span{ style: "font: normal 18px 'MuliItalic', sans-serif;" } - #{@enrollment.total_points} pts, Level #{current_user.level(@path)}
+            %span{ } #{@path.name}
           %div{style:"float:right; position:relative; top:3px; margin-right:12px; "}
             %span{style:"font-size:21px;"} Level #{current_user.level(@path)}
             %span{style:"font-size:14px;"} XXX pts to level up
