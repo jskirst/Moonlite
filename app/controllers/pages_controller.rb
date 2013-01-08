@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, except: [:home, :about, :challenges, :tos]
+  before_filter :authenticate, except: [:home, :about, :challenges, :tos, :mark_help_read]
   before_filter :authorize_resource, only: [:create]
   
   def home
@@ -60,8 +60,17 @@ class PagesController < ApplicationController
   end
   
   def mark_help_read
-    current_user.set_viewed_help(params[:id])
-    render json: { status: "success" }
+    if current_user
+      current_user.set_viewed_help(params[:id])
+      render json: { status: "success" }
+    else
+      if session[:viewed_help].nil?
+        session[:viewed_help] = params[:id]
+      else
+        session[:viewed_help] = session[:viewed_help].split(",").push(params[:id]).join(",")
+      end
+      render json: { status: session[:viewed_help] }
+    end
   end
   
   def about

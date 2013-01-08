@@ -20,13 +20,16 @@ class SessionsController < ApplicationController
         end
       else
         user = User.create_with_omniauth(auth)
-        Mailer.welcome(user.email).deliver
+        user.set_viewed_help(session[:viewed_help])
+        user.reload
         sign_in(user)
+        Mailer.welcome(current_user.email).deliver
         log_event(nil, root_url, nil, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
         if session[:referer]
+          session[:referrer] = nil
           path = Path.find_by_id(session[:referer])
-          user.enroll!(path)
-          redirect_to path
+          current_user.enroll!(path)
+          redirect_to continue_path_path(path)
         else
           redirect_to intro_path
         end

@@ -240,6 +240,8 @@ class User < ActiveRecord::Base
   end
   
   def set_viewed_help(help_id)
+    raise "FATAL: Illegal viewed_help" if help_id.index(/[^a-z_,]/)
+    
     if self.viewed_help.blank?
       self.viewed_help = help_id
     else

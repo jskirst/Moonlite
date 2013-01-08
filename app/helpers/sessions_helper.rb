@@ -37,6 +37,14 @@ module SessionsHelper
     return @show_nav_bar.nil? ? true : @show_nav_bar
   end
   
+  def get_viewed_help
+    if current_user
+      return current_user.get_viewed_help
+    else
+      session[:viewed_help].nil? ? [] : session[:viewed_help]
+    end
+  end
+  
   def unread_notification_count
     return 0 unless current_user
     current_user.user_events.unread.count
@@ -75,6 +83,7 @@ module SessionsHelper
   
   def deny_access
     store_location
+    logger.debug "Access Denied: requires logged in user"
     flash[:notice] = "Please sign in to access this page."
     redirect_to root_path
   end
