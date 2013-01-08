@@ -18,6 +18,8 @@ Metabright::Application.routes.draw do
 	end
 	match '/paths/:id/submission/:submission/' => 'paths#show', as: 'submission_details'
 	match '/paths/:id/task/:task/' => 'paths#show', as: 'task_details'
+	match '/tasks/:task_id' => 'paths#drilldown', as: 'task_drilldown'
+	match '/submissions/:submission_id' => 'paths#drilldown', as: 'submission_drilldown'
 	
 	resources :sections do
 		member do

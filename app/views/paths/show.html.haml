@@ -12,7 +12,8 @@
   %div#topsection
     %div#updatespace
       %div{ style: "display:inline;" }
-        = image_tag @path.path_pic, class: "bigheaderimage"
+        = link_to challenge_path(@path.permalink) do
+          = image_tag @path.path_pic, class: "bigheaderimage"
       %div.rightofbigheaderimage{ style: "width:81%;" }
         %div#topboxcontent
           - if current_user
@@ -71,6 +72,6 @@
 
         :javascript
           $(function(){
-            $.ajax({ type: "GET", url: "#{newsfeed_path_path(@path.id)}", success: function(data){ $(".empty_post").replaceWith(data); } });
+            $.ajax({ type: "GET", url: "#{@url_for_newsfeed}", success: function(data){ $(".empty_post").replaceWith(data); } });
           });
         %div.post.empty_post{ style: "height: 300px;"}

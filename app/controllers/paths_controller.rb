@@ -1,6 +1,6 @@
 class PathsController < ApplicationController
-  before_filter :authenticate, except: [:show, :newsfeed]
-  before_filter :load_resource, except: [:index, :new, :create]
+  before_filter :authenticate, except: [:show, :newsfeed, :drilldown]
+  before_filter :load_resource, except: [:index, :new, :create, :drilldown]
   before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
@@ -157,7 +157,19 @@ class PathsController < ApplicationController
     @display_type = params[:type] || 2
     
     @enrollments = @path.enrollments.includes(:user).order("total_points DESC").limit(10).eager_load.to_a
+    
+    @url_for_newsfeed = generate_newsfeed_url
     render "show"
+  end
+  
+  def drilldown
+    if params[:submission_id]
+      submission = SubmittedAnswer.find(params[:submission_id])
+      redirect_to submission_details_path(submission.path.id, submission.id)
+    else
+      task = Task.find(params[:task_id])
+      redirect_to task_details_path(task.path.id, task.id)
+    end
   end
   
   def newsfeed
@@ -193,5 +205,17 @@ class PathsController < ApplicationController
     
     def authorize_view
       raise "View Access Denied" unless @path.is_public || can_edit_path(@path)
+    end
+    
+    def generate_newsfeed_url
+      if params[:submission]
+        return newsfeed_path_path(@path, submission: params[:submission])
+      elsif params[:task]
+        return newsfeed_path_path(@path, task: params[:task], page: params[:page])
+      elsif params[:order] && params[:order] == "votes"
+        return newsfeed_path_path(@path, order: params[:order], page: params[:page])
+      else
+        return newsfeed_path_path(@path)
+      end
     end
 end
