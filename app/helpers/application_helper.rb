@@ -30,6 +30,14 @@ module ApplicationHelper
       leaderboard_pop: {
         content: "The people who have dominated this Challenge appear here.",
         placement: "left"
+      },
+      points_pop: {
+        content: "Vote on answers you like so they earn more points.",
+        placement: "right"
+      },
+      cr_pop: {
+        content: "This is an answer to the above Creative Response question.",
+        placement: "left"
       }
     }
   end
