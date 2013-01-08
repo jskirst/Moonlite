@@ -3,12 +3,10 @@
   %head
     = render "layouts/head"
     :javascript
-      var viewed_help = #{current_user.get_viewed_help};
+      var viewed_help = #{current_user.nil? ? [] : current_user.get_viewed_help};
       var all_help = #{get_all_help.to_json};
       var mark_read_url = '#{mark_help_read_url}';
-      $(function(){
-        
-      });
+      $(function(){ init_iph(); });
   %body
     - if current_user
       = render "layouts/explore_modal"
