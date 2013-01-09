@@ -189,6 +189,8 @@ code,pre{font:inherit;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace {margin-top:12px; }
 .input input{background-color: #F9F9F9;}
+#report_issue_modal.modal.fade {  background-color: transparent; border: 0; box-shadow: 0 0 0; }
+.explorebody .radio{padding-left:35px;}
 
 #topsection { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position:relative; background-clip: padding-box; color:#333; background-color:white; margin-bottom:12px; }
 .headerspace { text-shadow: 0 1px 0 white; padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; background-color: #FCFCFC;}
@@ -223,7 +225,7 @@ code,pre{font:inherit;}
 .exploretextdetails h2        { font-size:23px; font-weight:bold; font-style:italic;}
 
 /* modal/help close button*/
-.exploreheader>.modal_close{ margin: -4px 19px 0 0; }
+.exploreheader>.modal_close{ margin: -8px 6px 0 0; }
 .modal_close, .help_close { float:right; cursor:pointer;}
 .modal_close, .help_close img{ width:20px; height: inherit;}
 .help_close { margin: 4px 0 0 0; }
