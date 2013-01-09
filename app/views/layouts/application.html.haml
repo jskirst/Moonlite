@@ -10,7 +10,8 @@
   %body
     - if current_user
       = render "layouts/explore_modal"
-      = render "layouts/launchpad_modal"
+      = render "layouts/launchpad_modal"   
+      = render "layouts/report_issue_modal"
     - else
       = render "layouts/login_modal"
     = render "layouts/navbar"

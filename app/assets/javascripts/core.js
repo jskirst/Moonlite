@@ -108,4 +108,8 @@ $(function(){
   $(".login_link").click(function(){
     $("#login_modal").modal({ keyboard: true, backdrop: 'static', show: true });
   });
+  
+  $(".arena_report_link").click(function(){
+  	$("#report_issue_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+  })
 });
