@@ -1,7 +1,7 @@
 %section
   - unless current_user
     %div#newuserbox.help_box{ style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;" }
-      %div.help_close
+      %div.help_close{style:"position:relative; left:10px;"}
         %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png" }
       %div{ style: "margin-top:-6px;"}
         %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:90px; "}
@@ -23,7 +23,7 @@
             - if current_user
               %h3{ style: "font-size: 18px; line-height:33px; " } Level #{@enrollment.level}, #{@enrollment.total_points} points
             - else
-              %h4{ style: "height: 46px; cursor: pointer;" }
+              %h4{ style: "height: 42px; cursor: pointer; margin-top:4px;" }
                 %a.login_link Login or register to join this Challenge!
         %div#challengecarousel_container
           - if @enrollments.size > 4

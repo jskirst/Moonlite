@@ -28,7 +28,7 @@ module ApplicationHelper
   def get_all_help
     {
       leaderboard_pop: {
-        content: "The people who have dominated this Challenge appear here.",
+        content: "People who have dominated this Challenge appear here.",
         placement: "left"
       },
       points_pop: {
