@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
   CHECKIN_LINK      = 201
   
   attr_readonly :section_id
-  attr_accessor :answer_content
+  attr_accessor :answer_content, :source
   attr_accessible :question,
     :points,
     :position, 
@@ -24,7 +24,10 @@ class Task < ActiveRecord::Base
     :answer_sub_type,
     :disable_time_limit,
     :time_limit,
-    :answer_content
+    :answer_content,
+    :creator_id,
+    :is_locked,
+    :source
   
   belongs_to :section
   has_one :path, through: :section
@@ -37,7 +40,8 @@ class Task < ActiveRecord::Base
   
   validates :question, length: { within: 1..1000 }
   validates :points, presence: true, numericality: { less_than: 51 }
-  validates :section_id, presence: true
+  validates_presence_of :section_id
+  validates_presence_of :creator_id
   
   before_validation { self.points = 10 if self.points.to_i == 0 }
   before_create { self.position = get_next_position_for_section }

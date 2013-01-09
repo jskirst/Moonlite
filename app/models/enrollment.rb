@@ -25,11 +25,6 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def send_result_email
-    email_details = { enrollment: self, path: path, user: user }
-    Mailer.path_result(email_details).deliver
-  end
-  
   def self.points_to_level(points)
     level = points / 300
     return level > 0 ? level : 1

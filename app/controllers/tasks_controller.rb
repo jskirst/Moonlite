@@ -7,9 +7,10 @@ class TasksController < ApplicationController
   
   def create
     @section = Section.find(params[:task][:section_id])
-    raise "Access Denied" unless can_edit_path(@section.path)
+    raise "Access Denied" unless can_add_tasks(@section.path)
     
     @task = @section.tasks.new(params[:task])
+    @task.creator_id = current_user.id
     @task.answer_content = gather_answers(params[:task])
     if @task.save
       unless params[:stored_resource_id].blank?
@@ -19,9 +20,10 @@ class TasksController < ApplicationController
         sr.owner_type = @task.class.to_s
         sr.save
       end
-      respond_to do |f|
-        f.html { render :partial => "task", :locals => {:task => @task } }
-        f.json { render :json => @task }
+      if @task.source == "launchpad"
+        render json: { status: "success", question_link: take_section_url(@section, task_id: @task.id) }
+      else
+        render partial: "task", locals: { task: @task }
       end
     else
       respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages } } }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130107195432) do
+ActiveRecord::Schema.define(:version => 20130109053801) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -69,17 +69,6 @@ ActiveRecord::Schema.define(:version => 20130107195432) do
     t.string   "custom_email_from"
   end
 
-  create_table "company_users", :force => true do |t|
-    t.string   "email"
-    t.integer  "user_id"
-    t.integer  "company_id"
-    t.string   "token1"
-    t.string   "token2"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.boolean  "is_admin"
-  end
-
   create_table "completed_tasks", :force => true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
@@ -117,32 +106,12 @@ ActiveRecord::Schema.define(:version => 20130107195432) do
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
 
-  create_table "leaderboards", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "completed_tasks", :default => 0
-    t.integer  "score",           :default => 0
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.integer  "category_id"
-    t.integer  "path_id"
-    t.integer  "section_id"
-  end
-
   create_table "path_personas", :force => true do |t|
     t.integer "path_id"
     t.integer "persona_id"
   end
 
   add_index "path_personas", ["path_id", "persona_id"], :name => "index_path_personas_on_path_id_and_persona_id"
-
-  create_table "path_user_roles", :force => true do |t|
-    t.integer  "user_role_id"
-    t.integer  "path_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
-  end
-
-  add_index "path_user_roles", ["user_role_id", "path_id"], :name => "index_path_user_roles_on_user_role_id_and_path_id"
 
   create_table "paths", :force => true do |t|
     t.string   "name"
@@ -197,16 +166,6 @@ ActiveRecord::Schema.define(:version => 20130107195432) do
   end
 
   add_index "phrases", ["content"], :name => "index_phrases_on_content", :unique => true
-
-  create_table "rewards", :force => true do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.string   "description"
-    t.integer  "points"
-    t.string   "image_url"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
-  end
 
   create_table "sections", :force => true do |t|
     t.integer  "path_id"
@@ -272,20 +231,11 @@ ActiveRecord::Schema.define(:version => 20130107195432) do
     t.integer  "answer_sub_type"
     t.boolean  "disable_time_limit", :default => false
     t.integer  "time_limit",         :default => 30
+    t.integer  "creator_id"
+    t.boolean  "is_locked",          :default => false
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
-
-  create_table "usage_reports", :force => true do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.string   "report_file_name"
-    t.string   "report_content_type"
-    t.integer  "report_file_size"
-    t.datetime "report_updated_at"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
-  end
 
   create_table "user_auths", :force => true do |t|
     t.integer  "user_id"

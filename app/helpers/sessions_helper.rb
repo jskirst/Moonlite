@@ -81,6 +81,11 @@ module SessionsHelper
     return false
   end
   
+  def can_add_tasks(path)
+    enrollment = current_user.enrollments.find_by_path_id(path.id)
+    return enrollment.total_points >= 100
+  end
+  
   def deny_access
     store_location
     logger.debug "Access Denied: requires logged in user"

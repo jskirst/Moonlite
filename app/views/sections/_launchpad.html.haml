@@ -30,31 +30,58 @@
               %p Continue on to the <strong>Creative Reponse</strong> and <strong>Tasks</strong> tabs to earn additional points and level-up.          
       %div#questions_tab.tab_content{ style: "" }
         %div.editor_view{ style: "display: none; height:100%;" }
-          %form{style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;"}
-            %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
-              %legend Create a CR
-              %label What's your question?
-              %textarea{class:"rows2", placeholder:"Question...", style:"width:100%;"}
-              %label What type of response should people give?
-              %label.radio
-                %input{type:"radio", name:"optionsRadios", id:"optionsRadios1", value:"YouTube"}
-                YouTube video
-              %label.radio
-                %input{type:"radio", name:"optionsRadios", id:"optionsRadios1", value:"Image"}
-                Image upload
-              %label.radio
-                %input{type:"radio", name:"optionsRadios", id:"optionsRadios1", value:"Text"}
-                Text response             
-              %label
-              %button.button.button-actionable{style: "float:right;"} Continue
-            %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
-              %h4 
-                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
-                Tips:
-              %ul{style:"font-size:13px;"}
-                %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
-                %li Keep the tone informal but direct.
-                %li Make sure you check for spelling and grammar.
+          = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
+            %div.step1
+              = f.hidden_field(:answer_type, value: Task::CREATIVE)
+              = f.hidden_field(:section_id, value: @current_section.id)
+              = f.hidden_field(:source, value: "launchpad")
+              %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
+                %legend Create your own question
+                %label What's your question?
+                = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
+                %div.control-group
+                  %div.controls
+                    = render "stored_resources/new_image"
+                %label What type of response should people give?
+                %label.radio
+                  = f.radio_button(:answer_sub_type, Task::TEXT)
+                  Text response
+                %label.radio
+                  = f.radio_button(:answer_sub_type, Task::IMAGE)
+                  Image upload
+                %label.radio
+                  = f.radio_button(:answer_sub_type, Task::YOUTUBE)
+                  YouTube video
+                %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
+              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+                %h4 
+                  %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                  Tips:
+                %ul{style:"font-size:13px;"}
+                  %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
+                  %li Keep the tone informal but direct.
+                  %li Make sure you check for spelling and grammar.
+            %div.step2{ style: "display: none;" }
+              %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
+                %legend{style:"margin-bottom:5px; "} Create a CR
+                %h4{style:"margin-top:12px; font-size:14px;"} Your question:
+                %div{style:"margin-left:12px;"}
+                  %span.question{style:"font-weight:bold;font-size:14px;"}
+                %h4{style:"margin-top:12px; font-size:14px; "} Here's where your question will appear:
+                %div{style:"margin-left:12px;"}
+                  %span{style:" font-size:14px;"} Challenge:
+                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
+                  %br/
+                  %span{style:" font-size:14px;"} Section: 
+                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
+                %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
+                %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
+                = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
+            %div.step3{ style: "display: none;" }
+              %p This is done!
+              %a.restart.button.button-actionable{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Create another question
+              %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
+              %a.take.button.button-info{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none; color:#333;"} Answer your question
         %div.task_view
           - if @challenge_tasks.empty?
             %p No Challenge tasks available.
@@ -75,23 +102,6 @@
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
       %div#achievements_tab.tab_content{ style: "display: none;" }
         %div.editor_view{ style: "display: none;" }
-          %form{style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;"}
-            %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
-              %legend{style:"margin-bottom:5px; "} Create a CR
-              %h4{style:"margin-top:12px; font-size:14px;"} Your question:
-              %div{style:"margin-left:12px;"}
-                %span{style:"font-weight:bold;font-size:14px;"} Your question text goes right here
-              %h4{style:"margin-top:12px; font-size:14px; "} Here's where your question will appear:
-              %div{style:"margin-left:12px;"}
-                %span{style:" font-size:14px;"} Challenge:
-                %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
-                %br/
-                %span{style:" font-size:14px;"} Section: 
-                %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
-              %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Do you want to also post an answer to this question?
-              %button.button{style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"}Back
-              %button.button.button-actionable{style:"margin-left:12px;"}Yes!
-              %button.button.button-info{style:""}Nah, just publish my question
         %div.task_view
           - if @achievement_tasks.empty?
             %p No tasks available.
@@ -139,5 +149,41 @@
       $("#editor_link").click(function(){
         $(".active_tab").find(".task_view").hide();
         $(".active_tab").find(".editor_view").show();
+      });
+      
+      $(".editor_view").each(function(){
+        var $editor = $(this);
+        $editor.find(".step1 a.next").click(function(){
+          console.log($editor.find("textarea[name='task[question]']").val());
+          $editor.find(".step2 span.question").text($editor.find("textarea[name='task[question]']").val());
+          $editor.find(".step1").hide();
+          $editor.find(".step2").show();
+        });
+        
+        $editor.find(".step2 a.back").click(function(){
+          $editor.find(".step2").hide();
+          $editor.find(".step1").show();
+        });
+        
+        $editor.find(".step3 a.restart").click(function(){
+          $editor.find(".step3").hide();
+          $editor.find(".step1").find("input[type!=hidden],textarea").val("");
+          $editor.find(".step1").show();
+        });
+        
+        $editor.find(".step3 a.finish").click(function(){
+          $editor.find(".step3").hide();
+          $editor.find(".step1").find("input[type!=hidden],textarea").val("");
+          $editor.find(".step1").show();
+          $editor.hide();
+          $editor.siblings(".task_view").show();
+        });
+        
+        $editor.find("form").on("ajax:success", function(event, data){
+          $editor.find(".step2").hide();
+          $editor.find(".step3").find("a.take").attr("href", data.question_link);
+          $editor.find(".step3").show();
+          console.log(data);
+        });
       });
     });
