@@ -46,3 +46,5 @@
 .tabs > li > a:hover {cursor:pointer; }
 
 .editor_view .radio{padding-left:35px;}
+#arena_tab .step1 label{display:inline-block; }
+#arena_tab .step1 input{position:relative; top:2px;}
