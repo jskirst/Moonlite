@@ -17,7 +17,7 @@
         show_persona_challenges();
       });
     %div.exploreheader
-      %div.modal_close
+      %div.modal_close{ style: "margin: -8px 14px 0 0;" }
         %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
       %h1{ style: "font-size: 23px;" }
         - if current_user.personas.empty?
