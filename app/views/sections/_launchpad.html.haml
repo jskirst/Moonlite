@@ -13,7 +13,7 @@
         %div.editor_view{ style: "display: none; height:100%;" }
           = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
             %div.step1
-              = f.hidden_field(:answer_type, value: Task::CREATIVE)
+              = f.hidden_field(:answer_type, value: Task::MULTIPLE)
               = f.hidden_field(:section_id, value: @current_section.id)
               = f.hidden_field(:source, value: "launchpad")
               %fieldset{style: "display: inline-block; margin-right:16px; width:58.1%;"}
@@ -22,13 +22,13 @@
                 = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
                 %span.help-block What are the possible answers?
                 %label Correct answer
-                %input{type:"text", placeholder:"Required", style:"margin-left:22px;"}
+                = f.text_field(:answer1, placeholder: "Required", style:"margin-left:22px;")
                 %label Wrong answer
-                %input{type:"text", placeholder:"Required", style:"margin-left:27px;"}
+                = f.text_field(:answer2, placeholder: "Required", style:"margin-left:22px;")
                 %label Wrong answer
-                %input{type:"text", placeholder:"Optional", style:"margin-left:27px;"}
+                = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
                 %label Wrong answer
-                %input{type:"text", placeholder:"Optional", style:"margin-left:27px;"}
+                = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -150,7 +150,7 @@
         %div.editor_view{ style: "display: none; height:100%;" }
           = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
             %div.step1
-              = f.hidden_field(:answer_type, value: Task::CREATIVE)
+              = f.hidden_field(:answer_type, value: Task::CHECKIN)
               = f.hidden_field(:section_id, value: @current_section.id)
               = f.hidden_field(:source, value: "launchpad")
               %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
@@ -216,7 +216,7 @@
       $(".tab_content").hide();
       $("ul.nav-tabs li.active").removeClass("active");
       $(open_tab).parent().addClass("active");
-      $($(open_tab).attr("href")).show();
+      $($(open_tab).attr("href")).show().addClass("active_tab");
     
       $(".nav-tabs li a").click(function(){
         $(".tab_content").hide();
