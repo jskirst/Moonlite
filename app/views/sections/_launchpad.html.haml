@@ -29,6 +29,7 @@
                 = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
                 %label Wrong answer
                 = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
+                %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -98,6 +99,7 @@
                 %label.radio
                   = f.radio_button(:answer_sub_type, Task::YOUTUBE, class: "answer_sub_type")
                   YouTube video
+                %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -157,6 +159,7 @@
                 %legend Create a Task
                 %label What's the Task?
                 = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")                
+                %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -206,6 +209,11 @@
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
   :javascript
+    function log_error(error){
+      $(".editor_view:visible").find("span.error_message").text(error).show().delay(3000).fadeOut("slow");
+      return false;
+    }
+    
     var display_type = #{@display_type || 0};
     var open_tab;
     $(function(){
@@ -239,18 +247,18 @@
         var $editor = $(this);
         $editor.find(".step1 a.next").click(function(){
           if($editor.find("textarea").val() == ""){
-            return false;
+            return log_error("You must provide a question.");
           }
           if($editor.find("input[name*=answer_type]").val() == 0){
             if($editor.find("input[name*=answer_sub_type]:checked").size() == 0){
-              return false;
+              return log_error("You must provide an answer type.");
             }
           } else if ($editor.find("input[name*=answer_type]").val() == 2){
             if($editor.find("input[name*=answer1]").val() == ""){
-              return false;
+              return log_error("You must provide a correct answer.");
             }
             if($editor.find("input[name*=answer2]").val() == ""){
-              return false;
+              return log_error("You must provide at least one incorrect answer.");
             }
           }
           $editor.find(".step2 span.question").text($editor.find("textarea[name='task[question]']").val());
