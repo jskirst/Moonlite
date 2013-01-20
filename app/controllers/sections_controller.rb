@@ -115,7 +115,7 @@ class SectionsController < ApplicationController
     if @unlocked
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
-        .where("tasks.section_id = ?", @current_section.id)
+        .where("tasks.section_id = ? and task.is_locked = ?", @current_section.id, false)
       @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
       @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
       @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
@@ -128,7 +128,8 @@ class SectionsController < ApplicationController
     @show_nav_bar = false
     @show_footer = false
     @task = @section.tasks.find(params[:task_id])
-    raise "Not a challenge." unless @task.is_challenge_question?
+    raise "Access Denied: Not a challenge." unless @task.is_challenge_question?
+    raise "Access Denied: Task is currently locked." if @task.is_locked
     @path = @section.path
     @stored_resource = @task.stored_resources.first
   end
@@ -137,6 +138,7 @@ class SectionsController < ApplicationController
     @task = @section.tasks.find(params[:task_id])
     raise "Task already completed" if current_user.completed_tasks.find_by_task_id(@task.id)
     raise "Only CRs can be taken." unless @task.is_challenge_question?
+    raise "Access Denied: Task is currently locked." if @task.is_locked
     
     if !params[:answer].blank? || params[:answer] != "false" || params[:obj]
       unless params[:obj]

@@ -37,6 +37,7 @@ class Task < ActiveRecord::Base
   has_many :submitted_answers, dependent: :destroy, limit: 10
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
+  has_many :task_issues
   
   validates :question, length: { within: 1..1000 }
   validates :points, presence: true, numericality: { less_than: 51 }
