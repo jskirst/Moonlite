@@ -115,6 +115,9 @@
                 %h4{style:"margin-top:12px; font-size:14px;"} Your question:
                 %div{style:"margin-left:12px;"}
                   %span.question{style:"font-weight:bold;font-size:14px;"}
+                %h4{style:"margin-top:12px; font-size:14px;"} Question type:
+                %div{style:"margin-left:12px;"}
+                  %span{style:"font-weight:bold;font-size:14px;"} ***Question type goes here***
                 %h4{style:"margin-top:12px; font-size:14px; "} Here's where this question will appear:
                 %div{style:"margin-left:12px;"}
                   %span{style:" font-size:14px;"} Challenge:
@@ -126,7 +129,9 @@
                 %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
                 = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
             %div.step3{ style: "display: none;" }
-              %p This is done!
+              %legend{style:"margin-bottom:5px; "} Create a CR
+              %h4{style:"margin-top:12px; font-size:18px;"} Nice work!
+              %h4{style:"margin-top:12px; font-size:14px;"} Your question is published!
               %a.restart.button.button-actionable{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Create another question
               %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
               %a.take.button.button-info{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none; color:#333;"} Answer your question
