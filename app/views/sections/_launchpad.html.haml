@@ -11,7 +11,7 @@
           %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks      
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
         %div.editor_view{ style: "display: none; height:100%;" }
-          = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
+          = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0; height:90%; margin-top:-10px;" }) do |f|
             %div.step1
               = f.hidden_field(:answer_type, value: Task::CREATIVE)
               = f.hidden_field(:section_id, value: @current_section.id)
