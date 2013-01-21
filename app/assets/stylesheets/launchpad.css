@@ -41,7 +41,7 @@
 .launchpadcolumnheader ul.nav-tabs li { font-size: 14px; }
 .launchpadcolumnheader ul.nav-tabs li { font-size: 14px; }
 .launchpadcolumnheader ul.nav-tabs li a { border-bottom-color: transparent }
-.tab_content table td { padding: 0px 10px 0px 10px; height: 40px; border: 0px; border-bottom: 1px solid #DDD }
+.tab_content table td { padding: 0px 10px 0px 10px; height: 40px; border: 0px; border-bottom: 1px solid #DDD; font-size:14px; }
 .tab_content table td p { margin-bottom: 0px; }
 .tabs > li > a:hover {cursor:pointer; }
 

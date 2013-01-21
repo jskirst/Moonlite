@@ -86,9 +86,9 @@ class TasksController < ApplicationController
   def report
     issue = current_user.task_issues.new(task_id: @task.id, issue_type: params[:task_issue][:issue_type])
     if issue.save
-      flash[:alert] = "Thank you for reporting this issue. Once two or more users have reported the same issue, the task will be removed. Thank you for your help keeping Metabright at its best!"
+      flash[:alert] = "Thank you for reporting this question. Once two or more users have reported the same issue, the question will be removed. Thanks for your help keeping MetaBright at its best!"
     else
-      flash[:alert] = "We're sorry, your issue could not be reported. You may have tried to create another issue report for the same task."  
+      flash[:alert] = "We're sorry, your issue could not be reported. You may have tried to create another issue report for the same question."  
     end
     redirect_to challenge_path(@task.path.permalink)
   end
