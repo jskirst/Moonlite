@@ -1,29 +1,22 @@
-%div#report_issue_modal.dropdown_modal.modal.hide.fade
-  %div.explorecontainer{ style: "width: 514px; background:none; border:none;" }
-    :javascript
-      $(function(){ close_button(); });
-    %div.explorenewusercontent{ style: "margin:30px;" }
-      %div.exploreheader{ style: "width: inherit;" }
-        %div.modal_close
-          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
-        %h1{ style: "margin-bottom: 0; line-height: 23px;" }
-          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", :style => "height:45px;" } 
-          %span{style: "font-size:26px;"} Report an issue
-      %hr{ style: "margin: 0;" }
-      %div.explorebody{ style: "" }
-        %form{style:"margin:10px 18px 0 18px;"}
-          %fieldset
-            %label{style:"font-size:16px;"} What's wrong with this question?
-            %label.radio
-              %input{type:"radio", name:"CR_reporting_Radios", id:"CR_reporting_Radios1", value:"report1"} Unwanted commercial content or spam
-            %label.radio
-              %input{type:"radio", name:"CR_reporting_Radios", id:"CR_reporting_Radios2", value:"report2"} Spelling or grammatical error
-            %label.radio
-              %input{type:"radio", name:"CR_reporting_Radios", id:"CR_reporting_Radios3", value:"report3"} Doesn't belong in this section or Challenge
-            %label.radio
-              %input{type:"radio", name:"CR_reporting_Radios", id:"CR_reporting_Radios4", value:"report4"} Too similar to another question
-            %label.radio
-              %input{type:"radio", name:"CR_reporting_Radios", id:"CR_reporting_Radios5", value:"report5"} So poor that it detracts from the Challenge
-            %label.radio
-              %input{type:"radio", name:"CR_reporting_Radios", id:"CR_reporting_Radios6", value:"report6"} Copyrighted material 
-            %button.button.button-actionable{style:"float:right; margin-bottom:10px;"} Submit
+- if @task
+  %div#report_issue_modal.dropdown_modal.modal.hide.fade
+    %div.explorecontainer{ style: "width: 514px; background:none; border:none;" }
+      :javascript
+        $(function(){ close_button(); });
+      %div.explorenewusercontent{ style: "margin:30px;" }
+        %div.exploreheader{ style: "width: inherit;" }
+          %div.modal_close
+            %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
+          %h1{ style: "margin-bottom: 0; line-height: 23px;" }
+            %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", :style => "height:45px;" } 
+            %span{style: "font-size:26px;"} Report an issue
+        %hr{ style: "margin: 0;" }
+        %div.explorebody{ style: "" }
+          = form_for(current_user.task_issues.new, url: report_task_path(@task.id), html: { style: "margin:10px 18px 0 18px;" }) do |f|
+            %fieldset
+              %label{style:"font-size:16px;"} What's wrong with this question?
+              - TaskIssue::ISSUE_TYPES.each do |t|
+                %label.radio
+                  = f.radio_button :issue_type, t
+                  = TaskIssue::ISSUE_TYPE_CONTENT[t] 
+              = f.submit "Submit", class: "button button-actionable", style: "float:right; margin-bottom:10px;"

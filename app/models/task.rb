@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
   CHECKIN_LINK      = 201
   
   attr_readonly :section_id
-  attr_accessor :answer_content, :source
+  attr_accessor :answer_content, :source, :answer1, :answer2, :answer3, :answer4
   attr_accessible :question,
     :points,
     :position, 
@@ -37,6 +37,7 @@ class Task < ActiveRecord::Base
   has_many :submitted_answers, dependent: :destroy, limit: 10
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
+  has_many :task_issues
   
   validates :question, length: { within: 1..1000 }
   validates :points, presence: true, numericality: { less_than: 51 }

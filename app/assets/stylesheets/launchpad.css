@@ -45,6 +45,8 @@
 .tab_content table td p { margin-bottom: 0px; }
 .tabs > li > a:hover {cursor:pointer; }
 
-.editor_view .radio{padding-left:35px;}
-#arena_tab .step1 label{display:inline-block; }
-#arena_tab .step1 input{position:relative; top:2px;}
+.editor_view .radio{ padding-left:35px; }
+.editor_view .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
+#arena_tab .step1 label{ display:inline-block; }
+#arena_tab .step1 input{ position:relative; top:2px; }
+

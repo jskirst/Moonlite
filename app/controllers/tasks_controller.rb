@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate
   before_filter :load_resource, except: [:create]
-  before_filter :authorize_resource, except: [:vote, :create]
+  before_filter :authorize_resource, except: [:vote, :report, :create]
   
   respond_to :json, :html
   
@@ -81,6 +81,16 @@ class TasksController < ApplicationController
         render json: { errors: "Uknown error."}
       end
     end
+  end
+  
+  def report
+    issue = current_user.task_issues.new(task_id: @task.id, issue_type: params[:task_issue][:issue_type])
+    if issue.save
+      flash[:alert] = "Thank you for reporting this issue. Once two or more users have reported the same issue, the task will be removed. Thank you for your help keeping Metabright at its best!"
+    else
+      flash[:alert] = "We're sorry, your issue could not be reported. You may have tried to create another issue report for the same task."  
+    end
+    redirect_to challenge_path(@task.path.permalink)
   end
   
   def add_stored_resource

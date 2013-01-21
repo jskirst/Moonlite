@@ -36,6 +36,7 @@ class User < ActiveRecord::Base
   has_many :submitted_answers, through: :completed_tasks
   has_many :votes
   has_many :user_transactions
+  has_many :task_issues
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }

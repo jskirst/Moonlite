@@ -13,7 +13,7 @@
         %div.editor_view{ style: "display: none; height:100%;" }
           = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0; height:90%; margin-top:-10px;" }) do |f|
             %div.step1
-              = f.hidden_field(:answer_type, value: Task::CREATIVE)
+              = f.hidden_field(:answer_type, value: Task::MULTIPLE)
               = f.hidden_field(:section_id, value: @current_section.id)
               = f.hidden_field(:source, value: "launchpad")
               %fieldset{style: "display: inline-block; margin-right:16px; width:58.1%;"}
@@ -22,13 +22,14 @@
                 = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
                 %span.help-block What are the possible answers?
                 %label Correct answer
-                %input{type:"text", placeholder:"Required", style:"margin-left:22px;"}
+                = f.text_field(:answer1, placeholder: "Required", style:"margin-left:22px;")
                 %label Wrong answer
-                %input{type:"text", placeholder:"Required", style:"margin-left:27px;"}
+                = f.text_field(:answer2, placeholder: "Required", style:"margin-left:22px;")
                 %label Wrong answer
-                %input{type:"text", placeholder:"Optional", style:"margin-left:27px;"}
+                = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
                 %label Wrong answer
-                %input{type:"text", placeholder:"Optional", style:"margin-left:27px;"}
+                = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
+                %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -90,14 +91,15 @@
                     = render "stored_resources/new_image"
                 %label What type of response should people give?
                 %label.radio
-                  = f.radio_button(:answer_sub_type, Task::TEXT)
+                  = f.radio_button(:answer_sub_type, Task::TEXT, class: "answer_sub_type")
                   Text response
                 %label.radio
-                  = f.radio_button(:answer_sub_type, Task::IMAGE)
+                  = f.radio_button(:answer_sub_type, Task::IMAGE, class: "answer_sub_type")
                   Image upload
                 %label.radio
-                  = f.radio_button(:answer_sub_type, Task::YOUTUBE)
+                  = f.radio_button(:answer_sub_type, Task::YOUTUBE, class: "answer_sub_type")
                   YouTube video
+                %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -150,13 +152,14 @@
         %div.editor_view{ style: "display: none; height:100%;" }
           = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
             %div.step1
-              = f.hidden_field(:answer_type, value: Task::CREATIVE)
+              = f.hidden_field(:answer_type, value: Task::CHECKIN)
               = f.hidden_field(:section_id, value: @current_section.id)
               = f.hidden_field(:source, value: "launchpad")
               %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
                 %legend Create a Task
                 %label What's the Task?
                 = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")                
+                %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
               %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
@@ -206,6 +209,11 @@
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
   :javascript
+    function log_error(error){
+      $(".editor_view:visible").find("span.error_message").text(error).show().delay(3000).fadeOut("slow");
+      return false;
+    }
+    
     var display_type = #{@display_type || 0};
     var open_tab;
     $(function(){
@@ -216,7 +224,7 @@
       $(".tab_content").hide();
       $("ul.nav-tabs li.active").removeClass("active");
       $(open_tab).parent().addClass("active");
-      $($(open_tab).attr("href")).show();
+      $($(open_tab).attr("href")).show().addClass("active_tab");
     
       $(".nav-tabs li a").click(function(){
         $(".tab_content").hide();
@@ -238,7 +246,21 @@
       $(".editor_view").each(function(){
         var $editor = $(this);
         $editor.find(".step1 a.next").click(function(){
-          console.log($editor.find("textarea[name='task[question]']").val());
+          if($editor.find("textarea").val() == ""){
+            return log_error("You must provide a question.");
+          }
+          if($editor.find("input[name*=answer_type]").val() == 0){
+            if($editor.find("input[name*=answer_sub_type]:checked").size() == 0){
+              return log_error("You must provide an answer type.");
+            }
+          } else if ($editor.find("input[name*=answer_type]").val() == 2){
+            if($editor.find("input[name*=answer1]").val() == ""){
+              return log_error("You must provide a correct answer.");
+            }
+            if($editor.find("input[name*=answer2]").val() == ""){
+              return log_error("You must provide at least one incorrect answer.");
+            }
+          }
           $editor.find(".step2 span.question").text($editor.find("textarea[name='task[question]']").val());
           $editor.find(".step1").hide();
           $editor.find(".step2").show();

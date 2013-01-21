@@ -32,7 +32,7 @@ class Section < ActiveRecord::Base
   end
       
   def next_task(user)
-    return tasks.where(["answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", Task::MULTIPLE, user.id]).first
+    return tasks.where(["is_locked = ? and answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", false, Task::MULTIPLE, user.id]).first
   end
   
   def completed?(user)

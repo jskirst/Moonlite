@@ -40,10 +40,13 @@ Metabright::Application.routes.draw do
 	resources :tasks do
     member do
       get :vote
+      post :report
       get :add_stored_resource
       put :add_stored_resource
     end
   end
+  
+  resources :task_issues, only: [:create]
 	
 	resources :personas do
 	  member do
