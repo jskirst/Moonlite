@@ -1,4 +1,5 @@
 %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
+  
   %div.quizspace
     :javascript
       var continue_countdown = true;
@@ -82,3 +83,4 @@
       %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
         - if @task.resource
           %p= @task.resource
+    %a.arena_report_link{href:"#", style: "float:right; text-decoration:none;"} Report this question

@@ -8,6 +8,7 @@ class Task < ActiveRecord::Base
   TEXT      = 100
   IMAGE     = 101
   YOUTUBE   = 102
+  SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video" }
   
   # Challenge Subtypes
   CHECKIN_CONFIRM   = 200
@@ -30,6 +31,7 @@ class Task < ActiveRecord::Base
     :source
   
   belongs_to :section
+  belongs_to :creator, class_name: "User"
   has_one :path, through: :section
   has_many :completed_tasks
   has_many :answers
