@@ -58,7 +58,7 @@
                 %li.CR_dropdown_option 
                   = link_to "Answer this question", take_section_path(r.task.section_id, task_id: r.task.id)
                 %li.CR_dropdown_option
-                  = link_to "View all answers", task_drilldown_path(r.task.id)
+                  = link_to "View all responses", task_drilldown_path(r.task.id)
                 %li.CR_dropdown_option
                   = link_to "View all comments", submission_drilldown_path(r.submitted_answer.id)         
       %div#cr_pop.CRarea

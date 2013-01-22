@@ -91,15 +91,17 @@
         %div.leftboxheader Vital Stats
         %div.leftboxfooter{style:"padding-top: 6px"}
           %ul
+            - unless @user.description.blank?
+              %li About: #{@user.description}
             %li Location: #{@user.location || "A galaxy far, far away..."}
-            - unless @user.link.blank?
-              %li Link: <a href='#{@user.link}' target='_newtab'>#{truncate(@user.link)}</a>
             - unless @user.education.blank? 
               %li Education: #{@user.education}
             - unless @user.company_name.blank?
               %li Company: #{@user.company_name}  
             - unless @user.title.blank?
-              %li Title: #{@user.title} 
+              %li Title: #{@user.title}            
+            - unless @user.link.blank?
+              %li Link: <a href='#{@user.link}' target='_newtab'>#{truncate(@user.link)}</a> 
     %div.span11
       %div.newsfeed{ style: "min-height: 285px;" }
         %div.leftboxheader
