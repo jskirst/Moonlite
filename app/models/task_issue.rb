@@ -27,7 +27,10 @@ class TaskIssue < ActiveRecord::Base
   
   after_create do
     if task.task_issues.where(resolved: false).size >= 2
-      task.update_attribute(is_locked: true)
+      task.update_attribute(:is_locked, true)
+      creator = task.creator
+      creator.enroll!(task.path)
+      task.creator.retract_points(task, 100)
     end
   end
 end

@@ -26,8 +26,12 @@ class Enrollment < ActiveRecord::Base
   end
   
   def self.points_to_level(points)
-    level = points / 300
-    return level > 0 ? level : 1
+    return 1 if points < 2
+    points = points.to_f
+    level = (points.to_f**0.55) / Math.log(points)
+    level = level - (level % 1)
+    level = level - 3
+    return level <= 0 ? 1 : level.to_i
   end
   
   def level
