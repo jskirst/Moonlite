@@ -2,7 +2,7 @@
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
-      %ul.nav.nav-tabs
+      %ul.nav.nav-tabs{style:"margin-bottom:13px;"}
         %li.active
           %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
         %li
@@ -73,9 +73,12 @@
               %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
               %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          %div.launchpadtip
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %p Enter the Arena and take multiple-choice questions to discover where you stand. 
           - tasks_completed = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
           - if @core_tasks.empty?
-            %p No core tasks available.
+            %p No Arena questions available.
           - elsif tasks_completed
             - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
             - earned_points = 0
@@ -153,6 +156,9 @@
               %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
               %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          %div.launchpadtip
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %p CR's let you demonstrate your skills. Responses to CR's appear in the stream so they can be voted and commented upon.
           - if @challenge_tasks.empty?
             %p No Challenge tasks available.
           - else
@@ -166,7 +172,7 @@
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                       %div.launchpadpoints= t.points_awarded.to_i.to_s + " points"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
@@ -188,7 +194,7 @@
                   %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
                   Tips:
                 %ul{style:"font-size:13px;"}
-                  %li Tasks should serve as a guide to improving at the section.
+                  %li Tasks should serve as a path to improving at the section.
                   %li Keep the tone informal but direct.
                   %li Make sure you check for spelling and grammar.
                   %li You <strong>earn 50 points</strong> per published Task, but will <strong>lose 100 points</strong> if it's reported and taken down.
@@ -217,6 +223,9 @@
               %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another Task
               %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          %div.launchpadtip
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %p Tasks verify the things you've done and guide you for what to do next. 
           - if @achievement_tasks.empty?
             %p No tasks available.
           - else
