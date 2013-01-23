@@ -20,7 +20,7 @@
 .launchpadCRcolumn img { display:inline; position:relative; height:17px; }
 .modalbuttonbox { text-align: right; }
 .modalbuttonbox button { margin:0 11px 0 0; padding: 6px 14px 6px 14px; font: bold 12px 'Muli', sans-serif; }
-.sectioninfocontainer { background-color:white; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1);  display:inline-block; width:635px;  min-height:460px; margin: 0 0 0 10px;  padding:10px;  overflow:auto;}
+.sectioninfocontainer { background-color:white; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1);  display:inline-block; width:635px; height:460px; margin: 0 0 0 10px;  padding:10px;  overflow:auto;}
 #sectionpointchart { width: 627px; height: 60px; margin: 0 auto; margin-bottom: 12px; }
 
 .launchpadsectioncolumn {background-color: #F9F9F9;display:inline-block;border-right: 1px solid rgba(0, 0, 0, .1); padding-right:10px; width:175px; vertical-align: top;overflow:auto; height:460px;}
