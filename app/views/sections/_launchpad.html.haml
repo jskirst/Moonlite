@@ -73,21 +73,23 @@
               %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
               %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          - tasks_completed = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
           - if @core_tasks.empty?
             %p No core tasks available.
-          - elsif @core_tasks.select{ |t| t.status_id.nil? }.size > 0
-            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
-            %p= link_to "Start", continue_section_path(@current_section), class: "button button-actionable"  
-          - else
+          - elsif tasks_completed
             - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
+            - earned_points = 0
+            - @core_tasks.each { |t| earned_points += t.points_awarded.to_i }
             - incorrect_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::INCORRECT }.size
-            %p You answered <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> Arena questions correctly, and scored <strong>#{@current_section.points_earned(current_user)} points</strong>!
-            - if @achievement_tasks.count == 0 and @challenge_tasks.count > 0
-              %p Continue on to the <strong>Creative Reponse</strong> tab to earn additional points and level-up.
-            - if @challenge_tasks.count == 0 and @achievement_tasks.count > 0
-              %p Continue on to the <strong>Tasks</strong> tab to earn additional points and level-up.
-            - if @challenge_tasks.count > 0 and @achievement_tasks.count > 0
-              %p Continue on to the <strong>Creative Reponse</strong> and <strong>Tasks</strong> tabs to earn additional points and level-up.          
+            %p You answered <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> Arena questions correctly, and scored <strong>#{earned_points} points</strong>!
+            - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0
+            - if tasks_remaining
+              %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable"
+            - else
+              %p Don't worry, more Arena questions are added all everyday. Complete some Tasks or answer some Creative Response questions to earn more points and continue to level up. 
+          - else
+            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
+            %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       %div#questions_tab.tab_content{ style: "" }
         %div.editor_view{ style: "display: none; height:100%;" }
           = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|

@@ -1,16 +1,7 @@
 :javascript
-  jQuery(function($){
-    $('.bar2').mosaic({
-      animation : 'slide'   //fade or slide
-    });
-    $('.comment').click({
-      animation : 'slide',  //fade or slide
-      hover_x   : '400px'   //Horizontal position on hover
-    });
-  });
-  
-:javascript
-  jQuery(function($){
+  $(function(){
+    $('.bar2').mosaic({ animation : 'slide' });
+    $('.comment').click({ animation: 'slide', hover_x: '400px' });
     $('.accordion-toggle').click(function() {
       if($(this).hasClass("active_accordion") == false ) {
         $('.accordion-toggle').removeClass('active_accordion');
@@ -19,6 +10,7 @@
         $('.accordion-toggle').removeClass('active_accordion');}
       });
     });
+  });
 
 %div#homepage
   %div#topsection
