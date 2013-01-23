@@ -194,7 +194,6 @@ class SectionsController < ApplicationController
     
   def continue
     @streak = 0
-    @enrollment = current_user.enrollments.find_by_path_id(@path.id)
     @question_count = params[:count].to_i || 0
     if @question_count < 10
       @task = @section.next_task(current_user)
@@ -246,6 +245,7 @@ class SectionsController < ApplicationController
     else
       raise "FATAL: attempt to access unknown path."
     end
+    @enrollment = current_user.enrollments.find_by_path_id(@path.id)
   end
   
   def authorize_edit

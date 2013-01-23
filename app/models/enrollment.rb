@@ -1,6 +1,8 @@
 class Enrollment < ActiveRecord::Base
+  CONTRIBUTION_THRESHOLD = 1000
+  
   attr_readonly :path_id
-  attr_accessible :path_id, :total_points
+  attr_accessible :path_id, :total_points, :contribution_unlocked
   
   belongs_to :user
   belongs_to :path
@@ -17,11 +19,14 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def add_earned_points(points)
+  def add_earned_points(points, callback)
     points = points.to_i
     self.total_points = self.total_points + points
-    unless self.save
-      raise points.to_yaml
+    if self.total_points >= CONTRIBUTION_THRESHOLD
+      self.contribution_unlocked = true
+    end
+    if self.save
+      callback
     end
   end
   
