@@ -61,7 +61,7 @@
               %li.answer_content{ id: "answer_#{a.id}", onclick: "$(this).css('background-color', '#C6C6DA');" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
-        = link_to "Next", continue_section_path(@section.id), id: "nextbutton", style: "display: none; float: right;", remote: true, class: "button button-actionable", method: "post" 
+        = link_to "Next", continue_section_path(@section.id, @question_count), id: "nextbutton", style: "display: none; float: right;", remote: true, class: "button button-actionable", method: "post" 
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.pointsandstreakspace
         %div.pointspace.counterbox

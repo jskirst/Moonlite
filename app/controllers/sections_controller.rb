@@ -1,7 +1,8 @@
 class SectionsController < ApplicationController
   before_filter :authenticate
   before_filter :load_resource
-  before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]  
+  before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]
+  before_filter :disable_navbar, except: [:new, :create]  
   
   def new
     @path = Path.find(params[:path_id])
@@ -125,8 +126,6 @@ class SectionsController < ApplicationController
   end
   
   def take
-    @show_nav_bar = false
-    @show_footer = false
     @task = @section.tasks.find(params[:task_id])
     raise "Access Denied: Not a challenge." unless @task.is_challenge_question?
     raise "Access Denied: Task is currently locked." if @task.is_locked
@@ -194,12 +193,15 @@ class SectionsController < ApplicationController
   end
     
   def continue
-    @show_nav_bar = false
-    @show_footer = false
     @streak = 0
     @enrollment = current_user.enrollments.find_by_path_id(@path.id)
-    @task = @section.next_task(current_user)
+    @question_count = params[:count].to_i || 0
+    if @question_count < 10
+      @task = @section.next_task(current_user)
+    end
+    
     if @task
+      @question_count += 1
       if request.get? && @enrollment.total_points == 0
         @partial = "intro"
       else
@@ -228,6 +230,11 @@ class SectionsController < ApplicationController
   end
   
   private
+  
+  def disable_navbar
+    @show_nav_bar = false
+    @show_footer = false
+  end
   
   def load_resource
     if params[:id]

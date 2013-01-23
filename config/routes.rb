@@ -26,14 +26,15 @@ Metabright::Application.routes.draw do
       get :publish
       get :unpublish
       get :confirm_delete
-			get :continue
-			post :continue
-      get :take
-      put :took
       get :launchpad
       put :complete
 		end
 	end
+	
+	match '/sections/:id/continue' => "sections#continue", as: 'start_section'
+	match '/sections/:id/continue/:count' => "sections#continue", as: 'continue_section'
+	match '/sections/:id/take/:task_id' => "sections#take", as: 'take_section'
+	match '/sections/:id/took/:task_id' => "sections#took", as: 'took_section'
 	
 	resources :enrollments
 	
