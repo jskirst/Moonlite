@@ -345,3 +345,4 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
+.mb-tooltip{height:17px; width:16px; background-image:url('https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/question_mark_tooltip.png'); margin-bottom:-3px; display:inline-block; cursor:pointer;}
