@@ -16,25 +16,22 @@
               = f.hidden_field(:answer_type, value: Task::MULTIPLE)
               = f.hidden_field(:section_id, value: @current_section.id)
               = f.hidden_field(:source, value: "launchpad")
-              %fieldset{style: "display: inline-block; margin-right:16px; width:58.1%;"}
+              %fieldset{style: "display: inline-block; margin-right:15px; width:58.1%;"}
                 %legend Create an Arena question
                 %span.help-block What's your question?
                 = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
                 %span.help-block What are the possible answers?
                 %label Correct answer
-                = f.text_field(:answer1, placeholder: "Required", style:"margin-left:22px;")
+                = f.text_field(:answer1, placeholder: "Required", style:"margin-left:17px;")
                 %label Wrong answer
                 = f.text_field(:answer2, placeholder: "Required", style:"margin-left:22px;")
                 %label Wrong answer
                 = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
                 %label Wrong answer
                 = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
-                %div.control-group{style:"width:350px;"}
-                  %div.controls
-                    = render "stored_resources/new_image"
                 %span.error_message
                 %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
-              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:195px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                 %h4 
                   %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
                   Tips:
@@ -48,6 +45,12 @@
                 %h4{style:"margin-top:12px; font-size:14px;"} Your question:
                 %div{style:"margin-left:12px;"}
                   %span.question{style:"font-weight:bold;font-size:14px;"}
+                %h4{style:"margin-top:12px; font-size:14px;"} Correct answer:
+                %div{style:"margin-left:12px;"}
+                  %span{style:"font-weight:bold;font-size:14px;"} **Correct answer**
+                %h4{style:"margin-top:12px; font-size:14px;"} Wrong answers:
+                %div{style:"margin-left:12px;"}
+                  %span{style:"font-weight:bold;font-size:14px;"} **Comma separated wrong answers**
                 %h4{style:"margin-top:12px; font-size:14px; "} Here's where this Arena question will appear:
                 %div{style:"margin-left:12px;"}
                   %span{style:" font-size:14px;"} Challenge:
