@@ -331,6 +331,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .aboutbody span{font-size:11px; line-height:18px;}
 .aboutbody h4{font-weight:bold; line-height:32px; font-size:16px}
 .challengeset{margin-bottom:5px;}
+.challengepagechallenge:nth-child(3n){margin-right:33px;}
 .challengepagechallenge:nth-child(4n){margin-right:0px;}
 
 /* Popover -- guided help */
