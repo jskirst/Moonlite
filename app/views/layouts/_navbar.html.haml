@@ -53,7 +53,7 @@
                   %div
                     %div.nub{ style: "left:150px;" }
                   %div.leftboxheader Your Challenges
-                  %div.leftboxfooter{style:"padding:0; background-color:white;"}
+                  %div.leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:scroll;"}
                     - current_user.enrollments.includes(:path).all(order: "total_points DESC").each do |e|
                       = link_to challenge_path(e.path.permalink) do
                         %div.singleprogressentry
@@ -74,13 +74,14 @@
                   %div
                     %div.nub
                   %div.leftboxheader Notifications
-                  - notifications.each do |event|
-                    %li.notification_space
-                      %div.notification{ class: "#{event.is_read ? '' : 'notification-unread'}" }
-                        = link_to event.link do
-                          = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;"
-                          %p.notification_body= event.content
-                          %p.notification_time #{time_ago_in_words(event.created_at)} ago
+                  %div.leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: scroll;"}
+                    - notifications.each do |event|
+                      %li.notification_space
+                        %div.notification{ class: "#{event.is_read ? '' : 'notification-unread'}" }
+                          = link_to event.link do
+                            = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;"
+                            %p.notification_body= event.content
+                            %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:10px;" }
