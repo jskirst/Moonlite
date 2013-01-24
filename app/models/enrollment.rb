@@ -19,7 +19,7 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def add_earned_points(points, callback)
+  def add_earned_points(points, callback = nil)
     points = points.to_i
     self.total_points = self.total_points + points
     if self.total_points >= CONTRIBUTION_THRESHOLD

@@ -19,4 +19,8 @@ class ApplicationController < ActionController::Base
     e.content = content
     e.save!
   end
+  
+  def unlock_contribution
+    log_event(nil, root_url, nil, "Congratulations! You have unlocked the ability to contribute new questions and tasks to Challenges.")
+  end
 end

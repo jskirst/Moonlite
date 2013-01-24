@@ -173,11 +173,11 @@ class User < ActiveRecord::Base
     enrollments.find_by_path_id(path.id).destroy
   end
   
-  def award_points(task, points)
+  def award_points(task, points, callback = nil)
     if points.to_i > 0
       log_transaction(task.id, points)
       self.update_attribute('earned_points', self.earned_points + points)
-      enrollments.find_by_path_id(task.section.path_id).add_earned_points(points)
+      enrollments.find_by_path_id(task.section.path_id).add_earned_points(points, callback)
     end
   end
   
