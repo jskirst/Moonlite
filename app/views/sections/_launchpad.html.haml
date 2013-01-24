@@ -72,9 +72,12 @@
                 %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          %div.launchpadtip
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %p Enter the Arena and take multiple-choice questions to discover where you stand. 
           - tasks_completed = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
           - if @core_tasks.empty?
-            %p No core tasks available.
+            %p No Arena questions available.
           - elsif tasks_completed
             - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
             - earned_points = 0
@@ -87,7 +90,6 @@
             - else
               %p Don't worry, more Arena questions are added all everyday. Complete some Tasks or answer some Creative Response questions to earn more points and continue to level up. 
           - else
-            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
             %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       %div#questions_tab.tab_content{ style: "" }
         - if @enrollment.contribution_unlocked
@@ -124,7 +126,10 @@
                     %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
-                    %li You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if it's reported and taken down.
+                    %li 
+                      You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
+                      %span
+                        %a#points-tt2.mb-tooltip{href:"#", rel:"tooltip"}
               %div.step2{ style: "display: none;" }
                 %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
                   %legend{style:"margin-bottom:5px; "} Create a CR
@@ -153,6 +158,9 @@
                 %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          %div.launchpadtip
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %p Creative Response questions let you demonstrate your skills. Responses to CR's appear in the stream so they can be voted and commented upon.
           - if @challenge_tasks.empty?
             %p No Challenge tasks available.
           - else
@@ -166,7 +174,7 @@
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                       %div.launchpadpoints= t.points_awarded.to_i.to_s + " points"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
@@ -189,10 +197,13 @@
                     %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
                     Tips:
                   %ul{style:"font-size:13px;"}
-                    %li Tasks should serve as a guide to improving at the section.
+                    %li Tasks should serve as a path to improving at the section.
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
-                    %li You <strong>earn 50 points</strong> per published Task, but will <strong>lose 100 points</strong> if it's reported and taken down.
+                    %li 
+                      You <strong>earn 50 points</strong> per published Task, but will <strong>lose 100 points</strong> if it's reported and taken down.
+                      %span
+                        %a#points-tt3.mb-tooltip{href:"#", rel:"tooltip"}
               %div.step2{ style: "display: none;" }
                 %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
                   %legend{style:"margin-bottom:5px; "} Create a Task
@@ -218,6 +229,9 @@
                 %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another Task
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
+          %div.launchpadtip
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %p Use Tasks to verify the things you've done and guide you towards what to do next. 
           - if @achievement_tasks.empty?
             %p No tasks available.
           - else
@@ -329,4 +343,6 @@
       });
     });
     
-    $('#points-tt').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
+    $('#points-tt1').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
+    $('#points-tt2').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
+    $('#points-tt3').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
