@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130120184815) do
+ActiveRecord::Schema.define(:version => 20130123213546) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -97,9 +97,10 @@ ActiveRecord::Schema.define(:version => 20130120184815) do
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "total_points", :default => 0
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
+    t.integer  "total_points",          :default => 0
+    t.boolean  "contribution_unlocked", :default => false
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"

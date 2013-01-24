@@ -1,8 +1,9 @@
 %div.sectioninfocontainer
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
-      %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
-      %ul.nav.nav-tabs{style:"margin-bottom:13px;"}
+      - if @enrollment.contribution_unlocked
+        %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
+      %ul.nav.nav-tabs
         %li.active
           %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
         %li
@@ -10,68 +11,66 @@
         %li
           %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks      
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
-        %div.editor_view{ style: "display: none; height:100%;" }
-          = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0; height:90%; margin-top:-10px;" }) do |f|
-            %div.step1
-              = f.hidden_field(:answer_type, value: Task::MULTIPLE)
-              = f.hidden_field(:section_id, value: @current_section.id)
-              = f.hidden_field(:source, value: "launchpad")
-              %fieldset{style: "display: inline-block; margin-right:15px; width:58.1%;"}
-                %legend Create an Arena question
-                %span.help-block What's your question?
-                = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
-                %span.help-block What are the possible answers?
-                %label Correct answer
-                = f.text_field(:answer1, placeholder: "Required", style:"margin-left:17px;")
-                %label Wrong answer
-                = f.text_field(:answer2, placeholder: "Required", style:"margin-left:22px;")
-                %label Wrong answer
-                = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
-                %label Wrong answer
-                = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
-                %span.error_message
-                %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
-              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
-                %h4 
-                  %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
-                  Tips:
-                %ul{style:"font-size:13px;"}
-                  %li Questions should cover the core knowledge area of the section they're placed.
-                  %li Keep the tone informal but direct.
-                  %li Make sure you check for spelling and grammar.
-                  %li 
-                    You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
-                    %span
-                      %a#points-tt1.mb-tooltip{href:"#", rel:"tooltip"}
-            %div.step2{ style: "display: none;" }
-              %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
-                %legend{style:"margin-bottom:5px; "} Create an Arena question
-                %h4{style:"margin-top:12px; font-size:14px;"} Your question:
-                %div{style:"margin-left:12px;"}
-                  %span.question{style:"font-weight:bold;font-size:14px;"}
-                %h4{style:"margin-top:12px; font-size:14px;"} Correct answer:
-                %div{style:"margin-left:12px;"}
-                  %span{style:"font-weight:bold;font-size:14px;"} **Correct answer**
-                %h4{style:"margin-top:12px; font-size:14px;"} Wrong answers:
-                %div{style:"margin-left:12px;"}
-                  %span{style:"font-weight:bold;font-size:14px;"} **Comma separated wrong answers**
-                %h4{style:"margin-top:12px; font-size:14px; "} Here's where this Arena question will appear:
-                %div{style:"margin-left:12px;"}
-                  %span{style:" font-size:14px;"} Challenge:
-                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
-                  %br/
-                  %span{style:" font-size:14px;"} Section: 
-                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
-                %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
-                %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
-                = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
-            %div.step3{ style: "display: none;" }
-              %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
-              %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
-              %h4{style:"margin-top:12px; font-size:16px;"} Your question is now visible to the MetaBright community!
-              %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} Remember, you earn 50 points every time you publish a question, but if your question is reported and taken down, you'll lose 100 points.
-              %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
-              %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
+        - if @enrollment.contribution_unlocked
+          %div.editor_view{ style: "display: none; height:100%;" }
+            = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0; height:90%; margin-top:-10px;" }) do |f|
+              %div.step1
+                = f.hidden_field(:answer_type, value: Task::MULTIPLE)
+                = f.hidden_field(:section_id, value: @current_section.id)
+                = f.hidden_field(:source, value: "launchpad")
+                %fieldset{style: "display: inline-block; margin-right:15px; width:58.1%;"}
+                  %legend Create an Arena question
+                  %span.help-block What's your question?
+                  = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
+                  %span.help-block What are the possible answers?
+                  %label Correct answer
+                  = f.text_field(:answer1, placeholder: "Required", style:"margin-left:17px;")
+                  %label Wrong answer
+                  = f.text_field(:answer2, placeholder: "Required", style:"margin-left:22px;")
+                  %label Wrong answer
+                  = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
+                  %label Wrong answer
+                  = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
+                  %span.error_message
+                  %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
+                %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+                  %h4 
+                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                    Tips:
+                  %ul{style:"font-size:13px;"}
+                    %li Questions should cover the core knowledge area of the section they're placed.
+                    %li Keep the tone informal but direct.
+                    %li Make sure you check for spelling and grammar.
+                    %li 
+                      You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
+                      %span
+                        %a#points-tt.mb-tooltip{href:"#", rel:"tooltip"}
+              %div.step2{ style: "display: none;" }
+                %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
+                  %legend{style:"margin-bottom:5px; "} Create an Arena question
+                  %h4{style:"margin-top:12px; font-size:14px;"} Your question:
+                  %div{style:"margin-left:12px;"}
+                    %span.question{style:"font-weight:bold;font-size:14px;"}
+                  %h4{style:"margin-top:12px; font-size:14px;"} Correct answer:
+                  %div{style:"margin-left:12px;"}
+                    %span.correct_answer{style:"font-weight:bold;font-size:14px;"}
+                  %h4{style:"margin-top:12px; font-size:14px; "} Here's where this Arena question will appear:
+                  %div{style:"margin-left:12px;"}
+                    %span{style:" font-size:14px;"} Challenge:
+                    %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
+                    %br/
+                    %span{style:" font-size:14px;"} Section: 
+                    %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
+                  %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
+                  %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
+                  = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
+              %div.step3{ style: "display: none;" }
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
+                %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
+                %h4{style:"margin-top:12px; font-size:16px;"} Your question is now visible to the MetaBright community!
+                %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} Remember, you earn 50 points every time you publish a question, but if your question is reported and taken down, you'll lose 100 points.
+                %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
+                %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
           %div.launchpadtip
             %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
@@ -91,73 +90,73 @@
             - else
               %p Don't worry, more Arena questions are added all everyday. Complete some Tasks or answer some Creative Responses to earn more points and continue to level up. 
           - else
-            %p{ style: "margin: 15px 0 15px 0;" } Enter the Arena to see where you stack up!
             %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       %div#questions_tab.tab_content{ style: "" }
-        %div.editor_view{ style: "display: none; height:100%;" }
-          = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
-            %div.step1
-              = f.hidden_field(:answer_type, value: Task::CREATIVE)
-              = f.hidden_field(:section_id, value: @current_section.id)
-              = f.hidden_field(:source, value: "launchpad")
-              %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
-                %legend Create a CR
-                %label What's your question?
-                = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
-                %div.control-group{style:"width:350px;"}
-                  %div.controls
-                    = render "stored_resources/new_image"
-                %label What type of response should people give?
-                %label.radio
-                  = f.radio_button(:answer_sub_type, Task::TEXT, class: "answer_sub_type")
-                  = Task::SUBTYPES[Task::TEXT]
-                %label.radio
-                  = f.radio_button(:answer_sub_type, Task::IMAGE, class: "answer_sub_type")
-                  = Task::SUBTYPES[Task::IMAGE]
-                %label.radio
-                  = f.radio_button(:answer_sub_type, Task::YOUTUBE, class: "answer_sub_type")
-                  = Task::SUBTYPES[Task::YOUTUBE]
-                %span.error_message
-                %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
-              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
-                %h4 
-                  %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
-                  Tips:
-                %ul{style:"font-size:13px;"}
-                  %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
-                  %li Keep the tone informal but direct.
-                  %li Make sure you check for spelling and grammar.
-                  %li 
-                    You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
-                    %span
-                      %a#points-tt2.mb-tooltip{href:"#", rel:"tooltip"}
-            %div.step2{ style: "display: none;" }
-              %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
-                %legend{style:"margin-bottom:5px; "} Create a CR
-                %h4{style:"margin-top:12px; font-size:14px;"} Your question:
-                %div{style:"margin-left:12px;"}
-                  %span.question{style:"font-weight:bold;font-size:14px;"}
-                %h4{style:"margin-top:12px; font-size:14px;"} Question type:
-                %div{style:"margin-left:12px;"}
-                  %span.task_subtype{style:"font-weight:bold;font-size:14px;"} 
-                %h4{style:"margin-top:12px; font-size:14px; "} Here's where this question will appear:
-                %div{style:"margin-left:12px;"}
-                  %span{style:" font-size:14px;"} Challenge:
-                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
-                  %br/
-                  %span{style:" font-size:14px;"} Section: 
-                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
-                %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
-                %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
-                = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
-            %div.step3{ style: "display: none;" }
-              %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
-              %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
-              %h4{style:"margin-top:12px; font-size:16px;"} Your CR is now visible to the MetaBright community!
-              %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn 50 points every time you publish a CR, but if your question is reported and taken down, you'll lose 100 points.
-              %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you'd like, you can <a class="take">post a response</a> to your CR now. 
-              %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
-              %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
+        - if @enrollment.contribution_unlocked
+          %div.editor_view{ style: "display: none; height:100%;" }
+            = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
+              %div.step1
+                = f.hidden_field(:answer_type, value: Task::CREATIVE)
+                = f.hidden_field(:section_id, value: @current_section.id)
+                = f.hidden_field(:source, value: "launchpad")
+                %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
+                  %legend Create a CR
+                  %label What's your question?
+                  = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
+                  %div.control-group{style:"width:350px;"}
+                    %div.controls
+                      = render "stored_resources/new_image"
+                  %label What type of response should people give?
+                  %label.radio
+                    = f.radio_button(:answer_sub_type, Task::TEXT, class: "answer_sub_type")
+                    = Task::SUBTYPES[Task::TEXT]
+                  %label.radio
+                    = f.radio_button(:answer_sub_type, Task::IMAGE, class: "answer_sub_type")
+                    = Task::SUBTYPES[Task::IMAGE]
+                  %label.radio
+                    = f.radio_button(:answer_sub_type, Task::YOUTUBE, class: "answer_sub_type")
+                    = Task::SUBTYPES[Task::YOUTUBE]
+                  %span.error_message
+                  %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
+                %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+                  %h4 
+                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                    Tips:
+                  %ul{style:"font-size:13px;"}
+                    %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
+                    %li Keep the tone informal but direct.
+                    %li Make sure you check for spelling and grammar.
+                    %li 
+                      You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
+                      %span
+                        %a#points-tt2.mb-tooltip{href:"#", rel:"tooltip"}
+              %div.step2{ style: "display: none;" }
+                %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
+                  %legend{style:"margin-bottom:5px; "} Create a CR
+                  %h4{style:"margin-top:12px; font-size:14px;"} Your question:
+                  %div{style:"margin-left:12px;"}
+                    %span.question{style:"font-weight:bold;font-size:14px;"}
+                  %h4{style:"margin-top:12px; font-size:14px;"} Question type:
+                  %div{style:"margin-left:12px;"}
+                    %span.task_subtype{style:"font-weight:bold;font-size:14px;"} 
+                  %h4{style:"margin-top:12px; font-size:14px; "} Here's where this question will appear:
+                  %div{style:"margin-left:12px;"}
+                    %span{style:" font-size:14px;"} Challenge:
+                    %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
+                    %br/
+                    %span{style:" font-size:14px;"} Section: 
+                    %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
+                  %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
+                  %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
+                  = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
+              %div.step3{ style: "display: none;" }
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
+                %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
+                %h4{style:"margin-top:12px; font-size:16px;"} Your CR is now visible to the MetaBright community!
+                %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn 50 points every time you publish a CR, but if your question is reported and taken down, you'll lose 100 points.
+                %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you'd like, you can <a class="take">post a response</a> to your CR now. 
+                %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
+                %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
           %div.launchpadtip
             %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
@@ -180,54 +179,55 @@
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
       %div#achievements_tab.tab_content{ style: "display: none;" }
-        %div.editor_view{ style: "display: none; height:100%;" }
-          = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
-            %div.step1
-              = f.hidden_field(:answer_type, value: Task::CHECKIN)
-              = f.hidden_field(:section_id, value: @current_section.id)
-              = f.hidden_field(:source, value: "launchpad")
-              %fieldset{style: "display: inline-block; margin-right:28px; margin-bottom:150px; width:56%;"}
-                %legend Create a Task
-                %label What's the Task?
-                = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Task...", style:"width:100%;")                
-                %span.error_message
-                %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
-              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
-                %h4 
-                  %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
-                  Tips:
-                %ul{style:"font-size:13px;"}
-                  %li Tasks should serve as a path to improving at the section.
-                  %li Keep the tone informal but direct.
-                  %li Make sure you check for spelling and grammar.
-                  %li 
-                    You <strong>earn 50 points</strong> per published Task, but will <strong>lose 100 points</strong> if it's reported and taken down.
-                    %span
-                      %a#points-tt3.mb-tooltip{href:"#", rel:"tooltip"}
-            %div.step2{ style: "display: none;" }
-              %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
-                %legend{style:"margin-bottom:5px; "} Create a Task
-                %h4{style:"margin-top:12px; font-size:14px;"} Your new Task:
-                %div{style:"margin-left:12px;"}
-                  %span.question{style:"font-weight:bold;font-size:14px;"}
-                %h4{style:"margin-top:12px; font-size:14px; "} Here's where this Task will appear:
-                %div{style:"margin-left:12px;"}
-                  %span{style:" font-size:14px;"} Challenge:
-                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
-                  %br/
-                  %span{style:" font-size:14px;"} Section: 
-                  %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
-                %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
-                %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
-                = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
-            %div.step3{ style: "display: none;" }
-              %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
-              %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
-              %h4{style:"margin-top:12px; font-size:16px;"} Your Task is now visible to the MetaBright community!
-              %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn 50 points every time you publish a Task, but if it's reported and taken down, you'll lose 100 points.
-              %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you've already personally completed this Task, you can <a class="take">mark it as complete</a> now. 
-              %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another Task
-              %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
+        - if @enrollment.contribution_unlocked
+          %div.editor_view{ style: "display: none; height:100%;" }
+            = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
+              %div.step1
+                = f.hidden_field(:answer_type, value: Task::CHECKIN)
+                = f.hidden_field(:section_id, value: @current_section.id)
+                = f.hidden_field(:source, value: "launchpad")
+                %fieldset{style: "display: inline-block; margin-right:28px; margin-bottom:150px; width:56%;"}
+                  %legend Create a Task
+                  %label What's the Task?
+                  = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Task...", style:"width:100%;")                
+                  %span.error_message
+                  %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
+                %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+                  %h4 
+                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                    Tips:
+                  %ul{style:"font-size:13px;"}
+                    %li Tasks should serve as a path to improving at the section.
+                    %li Keep the tone informal but direct.
+                    %li Make sure you check for spelling and grammar.
+                    %li 
+                      You <strong>earn 50 points</strong> per published Task, but will <strong>lose 100 points</strong> if it's reported and taken down.
+                      %span
+                        %a#points-tt3.mb-tooltip{href:"#", rel:"tooltip"}
+              %div.step2{ style: "display: none;" }
+                %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
+                  %legend{style:"margin-bottom:5px; "} Create a Task
+                  %h4{style:"margin-top:12px; font-size:14px;"} Your new Task:
+                  %div{style:"margin-left:12px;"}
+                    %span.question{style:"font-weight:bold;font-size:14px;"}
+                  %h4{style:"margin-top:12px; font-size:14px; "} Here's where this Task will appear:
+                  %div{style:"margin-left:12px;"}
+                    %span{style:" font-size:14px;"} Challenge:
+                    %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.path.name}
+                    %br/
+                    %span{style:" font-size:14px;"} Section: 
+                    %span{style:"font-weight:bold;font-size:14px;"} #{@current_section.name}
+                  %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
+                  %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
+                  = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
+              %div.step3{ style: "display: none;" }
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
+                %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
+                %h4{style:"margin-top:12px; font-size:16px;"} Your Task is now visible to the MetaBright community!
+                %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn 50 points every time you publish a Task, but if it's reported and taken down, you'll lose 100 points.
+                %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you've already personally completed this Task, you can <a class="take">mark it as complete</a> now. 
+                %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another Task
+                %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
           %div.launchpadtip
             %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
@@ -296,17 +296,21 @@
           if($editor.find("input[name*=answer_type]").val() == 0){
             if($editor.find("input[name*=answer_sub_type]:checked").size() == 0){
               return log_error("You must provide an answer type.");
+            } else {
+              $editor.find(".step2 span.task_subtype").text(task_subtypes[$editor.find("input[name*=answer_sub_type]:checked").val()]);
             }
           } else if ($editor.find("input[name*=answer_type]").val() == 2){
             if($editor.find("input[name*=answer1]").val() == ""){
               return log_error("You must provide a correct answer.");
-            }
-            if($editor.find("input[name*=answer2]").val() == ""){
-              return log_error("You must provide at least one incorrect answer.");
+            } else {
+              if($editor.find("input[name*=answer2]").val() == ""){
+                return log_error("You must provide at least one incorrect answer.");
+              } else {
+                $editor.find(".step2 span.correct_answer").text($editor.find("input[name*=answer1]").val());
+              }
             }
           }
           $editor.find(".step2 span.question").text($editor.find("textarea[name='task[question]']").val());
-          $editor.find(".step2 span.task_subtype").text(task_subtypes[$editor.find("input[name*=answer_sub_type]:checked").val()]);
           $editor.find(".step1").hide();
           $editor.find(".step2").show();
         });
