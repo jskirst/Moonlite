@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     @page = params[:page].to_i
     offset = @page * 30
     if params[:task]
-      all_responses = @user.completed_tasks.joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE)
+      all_responses = @user.completed_tasks.joins(:submitted_answer, :task)
       @newsfeed_items = [all_responses.find_by_task_id(params[:task])]
     elsif params[:order] && params[:order] == "votes"
       all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("total_votes DESC")
