@@ -129,7 +129,7 @@ class PathsController < ApplicationController
     if @section.nil? || @section.is_published == false
       redirect_to @path
     else
-      redirect_to continue_section_path(@section)
+      redirect_to start_section_path(@section)
     end
   end
   
