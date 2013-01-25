@@ -21,12 +21,15 @@
         = render "stored_resource", { :stored_resource => @stored_resource }
       %div.CRquestionandresponsespace
         %div.CRquestionspace
-          %span.CRquestionheader Creative response:
+          - if @task.answer_type == Task::CREATIVE
+            %span.CRquestionheader Creative response:
+          - elsif @task.answer_type == Task::CHECKIN
+            %span.CRquestionheader Task:
           %br
           %span.CRquestion= @task.question
-        %div.CRresponsespace{ style: "min-height: 175px;" } 
-          %span Your answer:
+        %div.CRresponsespace{ style: "min-height: 175px;" }           
           - if @task.answer_type == Task::CREATIVE
+            %span Your answer:
             - if @task.answer_sub_type == Task::TEXT
               :javascript
                 $(function(){
@@ -77,10 +80,11 @@
                   %div#answer_preview
                     = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
           - elsif @task.answer_type == Task::CHECKIN
+            %span{style:"font-size:16px;"} I hearby proclaim in this land of MetaBright, with Stoney as my witness, that I have completed the Task stated here.
             :javascript
               $(function(){ check_checkin_before_submit(); });
             %div.input{ style: "margin: 10px 0 0 0; " }
-              %p Been there, done that.
+              %p 
               %input#checkin{ type: "hidden", name: "answer", value: false }
               %a#checkin_button.button.button-standard Confirm
       %div.CRbuttonspace

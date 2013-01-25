@@ -122,7 +122,7 @@ module SessionsHelper
   end
   
   def social_title
-    @social_title || "MetaBright - Bowties are cool"
+    @social_title || "MetaBright - Prove and Promote your Skills"
   end
   
   def social_description

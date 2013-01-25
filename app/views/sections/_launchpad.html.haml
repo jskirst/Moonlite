@@ -76,7 +76,7 @@
             %p Enter the Arena and take multiple-choice questions to discover where you stand. 
           - tasks_completed = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
           - if @core_tasks.empty?
-            %p No Arena questions available.
+            %p No Arena questions are available at the moment. Check back again later.
           - elsif tasks_completed
             - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
             - earned_points = 0
@@ -87,7 +87,7 @@
             - if tasks_remaining
               %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable"
             - else
-              %p Don't worry, more Arena questions are added all everyday. Complete some Tasks or answer some Creative Response questions to earn more points and continue to level up. 
+              %p Arena questions are added daily. When more are available, you can return here to take them. Complete Tasks or answer some Creative Responses to earn more points and continue to level up. 
           - else
             %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       %div#questions_tab.tab_content{ style: "" }
@@ -159,7 +159,7 @@
         %div.task_view
           %div.launchpadtip
             %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
-            %p Creative Response questions let you demonstrate your skills. Responses to CR's appear in the stream so they can be voted and commented upon.
+            %p Creative Responses let you demonstrate your skills. Responses to CR's appear in the stream so they can be voted and commented upon.
           - if @challenge_tasks.empty?
             %p No Challenge tasks available.
           - else
@@ -244,9 +244,9 @@
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", target: "_blank"
+                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                       %br
-                      %span.launchpadpoints= t.points_awarded.to_i.to_s + " points"
+                      %div.launchpadpoints{style:"margin-right:4px;"}= t.points_awarded.to_i.to_s + " points"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
 

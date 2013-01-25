@@ -4,7 +4,6 @@
 .launchpad h1>div { position:relative; bottom:8px; display:inline;}
 .launchpadcontent { margin-left:10px; margin-top:10px; border-collapse:collapse; }
 .launchpadpoints { font-weight:bold; font-size:11px; white-space:nowrap; position:relative; top:2px;}
-.launchpadsectioncolumn { display: inline-block; border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; padding: 10px;width: 160px;vertical-align: top; overflow: auto; height: 330px;}
 .launchpadCRcolumn { width: 100%; display:inline-block; vertical-align: top; overflow:auto; }
 .launchpadCRcolumn table { width: 100%; }
 .launchpadCRcolumn td.question_status { text-align: right; }
@@ -23,7 +22,7 @@
 .sectioninfocontainer { background-color:white; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1);  display:inline-block; width:635px; height:460px; margin: 0 0 0 10px;  padding:10px;  overflow:auto;}
 #sectionpointchart { width: 627px; height: 60px; margin: 0 auto; margin-bottom: 12px; }
 
-.launchpadsectioncolumn {background-color: #F9F9F9;display:inline-block;border-right: 1px solid rgba(0, 0, 0, .1); padding-right:10px; width:175px; vertical-align: top;overflow:auto; height:460px;}
+.launchpadsectioncolumn {background-color: #F9F9F9;display:inline-block; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1); padding:10px 5px; width:185px; vertical-align: top;overflow:auto; height:460px;}
 .launchpadsectionpoints {display:inline-block; vertical-align: top;}
 .launchpadCRcolumn {display:inline-block;vertical-align: top; overflow:auto;}
 .launchpadCRcolumn td {font-style:italic;}
@@ -33,7 +32,7 @@
 .sectionlist li {list-style: none; line-height: 28px;}
 .sectionlist a {font-size:14px;}
 .sectionlist hr {margin:4px 0;}
-.pointsandprogress {display:inline-block; font-size:10px; font-style:italic; float:right; text-align:right; margin-top:-6px;}
+.pointsandprogress {display:inline-block; font-size:10px; font-style:italic; float:right; text-align:right; margin-top:-6px; width:24%;}
 .pointsandprogress div { margin-bottom:-16px;}
 .launchpad_link { border-bottom: 1px solid #EEE; margin: 4px 0px;}
 
