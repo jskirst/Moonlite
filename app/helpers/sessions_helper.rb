@@ -83,7 +83,11 @@ module SessionsHelper
   
   def can_add_tasks(path)
     enrollment = current_user.enrollments.find_by_path_id(path.id)
-    return enrollment.total_points >= 100
+    enrollment = current_user.enroll!(path) if enrollment.nil?
+    if path.user == current_user && !enrollment.contribution_unlocked
+      enrollment.update_attribute(:contribution_unlocked, true)
+    end
+    return enrollment.contribution_unlocked
   end
   
   def deny_access

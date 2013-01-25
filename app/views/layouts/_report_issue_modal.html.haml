@@ -2,7 +2,15 @@
   %div#report_issue_modal.dropdown_modal.modal.hide.fade
     %div.explorecontainer{ style: "width: 514px; background:none; border:none;" }
       :javascript
-        $(function(){ close_button(); });
+        $(function(){ 
+          close_button();
+          $("#new_task_issue").submit(function(){
+            if($(this).find("input[name*=issue_type]:checked").size() == 0){
+              alert("Please indicate what is wrong with the question before submitting this issue.");
+              return false;
+            }
+          }); 
+        });
       %div.explorenewusercontent{ style: "margin:30px;" }
         %div.exploreheader{ style: "width: inherit;" }
           %div.modal_close

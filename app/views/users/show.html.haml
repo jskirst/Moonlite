@@ -3,12 +3,11 @@
     $('.bar2').mosaic({ animation : 'slide' });
     $('.comment').click({ animation: 'slide', hover_x: '400px' });
     $('.accordion-toggle').click(function() {
-      if($(this).hasClass("active_accordion") == false ) {
-        $('.accordion-toggle').removeClass('active_accordion');
-        $(this).addClass('active_accordion');}
-      else {
-        $('.accordion-toggle').removeClass('active_accordion');}
-      });
+      if($(this).hasClass("active_accordion") == true ) {
+        $(this).removeClass('active_accordion');
+      } else {
+        $(this).addClass('active_accordion');
+      }
     });
   });
 
@@ -48,14 +47,17 @@
           Completed Tasks
         - if @completed_tasks.count > 0
           %div.leftboxfooter
-            %div#accordion2.accordion
+            %div.accordion
+              - counter = 0
               - @completed_tasks.each do |challenge_name, tasks|
+                - challenge_id = "challenge_#{counter.to_s}"
+                - counter += 1
                 %div.accordion-group
                   %div.accordion-heading
-                    %a.accordion-toggle{"data-parent" => "#accordion2", "data-toggle" => "collapse", href:"#collapseOne"}
+                    %a.accordion-toggle{ "data-toggle" => "collapse", href: "##{challenge_id}" }
                       %div.expand_contract
                       %span= challenge_name
-                  %div#collapseOne.accordion-body.collapse
+                  %div.accordion-body.collapse{ id: challenge_id }
                     %div.accordion-inner
                       - tasks.each do |task|
                         %div.singletaskentry
