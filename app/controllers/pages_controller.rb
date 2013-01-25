@@ -20,14 +20,16 @@ class PagesController < ApplicationController
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @newsfeed_items = []
     @page = params[:page].to_i
-    challenge_questions = current_user.completed_tasks
-      .joins(:task)
-      .where("tasks.answer_type = ?", Task::CREATIVE)
-      .select(:section_id)
-      .to_a.collect &:section_id
-    unless challenge_questions.empty?
+    relevant_paths = current_user.enrollments.to_a.collect &:path_id
+    if relevant_paths.empty?
       @newsfeed_items = CompletedTask.joins(:task, :submitted_answer)
-        .where("tasks.section_id in (?)", challenge_questions)
+        .where("tasks.answer_type = ?", Task::CREATIVE)
+        .order("completed_tasks.created_at DESC")
+        .limit(30)
+        .offset(@page * 30)
+    else
+      @newsfeed_items = CompletedTask.joins({:task => :section}, :submitted_answer)
+        .where("sections.path_id in (?) and tasks.answer_type = ?", relevant_paths, Task::CREATIVE)
         .order("completed_tasks.created_at DESC")
         .limit(30)
         .offset(@page * 30)
