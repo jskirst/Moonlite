@@ -76,7 +76,6 @@ function truncate(text, length, ellipsis) {
 function init_iph(){
   for(help_pop in all_help){
     if(viewed_help.indexOf(help_pop) < 0){
-      console.log(help_pop);
       $('#'+help_pop).popover({
         trigger: 'manual',
         placement: all_help[help_pop].placement,  
