@@ -36,7 +36,6 @@
                   check_text_before_submit();
                 });
               %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
-              %p{ style: "font-style:italic;" } *Points awarded by number of votes
             - elsif @task.answer_sub_type == Task::IMAGE
               :javascript
                 $(function(){
@@ -53,7 +52,6 @@
                 %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px;"} Preview
                 %p{ style: "margin:4px; line-height:18px; font-size: 13px;"} or #{file_field_tag("obj")}
-                %p{ style: "font-style:italic;" } *Points awarded by votes
                 %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                   %div#answer_preview{ style: "text-align: center; padding: 10px;" }
                     = image_tag "/images/image_thumb.png", :style => "width: 125px;", :id => "image_placeholder"
@@ -75,7 +73,6 @@
               %div.input{ style: "margin-left: 0px; " }
                 %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to youtube video here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:5px;" } Preview
-                %p{ style: "font-style:italic;" } *Points awarded by votes
                 %div#answer_preview_container{ style: "text-align: center;padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                   %div#answer_preview
                     = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"

@@ -17,7 +17,7 @@
       = image_tag @user.profile_pic, class: "bigheaderimage"
       %div.rightofbigheaderimage
         %div#topboxcontent{ style: "height: 83px;" }
-          %div{ style: "width: 118px; float:right;" }
+          %div{ style: "width: 119px; float:right;" }
             - if @user == current_user
               = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard"
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
@@ -72,7 +72,7 @@
         %div.leftboxheader Persona Progress
         %div.leftboxfooter{style:"padding-top: 6px"}
           - @user_personas.each do |user_persona|
-            %div
+            %div.persona_progress_area
               = image_tag user_persona.persona.image, style:"width:50px; height:50px;"              
               %div.personaprogress
                 %span{ style: "font-size:18px;" }= user_persona.persona.name

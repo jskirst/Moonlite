@@ -7,7 +7,6 @@
 .launchpadCRcolumn { width: 100%; display:inline-block; vertical-align: top; overflow:auto; }
 .launchpadCRcolumn table { width: 100%; }
 .launchpadCRcolumn td.question_status { text-align: right; }
-.launchpadCRcolumn td { font-style:italic; }
 .launchpadcolumnheader { font-weight:bold; text-align: left; font-size:16px; margin-bottom:10px;}
 
 .launchpadcolumnsubheader { font-weight:bold; text-align:right; font-style:italic; }
@@ -25,7 +24,6 @@
 .launchpadsectioncolumn {background-color: #F9F9F9;display:inline-block; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1); padding:10px 5px; width:185px; vertical-align: top;overflow:auto; height:460px;}
 .launchpadsectionpoints {display:inline-block; vertical-align: top;}
 .launchpadCRcolumn {display:inline-block;vertical-align: top; overflow:auto;}
-.launchpadCRcolumn td {font-style:italic;}
 .launchpadcolumnheader {font-weight:bold; text-align: left; margin-bottom:10px;}
 .launchpadcolumnsubheader {font-weight:bold; text-align:right; font-style:italic;}
 .sectionlist {margin: 0 0 18px 2px; text-align:left;}
