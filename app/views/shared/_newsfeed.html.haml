@@ -49,13 +49,13 @@
               %div.vote_count= r.submitted_answer.total_votes.to_i
       %div.posttext.leveltext.dropdown
         %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{r.task.question}
-        %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; "}
+        %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
           %li
             %div
               %div.sidenub
             %div{ style: "padding: 3px 0px;"}
-              %ul.profile_dropdown{ style: "list-style: none; margin: 0 0 0 4px;"}
-                %li.CR_dropdown_option 
+              %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
+                %li.CR_dropdown_option{ style: ("display:none;" if current_user == r.user)} 
                   = link_to "Answer this question", take_section_path(r.task.section_id, task_id: r.task.id)
                 %li.CR_dropdown_option
                   = link_to "View all responses", task_drilldown_path(r.task.id)
