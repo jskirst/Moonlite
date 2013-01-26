@@ -85,12 +85,13 @@ namespace :db do
                 { content: "#{(4*n)+2}", is_correct: false }
               ],
               points: 10,
-              answer_type: 2
+              answer_type: 2,
+              creator_id: moonlite_admin
             )
           end
-          section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT)
-          section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE)
-          section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE)
+          section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin)
+          section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE, creator_id: moonlite_admin)
+          section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE, creator_id: moonlite_admin)
         end
       end
     end
