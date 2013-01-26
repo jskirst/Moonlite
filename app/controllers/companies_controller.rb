@@ -9,6 +9,7 @@ class CompaniesController < ApplicationController
     end
 
     @users                  = User.where("id not in (?)", excluded).count
+    @returning_users        = User.where("id not in (?)", excluded).where("created_at != login_at").count
     @arena_answers          = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).count
     @creative_answers       = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).count
     @task_answers           = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
@@ -19,6 +20,7 @@ class CompaniesController < ApplicationController
     @comments               = Comment.where("user_id not in (?)", excluded).count
     
     @new_users              = User.where("id not in (?)", excluded).where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_returning_users    = User.where("id not in (?)", excluded).where("DATE(created_at) != DATE(?) and DATE(login_at) = DATE(?)", Time.now, Time.now).count
     @new_arena_answers      = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
     @new_creative_answers   = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
     @new_task_answers       = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
