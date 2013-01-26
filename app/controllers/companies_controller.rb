@@ -8,19 +8,23 @@ class CompaniesController < ApplicationController
       admin_users = User.joins(:user_role).where("user_roles.enable_administration = ?", true).to_a.collect &:id
     end
 
-    @users                = User.where("id not in (?)", admin_users).count
-    @arena_answers        = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).count
-    @creative_responses   = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).count
-    @completed_tasks      = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).count
-    @contributions        = Task.where("creator_id not in (?)", admin_users).count
-    @votes                = Vote.where("user_id not in (?)", admin_users).count
-    @comments             = Comment.where("user_id not in (?)", admin_users).count
+    @users                  = User.where("id not in (?)", admin_users).count
+    @arena_answers          = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).count
+    @creative_answers       = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CREATIVE).count
+    @task_answers           = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CHECKIN).count
+    @arena_questions        = Task.where("creator_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).count
+    @creative_questions     = Task.where("creator_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CREATIVE).count
+    @task_questions         = Task.where("creator_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CHECKIN).count
+    @votes                  = Vote.where("user_id not in (?)", admin_users).count
+    @comments               = Comment.where("user_id not in (?)", admin_users).count
     
     @new_users              = User.where("id not in (?)", admin_users).where("DATE(created_at) = DATE(?)", Time.now).count
     @new_arena_answers      = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
-    @new_creative_responses = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CREATIVE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
-    @new_completed_tasks    = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CHECKIN).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
-    @new_contributions      = Task.where("creator_id not in (?)", admin_users).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
+    @new_creative_answers   = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CREATIVE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
+    @new_task_answers       = CompletedTask.joins(:task).where("user_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CHECKIN).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
+    @new_arena_questions    = Task.where("creator_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::MULTIPLE).where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_creative_questions = Task.where("creator_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CREATIVE).where("DATE(created_at) = DATE(?)", Time.now).count
+    @new_task_questions     = Task.where("creator_id not in (?)", admin_users).where("tasks.answer_type = ?", Task::CHECKIN).where("DATE(created_at) = DATE(?)", Time.now).count
     @new_votes              = Comment.where("user_id not in (?)", admin_users).where("DATE(created_at) = DATE(?)", Time.now).count
     @new_comments           = Vote.where("user_id not in (?)", admin_users).where("DATE(created_at) = DATE(?)", Time.now).count
   end
