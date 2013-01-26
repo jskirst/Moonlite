@@ -12,9 +12,9 @@
         %th Name
         %th Role
         %th Email
-        %th Last Login
+        %th= link_to "Last Login", admin_users_path(sort: "login_at")
         %th Enrollments
-        %th Points
+        %th= link_to "Points", admin_users_path(sort: "earned_points")
         %th Votes
         %th Comments
         %th Status
