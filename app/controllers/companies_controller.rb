@@ -19,16 +19,17 @@ class CompaniesController < ApplicationController
     @votes                  = Vote.where("user_id not in (?)", excluded).count
     @comments               = Comment.where("user_id not in (?)", excluded).count
     
-    @new_users              = User.where("id not in (?)", excluded).where("DATE(created_at) = DATE(?)", Time.now).count
-    @new_returning_users    = User.where("id not in (?)", excluded).where("DATE(created_at) != DATE(?) and DATE(login_at) = DATE(?)", Time.now, Time.now).count
-    @new_arena_answers      = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
-    @new_creative_answers   = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
-    @new_task_answers       = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("DATE(completed_tasks.created_at) = DATE(?)", Time.now).count
-    @new_arena_questions    = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("DATE(created_at) = DATE(?)", Time.now).count
-    @new_creative_questions = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("DATE(created_at) = DATE(?)", Time.now).count
-    @new_task_questions     = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("DATE(created_at) = DATE(?)", Time.now).count
-    @new_votes              = Comment.where("user_id not in (?)", excluded).where("DATE(created_at) = DATE(?)", Time.now).count
-    @new_comments           = Vote.where("user_id not in (?)", excluded).where("DATE(created_at) = DATE(?)", Time.now).count
+    time_limit              = 24.hours.ago
+    @new_users              = User.where("id not in (?)", excluded).where("created_at >= ?", time_limit).count
+    @new_returning_users    = User.where("id not in (?)", excluded).where("created_at <= ? and login_at >= ?", time_limit, time_limit).count
+    @new_arena_answers      = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("completed_tasks.created_at >= ?", time_limit).count
+    @new_creative_answers   = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("completed_tasks.created_at >= ?", time_limit).count
+    @new_task_answers       = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("completed_tasks.created_at >= ?", time_limit).count
+    @new_arena_questions    = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("created_at >= ?", time_limit).count
+    @new_creative_questions = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("created_at >= ?", time_limit).count
+    @new_task_questions     = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("created_at >= ?", time_limit).count
+    @new_votes              = Comment.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
+    @new_comments           = Vote.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
   end
   
   def users
