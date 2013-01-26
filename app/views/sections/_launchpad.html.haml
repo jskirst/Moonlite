@@ -5,11 +5,11 @@
         %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
       %ul.nav.nav-tabs
         %li.active
-          %a#arena_tab_link{ href: "#arena_tab", title: "Arena"} Arena
+          %a#arena_tab_link{ href: "#", "data-tab" => "arena_tab", title: "Arena"} Arena
         %li
-          %a#questions_tab_link{ href: "#questions_tab", title: "Creative Responses"}  Creative Response
+          %a#questions_tab_link{ href: "#", "data-tab" => "questions_tab", title: "Creative Responses"}  Creative Response
         %li
-          %a#achievement_tab_link{ href: "#achievements_tab", title: "Tasks"} Tasks      
+          %a#achievement_tab_link{ href: "#", "data-tab" => "achievements_tab", title: "Tasks"} Tasks      
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
         - if @enrollment.contribution_unlocked
           %div.editor_view{ style: "display: none; height:100%;" }
@@ -267,14 +267,14 @@
       $(".tab_content").hide();
       $("ul.nav-tabs li.active").removeClass("active");
       $(open_tab).parent().addClass("active");
-      $($(open_tab).attr("href")).show().addClass("active_tab");
+      $("#"+$(open_tab).attr("data-tab")).show().addClass("active_tab");
     
       $(".nav-tabs li a").click(function(){
         $(".tab_content").hide();
         $("ul.nav-tabs li.active").removeClass("active");
         $(this).parent().addClass("active");
         $(".active_tab").removeClass("active_tab");
-        var $open_tab = $($(this).attr("href"));
+        var $open_tab = $("#"+$(this).attr("data-tab"));
         $open_tab.addClass("active_tab");
         $open_tab.find(".task_view").show();
         $open_tab.find(".editor_view").hide();
