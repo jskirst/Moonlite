@@ -54,7 +54,7 @@
                     %div.nub{ style: "left:150px;" }
                   %div.leftboxheader Your Challenges
                   %div.leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:auto;"}
-                    - current_user.enrollments.includes(:path).all(order: "total_points DESC").each do |e|
+                    - current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").each do |e|
                       = link_to challenge_path(e.path.permalink) do
                         %div.singleprogressentry
                           = image_tag e.path.image, style: "width: 50px; height: 50px;"              
