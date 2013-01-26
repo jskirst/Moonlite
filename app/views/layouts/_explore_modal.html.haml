@@ -5,7 +5,6 @@
   :javascript
     $(function(){
       $.get("#{explore_path}", function(data){
-        console.log("Success");
         $("#explore_modal").html(data);
       });
     })

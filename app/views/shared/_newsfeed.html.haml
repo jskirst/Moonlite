@@ -73,8 +73,7 @@
 
 :javascript
   $(function(){
-    $(".retract_link").on("ajax:success", function(xhr, data){ 
-      console.log($(this).parents(".post"));
+    $(".retract_link").on("ajax:success", function(xhr, data){
       $(this).parents(".post").hide("slow");
     });
   });
