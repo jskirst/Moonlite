@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130123213546) do
+ActiveRecord::Schema.define(:version => 20130126171523) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -284,6 +284,7 @@ ActiveRecord::Schema.define(:version => 20130123213546) do
     t.integer  "time_limit",         :default => 30
     t.integer  "creator_id"
     t.boolean  "is_locked",          :default => false
+    t.boolean  "is_reviewed",        :default => false
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

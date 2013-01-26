@@ -3,6 +3,7 @@ class Task < ActiveRecord::Base
   FIB       = 1
   MULTIPLE  = 2
   CHECKIN   = 3
+  TYPES = { CREATIVE => "Creative Response", MULTIPLE => "Arena", CHECKIN => "Task" }
   
   # Creative Subtypes
   TEXT      = 100
@@ -28,6 +29,7 @@ class Task < ActiveRecord::Base
     :answer_content,
     :creator_id,
     :is_locked,
+    :is_reviewed,
     :source
   
   belongs_to :section

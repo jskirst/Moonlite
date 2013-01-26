@@ -62,6 +62,21 @@ class CompaniesController < ApplicationController
       render json: { status: "success" }
     end
   end
+  
+  def tasks
+    if request.get?
+      if params[:search]
+        @tasks = Task.paginate(page: params[:page], conditions: ["question ILIKE ?", "%#{params[:search]}%"])
+      else
+        @tasks = Task.paginate(page: params[:page], conditions: ["is_reviewed = ?", false])
+      end
+      render "tasks"
+    else
+      @task = Task.find(params[:id])
+      @task.update_attribute(:is_reviewed, true)
+      render json: { status: "success" }
+    end
+  end
     
   def styles
     @custom_style = current_company.custom_style

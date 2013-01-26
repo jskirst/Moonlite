@@ -21,7 +21,8 @@ module ApplicationHelper
       ["personas", "Personas", personas_path],
       ["paths", "Paths", admin_paths_path],
       ["users", "Users", admin_users_path],
-      ["submissions", "Submissions", admin_submissions_path]
+      ["submissions", "Submissions", admin_submissions_path],
+      ["tasks", "tasks", admin_tasks_path]
     ]
   end
   
