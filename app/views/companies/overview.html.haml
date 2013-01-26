@@ -1,40 +1,52 @@
 %div.single_pane
   :css
-    .overview td{ text-align: center; border: 1px solid #DDD; }
+    .overview td{ text-align: center; border: 1px solid #DDD; width: 80px; }
   = render "companies/tab_header"
   %h3 Overview
   %table.table.overview
     %tr
       %td
-        %h3= @user_count
+        %h3= @users
         %p Total Users
       %td
-        %h3= @ct_count
-        %p Total CTs
+        %h3= @arena_answers
+        %p Total Arena Answers
       %td
-        %h3= @submission_count
-        %p Total Submissions
+        %h3= @creative_responses
+        %p Total Creative Responses
       %td
-        %h3= @vote_count
+        %h3= @completed_tasks
+        %p Total Completed Tasks
+      %td
+        %h3= @contributions
+        %p Total Contributions
+      %td
+        %h3= @votes
         %p Total Votes
       %td
-        %h3= @comment_count
+        %h3= @comments
         %p Total Comments
   %h3 Recent Activity
   %table.table.overview
     %tr
       %td
-        %h3= @new_user_count
+        %h3= @new_users
         %p New Users
       %td
-        %h3= @new_ct_count
-        %p New CTs
+        %h3= @new_arena_answers
+        %p New Arena Answers
       %td
-        %h3= @new_submission_count
+        %h3= @new_creative_responses
         %p New Submissions
       %td
-        %h3= @new_vote_count
+        %h3= @new_completed_tasks
+        %p New Completed Tasks
+      %td
+        %h3= @new_contributions
+        %p New Contributions
+      %td
+        %h3= @new_votes
         %p New Votes
       %td
-        %h3= @new_comment_count
+        %h3= @new_comments
         %p New Comments
