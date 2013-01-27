@@ -9,7 +9,6 @@ class PagesController < ApplicationController
       @enrollments = current_user.enrollments.includes(:path).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
-      render "users/home"
     else
       @show_sign_in = false
       render "landing", layout: "landing"
@@ -18,25 +17,65 @@ class PagesController < ApplicationController
   
   def newsfeed
     @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
-    @newsfeed_items = []
+    @completed_tasks = []
     @page = params[:page].to_i
     relevant_paths = current_user.enrollments.to_a.collect &:path_id
     if relevant_paths.empty?
-      @newsfeed_items = CompletedTask.joins(:task, :submitted_answer)
+      @completed_tasks = CompletedTask.joins(:task, :submitted_answer)
         .where("tasks.answer_type = ?", Task::CREATIVE)
         .order("completed_tasks.created_at DESC")
         .limit(30)
         .offset(@page * 30)
     else
-      @newsfeed_items = CompletedTask.joins({:task => :section}, :submitted_answer)
+      @completed_tasks = CompletedTask.joins({:task => :section}, :submitted_answer)
         .where("sections.path_id in (?) and tasks.answer_type = ?", relevant_paths, Task::CREATIVE)
         .order("completed_tasks.created_at DESC")
         .limit(30)
         .offset(@page * 30)
     end
-    @more_available = @newsfeed_items.size == 30
-    @more_available_url = newsfeed_path(page: @page+1)
-    render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
+    @compact_social = true
+    @more_available_url = @completed_tasks.size == 30 ? newsfeed_path(page: @page+1) : false
+    render partial: "shared/newsfeed"
+  end
+  
+  def profile
+    @user = User.find_by_username(params[:username])
+    redirect_to root_path and return unless @user
+    
+    @page = params[:page].to_i
+    offset = @page * 20
+    if params[:task]
+      @completed_tasks = [@user.completed_tasks.joins(:submitted_answer, :task).find_by_task_id(params[:task])]
+      social_tags("My response to the #{@completed_tasks.first.path.name} challenge!", @user.picture)
+      @compact_social = false
+    else
+      if params[:order] && params[:order] == "votes"
+        @completed_tasks = @user.completed_tasks.offset(offset).limit(20).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("total_votes DESC")
+      else
+        @completed_tasks = @user.completed_tasks.offset(offset).limit(20).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
+      end
+      social_tags("#{@user.name}'s Profile on Metabright", @user.picture)
+      @compact_social = true
+    end  
+    
+    @completed_tasks_by_challenge = current_user.completed_tasks
+      .joins(:task, :path)
+      .select("tasks.question, tasks.answer_type, paths.name")
+      .where("tasks.answer_type = ?", Task::CHECKIN)
+      .group_by(&:name)
+    
+    @enrolled_personas = @user.personas
+    @user_personas = @user.user_personas.includes(:persona)
+    
+    @creative_task_questions = @completed_tasks.collect { |item| item.task }
+    @enrollments = @user.enrollments.includes(:path).where("total_points > ?", 100).sort { |a,b| b.total_points <=> a.total_points }
+    
+    @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @title = @user.name
+    @more_available_url = @completed_tasks.size == 20 ? profile_path(@user.username, page: @page+1) : false
+    if request.xhr?
+      render partial: "shared/newsfeed"
+    end
   end
   
   def intro

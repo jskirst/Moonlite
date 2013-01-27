@@ -1,43 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :authenticate, except: [:show]
+  before_filter :authenticate
   before_filter :load_resource, except: [:retract]
-  before_filter :authorize_resource, except: [:show, :retract]
-  
-  def show
-    @page = params[:page].to_i
-    offset = @page * 30
-    if params[:task]
-      all_responses = @user.completed_tasks.joins(:submitted_answer, :task)
-      @newsfeed_items = [all_responses.find_by_task_id(params[:task])]
-    elsif params[:order] && params[:order] == "votes"
-      all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("total_votes DESC")
-    else
-      all_responses = @user.completed_tasks.offset(offset).limit(30).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
-    end  
-    @newsfeed_items = all_responses if @newsfeed_items.nil?
-    
-    @completed_tasks = @user.completed_tasks
-      .joins(:task, :path)
-      .select("tasks.question, tasks.answer_type, paths.name")
-      .where("tasks.answer_type = ?", Task::CHECKIN)
-    @completed_tasks = @completed_tasks.group_by(&:name)
-    
-    @enrolled_personas = @user.personas
-    @user_personas = @user.user_personas.includes(:persona)
-    
-    @creative_tasks = all_responses.collect { |item| item.task }
-    @enrollments = @user.enrollments.includes(:path).where("total_points > ?", 100).sort { |a,b| b.total_points <=> a.total_points }
-    
-    @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
-    @title = @user.name
-    @more_available = @newsfeed_items.size == 30
-    @more_available_url = profile_path(@user.username, page: @page+1)
-    if request.xhr?
-      render partial: "shared/newsfeed", locals: { newsfeed_items: @newsfeed_items }
-    else
-      render "users/show"
-    end
-  end
+  before_filter :authorize_resource, except: [:retract]
   
   def edit
     @title = "Settings"

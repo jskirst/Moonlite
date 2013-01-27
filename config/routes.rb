@@ -17,8 +17,8 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
-	match '/paths/:id/submission/:submission/' => 'paths#show', as: 'submission_details'
-	match '/paths/:id/task/:task/' => 'paths#show', as: 'task_details'
+	match '/paths/:permalink/submission/:submission/' => 'paths#show', as: 'submission_details'
+	match '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
 	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
 	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
 	
@@ -71,6 +71,7 @@ Metabright::Application.routes.draw do
   match '/about' => 'pages#about'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
+  match '/:username' => 'pages#profile', as: 'profile'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put
@@ -98,6 +99,5 @@ Metabright::Application.routes.draw do
 	match '/password_reset' => 'users#request_send'
 	match '/send_reset' => 'users#send_reset'
 	
-	match '/:username' => 'users#show', as: 'profile'
 	match '/challenges/:permalink' => 'paths#show', as: 'challenge'
 end

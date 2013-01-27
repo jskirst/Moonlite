@@ -13,6 +13,24 @@ module ApplicationHelper
     end
   end
   
+  def social_tags(title = nil, image = nil, description = nil)
+    @social_title = title
+    @social_description = description
+    @social_image = image
+  end
+  
+  def social_details(completed_task)
+    { 
+      owner: completed_task.submitted_answer, 
+      owner_type: "SubmittedAnswer", 
+      owner_id: completed_task.submitted_answer_id, 
+      comment_count: completed_task.submitted_answer.comments.size, 
+      created_at: completed_task.created_at, 
+      sharing_url: submission_details_url(completed_task.path.permalink, completed_task.submitted_answer.id), 
+      sharing_title: "Great response in the #{completed_task.path.name} Challenge on @MetaBright." 
+    } 
+  end
+  
   def admin_tabs
     [
       ["overview", "Overview", admin_overview_path],

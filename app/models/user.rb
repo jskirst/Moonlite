@@ -136,6 +136,10 @@ class User < ActiveRecord::Base
     return company.default_profile_picture_link
   end
   
+  def picture
+    profile_pic
+  end
+  
   def profile_complete?
     !self.description.nil?
   end

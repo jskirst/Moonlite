@@ -142,7 +142,6 @@ class PathsController < ApplicationController
         redirect_to continue_path_path(@path) and return
       end
       @current_section = current_user.most_recent_section_for_path(@path)
-      #@unlocked = @current_section.unlocked?(current_user)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
         .where("tasks.section_id = ? and tasks.is_locked = ?", @current_section.id, false)
@@ -169,10 +168,10 @@ class PathsController < ApplicationController
   def drilldown
     if params[:submission_id]
       submission = SubmittedAnswer.find(params[:submission_id])
-      redirect_to submission_details_path(submission.path.id, submission.id)
+      redirect_to submission_details_path(submission.path.permalink, submission.id)
     else
       task = Task.find(params[:task_id])
-      redirect_to task_details_path(task.path.id, task.id)
+      redirect_to task_details_path(task.path.permalink, task.id)
     end
   end
   
@@ -181,18 +180,20 @@ class PathsController < ApplicationController
     @page = params[:page].to_i
     offset = @page * 20
     if params[:submission]
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
-      @sharing = true
-    elsif params[:task]
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
-    elsif params[:order] && params[:order] == "votes"
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
+      @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
+      @compact_social = false
     else
-      @responses = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
+      @compact_social = true
+      if params[:task]
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+      elsif params[:order] && params[:order] == "votes"
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
+      else
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
+      end
     end
-    @more_available = @responses.size == 20
-    @more_available_url = newsfeed_path_path(@path.id, page: @page+1)
-    render partial: "shared/newsfeed", locals: { newsfeed_items: @responses }
+    @more_available_url = @completed_tasks.size == 20 ? newsfeed_path_path(@path.id, page: @page+1) : false
+    render partial: "shared/newsfeed"
   end
 
   private

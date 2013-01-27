@@ -2,18 +2,18 @@
   %div.leftstuff{ style: "height: 27px; width: 100%; padding-top: 5px;" }
     %div.displayin.floatl
       %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{owner.comments.size.to_i} Comments
-    - if @sharing
-      = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
-    - else
+    - if @compact_social
       %div.displayin.floatl{ style: "margin-left: 10px;" }
-        %img.display_sharing_icon{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", style: "height: 20px; cursor: pointer; position:relative; top:2px;" }
-      = render "shared/sharing", { custom_style: "display: none; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
+        = link_to sharing_url, target: "_blank" do 
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", style: "height: 20px; cursor: pointer; position:relative; top:2px;" }
+    - else
+      = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url } 
     %div.displayin.floatr{ style: "position: relative; top: 5px;" }
       - if created_at.today?
         %p #{time_ago_in_words(created_at)} ago
       - else
         %p= created_at.strftime("%B %d, %Y")
-  %div.comments{ style: "display:none; text-align: left;" }
+  %div.comments{ style: "text-align: left; #{ @compact_social ? 'display: none;' : '' }" }
     - if owner.comments.empty?
       %p.no_comments There are no comments for this yet. 
     %ul{ style: "list-style: none; margin: 10px 0 20px 0;" }
