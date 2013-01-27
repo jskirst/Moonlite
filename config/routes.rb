@@ -16,10 +16,20 @@ Metabright::Application.routes.draw do
 			get :newsfeed
 		end
 	end
+	
 	match '/paths/:id/submission/:submission/' => 'paths#show', as: 'submission_details'
 	match '/paths/:id/task/:task/' => 'paths#show', as: 'task_details'
-	match '/tasks/:task_id' => 'paths#drilldown', as: 'task_drilldown'
-	match '/submissions/:submission_id' => 'paths#drilldown', as: 'submission_drilldown'
+	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
+	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
+	
+	resources :tasks do
+    member do
+      get :vote
+      post :report
+      get :add_stored_resource
+      put :add_stored_resource
+    end
+  end
 	
 	resources :sections do
 		member do
@@ -37,15 +47,6 @@ Metabright::Application.routes.draw do
 	match '/sections/:id/took/:task_id' => "sections#took", as: 'took_section'
 	
 	resources :enrollments
-	
-	resources :tasks do
-    member do
-      get :vote
-      post :report
-      get :add_stored_resource
-      put :add_stored_resource
-    end
-  end
   
   resources :task_issues, only: [:create]
 	
