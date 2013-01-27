@@ -153,9 +153,7 @@ class PathsController < ApplicationController
       session[:referer] = @path.id 
     end
     
-    @social_title = @path.name
-    @social_description = @path.description
-    @social_image = @path.path_pic
+    social_tags(@path.name, @path.picture, @path.description)
     @display_launchpad = params[:completed]
     @display_type = params[:type] || 2
     
