@@ -142,7 +142,7 @@ class PathsController < ApplicationController
         redirect_to continue_path_path(@path) and return
       end
       @current_section = current_user.most_recent_section_for_path(@path)
-      @unlocked = @current_section.unlocked?(current_user)
+      #@unlocked = @current_section.unlocked?(current_user)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
         .where("tasks.section_id = ? and tasks.is_locked = ?", @current_section.id, false)
