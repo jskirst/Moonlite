@@ -103,7 +103,7 @@ class Section < ActiveRecord::Base
   
   def unlocked?(user)
     enrollment = user.enrollments.find_by_path_id(self.path_id)
-    return points_until_unlock(enrollment) > 0
+    return points_until_unlock(enrollment) <= 0
   end
   
   def points_until_unlock(enrollment)
