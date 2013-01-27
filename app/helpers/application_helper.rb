@@ -57,7 +57,7 @@ module ApplicationHelper
       ["paths", "Paths", admin_paths_path],
       ["users", "Users", admin_users_path],
       ["submissions", "Submissions", admin_submissions_path],
-      ["tasks", "tasks", admin_tasks_path]
+      ["tasks", "Tasks", admin_tasks_path]
     ]
   end
   

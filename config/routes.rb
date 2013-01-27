@@ -71,23 +71,22 @@ Metabright::Application.routes.draw do
   match '/about' => 'pages#about'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
-  match '/:username' => 'pages#profile', as: 'profile'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put
 	match '/stored_resources/:id' => 'stored_resources#destroy', via: :delete, as: 'delete_stored_resource'
 	
-  match '/admin_overview' => 'companies#overview'
-  match '/admin_settings' => 'companies#settings'
-  match '/admin_users' => 'companies#users'
-  match '/admin_users/:id/' => 'companies#users', as: 'admin_update_user'
-  match '/admin_paths' => 'companies#paths'
-  match '/admin_paths/:id' => 'companies#paths', as: 'admin_update_path'
-  match '/admin_submissions' => 'companies#submissions'
-  match '/admin_submissions/:id' => 'companies#submissions', as: 'admin_update_submission'
-  match '/admin_tasks' => 'companies#tasks'
-  match '/admin_tasks/:id' => 'companies#tasks', as: 'admin_update_task'
-  match '/admin_styles' => 'companies#styles'
+  match '/admin/overview' => 'companies#overview'
+  match '/admin/settings' => 'companies#settings'
+  match '/admin/users' => 'companies#users'
+  match '/admin/users/:id/' => 'companies#users', as: 'admin_update_user'
+  match '/admin/paths' => 'companies#paths'
+  match '/admin/paths/:id' => 'companies#paths', as: 'admin_update_path'
+  match '/admin/submissions' => 'companies#submissions'
+  match '/admin/submissions/:id' => 'companies#submissions', as: 'admin_update_submission'
+  match '/admin/tasks' => 'companies#tasks'
+  match '/admin/tasks/:id' => 'companies#tasks', as: 'admin_update_task'
+  match '/admin/styles' => 'companies#styles'
   
   match '/locallink' => 'sessions#locallink'
   match '/auth/failure' => 'sessions#auth_failure'
@@ -100,4 +99,5 @@ Metabright::Application.routes.draw do
 	match '/send_reset' => 'users#send_reset'
 	
 	match '/challenges/:permalink' => 'paths#show', as: 'challenge'
+	match '/:username' => 'pages#profile', as: 'profile'
 end
