@@ -16,7 +16,7 @@ class UsersController < ApplicationController
     end  
     @newsfeed_items = all_responses if @newsfeed_items.nil?
     
-    @completed_tasks = current_user.completed_tasks
+    @completed_tasks = @user.completed_tasks
       .joins(:task, :path)
       .select("tasks.question, tasks.answer_type, paths.name")
       .where("tasks.answer_type = ?", Task::CHECKIN)
