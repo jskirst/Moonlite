@@ -44,9 +44,8 @@
               = link_to vote_task_path(ct.task.id, sa_id: ct.submitted_answer.id), remote: true, class: ("btn vote_button " + (@votes.include?(ct.submitted_answer.id) ? "btn-info" : "")) do
                 %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }            
           - else
-            %a.btn.vote_button
-              %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
-              %div.vote_count= ct.submitted_answer.total_votes.to_i
+            %span.vote_points{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= ct.points_awarded
+            %span{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
       %div.posttext.leveltext.dropdown
         %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{ct.task.question}
         %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
