@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, except: [:home, :about, :challenges, :tos, :mark_help_read]
+  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :mark_help_read]
   before_filter :authorize_resource, only: [:create]
   
   def home
@@ -58,7 +58,7 @@ class PagesController < ApplicationController
       @compact_social = true
     end  
     
-    @completed_tasks_by_challenge = current_user.completed_tasks
+    @completed_tasks_by_challenge = @user.completed_tasks
       .joins(:task, :path)
       .select("tasks.question, tasks.answer_type, paths.name")
       .where("tasks.answer_type = ?", Task::CHECKIN)

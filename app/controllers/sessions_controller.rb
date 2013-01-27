@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
         user.reload
         sign_in(user)
         Mailer.welcome(current_user.email).deliver
-        log_event(nil, root_url, nil, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
+        log_event(nil, nil, nil, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
         if session[:referer]
           path = Path.find_by_id(session[:referer])
           session[:referrer] = nil
