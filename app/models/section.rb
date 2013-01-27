@@ -14,6 +14,7 @@ class Section < ActiveRecord::Base
   validates :path_id, presence: true
     
   before_create { self.position = get_next_position_for_path }
+  before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
   
   def randomize_tasks
     old_task_array = tasks.all(:order => "position ASC").to_a
@@ -102,12 +103,13 @@ class Section < ActiveRecord::Base
   
   def unlocked?(user)
     enrollment = user.enrollments.find_by_path_id(self.path_id)
-    return false if enrollment.nil?
-    return enrollment.total_points.to_i >= self.points_to_unlock
+    return points_until_unlock(enrollment) > 0
   end
   
   def points_until_unlock(enrollment)
-    self.points_to_unlock.to_i - enrollment.total_points.to_i
+    return 0 if self.points_to_unlock.nil?
+    return self.points_to_unlock if enrollment.nil? or enrollment.total_points.nil?
+    return self.points_to_unlock.to_i - enrollment.total_points.to_i
   end
   
   def percentage_complete(user)
