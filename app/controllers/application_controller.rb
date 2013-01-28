@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  include SessionsHelper
   include ApplicationHelper
+  include SessionsHelper
   
   before_filter :determine_enabled_features
 end

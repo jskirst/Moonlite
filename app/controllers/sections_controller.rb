@@ -158,10 +158,10 @@ class SectionsController < ApplicationController
       if current_user.completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::CREATIVE).size == 1
         render "completed_cr"
       else
-        redirect_to path_path(@section.path, completed: true, type: @task.answer_type)
+        redirect_to challenge_path(@section.path.permalink, completed: true, type: @task.answer_type)
       end
     else
-      redirect_to path_path(@section.path), alert: "You must supply a valid answer."
+      redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
     end
   end
   

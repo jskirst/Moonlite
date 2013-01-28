@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(params[:user])
       flash[:success] = "Profile successfully updated."
-      redirect_to @user
+      redirect_to profile_path(@user.username)
     else
       render 'edit'
     end
@@ -30,8 +30,8 @@ class UsersController < ApplicationController
   
   private
     def load_resource
-      @user = User.find_by_username(params[:username]) if params[:username]
-      @user = User.find_by_id(params[:id]) if params[:id]
+      @user = User.find_by_username(params[:id])
+      @user = User.find_by_id(params[:id]) unless @user
       redirect_to root_path and return if @user.nil?
     end
     

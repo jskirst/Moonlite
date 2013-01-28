@@ -6,9 +6,9 @@ class CommentsController < ApplicationController
     if comment.save
       owner = comment.owner
       if owner.is_a? SubmittedAnswer
-        link = submission_details_path(owner.path, owner)
+        link = submission_details_path(owner.path.permalink, owner)
         content = "#{current_user} commented on your submission."
-        log_event(comment.owner.user, link, current_user.profile_pic, content)
+        UserEvent.log_event(comment.owner.user, "#{current_user} commented on your submission.", current_user, link, current_user.picture)
       end
       render partial: "comment", locals: { comment: comment }
     else

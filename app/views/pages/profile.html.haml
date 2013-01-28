@@ -19,7 +19,7 @@
         %div#topboxcontent{ style: "height: 83px;" }
           %div{ style: "width: 119px; float:right;" }
             - if @user == current_user
-              = link_to "Edit Profile", edit_user_path(@user), class: "button button-standard"
+              = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-standard"
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
             %p{ style: "font-size: 16px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)

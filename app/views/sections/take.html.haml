@@ -77,7 +77,7 @@
                   %div#answer_preview
                     = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
           - elsif @task.answer_type == Task::CHECKIN
-            %span{style:"font-size:16px;"} I hearby proclaim in this land of MetaBright, with Stoney as my witness, that I have completed the Task stated here.
+            %span{style:"font-size:16px;"} I have completed the Task stated here.
             :javascript
               $(function(){ check_checkin_before_submit(); });
             %div.input{ style: "margin: 10px 0 0 0; " }
@@ -85,7 +85,7 @@
               %input#checkin{ type: "hidden", name: "answer", value: false }
               %a#checkin_button.button.button-standard Confirm
       %div.CRbuttonspace
-        = link_to "Back", path_path(@section.path, completed: true), class: "button button-standard", style: "float: left;"
+        = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
         %a.arena_report_link{href:"#", style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
         = submit_tag "Submit", :class => "button button-actionable", :id => "submit_button", style: "float:right;"
         = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image"

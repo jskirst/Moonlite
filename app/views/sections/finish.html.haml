@@ -15,14 +15,14 @@
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
         %p Current level: <strong>#{@enrollment.level}</strong>
       %div{ style: "float: right; margin: 15px 10px 0 0;" }
-        = render "shared/sharing", { custom_style: "", title: "Just finished a section of the #{@path.name} challenge on @MetaBright and scored #{@enrollment.total_points} points", url: path_url(@path) }
+        = render "shared/sharing", { custom_style: "", title: "Just finished a section of the #{@path.name} challenge on @MetaBright and scored #{@enrollment.total_points} points", url: challenge_path(@section.path.permalink) }
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.completionnextsteps
         %span Continue improving your score
         %ul
           %li
             Complete Challenge Questions
-            %p= link_to "#{@available_crs} available", path_url(@section.path, completed: true)
+            %p= link_to "#{@available_crs} available", challenge_path(@section.path.permalink, completed: true)
           %li Take additional sections
-          %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", path_url(@section.path, completed: true, type: 2) 
-    = link_to "Continue", path_url(@section.path, completed: "true"), class: "button button-info", style: "float: right;"
+          %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", challenge_path(@section.path.permalink, completed: true, type: 2) 
+    = link_to "Continue", challenge_path(@section.path.permalink, completed: "true"), class: "button button-info", style: "float: right;"

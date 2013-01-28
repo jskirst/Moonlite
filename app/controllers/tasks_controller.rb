@@ -74,9 +74,8 @@ class TasksController < ApplicationController
     else
       if @vote = @submission.add_vote(current_user)
         path = @submission.path
-        content = "#{current_user.name} voted for your submission."
-        link = submission_details_path(path, @submission.id)
-        log_event(@submission.user, link, current_user.profile_pic, content)
+        link = submission_details_path(path.permalink, @submission.id)
+        UserEvent.log_event(@submission.user, "#{current_user.name} voted for your submission.", current_user, link, current_user.picture)
         render json: @vote.to_json
       else
         render json: { errors: "Uknown error."}

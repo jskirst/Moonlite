@@ -19,15 +19,11 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def add_earned_points(points, callback = nil)
+  def add_earned_points(points)
     points = points.to_i
     self.total_points = self.total_points + points
-    if self.total_points >= CONTRIBUTION_THRESHOLD
-      self.contribution_unlocked = true
-    end
-    if self.save
-      callback
-    end
+    check_for_events(points)
+    save
   end
   
   def self.points_to_level(points)
@@ -57,5 +53,23 @@ class Enrollment < ActiveRecord::Base
   
   def level_percent
     return points_in_level / 3
+  end
+  
+  private
+  
+  def check_for_events(points)
+    if crossed_threshold?(CONTRIBUTION_THRESHOLD, points)
+      self.contribution_unlocked = true
+      UserEvent.log_point_event(user, self, :contribution_unlocked)
+    end
+  end
+  
+  def crossed_threshold?(threshold, delta)
+    if self.total_points >= threshold
+      if (self.total_points - delta) < threshold
+        return true
+      end
+    end
+    return false
   end
 end

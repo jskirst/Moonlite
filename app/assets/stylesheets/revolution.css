@@ -273,7 +273,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .notification-unread { background-color: #EEE; }
 .notification:hover { background-color: #EEE; }
 .notification_body { margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right; text-shadow:none; line-height:17px;}
-.notification_time { margin: 0; font-size: 11px; float: right; text-shadow:none; cursor:default; margin-right:2px; color: #BBB; line-height: 5px;}
+.notification_time { margin: 7px 2px 0 0; font-size: 11px; float: right; text-shadow:none; cursor:default; color: #BBB; line-height: 5px;}
 .nub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
 .sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:27px; left: -11px;}
 .graynub{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_post_gear_dropdown.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; }

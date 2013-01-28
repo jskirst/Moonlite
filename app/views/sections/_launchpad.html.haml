@@ -168,12 +168,12 @@
                 %tr
                   %td
                     - if t.status_id
-                      %div= link_to t.question, user_path(current_user, task: t.id)
+                      %div= link_to t.question, profile_path(current_user.username, task: t.id)
                     - else
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
+                      = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                       %div.launchpadpoints= t.points_awarded.to_i.to_s + " points"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
@@ -239,12 +239,12 @@
                 %tr
                   %td
                     - if t.status_id
-                      %div= link_to t.question, user_path(current_user, task: t.id)
+                      %div= link_to t.question, profile_path(current_user.username, task: t.id)
                     - else
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      = link_to "Completed", user_path(current_user, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
+                      = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                       %br
                       %div.launchpadpoints{style:"margin-right:4px;"}= t.points_awarded.to_i.to_s + " points"
                     - else
