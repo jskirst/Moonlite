@@ -22,7 +22,7 @@
       - @users.to_a.each_with_index do |u, i|
         %tr
           %td= i
-          %td= link_to u.name, u
+          %td= link_to u.name, profile_path(u.username)
           %td= link_to u.user_role.name, update_users_role_path(u.id)
           %td= u.email
           %td= (u.login_at || u.created_at).strftime("%m/%d/%Y")
