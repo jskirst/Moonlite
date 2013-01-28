@@ -14,3 +14,24 @@ STREAK_BONUSES = {
   40 => [7.0, "Heating Up"]
 }
 
+POINT_LEVELS = []
+
+level = 1
+(1..1000000).each do |i|
+  if i < 200
+    current_level = 1
+  else
+    current_level = current_level.to_f
+    current_level = (i.to_f**0.55) / Math.log(i)
+    current_level = current_level - (current_level % 1)
+    current_level = (current_level - 3).to_i
+  end
+  
+  if current_level > level
+    POINT_LEVELS << [current_level, i]
+    level = current_level
+  end
+end
+
+
+

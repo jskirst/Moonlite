@@ -1,5 +1,5 @@
 class Enrollment < ActiveRecord::Base
-  CONTRIBUTION_THRESHOLD = 1000
+  CONTRIBUTION_THRESHOLD = 300
   
   attr_readonly :path_id
   attr_accessible :path_id, :total_points, :contribution_unlocked
@@ -27,32 +27,44 @@ class Enrollment < ActiveRecord::Base
   end
   
   def self.points_to_level(points)
-    return 1 if points < 2
-    points = points.to_f
-    level = (points.to_f**0.55) / Math.log(points)
-    level = level - (level % 1)
-    level = level - 3
-    return level <= 0 ? 1 : level.to_i
+    POINT_LEVELS.each do |l, p|
+      if points < p
+        return l - 1
+      end
+    end
   end
   
   def level
     Enrollment.points_to_level(self.total_points)
   end
-  
-  def points_in_level
-    points_remaining = self.total_points
-    until points_remaining < 300
-      points_remaining -= 300
+
+  def self.points_to_next_level(points)
+    POINT_LEVELS.each do |l, p|
+      if points < p
+        return p - points
+      end
     end
-    return points_remaining
   end
   
   def points_to_next_level
-    (points_in_level - 300) * -1
+    Enrollment.points_to_next_level(self.total_points)
+  end
+  
+  def self.level_percent(points)
+    previous_points = 0
+    POINT_LEVELS.each do |l, p|
+      if points < p
+        points_in_level = p - previous_points
+        points_so_far = points - previous_points
+        return (points_so_far.to_f / points_in_level.to_f) * 100
+      else
+        previous_points = p
+      end
+    end
   end
   
   def level_percent
-    return points_in_level / 3
+    Enrollment.level_percent(self.total_points)
   end
   
   private

@@ -14,18 +14,14 @@ class UserPersona < ActiveRecord::Base
   end
   
   def level
-    return total_points / 300
+    Enrollment.points_to_level(total_points)
   end
   
   def percent_level
-    return (total_points % 300) / 3
-  end
-  
-  def points_in_level
-    return total_points < 300 ? total_points : total_points % 300
+    Enrollment.level_percent(total_points)
   end
   
   def points_to_next_level
-    (points_in_level - 300) * -1
+    Enrollment.points_to_next_level(total_points)
   end
 end
