@@ -57,11 +57,11 @@ module ApplicationHelper
       cr_pop: {
         content: "This is an answer to the above Creative Response question.",
         placement: "left"
-      },
-      editor_link: {
-        content: "Choose a tab and start creating questions!",
-        placement: "right"  
-      }
+      }#,
+      # editor_link: {
+        # content: "Choose a tab and start creating questions!",
+        # placement: "right"  
+      # }
     }
   end
 end
