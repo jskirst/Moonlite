@@ -161,7 +161,7 @@
             %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
             %p Creative Responses let you demonstrate your skills. Responses to CR's appear in the stream so they can be voted and commented upon.
           - if @challenge_tasks.empty?
-            %p No Challenge tasks available.
+            %p No Creative Responses available.
           - else
             %table
               - @challenge_tasks.each do |t|
