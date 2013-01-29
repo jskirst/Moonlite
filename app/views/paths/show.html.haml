@@ -63,7 +63,7 @@
                   = link_to challenge_path(p.permalink) do
                     = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
                 - else
-                  = link_to "#", class: "login_link" do
+                  %span.login_link
                     = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
     %div.span11
       %div.newsfeed
