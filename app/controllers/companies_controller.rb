@@ -18,6 +18,7 @@ class CompaniesController < ApplicationController
     @task_questions         = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
     @votes                  = Vote.where("user_id not in (?)", excluded).count
     @comments               = Comment.where("user_id not in (?)", excluded).count
+    @issues                 = TaskIssue.where("user_id not in (?)", excluded).count
     
     time_limit              = 24.hours.ago
     @new_users              = User.where("id not in (?)", excluded).where("created_at >= ?", time_limit).count
@@ -30,6 +31,7 @@ class CompaniesController < ApplicationController
     @new_task_questions     = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("created_at >= ?", time_limit).count
     @new_votes              = Comment.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
     @new_comments           = Vote.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
+    @new_issues             = TaskIssue.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
   end
   
   def users
@@ -43,8 +45,8 @@ class CompaniesController < ApplicationController
       end
     else
       status = params[:lock] == "true" ? true : false
-      @user = User.find(params[:id])
-      @user.update_attribute(:is_locked, status)
+      user = User.find(params[:id])
+      user.update_attribute(:is_locked, status)
       render json: { status: status }
     end
   end
@@ -58,8 +60,8 @@ class CompaniesController < ApplicationController
       end
     else
       status = params[:approve] == "true" ? true : false
-      @path = Path.find(params[:id])
-      @path.update_attribute(:is_approved, status)
+      path = Path.find(params[:id])
+      path.update_attribute(:is_approved, status)
       render json: { status: status }
     end
   end
@@ -73,8 +75,8 @@ class CompaniesController < ApplicationController
       end
       render "submissions"
     else
-      @submission = SubmittedAnswer.find(params[:id])
-      @submission.update_attribute(:is_reviewed, true)
+      submission = SubmittedAnswer.find(params[:id])
+      submission.update_attribute(:is_reviewed, true)
       render json: { status: "success" }
     end
   end
@@ -88,8 +90,23 @@ class CompaniesController < ApplicationController
       end
       render "tasks"
     else
-      @task = Task.find(params[:id])
-      @task.update_attribute(:is_reviewed, true)
+      task = Task.find(params[:id])
+      task.update_attribute(:is_reviewed, true)
+      render json: { status: "success" }
+    end
+  end
+  
+  def comments
+    if request.get?
+      if params[:search]
+        @comments = Comment.paginate(page: params[:page], conditions: ["content ILIKE ?", "%#{params[:search]}%"])
+      else
+        @comments = Comment.paginate(page: params[:page], conditions: ["is_reviewed = ?", false])
+      end
+      render "comments"
+    else
+      comment = Comment.find(params[:id])
+      comment.update_attribute(:is_reviewed, true)
       render json: { status: "success" }
     end
   end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130126171523) do
+ActiveRecord::Schema.define(:version => 20130129192852) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -43,9 +43,10 @@ ActiveRecord::Schema.define(:version => 20130126171523) do
     t.integer  "user_id"
     t.integer  "owner_id"
     t.string   "content"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "owner_type"
+    t.boolean  "is_reviewed", :default => false
   end
 
   create_table "companies", :force => true do |t|

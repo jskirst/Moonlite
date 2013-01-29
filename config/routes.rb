@@ -86,6 +86,8 @@ Metabright::Application.routes.draw do
   match '/admin/submissions/:id' => 'companies#submissions', as: 'admin_update_submission'
   match '/admin/tasks' => 'companies#tasks'
   match '/admin/tasks/:id' => 'companies#tasks', as: 'admin_update_task'
+  match '/admin/comments' => 'companies#comments'
+  match '/admin/comments/:id' => 'companies#comments', as: 'admin_update_comment'
   match '/admin/styles' => 'companies#styles'
   
   match '/locallink' => 'sessions#locallink'
