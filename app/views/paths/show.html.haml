@@ -53,6 +53,18 @@
               = link_to truncate(entry.user.name, length: 22), profile_path(entry.user.username), class: "name"
               %span.level lvl. #{entry.level}
               %span.points= entry.total_points
+      - if @similar_paths
+        %div.leftbox
+          %div.leftboxheader Similar Challenges
+          %div.leftboxfooter
+            %li.leftrailcontent
+              - @similar_paths.each do |p|
+                - if current_user
+                  = link_to challenge_path(p.permalink) do
+                    = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
+                - else
+                  = link_to "#", class: "login_link" do
+                    = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
     %div.span11
       %div.newsfeed
         %div.leftboxheader

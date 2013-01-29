@@ -29,7 +29,7 @@
           %div.leftboxfooter
             %li.leftrailcontent
               - @suggested_paths.each do |p|
-                = link_to p do
+                = link_to challenge_path(p.permalink) do
                   = image_tag p.path_pic, class: "leftrailicon", title: "#{p.name}"
       %div.leftbox
         %div.leftboxheader Enrolled Personas

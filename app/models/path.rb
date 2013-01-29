@@ -85,12 +85,8 @@ class Path < ActiveRecord::Base
     return Path.where(conditions)
   end
   
-  def self.similar_paths(path, user)
-    paths = Set.new
-    unless path.nil?
-      Path.with_tags_like(path.tags_to_array, user, path.id).each {|p| paths << p}
-      return paths.to_a
-    end
+  def similar_paths
+    return personas.first.paths.where(is_public: true, is_published: true, is_approved: true)
   end
   
   def self.suggested_paths(user, excluded_path_id = -1)

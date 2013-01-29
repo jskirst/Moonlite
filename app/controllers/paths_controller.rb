@@ -152,7 +152,7 @@ class PathsController < ApplicationController
       @display_sign_in = true
       session[:referer] = @path.id 
     end
-    
+    @similar_paths = @path.similar_paths
     social_tags(@path.name, @path.picture, @path.description)
     @display_launchpad = params[:completed]
     @display_type = params[:type] || 2
