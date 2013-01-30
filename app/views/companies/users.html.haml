@@ -1,10 +1,7 @@
 %div.single_pane
-  = render "companies/tab_header"
+  = render "header"
   = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
-  %div{ style: "float:right; margin: 0 0 0px 0;" }
-    = form_tag admin_users_path, method: "get" do
-      = text_field_tag :search, params[:search], :class => "large", :placeholder => "Search by name or email..."
-      = submit_tag "Search", :class => "button button-standard"
+  = render "search", link: admin_users_path, placeholder: "Name or email..."
   %table.table
     %thead
       %tr
@@ -13,8 +10,9 @@
         %th Role
         %th Email
         %th= link_to "Last Login", admin_users_path(sort: "login_at")
-        %th Enrollments
+        %th= link_to "Created", admin_users_path(sort: "created_at")
         %th= link_to "Points", admin_users_path(sort: "earned_points")
+        %th Enrollments
         %th Votes
         %th Comments
         %th Status
@@ -25,22 +23,13 @@
           %td= link_to u.name, profile_path(u.username)
           %td= link_to u.user_role.name, update_users_role_path(u.id)
           %td= u.email
-          %td= (u.login_at || u.created_at).strftime("%m/%d/%Y")
-          %td= u.enrollments.size
+          %td= u.login_at.strftime("%m/%d/%Y")
+          %td= u.created_at.strftime("%m/%d/%Y")
           %td= u.earned_points
+          %td= u.enrollments.size
           %td= u.votes.size
           %td= u.comments.size
           - if u.is_locked
             %td= link_to "locked", admin_update_user_path(u, lock: "false"), class: "mark_locked", remote: true, method: "put"
           - else
             %td= link_to "open", admin_update_user_path(u, lock: "true"),  class: "mark_locked", remote: true, method: "put"
-:javascript
-  $(function(){
-    $(".mark_locked").on("ajax:success", function(xhr, data){
-      if(data.status == true){
-        $(this).text("locked");
-      } else {
-        $(this).text("open");
-      }
-    });
-  });

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130129192852) do
+ActiveRecord::Schema.define(:version => 20130130114602) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20130129192852) do
     t.datetime "updated_at",                     :null => false
     t.string   "owner_type"
     t.boolean  "is_reviewed", :default => false
+    t.boolean  "is_locked",   :default => false
   end
 
   create_table "companies", :force => true do |t|
@@ -257,6 +258,7 @@ ActiveRecord::Schema.define(:version => 20130129192852) do
     t.integer  "total_votes", :default => 0
     t.integer  "task_id"
     t.boolean  "is_reviewed", :default => false
+    t.boolean  "is_locked",   :default => false
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"

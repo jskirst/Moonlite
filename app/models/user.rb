@@ -48,6 +48,9 @@ class User < ActiveRecord::Base
   before_save :set_tokens
   before_save :set_default_user_role
   before_validation :grant_username
+  before_create do
+    self.login_at = self.created_at
+  end
   
   def to_s
     return self.name

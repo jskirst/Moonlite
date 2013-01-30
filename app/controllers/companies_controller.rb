@@ -29,20 +29,16 @@ class CompaniesController < ApplicationController
     @new_arena_questions    = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("created_at >= ?", time_limit).count
     @new_creative_questions = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("created_at >= ?", time_limit).count
     @new_task_questions     = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("created_at >= ?", time_limit).count
-    @new_votes              = Comment.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
-    @new_comments           = Vote.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
+    @new_votes              = Vote.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
+    @new_comments           = Comment.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
     @new_issues             = TaskIssue.where("user_id not in (?)", excluded).where("created_at >= ?", time_limit).count
   end
   
   def users
     if request.get?
-      if params[:search]
-        search = "%#{params[:search]}%"
-        @users = User.paginate(page: params[:page], conditions: ["name ILIKE ? or email ILIKE ? and is_fake_user = ?", search, search, false])
-      else
-        @sort = params[:sort] || "earned_points"
-        @users = User.paginate(page: params[:page], conditions: ["is_fake_user = ?", false], order: "#{@sort} DESC").includes(:user_role)
-      end
+      conditions = params[:search].nil? ? nil : ["name ILIKE ? or email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%"]
+      @sort = params[:sort] || "earned_points"
+      @users = User.paginate(page: params[:page], conditions: conditions, order: "#{@sort} DESC").includes(:user_role)
     else
       status = params[:lock] == "true" ? true : false
       user = User.find(params[:id])
@@ -53,11 +49,8 @@ class CompaniesController < ApplicationController
   
   def paths
     if request.get?
-      if params[:search]
-        @paths = current_company.all_paths.paginate(page: params[:page], conditions: ["name ILIKE ?", "%#{params[:search]}%"])
-      else
-        @paths = current_company.all_paths.paginate(page: params[:page])
-      end
+      conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
+      @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions)
     else
       status = params[:approve] == "true" ? true : false
       path = Path.find(params[:id])
@@ -68,12 +61,8 @@ class CompaniesController < ApplicationController
   
   def submissions
     if request.get?
-      if params[:search]
-        @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: ["content ILIKE ? and is_reviewed = ?", "%#{params[:search]}%", false])
-      else
-        @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: ["is_reviewed = ?", false])
-      end
-      render "submissions"
+      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["content ILIKE ? and is_reviewed = ?", "%#{params[:search]}%", false]
+      @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: conditions)
     else
       submission = SubmittedAnswer.find(params[:id])
       submission.update_attribute(:is_reviewed, true)
@@ -83,12 +72,8 @@ class CompaniesController < ApplicationController
   
   def tasks
     if request.get?
-      if params[:search]
-        @tasks = Task.paginate(page: params[:page], conditions: ["question ILIKE ?", "%#{params[:search]}%"])
-      else
-        @tasks = Task.paginate(page: params[:page], conditions: ["is_reviewed = ?", false])
-      end
-      render "tasks"
+      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["question ILIKE ?", "%#{params[:search]}%"]
+      @tasks = Task.paginate(page: params[:page], conditions: conditions)
     else
       task = Task.find(params[:id])
       task.update_attribute(:is_reviewed, true)
@@ -98,12 +83,8 @@ class CompaniesController < ApplicationController
   
   def comments
     if request.get?
-      if params[:search]
-        @comments = Comment.paginate(page: params[:page], conditions: ["content ILIKE ?", "%#{params[:search]}%"])
-      else
-        @comments = Comment.paginate(page: params[:page], conditions: ["is_reviewed = ?", false])
-      end
-      render "comments"
+      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["content ILIKE ?", "%#{params[:search]}%"]
+      @comments = Comment.paginate(page: params[:page], conditions: conditions)
     else
       comment = Comment.find(params[:id])
       comment.update_attribute(:is_reviewed, true)

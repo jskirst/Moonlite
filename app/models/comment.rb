@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
-  attr_accessible :owner_id, :owner_type, :content, :is_reviewed
+  attr_protected :is_reviewed, :is_locked
+  attr_accessible :owner_id, :owner_type, :content
   
   belongs_to :user
   belongs_to :owner, polymorphic: true
