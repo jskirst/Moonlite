@@ -168,6 +168,7 @@ code,pre{font:inherit;}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
 .questionspace span{font:normal 18px 'Muli', sans-serif;}
+.questionspace pre{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none;}
 .pointbar { background-color: rgba(255, 163, 102, 0.5); height:20px; margin:3px 0px; border-radius: 3px; text-align: center; }
 .pointbarfiller { line-height: 20px; width: 100%; border-radius: 3px; height: 20px; padding-left: 3px; background-color: #FFA366; color: #404040; float: left; }
 .nextbutton{float:right;}
@@ -185,7 +186,7 @@ code,pre{font:inherit;}
 #CRprogressbar {width:632px; height: 40px; margin: 0 auto;}
 .CRquestionspace {width:40%; display:inline-block; padding-top:9px;}
 .CRquestionheader {font:bold 18px 'Muli', sans-serif;}
-.CRquestion {font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none;} 
+.CRquestion {font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none; font: normal 18px 'Muli', sans-serif;} 
 .CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'Muli', sans-serif;width:56.5%;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace {margin-top:12px; }
