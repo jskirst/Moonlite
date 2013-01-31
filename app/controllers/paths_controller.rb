@@ -134,6 +134,10 @@ class PathsController < ApplicationController
   end
   
   def show
+    if @path.is_approved == false && (current_user.nil? || @path.user != current_user)
+      redirect_to root_path and return
+    end
+     
     @tasks = @path.tasks
     @responses = []
     if current_user

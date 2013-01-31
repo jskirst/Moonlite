@@ -1,0 +1,25 @@
+:javascript
+  function check_table(){
+    if($("table.table tbody").find("tr").size() == 0){
+      var columns = $("table.table").find("th").size();
+      var $new_row = $("<tr></tr>").appendTo("table.table tbody");
+      for(i = 0; i < columns; i++){
+        $new_row.append("<td>...</td>");
+      }
+    }
+  }
+  
+  $(function(){
+    check_table();
+    $(".mark_locked").on("ajax:success", function(xhr, data){
+      if(data.status == true){
+        $(this).replaceWith("<span>locked</span>");
+      } else {
+        $(this).replaceWith("<span>open</span>");
+      }
+    });
+    
+    $(".mark_reviewed").on("ajax:success", function(xhr, data){
+      $(this).parents("tr").hide("fast", function(){ $(this).remove(); });
+    });
+  });

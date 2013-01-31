@@ -1,0 +1,4 @@
+%div{ style: "float:right; margin: 0 0 0px 0;" }
+  = form_tag link, method: "get" do
+    = text_field_tag :search, params[:search], class: "large", placeholder: placeholder, style: "margin-bottom: 0px;"
+    = submit_tag "Search", class: "button button-standard"

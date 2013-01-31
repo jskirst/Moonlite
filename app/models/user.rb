@@ -18,25 +18,26 @@ class User < ActiveRecord::Base
     :location,
     :viewed_help
 
-  belongs_to :company
-  belongs_to :user_role
-  has_many :user_auths, dependent: :destroy
-  has_many :paths
-  has_many :enrollments, dependent: :destroy
-  has_many :enrolled_paths, through: :enrollments, source: :path
-  has_many :completed_tasks, dependent: :destroy
-  has_many :my_completed_tasks, through: :completed_tasks, source: :task
-  has_many :user_personas, dependent: :destroy
-  has_many :personas, through: :user_personas
-  has_many :achievements, through: :user_achievements
-  has_many :comments, dependent: :destroy
-  has_many :user_events, dependent: :destroy
-  has_many :collaborations
-  has_many :collaborating_paths, through: :collaborations, source: :path
-  has_many :submitted_answers, through: :completed_tasks
-  has_many :votes
-  has_many :user_transactions
-  has_many :task_issues
+  belongs_to  :company
+  belongs_to  :user_role
+  has_one     :notification_settings
+  has_many    :user_auths, dependent: :destroy
+  has_many    :paths
+  has_many    :enrollments, dependent: :destroy
+  has_many    :enrolled_paths, through: :enrollments, source: :path
+  has_many    :completed_tasks, dependent: :destroy
+  has_many    :my_completed_tasks, through: :completed_tasks, source: :task
+  has_many    :user_personas, dependent: :destroy
+  has_many    :personas, through: :user_personas
+  has_many    :achievements, through: :user_achievements
+  has_many    :comments, dependent: :destroy
+  has_many    :user_events, dependent: :destroy
+  has_many    :collaborations
+  has_many    :collaborating_paths, through: :collaborations, source: :path
+  has_many    :submitted_answers, through: :completed_tasks
+  has_many    :votes
+  has_many    :user_transactions
+  has_many    :task_issues
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
@@ -48,6 +49,14 @@ class User < ActiveRecord::Base
   before_save :set_tokens
   before_save :set_default_user_role
   before_validation :grant_username
+  
+  before_create do
+    self.login_at = self.created_at
+  end
+  
+  after_create do
+    NotificationSettings.create!(user_id: self.id)
+  end
   
   def to_s
     return self.name
