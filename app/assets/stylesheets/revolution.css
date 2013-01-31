@@ -15,6 +15,7 @@
 .photo{ border-radius:4px; width: 50px; height: 50px; }
 .username{ text-decoration: none; color:#005C1F; font-size:17px; }
 .posttext { margin: -2px -12px 0 -12px; padding: 9px 12px; background-color:#E5F5EA; }
+.posttext pre{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none;}
 .leveltext { font-weight: normal; }
 .challengetext { font-weight: bold; text-decoration:none; color:black; display:inline; }
 .enrolledminiimages { height:13px; width:13px; }
@@ -278,6 +279,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:27px; left: -11px;}
 .graynub{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_post_gear_dropdown.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; }
 .CR_dropdown_option{width: 95%; padding: 3px;}
+.dropdown-menu{top:-20px !important;}
 .dropdown-menu .CR_dropdown_option a{padding: 0px 9px 0px 3px;}
 
 .button { margin-bottom: 0px; margin-top: 0px; vertical-align: middle; display: inline-block; text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
