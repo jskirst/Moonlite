@@ -16,7 +16,7 @@ class Mailer < ActionMailer::Base
     @user = @submission.user
     @commenting_user = comment.user
     @action_url = submission_details_url(@submission.path, @submission)
-    mail(to: @user.email, subject: "New comment on your MetaBright submission")
+    mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
   end
   
   def content_vote_alert(vote)
@@ -28,7 +28,7 @@ class Mailer < ActionMailer::Base
     @user = vote.submitted_answer.user
     @voting_user = vote.user
     @action_url = submission_details_url(@submission.path, @submission)
-    mail(to: @user.email, subject: "New vote for your MetaBright submission")
+    mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
   end
   
   def intro_drop_off(email)
