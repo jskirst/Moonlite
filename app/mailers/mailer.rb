@@ -33,9 +33,9 @@ class Mailer < ActionMailer::Base
     mail(to: @user.email, subject: "Complete your first Challenge!")
   end
   
-  def create_cr_unlock(email)
-    @challenge_name
-    mail(to: @user.email, subject: "[UNLOCKED] Create your own MetaBright CR's!")
+  def contribution_unlocked(email, path)
+    @challenge_name = path.name
+    mail(to: @user.email, subject: "Metabright Power Unlocked! Create your own MetaBright CR's!")
   end
   
   def section_unlock(email)
