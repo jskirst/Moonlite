@@ -86,7 +86,7 @@ namespace :db do
               ],
               points: 10,
               answer_type: 2,
-              creator_id: moonlite_admin
+              creator_id: moonlite_admin.id
             )
           end
           section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin)
