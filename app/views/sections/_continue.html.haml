@@ -46,7 +46,7 @@
       = render "stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
       %div.questionspace
-        %span= @task.question
+        %pre.CRQuestion= @task.question
       %div.questionfooter
         %div.pointbar{ style: "position: relative;" }
           %div.pointbarfiller{ style: "display: inline-block;"}
