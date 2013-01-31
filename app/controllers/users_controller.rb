@@ -1,7 +1,15 @@
 class UsersController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, except: [:notifications]
   before_filter :load_resource, except: [:retract]
-  before_filter :authorize_resource, except: [:retract]
+  before_filter :authorize_resource, except: [:retract, :notifications]
+  
+  def notifications
+    @notification_settings = @user.notification_settings
+    unless request.get?
+      @user.notification_settings.update_attributes(params[:notification_settings])
+      flash[:success] = "You're notification settings have been saved. Rock on."
+    end
+  end
   
   def edit
     @title = "Settings"
@@ -32,14 +40,11 @@ class UsersController < ApplicationController
     def load_resource
       @user = User.find_by_username(params[:id])
       @user = User.find_by_id(params[:id]) unless @user
+      @user = User.find_by_signup_token(params[:id]) unless @user
       redirect_to root_path and return if @user.nil?
     end
     
     def authorize_resource
       raise "Access Denied" unless @user == current_user
-    end
-  
-    def user_only
-      redirect_to root_path unless current_user.id == @user.id
     end
 end
