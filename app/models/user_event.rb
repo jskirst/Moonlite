@@ -28,7 +28,7 @@ class UserEvent < ActiveRecord::Base
     path = enrollment.path
     path_url = BASE_URL + "challenges/#{path.permalink}"
     if event_type == :contribution_unlocked
-      content = "You have unlocked the ability to contribute your own questions to the #{path.name} challenge!"
+      content = "You have unlocked the ability to contribute your own questions to the #{path.name} Challenge!"
       log_event(user, content, nil, path_url, path.picture)
     end
   end
