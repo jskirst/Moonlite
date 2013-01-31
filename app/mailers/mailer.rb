@@ -38,16 +38,16 @@ class Mailer < ActionMailer::Base
     mail(to: @user.email, subject: "[UNLOCKED] Create your own MetaBright CR's!")
   end
   
-  def section_unlock(email)
-    @challenge_name 
-    @section_name 
-    @challenge_link 
-    @section_link 
-  end
-  
-  def challenge_unlock(email)
-    @persona_name 
-    @challenge_name
-    @challenge_link 
-  end
+  # def section_unlock(email)
+    # @challenge_name 
+    # @section_name 
+    # @challenge_link 
+    # @section_link 
+  # end
+#   
+  # def challenge_unlock(email)
+    # @persona_name 
+    # @challenge_name
+    # @challenge_link 
+  # end
 end
