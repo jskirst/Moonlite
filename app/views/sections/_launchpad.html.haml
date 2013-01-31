@@ -49,7 +49,8 @@
                   %legend{style:"margin-bottom:5px; "} Create an Arena question
                   %h4{style:"margin-top:12px; font-size:14px;"} Your question:
                   %div{style:"margin-left:12px;"}
-                    %span.question{style:"font-weight:bold;font-size:14px;"}
+                    %pre
+                      %span.question{style:"font-weight:bold;font-size:14px;"}
                   %h4{style:"margin-top:12px; font-size:14px;"} Correct answer:
                   %div{style:"margin-left:12px;"}
                     %span.correct_answer{style:"font-weight:bold;font-size:14px;"}
@@ -100,12 +101,12 @@
                 = f.hidden_field(:source, value: "launchpad")
                 %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
                   %legend Create a CR
-                  %label What's your question?
+                  %span.help-block What's your question?
                   = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
                   %div.control-group{style:"width:350px;"}
                     %div.controls
                       = render "stored_resources/new_image"
-                  %label What type of response should people give?
+                  %span.help-block{style: "margin-top:20px;"} What type of response should people give?
                   %label.radio
                     = f.radio_button(:answer_sub_type, Task::TEXT, class: "answer_sub_type")
                     = Task::SUBTYPES[Task::TEXT]
@@ -134,7 +135,8 @@
                   %legend{style:"margin-bottom:5px; "} Create a CR
                   %h4{style:"margin-top:12px; font-size:14px;"} Your question:
                   %div{style:"margin-left:12px;"}
-                    %span.question{style:"font-weight:bold;font-size:14px;"}
+                    %pre
+                      %span.question{style:"font-weight:bold;font-size:14px;"}
                   %h4{style:"margin-top:12px; font-size:14px;"} Question type:
                   %div{style:"margin-left:12px;"}
                     %span.task_subtype{style:"font-weight:bold;font-size:14px;"} 
@@ -187,7 +189,7 @@
                 = f.hidden_field(:source, value: "launchpad")
                 %fieldset{style: "display: inline-block; margin-right:28px; margin-bottom:150px; width:56%;"}
                   %legend Create a Task
-                  %label What's the Task?
+                  %span.help-block What's the Task?
                   = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Task...", style:"width:100%;")                
                   %span.error_message
                   %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
@@ -208,7 +210,8 @@
                   %legend{style:"margin-bottom:5px; "} Create a Task
                   %h4{style:"margin-top:12px; font-size:14px;"} Your new Task:
                   %div{style:"margin-left:12px;"}
-                    %span.question{style:"font-weight:bold;font-size:14px;"}
+                    %pre
+                      %span.question{style:"font-weight:bold;font-size:14px;"}
                   %h4{style:"margin-top:12px; font-size:14px; "} Here's where this Task will appear:
                   %div{style:"margin-left:12px;"}
                     %span{style:" font-size:14px;"} Challenge:
