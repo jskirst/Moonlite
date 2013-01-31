@@ -8,24 +8,24 @@ class Mailer < ActionMailer::Base
   end
   
   def content_comment_alert(comment)
-    @settings_url = notification_settings_url(@user.signup_token)
     if comment.is_a? String
       comment = SubmittedAnswer.find(comment).comments.first
     end
     @submission = comment.owner
     @user = @submission.user
+    @settings_url = notification_settings_url(@user.signup_token)
     @commenting_user = comment.user
     @action_url = submission_details_url(@submission.path, @submission)
     mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
   end
   
   def content_vote_alert(vote)
-    @settings_url = notification_settings_url(@user.signup_token)
     if vote.is_a? String
       vote = SubmittedAnswer.find(vote).votes.first
     end
     @submission = vote.submitted_answer
     @user = vote.submitted_answer.user
+    @settings_url = notification_settings_url(@user.signup_token)
     @voting_user = vote.user
     @action_url = submission_details_url(@submission.path, @submission)
     mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
@@ -37,6 +37,7 @@ class Mailer < ActionMailer::Base
   end
   
   def contribution_unlocked(email, path)
+    @user = User.find_by_email(email)
     @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
     mail(to: @user.email, subject: "Metabright Power Unlocked! Create your own MetaBright CR's!")
