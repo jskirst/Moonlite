@@ -8,8 +8,8 @@
       class: "button button-standard delete_button"
     = link_to "Edit", edit_task_path(task.id), remote: true, class: "button button-standard edit_button"
   %div{ style: "padding:15px;" }
-    %blockquote{ style: "margin-top:0px;" }
-      %p= task.question
+    %blockquote{ style: "margin-top:0px; width:77%;" }
+      %pre{ style:"word-break:normal;" }= task.question
     - if task.stored_resources.first
       = image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 40px; max-width: 500px;"
     %ol{ style: "padding-left:20px;" }

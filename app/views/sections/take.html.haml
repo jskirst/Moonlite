@@ -26,7 +26,7 @@
           - elsif @task.answer_type == Task::CHECKIN
             %span.CRquestionheader Task:
           %br
-          %span.CRquestion= @task.question
+          %pre.CRquestion= @task.question
         %div.CRresponsespace{ style: "min-height: 175px;" }           
           - if @task.answer_type == Task::CREATIVE
             %span Your answer:

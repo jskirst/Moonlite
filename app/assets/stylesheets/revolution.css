@@ -184,7 +184,7 @@ code,pre{font:inherit;}
 #CRprogressbar {width:632px; height: 40px; margin: 0 auto;}
 .CRquestionspace {width:40%; display:inline-block; padding-top:9px;}
 .CRquestionheader {font:bold 18px 'Muli', sans-serif;}
-.CRquestion {font-size:15px; position:relative; top:13px;} 
+.CRquestion {font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none;} 
 .CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'Muli', sans-serif;width:56.5%;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace {margin-top:12px; }
