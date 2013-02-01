@@ -64,7 +64,7 @@
       - if @path.is_published
         = link_to "View", @path, class: "button button-actionable"
       - else
-        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes."
+        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
       %span.button.button-standard.edit_path_settings_button Settings
   %div
     = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
@@ -79,11 +79,11 @@
                 %div.floatr
                   %ul.nav.nav-pills
                     %li.active
-                      %a.edit_section_overview_pill{ onclick: "close_section_container(this);" } Overview
+                      %a.edit_section_overview_pill{ onclick: "close_section_container(this);", style:"cursor:pointer;" } Overview
                     %li
-                      %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));" } Questions
+                      %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
                     %li
-                      %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" } Settings
+                      %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
                 %div.span8
                   %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
                   %div
