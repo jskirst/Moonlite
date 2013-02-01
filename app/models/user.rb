@@ -267,6 +267,15 @@ class User < ActiveRecord::Base
     self.save!
   end
   
+  def can_email?(type = nil)
+    settings = notification_settings
+    return false if settings.inactive
+    return false if type == :interaction && !settings.interaction
+    return false if type == :powers && !settings.powers
+    return false if type == :weekly && !settings.weekly
+    return true
+  end
+  
   private
     def set_default_user_role
       if self.user_role_id.nil?

@@ -13,6 +13,8 @@ class Mailer < ActionMailer::Base
     end
     @submission = comment.owner
     @user = @submission.user
+    return false unless @user.can_email?(:interaction)
+    
     @settings_url = notification_settings_url(@user.signup_token)
     @commenting_user = comment.user
     @action_url = submission_details_url(@submission.path.permalink, @submission)
@@ -25,6 +27,8 @@ class Mailer < ActionMailer::Base
     end
     @submission = vote.submitted_answer
     @user = vote.submitted_answer.user
+    return unless @user.can_email?(:interaction)
+    
     @settings_url = notification_settings_url(@user.signup_token)
     @voting_user = vote.user
     @action_url = submission_details_url(@submission.path.permalink, @submission)
@@ -33,14 +37,18 @@ class Mailer < ActionMailer::Base
   
   def intro_drop_off(email)
     @user = User.find_by_email(email)
+    return unless @user.can_email?()
+    
     mail(to: @user.email, subject: "Complete your first Challenge!")
   end
   
   def contribution_unlocked(email, path)
     @user = User.find_by_email(email)
+    return unless @user.can_email?(:powers)
+    
     @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
-    mail(to: @user.email, subject: "Metabright Power Unlocked! Create your own MetaBright CR's!")
+    mail(to: @user.email, subject: "Metabright Power Unlocked! Create your own MetaBright questions's to challenge others!")
   end
   
   # def section_unlock(email)

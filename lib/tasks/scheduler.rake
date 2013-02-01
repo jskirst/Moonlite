@@ -19,18 +19,26 @@ task :refresh_staging => :environment do
 end
 
 task :send_alerts => :environment do
-  desc "Sending alerts..."
+  puts "VOTE ALERTS"
   votes = Vote.where("created_at > ?", 10.minutes.ago)
   votes.each do |vote|
     puts "Sending vote alert..."
-    Mailer.content_vote_alert(vote).deliver
+    begin
+      Mailer.content_vote_alert(vote).deliver
+    rescue
+      puts "Vote alert rejected."
+    end
   end
   
-  puts "Sending comment alerts..."
+  puts "COMMENT ALERTS"
   comments = Comment.where("created_at > ?", 10.minutes.ago)
   comments.each do |comment|
     puts "Sending comment alert..."
-    Mailer.content_comment_alert(comment).deliver
+    begin
+      Mailer.content_comment_alert(comment).deliver
+    rescue
+      puts "Comment alert rejected"
+    end
   end
 end
 
