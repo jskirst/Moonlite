@@ -341,8 +341,10 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .popover{background-color: #FFECBD;border-width: 10px;border-style: solid;border-color: #FDD05B; z-index:1001;}
 .popover.left .arrow{right:-20px; border-left-color:#FDD05B;}
 .popover.right .arrow{left:-20px; border-right-color:#FDD05B;}
+.popover.bottom .arrow{top:-20px; border-bottom-color:#FDD05B;}
 .popover.left .arrow:after {border-left-color: #FDD05B;}
 .popover.right .arrow:after {border-right-color: #FDD05B;}
+.popover.bottom .arrow:after {border-bottom-color: #FDD05B;}
 .popover-content p{color:#404040; margin:0; font-size:13px;}
 .popover-content{padding:6px 6px 3px 6px;}
 .popover{width:150px;}

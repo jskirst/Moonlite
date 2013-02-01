@@ -58,7 +58,21 @@ module ApplicationHelper
       cr_pop: {
         content: "This is an answer to the above Creative Response question.",
         placement: "left"
-      }#,
+      },
+      questions_pop: {
+        content: "Create questions for your Challenge here.",
+        placement: "bottom"
+      },
+      challenge_desc_pop: {
+        content: "Every Challenge needs a description.",
+        placement: "bottom"
+      },
+      section_settings_pop: {
+        content: "Publish your section before you publish your Challenge.",
+        placement: "right"
+      }
+      
+      #,
       # editor_link: {
         # content: "Choose a tab and start creating questions!",
         # placement: "right"  

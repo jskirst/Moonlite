@@ -1,5 +1,5 @@
 class Mailer < ActionMailer::Base
-  default from: "Team Metabright <team@metabright.com>"
+  default from: "Team MetaBright <team@metabright.com>"
   
   def welcome(email)
     @user = User.find_by_email(email)
