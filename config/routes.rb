@@ -3,7 +3,7 @@ Metabright::Application.routes.draw do
 	
 	resources :users
 	match '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
-	match '/notifications/:id' => 'users#notifications', as: 'notification_settings'
+	match '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
 	
   resources :paths do
 		member do
