@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  attr_protected :is_reviewed, :is_locked
+  attr_protected :is_reviewed, :is_locked, :reviewed_at, :locked_at
   attr_accessible :owner_id, :owner_type, :content
   
   belongs_to :user

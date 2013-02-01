@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131185900) do
+ActiveRecord::Schema.define(:version => 20130201165414) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "owner_type"
     t.boolean  "is_reviewed", :default => false
     t.boolean  "is_locked",   :default => false
+    t.datetime "reviewed_at"
+    t.datetime "locked_at"
   end
 
   create_table "companies", :force => true do |t|
@@ -99,10 +101,11 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.integer  "total_points",          :default => 0
-    t.boolean  "contribution_unlocked", :default => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "total_points",             :default => 0
+    t.boolean  "contribution_unlocked",    :default => false
+    t.datetime "contribution_unlocked_at"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
@@ -145,6 +148,9 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "tags"
     t.boolean  "enable_voting",              :default => false
     t.string   "permalink"
+    t.datetime "approved_at"
+    t.datetime "published_at"
+    t.datetime "public_at"
   end
 
   add_index "paths", ["permalink"], :name => "index_paths_on_permalink"
@@ -191,6 +197,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.datetime "updated_at",                          :null => false
     t.boolean  "is_published",     :default => false
     t.integer  "points_to_unlock", :default => 0
+    t.datetime "published_at"
   end
 
   add_index "sections", ["path_id"], :name => "index_sections_on_path_id"
@@ -230,6 +237,8 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "task_id"
     t.boolean  "is_reviewed", :default => false
     t.boolean  "is_locked",   :default => false
+    t.datetime "reviewed_at"
+    t.datetime "locked_at"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
@@ -238,9 +247,10 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "task_id"
     t.integer  "user_id"
     t.integer  "issue_type"
-    t.boolean  "resolved",   :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "resolved",    :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.datetime "resolved_at"
   end
 
   create_table "tasks", :force => true do |t|
@@ -259,6 +269,8 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "creator_id"
     t.boolean  "is_locked",          :default => false
     t.boolean  "is_reviewed",        :default => false
+    t.datetime "reviewed_at"
+    t.datetime "locked_at"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
@@ -282,6 +294,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "link"
     t.integer  "actioner_id"
     t.string   "image_link"
+    t.datetime "read_at"
   end
 
   add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
@@ -349,6 +362,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.boolean  "is_locked",          :default => false
     t.string   "large_image_url"
     t.text     "viewed_help"
+    t.datetime "locked_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

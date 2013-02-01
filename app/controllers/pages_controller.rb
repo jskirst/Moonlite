@@ -141,7 +141,7 @@ class PagesController < ApplicationController
   private
     def authorize_resource
       unless @enable_content_creation
-        flash[:error] = "You do not have access to #{name_for_paths} editing functionality."
+        flash[:error] = "You do not have access to Challenge editing functionality."
         redirect_to root_path
       end
     end

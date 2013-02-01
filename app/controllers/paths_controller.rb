@@ -206,12 +206,11 @@ class PathsController < ApplicationController
     end
     
     def authorize_edit
-      raise "Creation Access Denied" unless @enable_content_creation
       raise "Edit Access Denied" unless @path.nil? || can_edit_path(@path)
     end
     
     def authorize_view
-      raise "View Access Denied" unless @path.is_public || can_edit_path(@path)
+      raise "View Access Denied" unless (@path.is_public && @path.is_approved && @path.is_published) || can_edit_path(@path)
     end
     
     def generate_newsfeed_url

@@ -6,9 +6,9 @@ class PhrasePairing < ActiveRecord::Base
   belongs_to :paired_phrase, class_name: :phrase
   
   validates :phrase_id, presence: true, uniqueness: { scope: :paired_phrase_id }
-  validates :paired_phrase_id, :presence => true
+  validates :paired_phrase_id, presence: true
   
-  default_scope :order => 'strength desc'
+  default_scope order: 'strength desc'
   
   def self.create_phrase_pairings(new_phrases)
     phrases = []

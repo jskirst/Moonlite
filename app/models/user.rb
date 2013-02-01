@@ -2,7 +2,7 @@ require 'open-uri'
 
 class User < ActiveRecord::Base
   attr_readonly :signup_token, :company_id
-  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :is_locked
+  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :is_locked, :locked_at
   attr_accessor :password, :password_confirmation
   attr_accessible :name,
     :email, 
@@ -45,12 +45,17 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, length: { within: 6..40 }, on: :create
   validates :password, confirmation: true, length: { within: 6..40 }, on: :update, if: Proc.new { self.password.present? }
   
-  before_save :encrypt_password
-  before_save :set_tokens
-  before_save :set_default_user_role
   before_validation :grant_username
+  before_save do
+    if self.password.present?
+      self.salt = make_salt
+      self.encrypted_password = encrypt(password)
+    end
+    self.user_role_id = self.company.user_role_id if self.user_role_id.nil?
+  end
   
   before_create do
+    self.signup_token = random_alphanumeric
     self.login_at = self.created_at
   end
   
@@ -58,9 +63,7 @@ class User < ActiveRecord::Base
     NotificationSettings.create!(user_id: self.id)
   end
   
-  def to_s
-    return self.name
-  end
+  def to_s() self.name end
   
   def self.find_with_omniauth(auth)
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
@@ -139,23 +142,14 @@ class User < ActiveRecord::Base
     Mailer.reset(email_details).deliver
   end
   
+  def picture() profile_pic end
   def profile_pic
     return self.image_url if self.image_url != nil
     return "/images/default_profile_pic.png"  if company.default_profile_picture_link.blank?
     return company.default_profile_picture_link
   end
-  
-  def picture
-    profile_pic
-  end
-  
-  def profile_complete?
-    !self.description.nil?
-  end
-  
-  def has_password?(submitted_password)
-    encrypted_password == encrypt(submitted_password)
-  end
+  def profile_complete?() !self.description.nil? end
+  def has_password?(submitted_password) encrypted_password == encrypt(submitted_password) end
   
   def self.authenticate(email, submitted_password)
     user = find_by_email(email)
@@ -168,10 +162,7 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
   
-  def enrolled?(path)
-    return enrollments.find_by_path_id(path.id)
-  end
-  
+  def enrolled?(path) enrollments.find_by_path_id(path.id) end
   def enroll!(obj)
     if obj.is_a? Path
       enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
@@ -181,12 +172,9 @@ class User < ActiveRecord::Base
       raise "Invalid object to enroll."
     end
   end
+  def unenroll!(path) enrollments.find_by_path_id(path.id).destroy end
   
-  def unenroll!(path)
-    enrollments.find_by_path_id(path.id).destroy
-  end
-  
-  def award_points(task, points, callback = nil)
+  def award_points(task, points)
     if points.to_i > 0
       log_transaction(task.id, points)
       self.update_attribute('earned_points', self.earned_points + points)
@@ -194,21 +182,14 @@ class User < ActiveRecord::Base
       enrollment.add_earned_points(points)
     end
   end
-  
   def retract_points(task, points)
     log_transaction(task.id, points * -1)
     self.update_attribute('earned_points', self.earned_points - points)
     enrollment = enrollments.find_by_path_id(task.section.path_id)
     enrollment.update_attribute(:total_points, enrollment.total_points - points)
   end
-  
-  def debit_points(points)
-    self.update_attribute('spent_points', self.spent_points + points)
-  end
-  
-  def available_points
-    self.earned_points.to_i - self.spent_points
-  end
+  def debit_points(points) self.update_attribute('spent_points', self.spent_points + points) end
+  def available_points() self.earned_points.to_i - self.spent_points end
   
   def most_recent_section_for_path(path)
     last_task = completed_tasks.includes(:path).where(["paths.id = ?", path.id]).first(:order => "completed_tasks.updated_at DESC")
@@ -216,25 +197,11 @@ class User < ActiveRecord::Base
     return last_task.section
   end
   
-  def completed?(task)
-    completed_tasks.find_by_task_id(task.id)
-  end
-  
-  def path_started?(path)
-    return true unless my_completed_tasks.includes(:path).where(["paths.id = ?", path.id]).empty?
-  end
-  
-  def section_started?(section)
-    return true unless my_completed_tasks.where(["section_id = ?", section.id]).empty?
-  end
-  
-  def level(path)
-    return enrollments.find_by_path_id(path).level
-  end
-  
-  def points(path)
-    return enrollments.find_by_path_id(path).total_points
-  end
+  def path_started?(path) !my_completed_tasks.includes(:path).where(["paths.id = ?", path.id]).empty? end
+  def section_started?(section) !my_completed_tasks.where(["section_id = ?", section.id]).empty? end
+  def completed?(task) completed_tasks.find_by_task_id(task.id) end
+  def level(path) enrollments.find_by_path_id(path).level end
+  def points(path) enrollments.find_by_path_id(path).total_points end
   
   def grant_username
     if self.username.blank?
@@ -277,40 +244,11 @@ class User < ActiveRecord::Base
   end
   
   private
-    def set_default_user_role
-      if self.user_role_id.nil?
-        self.user_role_id = self.company.user_role_id
-      end
-    end
+    def check_image_url() self.image_url = nil if self.image_url && self.image_url.length < 9 end
     
-    def check_image_url
-      unless self.image_url.nil?
-        self.image_url = nil if self.image_url.length < 9
-      end
-    end
-  
-    def encrypt_password
-      if self.password.present?
-        self.salt = make_salt
-        self.encrypted_password = encrypt(password)
-      end
-    end
-    
-    def encrypt(string)
-      secure_hash("#{salt}--#{string}")
-    end
-    
-    def make_salt
-      secure_hash("#{Time.now.utc}--#{password}")
-    end
-    
-    def secure_hash(string)
-      Digest::SHA2.hexdigest(string)
-    end
-    
-    def set_tokens
-      self.signup_token = random_alphanumeric if self.signup_token == nil
-    end
+    def encrypt(string) secure_hash("#{salt}--#{string}") end
+    def make_salt() secure_hash("#{Time.now.utc}--#{password}") end
+    def secure_hash(string) Digest::SHA2.hexdigest(string) end
     
     def random_alphanumeric(size=15)
       (1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join

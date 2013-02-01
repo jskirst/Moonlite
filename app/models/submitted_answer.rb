@@ -1,7 +1,7 @@
 class SubmittedAnswer < ActiveRecord::Base
   POINTS_PER_VOTE = 50
-  
-  attr_protected :task_id, :total_votes, :is_locked
+
+  attr_protected :task_id, :total_votes, :is_locked, :is_reviewed, :locked_at, :reviewed_at
   attr_accessible :content
   
   belongs_to :task

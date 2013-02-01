@@ -1,11 +1,7 @@
 class Path < ActiveRecord::Base
-  def to_param
-    "#{id} #{name}".parameterize
-  end
-  
   attr_accessor :persona_id
   attr_readonly :company_id
-  attr_protected :is_approved
+  attr_protected :is_approved, :approved_at, :published_at, :public_at
   attr_accessible :user_id,
     :category_id,
     :name, 
@@ -49,21 +45,18 @@ class Path < ActiveRecord::Base
     self.path_personas.create(persona_id: self.persona_id)
   end
   
-  def default_pic?() path_pic == "/images/image_thumb.png" end
+  def published?() published_at.nil? ? false : true end
+  def public?() public_at.nil? ? false : true end
+  def approved?() approved_at.nil? ? false : true end
   
   def path_pic
     return stored_resource.obj.url if stored_resource
     return self.image_url if self.image_url
     return "/images/image_thumb.png"
   end
-  
-  def image
-    return path_pic
-  end
-  
-  def picture
-    return path_pic
-  end
+  def image() path_pic end
+  def picture() path_pic end
+  def default_pic?() path_pic == "/images/image_thumb.png" end
   
   def self.with_name_like(name, user)
     return Path.where("is_locked = ? and is_published = ? and name ILIKE ?", false, true, "%#{name}%")
