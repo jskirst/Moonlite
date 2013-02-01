@@ -1,28 +1,40 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
   :css
     form .control-group label.control-label { width: 160px; }
-  %h3{ style: "border-bottom: 3px solid whitesmoke;padding:5px;" } Notification Settings
-  = form_for(@notification_settings, url: notification_settings_path(@user.id), html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+  %span{ style: "font-size: 50px;position: relative;top:13px;" } Notification Settings
+  %hr{style:"margin:0;"}
+  = form_for(@notification_settings, url: notification_settings_path(@user.id), html: { class: "form-horizontal", style: "margin-top: 10px;" }) do |f|
     = render 'shared/error_messages', object: f.object
-    %h4{ style: "margin: 20px 0 20px 100px;"} When do you want to recieve emails from Metabright?
-    %div.control-group
-      %label.control-label When someone comments or votes on your submissions, or replies to you.
-      %div.controls
-        = f.check_box :interaction
-    %div.control-group
-      %label.control-label When you unlock new Metabright powers.
-      %div.controls
-        = f.check_box :powers
-    %div.control-group
-      %label.control-label Weekly updates
-      %div.controls
-        = f.check_box :weekly
-    %div.control-group
-      %label.control-label Unsubscribe from everything
-      %div.controls
-        = f.check_box :inactive
-    %hr
-    %div.control-group
-      %div.controls
-      = f.submit "Save", class: "button button-info", style: "float: right; margin-left: 10px; margin-right: 20px;"
-      = link_to "Cancel", current_user, class: "button button-standard", style: "float: right;"
+    %div.notificationpanelbody
+      %h4 When do you want to recieve emails from Metabright?
+      %div.settingsmanagementarea
+        %div
+          %h5 When someone comments or votes on your submissions, or replies to you.
+          %div.control-group
+            %label.control-label Yes!
+            %div.controls
+              = f.check_box :interaction
+        %div
+          %h5 When you unlock new Metabright powers.
+          %div.control-group
+            %label.control-label Yes!
+            %div.controls
+              = f.check_box :powers
+        %div
+          %h5 Weekly updates
+          %div.control-group
+            %label.control-label Yes!
+            %div.controls
+              = f.check_box :weekly
+        %div
+          %h5 Unsubscribe from everything
+          %div.control-group
+            %label.control-label :(
+            %div.controls
+              = f.check_box :inactive
+      %hr
+      %div.control-group
+        %div.controls
+        = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
+        = link_to "Cancel", current_user, class: "button button-standard", style: "float: right;"
