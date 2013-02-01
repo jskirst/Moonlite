@@ -38,6 +38,10 @@
     %div.control-group
       %div.controls
         = image_tag @user.profile_pic, id: "image_url_preview", width: "210"
+    %div.control-group
+      %label.control-label Notification Settings
+      %div.controls{ style: "padding-top: 5px;"}
+        = link_to "Edit Settings", notification_settings_path(current_user.username)
     %hr
     %div.control-group
       %div.controls
