@@ -15,7 +15,7 @@ class Mailer < ActionMailer::Base
     @user = @submission.user
     @settings_url = notification_settings_url(@user.signup_token)
     @commenting_user = comment.user
-    @action_url = submission_details_url(@submission.path, @submission)
+    @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
   end
   
@@ -27,7 +27,7 @@ class Mailer < ActionMailer::Base
     @user = vote.submitted_answer.user
     @settings_url = notification_settings_url(@user.signup_token)
     @voting_user = vote.user
-    @action_url = submission_details_url(@submission.path, @submission)
+    @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
   end
   
