@@ -64,6 +64,8 @@ class User < ActiveRecord::Base
   end
   
   def to_s() self.name end
+    
+  def locked?() locked_at.nil? ? false : true end
   
   def self.find_with_omniauth(auth)
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])

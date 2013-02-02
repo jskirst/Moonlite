@@ -150,10 +150,11 @@ class SectionsController < ApplicationController
         submitted_answer.content = sr.obj.url
         submitted_answer.save
       end
-      ct = current_user.completed_tasks.create!(
-        points_awarded: 100, 
-        task_id: @task.id, status_id: 1, 
-        submitted_answer_id: submitted_answer.id)
+      ct = current_user.completed_tasks.new(task_id: @task.id)
+      ct.points_awarded = 100
+      ct.status_id = 1
+      ct.submitted_answer_id = submitted_answer.id
+      ct.save!
       current_user.award_points(@task, 100)
       if current_user.completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::CREATIVE).size == 1
         render "completed_cr"

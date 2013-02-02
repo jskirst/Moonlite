@@ -37,12 +37,11 @@ class CompaniesController < ApplicationController
   def users
     if request.get?
       conditions = params[:search].nil? ? nil : ["name ILIKE ? or email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%"]
-      @sort = params[:sort] || "earned_points"
+      @sort = params[:sort] || "id"
       @users = User.paginate(page: params[:page], conditions: conditions, order: "#{@sort} DESC").includes(:user_role)
     else
-      status = params[:lock] == "true" ? true : false
       user = User.find(params[:id])
-      user.update_attribute(:is_locked, status)
+      toggle(:locked_at, user)
       render json: { status: status }
     end
   end
@@ -52,9 +51,8 @@ class CompaniesController < ApplicationController
       conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
       @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions)
     else
-      status = params[:approve] == "true" ? true : false
       path = Path.find(params[:id])
-      path.update_attribute(:is_approved, status)
+      toggle(:approved_at, path)
       render json: { status: status }
     end
   end
@@ -65,7 +63,7 @@ class CompaniesController < ApplicationController
       @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: conditions)
     else
       submission = SubmittedAnswer.find(params[:id])
-      submission.update_attribute(:is_reviewed, true)
+      toggle(:reviewed_at, submission)
       render json: { status: "success" }
     end
   end
@@ -76,7 +74,7 @@ class CompaniesController < ApplicationController
       @tasks = Task.paginate(page: params[:page], conditions: conditions)
     else
       task = Task.find(params[:id])
-      task.update_attribute(:is_reviewed, true)
+      toggle(:reviewed_at, task)
       render json: { status: "success" }
     end
   end
@@ -87,7 +85,7 @@ class CompaniesController < ApplicationController
       @comments = Comment.paginate(page: params[:page], conditions: conditions)
     else
       comment = Comment.find(params[:id])
-      comment.update_attribute(:is_reviewed, true)
+      toggle(:reviewed_at, comment)
       render json: { status: "success" }
     end
   end
@@ -100,4 +98,11 @@ class CompaniesController < ApplicationController
       end
     end
   end
+  
+  private
+  
+  def toggle(attr, obj)
+    obj.update_attribute(attr, obj.read_attribute(attr).nil? ? Time.now : nil)
+  end
+    
 end

@@ -17,14 +17,14 @@
       - @paths.to_a.each_with_index do |p, i|
         %tr
           %td= i
-          %td= link_to p.name, p
+          %td= link_to p.name, challenge_path(p.permalink)
           %td= p.personas.first.name
           %td= p.sections.size
           %td= p.tasks.size
           %td= link_to p.user.name, p.user
-          %td= p.is_published.to_s 
+          %td= p.published? ? "waiting" : "published"
           %td
-            - if p.is_approved
-              = link_to "approved", admin_update_path_path(p, approve: "false"), class: "mark_approved", remote: true, method: "put"
+            - if p.approved?
+              = link_to "approved", admin_update_path_path(p), class: "mark_approved approved", remote: true, method: "put"
             - else
-              = link_to "locked", admin_update_path_path(p, approve: "true"), class: "mark_approved", remote: true, method: "put"
+              = link_to "waiting", admin_update_path_path(p), class: "mark_approved waiting", remote: true, method: "put"
