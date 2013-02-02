@@ -92,6 +92,7 @@ class PagesController < ApplicationController
   end
   
   def create
+    @title = "Create"
     @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
   end
   
@@ -115,17 +116,20 @@ class PagesController < ApplicationController
   end
   
   def about
+    @title = "About"
     @show_footer = true
     render "about", layout: "landing"
   end
   
   def challenges
+    @title = "Challenges"
     @show_footer = true
     @personas = current_company.personas
     render "challenges", layout: "landing"
   end
   
   def tos
+    @title = "Terms of Service"
     @show_footer = true
     render "tos", layout: "landing"
   end
