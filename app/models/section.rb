@@ -1,5 +1,5 @@
 class Section < ActiveRecord::Base
-  attr_protected :path_id, :is_published, :published_at
+  attr_protected :path_id, :published_at
   attr_accessible :name, 
     :instructions, 
     :position,
@@ -16,13 +16,13 @@ class Section < ActiveRecord::Base
   before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
       
   def next_task(user)
-    return tasks.where(["is_locked = ? and answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", false, Task::MULTIPLE, user.id]).first
+    return tasks.where(["locked_at is ? and answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", nil, Task::MULTIPLE, user.id]).first
   end
   
   def completed?(user) remaining_tasks(user) <= 0 end
   
   def remaining_tasks(user)
-    unless self.is_published == false
+    unless self.published_at.nil?
       return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
     else
       return 0

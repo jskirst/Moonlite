@@ -63,7 +63,7 @@ module SessionsHelper
   def authenticate
     if not signed_in?
       deny_access 
-    elsif current_user.is_locked?
+    elsif current_user.locked?
       sign_out
       redirect_to root_url
     end

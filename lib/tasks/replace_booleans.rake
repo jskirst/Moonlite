@@ -13,4 +13,5 @@ task :replace_booleans => :environment do
   Comment.all.each { |c| c.update_attribute(:locked_at, Time.now) if c.is_locked }
   SubmittedAnswer.all.each { |sa| sa.update_attribute(:reviewed_at, Time.now) if sa.is_reviewed }
   SubmittedAnswer.all.each { |sa| sa.update_attribute(:locked_at, Time.now) if sa.is_locked }
+  Persona.all.each { |p| p.update_attribute(:locked_at, Time.now) if p.is_locked }
 end

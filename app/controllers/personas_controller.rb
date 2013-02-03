@@ -9,7 +9,7 @@ class PersonasController < ApplicationController
   end
   
   def show
-    @paths = @persona.paths.order("is_public DESC")
+    @paths = @persona.paths.order("public_at DESC")
     render partial: "show"
   end
   

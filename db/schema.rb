@@ -167,6 +167,7 @@ ActiveRecord::Schema.define(:version => 20130201165414) do
     t.integer  "parent_id"
     t.integer  "unlock_threshold"
     t.boolean  "is_locked",        :default => true
+    t.datetime "locked_at"
   end
 
   create_table "phrase_pairings", :force => true do |t|

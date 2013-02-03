@@ -2,7 +2,7 @@ require 'open-uri'
 
 class User < ActiveRecord::Base
   attr_readonly :signup_token, :company_id
-  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :is_locked, :locked_at
+  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :locked_at
   attr_accessor :password, :password_confirmation
   attr_accessible :name,
     :email, 

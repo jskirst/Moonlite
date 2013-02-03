@@ -14,5 +14,6 @@ class ConvertBooleansToTimestamps < ActiveRecord::Migration
     add_column :comments, :locked_at, :datetime
     add_column :submitted_answers, :reviewed_at, :datetime
     add_column :submitted_answers, :locked_at, :datetime
+    add_column :personas, :locked_at, :datetime
   end
 end

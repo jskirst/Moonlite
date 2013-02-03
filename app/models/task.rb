@@ -28,8 +28,6 @@ class Task < ActiveRecord::Base
     :time_limit,
     :answer_content,
     :creator_id,
-    :is_locked,
-    :is_reviewed,
     :source
   
   belongs_to :section

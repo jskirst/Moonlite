@@ -6,7 +6,7 @@ class PagesController < ApplicationController
     @title = "Home"
     if signed_in?
       redirect_to start and return if params[:go] == "start"
-      @enrollments = current_user.enrollments.includes(:path).where("paths.is_approved = ?", true).sort { |a,b| b.total_points <=> a.total_points }
+      @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
     else
@@ -68,7 +68,7 @@ class PagesController < ApplicationController
     @user_personas = @user.user_personas.includes(:persona)
     
     @creative_task_questions = @completed_tasks.collect { |item| item.task }
-    @enrollments = @user.enrollments.includes(:path).where("total_points > ? and paths.is_approved = ?", 50, true).sort { |a,b| b.total_points <=> a.total_points }
+    @enrollments = @user.enrollments.includes(:path).where("total_points > ? and paths.approved_at is not ?", 50, nil).sort { |a,b| b.total_points <=> a.total_points }
     
     @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
     @title = @user.name
@@ -140,9 +140,6 @@ class PagesController < ApplicationController
   
   private
     def authorize_resource
-      unless @enable_content_creation
-        flash[:error] = "You do not have access to Challenge editing functionality."
-        redirect_to root_path
-      end
+      return true
     end
 end

@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
   def overview
     excluded = [0]
     unless params[:excluded]
-      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or is_locked = ?", true, true, true, true).to_a.collect &:id
+      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is ?", true, true, true, nil).to_a.collect &:id
     end
 
     @users                  = User.where("id not in (?)", excluded).count
@@ -59,7 +59,7 @@ class CompaniesController < ApplicationController
   
   def submissions
     if request.get?
-      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["content ILIKE ? and is_reviewed = ?", "%#{params[:search]}%", false]
+      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["content ILIKE ?", "%#{params[:search]}%"]
       @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: conditions)
     else
       submission = SubmittedAnswer.find(params[:id])
@@ -70,7 +70,7 @@ class CompaniesController < ApplicationController
   
   def tasks
     if request.get?
-      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["question ILIKE ?", "%#{params[:search]}%"]
+      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["question ILIKE ?", "%#{params[:search]}%"]
       @tasks = Task.paginate(page: params[:page], conditions: conditions)
     else
       task = Task.find(params[:id])
@@ -81,7 +81,7 @@ class CompaniesController < ApplicationController
   
   def comments
     if request.get?
-      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["content ILIKE ?", "%#{params[:search]}%"]
+      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["content ILIKE ?", "%#{params[:search]}%"]
       @comments = Comment.paginate(page: params[:page], conditions: conditions)
     else
       comment = Comment.find(params[:id])

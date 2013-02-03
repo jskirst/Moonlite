@@ -1,6 +1,5 @@
 class Persona < ActiveRecord::Base
   attr_accessor :criteria
-  attr_protected :is_locked
   attr_accessible :company_id, :name, :description, :image_url, :criteria
 
   belongs_to :company
@@ -9,8 +8,8 @@ class Persona < ActiveRecord::Base
   has_many :user_personas, include: :user
   has_many :users, through: :user_personas
   has_many :path_personas, include: :path
-  has_many :public_paths, through: :path_personas, source: :path, conditions: { is_published: true, is_approved: true, is_public: true }
-  has_many :paths, through: :path_personas, conditions: { is_published: true, is_approved: true }
+  has_many :paths, through: :path_personas, conditions: ["published_at is not ? and approved_at is not ?", nil, nil]
+  has_many :public_paths, source: :path, through: :path_personas, conditions: ["published_at is not ? and approved_at is not ? and public_at is not ?", nil, nil, nil]
   
   validates :name, length: { within: 1..255 }
   validates :description, length: { within: 1..255 }

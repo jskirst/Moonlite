@@ -45,7 +45,7 @@
     - @paths.to_a.each_with_index do |path, i|
       %div.mosaic-block.bar2{ style: (((i+1) % 4 == 0) ? "margin-right: 0px;" : "") }
         %div.details
-          - if path.is_public
+          - if path.public_at
             = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
               %h4 #{truncate(path.name,length: 17, separator: ' ')}
               - if current_user.enrolled?(path)
