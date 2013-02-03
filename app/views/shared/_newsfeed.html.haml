@@ -26,6 +26,8 @@
       %div.postheader
         %h3
           = link_to truncate(ct.user.to_s, length: 50), profile_path(ct.user.username), class:"username"
+        %span
+          = link_to truncate(ct.path.name.to_s, length: 20), challenge_path(ct.path.permalink), class:"challengename"
         %div.votingandpointsarea{ id: ("points_pop" unless current_user == ct.user)}
           - if current_user
             %span.vote_points{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= ct.points_awarded

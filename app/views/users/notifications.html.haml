@@ -7,7 +7,7 @@
   = form_for(@notification_settings, url: notification_settings_path(@user.signup_token), html: { class: "form-horizontal", style: "margin-top: 10px;" }) do |f|
     = render 'shared/error_messages', object: f.object
     %div.notificationpanelbody
-      %h4 When do you want to receive emails from Metabright?
+      %h4 When do you want to receive emails from MetaBright?
       %div.settingsmanagementarea
         %div
           %h5 When someone comments or votes on your submissions, or replies to you.
@@ -16,7 +16,7 @@
             %div.controls
               = f.check_box :interaction
         %div
-          %h5 When you unlock new Metabright powers.
+          %h5 When you unlock new MetaBright powers.
           %div.control-group
             %label.control-label Yes!
             %div.controls

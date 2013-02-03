@@ -59,12 +59,12 @@
         = image_tag(@path.path_pic, class: "bigheaderimage")
     %div.span4{ style: "margin-left: 5px;" }
       %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
-      %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
+      %p#challenge_desc_pop.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
     %div.floatr{ style: "margin-top:10px;"}
       - if @path.published_at
         = link_to "View", @path, class: "button button-actionable"
       - else
-        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Are you certain that you want to publish this just yet? Once its been published, it cannot be unpublished, though you can always make changes."
+        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
       %span.button.button-standard.edit_path_settings_button Settings
   %div
     = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
@@ -79,11 +79,11 @@
                 %div.floatr
                   %ul.nav.nav-pills
                     %li.active
-                      %a.edit_section_overview_pill{ onclick: "close_section_container(this);" } Overview
+                      %a.edit_section_overview_pill{ onclick: "close_section_container(this);", style:"cursor:pointer;" } Overview
                     %li
-                      %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));" } Questions
+                      %a#questions_pop.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
                     %li
-                      %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" } Settings
+                      %a#section_settings_pop.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
                 %div.span8
                   %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
                   %div
