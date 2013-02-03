@@ -54,7 +54,7 @@ class PagesController < ApplicationController
       else
         @completed_tasks = @user.completed_tasks.offset(offset).limit(20).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
       end
-      social_tags("#{@user.name}'s Profile on Metabright", @user.picture)
+      social_tags("#{@user.name}'s Profile on MetaBright", @user.picture)
       @compact_social = true
     end  
     
@@ -92,7 +92,7 @@ class PagesController < ApplicationController
   end
   
   def create
-    @title = "Create"
+    @title = "Create" 
     @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
   end
   
