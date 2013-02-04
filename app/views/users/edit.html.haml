@@ -58,4 +58,4 @@
       %div.controls
       = link_to "Remove Account", current_user, method: :delete, confirm: "Are you absolutely certain you would like to delete your account? This action is irreversible", class: "button button-info", style: "margin-left: 20px; float: left;"
       = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
-      = link_to "Cancel", current_user, class: "button button-standard", style: "float: right;"
+      = link_to "Cancel", profile_path(current_user.username), class: "button button-standard", style: "float: right;"
