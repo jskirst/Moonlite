@@ -203,7 +203,8 @@ class PathsController < ApplicationController
   private
     def load_resource
       @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
-      @path = Path.find_by_id(params[:id]) if params[:id]
+      @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
+      @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       redirect_to root_path unless @path
     end
     
