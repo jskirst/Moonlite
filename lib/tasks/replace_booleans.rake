@@ -1,5 +1,5 @@
 task :replace_booleans => :environment do
-  Enrollment.all.each { |e| e.update_attribute(:contribution_unlocked_at, Time.now) if e.contribution_unlocked }
+  Enrollment.all.each { |e| e.update_attribute(:contribution_unlocked_at, e.created_at) if e.contribution_unlocked }
   User.all.each { |u| u.update_attribute(:locked_at, Time.now) if u.is_locked }
   Path.all.each { |p| p.update_attribute(:approved_at, Time.now) if p.is_approved }
   Path.all.each { |p| p.update_attribute(:published_at, Time.now) if p.is_published }
