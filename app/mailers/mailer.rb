@@ -5,6 +5,7 @@ class Mailer < ActionMailer::Base
     @user = User.find_by_email(email)
     @settings_url = notification_settings_url(@user.signup_token)
     mail(to: @user.email, from: "Jonathan Kirst <jskirst@metabright.com>", subject: "Welcome to MetaBright!")
+    @user.log_email
   end
   
   def content_comment_alert(comment)
@@ -19,6 +20,7 @@ class Mailer < ActionMailer::Base
     @commenting_user = comment.user
     @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
+    @user.log_email
   end
   
   def content_vote_alert(vote)
@@ -33,6 +35,7 @@ class Mailer < ActionMailer::Base
     @voting_user = vote.user
     @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
+    @user.log_email
   end
   
   def intro_drop_off(email)
@@ -49,6 +52,7 @@ class Mailer < ActionMailer::Base
     @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
     mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions's to challenge others!")
+    @user.log_email
   end
   
   # def section_unlock(email)

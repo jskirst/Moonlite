@@ -1,8 +1,20 @@
 require 'open-uri'
 
 class User < ActiveRecord::Base
+  MAX_DAILY_EMAILS = 8
+  
   attr_readonly :signup_token, :company_id
-  attr_protected :admin, :login_at, :logout_at, :is_fake_user, :is_test_user, :earned_points, :spent_points, :user_role_id, :locked_at
+  attr_protected :admin, 
+    :login_at, 
+    :logout_at, 
+    :is_fake_user, 
+    :is_test_user, 
+    :earned_points, 
+    :spent_points, 
+    :user_role_id, 
+    :locked_at,
+    :last_email_sent_at, 
+    :emails_today
   attr_accessor :password, :password_confirmation
   attr_accessible :name,
     :email, 
@@ -237,12 +249,28 @@ class User < ActiveRecord::Base
   end
   
   def can_email?(type = nil)
+    if (last_email_sent_at && last_email_sent_at.to_date.today?) && (emails_today && emails_today >= MAX_DAILY_EMAILS)
+      puts "Emailed too much today"
+      return false
+    end
+    
     settings = notification_settings
     return false if settings.inactive
     return false if type == :interaction && !settings.interaction
     return false if type == :powers && !settings.powers
     return false if type == :weekly && !settings.weekly
     return true
+  end
+  
+  def log_email
+    if last_email_sent_at && last_email_sent_at.to_date.today?
+      self.emails_today += 1
+    else
+      self.emails_today = 1
+    end
+    
+    self.last_email_sent_at = DateTime.now
+    self.save!
   end
   
   private

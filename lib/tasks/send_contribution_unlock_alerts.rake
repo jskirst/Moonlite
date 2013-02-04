@@ -4,7 +4,12 @@ task :send_contribution_unlock_alerts => :environment do
       user = e.user
       path = e.path
       unless path.tasks.where("creator_id = ?", user.id).count > 0
-        Mailer.contribution_unlocked(user.email, path).deliver
+        puts "Sending contribution unlock"
+        begin
+          Mailer.contribution_unlocked(user.email, path).deliver
+        rescue
+          puts "Contribution unlock rejected."
+        end
       end
     end
   end
