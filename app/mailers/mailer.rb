@@ -52,7 +52,7 @@ class Mailer < ActionMailer::Base
     @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
     @challenge_link = challenge_url(path.permalink, completed: true) 
-    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions's to challenge others!")
+    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
     @user.log_email
   end
   

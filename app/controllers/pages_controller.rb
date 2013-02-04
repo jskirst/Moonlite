@@ -137,6 +137,12 @@ class PagesController < ApplicationController
     render "tos", layout: "landing"
   end
   
+  def ideas
+    @title = "Ideas"
+    @show_footer = true
+    render "ideas", layout: "landing"
+  end
+  
   def email_test
     raise "Access Denied" unless @enable_administration
     if params[:email]
