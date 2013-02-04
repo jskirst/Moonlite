@@ -65,7 +65,7 @@ class PathsController < ApplicationController
       @path.published_at = now
       @path.public_at = now
       if @path.save
-        flash[:success] = "#{@path.name} has been successfully published. It is now visible to the MetaBright community."
+        flash[:success] = "#{@path.name} has been submitted. Once approved by an administrator, it will be accessible by the MetaBright community."
       else
         flash[:error] = "There was an error publishing."
       end
