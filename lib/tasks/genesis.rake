@@ -1,5 +1,3 @@
-raise "FATAL: CANNOT RUN SCRIPT OUTSIDE DEVELOPMENT" unless Rails.env == "development"
-
 DEFAULT_PASSWORD = "a1b2c3"
 NUMBER_OF_USERS = 3
 NUMBER_OF_TASKS = 5
@@ -55,6 +53,7 @@ end
 namespace :db do
   desc "Fill database with production data"
   task :genesis => :environment do
+    raise "FATAL: CANNOT RUN SCRIPT OUTSIDE DEVELOPMENT" unless Rails.env == "development"
     Rake::Task['db:reset'].invoke
     moonlite_company = Company.create!(:name => "MetaBright")
     default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_content_creation: true)
