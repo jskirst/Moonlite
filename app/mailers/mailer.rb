@@ -14,10 +14,11 @@ class Mailer < ActionMailer::Base
     end
     @submission = comment.owner
     @user = @submission.user
+    @commenting_user = comment.user
+    return false if @user == @commenting_user
     return false unless @user.can_email?(:interaction)
     
     @settings_url = notification_settings_url(@user.signup_token)
-    @commenting_user = comment.user
     @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
     @user.log_email
@@ -29,10 +30,11 @@ class Mailer < ActionMailer::Base
     end
     @submission = vote.submitted_answer
     @user = vote.submitted_answer.user
-    return unless @user.can_email?(:interaction)
+    @voting_user = vote.user
+    return false if @user == @voting_user
+    return false unless @user.can_email?(:interaction)
     
     @settings_url = notification_settings_url(@user.signup_token)
-    @voting_user = vote.user
     @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
     @user.log_email
@@ -40,14 +42,14 @@ class Mailer < ActionMailer::Base
   
   def intro_drop_off(email)
     @user = User.find_by_email(email)
-    return unless @user.can_email?()
+    return false unless @user.can_email?()
     
     mail(to: @user.email, subject: "Complete your first Challenge!")
   end
   
   def contribution_unlocked(email, path)
     @user = User.find_by_email(email)
-    return unless @user.can_email?(:powers)
+    return false unless @user.can_email?(:powers)
     
     @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
