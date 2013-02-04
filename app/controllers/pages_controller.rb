@@ -97,7 +97,7 @@ class PagesController < ApplicationController
   end
   
   def mark_read
-    current_user.user_events.update_all(is_read: true)
+    current_user.user_events.unread.update_all(read_at: Time.now)
     render json: { status: "success" }
   end
   
