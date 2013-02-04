@@ -40,7 +40,10 @@ class PagesController < ApplicationController
   
   def profile
     @user = User.find_by_username(params[:username])
-    redirect_to root_path and return unless @user
+    if @user.nil? || @user.locked? 
+      redirect_to root_path
+      return
+    end 
     
     @page = params[:page].to_i
     offset = @page * 20

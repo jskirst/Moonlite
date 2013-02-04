@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   
   before_create do
     self.signup_token = random_alphanumeric
-    self.login_at = self.created_at
+    self.login_at = Time.now
   end
   
   after_create do
