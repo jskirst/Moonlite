@@ -5,7 +5,7 @@
 .post { padding:12px; }
 .post:hover { background-color:#F9F9F9; border-radius: 4px; }
 .postheader h3 { display:inline-block; margin: 0px; font-size:18px; line-height:36px; }
-.challengename{font-size:12px; color: #999;}
+.challengename{font-size:12px; color: #999; margin-left:10px;}
 .votingandpointsarea { display:inline-block; float:right; margin-top:4px; }
 .votingandpointsarea a { padding: 2px 3px 1px 3px;}
 .votingandpointsarea div { display: inline-block; margin: 0 1px 0 8px; position:relative; top:1px;}

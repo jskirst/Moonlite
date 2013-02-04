@@ -51,4 +51,7 @@
 .launchpadtip{background-color: rgb(253, 240, 213);border-radius: 6px;margin-right: 12px;padding:3px 8px; margin-bottom:12px;}
 .launchpadtip img{width:15px; position:relative; bottom:2px;}
 .launchpadtip p{font-size: 14px; line-height: 18px; display:inline;}
+.cr_create_tt .tooltip{top:172px !important; left:38px !important;}
+.arena_create_tt .tooltip{top:152px !important; left:39.5px !important;}
+.task_create_tt .tooltip{top:132px !important; right:-22px !important; left:72px !important;}
 
