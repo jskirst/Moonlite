@@ -1,43 +1,56 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  %h1{ style: "border-bottom: 1px solid whitesmoke;padding:5px;" } Edit Profile
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+  %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Profile
+  %hr{style:"margin:0;"}
   = form_for(@user, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
     = render 'shared/error_messages', object: f.object
-    %div.control-group
-      %label.control-label Name
-      %div.controls
-        = f.text_field :name
-    %div.control-group
-      %label.control-label Email
-      %div.controls
-        = f.text_field :email
-    %div.control-group
-      %label.control-label About
-      %div.controls
-        = f.text_area :description, rows: "5", style: "width: 400px;", placeholder: "Tell us about yourself..."
-    %div.control-group
-      %label.control-label Location
-      %div.controls
-        = f.text_field :location
-    %div.control-group
-      %label.control-label Education
-      %div.controls
-        = f.text_field :education
-    %div.control-group
-      %label.control-label Company Name
-      %div.controls
-        = f.text_field :company_name
-    %div.control-group
-      %label.control-label Title
-      %div.controls
-        = f.text_field :title
-    %div.control-group
-      %label.control-label Profile Picture URL
-      %div.controls
-        = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
-        %a.btn.secondary{ style: "margin-left:10px;" } Preview
-    %div.control-group
-      %div.controls
-        = image_tag @user.profile_pic, id: "image_url_preview", width: "210"
+    %div.notificationpanelbody
+      %h4 How you appear on MetaBright
+      %div.editprofilemanagementarea 
+        %div{style:"display:inline;"}       
+          %div.control-group
+            %label.control-label Name
+            %div.controls
+              = f.text_field :name
+          %div.control-group
+            %label.control-label Profile Picture URL
+            %div.controls
+              = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
+              %a.btn.secondary{ style: "margin-left:10px;" } Preview
+        %div{style:"display:inline-block; vertical-align:top; position:relative; bottom:34px; margin-bottom:-25px;"}
+          %div.control-group
+            %div.controls{style:"margin-left:102px;"}
+              = image_tag @user.profile_pic, id: "image_url_preview", width: "180"
+      %h4 Vital Stats
+      %div.editprofilemanagementarea
+        %div.control-group
+          %label.control-label About
+          %div.controls
+            = f.text_area :description, rows: "5", style: "width: 400px;", placeholder: "Tell us about yourself..."
+        %div.control-group
+          %label.control-label Location
+          %div.controls
+            = f.text_field :location
+        %div.control-group
+          %label.control-label Education
+          %div.controls
+            = f.text_field :education
+        %div.control-group
+          %label.control-label Company Name
+          %div.controls
+            = f.text_field :company_name
+        %div.control-group
+          %label.control-label Title
+          %div.controls
+            = f.text_field :title
+      %h4 Your email address
+      %span{style:"position:relative; bottom:5px;"}
+        (We hate spam too. We'll never sell, rent, or otherwise abuse your email address.)
+      %div.editprofilemanagementarea
+        %div.control-group
+          %label.control-label Email
+          %div.controls
+            = f.text_field :email
     %hr
     %div.control-group
       %div.controls
