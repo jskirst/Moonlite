@@ -29,7 +29,7 @@
           %td= u.enrollments.size
           %td= u.votes.size
           %td= u.comments.size
-          - if u.is_locked
-            %td= link_to "locked", admin_update_user_path(u, lock: "false"), class: "mark_locked", remote: true, method: "put"
+          - if u.locked?
+            %td= link_to "locked", admin_update_user_path(u), class: "mark_locked locked", remote: true, method: "put"
           - else
-            %td= link_to "open", admin_update_user_path(u, lock: "true"),  class: "mark_locked", remote: true, method: "put"
+            %td= link_to "open", admin_update_user_path(u),  class: "mark_locked open", remote: true, method: "put"

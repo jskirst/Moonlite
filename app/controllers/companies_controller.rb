@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
   def overview
     excluded = [0]
     unless params[:excluded]
-      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or is_locked = ?", true, true, true, true).to_a.collect &:id
+      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is ?", true, true, true, nil).to_a.collect &:id
     end
 
     @users                  = User.where("id not in (?)", excluded).count
@@ -37,12 +37,11 @@ class CompaniesController < ApplicationController
   def users
     if request.get?
       conditions = params[:search].nil? ? nil : ["name ILIKE ? or email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%"]
-      @sort = params[:sort] || "earned_points"
+      @sort = params[:sort] || "id"
       @users = User.paginate(page: params[:page], conditions: conditions, order: "#{@sort} DESC").includes(:user_role)
     else
-      status = params[:lock] == "true" ? true : false
       user = User.find(params[:id])
-      user.update_attribute(:is_locked, status)
+      toggle(:locked_at, user)
       render json: { status: status }
     end
   end
@@ -52,42 +51,41 @@ class CompaniesController < ApplicationController
       conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
       @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions)
     else
-      status = params[:approve] == "true" ? true : false
       path = Path.find(params[:id])
-      path.update_attribute(:is_approved, status)
+      toggle(:approved_at, path)
       render json: { status: status }
     end
   end
   
   def submissions
     if request.get?
-      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["content ILIKE ? and is_reviewed = ?", "%#{params[:search]}%", false]
+      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["content ILIKE ?", "%#{params[:search]}%"]
       @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: conditions)
     else
       submission = SubmittedAnswer.find(params[:id])
-      submission.update_attribute(:is_reviewed, true)
+      toggle(:reviewed_at, submission)
       render json: { status: "success" }
     end
   end
   
   def tasks
     if request.get?
-      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["question ILIKE ?", "%#{params[:search]}%"]
+      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["question ILIKE ?", "%#{params[:search]}%"]
       @tasks = Task.paginate(page: params[:page], conditions: conditions)
     else
       task = Task.find(params[:id])
-      task.update_attribute(:is_reviewed, true)
+      toggle(:reviewed_at, task)
       render json: { status: "success" }
     end
   end
   
   def comments
     if request.get?
-      conditions = params[:search].nil? ? ["is_reviewed = ?", false] : ["content ILIKE ?", "%#{params[:search]}%"]
+      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["content ILIKE ?", "%#{params[:search]}%"]
       @comments = Comment.paginate(page: params[:page], conditions: conditions)
     else
       comment = Comment.find(params[:id])
-      comment.update_attribute(:is_reviewed, true)
+      toggle(:reviewed_at, comment)
       render json: { status: "success" }
     end
   end
@@ -100,4 +98,11 @@ class CompaniesController < ApplicationController
       end
     end
   end
+  
+  private
+  
+  def toggle(attr, obj)
+    obj.update_attribute(attr, obj.read_attribute(attr).nil? ? Time.now : nil)
+  end
+    
 end

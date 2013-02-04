@@ -27,7 +27,7 @@ class TaskIssue < ActiveRecord::Base
   
   after_create do
     if task.task_issues.where(resolved: false).size >= 2 || user.user_role.enable_administration
-      task.update_attribute(:is_locked, true)
+      task.update_attribute(:locked_at, Time.now)
       creator = task.creator
       creator.enroll!(task.path)
       creator.retract_points(task, 100)

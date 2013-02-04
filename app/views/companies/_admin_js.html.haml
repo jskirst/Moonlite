@@ -11,11 +11,19 @@
   
   $(function(){
     check_table();
-    $(".mark_locked").on("ajax:success", function(xhr, data){
-      if(data.status == true){
-        $(this).replaceWith("<span>locked</span>");
+    $(".mark_approved").on("ajax:success", function(xhr, data){
+      if($(this).hasClass("approved")){
+        $(this).text("waiting").removeClass("approved").addClass("waiting");
       } else {
-        $(this).replaceWith("<span>open</span>");
+        $(this).text("approved").removeClass("waiting").addClass("approved");
+      }
+    });
+    
+    $(".mark_locked").on("ajax:success", function(xhr, data){
+      if($(this).hasClass("open")){
+        $(this).text("locked").removeClass("open").addClass("locked");
+      } else {
+        $(this).text("open").removeClass("locked").addClass("open");
       }
     });
     

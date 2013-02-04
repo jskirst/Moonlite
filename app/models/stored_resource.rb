@@ -5,7 +5,7 @@ class StoredResource < ActiveRecord::Base
     :link,
     :obj
   
-  belongs_to :owner, :polymorphic => true
+  belongs_to :owner, polymorphic: true
   
   has_attached_file :obj,
     :storage => :s3,

@@ -3,14 +3,13 @@ class Phrase < ActiveRecord::Base
   
   has_many :phrase_pairings
   
-  validates :content, length: { :within => 1..255 }
+  validates :content, length: { within: 1..255 }
   
   before_create :downcase
     
   def self.search(str)
-    #return Phrase.where(["content LIKE :str", {:str => str}]).first
-    phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "#{str}%"])
-    phrase = Phrase.find(:first, :conditions => ['content LIKE ?', "%#{str}%"]) if phrase.nil?
+    phrase = Phrase.where("content LIKE ?", "#{str}%").first
+    phrase = Phrase.where("content LIKE ?", "%#{str}%").first if phrase.nil?
     return phrase
   end
     

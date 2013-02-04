@@ -2,6 +2,7 @@ class Enrollment < ActiveRecord::Base
   CONTRIBUTION_THRESHOLD = 300
   
   attr_readonly :path_id
+  attr_protected :total_points, :contribution_unlocked_at
   attr_accessible :path_id, :total_points, :contribution_unlocked
   
   belongs_to :user
@@ -9,15 +10,8 @@ class Enrollment < ActiveRecord::Base
   
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true
-  validate do
-    errors[:base] << "Msg"  "Error 95" unless self.user.company_id == self.path.company_id 
-  end
   
-  after_create do
-    path.personas.each do |persona|
-      user.enroll!(persona)
-    end
-  end
+  after_create { path.personas.each { |p| user.enroll!(p) } }
   
   def add_earned_points(points)
     points = points.to_i
@@ -26,30 +20,21 @@ class Enrollment < ActiveRecord::Base
     save
   end
   
+  def level() Enrollment.points_to_level(self.total_points) end
   def self.points_to_level(points)
     POINT_LEVELS.each do |l, p|
-      if points < p
-        return l - 1
-      end
+      return l - 1 if points < p
     end
-  end
-  
-  def level
-    Enrollment.points_to_level(self.total_points)
   end
 
+  def points_to_next_level() Enrollment.points_to_next_level(self.total_points) end
   def self.points_to_next_level(points)
     POINT_LEVELS.each do |l, p|
-      if points < p
-        return p - points
-      end
+      return p - points if points < p
     end
   end
   
-  def points_to_next_level
-    Enrollment.points_to_next_level(self.total_points)
-  end
-  
+  def level_percent() Enrollment.level_percent(self.total_points) end
   def self.level_percent(points)
     previous_points = 0
     POINT_LEVELS.each do |l, p|
@@ -63,15 +48,14 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def level_percent
-    Enrollment.level_percent(self.total_points)
-  end
+  def contribution_unlocked?() contribution_unlocked_at.nil? ? false : true end
   
   private
   
   def check_for_events(points)
     if crossed_threshold?(CONTRIBUTION_THRESHOLD, points)
       self.contribution_unlocked = true
+      self.contribution_unlocked_at = Time.now
       UserEvent.log_point_event(user, self, :contribution_unlocked)
     end
   end

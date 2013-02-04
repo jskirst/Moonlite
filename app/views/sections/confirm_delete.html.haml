@@ -4,6 +4,6 @@
   %p If you're unsure, you can always unpublish the section, which will hide it from others but still give you access to it.
   %div{ style: "margin-top:50px;" }
     = link_to "Back", edit_path_path(@section.path), class: "button button-standard", style: "margin-right:10px;"
-    - if @path.is_published
+    - if @path.published_at
       = link_to "Unpublish", unpublish_section_path(@section), class: "button button-info"
     = link_to "Permanently Delete", @section, method: :delete, class: "button button-actionable", style: "float:right;"

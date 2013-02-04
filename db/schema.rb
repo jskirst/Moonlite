@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130131185900) do
+ActiveRecord::Schema.define(:version => 20130201165414) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "owner_type"
     t.boolean  "is_reviewed", :default => false
     t.boolean  "is_locked",   :default => false
+    t.datetime "reviewed_at"
+    t.datetime "locked_at"
   end
 
   create_table "companies", :force => true do |t|
@@ -69,6 +71,17 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "referrer_url"
     t.boolean  "enable_custom_landing",        :default => false
     t.string   "custom_email_from"
+  end
+
+  create_table "company_users", :force => true do |t|
+    t.string   "email"
+    t.integer  "user_id"
+    t.integer  "company_id"
+    t.string   "token1"
+    t.string   "token2"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.boolean  "is_admin"
   end
 
   create_table "completed_tasks", :force => true do |t|
@@ -99,15 +112,27 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
   create_table "enrollments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at",                               :null => false
-    t.datetime "updated_at",                               :null => false
-    t.integer  "total_points",          :default => 0
-    t.boolean  "contribution_unlocked", :default => false
+    t.datetime "created_at",                                  :null => false
+    t.datetime "updated_at",                                  :null => false
+    t.integer  "total_points",             :default => 0
+    t.boolean  "contribution_unlocked",    :default => false
+    t.datetime "contribution_unlocked_at"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "leaderboards", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "completed_tasks", :default => 0
+    t.integer  "score",           :default => 0
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.integer  "category_id"
+    t.integer  "path_id"
+    t.integer  "section_id"
+  end
 
   create_table "notification_settings", :force => true do |t|
     t.integer  "user_id"
@@ -128,6 +153,15 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
 
   add_index "path_personas", ["path_id", "persona_id"], :name => "index_path_personas_on_path_id_and_persona_id"
 
+  create_table "path_user_roles", :force => true do |t|
+    t.integer  "user_role_id"
+    t.integer  "path_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "path_user_roles", ["user_role_id", "path_id"], :name => "index_path_user_roles_on_user_role_id_and_path_id"
+
   create_table "paths", :force => true do |t|
     t.string   "name"
     t.text     "description",                :default => ""
@@ -145,6 +179,9 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "tags"
     t.boolean  "enable_voting",              :default => false
     t.string   "permalink"
+    t.datetime "approved_at"
+    t.datetime "published_at"
+    t.datetime "public_at"
   end
 
   add_index "paths", ["permalink"], :name => "index_paths_on_permalink"
@@ -161,6 +198,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "parent_id"
     t.integer  "unlock_threshold"
     t.boolean  "is_locked",        :default => true
+    t.datetime "locked_at"
   end
 
   create_table "phrase_pairings", :force => true do |t|
@@ -182,6 +220,16 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
 
   add_index "phrases", ["content"], :name => "index_phrases_on_content", :unique => true
 
+  create_table "rewards", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.string   "description"
+    t.integer  "points"
+    t.string   "image_url"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
   create_table "sections", :force => true do |t|
     t.integer  "path_id"
     t.string   "name"
@@ -191,6 +239,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.datetime "updated_at",                          :null => false
     t.boolean  "is_published",     :default => false
     t.integer  "points_to_unlock", :default => 0
+    t.datetime "published_at"
   end
 
   add_index "sections", ["path_id"], :name => "index_sections_on_path_id"
@@ -230,6 +279,8 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "task_id"
     t.boolean  "is_reviewed", :default => false
     t.boolean  "is_locked",   :default => false
+    t.datetime "reviewed_at"
+    t.datetime "locked_at"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
@@ -238,9 +289,10 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "task_id"
     t.integer  "user_id"
     t.integer  "issue_type"
-    t.boolean  "resolved",   :default => false
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
+    t.boolean  "resolved",    :default => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.datetime "resolved_at"
   end
 
   create_table "tasks", :force => true do |t|
@@ -259,9 +311,22 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.integer  "creator_id"
     t.boolean  "is_locked",          :default => false
     t.boolean  "is_reviewed",        :default => false
+    t.datetime "reviewed_at"
+    t.datetime "locked_at"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"
+
+  create_table "usage_reports", :force => true do |t|
+    t.integer  "company_id"
+    t.string   "name"
+    t.string   "report_file_name"
+    t.string   "report_content_type"
+    t.integer  "report_file_size"
+    t.datetime "report_updated_at"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
 
   create_table "user_auths", :force => true do |t|
     t.integer  "user_id"
@@ -282,6 +347,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.string   "link"
     t.integer  "actioner_id"
     t.string   "image_link"
+    t.datetime "read_at"
   end
 
   add_index "user_events", ["user_id"], :name => "index_user_events_on_user_id"
@@ -349,6 +415,7 @@ ActiveRecord::Schema.define(:version => 20130131185900) do
     t.boolean  "is_locked",          :default => false
     t.string   "large_image_url"
     t.text     "viewed_help"
+    t.datetime "locked_at"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

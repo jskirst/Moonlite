@@ -1,5 +1,6 @@
 class CompletedTask < ActiveRecord::Base
-  attr_accessible :updated_at, :task_id, :answer_id, :submitted_answer_id, :status_id, :points_awarded
+  attr_readonly :task_id, :submitted_answer_id
+  attr_protected :updated_at, :answer_id, :status_id, :points_awarded
   
   belongs_to :user
   belongs_to :task
@@ -10,15 +11,6 @@ class CompletedTask < ActiveRecord::Base
   
   validates :user_id, presence: true
   validates :task_id, presence: true
-  validates_uniqueness_of :task_id, :scope => :user_id
+  validates_uniqueness_of :task_id, scope: :user_id
   validates :status_id, presence: true
-  
-  def user_submitted_answer
-    return nil if submitted_answer.nil
-    return submitted_answer.content
-  end
-  
-  def correct?
-    return self.status_id == Answer::CORRECT
-  end
 end

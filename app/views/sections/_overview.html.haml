@@ -3,7 +3,7 @@
     %tr
       %td{ style: "padding: 0px 10px 10px 15px; border-top:none; min-width: 270px;" }
         %h5 ACTIVITY
-        - if !s.is_published
+        - if !s.published_at
           %p You have not published this section yet.
           %p <strong>NOTE:</strong> Publishing a section will not make the entire Challenge visible.
           %p= link_to "Publish", publish_section_path(s), confirm: "Are you sure you want to publish this section?"

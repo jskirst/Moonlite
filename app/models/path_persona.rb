@@ -4,6 +4,6 @@ class PathPersona < ActiveRecord::Base
   belongs_to :persona
   belongs_to :path
   
-  validates :persona_id, :presence => true, :uniqueness => { :scope => :path_id }
-  validates :path_id, :presence => true
+  validates :persona_id, presence: true, uniqueness: { scope: :path_id }
+  validates :path_id, presence: true
 end

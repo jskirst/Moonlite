@@ -13,8 +13,8 @@ class PathsController < ApplicationController
   def create
     @path = current_user.company.paths.new(params[:path])
     @path.user_id = current_user.id
-    @path.is_approved = false
-    @path.is_published = false
+    @path.approved_at = nil
+    @path.published_at = nil
     if @path.save
       if params[:stored_resource_id]
         sr = StoredResource.find(params[:stored_resource_id])
@@ -60,9 +60,10 @@ class PathsController < ApplicationController
     elsif @path.description.blank?
       flash[:info] = "You need to create a description for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
     else
-      @path.sections.each { |s| s.update_attribute(:is_published, true) }
-      @path.is_published = true
-      @path.is_public = true
+      now = Time.now
+      @path.sections.each { |s| s.update_attribute(:published_at, now) }
+      @path.published_at = now
+      @path.public_at = now
       if @path.save
         flash[:success] = "#{@path.name} has been successfully published. It is now visible to the MetaBright community."
       else
@@ -73,7 +74,7 @@ class PathsController < ApplicationController
   end
   
   def unpublish
-    @path.is_published = false
+    @path.published_at = nil
     if @path.save
       flash[:success] = "#{name_for_paths} has been unpublished and is no longer visible."
     else
@@ -126,7 +127,7 @@ class PathsController < ApplicationController
       @section = @path.next_section(@section)
     end
     
-    if @section.nil? || @section.is_published == false
+    if @section.nil? || @section.published_at.nil?
       redirect_to @path
     else
       redirect_to start_section_path(@section)
@@ -134,7 +135,7 @@ class PathsController < ApplicationController
   end
   
   def show
-    if @path.is_approved == false && (current_user.nil? || @path.user != current_user)
+    if @path.approved_at.nil? && (current_user.nil? || @path.user != current_user)
       redirect_to root_path and return
     end
     
@@ -149,7 +150,7 @@ class PathsController < ApplicationController
       @current_section = current_user.most_recent_section_for_path(@path)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
-        .where("tasks.section_id = ? and tasks.is_locked = ?", @current_section.id, false)
+        .where("tasks.section_id = ? and tasks.locked_at is ?", @current_section.id, nil)
       @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
       @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
       @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
@@ -207,12 +208,11 @@ class PathsController < ApplicationController
     end
     
     def authorize_edit
-      raise "Creation Access Denied" unless @enable_content_creation
       raise "Edit Access Denied" unless @path.nil? || can_edit_path(@path)
     end
     
     def authorize_view
-      raise "View Access Denied" unless @path.is_public || can_edit_path(@path)
+      raise "View Access Denied" unless (@path.published_at && @path.approved_at && @path.published_at) || can_edit_path(@path)
     end
     
     def generate_newsfeed_url

@@ -12,16 +12,7 @@ class UserPersona < ActiveRecord::Base
   def total_points
     return persona.paths.joins(:enrollments).where("enrollments.user_id = ?", user.id).sum("enrollments.total_points").to_i
   end
-  
-  def level
-    Enrollment.points_to_level(total_points)
-  end
-  
-  def percent_level
-    Enrollment.level_percent(total_points)
-  end
-  
-  def points_to_next_level
-    Enrollment.points_to_next_level(total_points)
-  end
+  def level() Enrollment.points_to_level(total_points) end
+  def percent_level() Enrollment.level_percent(total_points) end
+  def points_to_next_level() Enrollment.points_to_next_level(total_points) end
 end

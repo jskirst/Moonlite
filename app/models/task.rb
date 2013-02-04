@@ -28,8 +28,6 @@ class Task < ActiveRecord::Base
     :time_limit,
     :answer_content,
     :creator_id,
-    :is_locked,
-    :is_reviewed,
     :source
   
   belongs_to :section
@@ -82,51 +80,15 @@ class Task < ActiveRecord::Base
     return errors
   end
   
-  def correct_answer
-    answers.find_by_is_correct(true)
-  end
-  
-  def total_answers
-    total_answers = answers.sum(:answer_count)
-  end
-  
-  def fib_answer_breakdown
-    if self.answer_type == 1
-      number_correct = completed_tasks.where("status_id = 1").count
-      number_incorrect = completed_tasks.where("status_id = 0").count
-      unless number_correct == 0 && number_incorrect == 0
-        return ((number_correct.to_f / (number_correct + number_incorrect).to_f) * 100).to_i
-      else
-        return 0
-      end
-    else
-      raise "RUNTIME EXCEPTION: Using fib_guess_breakdown when not FIB"
-    end
-  end
-  
-  def is_challenge_question?
-    return true if self.answer_type == 0 || self.answer_type == 3
-    return false
-  end
+  def correct_answer() answers.find_by_is_correct(true) end
+  def total_answers() total_answers = answers.sum(:answer_count) end
+  def is_challenge_question?() self.answer_type == 0 || self.answer_type == 3 end
   
   private
-    def same_letters?(word, str)
-      word = word.downcase.strip
-      str = str.downcase.strip
-      
-      return false unless word.size == str.size
-      str.split(//).each do |s|
-        return false unless word.include?(s)
-      end
-      return true
-    end
-    
     def get_next_position_for_section
       return section.tasks.last.position + 1 unless section.tasks.empty?
       return 1
     end
     
-    def answers_to_array
-      return answers.to_a.collect { |a| a.content }
-    end
+    def answers_to_array() answers.to_a.collect { |a| a.content } end
 end

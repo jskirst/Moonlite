@@ -1,20 +1,13 @@
 class Path < ActiveRecord::Base
-  def to_param
-    "#{id} #{name}".parameterize
-  end
-  
   attr_accessor :persona_id
   attr_readonly :company_id
-  attr_protected :is_approved
+  attr_protected :approved_at, :published_at, :public_at
   attr_accessible :user_id,
     :category_id,
     :name, 
     :description, 
-    :image_url,
-    :is_public,
-    :is_locked,  
+    :image_url,  
     :tags,
-    :is_published,
     :persona_id,
     :permalink
   
@@ -23,7 +16,7 @@ class Path < ActiveRecord::Base
   belongs_to :company
   belongs_to :category
   has_many :sections, dependent: :destroy
-  has_many :tasks, through: :sections, conditions: ["sections.is_published = ?", true]
+  has_many :tasks, through: :sections, conditions: ["sections.published_at is not ?", nil]
   has_many :completed_tasks, through: :tasks
   has_many :submitted_answers, through: :tasks
   has_many :enrollments, dependent: :destroy
@@ -49,31 +42,28 @@ class Path < ActiveRecord::Base
     self.path_personas.create(persona_id: self.persona_id)
   end
   
-  def default_pic?() path_pic == "/images/image_thumb.png" end
+  def published?() published_at.nil? ? false : true end
+  def public?() public_at.nil? ? false : true end
+  def approved?() approved_at.nil? ? false : true end
   
   def path_pic
     return stored_resource.obj.url if stored_resource
     return self.image_url if self.image_url
     return "/images/image_thumb.png"
   end
-  
-  def image
-    return path_pic
-  end
-  
-  def picture
-    return path_pic
-  end
+  def image() path_pic end
+  def picture() path_pic end
+  def default_pic?() path_pic == "/images/image_thumb.png" end
   
   def self.with_name_like(name, user)
-    return Path.where("is_locked = ? and is_published = ? and name ILIKE ?", false, true, "%#{name}%")
+    return Path.where("locked_at is ? and published_at is ? and name ILIKE ?", nil, true, "%#{name}%")
   end
   
   def self.with_tags_like(tags, user, excluded_path_id)
     return [] if tags.empty?
     conditions = []
-    base_query = ["is_locked = ?", "is_published = ?", "paths.id != ?"]
-    query_variables = [false, true, excluded_path_id]
+    base_query = ["locked_at is ?", "published_at is not ?", "paths.id != ?"]
+    query_variables = [nil, nil, excluded_path_id]
     
     tags_query = []
     tags.each do |t|
@@ -86,7 +76,7 @@ class Path < ActiveRecord::Base
   end
   
   def similar_paths
-    return personas.first.paths.where(is_public: true, is_published: true, is_approved: true)
+    return personas.first.paths.where("public_at is not ? and published_at is not ? and approved_at is not ?", nil, nil, nil)
   end
   
   def self.suggested_paths(user, excluded_path_id = -1)
@@ -109,7 +99,7 @@ class Path < ActiveRecord::Base
   end
   
   def next_section(section=nil)
-    return sections.where(["position > ? and is_published = ?", section.position, true]).first(:order => "position ASC")
+    return sections.where(["position > ? and published_at is not ?", section.position, nil]).first(order: "position ASC")
   end
   
   def tags_to_array

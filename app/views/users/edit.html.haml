@@ -51,6 +51,8 @@
           %label.control-label Email
           %div.controls
             = f.text_field :email
+        %div{style:"margin-left:180px;"}
+          = link_to "Manage your notification settings.", notification_settings_path(current_user.signup_token)
     %hr
     %div.control-group
       %div.controls

@@ -63,7 +63,7 @@ module SessionsHelper
   def authenticate
     if not signed_in?
       deny_access 
-    elsif current_user.is_locked?
+    elsif current_user.locked?
       sign_out
       redirect_to root_url
     end
@@ -75,19 +75,18 @@ module SessionsHelper
   end
   
   def can_edit_path(path)
-    return false unless @enable_content_creation #creation enabled for your user role and...
-    return true if path.user == current_user #1) You are the path creator or...
-    return true if path.collaborations.find_by_user_id(current_user.id) #3) Your listed as a collaborator
+    return true if path.user == current_user
+    return true if path.collaborations.find_by_user_id(current_user.id)
     return false
   end
   
   def can_add_tasks(path)
-    enrollment = current_user.enrollments.find_by_path_id(path.id)
-    enrollment = current_user.enroll!(path) if enrollment.nil?
-    if path.user == current_user && !enrollment.contribution_unlocked
-      enrollment.update_attribute(:contribution_unlocked, true)
+    e = current_user.enrollments.find_by_path_id(path.id)
+    e = current_user.enroll!(path) if e.nil?
+    if path.user == current_user && e.contribution_unlocked_at.nil?
+      e.update_attribute(:contribution_unlocked_at, Time.now)
     end
-    return enrollment.contribution_unlocked
+    return e.contribution_unlocked?
   end
   
   def deny_access
@@ -113,7 +112,6 @@ module SessionsHelper
       role = current_user.user_role
       @is_consumer = true
       @enable_administration = role.enable_administration
-      @enable_content_creation = true
     end
   end
   

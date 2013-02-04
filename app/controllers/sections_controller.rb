@@ -30,7 +30,6 @@ class SectionsController < ApplicationController
       if @section.save
         redirect_to edit_path_path(@path)
       else
-        @title = "New section"
         @form_title = @title
         @path_id = @path.id
         render "new"
@@ -44,19 +43,19 @@ class SectionsController < ApplicationController
     @path_id = @section.path_id
     if params[:m] == "tasks"
       @task = @section.tasks.new
-      @tasks = @section.tasks.all(:order => "id DESC")
+      @tasks = @section.tasks.all(order: "id DESC")
       @display = (@tasks.empty?)
       respond_to do |f|
-        f.html { render :partial => "edit_tasks", :locals => { :display_new_task_form => @display, :task => @task, :tasks => @tasks, :section => @section } }
+        f.html { render partial: "edit_tasks", locals: { display_new_task_form: @display, task: @task, tasks: @tasks, section: @section } }
       end
     elsif params[:m] == "settings"
       respond_to do |f|
-        f.html { render :partial => "edit_settings", :locals => { :section => @section } }
+        f.html { render partial: "edit_settings", locals: { section: @section } }
       end
     elsif params[:m] == "content"
       @stored_resources = @section.stored_resources
       respond_to do |f|
-        f.html { render :partial => "edit_content", :locals => { :section => @section, :stored_resources => @stored_resources } }
+        f.html { render partial: "edit_content", locals: { section: @section, stored_resources: @stored_resources } }
       end
     end
   end
@@ -74,7 +73,7 @@ class SectionsController < ApplicationController
     if @section.tasks.count.zero?
       flash[:error] = "You need to have at least one question before you can make your section publicly available."
     else
-      @section.is_published = true
+      @section.published_at = Time.now
       if @section.save
         flash[:success] = "#{@section.name} has been successfully published. Note that if you have not already, you will still need to publish the #{name_for_paths.downcase} as a whole before it will be visible to the community."
       else
@@ -85,11 +84,11 @@ class SectionsController < ApplicationController
   end
   
   def unpublish
-    other_sections = @section.path.sections.where("is_published = ? and id != ?", true, @section.id)
+    other_sections = @section.path.sections.where("published_at is not ? and id != ?", nil, @section.id)
     if other_sections.size < 1
-      flash[:error] = "You cannot unpublish a section if it is the only one. You must unpublish the whole #{name_for_paths}."
+      flash[:error] = "You cannot unpublish a section if it is the only one. You must unpublish the whole Challenge."
     else
-      @section.is_published = false
+      @section.published_at = Time.now
       if @section.save
         flash[:success] = "#{@section.name} has been successfully unpublished. It will no longer be visible."
       else
@@ -115,7 +114,7 @@ class SectionsController < ApplicationController
     if @section.unlocked?(current_user)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
-        .where("tasks.section_id = ? and tasks.is_locked = ?", @current_section.id, false)
+        .where("tasks.section_id = ? and tasks.locked_at is ?", @current_section.id, nil)
       @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
       @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
       @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
@@ -129,7 +128,7 @@ class SectionsController < ApplicationController
   def take
     @task = @section.tasks.find(params[:task_id])
     raise "Access Denied: Not a challenge." unless @task.is_challenge_question?
-    raise "Access Denied: Task is currently locked." if @task.is_locked
+    raise "Access Denied: Task is currently locked." if @task.locked_at
     @path = @section.path
     @stored_resource = @task.stored_resources.first
   end
@@ -138,7 +137,7 @@ class SectionsController < ApplicationController
     @task = @section.tasks.find(params[:task_id])
     raise "Task already completed" if current_user.completed_tasks.find_by_task_id(@task.id)
     raise "Only CRs can be taken." unless @task.is_challenge_question?
-    raise "Access Denied: Task is currently locked." if @task.is_locked
+    raise "Access Denied: Task is currently locked." if @task.locked_at
     
     if !params[:answer].blank? || params[:answer] != "false" || params[:obj]
       unless params[:obj]
@@ -150,10 +149,11 @@ class SectionsController < ApplicationController
         submitted_answer.content = sr.obj.url
         submitted_answer.save
       end
-      ct = current_user.completed_tasks.create!(
-        points_awarded: 100, 
-        task_id: @task.id, status_id: 1, 
-        submitted_answer_id: submitted_answer.id)
+      ct = current_user.completed_tasks.new(task_id: @task.id)
+      ct.points_awarded = 100
+      ct.status_id = 1
+      ct.submitted_answer_id = submitted_answer.id
+      ct.save!
       current_user.award_points(@task, 100)
       if current_user.completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::CREATIVE).size == 1
         render "completed_cr"
