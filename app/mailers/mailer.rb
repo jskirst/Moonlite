@@ -48,7 +48,7 @@ class Mailer < ActionMailer::Base
     
     @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
-    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions's to challenge others!")
+    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions!")
   end
   
   # def section_unlock(email)
