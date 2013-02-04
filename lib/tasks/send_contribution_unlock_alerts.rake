@@ -1,4 +1,4 @@
-task :replace_booleans => :environment do
+task :send_contribution_unlock_alerts => :environment do
   Enrollment.all.each do |e|
     if e.contribution_unlocked?
       user = e.user
