@@ -46,9 +46,9 @@ task :send_alerts => :environment do
   enrollments.each do |e|
     puts "Sending contribution unlock alert..."
     begin
-      Mailer.contribution_unlocked(e.user.email, u.path).deliver
+      Mailer.contribution_unlocked(e.user.email, e.path).deliver
     rescue
-      puts "Contribution Unlock alert rejected"
+      puts "Contribution Unlock alert rejected: #{$!}"
     end
   end
 end
