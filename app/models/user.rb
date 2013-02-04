@@ -249,6 +249,11 @@ class User < ActiveRecord::Base
   end
   
   def can_email?(type = nil)
+    if locked?
+      puts "User is locked"
+      return false
+    end
+    
     if (last_email_sent_at && last_email_sent_at.to_date.today?) && (emails_today && emails_today >= MAX_DAILY_EMAILS)
       puts "Emailed too much today"
       return false
