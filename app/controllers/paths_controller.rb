@@ -51,7 +51,7 @@ class PathsController < ApplicationController
       sr.owner_type = @path.class.to_s
       sr.save
     end
-    redirect_to edit_path_path(@path)
+    redirect_to edit_path_path(@path.permalink)
   end
   
   def publish
@@ -70,7 +70,7 @@ class PathsController < ApplicationController
         flash[:error] = "There was an error publishing."
       end
     end
-    redirect_to edit_path_path(@path)
+    redirect_to edit_path_path(@path.permalink)
   end
   
   def unpublish
@@ -80,7 +80,7 @@ class PathsController < ApplicationController
     else
       flash[:error] = "Oops, could not unpublish this #{name_for_paths}. Please try again."
     end
-    redirect_to edit_path_path(@path)
+    redirect_to edit_path_path(@path.permalink)
   end
 
   def destroy
