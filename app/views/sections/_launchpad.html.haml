@@ -1,7 +1,7 @@
 %div.sectioninfocontainer
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
-      - if @enrollment.contribution_unlocked
+      - if @enrollment.contribution_unlocked?
         %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
       %ul.nav.nav-tabs
         %li.active
@@ -11,7 +11,7 @@
         %li
           %a#achievement_tab_link{ href: "#", "data-tab" => "achievements_tab", title: "Tasks"} Tasks      
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
-        - if @enrollment.contribution_unlocked
+        - if @enrollment.contribution_unlocked?
           %div.editor_view{ style: "display: none; height:100%;" }
             = form_for(@current_section.tasks.new, remote: true, html: { style: "width:599px; padding:0; height:90%; margin-top:-10px;" }) do |f|
               %div.step1
@@ -93,7 +93,7 @@
           - else
             %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       %div#questions_tab.tab_content{ style: "" }
-        - if @enrollment.contribution_unlocked
+        - if @enrollment.contribution_unlocked?
           %div.editor_view{ style: "display: none; height:100%;" }
             = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
               %div.step1
@@ -181,7 +181,7 @@
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
       %div#achievements_tab.tab_content{ style: "display: none;" }
-        - if @enrollment.contribution_unlocked
+        - if @enrollment.contribution_unlocked?
           %div.editor_view{ style: "display: none; height:100%;" }
             = form_for(@current_section.tasks.new, remote: true, html: { style: "width:600px; padding:0 0 0 10px; height:90%; margin-top:-10px;" }) do |f|
               %div.step1
@@ -325,13 +325,13 @@
         
         $editor.find(".step3 a.restart").click(function(){
           $editor.find(".step3").hide();
-          $editor.find(".step1").find("input[type!=hidden],textarea").val("");
+          $editor.find(".step1").find("input[type=text],textarea").val("");
           $editor.find(".step1").show();
         });
         
         $editor.find(".step3 a.finish").click(function(){
           $editor.find(".step3").hide();
-          $editor.find(".step1").find("input[type!=hidden],textarea").val("");
+          $editor.find(".step1").find("input[type=text],textarea").val("");
           $editor.find(".step1").show();
           $editor.hide();
           $editor.siblings(".task_view").show();
