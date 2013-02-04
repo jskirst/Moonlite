@@ -1,9 +1,12 @@
 - if @task
-  %div#report_issue_modal.dropdown_modal.modal.hide.fade{tabindex: "-1"}
+  %div#report_issue_modal.dropdown_modal.modal.hide.fade{tabindex: "-1", style: "margin-left: -22%;"}
     %div.explorecontainer{ style: "width: 544px; background:none; border:none;" }
       :javascript
         $(function(){ 
           close_button();
+          $(".arena_report_link").click(function(){
+            $("#report_issue_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+          });
           $("#new_task_issue").submit(function(){
             if($(this).find("input[name*=issue_type]:checked").size() == 0){
               alert("Please indicate what is wrong with the question before submitting this issue.");
@@ -19,7 +22,7 @@
             %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", :style => "height:45px;" } 
             %span{style: "font-size:26px;"} Report an issue
         %hr{ style: "margin: 0;" }
-        %div.explorebody{ style: "" }
+        %div.explorebody{ style: "padding:10px;" }
           = form_for(current_user.task_issues.new, url: report_task_path(@task.id), html: { style: "margin:10px 18px 0 18px;" }) do |f|
             %fieldset
               %label{style:"font-size:16px;"} What's wrong with this question?

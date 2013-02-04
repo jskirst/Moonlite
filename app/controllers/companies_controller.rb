@@ -5,7 +5,7 @@ class CompaniesController < ApplicationController
   def overview
     excluded = [0]
     unless params[:excluded]
-      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is ?", true, true, true, nil).to_a.collect &:id
+      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ?", true, true, true, nil).to_a.collect &:id
     end
 
     @users                  = User.where("id not in (?)", excluded).count

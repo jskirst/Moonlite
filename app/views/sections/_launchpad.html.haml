@@ -80,10 +80,10 @@
           - if @core_tasks.empty?
             %p No Arena questions are available at the moment. Check back again later.
           - elsif tasks_completed
-            - correct_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::CORRECT }.size
+            - correct_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::CORRECT }.size
             - earned_points = 0
             - @core_tasks.each { |t| earned_points += t.points_awarded.to_i }
-            - incorrect_tasks = @core_tasks.select{ |t| t.status_id.to_i == Answer::INCORRECT }.size
+            - incorrect_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::INCORRECT }.size
             %p You answered <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> Arena questions correctly, and scored <strong>#{earned_points} points</strong>!
             - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0
             - if tasks_remaining
