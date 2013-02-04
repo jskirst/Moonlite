@@ -39,6 +39,7 @@ class Path < ActiveRecord::Base
   
   before_validation :grant_permalink
   after_create do
+    puts "PERSONA_ID:" + self.persona_id.to_s
     self.path_personas.create(persona_id: self.persona_id)
   end
   

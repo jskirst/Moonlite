@@ -40,12 +40,23 @@ task :send_alerts => :environment do
       puts "Comment alert rejected"
     end
   end
+  
+  puts "CONTRIBUTION UNLOCK ALERTS"
+  enrollments = Enrollment.where("contribution_unlocked_at > ?", 10.minutes.ago)
+  enrollments.each do |e|
+    puts "Sending contribution unlock alert..."
+    begin
+      Mailer.contribution_unlocked(e.user.email, e.path).deliver
+    rescue
+      puts "Contribution Unlock alert rejected: #{$!}"
+    end
+  end
 end
 
 task :test_notifications => :environment do
   desc "Resetting notifications..."
   UserEvent.all.each do |u|
-    u.is_read = false
+    u.read_at = nil
     u.save
   end
 end

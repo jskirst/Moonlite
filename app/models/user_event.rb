@@ -1,9 +1,9 @@
 class UserEvent < ActiveRecord::Base
   DEFAULT_IMAGE_LINK = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
   BASE_URL = "http://www.metabright.com/"
-  attr_accessible :actioner_id, :content, :link, :image_link, :is_read
+  attr_accessible :actioner_id, :content, :link, :image_link
   
-  scope :unread, where(is_read: false)
+  scope :unread, where(read_at: nil)
   belongs_to :user
   belongs_to :actioner, class_name: "User"
 

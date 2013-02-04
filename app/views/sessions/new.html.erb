@@ -29,10 +29,6 @@
         <%= link_to image_tag("/images/facebook_login_button.png", :size => "220x55"), "/auth/facebook", :id => "facebook_signin" %>
         <%= link_to image_tag("/images/google_login_button.png", :size => "220x45"), "/auth/google_oauth2", :id => "google_signin" %>
       </td>
-      <% elsif @is_company && @possible_company && @possible_company.big_logo_link %>
-      <td style="border-top: none; vertical-align: middle;">
-        <%= image_tag @possible_company.big_logo_link, style: "max-height: 200px; max-width: 300px; margin-left:50px; margin-top:-50px;" %>
-      </td>
       <% end %>
     </tr>
   </table>

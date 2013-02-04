@@ -53,6 +53,7 @@ end
 namespace :db do
   desc "Fill database with production data"
   task :genesis => :environment do
+    raise "FATAL: CANNOT RUN SCRIPT OUTSIDE DEVELOPMENT" unless Rails.env == "development"
     Rake::Task['db:reset'].invoke
     moonlite_company = Company.create!(:name => "MetaBright")
     default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_content_creation: true)
@@ -68,13 +69,25 @@ namespace :db do
     end
     
     unless ENV['DISABLE_FAKE']  
+      now = Time.now
+      PERSONAS.each do |persona|
+        persona = persona[1]
+        new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"])
+      end
+      
       PATHS.each do |p|
-        moonlite_company.paths.create!(:name => p[0], :description => p[1], :image_url => p[2], :user_id => moonlite_admin.id, :is_published => true, :is_public => true, :is_approved => true, :category_id => default_cat.id)
+        path = moonlite_company.paths.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id, category_id: default_cat.id, persona_id: Persona.first.id)
+        path.published_at = now
+        path.approved_at = now
+        path.public_at = now
+        path.save!
       end
     
       Path.all.each do |path|
         PATH_SECTIONS.each do |s|
-          section = path.sections.create(:name => s[0], :category_id => default_cat.id, :instructions => "Instructions to follow.", :is_published => true, :image_url => s[1])
+          section = path.sections.create(name: s[0], category_id: default_cat.id, instructions: "Instructions to follow.")
+          section.published_at = now
+          section.save!
           NUMBER_OF_TASKS.times do |n|
             section.tasks.create!(
               question: "What is #{n} + #{n}?",
@@ -94,14 +107,6 @@ namespace :db do
           section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE, creator_id: moonlite_admin)
         end
       end
-    end
-    
-    criteria = Path.all.to_a.collect &:id
-    PERSONAS.each do |persona|
-      persona = persona[1]
-      next if persona["name"].include?("lock")
-      new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"], criteria: criteria)
-      criteria = nil if criteria
     end
   end
 end
