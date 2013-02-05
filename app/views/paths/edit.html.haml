@@ -16,14 +16,14 @@
         %div.controls= render "stored_resources/new_image"
       %div.control-group
         %div.controls= image_tag(@path.path_pic, class: "original_image_preview", style: "height: 75px; max-width: 150px;")
-      - if @path.user == current_user
+      - if false
         %div.control-group{ style: "margin-bottom: 5px;" }
           %label.control-label Collaborators
           %div.controls= link_to "View and add collaborators", collaborator_path_path(@path), style: "line-height:18px;"
       %hr
       %div{ style: "float:right;" }
-        = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
         %span.button.button-standard{ onclick: "$('#settings_modal').modal('hide');" } Close
+        = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
 
 - @sections.each do |s|
   %div{ id: "section_settings_modal_#{s.id}", class: "modal hide fade", style: "top: 50%;" }
@@ -39,7 +39,7 @@
           %label.control-label Points to unlock
           %div.controls= f.text_field :points_to_unlock, placeholder: "optional..."
         %div.control-group
-          %label.control-label "Delete Section"
+          %label.control-label Delete Section
           %div.controls{ style: "padding-top: 8px;" }= link_to "Delete", confirm_delete_section_path(s)
         %div{ style: "float:left; margin: 20px 20px 0px 0;" }
           - if s.published_at

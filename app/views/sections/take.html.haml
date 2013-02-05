@@ -12,6 +12,7 @@
       });
     });
   %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
+    = render "layouts/report_issue_modal"
     %div.CRquizspace
       %div.quizheader
         = image_tag @path.path_pic, style: "height:50px; width:50px;"

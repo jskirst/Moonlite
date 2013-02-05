@@ -1,7 +1,8 @@
 %div{ style: "margin-top: 10px;" }
+  - unique_id = "fileupload_#{rand(10000000)}"
   :javascript
     $(function(){
-      $('.fileupload').fileupload({
+      $('##{unique_id}').fileupload({
         url: '#{stored_resources_path}',
         dataType: 'json',
         done: function (e, data) {
@@ -10,19 +11,24 @@
           if(result.status == "success"){
             $(".original_image_preview").remove();
             $parent.find("input.image_input_field").val(result.id);
-            $parent.find("div.image_input").remove();
+            //$parent.find("div.image_input").remove();
             $parent.find("img.image_preview").attr("src", result.link).show();
+            $("#loading_image_#{unique_id}").hide();
           }
+        },
+        send: function(e){
+          $("#loading_image_#{unique_id}").show();
         },
         autoUpload: true,
         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
       });
-      $("#fileupload").bind('fileuploadfail', function (e) {alert("File upload failed.")});
+      $("##{unique_id}").bind('fileuploadfail', function (e) {alert("File upload failed.")});
     });
   %div.image_input
     = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/image.png", size: "16x16", style: "vertical-align: middle;"
     %span{ style: "vertical-align: middle; font-size: 13px;" } Add image:
-    = file_field_tag("obj", class: "fileupload", style: "margin-left: 2px; line-height: inherit; height: inherit; vertical-align: middle; width: 185px;")
+    = file_field_tag("obj", id: unique_id, style: "margin-left: 2px; line-height: inherit; height: inherit; vertical-align: middle; width: 185px;")
+    = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "20x20", style: "vertical-align: middle; display: none;", id: "loading_image_#{unique_id}"
   %div{ style: "margin-top: 10px;" }
     = hidden_field_tag("stored_resource_id", nil, class: "image_input_field")
     %img.image_preview{ style: "height: 70px; max-width: 150px; display: none;" }

@@ -202,7 +202,7 @@ class SectionsController < ApplicationController
     
     if @task
       @question_count += 1
-      if request.get? && @enrollment.total_points == 0
+      if request.get? && @enrollment.total_points == 0 && current_user.enrollments.size == 1
         @partial = "intro"
       else
         @streak = session[:ssf].to_i

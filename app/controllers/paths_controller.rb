@@ -51,7 +51,7 @@ class PathsController < ApplicationController
       sr.owner_type = @path.class.to_s
       sr.save
     end
-    redirect_to edit_path_path(@path)
+    redirect_to edit_path_path(@path.permalink)
   end
   
   def publish
@@ -70,7 +70,7 @@ class PathsController < ApplicationController
         flash[:error] = "There was an error publishing."
       end
     end
-    redirect_to edit_path_path(@path)
+    redirect_to edit_path_path(@path.permalink)
   end
   
   def unpublish
@@ -80,7 +80,7 @@ class PathsController < ApplicationController
     else
       flash[:error] = "Oops, could not unpublish this #{name_for_paths}. Please try again."
     end
-    redirect_to edit_path_path(@path)
+    redirect_to edit_path_path(@path.permalink)
   end
 
   def destroy
@@ -163,7 +163,7 @@ class PathsController < ApplicationController
     @display_launchpad = params[:completed]
     @display_type = params[:type] || 2
     
-    @enrollments = @path.enrollments.includes(:user).where("total_points > 0").order("total_points DESC").limit(10).eager_load.to_a
+    @enrollments = @path.enrollments.includes(:user).where("users.locked_at is ? and total_points > ?", nil, 0).order("total_points DESC").limit(10).eager_load.to_a
     
     @url_for_newsfeed = generate_newsfeed_url
     render "show"
@@ -203,7 +203,8 @@ class PathsController < ApplicationController
   private
     def load_resource
       @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
-      @path = Path.find_by_id(params[:id]) if params[:id]
+      @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
+      @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       redirect_to root_path unless @path
     end
     

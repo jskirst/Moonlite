@@ -14,5 +14,7 @@
         = f.text_field :name, class: "xlarge", style: "margin-bottom: 5px;", autofocus: "autofocus"
         %br
         %span{ style: "font-style: italic;" } Examples: Level 1, Beginner Lessons, Fried food of the Midwest
-    %div.actions{ style: "margin-top: 125px;" }
+    %div.actions{ style: "margin-top: 125px; text-align:right;" }
+      - unless @path.sections.first.new_record?
+        = link_to "Back", edit_path_path(@path.permalink), class: "button button-standard"
       = f.submit "Next", class: "button button-info"

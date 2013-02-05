@@ -18,7 +18,13 @@ class Task < ActiveRecord::Base
   CHECKIN_LINK      = 201
   
   attr_readonly :section_id
-  attr_accessor :answer_content, :source, :answer1, :answer2, :answer3, :answer4
+  attr_accessor :answer_content, 
+    :source, 
+    :answer1, 
+    :answer2, 
+    :answer3, 
+    :answer4,
+    :stored_resource_id
   attr_accessible :question,
     :points,
     :position, 

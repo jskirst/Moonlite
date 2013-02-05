@@ -10,9 +10,15 @@
           %div
             - persona.paths.each do |path|
               %div.mosaic-block.bar2.challengepagechallenge{style: "margin-bottom:10px;"}
-                = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
-                  %div.details
-                    %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
+                - if path.public?
+                  = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
+                    %div.details
+                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
+                - else
+                  %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
+                    %div.details
+                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
+                      %h5 Coming Soon!
                 %div 
                   = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
           %hr{:style => "margin:0"}
