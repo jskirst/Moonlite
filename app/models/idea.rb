@@ -10,4 +10,8 @@ class Idea < ActiveRecord::Base
   validates :title, length: { within: 1..255 }
   validates :description, length: { within: 1..1000 }
   validates_presence_of :creator_id
+  
+  def points_awarded
+    votes.count * 50
+  end
 end

@@ -18,7 +18,11 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
-	resources :ideas
+	resources :ideas do
+	  member do
+	    get :vote
+	  end
+	end
 	
 	match '/paths/:permalink/submission/:submission/' => 'paths#show', as: 'submission_details'
 	match '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
@@ -74,7 +78,6 @@ Metabright::Application.routes.draw do
   match '/about' => 'pages#about'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
-  match '/ideas' => 'pages#ideas'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put

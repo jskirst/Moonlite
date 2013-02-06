@@ -31,6 +31,18 @@ module ApplicationHelper
     } 
   end
   
+  def idea_comment_details(idea)
+    { 
+      owner: idea, 
+      owner_type: "Idea", 
+      owner_id: idea.id, 
+      comment_count: idea.comments.size, 
+      created_at: idea.created_at, 
+      sharing_url: "", 
+      sharing_title: "" 
+    } 
+  end
+  
   def admin_tabs
     [
       ["overview", "Overview", admin_overview_path],

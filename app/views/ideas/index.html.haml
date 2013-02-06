@@ -1,0 +1,35 @@
+%div#ideapage{ style: "margin-top: 0px;" }
+  %div.ideaheader
+    %div{style:"bottom:15px; position:relative;"}
+      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+      %span MetaBright Labs
+      %hr{style:"margin:0; position:relative; bottom:10px; "}
+    %div{style:"margin-top:-12px;"}
+      %h4 Help shape the MetaBright roadmap
+      %p This is where we post some of our planned features and upgrades. Vote for what you think we should prioritize and post ideas for things we should work on next.
+  %div.leftboxheader
+    = link_to "Post new Idea", new_idea_path, class: "button button-info", style: "float: right;"
+    Suggest What's Next
+  %div.ideacontainer{ style: "padding: 20px;" }
+    - @ideas.each do |idea|
+      %div.votingandpointsarea
+        %span.vote_points{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= idea.points_awarded
+        %span{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
+        = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "button button-info" : "")) do
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
+      %h4= idea.title
+      %p= idea.description
+      = render "comments/comments", idea_comment_details(idea)
+      %hr
+
+:javascript
+  $(function(){ 
+    $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
+    $(".display_sharing_icon").click(function(){ 
+      $(this).parents(".leftstuff").find(".social_toolbar").css("display", "inline");
+      $(this).parent().remove(); 
+    });
+    init_voting();
+    init_comments();
+    init_iph();
+  });

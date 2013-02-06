@@ -1,11 +1,13 @@
 class IdeasController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, except: [:index, :show]
   before_filter :load_resource, except: [:index, :new, :create]
   before_filter :authorize_resource, only: [:edit, :update, :destroy]
   
   def index
+    @compact_social = true
     @mode = "personas"
     @ideas = Idea.all
+    @idea_votes = current_user.idea_votes.collect &:owner_id
   end
   
   def show
@@ -45,6 +47,12 @@ class IdeasController < ApplicationController
   
   def destroy
     @idea.destroy
+    flash[:success] = "Idea successfully deleted."
+    redirect_to ideas_path
+  end
+  
+  def vote
+    current_user.idea_votes.create!(owner_id: @idea.id)
     flash[:success] = "Idea successfully deleted."
     redirect_to ideas_path
   end

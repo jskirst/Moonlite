@@ -1,0 +1,14 @@
+%div.single_pane
+  %h3 New Idea
+  = form_for(@idea, class:"form-horizontal") do |f|
+    %div.control-group
+      %label.control-label Title
+      %div.controls
+        = f.text_field(:title)
+    %div.control-group
+      %label.control-label Description
+      %div.controls
+        = f.text_area(:description, style: "width: 400px; height: 100px;")
+    %div.control-group
+      %div.controls
+        = f.submit("Submit Idea", class: "button button-info")

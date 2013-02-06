@@ -114,8 +114,6 @@ ActiveRecord::Schema.define(:version => 20130206061249) do
 
   create_table "ideas", :force => true do |t|
     t.integer  "creator_id"
-    t.integer  "owner_id"
-    t.string   "owner_type"
     t.string   "title"
     t.text     "description"
     t.string   "status"
