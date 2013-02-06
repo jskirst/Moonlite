@@ -386,7 +386,12 @@ div.footer { bottom: inherit; }
 .ideaheader span{font-size:50px; position:relative; bottom:42px;}
 .ideaheader img{height:115px; vertical-align:baseline;}
 .ideaheader h4{font-weight:bold; line-height:32px; font-size:16px}
-.ideacontainer{background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
+.ideacontainer{background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; padding:12px;}
+.leftboxheader .post_new_idea{text-transform:none; text-shadow:none; font-size:12px; float:right; position:relative; bottom:4px;}
+.ideacontent{width:85%;}
+.ideacontent h4{margin-bottom:10px; font-weight:bold; font-size:16px; }
+.singleidea{border-radius: 3px;box-shadow: 0 2px 4px rgba(0, 0, 0, .05);background-color: #F9F9F9;border: 1px solid #ccc;padding:12px 12px 6px 12px; margin-bottom:20px; }
+.singleidea .postfooter{margin-right:0;}
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
