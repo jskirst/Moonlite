@@ -47,7 +47,8 @@ class User < ActiveRecord::Base
   has_many    :collaborations
   has_many    :collaborating_paths, through: :collaborations, source: :path
   has_many    :submitted_answers, through: :completed_tasks
-  has_many    :votes
+  has_many    :votes, conditions: { owner_type: "SubmittedAnswer" }
+  has_many    :idea_votes, class_name: "Vote", conditions: { owner_type: "Idea" }
   has_many    :user_transactions
   has_many    :task_issues
   
@@ -276,6 +277,10 @@ class User < ActiveRecord::Base
     
     self.last_email_sent_at = DateTime.now
     self.save!
+  end
+  
+  def vote_list
+    votes.to_a.collect {|v| v.owner_id }
   end
   
   private

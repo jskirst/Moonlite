@@ -1,9 +1,8 @@
 class Vote < ActiveRecord::Base
-  attr_readonly :submitted_answer_id
+  attr_readonly :owner_id, :owner_type
   
-  belongs_to :submitted_answer
+  belongs_to :owner, polymorphic: true
   belongs_to :user
   
-  validates :submitted_answer_id, presence: true, uniqueness: { scope: :user_id }
   validates :user_id, presence: true
 end

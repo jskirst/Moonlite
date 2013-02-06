@@ -65,7 +65,7 @@ class TasksController < ApplicationController
   
   def vote
     @submission = @task.submitted_answers.find(params[:sa_id])
-    if @vote = current_user.votes.find_by_submitted_answer_id(@submission.id)
+    if @vote = current_user.votes.find_by_owner_id(@submission.id)
       if @vote.destroy && @submission.subtract_vote(current_user)
         render json: @vote.to_json
       else

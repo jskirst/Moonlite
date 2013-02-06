@@ -180,7 +180,7 @@ class PathsController < ApplicationController
   end
   
   def newsfeed
-    @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @votes = current_user.nil? ? [] : current_user.vote_list
     @page = params[:page].to_i
     offset = @page * 20
     if params[:submission]

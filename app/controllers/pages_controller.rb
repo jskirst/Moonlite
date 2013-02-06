@@ -16,7 +16,7 @@ class PagesController < ApplicationController
   end
   
   def newsfeed
-    @votes = current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @votes = current_user.votes.to_a.collect {|v| v.owner_id } 
     @completed_tasks = []
     @page = params[:page].to_i
     relevant_paths = current_user.enrollments.to_a.collect &:path_id
@@ -73,7 +73,7 @@ class PagesController < ApplicationController
     @creative_task_questions = @completed_tasks.collect { |item| item.task }
     @enrollments = @user.enrollments.includes(:path).where("total_points > ? and paths.approved_at is not ?", 50, nil).sort { |a,b| b.total_points <=> a.total_points }
     
-    @votes = current_user.nil? ? [] : current_user.votes.to_a.collect {|v| v.submitted_answer_id } 
+    @votes = current_user.nil? ? [] : current_user.vote_list
     @title = @user.name
     @more_available_url = @completed_tasks.size == 20 ? profile_path(@user.username, page: @page+1) : false
     if request.xhr?

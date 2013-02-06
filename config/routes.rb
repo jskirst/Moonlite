@@ -18,6 +18,8 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
+	resources :ideas
+	
 	match '/paths/:permalink/submission/:submission/' => 'paths#show', as: 'submission_details'
 	match '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
 	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'

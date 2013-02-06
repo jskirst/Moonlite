@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204201030) do
+ActiveRecord::Schema.define(:version => 20130206061249) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -111,6 +111,17 @@ ActiveRecord::Schema.define(:version => 20130204201030) do
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "ideas", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "title"
+    t.text     "description"
+    t.string   "status"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "notification_settings", :force => true do |t|
     t.integer  "user_id"
@@ -372,13 +383,15 @@ ActiveRecord::Schema.define(:version => 20130204201030) do
   add_index "users", ["username"], :name => "index_users_on_username"
 
   create_table "votes", :force => true do |t|
-    t.integer  "submitted_answer_id"
+    t.integer  "owner_id"
     t.integer  "user_id"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
+    t.string   "owner_type", :default => "SubmittedAnswer"
   end
 
-  add_index "votes", ["user_id", "submitted_answer_id"], :name => "index_votes_on_user_id_and_submitted_answer_id"
+  add_index "votes", ["owner_id", "owner_type", "user_id"], :name => "index_votes_on_owner_id_and_owner_type_and_user_id", :unique => true
+  add_index "votes", ["user_id", "owner_id"], :name => "index_votes_on_user_id_and_submitted_answer_id"
   add_index "votes", ["user_id"], :name => "index_votes_on_user_id"
 
 end

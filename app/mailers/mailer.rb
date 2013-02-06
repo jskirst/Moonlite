@@ -28,8 +28,8 @@ class Mailer < ActionMailer::Base
     if vote.is_a? String
       vote = SubmittedAnswer.find(vote).votes.first
     end
-    @submission = vote.submitted_answer
-    @user = vote.submitted_answer.user
+    @submission = vote.owner
+    @user = vote.owner.user
     @voting_user = vote.user
     return false if @user == @voting_user
     return false unless @user.can_email?(:interaction)
