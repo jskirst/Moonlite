@@ -22,3 +22,10 @@
             = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
               %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png" }
               %span.landingbuttontext Sign in with Facebook »
+          %div{style:"padding:12px;"}
+            %span{style:""} Learn about these sign in options
+            %span
+              %a#signin_options_pop.mb-tooltip{href:"#", rel:"popover"}
+            
+  :javascript
+    $('#signin_options_pop').popover({trigger: 'click', placement:'bottom', content:'We think online communities work best when people use their real identities, and the best way to encourage this is to have people use a social sign-up before contributing. We take your privacy seriously and will never post on your behalf, or do anything our mothers would not approve of.'})

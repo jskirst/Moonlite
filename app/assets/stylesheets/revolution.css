@@ -352,6 +352,8 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .popover-close{float:right;margin-right: 5px;font-size: 11px;text-shadow: none;}
 .popover-close:after{content:"Close";}
 .postspace>.popover {top:32% !important;}
+.explorebody .popover{width:300px;}
+.explorebody .popover-title{display:none;}
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
@@ -377,3 +379,17 @@ div.footer { bottom: inherit; }
 .editprofilemanagementarea{display: block;padding: 15px 9.5px 4.5px 9.5px;margin: 0 0 10px;font-size: 13px;line-height: 20px;word-break: break-all;word-wrap: break-word;background-color: #f5f5f5;border: 1px solid #ccc;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
 .editprofilemanagementarea .control-group{display:inline-block; margin:0; padding:0;position: relative; bottom:3px;}
 .editprofilemanagementarea control-label{font-weight:bold; padding:0; margin:0; position:relative; top:3px; }
+
+/* Idea page */
+#ideapage{margin-top:37px;}
+.ideaheader{border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
+.ideaheader span{font-size:50px; position:relative; bottom:42px;}
+.ideaheader img{height:115px; vertical-align:baseline;}
+.ideaheader h4{font-weight:bold; line-height:32px; font-size:16px}
+.ideacontainer{background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
+
+/* Signed Out Challenge page */
+.challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
+.challenge_stats ul{list-style:none;}
+.challenge_stats li{line-height:15px;}
+.challenge_stats span{font-weight:bold; }

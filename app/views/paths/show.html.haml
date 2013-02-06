@@ -7,7 +7,7 @@
         %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:90px; "}
         %h1{style:"display:inline; position:relative; top:12px; font-size: 30px;"} Looks like you're new here...
       %div{style:"margin-left:20px; margin-top:-10px;"}
-        %h4 MetaBright is a place to showcase your skills and get better at the stuff you're passionate about.
+        %h4 MetaBright is a place to showcase your skills and get better at the stuff you're passionate about. Learn more about us <a href="/about">here</a>.
         %h4{style:"margin-top:15px;"} Poke around a little bit, and when you're ready to join the Challenge yourself, come back here to <a class="login_link">sign up</a>. It only takes five seconds. Honest!
   %div#topsection
     %div#updatespace
@@ -18,11 +18,18 @@
         %div#topboxcontent
           - if current_user
             %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level} »
+          - else
+            %div.challenge_stats
+              %span Challenge stats:
+              %ul
+                %li #{@path.tasks.size} Arena Questions
+                %li 12 Creative Responses
+                %li 8 Tasks
           %div{ style: "width: 550px; margin-top: 10px;" }
             %h1= @path.name
             - if current_user
               %h3{ style: "font-size: 18px; line-height:33px; " } Level #{@enrollment.level}, #{@enrollment.total_points} points
-            - else
+            - else              
               %h4{ style: "height: 42px; cursor: pointer; margin-top:4px;" }
                 %a.login_link Login or register to join this Challenge!
         %div#challengecarousel_container
