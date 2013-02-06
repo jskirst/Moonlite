@@ -387,3 +387,9 @@ div.footer { bottom: inherit; }
 .ideaheader img{height:115px; vertical-align:baseline;}
 .ideaheader h4{font-weight:bold; line-height:32px; font-size:16px}
 .ideacontainer{background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
+
+/* Signed Out Challenge page */
+.challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
+.challenge_stats ul{list-style:none;}
+.challenge_stats li{line-height:15px;}
+.challenge_stats span{font-weight:bold; }
