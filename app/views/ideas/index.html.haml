@@ -8,9 +8,12 @@
       %h4 Help shape the MetaBright roadmap
       %p Vote for what you think we should prioritize and post ideas for things we should work on next.
   %div.leftboxheader
-    = link_to "Post new Idea", new_idea_path, class: "button button-actionable post_new_idea"
+    = link_to "Post new Idea", new_idea_path, class: "button button-actionable post_new_idea", style: ""
     Suggest What's Next
-    %span Sort by: 
+    %a{style:"margin-left:30px;"} Newest
+    %span 
+      |
+    %a Votes
   %div.ideacontainer
     - @ideas.each do |idea|
       %div.singleidea
