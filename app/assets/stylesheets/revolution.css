@@ -352,6 +352,8 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .popover-close{float:right;margin-right: 5px;font-size: 11px;text-shadow: none;}
 .popover-close:after{content:"Close";}
 .postspace>.popover {top:32% !important;}
+.explorebody .popover{width:300px;}
+.explorebody .popover-title{display:none;}
 
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 div.footer { bottom: inherit; }
