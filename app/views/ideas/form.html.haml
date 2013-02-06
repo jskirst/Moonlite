@@ -1,5 +1,5 @@
 %div.single_pane
-  %h3 New Idea
+  %h3= @idea.new_record? ? "New Idea" : "Edit Idea"
   = form_for(@idea, class:"form-horizontal") do |f|
     %div.control-group
       %label.control-label Title

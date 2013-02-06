@@ -27,12 +27,12 @@ class IdeasController < ApplicationController
     else
       flash[:error] = @idea.errors.full_messages.join(".")
     end
-    render "edit"
+    render "form"
   end
   
   def new
     @idea = current_user.ideas.new
-    render "new"
+    render "form"
   end
   
   def create
@@ -41,7 +41,7 @@ class IdeasController < ApplicationController
       redirect_to ideas_path, notice: "Achievement created."
     else
       flash[:alert] = @idea.errors.full_messages.join(". ")
-      render "new" 
+      render "form" 
     end
   end
   

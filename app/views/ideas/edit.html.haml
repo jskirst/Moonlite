@@ -1,6 +1,0 @@
-%div.single_pane
-  %h3 Edit Idea
-  = form_for(@idea, class:"form-horizontal") do |f|
-    = f.text_field(:title)
-    = f.text_area(:description, style: "width: 400px; height: 100px;")
-    = f.submit("Submit Idea")
