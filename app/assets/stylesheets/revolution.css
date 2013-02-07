@@ -381,19 +381,25 @@ div.footer { bottom: inherit; }
 .editprofilemanagementarea control-label{font-weight:bold; padding:0; margin:0; position:relative; top:3px; }
 
 /* Idea page */
-#ideapage{margin-top:37px;}
-.ideaheader{border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
-.ideaheader span{font-size:50px; position:relative; bottom:42px;}
-.ideaheader img{height:115px; vertical-align:baseline;}
-.ideaheader h4{font-weight:bold; line-height:32px; font-size:16px}
-.ideacontainer{background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; padding:12px;}
-.leftboxheader .post_new_idea{text-transform:none; text-shadow:none; font-size:12px; float:right; position:relative; bottom:4px; padding:3px 12px;}
-#ideapage .leftboxheader span{text-transform:none;}
-#ideapage .leftboxheader a{text-decoration:none; text-transform:none; cursor:pointer;}
-.ideacontent{width:85%;}
-.ideacontent h4{margin-bottom:10px; font-weight:bold; font-size:16px; }
-.singleidea{border-radius: 3px;box-shadow: 0 2px 4px rgba(0, 0, 0, .05);background-color: #F9F9F9;border: 1px solid #ccc;padding:12px 12px 6px 12px; margin-bottom:20px; }
-.singleidea .postfooter{margin-right:0;}
+#ideapage {margin-top:37px;}
+.ideaheader {border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
+.ideaheader span {font-size:50px; position:relative; bottom:42px;}
+.ideaheader img {height:115px; vertical-align:baseline;}
+.ideaheader h4 {font-weight:bold; line-height:32px; font-size:16px}
+.ideacontainer {background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; padding:12px;}
+.leftboxheader .post_new_idea {text-transform:none; text-shadow:none; font-size:12px; float:right; position:relative; bottom:4px; padding:3px 12px;}
+#ideapage .leftboxheader span {text-transform:none;}
+#ideapage .leftboxheader a {text-decoration:none; text-transform:none; cursor:pointer;}
+.ideacontent {width:85%;}
+.ideacontent h4 {margin-bottom:10px; font-weight:bold; font-size:16px; }
+.singleidea {border-radius: 3px;box-shadow: 0 2px 4px rgba(0, 0, 0, .05);background-color: #F9F9F9;border: 1px solid #ccc;padding:12px 12px 6px 12px; margin-bottom:20px; }
+.singleidea .postfooter {margin-right:0;}
+.submit_idea .help-block {font-size:16px;}
+.submit_idea>h2 {margin-bottom:20px;}
+.submit_idea_tips {display:inline-block; margin: 52px 0 0 50px; vertical-align:top; width:400px; border-left: 1px solid #E7E7E7; padding-left:10px;}
+.submit_idea_tips ul {font-size:16px; margin-top:10px;}
+.submit_idea_tips li {margin-bottom:10px;}
+.submit_idea_tips h3 {font-size:23px; }
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
