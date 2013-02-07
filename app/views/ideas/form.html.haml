@@ -3,9 +3,9 @@
     %h2= @idea.new_record? ? "Submit a new idea" : "Edit Idea"
     = form_for(@idea, class:"form-horizontal") do |f|
       %div.control-group
-        %span.help-block{style:"width:400px;"} Title
+        %span.help-block Title
         %div.controls
-          = f.text_field(:title)
+          = f.text_field(:title, style: "width:400px;")
       %div.control-group
         %span.help-block Description
         %div.controls

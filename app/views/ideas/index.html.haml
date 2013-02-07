@@ -24,7 +24,7 @@
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }
         %div.ideacontent
           %h4= idea.title
-          %p= idea.description
+          %pre= idea.description
         = render "comments/comments", idea_comment_details(idea)
 
 :javascript
