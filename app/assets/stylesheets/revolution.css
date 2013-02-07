@@ -392,6 +392,12 @@ div.footer { bottom: inherit; }
 #ideapage .postfooter { margin: 0; }
 #ideapage .leftboxheader span{text-transform:none;}
 #ideapage .leftboxheader a{text-decoration:none; text-transform:none; cursor:pointer;}
+.submit_idea .help-block {font-size:16px;}
+.submit_idea>h2 {margin-bottom:20px;}
+.submit_idea_tips {display:inline-block; margin: 52px 0 0 50px; vertical-align:top; width:400px; border-left: 1px solid #E7E7E7; padding-left:10px;}
+.submit_idea_tips ul {font-size:16px; margin-top:10px;}
+.submit_idea_tips li {margin-bottom:10px;}
+.submit_idea_tips h3 {font-size:23px; }
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
