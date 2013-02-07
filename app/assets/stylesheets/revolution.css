@@ -381,14 +381,17 @@ div.footer { bottom: inherit; }
 .editprofilemanagementarea control-label{font-weight:bold; padding:0; margin:0; position:relative; top:3px; }
 
 /* Idea page */
-.ideaheader { vertical-align: middle; border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
-.ideaheader span{ font-size:50px; }
-.ideaheader img { height:115px; }
-.ideaheader h4 { font-weight:bold; line-height:32px; font-size:16px }
-.idea_container { border-bottom: 1px solid #DDD; margin: 0 20px 0 20px; padding: 15px 0px 8px 0px; }
+.ideas_header { vertical-align: middle; border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
+.ideas_header img { height:115px; }
+.ideas_header h4 { font-weight:bold; line-height:32px; font-size:16px }
+.ideas_body { border-radius: 4px; background-color: white; padding-bottom: 10px; }
+.ideas_list { background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; }
+.idea_box { background-color: #F9F9F9; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); border-bottom: 1px solid #DDD; margin: 10px 20px 10px 20px; padding:12px 12px 6px 12px; }
 #ideapage pre { padding: 0px; background-color: inherit; border: 0px; }
 #ideapage .postfooter .leftstuff { padding-top: 0px; height: 20px; }
 #ideapage .postfooter { margin: 0; }
+#ideapage .leftboxheader span{text-transform:none;}
+#ideapage .leftboxheader a{text-decoration:none; text-transform:none; cursor:pointer;}
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
