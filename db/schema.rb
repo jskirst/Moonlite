@@ -117,8 +117,9 @@ ActiveRecord::Schema.define(:version => 20130206061249) do
     t.string   "title"
     t.text     "description"
     t.string   "status"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "vote_count",  :default => 0
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
   end
 
   create_table "notification_settings", :force => true do |t|

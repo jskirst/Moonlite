@@ -11,4 +11,5 @@
         = f.text_area(:description, style: "width: 400px; height: 100px;")
     %div.control-group
       %div.controls
-        = f.submit("Submit Idea", class: "button button-info")
+        = link_to "Back", ideas_path, class: "button button-standard"
+        = f.submit(@idea.new_record? ? "Submit Idea" : "Save Changes", class: "button button-info")

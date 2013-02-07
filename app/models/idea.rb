@@ -1,6 +1,6 @@
 class Idea < ActiveRecord::Base
   attr_readonly :creator_id
-  attr_protected :status
+  attr_protected :status, :vote_count
   attr_accessible :title, :description
   
   belongs_to :creator, class_name: "User"
@@ -12,6 +12,17 @@ class Idea < ActiveRecord::Base
   validates_presence_of :creator_id
   
   def points_awarded
-    votes.count * 50
+    100 + (vote_count * 50)
+  end
+  
+  def increment_vote_count
+    self.vote_count += 1
+    save!
+  end
+  
+  def decrement_vote_count
+    self.vote_count -= 1
+    self.vote_count = 0 if vote_count < 0
+    save!
   end
 end

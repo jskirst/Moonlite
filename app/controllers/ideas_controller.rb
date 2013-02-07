@@ -5,25 +5,28 @@ class IdeasController < ApplicationController
   
   def index
     @compact_social = true
-    @mode = "personas"
-    @ideas = Idea.all
+    @sort = params[:sort] || "vote_count"
+    @ideas = Idea.order("#{@sort} DESC")
     @idea_votes = current_user.idea_votes.collect &:owner_id
   end
   
   def show
-    @idea = Idea.find(params[:id]).include(:comments, :votes)
+    @ideas = [Idea.find(params[:id])]
+    @compact_social = false
+    render "index"
   end
   
   def edit
     @idea = Idea.find(params[:id])
+    render "form"
   end
   
   def update
     @idea = Idea.find(params[:id])
-    @idea.name = params[:idea][:title]
-    @idea.name = params[:idea][:description]
+    @idea.title = params[:idea][:title]
+    @idea.description = params[:idea][:description]
     if @idea.save
-      flash[:success] = "Fixed it."
+      flash[:success] = "Changes saved."
     else
       flash[:error] = @idea.errors.full_messages.join(".")
     end
@@ -52,9 +55,15 @@ class IdeasController < ApplicationController
   end
   
   def vote
-    current_user.idea_votes.create!(owner_id: @idea.id)
-    flash[:success] = "Idea successfully deleted."
-    redirect_to ideas_path
+    existing_vote = current_user.idea_votes.find_by_owner_id(@idea.id)
+    if existing_vote
+      existing_vote.destroy
+      @idea.decrement_vote_count
+    else
+      current_user.idea_votes.create!(owner_id: @idea.id)
+      @idea.increment_vote_count
+    end
+    render json: { status: "success" }
   end
   
   private
