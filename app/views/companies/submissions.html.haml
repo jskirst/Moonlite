@@ -16,7 +16,8 @@
           %td= s.id
           %td= s.path.name
           %td= link_to s.user.name, profile_path(s.user.username)
-          %td= s.content
+          %td
+            %pre.unstyled= s.content
           %td= link_to "approve", admin_update_submission_path(s), class: "mark_reviewed", remote: true, method: "put"
   = link_to "Refresh", admin_submissions_path, class: "button button-standard"
 :javascript
