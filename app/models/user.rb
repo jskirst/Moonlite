@@ -52,6 +52,10 @@ class User < ActiveRecord::Base
   has_many    :idea_votes, class_name: "Vote", conditions: { owner_type: "Idea" }
   has_many    :user_transactions
   has_many    :task_issues
+  has_many    :subscriptions, foreign_key: "follower_id"
+  has_many    :subscribers, class_name: "Subscription", foreign_key: "followed_id"
+  has_many    :followers, through: :subscribers
+  has_many    :followed_users, through: :subscriptions, source: :followed
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }

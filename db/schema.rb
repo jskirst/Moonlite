@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206061249) do
+ActiveRecord::Schema.define(:version => 20130207025330) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -253,6 +253,15 @@ ActiveRecord::Schema.define(:version => 20130206061249) do
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
+
+  create_table "subscriptions", :force => true do |t|
+    t.integer  "followed_id"
+    t.integer  "follower_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "subscriptions", ["followed_id", "follower_id"], :name => "index_subscriptions_on_followed_id_and_follower_id", :unique => true
 
   create_table "task_issues", :force => true do |t|
     t.integer  "task_id"
