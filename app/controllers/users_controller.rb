@@ -39,6 +39,16 @@ class UsersController < ApplicationController
     render json: { status: "success" }
   end
   
+  def follow
+    existing_subscription = current_user.subscriptions.find_by_followed_id(params[:followed_id])
+    if existing_subscription
+      existing_subscription.destroy!
+    else
+      current_user.subscriptions.create!(followed_id: params[:followed_id])
+    end
+    render json: { status: "success" } 
+  end
+  
   private
     def load_resource
       @user = User.find_by_username(params[:id])

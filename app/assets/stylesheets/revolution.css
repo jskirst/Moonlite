@@ -1,3 +1,6 @@
+/* General - this should always stay at the top */
+pre.unstyled { padding: 0px; background-color: inherit; border: 0px; }
+
 /* Stream */
 .newsfeed h4{ margin:9px 10px 10px 10px; font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
 .newsfeed p{ margin:0 9px 2px 0; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
@@ -136,22 +139,22 @@ code,pre{font:inherit;}
 .active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
 
 /* Profile and challenge page carousels */
-  #challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
-  #challengecarousel_inner { position:relative; top:6px; margin-left:12px; float:left; /* important for inline positioning */ width:672px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */}   
-  #challengecarousel_ul { position:relative; left:-224px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
-  #challengecarousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:6px 12px 10px 12px; }  
-  #challengeleft_scroll, #challengeright_scroll{ float:left; height:80px;  width:15px; }  
-  #challengeleft_scroll img, #challengeright_scroll img{ max-width:none; margin-top: 28px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
-  #challengeright_scroll img{margin-left:6px;}
-  
-  #carousel_container { background-color: whitesmoke; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
-  #carousel_inner { margin-left:23px; float:left; /* important for inline positioning */ width:864px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */position:relative; }   
-  #carousel_ul { position:relative; left:-216px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
-  #carousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:10px 8px; }  
-  #left_scroll, #right_scroll{ float:left; height:80px;  width:15px; }  
-  #left_scroll img, #right_scroll img{ max-width:none; margin: 28px 0 0 10px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
-  #left_scroll img {margin-left:10px;}
-  #right_scroll img{margin-left:1px;}
+#challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
+#challengecarousel_inner { position:relative; top:6px; margin-left:12px; float:left; /* important for inline positioning */ width:672px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */}   
+#challengecarousel_ul { position:relative; left:-224px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
+#challengecarousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:6px 12px 10px 12px; }  
+#challengeleft_scroll, #challengeright_scroll{ float:left; height:80px;  width:15px; }  
+#challengeleft_scroll img, #challengeright_scroll img{ max-width:none; margin-top: 28px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
+#challengeright_scroll img{margin-left:6px;}
+
+#carousel_container { background-color: whitesmoke; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
+#carousel_inner { margin-left:23px; float:left; /* important for inline positioning */ width:864px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */position:relative; }   
+#carousel_ul { position:relative; left:-216px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
+#carousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:10px 8px; }  
+#left_scroll, #right_scroll{ float:left; height:80px;  width:15px; }  
+#left_scroll img, #right_scroll img{ max-width:none; margin: 28px 0 0 10px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
+#left_scroll img {margin-left:10px;}
+#right_scroll img{margin-left:1px;}
 
 /* Arena */
 .counter {display:block;float:left;font-size:2em;line-height:1.2em; -webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255,255,255,0.3)));}
