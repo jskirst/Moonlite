@@ -7,7 +7,7 @@ class IdeasController < ApplicationController
     @compact_social = true
     @sort = params[:sort] || "vote_count"
     @ideas = Idea.order("#{@sort} DESC")
-    @idea_votes = current_user.idea_votes.collect &:owner_id
+    @idea_votes = current_user.idea_votes.collect &:owner_id if current_user
   end
   
   def show
