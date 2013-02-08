@@ -46,7 +46,7 @@ class UsersController < ApplicationController
     else
       current_user.subscriptions.create!(followed_id: params[:followed_id])
     end
-    render json: { status: "success" }
+    render json: { status: "success" } 
   end
   
   private
