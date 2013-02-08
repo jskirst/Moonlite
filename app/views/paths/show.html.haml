@@ -63,7 +63,7 @@
       - if @similar_paths
         %div.leftbox
           %div.leftboxheader Similar Challenges
-          %div.leftboxfooter
+          %div.leftboxfooter{style:"background-color:white;"}
             %li.leftrailcontent
               - @similar_paths.each do |p|
                 - if current_user

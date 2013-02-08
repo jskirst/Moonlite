@@ -1,6 +1,6 @@
 %div#ideapage{ style: "margin-top: 0px;" }    
   %div.ideas_header
-    = link_to "Post new Idea", new_idea_path, class: "button button-info", style: "float: right;"
+    = link_to "Post new Idea", new_idea_path, class: "button button-actionable", style: "float: right;"
     %div{ style: "border-bottom: 1px solid #DDD; margin-bottom: 10px;" }
       %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
       %h1{ style: "display: inline-block;" } MetaBright Labs
@@ -13,7 +13,7 @@
       - if params[:action] == "show"
         = link_to "Back to all Ideas", ideas_path, style: "float: right;"
       - else
-        = link_to "Newest", ideas_path(sort: "created_at")
+        = link_to "Newest", ideas_path(sort: "created_at"), style: "margin-left:30px;"
         |
         = link_to "Votes", ideas_path(sort: "vote_count") 
     %div.ideas_list
@@ -37,10 +37,11 @@
               - else
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
                   %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }   
-          %h4{ style: "display: inline;" }= link_to idea.title, idea
-          %h6{ style: "margin: 0px;" } Created by #{link_to idea.creator.name, profile_path(idea.creator.username)}
-          %p{ style: "padding: 10px 0; margin: 0;" }
-            %pre= idea.description
+          %div.ideacontent
+            %h4= link_to idea.title, idea
+            %h6{ style: "margin: 0px;" } Created by #{link_to idea.creator.name, profile_path(idea.creator.username)}
+            %p{ style: "padding: 10px 0; margin: 0;" }
+              %pre= idea.description
 
 :javascript
   $(function(){ 
