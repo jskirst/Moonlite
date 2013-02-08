@@ -66,12 +66,8 @@
           %div.leftboxfooter{style:"background-color:white;"}
             %li.leftrailcontent
               - @similar_paths.each do |p|
-                - if current_user
-                  = link_to challenge_path(p.permalink) do
-                    = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
-                - else
-                  %span.login_link
-                    = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
+                = link_to challenge_path(p.permalink) do
+                  = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
     %div.span11
       %div.newsfeed
         %div.leftboxheader

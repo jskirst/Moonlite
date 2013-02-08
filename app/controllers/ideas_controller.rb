@@ -5,7 +5,7 @@ class IdeasController < ApplicationController
   
   def index
     @compact_social = true
-    @sort = params[:sort] || "vote_count"
+    @sort = params[:sort] || "created_at"
     @ideas = Idea.order("#{@sort} DESC")
     @idea_votes = current_user.idea_votes.collect &:owner_id if current_user
   end
@@ -27,10 +27,11 @@ class IdeasController < ApplicationController
     @idea.description = params[:idea][:description]
     if @idea.save
       flash[:success] = "Changes saved."
+      redirect_to ideas_path
     else
       flash[:error] = @idea.errors.full_messages.join(".")
+      render "form"
     end
-    render "form"
   end
   
   def new

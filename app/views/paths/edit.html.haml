@@ -61,8 +61,10 @@
       %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
       %p#challenge_desc_pop.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
     %div.floatr{ style: "margin-top:10px;"}
-      - if @path.published_at
-        = link_to "View", @path, class: "button button-actionable"
+      - if @path.published? && @path.approved?
+        = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
+      - elsif @path.published?
+        = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
       - else
         = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
       %span.button.button-standard.edit_path_settings_button Settings
