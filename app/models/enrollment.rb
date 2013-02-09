@@ -53,8 +53,7 @@ class Enrollment < ActiveRecord::Base
   private
   
   def check_for_events(points)
-    if crossed_threshold?(CONTRIBUTION_THRESHOLD, points)
-      self.contribution_unlocked = true
+    if crossed_threshold?(CONTRIBUTION_THRESHOLD, points) && !contribution_unlocked?
       self.contribution_unlocked_at = Time.now
       UserEvent.log_point_event(user, self, :contribution_unlocked)
     end

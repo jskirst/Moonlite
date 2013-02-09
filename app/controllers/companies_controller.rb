@@ -8,17 +8,17 @@ class CompaniesController < ApplicationController
       excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ?", true, true, true, nil).to_a.collect &:id
     end
 
-    @users                  = User.where("id not in (?)", excluded).count
-    @returning_users        = User.where("id not in (?)", excluded).where("created_at != login_at").count
-    @arena_answers          = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).count
-    @creative_answers       = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).count
-    @task_answers           = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
-    @arena_questions        = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).count
-    @creative_questions     = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).count
-    @task_questions         = Task.where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
-    @votes                  = Vote.where("user_id not in (?)", excluded).count
-    @comments               = Comment.where("user_id not in (?)", excluded).count
-    @issues                 = TaskIssue.where("user_id not in (?)", excluded).count
+    @users                  = User.where("created_at >= '01-27-2013'").where("id not in (?)", excluded).count
+    @returning_users        = User.where("created_at >= '01-27-2013'").where("id not in (?)", excluded).where("created_at != login_at").count
+    @arena_answers          = CompletedTask.where("completed_tasks.created_at >= '01-27-2013'").joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).count
+    @creative_answers       = CompletedTask.where("completed_tasks.created_at >= '01-27-2013'").joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).count
+    @task_answers           = CompletedTask.where("completed_tasks.created_at >= '01-27-2013'").joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
+    @arena_questions        = Task.where("tasks.created_at >= '01-27-2013'").where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).count
+    @creative_questions     = Task.where("tasks.created_at >= '01-27-2013'").where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).count
+    @task_questions         = Task.where("tasks.created_at >= '01-27-2013'").where("creator_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
+    @votes                  = Vote.where("votes.created_at >= '01-27-2013'").where("user_id not in (?)", excluded).count
+    @comments               = Comment.where("comments.created_at >= '01-27-2013'").where("user_id not in (?)", excluded).count
+    @issues                 = TaskIssue.where("task_issues.created_at >= '01-27-2013'").where("user_id not in (?)", excluded).count
     
     time_limit              = 24.hours.ago
     @new_users              = User.where("id not in (?)", excluded).where("created_at >= ?", time_limit).count
