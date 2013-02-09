@@ -49,7 +49,7 @@
           - current_user_in_top = false
           - @leaderboard.each_with_index do |user, i|
             - current_user_in_top = true if current_user && user.id = current_user.id
-            - break if i >= 20
+            - break if i >= 10
             %li
               %span.rank= (i+1).to_s
               = image_tag user.picture 
