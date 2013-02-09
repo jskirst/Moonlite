@@ -3,10 +3,12 @@
   %head
     = render "layouts/head"
     :javascript
+      var iph_off = #{!params[:iph].nil?};
       var viewed_help = #{get_viewed_help};
       var all_help = #{get_all_help.to_json};
       var mark_read_url = '#{mark_help_read_url}';
       $(function(){ init_iph(); });
+        
   %body
     - if current_user
       = render "layouts/launchpad_modal"

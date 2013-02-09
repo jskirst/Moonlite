@@ -166,7 +166,7 @@ class User < ActiveRecord::Base
     return image_url unless image_url.blank?
     return "/images/default_profile_pic.png"
   end
-  def picture() picture(self.image_url) end
+  def picture() User.picture(self.image_url) end
   
   def profile_complete?() !self.description.nil? end
   def has_password?(submitted_password) encrypted_password == encrypt(submitted_password) end

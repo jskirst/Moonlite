@@ -168,7 +168,7 @@ class PathsController < ApplicationController
       .order("total_points DESC").limit(10)
       .eager_load.to_a
     @leaderboard = User.joins(:enrollments)
-      .select("enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at")
+      .select("users.id, enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at, users.image_url")
       .where("enrollments.path_id = ? and users.locked_at is ? and total_points > ?", @path.id, nil, 0)
       .order("enrollments.total_points DESC")
       .limit(1000)
