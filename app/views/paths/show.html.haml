@@ -1,3 +1,4 @@
+- #raise @leaderboard.to_yaml
 %section
   - unless current_user
     %div#newuserbox.help_box{ style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;" }
@@ -48,8 +49,8 @@
         %ul#ranks{ style: "padding: 0px;"}
           - current_user_in_top = false
           - @leaderboard.each_with_index do |user, i|
-            - current_user_in_top = true if current_user && user.id = current_user.id
             - break if i >= 10
+            - current_user_in_top = true if current_user && user.id == current_user.id 
             %li
               %span.rank= (i+1).to_s
               = image_tag user.picture 
@@ -62,12 +63,14 @@
             - next_user = nil
             - @leaderboard.each_with_index do |user, i|
               - if current_user_spot
-                - next_user = user and break
-              - elsif user.id = current_user.id
+                - next_user = user
+                - break
+              - elsif user.id == current_user.id
                 - current_user_spot = i
               - else
                 - previous_user = user
             - if current_user_spot
+              %li{ style: "text-align: center;" } ...
               - if previous_user
                 %li
                   %span.rank= (current_user_spot).to_s
@@ -77,10 +80,10 @@
                   %span.points= previous_user.total_points
               %li
                 %span.rank= (current_user_spot+1).to_s
-                = image_tag user.picture 
-                = link_to truncate(user.name, length: 22), profile_path(user.username), class: "name"
-                %span.level lvl. #{Enrollment.points_to_level(user.total_points.to_i)}
-                %span.points= user.total_points
+                = image_tag current_user.picture 
+                = link_to truncate(current_user.name, length: 22), profile_path(current_user.username), class: "name"
+                %span.level lvl. #{Enrollment.points_to_level(@enrollment.total_points.to_i)}
+                %span.points= @enrollment.total_points
               - if next_user
                 %li
                   %span.rank= (current_user_spot+2).to_s
