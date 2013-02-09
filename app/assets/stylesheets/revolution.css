@@ -1,5 +1,5 @@
 /* General - this should always stay at the top */
-pre.unstyled { padding: 0px; background-color: inherit; border: 0px; }
+pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
 
 /* Stream */
 .newsfeed h4{ margin:9px 10px 10px 10px; font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
