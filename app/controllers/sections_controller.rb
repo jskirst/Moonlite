@@ -70,15 +70,11 @@ class SectionsController < ApplicationController
   end
   
   def publish
-    if @section.tasks.count.zero?
-      flash[:error] = "You need to have at least one question before you can make your section publicly available."
+    @section.published_at = Time.now
+    if @section.save
+      flash[:success] = "#{@section.name} has been successfully published. Note that if you have not already, you will still need to publish the #{name_for_paths.downcase} as a whole before it will be visible to the community."
     else
-      @section.published_at = Time.now
-      if @section.save
-        flash[:success] = "#{@section.name} has been successfully published. Note that if you have not already, you will still need to publish the #{name_for_paths.downcase} as a whole before it will be visible to the community."
-      else
-        flash[:error] = "There was an error publishing."
-      end
+      flash[:error] = "There was an error publishing."
     end
     redirect_to edit_path_path(@section.path)
   end
