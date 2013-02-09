@@ -390,9 +390,10 @@ div.footer { bottom: inherit; }
 .ideas_header h4 { font-weight:bold; line-height:32px; font-size:16px }
 .ideas_body { border-radius: 4px; background-color: white; padding-bottom: 10px; }
 .ideas_list { background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; }
-.idea_box { background-color: #F9F9F9; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); border-bottom: 1px solid #DDD; margin: 10px 20px 10px 20px; padding:12px 12px 6px 12px; }
+.idea_box { background-color: #F9F9F9; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); border-bottom: 1px solid #DDD; margin: 20px; padding:12px 12px 6px 12px; }
 #ideapage .postfooter .leftstuff { padding-top: 0px; height: 20px; }
 #ideapage .postfooter { margin: 0; }
+#ideapage .leftboxheader {margin-bottom:-7px;}
 #ideapage .leftboxheader span{text-transform:none;}
 #ideapage .leftboxheader a{text-decoration:none; text-transform:none; cursor:pointer;}
 .submit_idea .help-block {font-size:16px;}
@@ -402,8 +403,8 @@ div.footer { bottom: inherit; }
 .submit_idea_tips li {margin-bottom:10px;}
 .submit_idea_tips h3 {font-size:23px; }
 .ideacontent {width:85%;}
-.ideacontent h4 {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
-.ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit;}
+.ideacontent h4 a {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
+.ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px;}
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
