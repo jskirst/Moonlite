@@ -53,13 +53,13 @@
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
         %div.leftboxheader#leaderboard_pop{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
-          - @enrollments.each_with_index do |entry, i|
+          - @leaderboard.each_with_index do |user, i|
             %li
               %span.rank= (i+1).to_s
-              = image_tag entry.user.profile_pic 
-              = link_to truncate(entry.user.name, length: 22), profile_path(entry.user.username), class: "name"
-              %span.level lvl. #{entry.level}
-              %span.points= entry.total_points
+              = image_tag user.picture 
+              = link_to truncate(user.name, length: 22), profile_path(user.username), class: "name"
+              %span.level lvl. #{Enrollment.points_to_level(user.total_points)}
+              %span.points= user.total_points
       - if @similar_paths
         %div.leftbox
           %div.leftboxheader Similar Challenges

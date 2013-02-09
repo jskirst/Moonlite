@@ -2,7 +2,7 @@
   %div{ style: "float:left;" }
     :javascript
       $(function(){ $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); }); });
-    = link_to (image_tag comment.user.profile_pic, class: "commentphoto"), profile_path(comment.user.username)
+    = link_to (image_tag comment.user.picture, class: "commentphoto"), profile_path(comment.user.username)
   %div{ style: "overflow:hidden; margin: 0 0 0 43px;" }
     %p{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content
     %p{ style: "margin-left: 0;" } 

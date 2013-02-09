@@ -162,12 +162,12 @@ class User < ActiveRecord::Base
     Mailer.reset(email_details).deliver
   end
   
-  def picture() profile_pic end
-  def profile_pic
-    return self.image_url if self.image_url != nil
-    return "/images/default_profile_pic.png"  if company.default_profile_picture_link.blank?
-    return company.default_profile_picture_link
+  def self.picture(image_url)
+    return image_url unless image_url.blank?
+    return "/images/default_profile_pic.png"
   end
+  def picture() picture(self.image_url) end
+  
   def profile_complete?() !self.description.nil? end
   def has_password?(submitted_password) encrypted_password == encrypt(submitted_password) end
   

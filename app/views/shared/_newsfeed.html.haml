@@ -21,7 +21,7 @@
 - @completed_tasks.each do |ct|
   %div.post
     %div.postphotospace
-      = link_to (image_tag ct.user.profile_pic, class: "photo"), profile_path(ct.user.username)
+      = link_to (image_tag ct.user.picture, class: "photo"), profile_path(ct.user.username)
     %div.postspace
       %div.postheader
         %h3

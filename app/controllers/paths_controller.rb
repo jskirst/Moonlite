@@ -163,7 +163,15 @@ class PathsController < ApplicationController
     @display_launchpad = params[:completed]
     @display_type = params[:type] || 2
     
-    @enrollments = @path.enrollments.includes(:user).where("users.locked_at is ? and total_points > ?", nil, 0).order("total_points DESC").limit(10).eager_load.to_a
+    @enrollments = @path.enrollments.includes(:user)
+      .where("users.locked_at is ? and total_points > ?", nil, 0)
+      .order("total_points DESC").limit(10)
+      .eager_load.to_a
+    @leaderboard = User.joins(:enrollments)
+      .select("enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at")
+      .where("enrollments.path_id = ? and users.locked_at is ? and total_points > ?", @path.id, nil, 0)
+      .order("enrollments.total_points DESC")
+      .limit(1000)
     
     @url_for_newsfeed = generate_newsfeed_url
     render "show"
