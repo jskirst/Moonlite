@@ -7,7 +7,7 @@
     %table
       - @collaborators.each do |c|
         %tr
-          %td{ style: "width:75px;" }= image_tag c.profile_pic, size: "75x75"
+          %td{ style: "width:75px;" }= image_tag c.picture, size: "75x75"
           %td
             %p= c.name
             %p= link_to "Remove", undo_collaboration_path_path(@path, user_id: c.id), method: "put", confirm: "Are you certain you want to stop collaborating with this user?"

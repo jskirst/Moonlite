@@ -1,3 +1,4 @@
+- #raise @leaderboard.to_yaml
 %section
   - unless current_user
     %div#newuserbox.help_box{ style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;" }
@@ -18,13 +19,6 @@
         %div#topboxcontent
           - if current_user
             %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level} »
-          - else
-            %div.challenge_stats
-              %span Challenge stats:
-              %ul
-                %li #{@path.tasks.size} Arena Questions
-                %li 12 Creative Responses
-                %li 8 Tasks
           %div{ style: "width: 550px; margin-top: 10px;" }
             %h1= @path.name
             - if current_user
@@ -42,7 +36,7 @@
               - if @enrollments.size < 4
                 = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
               - @enrollments.shuffle.each do |e|
-                = render "shared/mosaic", { pic: e.user.profile_pic, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
+                = render "shared/mosaic", { pic: e.user.picture, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
           - if @enrollments.size > 4
             %div#challengeright_scroll
               %a{href: "javascript:challengeslide(\"right\");"}
@@ -53,13 +47,52 @@
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
         %div.leftboxheader#leaderboard_pop{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
-          - @enrollments.each_with_index do |entry, i|
+          - current_user_in_top = false
+          - @leaderboard.each_with_index do |user, i|
+            - break if i >= 10
+            - current_user_in_top = true if current_user && user.id == current_user.id 
             %li
               %span.rank= (i+1).to_s
-              = image_tag entry.user.profile_pic 
-              = link_to truncate(entry.user.name, length: 22), profile_path(entry.user.username), class: "name"
-              %span.level lvl. #{entry.level}
-              %span.points= entry.total_points
+              = image_tag user.picture 
+              = link_to truncate(user.name, length: 22), profile_path(user.username), class: "name"
+              %span.level lvl. #{Enrollment.points_to_level(user.total_points.to_i)}
+              %span.points= user.total_points
+          - unless current_user.nil? || current_user_in_top
+            - current_user_spot = nil
+            - previous_user = nil
+            - next_user = nil
+            - @leaderboard.each_with_index do |user, i|
+              - if current_user_spot
+                - next_user = user
+                - break
+              - elsif user.id == current_user.id
+                - current_user_spot = i
+              - else
+                - previous_user = user
+            - if current_user_spot
+              %li{ style: "text-align: center;" } ...
+              - if previous_user
+                %li
+                  %span.rank= (current_user_spot).to_s
+                  = image_tag previous_user.picture 
+                  = link_to truncate(previous_user.name, length: 22), profile_path(previous_user.username), class: "name"
+                  %span.level lvl. #{Enrollment.points_to_level(previous_user.total_points.to_i)}
+                  %span.points= previous_user.total_points
+              %li
+                %span.rank= (current_user_spot+1).to_s
+                = image_tag current_user.picture 
+                = link_to truncate(current_user.name, length: 22), profile_path(current_user.username), class: "name"
+                %span.level lvl. #{Enrollment.points_to_level(@enrollment.total_points.to_i)}
+                %span.points= @enrollment.total_points
+              - if next_user
+                %li
+                  %span.rank= (current_user_spot+2).to_s
+                  = image_tag next_user.picture 
+                  = link_to truncate(next_user.name, length: 22), profile_path(next_user.username), class: "name"
+                  %span.level lvl. #{Enrollment.points_to_level(next_user.total_points.to_i)}
+                  %span.points= next_user.total_points
+                
+      
       - if @similar_paths
         %div.leftbox
           %div.leftboxheader Similar Challenges
