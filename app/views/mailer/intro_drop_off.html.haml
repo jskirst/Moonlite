@@ -1,32 +1,13 @@
-!!!
-%html
-  %head
-    %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
-  %body
-    <table cellpadding:"0" cellspacing="0" style="border:1px solid rgba(0, 0, 0, .1);" width="620px">
-    %tbody
-      %tr
-        %td{:style => "background:#F9F9F9; padding:6px 0 3px 6px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
-          %a{:href => "http://www.metabright.com"}
-            %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+200+wide.png", :style => "width:145px"}/
-      %tr
-        %td{:style => "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
-          %span{:style => "font-size:24px;"} Complete your first <a href="http://www.metabright.com" style="text-decoration:none; color:inherit;">MetaBright</a> Challenge!
-          %br/
-          %hr{:style => "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
-            %p{:style => "font-size:12px;"} 
-              Hey, we noticed that you weren't able to complete a Challenge after signing up for <a href="http://www.metabright.com" style="text-decoration:none;">MetaBright</a>. We'd love to have you back and give it another shot. 
-            %p{:style => "font-size:12px;"} 
-              If you need a hand to get going, or just have some feedback for us, feel free to shoot us a message at
-                %a{:href => "[email]"} support@metabright.com
-              and we'll try to help out.
-            %p{:style => "font-size:12px;"} 
-              Thanks,
-              %br/
-              The MetaBright Team
-      %tr
-        %td{ style: "padding:3px 12px 6px;"}
-          %span{style:"font-size:10px; color:gray;"}
-            You are receiving this message because #{@user.email} is a member of MetaBright. To adjust your email settings or to unsubscribe, 
-          %span{style:"font-size:10px;"}= link_to "click here.", @settings_url
-          %span{style:"font-size:10px; color:gray;"} MetaBright, Inc. 212 Valencia Street, Suite D, San Francisco, CA 94123
+%span{:style => "font-size:24px;"} Complete your first <a href="http://www.metabright.com" style="text-decoration:none; color:inherit;">MetaBright</a> Challenge!
+%br/
+%hr{:style => "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
+%p{:style => "font-size:12px;"} 
+  Hey, we noticed that you weren't able to complete a Challenge after signing up for <a href="http://www.metabright.com" style="text-decoration:none;">MetaBright</a>. We'd love to have you back and give it another shot. 
+%p{:style => "font-size:12px;"} 
+  If you need a hand to get going, or just have some feedback for us, feel free to shoot us a message at
+    %a{:href => "[email]"} support@metabright.com
+  and we'll try to help out.
+%p{:style => "font-size:12px;"} 
+  Thanks,
+  %br/
+  The MetaBright Team
