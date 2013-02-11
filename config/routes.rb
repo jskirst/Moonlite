@@ -18,7 +18,7 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
-	resources :ideas do
+	resources :ideas, path: "labs" do
 	  member do
 	    get :vote
 	  end

@@ -53,6 +53,12 @@ task :send_alerts => :environment do
   end
 end
 
+task :send_newsletter => :environment do
+  User.where("locked_at is ?", nil).each do |user|
+    Newsletters.newsletter(user.email).deliver
+  end    
+end
+
 task :test_notifications => :environment do
   desc "Resetting notifications..."
   UserEvent.all.each do |u|

@@ -4,6 +4,7 @@ class Newsletters < ActionMailer::Base
   def newsletter(email)
     @user = User.find_by_email(email)
     @settings_url = notification_settings_url(@user.signup_token)
+    return false unless @user.can_email?(:weekly)
     
     mail(to: @user.email, 
       from: "Team MetaBright <team@metabright.com>", 
