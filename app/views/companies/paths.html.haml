@@ -22,7 +22,7 @@
           %td= p.sections.size
           %td= p.tasks.size
           %td= link_to p.user.name, p.user
-          %td= p.published? ? "waiting" : "published"
+          %td= p.published? ? "published" : "waiting"
           %td
             - if p.approved?
               = link_to "approved", admin_update_path_path(p), class: "mark_approved approved", remote: true, method: "put"
