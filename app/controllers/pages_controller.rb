@@ -144,7 +144,7 @@ class PagesController < ApplicationController
   end
   
   def email_test
-    raise "Access Denied" unless Rails.env == "development"
+    raise "Access Denied" unless Rails.env == "development" or ENV['ENABLE_EMAIL_TEST']
     if params[:email] && params[:test_method] && params[:mailer]
       eval("#{params[:mailer]}.#{params[:test_method]}('#{params[:email]}').deliver")
       flash[:success] = "Email should have been sent."

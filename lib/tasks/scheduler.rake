@@ -55,7 +55,11 @@ end
 
 task :send_newsletter => :environment do
   User.where("locked_at is ?", nil).each do |user|
-    Newsletters.newsletter(user.email).deliver
+    begin
+      Newsletters.newsletter(user.email).deliver
+    rescue
+      puts "Newsletter alert rejected"
+    end
   end    
 end
 
