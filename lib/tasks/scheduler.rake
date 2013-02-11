@@ -54,7 +54,7 @@ task :send_alerts => :environment do
 end
 
 task :send_newsletter => :environment do
-  raise "Fatal: No newsletter specified" unless ENV["newsletter_02102013"]
+  raise "Fatal: No newsletter specified" unless ENV["NEWSLETTER_PATH"]
   User.where("locked_at is ?", nil).each do |user|
     begin
       Newsletters.newsletter(user.email, newsletter).deliver
