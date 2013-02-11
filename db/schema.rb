@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207025330) do
+ActiveRecord::Schema.define(:version => 20130211040205) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -389,6 +389,14 @@ ActiveRecord::Schema.define(:version => 20130207025330) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "visits", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "visitor_id"
+    t.string   "request_url"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "votes", :force => true do |t|
     t.integer  "owner_id"

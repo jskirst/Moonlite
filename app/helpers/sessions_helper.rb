@@ -106,9 +106,6 @@ module SessionsHelper
   
   def determine_enabled_features
     unless current_user.nil?
-      unless request.xhr?
-        current_user.update_attribute(:login_at, DateTime.now())
-      end
       role = current_user.user_role
       @is_consumer = true
       @enable_administration = role.enable_administration
@@ -132,6 +129,24 @@ module SessionsHelper
   end
   
   private
+    def log_visit
+      unless request.xhr?
+        if current_user
+          visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
+          Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url)
+          current_user.update_attribute(:login_at, DateTime.now())
+        else
+          if cookies[:visitor_id].to_i > 0
+            visitor_id = cookies[:visitor_id]  
+          else
+            visitor_id = rand(1000000000)
+            cookies.permanent[:visitor_id] = visitor_id
+          end
+          Visit.create!(visitor_id: visitor_id, request_url: request.url)
+        end
+      end
+    end
+  
     def user_from_remember_token
       User.authenticate_with_salt(*remember_token)
     end
