@@ -59,7 +59,7 @@ task :send_newsletter => :environment do
     begin
       Newsletters.newsletter(user.email, newsletter).deliver
     rescue
-      puts "Newsletter alert rejected"
+      puts "Newsletter alert rejected: #{$!}"
     end
   end    
 end
