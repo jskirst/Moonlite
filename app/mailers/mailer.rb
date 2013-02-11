@@ -1,9 +1,9 @@
 class Mailer < ActionMailer::Base
   default from: "Team MetaBright <team@metabright.com>"
+  layout "mail"
   
   def welcome(email)
     @user = User.find_by_email(email)
-    @settings_url = notification_settings_url(@user.signup_token)
     mail(to: @user.email, from: "Jonathan Kirst <jskirst@metabright.com>", subject: "Welcome to MetaBright!")
     @user.log_email
   end
@@ -18,7 +18,6 @@ class Mailer < ActionMailer::Base
     return false if @user == @commenting_user
     return false unless @user.can_email?(:interaction)
     
-    @settings_url = notification_settings_url(@user.signup_token)
     @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
     @user.log_email
@@ -34,7 +33,6 @@ class Mailer < ActionMailer::Base
     return false if @user == @voting_user
     return false unless @user.can_email?(:interaction)
     
-    @settings_url = notification_settings_url(@user.signup_token)
     @action_url = submission_details_url(@submission.path.permalink, @submission)
     mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
     @user.log_email
@@ -51,23 +49,9 @@ class Mailer < ActionMailer::Base
     @user = User.find_by_email(email)
     return false unless @user.can_email?(:powers)
     
-    @settings_url = notification_settings_url(@user.signup_token)
     @challenge_name = path.name
     @challenge_link = challenge_url(path.permalink, completed: true) 
     mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
     @user.log_email
   end
-  
-  # def section_unlock(email)
-    # @challenge_name 
-    # @section_name 
-    # @challenge_link 
-    # @section_link 
-  # end
-#   
-  # def challenge_unlock(email)
-    # @persona_name 
-    # @challenge_name
-    # @challenge_link 
-  # end
 end

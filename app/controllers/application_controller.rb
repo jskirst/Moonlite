@@ -4,4 +4,5 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   
   before_filter :determine_enabled_features
+  before_filter :log_visit
 end

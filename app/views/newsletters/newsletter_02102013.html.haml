@@ -5,31 +5,32 @@
     - s = {}
     - s[:action_button] = "float:right; margin-bottom: 0px;margin-top: 0px;vertical-align: middle;display: inline-block;text-shadow: 0 1px 0px black;color: white;padding: 7px 20px 5px 20px;cursor: pointer;font-size: 15px;border: 1px solid #DDD;border-radius: 3px;background-image: -moz-linear-gradient(top, #ee5f5b, #971D1C);background-image: -ms-linear-gradient(top, #ee5f5b, #971D1C);background-image: -o-linear-gradient(top, #ee5f5b, #971D1C);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#971D1C));background-image: -webkit-linear-gradient(top, #ee5f5b, #971D1C);background-image: linear-gradient(top, #ee5f5b, #971D1C);"
     - s[:challenge_image] = "vertical-align:top; width:75px; height:75px; display:inline-block; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;"
+    - s[:challenge_box] = "text-decoration:none; color:#404040; "
   %body
-    %table{ cellpadding: "0", cellspacing: "0", style: "border: 1px solid rgba(0, 0, 0, .1); width: 620px;" }
+    %table{ cellpadding: "0", cellspacing: "0", style: "border: 1px solid rgba(0, 0, 0, .1); width: 620px; color:#404040;" }
       %tbody
         %tr
           %td{ style: "background:#F9F9F9; padding:6px 0 3px 6px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             = link_to root_url do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+200+wide.png", style: "width:145px"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", style: "width:145px", title: "MetaBright.com"
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
-            %h3{ style: "font-size:14px; font-weight:bold;" } #{@user.name},
+            %h3{ style: "font-size:14px; font-weight:bold; margin:0;" } #{@user.name},
             %hp{ style: "font-size:14px;"} Here's what's happening on MetaBright...
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
-            %h3{ style: "font-size: 20px;"} Updates
+            %h3{ style: "font-size: 20px; margin:0;"} Updates
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
               %div
-                %h4{ style: "font-size:14px;"} This week features big changes in the way you interact with MetaBright. The updates we rolled out with this week make it easier for you to shape MetaBright to your heart's content.
+                %h4{ style: "font-size:14px; font-weight:normal;"} This week features big changes in the way you interact with MetaBright. The updates we rolled out make it easier for you to shape MetaBright to your heart's content.
                 %ul{ style: "font-size:12px;"}
                   %li{ style: "margin-bottom:4px;"}
                     %strong Create your own questions:
                     Unlock the power to create questions inside every Challenge.
                   %li{ style: "margin-bottom:4px;"}
                     %strong MetaBright Labs:
-                    See whats coming soon and post your own ideas about what you think we should launch next!
-                    =link_to "Try it out!", "http://www.metabright.com/ideas"
+                    See whats coming soon and post your own ideas about what you think we should launch next.
+                    = link_to "Try it out!", "http://www.metabright.com/labs"
                   %li{ style: "margin-bottom:4px;"}
                     %strong Notification settings:
                     Choose the emails you wish to receive from MetaBright.
@@ -38,47 +39,52 @@
                     Editing your profile is now easier and more intuitive.
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
-            %h3{ style: "font-size: 20px;"} Challenges
+            %h3{ style: "font-size: 20px; margin:0;"} Challenges
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
-              %div{ style: "margin-bottom:12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}
-                = link_to "http://www.metabright.com/challenges/basicclasstest" do
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", style: s[:challenge_image] }
-                %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                  %h4{ style: "font-size: 16px; font-weight:bold;"} New Challenge!
-                  %h4{ style: "font-size: 16px;"} Ruby Without Rails
-                  = link_to "Check it out »", "http://www.metabright.com/challenges/basicclasstest", style: s[:action_button]
-              %div{ style: "margin-bottom:5px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}
-                = link_to "http://www.metabright.com/challenges/naturalwondersoftheworld" do
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/60/original.JPG?1354146690", style: s[:challenge_image] }
-                %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                  %h4{ style: "font-size: 16px; font-weight:bold;"} New Challenge!
-                  %h4{ style: "font-size: 16px;"} 7 Natural Wonders of the World
-                  %br/
-                  = link_to "Check it out »", "http://www.metabright.com/challenges/naturalwondersoftheworld", style: s[:action_button]
-              %div{ style: "margin-bottom:5px; padding:12px;"}
-                = link_to "http://www.metabright.com/challenges/rubyonrails" do
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/44/original.png?1353538042", style: s[:challenge_image] }
-                %div{ style: "display:inline-block; margin-left:10px;"}
-                  %h4{ style: "font-size: 16px;"} Ruby on Rails
-                  = link_to "Check it out »", "http://www.metabright.com/challenges/rubyonrails", style: s[:action_button]
-              %div{ style: "margin-bottom:5px; padding:12px; "}
-                = link_to "http://www.metabright.com/challenges/jquery" do
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", style: s[:challenge_image] }
-                %div{ style: "display:inline-block; margin-left:10px;"}
-                  %h4{ style: "font-size: 16px;"} jQuery
-                  = link_to "Check it out »", "http://www.metabright.com/challenges/jquery", style: s[:action_button]
-              %div{ style: "margin-bottom:5px; padding:12px; "}
-                = link_to "http://www.metabright.com/challenges/excelformulasandfunctions" do
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/55/original.jpg?1353948550", style: s[:challenge_image] }
-                %div{ style: "display:inline-block; margin-left:10px;"}
-                  %h4{ style: "font-size: 16px;"} Excel: Formulas and Functions
-                  = link_to "Check it out »", "http://www.metabright.com/challenges/excelformulasandfunctions", style: s[:action_button]
-              %div{ style: "margin-bottom:5px; padding:12px; "}
-                = link_to "http://www.metabright.com/challenges/rubygems" do
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", style: s[:challenge_image] }
-                %div{ style: "display:inline-block; margin-left:10px;"}
-                  %h4{ style: "font-size: 16px;"} RubyGems
-                  = link_to "Check it out »", "http://www.metabright.com/challenges/rubygems", style: s[:action_button]
+              = link_to "http://www.metabright.com/challenges/basicclasstest", style: s[:challenge_box] do
+                %div{ style: "margin-bottom:12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", height: 75, width:75, style: s[:challenge_image], title: "Ruby Without Rails" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} Ruby Without Rails
+                    %p{ style: "margin:3px 0 4px 0;"} 19 questions
+                    %p{ style: "margin:0;"} Who needs the wizardry of Rails? In this Challenge, your knowledge of pure Ruby is put to the test. 
+              = link_to "http://www.metabright.com/challenges/naturalwondersoftheworld", style: s[:challenge_box] do
+                %div{ style: "margin-bottom:5px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/60/original.JPG?1354146690", height: 75, width:75, style: s[:challenge_image], title: "Natural Wonders" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} 7 Natural Wonders of the World
+                    %p{ style: "margin:3px 0 4px 0;"} 60 questions
+                    %p{ style: "margin:0;"} For the world traveler or Google Earth surfer in all of us. With a section for every natural wonder, you have plenty of opportunity to show off your geography chops.
+              = link_to "http://www.metabright.com/challenges/heroku", style: s[:challenge_box] do
+                %div{ style: "margin-bottom:5px; padding:12px;"}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", height: 75, width:75, style: s[:challenge_image], title: "Heroku" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %h4{ style: "font-size: 16px; margin:0; font-weight:normal"} Heroku
+                    %p{ style: "margin:3px 0 4px 0;"} 30 questions 
+                    %p{ style: "margin:0;"} Specifically for Ruby on Rails -- If the console feels like your home, this is your Challenge. 
+              = link_to "http://www.metabright.com/challenges/jquery", style: s[:challenge_box] do
+                %div{ style: "margin-bottom:5px; padding:12px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", height: 75, width:75, style: s[:challenge_image], title: "jQuery" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %h4{ style: "font-size: 16px; margin:0; font-weight:normal"} jQuery
+                    %p{ style: "margin:3px 0 4px 0;"} 25 questions
+                    %p{ style: "margin:0;"} Making the Internet do cool stuff with the most popular JavaScript library in existence.
+              = link_to "http://www.metabright.com/challenges/excelformulasandfunctions", style: s[:challenge_box] do
+                %div{ style: "margin-bottom:5px; padding:12px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/55/original.jpg?1353948550", height: 75, width:75, style: s[:challenge_image], title: "Excel" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %h4{ style: "font-size: 16px; margin:0; font-weight:normal"} Excel: Formulas and Functions
+                    %p{ style: "margin:3px 0 4px 0;"} 19 questions
+                    %p{ style: "margin:0;"} Take your sensitivity tested, pivot table possessing, color coded, 10^7 row spreadsheet skills and show everyone what you can do.
+              = link_to "http://www.metabright.com/challenges/rubygems", style: s[:challenge_box] do
+                %div{ style: "margin-bottom:5px; padding:12px; "}
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", height: 75, width:75, style: s[:challenge_image], title: "RubyGems" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %h4{ style: "font-size: 16px; margin:0; font-weight:normal"} RubyGems
+                    %p{ style: "margin:3px 0 4px 0;"} 21 questions
+                    %p{ style: "margin:0;"} For Gem authors and Gem users. Gems might be simple to use, but this Challenge certainly isn't.
         %tr
           %td{ style: "padding:3px 12px 6px;"}
             %span{style:"font-size:10px; color:gray;"}

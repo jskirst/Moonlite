@@ -53,6 +53,17 @@ task :send_alerts => :environment do
   end
 end
 
+task :send_newsletter => :environment do
+  raise "Fatal: No newsletter specified" unless ENV["NEWSLETTER_PATH"]
+  User.where("locked_at is ?", nil).each do |user|
+    begin
+      Newsletters.newsletter(user.email, ENV["NEWSLETTER_PATH"]).deliver
+    rescue
+      puts "Newsletter alert rejected: #{$!}"
+    end
+  end    
+end
+
 task :test_notifications => :environment do
   desc "Resetting notifications..."
   UserEvent.all.each do |u|
