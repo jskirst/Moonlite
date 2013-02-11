@@ -19,8 +19,8 @@
           %td= i
           %td= link_to p.name, challenge_path(p.permalink)
           %td= p.personas.first.name
-          %td= p.sections.size
-          %td= p.tasks.size
+          %td= p.sections.count
+          %td= p.all_tasks.count
           %td= link_to p.user.name, p.user
           %td= p.published? ? "published" : "waiting"
           %td
