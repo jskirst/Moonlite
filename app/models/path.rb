@@ -17,7 +17,7 @@ class Path < ActiveRecord::Base
   belongs_to :category
   has_many :sections, dependent: :destroy
   has_many :tasks, through: :sections, conditions: ["sections.published_at is not ?", nil]
-  has_many :all_tasks, through: :sections
+  has_many :all_tasks, source: :tasks, through: :sections
   has_many :completed_tasks, through: :tasks
   has_many :submitted_answers, through: :tasks
   has_many :enrollments, dependent: :destroy
