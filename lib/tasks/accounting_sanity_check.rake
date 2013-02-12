@@ -61,7 +61,7 @@ task :user_transaction_task_to_cp_switch => :environment do
       logs.first.update_attributes(owner_id: ct.id, owner_type: ct.class.to_s)
     else
       if logs.first.amount.to_i == 20 or logs.first.amount.to_i == 50
-        if logs[1].amount.to_i == 100
+        if logs[1].amount.to_i == 100 || (logs[1].amount.to_i < 100 && logs[1].amount.to_i > 0 && logs[1].amount.to_i != 50)
           logs.first.update_attributes(owner_id: ct.id, owner_type: ct.class.to_s)
         else
           raise "CT##{ct.id}: unsure" + logs.to_yaml
