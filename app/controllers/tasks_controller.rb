@@ -20,7 +20,6 @@ class TasksController < ApplicationController
         sr.owner_type = @task.class.to_s
         sr.save
       end
-      current_user.award_points(@task, 50)
       if @task.source == "launchpad"
         render json: { status: "success", question_link: take_section_url(@section, task_id: @task.id) }
       else
@@ -66,7 +65,7 @@ class TasksController < ApplicationController
   def vote
     @submission = @task.submitted_answers.find(params[:sa_id])
     if @vote = current_user.votes.find_by_owner_id(@submission.id)
-      if @vote.destroy && @submission.subtract_vote(current_user)
+      if @submission.subtract_vote(current_user, @vote)
         render json: @vote.to_json
       else
        render json: { errors: "Error removing your vote." }

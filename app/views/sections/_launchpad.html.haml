@@ -42,7 +42,7 @@
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
                     %li 
-                      You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
+                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question, but will <strong>lose #{Task::CREATOR_PENALTY_POINTS} points</strong> if that question is reported and taken down.
                       %span.arena_create_tt
                         %a#points-tt1.mb-tooltip{href:"#", rel:"tooltip"}
               %div.step2{ style: "display: none;" }
@@ -69,7 +69,7 @@
                 %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
                 %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
                 %h4{style:"margin-top:12px; font-size:16px;"} Your question is now visible to the MetaBright community!
-                %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} Remember, you earn 50 points every time you publish a question, but if your question is reported and taken down, you'll lose 100 points.
+                %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} Remember, you earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a question, but if your question is reported and taken down, you'll lose #{Task::CREATOR_PENALTY_POINTS} points.
                 %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
@@ -128,7 +128,7 @@
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
                     %li 
-                      You <strong>earn 50 points</strong> per published question, but will <strong>lose 100 points</strong> if that question is reported and taken down.
+                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question, but will <strong>lose #{Task::CREATOR_PENALTY_POINTS} points</strong> if that question is reported and taken down.
                       %span.cr_create_tt
                         %a#points-tt2.mb-tooltip{href:"#", rel:"tooltip"}
               %div.step2{ style: "display: none;" }
@@ -155,7 +155,7 @@
                 %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
                 %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
                 %h4{style:"margin-top:12px; font-size:16px;"} Your CR is now visible to the MetaBright community!
-                %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn 50 points every time you publish a CR, but if your question is reported and taken down, you'll lose 100 points.
+                %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a CR, but if your question is reported and taken down, you'll lose #{Task::CREATOR_PENALTY_POINTS} points.
                 %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you'd like, you can <a class="take">post a response</a> to your CR now. 
                 %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
@@ -203,7 +203,7 @@
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
                     %li 
-                      You <strong>earn 50 points</strong> per published Task, but will <strong>lose 100 points</strong> if it's reported and taken down.
+                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published Task, but will <strong>lose #{Task::CREATOR_PENALTY_POINTS} points</strong> if it's reported and taken down.
                       %span.task_create_tt
                         %a#points-tt3.mb-tooltip{href:"#", rel:"tooltip"}
               %div.step2{ style: "display: none;" }
@@ -227,7 +227,7 @@
                 %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
                 %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
                 %h4{style:"margin-top:12px; font-size:16px;"} Your Task is now visible to the MetaBright community!
-                %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn 50 points every time you publish a Task, but if it's reported and taken down, you'll lose 100 points.
+                %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a Task, but if it's reported and taken down, you'll lose #{Task::CREATOR_PENALTY_POINTS} points.
                 %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you've already personally completed this Task, you can <a class="take">mark it as complete</a> now. 
                 %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another Task
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish

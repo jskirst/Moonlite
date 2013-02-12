@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
   has_many    :subscribers, class_name: "Subscription", foreign_key: "followed_id"
   has_many    :followers, through: :subscribers
   has_many    :followed_users, through: :subscriptions, source: :followed
+  has_many    :created_tasks, class_name: "Task", foreign_key: :creator_id
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
@@ -194,20 +195,36 @@ class User < ActiveRecord::Base
   end
   def unenroll!(path) enrollments.find_by_path_id(path.id).destroy end
   
-  def award_points(task, points)
+  def award_points(obj, points)
     if points.to_i > 0
-      log_transaction(task.id, points)
+      if obj.is_a? CompletedTask
+        enrollment = enrollments.find_by_path_id(obj.section.path_id)
+      elsif obj.is_a? Vote
+        enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+      else
+        raise "unknown upject"
+      end
+      raise "Enrollment nil" unless enrollment
+      log_transaction(obj, points)
       self.update_attribute('earned_points', self.earned_points + points)
-      enrollment = enrollments.find_by_path_id(task.section.path_id)
       enrollment.add_earned_points(points)
     end
   end
-  def retract_points(task, points)
-    log_transaction(task.id, points * -1)
-    self.update_attribute('earned_points', self.earned_points - points)
-    enrollment = enrollments.find_by_path_id(task.section.path_id)
-    enrollment.update_attribute(:total_points, enrollment.total_points - points)
+  def retract_points(obj, points)
+    raise "Subtracting 0 points" if points.to_i == 0
+    if obj.is_a? CompletedTask
+      enrollment = enrollments.find_by_path_id(obj.section.path_id)
+    elsif obj.is_a? Vote
+      enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+    else
+      raise "unknown upject"
+    end
+    raise "Enrollment nil" unless enrollment
+    log_transaction(obj, points * -1)
+    self.update_attribute(:earned_points, self.earned_points - points)
+    enrollment.remove_earned_points(points)
   end
+  
   def debit_points(points) self.update_attribute('spent_points', self.spent_points + points) end
   def available_points() self.earned_points.to_i - self.spent_points end
   
@@ -299,7 +316,7 @@ class User < ActiveRecord::Base
       (1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
     end
     
-    def log_transaction(task_id, points)
-      user_transactions.create!(owner_id: task_id, owner_type: "Task", amount: points, status: 1)
+    def log_transaction(obj, points)
+      user_transactions.create!(owner_id: obj.id, owner_type: obj.class.to_s, amount: points, status: 1)
     end
 end
