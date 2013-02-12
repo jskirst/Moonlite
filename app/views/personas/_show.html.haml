@@ -51,7 +51,7 @@
               - if current_user.enrolled?(path)
                 %button.btn.btn-success Enrolled
               - else
-                %button.btn.btn-danger Enroll
+                %button.btn.btn-danger Join
           - else
             %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
               %h4 #{truncate(path.name,length: 17, separator: ' ')}

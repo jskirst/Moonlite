@@ -2,7 +2,7 @@
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       - if @enrollment.contribution_unlocked?
-        %button#editor_link.button.button-small.button-info{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
+        %button#editor_link.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
       %ul.nav.nav-tabs
         %li.active
           %a#arena_tab_link{ href: "#", "data-tab" => "arena_tab", title: "Arena"} Arena
@@ -89,7 +89,7 @@
             - if tasks_remaining
               %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable"
             - else
-              %p Arena questions are added daily. When more are available, you can return here to take them. Complete Tasks or answer some Creative Responses to earn more points and continue to level up. 
+              %p Arena questions are added daily. When more are available, you can return here to take them. Complete <strong>Tasks</strong> or answer some <strong>Creative Responses</strong> to earn more points and continue to level up. 
           - else
             %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       %div#questions_tab.tab_content{ style: "" }
