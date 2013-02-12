@@ -42,7 +42,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .leftboxheader a, .leftboxheader button{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
 .newsfeed>.leftboxheader{padding:6px 12px;}
 .leftboxheader>div>.btn{text-transform:none;}
-.commentphoto{width:32px; border-radius:3px; }
+.commentphoto{ width:32px; border-radius:3px; }
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
 
@@ -50,17 +50,19 @@ code,pre{font:inherit;}
 .singleprogressentry{ padding: 4px 0 9px 12px;}
 .singleprogressentry:hover{background-color:#eee;}
 .singleprogressentry:last-child{ padding-bottom:10px; }
-.singleprogressentry:last-child:hover{border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
+.singleprogressentry:last-child:hover{ border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
 .singleprogressentry:first-child{padding-top:6px;}
 .singleprogressentry>img{ height:50px; width:50px; display:inline-block; border-radius:3px;}
 .personaprogress, .challengeprogress{ display:inline-block; position:relative; top:5px; margin-left:5px; }
+.persona_progress_area{ display:inline-block; margin-left: -6px; width:95%; }
+.personaprogress span{font-size: 11px;color: gray;}
 .challengeprogress{ width: 74%; }
-.personaprogress{ width:77%; }
-.personaprogress .progress{height:10px;}
-.challengeprogress .progress{height:10px;}
+.personaprogress{ width:76%; }
+.personaprogress .progress{ height:10px;}
+.challengeprogress .progress{ height:10px;}
 
 /* Other stuff - organize by feature */
-#topsection{margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
+#topsection{ margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
 #updatespace{ background-color: white; border-radius: 6px; padding: 12px 0 9px 13px; overflow: hidden;}
 .bigheaderimage{ height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
 .rightofbigheaderimage{ display:inline-block; width: 81%; float:right; }
@@ -132,9 +134,10 @@ code,pre{font:inherit;}
 .singletaskentry img{vertical-align:top; width:14px;}
 .leftboxfooter .accordion-group{ border-bottom: 1px solid #E5E5E5; border-top:none; border-right:none; border-left:none; border-radius:0; -webkit-border-radius: 0; -moz-border-radius: 0;}
 .leftboxfooter .accordion-toggle{text-decoration:none; padding:8px 2px 1px 2px;}
-.leftboxfooter .accordion-toggle span{font-size:14px; color:#404040;}
 .leftboxfooter .accordion-inner{padding:9px 15px 3px 15px;}
 .leftboxfooter .accordion{margin-bottom:4px;}
+.profile_challenge{ margin-left:23px; }
+.challenge_progress{ display:inline-block; vertical-align:top; margin-left:4px; width:78%; color:gray; }
 .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/plus.png); background-repeat:no-repeat; display:inline-block; width:11px; height:11px; vertical-align:middle; position:relative; bottom:2px; margin-right:2px; opacity:.8;}
 .active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
 

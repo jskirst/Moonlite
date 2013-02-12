@@ -56,7 +56,7 @@
                   %div.accordion-heading
                     %a.accordion-toggle{ "data-toggle" => "collapse", href: "##{challenge_id}" }
                       %div.expand_contract
-                      %span= challenge_name
+                      %span{ style: "color:#404040; font-size:14px;"}= challenge_name
                   %div.accordion-body.collapse{ id: challenge_id }
                     %div.accordion-inner
                       - tasks.each do |task|
@@ -67,19 +67,32 @@
         - else
           %div.leftboxfooter{style: "padding-top:6px;"}
             %span
-              No tasks have been completed yet.                           
+              No Tasks have been completed yet.                           
       %div.leftbox{ style: "" }
         %div.leftboxheader Persona Progress
         %div.leftboxfooter{style:"padding-top: 6px"}
-          - @user_personas.each do |user_persona|
-            %div.persona_progress_area
-              = image_tag user_persona.persona.image, style:"width:50px; height:50px;"              
-              %div.personaprogress
-                %span{ style: "font-size:18px;" }= user_persona.persona.name
-                %span{style: "font-size:14px; float:right; "} Level #{user_persona.level}
-                %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{user_persona.points_to_next_level} more points to level up!
-                %div.progress.progress-info
-                  %div.bar{ style: "width: #{user_persona.percent_level}%;"} 
+          %div.accordion
+            - @user_personas.each do |user_persona|
+              %div.accordion-group
+                %div.accordion-heading
+                  %a.accordion-toggle{ "data-toggle" => "collapse", href: "#", style: "padding:0;" }
+                    %div.expand_contract
+                    %div.persona_progress_area
+                      = image_tag user_persona.persona.image, style:"width:50px; height:50px;"              
+                      %div.personaprogress
+                        %span{ style: "font-size:18px;" }= user_persona.persona.name
+                        %span{style: "font-size:14px; float:right; "} Level #{user_persona.level}
+                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{user_persona.points_to_next_level} more points to level up!
+                        %div.progress.progress-info
+                          %div.bar{ style: "width: #{user_persona.percent_level}%;"} 
+                %div.accordion-body.collapse{ id: "#"}
+                  %div.accordion-inner{ style: "padding-right:0;" }
+                    %div.profile_challenge
+                      = image_tag "http://www.placekitten.com/100/100", style:"width:40px; height:40px;"
+                      %div.challenge_progress
+                        %h5 Challenge Name
+                        %span 3102 pts
+                        %span{ style: "float:right; "} Rank: 13
 
       %div.leftbox
         %div.leftboxheader Vital Stats
