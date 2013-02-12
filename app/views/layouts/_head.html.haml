@@ -3,7 +3,7 @@
 = csrf_meta_tag
 = javascript_include_tag "application"
 = stylesheet_link_tag "application"
-- if @path
+- if @path && !@path.new_record?
   %link{ rel: "canonical", href: challenge_url(@path.permalink) }
 %meta{ property: "og:title", content: "#{social_title}" } 
 %meta{ property: "og:description", content: "#{social_description}" } 
