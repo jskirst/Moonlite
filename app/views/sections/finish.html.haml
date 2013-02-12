@@ -25,4 +25,4 @@
             %p= link_to "#{@available_crs} available", challenge_path(@section.path.permalink, completed: true)
           %li Take additional sections
           %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", challenge_path(@section.path.permalink, completed: true, type: 2) 
-    = link_to "Continue", challenge_path(@section.path.permalink, completed: "true"), class: "button button-info", style: "float: right;"
+    = link_to "Continue", challenge_path(@section.path.permalink, completed: "true"), class: "button button-actionable", style: "float: right;"
