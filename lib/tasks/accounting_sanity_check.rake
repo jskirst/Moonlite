@@ -29,12 +29,11 @@ task :user_transaction_task_to_vote_switch => :environment do
     
     logs = v.owner.user.user_transactions.where(owner_id: v.owner.task.id, owner_type: "Task", amount: 50)
     raise "V##{v.id}: user_transaction cannot be found" + v.to_yaml unless logs.size > 0
-    raise "V##{v.id}: multiple user_transactions found" + v.to_yaml if logs.size > 1
     
     if logs.size == 1
       logs.first.update_attributes(owner_id: v.id, owner_type: v.class.to_s)
     else
-      raise "CT##{ct.id}: #{logs.size} logs were found." + logs.to_yaml
+      raise "V##{v.id}: #{logs.size} logs were found." + logs.to_yaml
     end
   end
 end
