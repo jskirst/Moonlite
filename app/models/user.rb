@@ -201,8 +201,10 @@ class User < ActiveRecord::Base
         enrollment = enrollments.find_by_path_id(obj.section.path_id)
       elsif obj.is_a? Vote
         enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+      elsif obj.is_a? Task
+        enrollment = enrollments.find_by_path_id(obj.section.path_id)
       else
-        raise "unknown upject"
+        raise "unknown object"
       end
       raise "Enrollment nil" unless enrollment
       log_transaction(obj, points)
@@ -216,8 +218,10 @@ class User < ActiveRecord::Base
       enrollment = enrollments.find_by_path_id(obj.section.path_id)
     elsif obj.is_a? Vote
       enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+    elsif obj.is_a? Task
+      enrollment = enrollments.find_by_path_id(obj.section.path_id)
     else
-      raise "unknown upject"
+      raise "unknown object"
     end
     raise "Enrollment nil" unless enrollment
     log_transaction(obj, points * -1)
