@@ -52,10 +52,10 @@ end
 task :user_transaction_task_to_cp_switch => :environment do
   CompletedTask.where(status_id: Answer::CORRECT).each do |ct|
     existing_logs = ct.user.user_transactions.where(owner_id: ct.id, owner_type: ct.class.to_s)
-    raise "CT##{ct.id}: #{logs.size} logs were found." if existing_logs.size > 1
+    raise "CT##{ct.id}: #{existing_logs.size} logs were found." if existing_logs.size > 1
     next if existing_logs.size == 1
      
-    logs = ct.user.user_transactions.where(owner_id: ct.task_id, owner_type: "Task")
+    logs = ct.user.user_transactions.where(owner_id: ct.task_id, owner_type: "Task").order("user_transactions.id DESC")
     raise "CT##{ct.id}: user_transaction cannot be found" unless logs.size > 0
     if logs.size == 1
       logs.first.update_attributes(owner_id: ct.id, owner_type: ct.class.to_s)
