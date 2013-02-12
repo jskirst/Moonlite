@@ -20,7 +20,6 @@ class TasksController < ApplicationController
         sr.owner_type = @task.class.to_s
         sr.save
       end
-      current_user.award_points(@task, 50)
       if @task.source == "launchpad"
         render json: { status: "success", question_link: take_section_url(@section, task_id: @task.id) }
       else

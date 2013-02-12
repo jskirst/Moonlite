@@ -7,7 +7,7 @@ class Enrollment < ActiveRecord::Base
   
   belongs_to  :user
   belongs_to  :path
-  has_many    :completed_tasks, 
+  has_many    :completed_tasks
   
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true

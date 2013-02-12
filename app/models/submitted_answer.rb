@@ -18,7 +18,7 @@ class SubmittedAnswer < ActiveRecord::Base
     if vote = voting_user.votes.create!(owner_id: self.id)
       self.total_votes += 1
       completed_task.update_attribute(:points_awarded, (completed_task.points_awarded += POINTS_PER_VOTE))
-      user.award_points(completed_task.task, POINTS_PER_VOTE)
+      user.award_points(completed_task, POINTS_PER_VOTE)
       return vote if save
     end
     return false
@@ -28,7 +28,7 @@ class SubmittedAnswer < ActiveRecord::Base
     if self.total_votes > 0
       self.total_votes -= 1
       completed_task.update_attribute(:points_awarded, (completed_task.points_awarded -= POINTS_PER_VOTE))
-      user.retract_points(completed_task.task, POINTS_PER_VOTE)
+      user.retract_points(completed_task, POINTS_PER_VOTE)
       return true if save
     end
     return false
