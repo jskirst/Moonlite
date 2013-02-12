@@ -30,7 +30,7 @@ class TaskIssue < ActiveRecord::Base
       task.update_attribute(:locked_at, Time.now)
       creator = task.creator
       creator.enroll!(task.path)
-      creator.retract_points(task, 100)
+      creator.retract_points(task, Task::CREATOR_PENALTY_POINTS)
     end
   end
 end

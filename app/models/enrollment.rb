@@ -5,8 +5,9 @@ class Enrollment < ActiveRecord::Base
   attr_protected :total_points, :contribution_unlocked_at
   attr_accessible :path_id, :total_points, :contribution_unlocked
   
-  belongs_to :user
-  belongs_to :path
+  belongs_to  :user
+  belongs_to  :path
+  has_many    :completed_tasks
   
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true
@@ -17,6 +18,11 @@ class Enrollment < ActiveRecord::Base
     points = points.to_i
     self.total_points = self.total_points + points
     check_for_events(points)
+    save
+  end
+  def remove_earned_points(points)
+    points = points.to_i
+    self.total_points = self.total_points - points
     save
   end
   

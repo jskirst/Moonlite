@@ -1,4 +1,7 @@
 class Task < ActiveRecord::Base
+  CREATOR_AWARD_POINTS = 20
+  CREATOR_PENALTY_POINTS = 40
+  
   CREATIVE  = 0
   FIB       = 1
   MULTIPLE  = 2
@@ -68,6 +71,7 @@ class Task < ActiveRecord::Base
       end
       PhrasePairing.create_phrase_pairings(answers_to_array)
     end
+    creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   
   def update_answers(params)

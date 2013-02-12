@@ -1,7 +1,10 @@
 class CompletedTask < ActiveRecord::Base
+  CORRECT_POINTS = 100
+  
   attr_readonly :task_id
-  attr_protected :updated_at, :answer_id, :points_awarded, :submitted_answer_id
+  attr_protected :updated_at, :answer_id, :points_awarded, :submitted_answer_id, :award_points
   attr_accessible :status_id, :task_id
+  attr_accessor :award_points
   
   belongs_to :user
   belongs_to :task
@@ -14,4 +17,14 @@ class CompletedTask < ActiveRecord::Base
   validates :task_id, presence: true
   validates_uniqueness_of :task_id, scope: :user_id
   validates :status_id, presence: true
+  
+  after_save do
+    if correct? && award_points
+      user.award_points(self, self.points_awarded)
+    end
+  end
+  
+  def incomplete?() status_id == Answer::INCOMPLETE end
+  def correct?() status_id == Answer::CORRECT end
+  def incorrect?() status_id == Answer::INCORRECT end
 end
