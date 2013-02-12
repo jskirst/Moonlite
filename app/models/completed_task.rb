@@ -21,8 +21,6 @@ class CompletedTask < ActiveRecord::Base
   after_save do
     if correct? && award_points
       user.award_points(self, self.points_awarded)
-    elsif correct?
-      raise "Not awarding points"
     end
   end
   

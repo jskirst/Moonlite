@@ -20,6 +20,11 @@ class Enrollment < ActiveRecord::Base
     check_for_events(points)
     save
   end
+  def remove_earned_points(points)
+    points = points.to_i
+    self.total_points = self.total_points - points
+    save
+  end
   
   def level() Enrollment.points_to_level(self.total_points) end
   def self.points_to_level(points)

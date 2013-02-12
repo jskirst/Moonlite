@@ -21,15 +21,16 @@ task :accounting_sanity_check => :environment do
 end
 
 task :user_transaction_task_to_vote_switch => :environment do
+  puts Vote.count.to_s
   Vote.all.each do |v|
     next if v.owner.is_a? Idea
     existing_logs = v.user.user_transactions.where(owner_id: v.id, owner_type: v.class.to_s)
-    raise "V##{v.id}: #{logs.size} logs were found." if existing_logs.size > 1
+    puts "V##{v.id}: #{logs.size} logs were found." if existing_logs.size > 1
     next if existing_logs.size == 1
     
     logs = v.owner.user.user_transactions.where(owner_id: v.owner.task.id, owner_type: "Task", amount: 50)
-    raise "V##{v.id}: user_transaction cannot be found" + v.to_yaml unless logs.size > 0
-    raise "V##{v.id}: multiple user_transactions found" + v.to_yaml unless logs.size == 1
+    puts "V##{v.id}: user_transaction cannot be found" + v.to_yaml unless logs.size > 0
+    puts "V##{v.id}: multiple user_transactions found" + v.to_yaml if logs.size > 1
     # if logs.size == 1
       # logs.first.update_attributes(owner_id: ct.id, owner_type: ct.class.to_s)
     # else

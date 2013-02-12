@@ -18,18 +18,21 @@ class SubmittedAnswer < ActiveRecord::Base
     if vote = voting_user.votes.create!(owner_id: self.id)
       self.total_votes += 1
       completed_task.update_attribute(:points_awarded, (completed_task.points_awarded += POINTS_PER_VOTE))
-      user.award_points(completed_task, POINTS_PER_VOTE)
+      user.award_points(vote, POINTS_PER_VOTE)
       return vote if save
     end
     return false
   end
   
-  def subtract_vote(user)
+  def subtract_vote(voting_user, vote)
+    vote.destroy
     if self.total_votes > 0
       self.total_votes -= 1
       completed_task.update_attribute(:points_awarded, (completed_task.points_awarded -= POINTS_PER_VOTE))
-      user.retract_points(completed_task, POINTS_PER_VOTE)
+      completed_task.user.retract_points(vote, POINTS_PER_VOTE)
       return true if save
+    else
+      raise "Fatal: Have negative votes somehow"
     end
     return false
   end

@@ -197,22 +197,34 @@ class User < ActiveRecord::Base
   
   def award_points(obj, points)
     if points.to_i > 0
-      log_transaction(obj, points)
-      self.update_attribute('earned_points', self.earned_points + points)
       if obj.is_a? CompletedTask
         enrollment = enrollments.find_by_path_id(obj.section.path_id)
-        enrollment.add_earned_points(points)
+      elsif obj.is_a? Vote
+        enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+      else
+        raise "unknown upject"
       end
+      raise "Enrollment nil" unless enrollment
+      log_transaction(obj, points)
+      self.update_attribute('earned_points', self.earned_points + points)
+      enrollment.add_earned_points(points)
     end
   end
   def retract_points(obj, points)
-    log_transaction(obj, points * -1)
-    self.update_attribute(:earned_points, self.earned_points - points)
+    raise "Subtracting 0 points" if points.to_i == 0
     if obj.is_a? CompletedTask
       enrollment = enrollments.find_by_path_id(obj.section.path_id)
-      enrollment.update_attribute(:total_points, enrollment.total_points - points)
+    elsif obj.is_a? Vote
+      enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+    else
+      raise "unknown upject"
     end
+    raise "Enrollment nil" unless enrollment
+    log_transaction(obj, points * -1)
+    self.update_attribute(:earned_points, self.earned_points - points)
+    enrollment.remove_earned_points(points)
   end
+  
   def debit_points(points) self.update_attribute('spent_points', self.spent_points + points) end
   def available_points() self.earned_points.to_i - self.spent_points end
   
