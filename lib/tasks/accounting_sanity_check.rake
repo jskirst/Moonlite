@@ -24,7 +24,7 @@ task :user_transaction_task_to_vote_switch => :environment do
   puts Vote.count.to_s
   Vote.all.each do |v|
     next if v.owner.is_a? Idea
-    existing_logs = v.user.user_transactions.where(owner_id: v.id, owner_type: v.class.to_s)
+    existing_logs = v.owner.user.user_transactions.where(owner_id: v.id, owner_type: v.class.to_s)
     puts "V##{v.id}: #{logs.size} logs were found." if existing_logs.size > 1
     next if existing_logs.size == 1
     
