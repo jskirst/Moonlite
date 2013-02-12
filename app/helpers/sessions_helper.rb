@@ -134,7 +134,7 @@ module SessionsHelper
         if current_user
           visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
           Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url)
-          current_user.update_attribute(:login_at, DateTime.now())
+          #current_user.update_attribute(:login_at, DateTime.now())
         else
           if cookies[:visitor_id].to_i > 0
             visitor_id = cookies[:visitor_id]  
