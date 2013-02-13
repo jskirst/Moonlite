@@ -6,7 +6,10 @@
   .container h3{ left:68px; }
   #landingbox{ margin-top: 130px; height:335px; width: 695px; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-radius: 6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
   div.footer { position: absolute; bottom: 0px; }
-
+  #landing_carousel_box { width: 695px; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-radius: 6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
+  #landing_carousel
+  .carousel-indicators li {display: block;float: left;width: 10px;height: 10px;margin-left: 5px;text-indent: -999px;background-color: #ccc;background-color: rgba(255, 255, 255, 0.25);border-radius: 5px;}
+  
 %div#landingbox
   %div#logospace{ style: "width:720px;margin-right:auto;margin-left:auto;position: relative;" }
     %img#landinglogo{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo" }
@@ -22,4 +25,44 @@
       = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
         %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png" }
         %span.landingbuttontext Sign in with Facebook »
+%div#landing_carousel_box
+  %div
+    %h2 For the HACKER in all of us
+  %div#landing_carousel.carousel.slide
+    %ol.carousel-indicators
+      %li{ "data-target" => "#landing_carousel", "data-slide-to" => "0", class:"active"}
+      %li{ "data-target" => "#landing_carousel", "data-slide-to" => "1",}
+      %li{ "data-target" => "#landing_carousel", "data-slide-to" => "2",}
+      %li{ "data-target" => "#landing_carousel", "data-slide-to" => "3",}
+    %div.carousel-inner
+      %div.active.item
+        %img{src:"http://www.placekitten.com/1000/1000"}
+        %div.carousel-caption
+          %h4 Label
+          %p lkajsdlkfj aslkdjf alksjf laksjfd kla sdjflkas dlfkjahsd ljfka lskdfhalksjdf halkjsdfh laksdf asjkf
+      %div.item
+        %img{src:"http://www.placekitten.com/1000/1000"}
+        %div.carousel-caption
+          %h4 Label
+          %p lkajsdlkfj aslkdjf alksjf laksjfd kla sdjflkas dlfkjahsd ljfka lskdfhalksjdf halkjsdfh laksdf asjkf
+      %div.item
+        %img{src:"http://www.placekitten.com/1000/1000"}
+        %div.carousel-caption
+          %h4 Label
+          %p lkajsdlkfj aslkdjf alksjf laksjfd kla sdjflkas dlfkjahsd ljfka lskdfhalksjdf halkjsdfh laksdf asjkf
+      %div.item
+        %img{src:"http://www.placekitten.com/1000/1000"}
+        %div.carousel-caption
+          %h4 Label
+          %p lkajsdlkfj aslkdjf alksjf laksjfd kla sdjflkas dlfkjahsd ljfka lskdfhalksjdf halkjsdfh laksdf asjkf
+    %a.carousel-control.left{href:"#landing_carousel", "data-slide" => "prev"} <
+    %a.carousel-control.right{href:"#landing_carousel", "data-slide" => "next"} >
+          
+
 = render "layouts/footer"
+
+:javascript
+  $(document).ready(function(){
+    $('#landing_carousel').carousel({
+    });
+  });
