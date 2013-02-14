@@ -42,9 +42,7 @@
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
                     %li 
-                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question, but will <strong>lose #{Task::CREATOR_PENALTY_POINTS} points</strong> if that question is reported and taken down.
-                      %span.arena_create_tt
-                        %a#points-tt1.mb-tooltip{href:"#", rel:"tooltip"}
+                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question.
               %div.step2{ style: "display: none;" }
                 %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
                   %legend{style:"margin-bottom:5px; "} Create an Arena question
@@ -128,9 +126,7 @@
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
                     %li 
-                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question, but will <strong>lose #{Task::CREATOR_PENALTY_POINTS} points</strong> if that question is reported and taken down.
-                      %span.cr_create_tt
-                        %a#points-tt2.mb-tooltip{href:"#", rel:"tooltip"}
+                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question.
               %div.step2{ style: "display: none;" }
                 %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
                   %legend{style:"margin-bottom:5px; "} Create a CR
@@ -203,9 +199,7 @@
                     %li Keep the tone informal but direct.
                     %li Make sure you check for spelling and grammar.
                     %li 
-                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published Task, but will <strong>lose #{Task::CREATOR_PENALTY_POINTS} points</strong> if it's reported and taken down.
-                      %span.task_create_tt
-                        %a#points-tt3.mb-tooltip{href:"#", rel:"tooltip"}
+                      You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published Task.
               %div.step2{ style: "display: none;" }
                 %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
                   %legend{style:"margin-bottom:5px; "} Create a Task
@@ -236,7 +230,7 @@
             %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
             %p Use Tasks to verify the things you've done and guide you towards what to do next. 
           - if @achievement_tasks.empty?
-            %p No tasks available.
+            %p No Tasks available.
           - else
             %table
               - @achievement_tasks.each do |t|
