@@ -6,17 +6,18 @@
   .container h3{ left:68px; }
   #landingbox{ margin-bottom:70px; margin-top: 80px; height:304px; width: 695px; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-radius: 6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
   .footer { position: absolute; bottom:0;}
-  #landing_carousel_box { min-height:137px; margin-bottom:34px; position:absolute; bottom:0; width: 100%; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-top: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
+  #landing_carousel_box { background-color: rgba(0, 0, 0, .8); min-height:137px; position:absolute; bottom:0; width: 100%; margin-left: auto; margin-right: auto; }
   .persona_horizontal_table{ display:table; margin: 0 auto; width:90%; margin-bottom:10px;}
   .persona_horizontal_table li{ width: 12.5%; font-size:15px;}
   .persona_horizontal_table li a{ text-align:center; width: 65%; margin-right: auto; margin-left: auto; padding-bottom:1px; border-bottom-width:2px; }
-  .persona_horizontal_table .nav-tabs > li > a:hover { border-color:transparent; background-color:transparent; border-bottom-color: #0088cc; border-bottom-width:2px;}
-  .nav-tabs > .active > a { border-bottom-width: 2px; font-weight: bold; border-bottom-color: #0088cc; background-color:transparent; border-right:none; border-left:none; border-top:none; }
-  .nav-tabs > .active > a:hover { border:0px solid; }
+  .persona_horizontal_table .nav-tabs > li > a:hover { color: rgb(207, 214, 255); border-color:transparent; background-color:transparent; border-bottom-color: #0088cc; border-bottom-width:2px;}
+  .nav-tabs > .active > a { border-bottom-width: 2px; font-weight: bold; border-bottom-color: #0088cc; background-color:transparent; border-right:none; border-left:none; border-top:none; color: rgb(207, 214, 255);}
+  .nav-tabs > .active > a:hover { border:0px solid; color: rgb(207, 214, 255);}
   .persona_horizontal_table ul { border-bottom: none; margin-bottom:0;}
   .challenge_table ul {list-style:none; margin-left:0; text-align:center; }
   .challenge_table{ display:table; margin: 0 auto; width:90%;}
   .challenge_table li{ width: 19.5%; display:inline-block; text-align:left; }
+  .challenge_table .mosaic-overlay{background-color: rgba(109, 109, 109, .8);}
   
 %div#landingbox
   %div#logospace{ style: "width:720px;margin-right:auto;margin-left:auto;position: relative;" }
@@ -116,5 +117,3 @@
       $open_tab.addClass("active_tab").show();
     });
   })
-    
-= render "layouts/footer"
