@@ -67,7 +67,7 @@
                       = link_to challenge_path(path.permalink), class: "mosaic-overlay" do
                         %div.details
                           %h4= path.name
-                          %h5 #{path.tasks.count()} points
+                          %h5 #{path.tasks.count() * 100} points
                       %div
                         = image_tag path.picture, class: "mosaic-backdrop clip_pic", style: "display: inline-block;"
                             
