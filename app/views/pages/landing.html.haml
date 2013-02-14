@@ -4,16 +4,19 @@
   #tagline span{ font-size:18px;}
   .container {width: 940px; margin-left: auto; margin-right: auto; zoom: 1; display:inline-block; padding:3px 0 0 142px;}
   .container h3{ left:68px; }
-  #landingbox{ margin-top: 108px; height:335px; width: 695px; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-radius: 6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
-  .footer { position: absolute; bottom: -181px; background: rgba(255, 255, 255, 0.8); }
-  #landing_carousel_box { margin-top:70px; padding:12px; height:240px; width: 100%; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-top: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
-  #landing_carousel{ margin-bottom:0; width:85%; margin-right:auto; margin-left:auto; }
-  .carousel .item {height:180px;  border-radius:6px; padding:0px 47px;}
-  .carousel-indicators li {display: block;float: left;width: 10px;height: 10px;margin-left: 5px;text-indent: -999px;background-color: #ccc;background-color: rgba(255, 255, 255, 0.25);border-radius: 5px;}
-  .persona_landing{text-transform: uppercase; color: rgb(0, 133, 255);font-weight:bold; margin:0 15px;}
-  #landing_carousel_box > div {margin-top:12px; }
-  #landing_carousel_box > div > span { font-size:34px; }
-  .mosaic-block{margin: 10px 30px; width:200px; height:160px; }
+  #landingbox{ margin-bottom:70px; margin-top: 80px; height:335px; width: 695px; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-radius: 6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
+  .footer { position: absolute; bottom:0;}
+  #landing_carousel_box { min-height:137px; margin-bottom:34px; position:absolute; bottom:0; width: 100%; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-top: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
+  .persona_horizontal_table{ display:table; margin: 0 auto; width:90%; margin-bottom:10px;}
+  .persona_horizontal_table li{ width: 12.5%; font-size:15px;}
+  .persona_horizontal_table li a{ text-align:center; width: 65%; margin-right: auto; margin-left: auto; padding-bottom:1px; border-bottom-width:2px; }
+  .persona_horizontal_table .nav-tabs > li > a:hover { border-color:transparent; background-color:transparent; border-bottom-color: #0088cc; border-bottom-width:2px;}
+  .nav-tabs > .active > a { border-bottom-width: 2px; font-weight: bold; border-bottom-color: #0088cc; background-color:transparent; border-right:none; border-left:none; border-top:none; }
+  .nav-tabs > .active > a:hover { border:0px solid; }
+  .persona_horizontal_table ul { border-bottom: none; margin-bottom:0;}
+  .challenge_table ul {list-style:none; margin-left:0; text-align:center; }
+  .challenge_table{ display:table; margin: 0 auto; width:90%;}
+  .challenge_table li{ width: 19.5%; display:inline-block; text-align:left; }
   
 %div#landingbox
   %div#logospace{ style: "width:720px;margin-right:auto;margin-left:auto;position: relative;" }
@@ -30,138 +33,90 @@
       = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
         %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png" }
         %span.landingbuttontext Sign in with Facebook »
-%div#landing_carousel_box
-  %div{ style: "text-align:center;" }
-    %span For the
-    %span.persona_landing Hacker
-    %span in all of us.
-  %div#landing_carousel.carousel.slide
-    %div.carousel-inner
-      %div.active.item
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-      %div.item
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-      %div.item
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-      %div.item
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", :style => "display:inline;", :width => "140"}/        
-        %div.mosaic-block.bar2
-          %a.mosaic-overlay{:style => "height: 20px; bottom: 0px; display: inline; left: 0px;"}
-            .details
-              %h4{:style => "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} Javascript
-              %h5 Coming Soon!
-          %div
-            %img.mosaic-backdrop{:alt => "Original", :height => "140", :src => "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", :style => "display:inline;", :width => "140"}/        
-    %a.carousel-control.left{href:"#landing_carousel", "data-slide" => "prev"} <
-    %a.carousel-control.right{href:"#landing_carousel", "data-slide" => "next"} >
-          
-
-= render "layouts/footer"
-
+%div.row-fluid
+  %div#landing_carousel_box.span12
+    %div.persona_horizontal_table
+      %ul.nav.nav-tabs
+        %li.active
+          %a{href:"#", "data-tab" => "hacker"} Hacker
+        %li
+          %a{href: "#", "data-tab" => "foodie" } Foodie
+        %li
+          %a{href: "#", "data-tab" => "maker"} Maker
+        %li
+          %a{href: "#", "data-tab" => "critic"} Critic
+        %li
+          %a{href: "#", "data-tab" => "explorer"} Explorer
+        %li
+          %a{href: "#", "data-tab" => "strategist"} Strategist
+        %li
+          %a{href: "#", "data-tab" => "designer"} Designer
+        %li
+          %a{href: "#", "data-tab" => "music_head"} Music Head
+    %div#hacker.tab_content.active_tab
+      %div.row-fluid
+        %div.span12
+          %div.challenge_table
+            %ul
+              %li
+                .mosaic-block.bar2
+                  %a.mosaic-overlay
+                    %div.details
+                      %h4 Sharing is caring
+                      %h5 Spread the MetaBright Gospel!
+                  %div
+                    %img.mosaic-backdrop.clip_pic{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png", style: "display: inline-block;"}
+              %li
+                .mosaic-block.bar2
+                  %a.mosaic-overlay
+                    %div.details
+                      %h4 Sharing is caring
+                      %h5 Spread the MetaBright Gospel!
+                  %div
+                    %img.mosaic-backdrop.clip_pic{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png", style: "display: inline-block;"}
+              %li
+                .mosaic-block.bar2
+                  %a.mosaic-overlay
+                    %div.details
+                      %h4 Sharing is caring
+                      %h5 Spread the MetaBright Gospel!
+                  %div
+                    %img.mosaic-backdrop.clip_pic{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png", style: "display: inline-block;"}
+              %li
+                .mosaic-block.bar2
+                  %a.mosaic-overlay
+                    %div.details
+                      %h4 Sharing is caring
+                      %h5 Spread the MetaBright Gospel!
+                  %div
+                    %img.mosaic-backdrop.clip_pic{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png", style: "display: inline-block;"}
+              %li
+                .mosaic-block.bar2
+                  %a.mosaic-overlay
+                    %div.details
+                      %h4 Sharing is caring
+                      %h5 Spread the MetaBright Gospel!
+                  %div
+                    %img.mosaic-backdrop.clip_pic{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png", style: "display: inline-block;"}
+    %div#foodie.tab_content
+      %span Whatever
+      
 :javascript
-  $(document).ready(function(){
-    $('#landing_carousel').carousel({
-      interval: 5000,
+  $(function () {
+   $(".tab_content").hide();
+    var open_tab_id = $("ul.nav-tabs li.active a").attr("data-tab");
+    console.log(open_tab_id); 
+    $("#"+open_tab_id).show().addClass("active_tab");
+  
+    $(".nav-tabs li a").click(function(){
+      var open_tab_id = $(this).attr("data-tab");
+      $(".tab_content").hide();
+      $("ul.nav-tabs li.active").removeClass("active");
+      $(this).parent().addClass("active");
+      $(".active_tab").removeClass("active_tab");
+      var $open_tab = $("#"+open_tab_id);
+      $open_tab.addClass("active_tab").show();
     });
-  });
+  })
+    
+= render "layouts/footer"
