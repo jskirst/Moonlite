@@ -135,7 +135,7 @@ class PathsController < ApplicationController
   end
   
   def show
-    if @path.approved_at.nil? && (current_user.nil? || @path.user != current_user)
+    if @path.public_at.nil? && (current_user.nil? || @path.user != current_user)
       redirect_to root_path and return
     end
     
