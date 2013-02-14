@@ -326,7 +326,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .pills a { line-height: 23px; cursor: pointer }
 
 /* Footer */
-.footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position:absolute; bottom:0; width:100%;}
+.footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position:absolute; bottom:inherit; width:100%;}
 .copyright{}
 .footerlinks{}
 .footerlinks a{text-decoration: none; color:#707070}
