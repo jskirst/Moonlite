@@ -23,6 +23,7 @@ function init_comments(){
     $(this).parent().find("ul").append(data);
     $(this).parent().find(".no_comments").hide();
     $(this).find("textarea").val("");
+    convert_links();
   });
 }
 
