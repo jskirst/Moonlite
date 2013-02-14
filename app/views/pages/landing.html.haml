@@ -21,6 +21,7 @@
   .challenge_table .details h4 {font-size: 13px; text-shadow:none; color:#fff; text-align:center;}
   .challenge_table .details h5 { text-align:center; }
   .challenge_table .bar2 .mosaic-overlay:hover {}
+  .challenge_table span{ color: #f9f9f9; font-size: 15px;position: relative;top: 27px;}
   
 %div#landingbox
   %div#logospace{ style: "width:720px;margin-right:auto;margin-left:auto;position: relative;" }
@@ -58,8 +59,10 @@
     - @personas.each do |persona|
       %div.tab_content.active_tab{ id: persona.name.downcase.gsub(" ", "_") }
         %div.row-fluid
-          %div.span12
+          %div.span12 
             %div.challenge_table
+              - if persona.paths.where("approved_at is not ?", nil).empty?
+                %span You must be registered and achieve a higher MetaBright level before you can view Challenges in this Persona.
               %ul
                 - persona.paths.where("approved_at is not ?", nil).limit(5).each do |path|
                   %li
