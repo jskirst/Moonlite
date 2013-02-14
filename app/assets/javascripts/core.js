@@ -94,6 +94,24 @@ function init_iph(){
   });
 }
 
+// Code source: http://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
+function convert_links(){
+  var replacedText, replacePattern1, replacePattern2;
+  $("pre").each(function(){
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = $(this).text().replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+    
+    $(this).html(replacedText); 
+  }) 
+}
+
+
+
 $(function(){
   close_button();
   help_button();

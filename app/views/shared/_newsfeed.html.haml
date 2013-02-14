@@ -75,6 +75,7 @@
 
 :javascript
   $(function(){
+    convert_links();
     $(".retract_link").on("ajax:success", function(xhr, data){
       $(this).parents(".post").hide("slow");
     });
