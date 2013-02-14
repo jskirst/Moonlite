@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130211040205) do
+ActiveRecord::Schema.define(:version => 20130214054718) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20130211040205) do
     t.integer  "vote_count",  :default => 0
     t.datetime "created_at",                 :null => false
     t.datetime "updated_at",                 :null => false
+    t.integer  "idea_type",   :default => 0
   end
 
   create_table "notification_settings", :force => true do |t|

@@ -1,12 +1,13 @@
 class IdeasController < ApplicationController
   before_filter :authenticate, except: [:index, :show]
-  before_filter :load_resource, except: [:index, :new, :create]
+  before_filter :load_resource, except: [:index, :idea, :bug, :create]
   before_filter :authorize_resource, only: [:edit, :update, :destroy]
   
   def index
     @compact_social = true
+    @type = params[:type] || Idea::IDEA
     @sort = params[:sort] || "created_at"
-    @ideas = Idea.order("#{@sort} DESC")
+    @ideas = Idea.where(idea_type: @type).order("#{@sort} DESC")
     @idea_votes = current_user.idea_votes.collect &:owner_id if current_user
   end
   
@@ -34,8 +35,13 @@ class IdeasController < ApplicationController
     end
   end
   
-  def new
-    @idea = current_user.ideas.new
+  def idea
+    @idea = current_user.ideas.new(idea_type: Idea::IDEA)
+    render "form"
+  end
+  
+  def bug
+    @idea = current_user.ideas.new(idea_type: Idea::BUG)
     render "form"
   end
   

@@ -11,6 +11,7 @@ class PagesController < ApplicationController
       @suggested_paths = Path.suggested_paths(current_user)
     else
       @show_sign_in = false
+      @personas = Persona.all
       render "landing", layout: "landing"
     end
   end

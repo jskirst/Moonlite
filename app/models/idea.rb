@@ -1,7 +1,11 @@
 class Idea < ActiveRecord::Base
+  IDEA  = 0
+  BUG   = 1
+  TYPES = { IDEA => "Idea", BUG => "Bug" }
+  
   attr_readonly :creator_id
   attr_protected :status, :vote_count
-  attr_accessible :title, :description
+  attr_accessible :title, :description, :idea_type
   
   belongs_to :creator, class_name: "User"
   has_many :votes, as: :owner
