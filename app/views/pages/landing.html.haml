@@ -55,55 +55,22 @@
           %a{href: "#", "data-tab" => "designer"} Designer
         %li
           %a{href: "#", "data-tab" => "music_head"} Music Head
-    %div#hacker.tab_content.active_tab
-      %div.row-fluid
-        %div.span12
-          %div.challenge_table
-            %ul
-              %li
-                .mosaic-block.bar2
-                  %a.mosaic-overlay
-                    %div.details
-                      %h4 Sharing is caring
-                      %h5 Spread the MetaBright Gospel!
-                  %div
-                    %img.mosaic-backdrop.clip_pic{ src:"http://moonlite.s3.amazonaws.com/objs/44/original.png?1353538042", style: "display: inline-block;"}
-              %li
-                .mosaic-block.bar2
-                  %a.mosaic-overlay
-                    %div.details
-                      %h4 Sharing is caring
-                      %h5 Spread the MetaBright Gospel!
-                  %div
-                    %img.mosaic-backdrop.clip_pic{ src:"http://moonlite.s3.amazonaws.com/objs/51/original.jpg?1353948060", style: "display: inline-block;"}
-              %li
-                .mosaic-block.bar2
-                  %a.mosaic-overlay
-                    %div.details
-                      %h4 Sharing is caring
-                      %h5 Spread the MetaBright Gospel!
-                  %div
-                    %img.mosaic-backdrop.clip_pic{ src:"http://moonlite.s3.amazonaws.com/objs/50/original.jpg?1353947860", style: "display: inline-block;"}
-              %li
-                .mosaic-block.bar2
-                  %a.mosaic-overlay
-                    %div.details
-                      %h4 Sharing is caring
-                      %h5 Spread the MetaBright Gospel!
-                  %div
-                    %img.mosaic-backdrop.clip_pic{ src:"http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", style: "display: inline-block;"}
-              %li
-                .mosaic-block.bar2
-                  %a.mosaic-overlay
-                    %div.details
-                      %h4 Sharing is caring
-                      %h5 Spread the MetaBright Gospel!
-                  %div
-                    %img.mosaic-backdrop.clip_pic{ src:"http://moonlite.s3.amazonaws.com/objs/55/original.jpg?1353948550", style: "display: inline-block;"}
-    %div#foodie.tab_content
-      %span Whatever
-      
-      
+    - @personas.each do |persona|
+      %div.tab_content.active_tab{ id: persona.name.downcase.gsub(" ", "_") }
+        %div.row-fluid
+          %div.span12
+            %div.challenge_table
+              %ul
+                - persona.paths.where("approved_at is not ?", nil).limit(5).each do |path|
+                  %li
+                    .mosaic-block.bar2
+                      = link_to challenge_path(path.permalink), class: "mosaic-overlay" do
+                        %div.details
+                          %h4= path.name
+                          %h5 #{path.tasks.count()} points
+                      %div
+                        = image_tag path.picture, class: "mosaic-backdrop clip_pic", style: "display: inline-block;"
+                            
 :javascript
   $(function () {
    $(".tab_content").hide();
