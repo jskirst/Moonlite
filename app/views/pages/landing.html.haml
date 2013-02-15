@@ -64,13 +64,13 @@
               - if persona.paths.where("approved_at is not ?", nil).empty?
                 %span You must be registered and achieve a higher MetaBright level before you can view Challenges in this Persona.
               %ul
-                - persona.paths.where("approved_at is not ?", nil).limit(5).each do |path|
+                - persona.paths.where("approved_at is not ? and public_at is not ?", nil, nil).limit(5).each do |path|
                   %li
                     .mosaic-block.bar2
                       = link_to challenge_path(path.permalink), class: "mosaic-overlay" do
                         %div.details
                           %h4= truncate(path.name,length:17, separator: ' ')
-                          %h5 #{path.tasks.count()} points
+                          %h5 #{path.tasks.count() * 100} points
                       %div
                         = image_tag path.picture, class: "mosaic-backdrop clip_pic", style: "display: inline-block;", alt: "#{path.name}"
                             
