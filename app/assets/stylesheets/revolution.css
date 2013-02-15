@@ -32,7 +32,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .obfuscation a{ color:gray; }
 .postfooter{ color:#999; font-size:11px; text-align: right; margin:0 -13px 0 0; position:relative; top:4px;}
 .leftstuff { display:inline-block; margin: 4px 0 4px 0; height: 27px; width: 100%; padding-top: 5px; }
-.leftstuff a { cursor:pointer; text-decoration:none; color: #004700; font-weight:normal; }
+.leftstuff a { cursor:pointer; text-decoration:none !important; color: #004700; font-weight:normal; }
 .leftstuff a:hover { text-decoration:underline; }
 .posttimestamp{display:inline-block; top:10px; position:relative; }
 .leftboxheader{background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: normal; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
@@ -409,7 +409,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .submit_idea_tips h3 {font-size:23px; }
 .ideacontent {width:85%;}
 .ideacontent h4 a {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
-.ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px;}
+.ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
