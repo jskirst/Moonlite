@@ -15,7 +15,7 @@
     = render "layouts/report_issue_modal"
     %div.CRquizspace
       %div.quizheader
-        = image_tag @path.path_pic, style: "height:50px; width:50px;"
+        = image_tag @path.path_pic, style: "height:50px; width:50px;", alt: "#{@path.name}"
         %div{ style: "display:inline-block;" }
           %span <strong>#{@path.name}:</strong> #{@section.name}</span>
       %div{ style: "text-align:center;" }
@@ -55,7 +55,7 @@
                 %p{ style: "margin:4px; line-height:18px; font-size: 13px;"} or #{file_field_tag("obj")}
                 %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                   %div#answer_preview{ style: "text-align: center; padding: 10px;" }
-                    = image_tag "/images/image_thumb.png", :style => "width: 125px;", :id => "image_placeholder"
+                    = image_tag "/images/image_thumb.png", :style => "width: 125px;", :id => "image_placeholder", alt: "Image placeholder"
             - elsif @task.answer_sub_type == Task::YOUTUBE
               :javascript
                 $(function(){
@@ -76,7 +76,7 @@
                 %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:5px;" } Preview
                 %div#answer_preview_container{ style: "text-align: center;padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                   %div#answer_preview
-                    = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder"
+                    = image_tag "/images/youtube_thumb.jpg", :size => "380x200", :id => "youtube_placeholder", alt: "YouTube placeholder"
           - elsif @task.answer_type == Task::CHECKIN
             %span{style:"font-size:16px;"} I have completed the Task stated here.
             :javascript
@@ -89,4 +89,4 @@
         = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
         %a.arena_report_link{href:"#", style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
         = submit_tag "Submit", :class => "button button-actionable", :id => "submit_button", style: "float:right;"
-        = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image"
+        = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"

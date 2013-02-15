@@ -21,27 +21,27 @@
     %div{ style: "margin-left: 188px;" }
       %h3.brand{ style: "top:3px; position:relative;" }
         = link_to root_url, style: "font-size: 26px;" do
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;")
+          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", style: "position:absolute;", alt: "MetaBright")
       - if current_user && show_nav_bar
         %ul.nav.navicons{ style: "margin-left:153px; bottom:5px; border-right:1px solid #56698B; height: 45px; overflow-y: hidden;" }
           %li.navitem{ style: "border-left: 0px;", title: "Home" }
             = link_to root_url do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:26px;"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png", style: "width:26px;", alt: "Home"
           %li.navitem{ title: "Explore"}
             = link_to "#", class: "explore_link" do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;", alt: "Explore"
           %li.navitem{ title: "Profile"}
             = link_to profile_path(current_user.username) do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png", alt: "Profile"
           %li.navitem{ title: "Create"}
             = link_to create_path do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;", alt: "Create"
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           - if current_user
             %li.navuser
               %div.dropdown.pull-right
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown"}
-                  = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;"
+                  = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
                   %span{ style: "vertical-align: middle;" }= current_user.name 
                   %span.caret
                 %ul.dropdown-menu{ role: "button", style: "padding: 0; top:42px; right:-138px; min-width: 312px; min-height: 135px;" }
@@ -52,7 +52,7 @@
                     - current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").each do |e|
                       = link_to challenge_path(e.path.permalink) do
                         %div.singleprogressentry
-                          = image_tag e.path.image, style: "width: 50px; height: 50px;"              
+                          = image_tag e.path.image, style: "width: 50px; height: 50px;", alt: "#{e.path.name}"            
                           %div.challengeprogress
                             %span{ style: "font-size:18px;"} #{truncate(e.path.name,length: 18, separator: ' ')}
                             %span{style: "font-size:14px; float:right; "} Level #{e.level}
@@ -62,7 +62,7 @@
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
-                  = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;", title: "Notifications"
+                  = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;", title: "Notifications", alt: "Notifications"
                   - if unread_notification_count > 0
                     %span.notifications_bubble= unread_notification_count
                 %ul.dropdown-menu{ role: "button", style: "padding: 0 0 10px 0; top:42px; right:-100px; min-width: 312px; min-height: 135px;" }
@@ -74,13 +74,13 @@
                       %li.notification_space
                         %div.notification{ class: "#{event.read_at ? '' : 'notification-unread'}" }
                           = link_to event.link do
-                            = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;"
+                            = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;", alt: "Notification"
                             %p.notification_body= event.content
                             %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:10px;" }
-                  %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png", style: "height:20px; width:20px;", title:"Settings"}
+                  %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png", style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
                 %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-52px; min-width: 25px; min-height: 50px;" }
                   %li
                     %div

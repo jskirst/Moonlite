@@ -4,7 +4,7 @@
 %div.quizcontainer{style:"width:641px; margin-top:110px;"}
   %div.quizspace
     %div.quizheader{style:"margin-bottom:9px;"}
-      = image_tag  @task.path.picture, style: "height:50px; width:50px;"
+      = image_tag  @task.path.picture, style: "height:50px; width:50px;", alt: "#{@task.path.name}"
       %div{style: "display:inline-block;"}
         %span
           %strong #{@task.path.name}:        
@@ -17,7 +17,7 @@
           When you complete a CR, you earn
           %strong 100 points
       %div.completioncontent
-        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:20px; position:relative; bottom:5px; display:inline;"}
+        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:20px; position:relative; bottom:5px; display:inline;", alt: "Tip"}
           %h4 A little bit about Creative Response questions...
           %ul
             %li

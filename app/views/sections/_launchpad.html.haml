@@ -35,7 +35,7 @@
                   %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
                 %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                   %h4 
-                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
                     Tips:
                   %ul{style:"font-size:13px;"}
                     %li Questions should cover the core knowledge area of the section they're placed.
@@ -64,7 +64,7 @@
                   %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
                   = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
               %div.step3{ style: "display: none;" }
-                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;", alt: "Stoney"}
                 %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
                 %h4{style:"margin-top:12px; font-size:16px;"} Your question is now visible to the MetaBright community!
                 %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} Remember, you earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a question, but if your question is reported and taken down, you'll lose #{Task::CREATOR_PENALTY_POINTS} points.
@@ -72,7 +72,7 @@
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
           %div.launchpadtip
-            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip"}
             %p Enter the Arena and take multiple-choice questions to discover where you stand. 
           - tasks_completed = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
           - if @core_tasks.empty?
@@ -119,7 +119,7 @@
                   %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
                 %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                   %h4 
-                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
                     Tips:
                   %ul{style:"font-size:13px;"}
                     %li Questions should enable people to demonstrate their knowledge or passion for the Challenge.
@@ -148,7 +148,7 @@
                   %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
                   = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
               %div.step3{ style: "display: none;" }
-                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;", alt: "Stoney"}
                 %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
                 %h4{style:"margin-top:12px; font-size:16px;"} Your CR is now visible to the MetaBright community!
                 %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a CR, but if your question is reported and taken down, you'll lose #{Task::CREATOR_PENALTY_POINTS} points.
@@ -157,7 +157,7 @@
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
           %div.launchpadtip{style:"margin-bottom:20px;"}
-            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip"}
             %p Creative Responses let you demonstrate your skills. Responses to CR's appear in the stream so they can be voted and commented upon.
           - if @challenge_tasks.empty?
             %p No Creative Responses available.
@@ -192,7 +192,7 @@
                   %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
                 %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
                   %h4 
-                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;"}
+                    %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
                     Tips:
                   %ul{style:"font-size:13px;"}
                     %li Tasks should serve as a path to improving at the section.
@@ -218,7 +218,7 @@
                   %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
                   = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
               %div.step3{ style: "display: none;" }
-                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;"}
+                %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;", alt: "Stoney"}
                 %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
                 %h4{style:"margin-top:12px; font-size:16px;"} Your Task is now visible to the MetaBright community!
                 %h4{style:"margin-top:12px; font-size:16px;"} Remember, you earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a Task, but if it's reported and taken down, you'll lose #{Task::CREATOR_PENALTY_POINTS} points.
@@ -227,7 +227,7 @@
                 %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
         %div.task_view
           %div.launchpadtip
-            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"}
+            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip"}
             %p Use Tasks to verify the things you've done and guide you towards what to do next. 
           - if @achievement_tasks.empty?
             %p No Tasks available.

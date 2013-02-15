@@ -18,14 +18,14 @@
       });
     %div.exploreheader
       %div.modal_close{ style: "margin: -8px 14px 0 0;" }
-        %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
+        %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt: "Close"}
       %h1{ style: "font-size: 23px;" }
         - if current_user.personas.empty?
           <strong>Explore:</strong> Adopt your first Persona...
         - else
           <strong>Explore:</strong> Choose a persona...
       %div
-        %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; position:relative; bottom:2px;" }
+        %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; position:relative; bottom:2px;", alt: "Tip" }
         %p{ style: "font-size: 14px; line-height: 28px; display:inline; "} Personas represent you and your interests. You can always enroll in multiple Personas. 
     %hr{ style: "margin:0px;" }
     %div.personatiles
@@ -33,7 +33,7 @@
         %div.singleexploretile
           %a{ href: "#", class: "persona_select", id: "persona_select_#{persona.id}" }
             %div.exploretileimage
-              = image_tag persona.picture, size: "85x85"
+              = image_tag persona.picture, size: "85x85", alt: "#{persona.name}"
     %div.persona_preview
       = render "personas/preview", { persona: @personas.first }
     %div.hidden_persona_previews{ style: "display: none;" }

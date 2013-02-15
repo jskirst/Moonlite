@@ -27,16 +27,16 @@
   %div.exploreheader
     - unless current_user.personas.empty?
       %div.modal_close{ style: "margin: -8px 14px 0 0;" }
-        %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
+        %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt: "Close"}
     %div{ style: "padding-bottom:8px;" }
-      = image_tag @persona.picture, style: "position:relative; bottom:2px;"
+      = image_tag @persona.picture, style: "position:relative; bottom:2px;", alt: "#{@persona.name}"
       %h1{ style: "font-size: 23px; position:relative; top:8px; line-height:1;" }
         - if current_user.enrollments.size == 0
           <strong>#{@persona.name}:</strong> Choose your first Challenge...
         - else
           <strong>#{@persona.name}:</strong> Choose your Challenge...
     %div
-      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; height:15px; margin:4px 4px 0 0; position:relative; top:1px;" }
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "width:15px; height:15px; margin:4px 4px 0 0; position:relative; top:1px;", alt: "Tip" }
       %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Challenges represent skillsets where you can prove what you know, and be inspired by others. 
   %hr{ style: "margin:0px;" }
   %div.challengetiles
@@ -58,6 +58,6 @@
               %h5 Coming Soon!
             
         %div 
-          = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
+          = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
   %div.explorenewuserfooter
     = link_to "Back", explore_path, class: "button button-standard back_to_preview_index", remote: true

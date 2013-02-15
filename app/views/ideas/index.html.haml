@@ -3,7 +3,7 @@
     - if current_user
       = link_to "Post New Idea", new_idea_path, class: "button button-actionable", style: "float: right;"
     %div{ style: "border-bottom: 1px solid #DDD; margin-bottom: 10px; margin-top:-10px;" }
-      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
       %h1{ style: "display: inline-block;" } MetaBright Labs
     %div
       %h4 Help shape the MetaBright roadmap
@@ -37,7 +37,7 @@
                           %li= link_to "Remove Idea", idea_path(idea), method: :delete, confirm: "Are you sure you want to delete your submission?", style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px;"
               - else
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
-                  %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png" }   
+                  %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png", alt: "Up-vote" }   
           %div.ideacontent
             %h4= link_to idea.title, idea
             %h6{ style: "margin: 0px;" } Submitted by #{link_to idea.creator.name, profile_path(idea.creator.username)}

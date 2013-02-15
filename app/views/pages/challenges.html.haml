@@ -1,7 +1,7 @@
 .aboutcontainer{style:"width:703px;"}
   .aboutbox
     .aboutheader
-      %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+      %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
         %span MetaBright Challenges
     %hr{:style => "margin:0"}
       .aboutbody{style:"padding-left:2px;"}
@@ -20,7 +20,7 @@
                       %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
                       %h5 Coming Soon!
                 %div 
-                  = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140"
+                  = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
           %hr{:style => "margin:0"}
                     
                 

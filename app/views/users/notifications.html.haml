@@ -1,7 +1,7 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
   :css
     form .control-group label.control-label { width: 160px; }
-  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
   %span{ style: "font-size: 50px;position: relative;top:13px;" } Notification Settings
   %hr{style:"margin:0;"}
   = form_for(@notification_settings, url: notification_settings_path(@user.signup_token), html: { class: "form-horizontal", style: "margin-top: 10px;" }) do |f|

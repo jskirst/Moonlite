@@ -2,9 +2,9 @@
   - unless current_user
     %div#newuserbox.help_box{ style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;" }
       %div.help_close{style:"position:relative; left:10px;"}
-        %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png" }
+        %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt: "Close" }
       %div{ style: "margin-top:-6px;"}
-        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:90px; "}
+        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:90px;", alt: "Stoney"}
         %h1{style:"display:inline; position:relative; top:12px; font-size: 30px;"} Looks like you're new here...
       %div{style:"margin-left:20px; margin-top:-10px;"}
         %h4 MetaBright is a place to showcase your skills and get better at the stuff you're passionate about. Learn more about us <a href="/about">here</a>.
@@ -13,7 +13,7 @@
     %div#updatespace
       %div{ style: "display:inline;" }
         = link_to challenge_path(@path.permalink) do
-          = image_tag @path.path_pic, class: "bigheaderimage"
+          = image_tag @path.path_pic, class: "bigheaderimage", alt: "#{@path.name}"
       %div.rightofbigheaderimage{ style: "width:81%;" }
         %div#topboxcontent
           - if current_user
@@ -29,7 +29,7 @@
           - if @enrollments.size > 4
             %div#challengeleft_scroll
               %a{href: "javascript:challengeslide(\"left\");"}
-                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
           %div#challengecarousel_inner{ style: "#{@enrollments.size < 4 ? 'margin-left: -12px;' : ''}" }
             %ul#challengecarousel_ul
               - if @enrollments.size < 4
@@ -39,7 +39,7 @@
           - if @enrollments.size > 4
             %div#challengeright_scroll
               %a{href: "javascript:challengeslide(\"right\");"}
-                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png", alt: "Right"}/
       %input#challengehidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
   %div.row
     %div.span5
@@ -52,7 +52,7 @@
             - current_user_in_top = true if current_user && user.id == current_user.id 
             %li
               %span.rank= (i+1).to_s
-              = image_tag user.picture 
+              = image_tag user.picture, alt: "#{user.name}" 
               = link_to truncate(user.name, length: 22), profile_path(user.username), class: "name"
               %span.level lvl. #{Enrollment.points_to_level(user.total_points.to_i)}
               %span.points= user.total_points
@@ -73,20 +73,20 @@
               - if previous_user
                 %li
                   %span.rank= (current_user_spot).to_s
-                  = image_tag previous_user.picture 
+                  = image_tag previous_user.picture, alt: "#{previous_user.name}" 
                   = link_to truncate(previous_user.name, length: 22), profile_path(previous_user.username), class: "name"
                   %span.level lvl. #{Enrollment.points_to_level(previous_user.total_points.to_i)}
                   %span.points= previous_user.total_points
               %li
                 %span.rank= (current_user_spot+1).to_s
-                = image_tag current_user.picture 
+                = image_tag current_user.picture, alt: "#{current_user.picture}" 
                 = link_to truncate(current_user.name, length: 22), profile_path(current_user.username), class: "name"
                 %span.level lvl. #{Enrollment.points_to_level(@enrollment.total_points.to_i)}
                 %span.points= @enrollment.total_points
               - if next_user
                 %li
                   %span.rank= (current_user_spot+2).to_s
-                  = image_tag next_user.picture 
+                  = image_tag next_user.picture, alt: "#{next_user.name}" 
                   = link_to truncate(next_user.name, length: 22), profile_path(next_user.username), class: "name"
                   %span.level lvl. #{Enrollment.points_to_level(next_user.total_points.to_i)}
                   %span.points= next_user.total_points
@@ -99,7 +99,7 @@
             %li.leftrailcontent
               - @similar_paths.each do |p|
                 = link_to challenge_path(p.permalink) do
-                  = image_tag p.picture, class: "leftrailicon", title: "#{p.name}"
+                  = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
     %div.span11
       %div.newsfeed
         %div.leftboxheader

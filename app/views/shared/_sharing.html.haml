@@ -2,8 +2,8 @@
 - url ||= request.url
 %div.addthis_toolbox.social_toolbar{ style: custom_style, "addthis:url" => url, "addthis:title" => title }
   = link_to sharing_url(:facebook, url), target: "_blank" do
-    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png", alt: "Share on Facebook"
   = link_to sharing_url(:twitter, url, title), target: "_blank" do
-    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png", alt: "Share on Twitter"
   = link_to sharing_url(:google_plus, url, title), target: "_blank" do
-    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png", alt: "Share on Google+"

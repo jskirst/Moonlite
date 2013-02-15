@@ -5,7 +5,7 @@
     - if @compact_social
       %div.displayin.floatl{ style: "margin-left: 10px;" }
         = link_to sharing_url, target: "_blank" do 
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", style: "height: 20px; cursor: pointer; position:relative; top:2px;" }
+          %img{ alt: "Share", src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/share_icon_gray.png", style: "height: 20px; cursor: pointer; position:relative; top:2px;" }
     - else
       = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url } 
     %div.displayin.floatr{ style: "position: relative; top: 5px;" }

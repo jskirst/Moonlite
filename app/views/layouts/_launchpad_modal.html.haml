@@ -3,9 +3,9 @@
     %div.overlay
       %div.launchpad{ style: "height: 545px; width: 900px;" }
         %div.modal_close
-          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"}
+          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt:"Close"}
         %h1
-          = image_tag(@path.path_pic, style:"vertical-align:baseline;")
+          = image_tag(@path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}")
           %div{style:"position:relative; bottom:10px; "}
             %span{ } #{@path.name}
           %div{style:"float:right; position:relative; top:3px; width: 205px; height; 42px; overflow-y: hidden; margin-right:12px; "}
