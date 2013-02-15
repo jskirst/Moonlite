@@ -1,5 +1,5 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"}
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
   %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Profile
   %hr{style:"margin:0;"}
   = form_for(@user, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
@@ -20,7 +20,7 @@
         %div{style:"display:inline-block; vertical-align:top; position:relative; bottom:34px; margin-bottom:-25px;"}
           %div.control-group
             %div.controls{style:"margin-left:112px;"}
-              = image_tag @user.picture, id: "image_url_preview", width: "150"
+              = image_tag @user.picture, id: "image_url_preview", width: "150", alt: "#{@user.name}"
       %h4 Vital Stats
       %div.editprofilemanagementarea
         %div.control-group

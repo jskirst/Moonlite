@@ -15,7 +15,7 @@ designer:
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Designer_130.png
   description: You make the world a more beautiful and functional place to reside. You never don't have an opinion, and you're certainly not afraid to let others know. You get to make your imagination other people's reality every day. 
 musichead:
-  name: Music Head
+  name: Audiophile
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_MusicHead_130.png
   description: You're the one with the lighter in the front row demanding an encore. Whether it's going to concerts, rocking out on your iPod, or making your own tunes, music just seems to make everything better.
 foodie:
@@ -31,9 +31,9 @@ strategist:
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Strategist_130.PNG
   description: A white-collar athlete, the three-piece-suit is your uniform. Some people call you the 'Human Calculator,' others just call you 'Boss.' When stuff needs to get done and done well, people turn to you to lead and execute at the highest level. 
 locked:
-  name: Locked
-  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hidden_130.png
-  description: This persona is currently locked. Achieve level 15 in any other persona to unlock.
+  name: Scholar
+  link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Scholar_130.png
+  description: You are an erudite person. Nose in the books and showering only when absolutely necessary, your passion for knowledge is eclipsed only by your desire to maintain your stellar GPA.
 locked2:
   name: Locked
   link: https://s3.amazonaws.com/moonlite-nsdub/static/Persona+Icons/Icon_Hidden_130.png

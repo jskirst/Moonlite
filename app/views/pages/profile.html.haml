@@ -14,7 +14,7 @@
 %div#homepage
   %div#topsection
     %div#updatespace
-      = image_tag @user.picture, class: "bigheaderimage"
+      = image_tag @user.picture, class: "bigheaderimage", alt: "#{@user.name}"
       %div.rightofbigheaderimage
         %div#topboxcontent{ style: "height: 83px;" }
           %div{ style: "width: 119px; float:right;" }
@@ -27,7 +27,7 @@
           - if @enrollments.size > 3
             %div#challengeleft_scroll
               %a{href: "javascript:challengeslide(\"left\");"}
-                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
           %div#challengecarousel_inner
             %ul#challengecarousel_ul
               - if @enrollments.size < 4
@@ -37,7 +37,7 @@
           - if @enrollments.size > 3
             %div#challengeright_scroll
               %a{href: "javascript:challengeslide(\"right\");"}
-                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png", alt: "Right"}/
       %input#challengehidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
 
   %div.row
@@ -61,7 +61,7 @@
                     %div.accordion-inner
                       - tasks.each do |task|
                         %div.singletaskentry
-                          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png" }
+                          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png", alt: "Check" }
                           %div
                             %span{ style: "display:block;" }= task.question
         - else
@@ -78,7 +78,7 @@
                   %a.accordion-toggle{ "data-toggle" => "collapse", href: "#", style: "padding:0;" }
                     %div.expand_contract
                     %div.persona_progress_area
-                      = image_tag user_persona.persona.image, style:"width:50px; height:50px;"              
+                      = image_tag user_persona.persona.image, style:"width:50px; height:50px;", alt: "#{user_persona.persona.image}"            
                       %div.personaprogress
                         %span{ style: "font-size:18px;" }= user_persona.persona.name
                         %span{style: "font-size:14px; float:right; "} Level #{user_persona.level}

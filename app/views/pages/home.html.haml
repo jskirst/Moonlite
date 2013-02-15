@@ -6,7 +6,7 @@
       - if @enrollments.size > 1
         %div#left_scroll
           %a{href: "javascript:slide(\"left\");"}
-            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"}/
+            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
       %div#carousel_inner
         %ul#carousel_ul
           = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
@@ -19,7 +19,7 @@
       - if @enrollments.size > 1
         %div#right_scroll
           %a{href: "javascript:slide(\"right\");"}
-            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"}/
+            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png", alt: "Right"}/
       %input#hidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
   %div.row
     %div.span5
@@ -30,7 +30,7 @@
             %li.leftrailcontent
               - @suggested_paths.each do |p|
                 = link_to challenge_path(p.permalink) do
-                  = image_tag p.path_pic, class: "leftrailicon", title: "#{p.name}"
+                  = image_tag p.path_pic, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
       %div.leftbox
         %div.leftboxheader Enrolled Personas
         %div.leftboxfooter
