@@ -66,7 +66,7 @@
         - if ct.task.answer_sub_type == Task::TEXT
           %pre{ style: "margin:20px; word-break:normal;" }= ct.submitted_answer.content
         - elsif ct.task.answer_sub_type == Task::IMAGE
-          = image_tag(sanitize(ct.submitted_answer.content)), alt: "Creative Response Image"
+          = image_tag(sanitize(ct.submitted_answer.content))
         - elsif ct.task.answer_sub_type == Task::YOUTUBE
           %center
             %div.youtube_answer{ id: "youtube_answer_#{ct.id}", alt: ct.submitted_answer.content }        
