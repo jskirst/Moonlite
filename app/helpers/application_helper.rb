@@ -43,6 +43,17 @@ module ApplicationHelper
     } 
   end
   
+  def sharing_url(destination, url, text = "")
+    case destination
+    when :facebook
+      "https://www.facebook.com/sharer/sharer.php?u=#{url}"
+    when :twitter
+      "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&related="
+    when :google_plus
+      "https://plus.google.com/share?url=#{url}&t=#{text}"
+    end
+  end
+  
   def admin_tabs
     [
       ["overview", "Overview", admin_overview_path],

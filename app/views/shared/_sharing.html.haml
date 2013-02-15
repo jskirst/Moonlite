@@ -1,6 +1,9 @@
 - title ||= "Challenge yourself on MetaBright!"
 - url ||= request.url
 %div.addthis_toolbox.social_toolbar{ style: custom_style, "addthis:url" => url, "addthis:title" => title }
-  %a.addthis_button_facebook= image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
-  %a.addthis_button_twitter= image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
-  %a.addthis_button_google_plusone_share= image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
+  = link_to sharing_url(:facebook, url), target: "_blank" do
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
+  = link_to sharing_url(:twitter, url, title), target: "_blank" do
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
+  = link_to sharing_url(:google_plus, url, title), target: "_blank" do
+    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
