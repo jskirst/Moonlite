@@ -13,10 +13,10 @@
             %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
             %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
               %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-        %div#launchpad_headlines{ style: "width: 100%; height: 90%; padding: 20px;" }
+        %div#launchpad_headlines{ style: "width: 100%; height: 90%; padding: 20px; display: none;" }
           %p this is a thing
           %button.button.button-actionable{ onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue
-        %div.launchpadcontent{ style: "display: none;" }
+        %div.launchpadcontent{ }
           %div.launchpadsectioncolumn
             %div.launchpadcolumnheader
               Sections

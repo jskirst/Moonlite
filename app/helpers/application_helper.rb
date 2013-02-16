@@ -43,15 +43,20 @@ module ApplicationHelper
     } 
   end
   
-  def sharing_url(destination, url, text = "")
-    case destination
-    when :facebook
-      "https://www.facebook.com/sharer/sharer.php?u=#{url}"
-    when :twitter
-      "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&related="
-    when :google_plus
-      "https://plus.google.com/share?url=#{url}&t=#{text}"
-    end
+  def popup_javascript(url)
+    "javascript:void window.open('#{url}','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"
+  end
+  
+  def sharing_popup_javascript(destination, url, text = "")
+    url = case destination
+      when :facebook
+        "https://www.facebook.com/sharer/sharer.php?u=#{url}"
+      when :twitter
+        "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&related="
+      when :google_plus
+        "https://plus.google.com/share?url=#{url}&t=#{text}"
+      end
+    popup_javascript(url)
   end
   
   def admin_tabs
