@@ -137,7 +137,7 @@ code,pre{font:inherit;}
 .leftboxfooter .accordion-toggle{text-decoration:none; padding:8px 2px 1px 2px;}
 .leftboxfooter .accordion-inner{padding:9px 15px 3px 15px;}
 .leftboxfooter .accordion{margin-bottom:4px;}
-.profile_challenge{ margin-left:23px; }
+.profile_challenge{ margin-left: 5px; margin-bottom: 10px; }
 .challenge_progress{ display:inline-block; vertical-align:top; margin-left:4px; width:78%; color:gray; }
 .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/plus.png); background-repeat:no-repeat; display:inline-block; width:11px; height:11px; vertical-align:middle; position:relative; bottom:2px; margin-right:2px; opacity:.8;}
 .active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
