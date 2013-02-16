@@ -1,5 +1,5 @@
 class PagesController < ApplicationController
-  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :mark_help_read]
+  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :mark_help_read, :robots]
   before_filter :authorize_resource, only: [:create]
   
   def home
