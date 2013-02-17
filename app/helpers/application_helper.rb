@@ -38,8 +38,8 @@ module ApplicationHelper
       owner_id: idea.id, 
       comment_count: idea.comments.size, 
       created_at: idea.created_at, 
-      sharing_url: "", 
-      sharing_title: "" 
+      sharing_url: idea_path(idea), 
+      sharing_title: "Great idea for a feature on @MetaBright!" 
     } 
   end
   

@@ -73,9 +73,10 @@
         %div.leftboxfooter{style:"padding-top: 6px"}
           %div.accordion
             - @user_personas.each do |user_persona|
+              - persona_id = "persona_#{user_persona.persona_id}"
               %div.accordion-group
                 %div.accordion-heading
-                  %a.accordion-toggle{ "data-toggle" => "collapse", href: "#", style: "padding:0;" }
+                  %a.accordion-toggle{ "data-toggle" => "collapse", href: "##{persona_id}", style: "padding:0;" }
                     %div.expand_contract
                     %div.persona_progress_area
                       = image_tag user_persona.persona.image, style:"width:50px; height:50px;", alt: "#{user_persona.persona.image}"            
@@ -85,14 +86,15 @@
                         %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{user_persona.points_to_next_level} more points to level up!
                         %div.progress.progress-info
                           %div.bar{ style: "width: #{user_persona.percent_level}%;"} 
-                %div.accordion-body.collapse{ id: "#"}
+                %div.accordion-body.collapse{ id: persona_id }
                   %div.accordion-inner{ style: "padding-right:0;" }
-                    %div.profile_challenge
-                      = image_tag "http://www.placekitten.com/100/100", style:"width:40px; height:40px;"
-                      %div.challenge_progress
-                        %h5 Challenge Name
-                        %span 3102 pts
-                        %span{ style: "float:right; "} Rank: 13
+                    - user_persona.enrollments.each do |enrollment|
+                      %div.profile_challenge
+                        = image_tag enrollment.path.picture, style:"width:30px; height:30px;"
+                        %div.challenge_progress
+                          %h5{ style: "font-size: 13px;" }= enrollment.path.name
+                          %span #{enrollment.total_points} pts
+                          %span{ style: "float:right; "} Rank: #{enrollment.rank}
 
       %div.leftbox
         %div.leftboxheader Vital Stats

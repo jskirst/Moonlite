@@ -18,6 +18,8 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
+	match '/labs/ideas' => 'ideas#ideas', as: 'ideas'
+	match '/labs/bugs' => 'ideas#bugs', as: 'bugs'
   match '/labs/idea' => "ideas#idea", as: "new_idea"
   match '/labs/bug' => "ideas#bug", as: "new_bug"
 	resources :ideas, path: "labs" do
@@ -104,6 +106,7 @@ Metabright::Application.routes.draw do
   match '/auth/:provider/callback' => 'sessions#create'
 	match '/signin' => 'sessions#new'
 	match '/signout' => 'sessions#destroy'
+	match '/robots.txt' => 'pages#robots'
 
   match '/emailtest' => 'pages#email_test', as: 'email'
 	match '/password_reset' => 'users#request_send'
