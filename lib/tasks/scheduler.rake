@@ -22,9 +22,9 @@ task :send_alerts => :environment do
   puts "VOTE ALERTS"
   votes = Vote.where("created_at > ?", 10.minutes.ago)
   votes.each do |vote|
-    puts "Sending vote alert..."
     begin
       Mailer.content_vote_alert(vote).deliver
+      puts "Vote alert sent"
     rescue
       puts "Vote alert rejected."
     end
@@ -33,15 +33,16 @@ task :send_alerts => :environment do
   puts "COMMENT ALERTS"
   comments = Comment.where("created_at > ?", 10.minutes.ago)
   comments.each do |comment|
-    puts "Sending comment alert..."
     begin
       Mailer.content_comment_alert(comment).deliver
       if comment.owner.comments.size > 1
         comment.owner.comments.each do |c|
           next if c == comment or c.user = comment.user or c.user == c.owner.user
           Mailer.comment_reply_alert(c, comment.user, c.user)
+          puts "Comment reply alert sent"
         end
       end
+      puts "Comment alert sent"
     rescue
       puts "Comment alert rejected"
     end
