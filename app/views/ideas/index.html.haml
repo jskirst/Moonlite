@@ -17,9 +17,9 @@
         - if params[:action] == "show"
           = link_to "Back to all #{@ideas.first.idea? ? 'Ideas' : 'Bugs'}", ideas_path, style: "float: right;"
         - else
-          = link_to "Newest", @ideas.first.idea? ? ideas_path(sort: "created_at") : bugs_path(sort: "created_at")
+          = link_to "Newest", @ideas.first.idea? ? ideas_path(s: "c") : bugs_path(s: "c")
           |
-          = link_to "Votes", @ideas.first.idea? ? ideas_path(sort: "vote_count") : bugs_path(sort: "vote_count") 
+          = link_to "Votes", @ideas.first.idea? ? ideas_path(s: "v") : bugs_path(s: "v") 
       %ul.nav.nav-tabs
         %li{ class: @ideas.first.idea? ? "active" : "" }
           = link_to "Ideas", ideas_path
@@ -55,7 +55,6 @@
 
 :javascript
   $(function(){ 
-    $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
     $(".display_sharing_icon").click(function(){ 
       $(this).parents(".leftstuff").find(".social_toolbar").css("display", "inline");
       $(this).parent().remove(); 

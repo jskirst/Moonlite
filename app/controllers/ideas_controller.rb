@@ -2,24 +2,25 @@ class IdeasController < ApplicationController
   before_filter :authenticate, except: [:index, :ideas, :bugs, :show]
   before_filter :load_resource, except: [:index, :ideas, :bugs, :idea, :bug, :create]
   before_filter :authorize_resource, only: [:edit, :update, :destroy]
+  before_filter do
+    @sort = params[:s] || "c"
+    @sort_by = @sort == "c" ? "created_at" : "vote_count"
+    @compact_social = true
+  end
   
   def index
     redirect_to ideas_path
   end
   
   def ideas
-    @compact_social = true
-    @sort = params[:sort] || "created_at"
-    @ideas = Idea.where(idea_type: Idea::IDEA).order("#{@sort} DESC")
-    @idea_votes = current_user.idea_votes.collect &:owner_id if current_user
+    @ideas = Idea.where(idea_type: Idea::IDEA).order("#{@sort_by} DESC")
+    @idea_votes = current_user.idea_votes.collect(&:owner_id) if current_user
     render "index"
   end
   
   def bugs
-    @compact_social = true
-    @sort = params[:sort] || "created_at"
-    @ideas = Idea.where(idea_type: Idea::BUG).order("#{@sort} DESC")
-    @idea_votes = current_user.idea_votes.collect &:owner_id if current_user
+    @ideas = Idea.where(idea_type: Idea::BUG).order("#{@sort_by} DESC")
+    @idea_votes = current_user.idea_votes.collect(&:owner_id) if current_user
     render "index"
   end
   
