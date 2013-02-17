@@ -54,4 +54,10 @@ class Mailer < ActionMailer::Base
     mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
     @user.log_email
   end
+  
+  def new_idea(idea)
+    @idea = idea
+    admins = User.joins(:user_role).where("user_roles.enable_administration = ?", true)
+    mail(to: admins.first.email, subject: "[NEW IDEA] #{@idea.title}", cc: admins.collect(&:email))
+  end
 end

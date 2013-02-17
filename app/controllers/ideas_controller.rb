@@ -60,7 +60,8 @@ class IdeasController < ApplicationController
   def create
     @idea = current_user.ideas.new(params[:idea])
     if @idea.save
-      redirect_to ideas_path, notice: "Your idea has been submitted."
+      flash[:alert] = "You're idea was created."
+      redirect_to @idea
     else
       flash[:alert] = @idea.errors.full_messages.join(". ")
       render "form" 

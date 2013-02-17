@@ -15,6 +15,13 @@ class Idea < ActiveRecord::Base
   validates :description, length: { within: 1..1000 }
   validates_presence_of :creator_id
   
+  after_create do 
+    Mailer.new_idea(self).deliver
+  end
+  
+  def idea?() self.idea_type == IDEA end
+  def bug?() self.idea_type == BUG end
+  
   def points_awarded
     100 + (vote_count * 50)
   end

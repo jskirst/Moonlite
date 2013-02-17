@@ -18,11 +18,11 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
-	match '/labs/ideas' => 'ideas#ideas', as: 'ideas'
-	match '/labs/bugs' => 'ideas#bugs', as: 'bugs'
-  match '/labs/idea' => "ideas#idea", as: "new_idea"
-  match '/labs/bug' => "ideas#bug", as: "new_bug"
-	resources :ideas, path: "labs" do
+	get '/labs' => 'ideas#ideas', as: 'ideas'
+	get '/labs/bugs' => 'ideas#bugs', as: 'bugs'
+  get '/labs/idea' => "ideas#idea", as: "new_idea"
+  get '/labs/bug' => "ideas#bug", as: "new_bug"
+  resources :ideas, path: "labs" do
 	  member do
 	    get :vote
 	  end
