@@ -47,7 +47,10 @@
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
                   %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png", alt: "Up-vote" }   
           %div.ideacontent
-            %h4= link_to idea.title, idea
+            %h4
+              = link_to idea.title, idea
+              - unless idea.status.blank?
+                %span.label.label-success= idea.status
             %h6{ style: "margin: 0px;" } Submitted by #{link_to idea.creator.name, profile_path(idea.creator.username)}
             %p{ style: "padding: 5px 0; margin: 0;" }
               %pre= idea.description
