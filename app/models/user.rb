@@ -303,6 +303,7 @@ class User < ActiveRecord::Base
     
     self.last_email_sent_at = DateTime.now
     self.save!
+    return self
   end
   
   def vote_list

@@ -36,6 +36,12 @@ task :send_alerts => :environment do
     puts "Sending comment alert..."
     begin
       Mailer.content_comment_alert(comment).deliver
+      if comment.owner.comments.size > 1
+        comment.owner.comments.each do |c|
+          next if c == comment or c.user = comment.user or c.user == c.owner.user
+          Mailer.comment_reply_alert(c, comment.user, c.user)
+        end
+      end
     rescue
       puts "Comment alert rejected"
     end

@@ -9,9 +9,6 @@ class Mailer < ActionMailer::Base
   end
   
   def content_comment_alert(comment)
-    if comment.is_a? String
-      comment = SubmittedAnswer.find(comment).comments.first
-    end
     @submission = comment.owner
     @user = @submission.user
     @commenting_user = comment.user
@@ -19,7 +16,21 @@ class Mailer < ActionMailer::Base
     return false unless @user.can_email?(:interaction)
     
     @action_url = submission_details_url(@submission.path.permalink, @submission)
-    mail(to: @user.email, subject: "Someone just commented on your MetaBright submission")
+    mail(to: @user.email, subject: "#{@commenting_user.name} just commented on your MetaBright submission")
+    @user.log_email
+  end
+  
+  def comment_reply_alert(comment, commenting_user, user)
+    @comment = comment
+    @submission = comment.owner
+    @commenting_user = commenting_user
+    @user = user
+    return false if @commenting_user == @user
+    return false if @comment.user == @user
+    return false unless @user.can_email?(:interaction)
+    
+    @action_url = submission_details_url(@submission.path.permalink, @submission)
+    mail(to: @user.email, subject: "#{@commenting_user.name} just replied to your comment on MetaBright")
     @user.log_email
   end
   
@@ -34,7 +45,7 @@ class Mailer < ActionMailer::Base
     return false unless @user.can_email?(:interaction)
     
     @action_url = submission_details_url(@submission.path.permalink, @submission)
-    mail(to: @user.email, subject: "Someone voted for your MetaBright submission!")
+    mail(to: @user.email, subject: "#{@voting_user.name} just voted for your MetaBright submission!")
     @user.log_email
   end
   
@@ -57,7 +68,7 @@ class Mailer < ActionMailer::Base
   
   def new_idea(idea)
     @idea = idea
-    admins = User.joins(:user_role).where("user_roles.enable_administration = ?", true)
+    admins = User.joins(:user_role).where("user_roles.enable_administration = ? and is_fake_user = ? and is_test_user = ?", true, false, false)
     mail(to: admins.first.email, subject: "[NEW IDEA] #{@idea.title}", cc: admins.collect(&:email))
   end
 end
