@@ -90,7 +90,8 @@
                   %div.accordion-inner{ style: "padding-right:0;" }
                     - user_persona.enrollments.each do |enrollment|
                       %div.profile_challenge
-                        = image_tag enrollment.path.picture, style:"width:30px; height:30px;"
+                        = link_to challenge_path(enrollment.path.permalink) do
+                          = image_tag enrollment.path.picture, style:"width:30px; height:30px;", title: "#{enrollment.path.name}", alt: "#{enrollment.path.name}"
                         %div.challenge_progress
                           %h5{ style: "font-size: 13px;" }= enrollment.path.name
                           %span #{enrollment.total_points} pts

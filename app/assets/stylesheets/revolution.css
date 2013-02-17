@@ -137,8 +137,10 @@ code,pre{font:inherit;}
 .leftboxfooter .accordion-toggle{text-decoration:none; padding:8px 2px 1px 2px;}
 .leftboxfooter .accordion-inner{padding:9px 15px 3px 15px;}
 .leftboxfooter .accordion{margin-bottom:4px;}
-.profile_challenge{ margin-left: 5px; margin-bottom: 10px; }
+.profile_challenge{ margin-left: 5px; margin-bottom: 12px; }
+.profile_challenge a{ text-decoration:none; }
 .challenge_progress{ display:inline-block; vertical-align:top; margin-left:4px; width:78%; color:gray; }
+.challenge_progress h5{ line-height: 12px; font-weight:bold; margin-bottom:3px;}
 .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/plus.png); background-repeat:no-repeat; display:inline-block; width:11px; height:11px; vertical-align:middle; position:relative; bottom:2px; margin-right:2px; opacity:.8;}
 .active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
 
@@ -253,6 +255,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 60px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .completionmessagespace{display:inline-block; width:396px;overflow: hidden; border-right:1px solid rgba(0, 0, 0, .1);}
+.completionmessagespace a{ text-decoration:none; }
 .completionheader{ margin-left: 12px; }
 .completionheader span{font:normal 29px 'Muli', sans-serif;}
 .completionsubheader{margin-left:12px; font-size:16px}
@@ -393,7 +396,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .ideas_header img { height:115px; }
 .ideas_header h1 {font-size:50px; display:inline-block; position: relative; top: 11px; }
 .ideas_header h4 { font-weight:bold; line-height:32px; font-size:16px }
-.ideas_body { border-radius: 4px; background-color: white; padding-bottom: 10px; }
+.ideas_body { border-radius: 4px; background-color: white; padding-bottom: 10px; border: 1px solid rgba(0, 0, 0, .1);}
 .ideas_list { background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; }
 .idea_box { background-color: #F9F9F9; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); border-bottom: 1px solid #DDD; margin: 20px; padding:12px 12px 6px 12px; }
 #ideapage .postfooter .leftstuff { padding-top: 0px; height: 20px; }
