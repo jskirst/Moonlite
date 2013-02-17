@@ -1,0 +1,10 @@
+%p #{@commenting_user.name} just replied to your comment on the question:
+%p.quote{ style: "font-size:12px; font-style: italic;" }= @submission.task.question
+%p #{@commenting_user.name} said: "#{@comment.content}"
+%p To see the whole thread, follow the link below:
+%p
+  %a{ href: @action_url }= @action_url
+%p 
+  Thanks,
+  %br
+  The MetaBright Team

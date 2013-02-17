@@ -1,3 +1,3 @@
-%p #{@idea.creator.name} posted a new idea:
-%p= @idea.title
+%p #{@idea.creator.name} posted a new #{@idea.bug? ? "bug" : "idea"}:
+%h4= @idea.title
 %p= @idea.description
