@@ -414,6 +414,10 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .ideacontent h4 a {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
 .ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
 
+/* Challenge creator */
+.challenge_creation_tips { display: inline-block; vertical-align: top; margin-left:23px; width:45%; margin-top:8px;}
+.challenge_creation_tips div { margin-top: 38px; }
+
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
 .challenge_stats ul{list-style:none;}

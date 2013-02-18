@@ -1,13 +1,14 @@
 :css
   legend { font-size: 16px; }
-  .form_field { margin: 20px 20px 30px 30px; }
+  .form_field { margin: 20px 20px 30px 30px;}
+  form {  width:52%; display:inline-block;}
   input, select { padding: 3px; font-size: 16px; color: #404040; }
 %div.single_pane
   :javascript
     $(function(){
       $("#new_path").submit(function(){
         if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
-          alert("You must provide an image and a name before you can create a challenge.");
+          alert("You must provide an image and a name before you can create a Challenge.");
           return false;
         } else {
           return true;
@@ -37,3 +38,20 @@
           = render "stored_resources/new_image"
       = link_to "Cancel", root_path, class: "button button-standard"
       = f.submit "Next", class: "button button-actionable", style: "margin-left: 15px;"
+  %div.challenge_creation_tips
+    %div
+      %h3
+        %img{ alt: "Lightbulb", src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:30px; width:30px;" }
+        Tips
+      %ul
+        %li Your Challenge name should refer to a specific topic. "Mathematics" would be too broad, "Subtraction" would be too narrow, but "Pre-Algebra" would be just right.
+        %li Keep in mind that you can divide your Challenge into specific sections.
+        %li The name should be no more than four words
+    %div
+      %h3
+        %img{ alt: "Lightbulb", src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:30px; width:30px;" }
+        Tips
+      %ul
+        %li Your image should clearly represent the Challenge.
+        %li For resolution purposes, try to pick an image that's roughly a square.
+        %li Images with color backgrounds tend to work best.
