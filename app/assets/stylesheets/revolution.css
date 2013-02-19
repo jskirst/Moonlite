@@ -415,8 +415,9 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
 
 /* Challenge creator */
-.challenge_creation_tips { display: inline-block; vertical-align: top; margin-left:23px; width:45%; margin-top:8px;}
-.challenge_creation_tips div { margin-top: 38px; }
+.challenge_creation_tips { display: inline-block; vertical-align: top; margin-left:23px; width:45%; }
+.challenge_creation_tips div {}
+.challenge_creation_tips ul {font-size:14px;}
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}

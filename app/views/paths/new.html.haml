@@ -26,13 +26,12 @@
       %div.field.clearfix
         %div.form_field
           = f.text_field :name, autofocus: "autofocus"
-          %p Examples: 'Advanced jQuery Techniques' or just 'Jimi Hendrix'
-      %legend 2. Choose a Persona for your Challenge to belong to:
-      %div.field.clearfix
+      %legend{ style: "display:none;" } 2. Choose a Persona for your Challenge to belong to:
+      %div.field.clearfix{ style: "display:none;" }
         %div.form_field
           = f.select :persona_id, current_company.personas.collect{|p|[p.name, p.id]}
           %p Every Challenge belongs to just one Persona - so choose wisely...
-      %legend 3. Upload an image to represent your Challenge:
+      %legend{ style: "margin-top:19px;" } 3. Upload an image to represent your Challenge:
       %div.field.clearfix
         %div.form_field
           = render "stored_resources/new_image"
@@ -42,7 +41,7 @@
     %div
       %h3
         %img{ alt: "Lightbulb", src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:30px; width:30px;" }
-        Tips
+        Naming Tips
       %ul
         %li Your Challenge name should refer to a specific topic. "Mathematics" would be too broad, "Subtraction" would be too narrow, but "Pre-Algebra" would be just right.
         %li Keep in mind that you can divide your Challenge into specific sections.
@@ -50,7 +49,7 @@
     %div
       %h3
         %img{ alt: "Lightbulb", src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:30px; width:30px;" }
-        Tips
+        Image Tips
       %ul
         %li Your image should clearly represent the Challenge.
         %li For resolution purposes, try to pick an image that's roughly a square.
