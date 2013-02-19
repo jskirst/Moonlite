@@ -17,9 +17,9 @@
         - if params[:action] == "show"
           = link_to "Back to all #{@ideas.first.idea? ? 'Ideas' : 'Bugs'}", ideas_path, style: "float: right;"
         - else
-          = link_to "Newest", @ideas.first.idea? ? ideas_path(sort: "created_at") : bugs_path(sort: "created_at")
+          = link_to "Newest", @ideas.first.idea? ? ideas_path(s: "c") : bugs_path(s: "c")
           |
-          = link_to "Votes", @ideas.first.idea? ? ideas_path(sort: "vote_count") : bugs_path(sort: "vote_count") 
+          = link_to "Votes", @ideas.first.idea? ? ideas_path(s: "v") : bugs_path(s: "v") 
       %ul.nav.nav-tabs
         %li{ class: @ideas.first.idea? ? "active" : "" }
           = link_to "Ideas", ideas_path
@@ -47,7 +47,10 @@
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
                   %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png", alt: "Up-vote" }   
           %div.ideacontent
-            %h4= link_to idea.title, idea
+            %h4
+              = link_to idea.title, idea
+              - unless idea.status.blank?
+                %span.label.label-success= idea.status
             %h6{ style: "margin: 0px;" } Submitted by #{link_to idea.creator.name, profile_path(idea.creator.username)}
             %p{ style: "padding: 5px 0; margin: 0;" }
               %pre= idea.description
@@ -55,7 +58,6 @@
 
 :javascript
   $(function(){ 
-    $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
     $(".display_sharing_icon").click(function(){ 
       $(this).parents(".leftstuff").find(".social_toolbar").css("display", "inline");
       $(this).parent().remove(); 
