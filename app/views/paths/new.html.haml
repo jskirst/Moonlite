@@ -1,7 +1,7 @@
-%div.single_pane
+%div.single_pane{ style: "padding: 8px; "}
   %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
-    = image_tag STONY_SMALL_URL, style: "height: 60px; display: inline; vertical-align: middle", alt: "Stoney"
-    %h1{ style: "display: inline; vertical-align: middle;" } Create a Challenge
+    = image_tag STONY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
+    %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create a Challenge
     
   %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
     = form_for(@path) do |f|
@@ -9,14 +9,14 @@
       %div{ style: "text-align: center; margin: 10px auto;" }
         
         %div.action_group
-          %h3 What is the name of your Challenge?
+          %h3 Give your Challenge a name
           %div.control-group
             %div.controls
               = f.text_field :name, autofocus: "autofocus", style: "padding: 20px; width: 500px; font-size: 28px; line-height: 36px; text-align: center;", placeholder: "Something awesome..."
           %div.tips
             %h5
               %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              Use to goldilocks rule for names: "Mathematics" would be too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
+              Stick to the Goldilocks rule for names: "Mathematics" would be too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
         
         %div.action_group
           %h3 Upload an image to represent your Challenge
@@ -26,7 +26,7 @@
           %div.tips
             %h5 
               %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              Images of medium resolution that's roughly a square with a color backgrounds tend to work best.
+              Try to choose an image of medium resolution that's roughly a square, and has a color background.
         
         %div.action_group 
           %h3 Choose a Challenge template
@@ -34,7 +34,7 @@
             %div.form_field
               %label.checkbox
                 = f.radio_button(:template_type, "difficulty", style: "margin-top: -2px;" )
-                Organize Sections difficulty level (Novice, Intermediate, Advanced, Master)
+                Organize Sections by difficulty level
               %label.checkbox
                 = f.radio_button(:template_type, "subtopic", style: "margin-top: -2px;" )
                 Organize Sections by subtopic name
@@ -44,9 +44,9 @@
           %div.tips
             %h5 
               %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              You can always add, remove or rename any section before you publish your Challenge.
+              You can always add, remove or rename any Section before you publish your Challenge.
     
-    %div.row{ style: "text-align: center; margin-bottom: 30px;" }
+    %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
       %button.button.button-large.button-actionable{ onclick: "$('#new_path').submit();" } Create My Challenge
       
 :css
@@ -54,12 +54,13 @@
   .action_group { margin-bottom: 40px; }
   .action_group h3 { margin: 0 0 15px 0; }
   .tips { width: 400px; margin: 5px auto; }
-  .tips h5 { display: inline-block; width: 350px; }
-  .tips img { vertical-align: top;display: inline-block; height: 13px; width: 13px; }
+  .tips h5 { display: inline-block; width: 370px; }
+  .tips img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; }
   .template_image { width: 60px; height: 60px; }
   .button.button-large { font-size: 24px; line-height: 30px; font-weight: lighter; }
   .button.button-large:hover { box-shadow: 0px 0px 5px black; }
   .action_group .image_preview { width: 200px; height: 200px; max-width: 200px; }
+  
 :javascript
   $(function(){
     $("#new_path").submit(function(){

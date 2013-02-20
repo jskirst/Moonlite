@@ -32,10 +32,10 @@ class PathsController < ApplicationController
         @path.sections.create!(name: "Topic 3")
         @path.sections.create!(name: "Topic 4")
       elsif @path.template_type == "difficulty"
-        @path.sections.create!(name: "Easy")
-        @path.sections.create!(name: "Medium")
+        @path.sections.create!(name: "Novice")
+        @path.sections.create!(name: "Intermediate")
         @path.sections.create!(name: "Advanced")
-        @path.sections.create!(name: "Hard")
+        @path.sections.create!(name: "Expert")
       else
         raise "Fatal: Unknown template type"
       end

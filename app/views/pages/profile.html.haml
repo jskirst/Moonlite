@@ -27,7 +27,7 @@
   .challengecontent > div { margin-bottom:40px; }
   .challengebucket {margin: 15px 0 0 60px; padding: 12px;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
-  .challengebucket h2 { color: #7d7d7d; text-shadow: 1px 0 0 #fff; font-weight:bold}
+  .challengebucket h2 { color: rgb(196, 196, 196); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; }
   .bucketsubtitle { font-size:18px; margin-left:15px; margin-bottom:20px;}
   .arenabucket .bucketsubtitle p { font-size: 15px; }
   .bucketsubtitle p { font-weight:bold; }
@@ -52,7 +52,7 @@
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
             %p{ style: "font-size: 26px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
-        %div#bottomboxcontent{ style:"display:none;"}
+        %div#bottomboxcontent{ }
           %div.span9
             %div{ style: "display:inline-block; "}
               %ul
