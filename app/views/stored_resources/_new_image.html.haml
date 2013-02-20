@@ -27,7 +27,7 @@
   %div.image_input
     = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/image.png", size: "16x16", style: "vertical-align: middle;"
     %span{ style: "vertical-align: middle; font-size: 13px;" } Add image:
-    = file_field_tag("obj", id: unique_id, style: "margin-left: 2px; line-height: inherit; height: inherit; vertical-align: middle; width: 185px;")
+    = file_field_tag("obj", id: unique_id, style: "margin-left: 2px; line-height: inherit; font-size: 13px; padding-top:0px; height: inherit; vertical-align: middle; width: 200px;")
     = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "20x20", style: "vertical-align: middle; display: none;", id: "loading_image_#{unique_id}", alt: "Loading"
   %div{ style: "margin-top: 10px;" }
     = hidden_field_tag("stored_resource_id", nil, class: "image_input_field")

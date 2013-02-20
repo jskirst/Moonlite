@@ -25,6 +25,10 @@ module SessionsHelper
     Company.find(1)
   end
   
+  def show_header
+    return @show_header.nil? ? true : @show_header
+  end
+  
   def show_sign_in
     return @show_sign_in.nil? ? true : @show_sign_in
   end
