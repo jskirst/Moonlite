@@ -171,6 +171,11 @@ class PathsController < ApplicationController
       @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
       @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
       @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
+      
+      @completed = params[:c]
+      if @completed
+        check_achievements
+      end
     else
       @display_sign_in = true
       session[:referer] = @path.id 
