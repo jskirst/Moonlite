@@ -54,7 +54,8 @@ class Enrollment < ActiveRecord::Base
     end
   end
   
-  def rank() Enrollment.where("path_id = ? and total_points > ?", path_id, total_points).count + 1 end
+  def rank() Enrollment.rank(total_points) end
+  def self.rank(points) Enrollment.where("path_id = ? and total_points > ?", path_id, total_points).count + 1 end
   
   def contribution_unlocked?() contribution_unlocked_at.nil? ? false : true end
   

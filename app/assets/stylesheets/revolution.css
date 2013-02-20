@@ -296,6 +296,10 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 
 .button { margin-bottom: 0px; margin-top: 0px; vertical-align: middle; display: inline-block; text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
 .button.button-small { font-size: 12px; padding: 5px 15px 4px 15px; }
+.button.button-xlarge { font-size: 24px; line-height: 30px; font-weight: lighter; }
+.button.button-xlarge:hover { box-shadow: 0px 0px 5px black; }
+.button.button-large { font-size: 18px; line-height: 24px; font-weight: lighter; }
+.button.button-large:hover { box-shadow: 0px 0px 3px black; }
 .button.button-actionable { background-image: -moz-linear-gradient(top, #ee5f5b, #971D1C);background-image: -ms-linear-gradient(top, #ee5f5b, #971D1C);background-image: -o-linear-gradient(top, #ee5f5b, #971D1C);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#971D1C));background-image: -webkit-linear-gradient(top, #ee5f5b, #971D1C);background-image: linear-gradient(top, #ee5f5b, #971D1C); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee5f5b', EndColorStr='#971D1C'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee5f5b', EndColorStr='#971D1C')"; /* IE8 */}
 .button.button-info { background-image: -moz-linear-gradient(top, #5BC0DE, #339BB9);background-image: -ms-linear-gradient(top, #5BC0DE, #339BB9);background-image: -o-linear-gradient(top, #5BC0DE, #339BB9);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5BC0DE), to(#339BB9));background-image: -webkit-linear-gradient(top, #5BC0DE, #339BB9);background-image: linear-gradient(top, #5BC0DE, #339BB9); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#5BC0DE', EndColorStr='#339BB9'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#5BC0DE', EndColorStr='#339BB9')"; background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc1NjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiM1QkMwREUiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiMzMzlCQjkiIG9mZnNldD0iMSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c1NjEpIiAvPgo8L3N2Zz4=);}
 .button.button-standard { background-image: -moz-linear-gradient(white, white 5%, #E6E6E6);background-image: -ms-linear-gradient(white, white 5%, #E6E6E6);background-image: -o-linear-gradient(white, white 5%, #E6E6E6);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(0.05, white), to(#E6E6E6));background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6);background-image: linear-gradient(white, white 5%, #E6E6E6); color: rgb(75, 75, 75); text-shadow: 0 1px 0px whitesmoke; filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6')";}
@@ -415,9 +419,14 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
 
 /* Challenge creator */
-.challenge_creation_tips { display: inline-block; vertical-align: top; margin-left:23px; width:45%; }
-.challenge_creation_tips div {}
-.challenge_creation_tips ul {font-size:14px;}
+h3 { font-size: 28px; }
+.action_group { margin-bottom: 40px; }
+.action_group h3 { margin: 0 0 15px 0; }
+.tips { width: 400px; margin: 5px auto; }
+.tips h5 { display: inline-block; width: 370px; }
+.tips img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; }
+.template_image { width: 60px; height: 60px; }
+.action_group .image_preview { width: 200px; height: 200px; max-width: 200px; }
 
 /* Signed Out Challenge page */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}

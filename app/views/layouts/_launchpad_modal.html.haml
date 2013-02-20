@@ -2,21 +2,56 @@
   %div#launchpad.dropdown_modal.modal.hide.fade{ style: "top: 5%;", tabindex: "-1"}
     %div.overlay
       %div.launchpad{ style: "height: 545px; width: 900px;" }
+        
         %div.modal_close
-          %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt:"Close"}
+          = image_tag ICON_CLOSE_URL, alt:"Close"
         %h1
-          = image_tag(@path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}")
+          = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}"
           %div{style:"position:relative; bottom:10px; "}
-            %span{ } #{@path.name}
+            %span #{@path.name}
           %div{style:"float:right; position:relative; top:3px; width: 205px; height; 42px; overflow-y: hidden; margin-right:12px; "}
             %span{style:"font-size:21px;"} Level #{@enrollment.level}
             %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
             %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
               %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-        %div#launchpad_headlines{ style: "width: 100%; height: 90%; padding: 20px; display: none;" }
-          %p this is a thing
-          %button.button.button-actionable{ onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue
-        %div.launchpadcontent{ }
+        
+        - @achievements = [3, false]
+        - if @achievements
+          - new_level = @achievements[0]
+          - new_rank = @achievements[1]
+          %div#launchpad_headlines{ style: "width: 100%; height: 90%; padding: 5% 6% 0 6%;" }
+            %div{ style: "width: 20%; height: 100%; display: inline-block; vertical-align: top" }
+              = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}", style: "width: 100%;"
+            %div{ style: "display: inline-block; width: 67%; padding: 10px 0;"}
+              
+              %h3{ style: "font-size: 25px; line-height: 32px;" }
+                Congratulations!
+                - if new_level && new_rank
+                  You just leveled up and reached the Top #{new_rank} on the leaderboard!
+                  - sharing_text = "I leveled up and reached the Top #{new_rank} on the #{@path.name} leaderboard!" 
+                - elsif new_level
+                  You just leveled up!
+                  - sharing_text = "I reached Level #{new_level} on the #{@path.name} Challenge!"
+                - elsif new_rank
+                  You reached the Top #{new_rank} on the leaderboard!
+                  - sharing_text = "You reached the Top #{new_rank} on the #{@path.name} leaderboard!"
+                  
+              %div{ style: "text-align: middle; margin: 15px 0;" }
+                - if new_level
+                  %h4{ style: "margin: 10px 0;" } You are now Level #{new_level} - only #{@enrollment.points_to_next_level} points to Level #{new_level + 1}.
+                - if new_rank
+                  %h4{ style: "margin: 10px 0;" } You're now in #{ActiveSupport::Inflector.ordinalize(new_rank)} place on the #{@path.name} Leaderboard.
+                
+                %p{ style: "font-size: 17px;" } You deserve a round of applause. In fact, you deserve a standing ovation. Share this achievement and brag to your friends.
+                %div{ style: "margin-top: 15px;" }
+                  %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, profile_path(current_user.username), sharing_text) } Share on Google+
+                  %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, profile_path(current_user.username), sharing_text) } Share on Facebook
+                  %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, profile_path(current_user.username), sharing_text) } Share on Twitter
+              
+              %div{ style: "float: right; margin-top: 30px;" }
+                %a{ href: "#", style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
+        
+        %div.launchpadcontent{ style: ("display: none;" if @achievements) }
           %div.launchpadsectioncolumn
             %div.launchpadcolumnheader
               Sections
