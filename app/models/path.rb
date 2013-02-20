@@ -1,5 +1,5 @@
 class Path < ActiveRecord::Base
-  attr_accessor :persona_id
+  attr_accessor :persona_id, :template_type
   attr_readonly :company_id
   attr_protected :approved_at, :published_at, :public_at
   attr_accessible :user_id,
@@ -9,7 +9,8 @@ class Path < ActiveRecord::Base
     :image_url,  
     :tags,
     :persona_id,
-    :permalink
+    :permalink,
+    :template_type
   
   has_one :stored_resource, as: :owner
   belongs_to :user
@@ -39,10 +40,6 @@ class Path < ActiveRecord::Base
   end
   
   before_validation :grant_permalink
-  after_create do
-    puts "PERSONA_ID:" + self.persona_id.to_s
-    self.path_personas.create(persona_id: self.persona_id)
-  end
   
   def published?() published_at.nil? ? false : true end
   def public?() public_at.nil? ? false : true end

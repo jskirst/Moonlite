@@ -23,7 +23,24 @@ class PathsController < ApplicationController
         sr.owner_type = @path.class.to_s
         sr.save
       end
-      redirect_to new_section_path(:path_id => @path.id)
+      
+      if @path.template_type == "blank"
+        @path.sections.create!(name: "First Section")
+      elsif @path.template_type == "subtopic"
+        @path.sections.create!(name: "Topic 1")
+        @path.sections.create!(name: "Topic 2")
+        @path.sections.create!(name: "Topic 3")
+        @path.sections.create!(name: "Topic 4")
+      elsif @path.template_type == "difficulty"
+        @path.sections.create!(name: "Easy")
+        @path.sections.create!(name: "Medium")
+        @path.sections.create!(name: "Advanced")
+        @path.sections.create!(name: "Hard")
+      else
+        raise "Fatal: Unknown template type"
+      end
+      
+      redirect_to edit_path_path(@path.permalink)
     else
       @categories = current_user.company.categories
       render 'new'

@@ -31,4 +31,4 @@
     = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "20x20", style: "vertical-align: middle; display: none;", id: "loading_image_#{unique_id}", alt: "Loading"
   %div{ style: "margin-top: 10px;" }
     = hidden_field_tag("stored_resource_id", nil, class: "image_input_field")
-    %img.image_preview{ style: "height: 70px; max-width: 150px; display: none;", alt: "Image preview" }
+    %img.image_preview{ style: "display: none;", alt: "Image preview" }

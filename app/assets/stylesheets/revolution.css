@@ -424,3 +424,6 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .challenge_stats ul{list-style:none;}
 .challenge_stats li{line-height:15px;}
 .challenge_stats span{font-weight:bold; }
+
+/* New Image */
+.image_preview { height: 70px; max-width: 150px; } 
