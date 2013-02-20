@@ -20,15 +20,22 @@
   #bottomboxcontent .span9 ul { list-style:none; }
   #profilemeat { padding:10px 12px; border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; margin-bottom: 12px;}
   .personabucket img { height:60px; width:60px; display:inline-block; }
-  .headerinfo { display:inline-block; font-size:20px; }
+  .headerinfo { display:inline-block; font-size:20px; border-bottom: 1px solid rgb(209, 209, 209); padding-bottom: 4px; width: 89%; }
   .bigname { font-weight:bold;  }
   .challengecontent { margin: 20px 0 0 30px;}
+  .challengecontent h2 { margin-bottom:15px; }
   .challengecontent > div { margin-bottom:40px; }
-  .challengebucket {margin: 15px 0 0 60px; background-color: #eff1f1; border: 1px solid rgba(0, 0, 0, .1); padding: 12px; border-radius: 6px;}
-  .challengebucket img { height:60px; width:60px; display:inline-block; }
+  .challengebucket {margin: 15px 0 0 60px; padding: 12px;}
+  .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
   .challengebucket h2 { color: #7d7d7d; text-shadow: 1px 0 0 #fff; font-weight:bold}
   .bucketsubtitle { font-size:17px; margin-left:15px; }
-  .taskbox{ margin-left:40px; border: 1px solid rgba(0, 0, 0, .1); background-color:white; }
+  .bucketsubtitle p { font-weight:bold; }
+  .bucketsubtitle ul { margin:0 0 15px 50px; }
+  .bucketsubtitle li { margin-bottom: 5px; }
+  .taskbox{ margin-left:40px; margin-bottom:25px; border: 1px solid rgba(0, 0, 0, .1); background-color: whitesmoke;border-radius: 6px;padding-top: 5px;padding-left: 12px;width: 89%;}
+  .taskbox h3{ text-shadow: 1px 0 0 #fff; }
+  .taskbucket a { cursor: pointer; }
+  .center { text-align:center; }
   
 %div#homepage
   %div#topsection
@@ -42,7 +49,7 @@
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
             %p{ style: "font-size: 26px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
-        %div#bottomboxcontent
+        %div#bottomboxcontent{ style:"display:none;"}
           %div.span9
             %div{ style: "display:inline-block; "}
               %ul
@@ -69,7 +76,14 @@
               %div.arenabucket
                 %h2 What I know
                 %div.bucketsubtitle
-                  %p *Section name* Section: ## multiple choice questions answered correctly
+                  %p *Section name* Section:
+                  %ul
+                    %li ## questions answered correctly
+                    %li Another achievement here
+                    %li And a third achievement here
+                      
+                  %p *Section name* Section: ## questions answered correctly
+                  %p *Section name* Section: ## questions answered correctly
               %div.taskbucket
                 %h2 What I've done
                 %div.bucketsubtitle
@@ -77,10 +91,12 @@
                 %div.taskbox
                   %h3 I jumped off a 15-story bridge and survived
                   %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
+                %div.center
+                  %a See more
               %div.crbucket
                 %h2 What I can do
                 %div.bucketsubtitle
-                  %p ## Creative Responses
+                  %p ## Creative Responses answered
                 %div.taskbox
                   %h3 I jumped off a 15-story bridge and survived
                   %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
