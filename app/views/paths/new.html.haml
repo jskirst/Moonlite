@@ -1,56 +1,68 @@
-:css
-  legend { font-size: 16px; }
-  .form_field { margin: 20px 20px 30px 30px;}
-  form {  width:52%; display:inline-block;}
-  input, select { padding: 3px; font-size: 16px; color: #404040; }
 %div.single_pane
-  :javascript
-    $(function(){
-      $("#new_path").submit(function(){
-        if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
-          alert("You must provide an image and a name before you can create a Challenge.");
-          return false;
-        } else {
-          return true;
-        }
-      });
-    });
-  %div
-    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: "height: 60px; display: inline; vertical-align: middle", alt: "Stoney"
+  %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+    = image_tag STONY_SMALL_URL, style: "height: 60px; display: inline; vertical-align: middle", alt: "Stoney"
     %h1{ style: "display: inline; vertical-align: middle;" } Create a Challenge
-  %hr{ style: "margin: 5px 0 20px 0;"}
-  = form_for(@path) do |f|
-    = render "shared/error_messages", object: f.object
-    %div{ style: "margin-left: 50px;" }
-      %legend 1. What is the name of your Challenge?
-      %div.field.clearfix
-        %div.form_field
-          = f.text_field :name, autofocus: "autofocus"
-      %legend{ style: "display:none;" } 2. Choose a Persona for your Challenge to belong to:
-      %div.field.clearfix{ style: "display:none;" }
-        %div.form_field
-          = f.select :persona_id, current_company.personas.collect{|p|[p.name, p.id]}
-          %p Every Challenge belongs to just one Persona - so choose wisely...
-      %legend{ style: "margin-top:19px;" } 3. Upload an image to represent your Challenge:
-      %div.field.clearfix
-        %div.form_field
-          = render "stored_resources/new_image"
-      = link_to "Cancel", root_path, class: "button button-standard"
-      = f.submit "Next", class: "button button-actionable", style: "margin-left: 15px;"
-  %div.challenge_creation_tips
-    %div
-      %h3
-        %img{ alt: "Lightbulb", src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:30px; width:30px;" }
-        Naming Tips
-      %ul
-        %li Your Challenge name should refer to a specific topic. "Mathematics" would be too broad, "Subtraction" would be too narrow, but "Pre-Algebra" would be just right.
-        %li Keep in mind that you can divide your Challenge into specific sections.
-        %li The name should be no more than four words
-    %div
-      %h3
-        %img{ alt: "Lightbulb", src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:30px; width:30px;" }
-        Image Tips
-      %ul
-        %li Your image should clearly represent the Challenge.
-        %li For resolution purposes, try to pick an image that's roughly a square.
-        %li Images with color backgrounds tend to work best.
+    
+  %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
+    = form_for(@path) do |f|
+      = render "shared/error_messages", object: f.object
+      %div{ style: "text-align: center; margin: 10px auto;" }
+        
+        %div.action_group
+          %h3 What is the name of your Challenge?
+          %div.control-group
+            %div.controls
+              = f.text_field :name, autofocus: "autofocus", style: "padding: 8px; width: 250px;", placeholder: "Something awesome..."
+          %div.tips
+            
+            %h5
+              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+              Use to goldilocks rule for names: "Mathematics" would be too broad, "Subtraction" too narrow, but "Pre-Algebra" would be just right.
+        
+        %div.action_group
+          %h3 Upload an image to represent your Challenge
+          %div.field.clearfix
+            %div.form_field
+              = render "stored_resources/new_image"
+          %div.tips
+            %h5 
+              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+              Images of medium resolution that's roughly a square with a color backgrounds tend to work best.
+        
+        %div.action_group   
+          %h3 Choose a Challenge template
+          %div.field.clearfix
+            %div.form_field
+              %img.template_image{ src: STONY_SMALL_URL }
+              %img.template_image{ src: STONY_SMALL_URL }
+              %img.template_image{ src: STONY_SMALL_URL }
+              %img.template_image{ src: STONY_SMALL_URL }
+              %img.template_image{ src: STONY_SMALL_URL }
+          %div.tips
+            %h5 
+              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+              Images of medium resolution that's roughly a square with a color backgrounds tend to work best.
+    
+    %div.row{ style: "text-align: center;" }
+      %button.button.button-large.button-actionable{ onclick: "$('#new_path').submit();" } Create My Challenge
+      
+:css
+  .action_group { margin-bottom: 40px; }
+  .action_group h3 { margin: 0 0 15px 0; }
+  .tips { width: 400px; margin: 5px auto; }
+  .tips h5 { display: inline-block; width: 350px; }
+  .tips img { vertical-align: top;display: inline-block; height: 13px; width: 13px; }
+  .template_image { width: 60px; height: 60px; }
+  .button.button-large { font-size: 18px; line-height: 30px; }
+
+:javascript
+  $(function(){
+    $("#new_path").submit(function(){
+      if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
+        alert("You must provide an image and a name before you can create a Challenge.");
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });

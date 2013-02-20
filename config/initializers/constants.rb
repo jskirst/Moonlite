@@ -33,5 +33,10 @@ level = 1
   end
 end
 
+# URLS
+
+LIGHT_BULB_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"
+
+STONY_SMALL_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
 
 
