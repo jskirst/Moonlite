@@ -14,7 +14,7 @@
 :css
   #updatespace{ min-height:162px; }
   #topboxcontent { }
-  #topboxcontent h1{ font-size:50px; line-height:50px; }
+  #topboxcontent h1{ font-size:45px; line-height:45px; }
   #bottomboxcontent { margin-top: 97px; }
   #bottomboxcontent .span9 div { display:inline-block; color:gray; font-size: 20px; min-width:330px; }
   #bottomboxcontent .span9 ul { list-style:none; }
@@ -28,16 +28,17 @@
   .challengebucket {margin: 15px 0 0 60px; padding: 12px;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
   .challengebucket h2 { color: #7d7d7d; text-shadow: 1px 0 0 #fff; font-weight:bold}
-  .bucketsubtitle { font-size:17px; margin-left:15px; }
+  .bucketsubtitle { font-size:18px; margin-left:15px; margin-bottom:20px;}
+  .arenabucket .bucketsubtitle p { font-size: 15px; }
   .bucketsubtitle p { font-weight:bold; }
   .bucketsubtitle ul { margin:0 0 15px 50px; }
   .bucketsubtitle li { margin-bottom: 5px; }
-  .taskbox{ margin-left:40px; margin-bottom:25px; border: 1px solid rgba(0, 0, 0, .1); background-color: whitesmoke;border-radius: 6px;padding:5px 12px 17px 12px; width: 89%;}
+  .taskbox{ margin-left:40px; margin-bottom:25px; border: 1px solid rgba(0, 0, 0, .1); border-top-left-radius: 0;border-top-right-radius: 0;overflow-y: auto;background-color: transparent;background-image: -moz-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: -ms-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: -o-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, .06)), to(transparent));background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, 0.1),transparent);background-image: linear-gradient(top,rgba(0, 0, 0, .06),transparent);border-bottom-right-radius: 6px; border-bottom-left-radius:6px; padding:5px 12px 17px 12px; width: 89%;}
   .taskbox h3{ text-shadow: 1px 0 0 #fff; }
   .taskbox img { height:auto; width: auto; border-radius:0;  max-width: 100%; max-height: 300px; border-color: #ccc; border-style: solid; border-width: 0px; display: block; margin-left: auto; margin-right: auto; margin-top:10px; }
   .taskbucket a { cursor: pointer; }
-  .taskbucket .taskbox { background-color: rgb(229, 242, 245); }
-  .crbucket .taskbox { background-color: #E5F5EA;}
+  .taskboxheader { padding:0 20px; border: 1px solid rgba(0, 0, 0, .1);margin-left: 40px;border-top-left-radius: 6px;width: 87%;background-color: rgb(66, 66, 66);color: white;border-top-right-radius: 6px;border-bottom: transparent;}
+  .taskboxheader h3 { font-size:20px; }
   
 %div#homepage
   %div#topsection
@@ -76,31 +77,52 @@
               %span.littledetails | 4,280 points, Rank: 23
             %div.challengecontent
               %div.arenabucket
-                %h2 What I know
+                %h2 What I know...
                 %div.bucketsubtitle
-                  %p *Section name* Section:
-                  %ul
-                    %li ## questions answered correctly
-                    %li Another achievement here
-                    %li And a third achievement here
-                      
-                  %p *Section name* Section: ## questions answered correctly
-                  %p *Section name* Section: ## questions answered correctly
+                  %p Beginner Section:
+                  %div{ style: "display:inline-block; "}
+                    %ul
+                      %li ## questions answered correctly
+                      %li Another achievement here
+                  %div{ style: "display:inline-block; margin-left:85px;"}
+                    %ul
+                      %li And a third achievement here
+                      %li This is the fourth achievement
+                  %p Intermediate Section:
+                  %div{ style: "display:inline-block; "}
+                    %ul
+                      %li ## questions answered correctly
+                      %li Another achievement here
+                  %div{ style: "display:inline-block; margin-left:85px;"}
+                    %ul
+                      %li And a third achievement here
+                      %li This is the fourth achievement
+                  %p Advanced Section:
+                  %div{ style: "display:inline-block; "}
+                    %ul
+                      %li ## questions answered correctly
+                      %li Another achievement here
+                  %div{ style: "display:inline-block; margin-left:85px;"}
+                    %ul
+                      %li And a third achievement here
+                      %li This is the fourth achievement
               %div.taskbucket
-                %h2 What I've done
+                %h2 What I've done...
                 %div.bucketsubtitle
-                  %p ## Tasks completed
-                %div.taskbox
+                  %p 17 Tasks completed
+                %div.taskboxheader
                   %h3 "I jumped off a 15-story bridge and survived"
+                %div.taskbox                  
                   %img{ src: "http://www.slovenia.info/pictures%5Cprogram%5C1%5C2008%5CBungee_jumping_-_Solkan_(500_x_374)_190854.jpg"}
                 %center
                   %a See more
               %div.crbucket
-                %h2 What I can do
+                %h2 What I can do...
                 %div.bucketsubtitle
-                  %p ## Creative Responses answered
-                %div.taskbox
+                  %p 23 Creative Responses answered
+                %div.taskboxheader                  
                   %h3 Explain why the Orioles will never win another World Series
+                %div.taskbox
                   %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
                 %center
                   %a See more  
