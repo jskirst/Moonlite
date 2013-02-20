@@ -32,10 +32,12 @@
   .bucketsubtitle p { font-weight:bold; }
   .bucketsubtitle ul { margin:0 0 15px 50px; }
   .bucketsubtitle li { margin-bottom: 5px; }
-  .taskbox{ margin-left:40px; margin-bottom:25px; border: 1px solid rgba(0, 0, 0, .1); background-color: whitesmoke;border-radius: 6px;padding-top: 5px;padding-left: 12px;width: 89%;}
+  .taskbox{ margin-left:40px; margin-bottom:25px; border: 1px solid rgba(0, 0, 0, .1); background-color: whitesmoke;border-radius: 6px;padding:5px 12px 17px 12px; width: 89%;}
   .taskbox h3{ text-shadow: 1px 0 0 #fff; }
+  .taskbox img { height:auto; width: auto; border-radius:0;  max-width: 100%; max-height: 300px; border-color: #ccc; border-style: solid; border-width: 0px; display: block; margin-left: auto; margin-right: auto; margin-top:10px; }
   .taskbucket a { cursor: pointer; }
-  .center { text-align:center; }
+  .taskbucket .taskbox { background-color: rgb(229, 242, 245); }
+  .crbucket .taskbox { background-color: #E5F5EA;}
   
 %div#homepage
   %div#topsection
@@ -89,18 +91,19 @@
                 %div.bucketsubtitle
                   %p ## Tasks completed
                 %div.taskbox
-                  %h3 I jumped off a 15-story bridge and survived
-                  %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
-                %div.center
+                  %h3 "I jumped off a 15-story bridge and survived"
+                  %img{ src: "http://www.slovenia.info/pictures%5Cprogram%5C1%5C2008%5CBungee_jumping_-_Solkan_(500_x_374)_190854.jpg"}
+                %center
                   %a See more
               %div.crbucket
                 %h2 What I can do
                 %div.bucketsubtitle
                   %p ## Creative Responses answered
                 %div.taskbox
-                  %h3 I jumped off a 15-story bridge and survived
+                  %h3 Explain why the Orioles will never win another World Series
                   %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
-                    
+                %center
+                  %a See more  
             
   
   
