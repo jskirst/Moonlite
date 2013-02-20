@@ -10,7 +10,7 @@ class PagesController < ApplicationController
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
     else
-      @show_sign_in = false
+      @show_header = false
       @personas = Persona.all
       render "landing", layout: "landing"
     end

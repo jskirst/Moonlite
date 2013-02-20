@@ -1,14 +1,25 @@
 %html
 %head
   = render "layouts/head"
+  
   :css
     body { background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg'); background-repeat:no-repeat; background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif;}
     .explorenewusercontent{ box-shadow: none; }
     .show_persona_select button { margin-top: 0px; }
     .persona_preview { height; 172px; margin-top:15px;}
     .explorecontainer{border-radius: 6px;border: 1px solid rgba(0, 0, 0, 0.0980392);background: rgba(255, 255, 255, 0.8);}
+  
+  :javascript
+    var iph_off = #{!params[:iph].nil?};
+    var viewed_help = #{get_viewed_help};
+    var all_help = #{get_all_help.to_json};
+    var mark_read_url = '#{mark_help_read_url}';
+    $(function(){ init_iph(); });
 %body
-  = render "layouts/navbar", { no_bar: (@no_bar.nil? ? true : @no_bar) }
-  = render "layouts/explore_modal" if @show_footer
+  = render "layouts/navbar" if show_header
+  - if current_user
+    = render "layouts/explore_modal" if show_footer
+  - else
+    = render "layouts/login_modal"
   = yield
-  = render "layouts/footer" if @show_footer
+  = render "layouts/footer" if show_footer
