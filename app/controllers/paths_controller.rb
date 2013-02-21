@@ -1,4 +1,6 @@
 class PathsController < ApplicationController
+  include PathsHelper
+  
   before_filter :authenticate, except: [:show, :newsfeed, :drilldown]
   before_filter :load_resource, except: [:index, :new, :create, :drilldown]
   before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators]
@@ -159,6 +161,7 @@ class PathsController < ApplicationController
     @title = "#{@path.name} Quiz" 
     @tasks = @path.tasks
     @responses = []
+    
     if current_user
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
       if current_user.enrollments.size == 1 and @enrollment.total_points == 0
@@ -171,10 +174,17 @@ class PathsController < ApplicationController
       @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
       @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
       @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
+      
+      @completed = params[:c]
+      @points_gained = params[:p]
+      if @completed && @points_gained
+        @achievements = check_achievements(@points_gained, @enrollment)
+      end
     else
       @display_sign_in = true
       session[:referer] = @path.id 
     end
+    
     @similar_paths = @path.similar_paths
     social_tags(@path.name, @path.picture, @path.description)
     @display_launchpad = params[:completed]
