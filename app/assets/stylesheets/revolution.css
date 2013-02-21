@@ -1,7 +1,7 @@
-/* General - this should always stay at the top */
+/* General/Revolution - this should always stay at the top */
 pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
 
-/* Stream */
+/* Stream/Revolution */
 .newsfeed h4{ margin:9px 10px 10px 10px; font: 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height:10%; letter-spacing:0.15em; color:#fff; text-shadow:1px 1px 0 rgb(0,0,0); }
 .newsfeed p{ margin:0 9px 2px 0; font:300 11px 'Lucida Grande', Tahoma, Verdana, sans-serif; color:#aaa;}
 .newsfeed a { text-decoration:none; cursor:pointer; }
@@ -46,7 +46,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
 
-/* Progress rails */
+/* Progress/Revolution rails */
 .singleprogressentry{ padding: 4px 0 9px 12px;}
 .singleprogressentry:hover{background-color:#eee;}
 .singleprogressentry:last-child{ padding-bottom:10px; }
@@ -61,7 +61,7 @@ code,pre{font:inherit;}
 .personaprogress .progress{ height:10px;}
 .challengeprogress .progress{ height:10px;}
 
-/* Other stuff - organize by feature */
+/* Other stuff/Revolution - organize by feature */
 #topsection{ margin: 0; border: 1px solid rgba(0, 0, 0, .1);border-radius: 6px;position:relative;background-clip: padding-box; color:#333; background-color:white; margin-bottom:10px;}
 #updatespace{ background-color: white; border-radius: 6px; padding: 12px 0 9px 13px; overflow: hidden;}
 .bigheaderimage{ height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
@@ -107,8 +107,8 @@ code,pre{font:inherit;}
 .container.body { margin-bottom:11px; border-radius:6px; width: 940px; padding: 15px; background-color: rgba(255, 255, 255, .3); border:none; box-shadow:none; }
 #content { padding-top: 42px; min-height: 450px;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
-.navbar .nav > li > a {display: block;float: none;padding: 10px 10px;line-height: 19px;text-decoration: none;}
-.navbar .nav.pull-right a:hover {color:white;}
+.navbar .nav > li > a { padding: 6px 25px; text-decoration: none;}
+.navbar .nav.pull-right a:hover { color:white; }
 .navbar .nav.pull-right .leftboxfooter a {text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);}
 .nav.pull-right .caret{ border-top-color: #c7ced6; border-bottom-color: #c7ced6; color: #c7ced6; margin-top:7px; }
 .navbar .nav.pull-right a:hover .caret{border-top-color:white; border-bottom-color:white; color:white;}
@@ -117,7 +117,7 @@ code,pre{font:inherit;}
 .landingbuttontext{color:white; font-size:13px; display:inline-block; position:relative; left:5px; font-family:'MuliRegular'; font-weight: bold;}
 
 
-/* From profile */
+/* Profile/Revolution */
 #homepage{color:#333;}
 #topboxcontent{ width:729px; margin-top: 0px; }
 #topboxcontent h1{ margin:0px; font-size:30px; display:inline; }
@@ -144,7 +144,7 @@ code,pre{font:inherit;}
 .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/plus.png); background-repeat:no-repeat; display:inline-block; width:11px; height:11px; vertical-align:middle; position:relative; bottom:2px; margin-right:2px; opacity:.8;}
 .active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
 
-/* Profile and challenge page carousels */
+/* Profile and challenge page carousels/Revolution */
 #challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
 #challengecarousel_inner { position:relative; top:6px; margin-left:12px; float:left; /* important for inline positioning */ width:672px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */}   
 #challengecarousel_ul { position:relative; left:-224px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
@@ -162,7 +162,7 @@ code,pre{font:inherit;}
 #left_scroll img {margin-left:10px;}
 #right_scroll img{margin-left:1px;}
 
-/* Arena */
+/* Arena/Revolution */
 .counter {display:block;float:left;font-size:2em;line-height:1.2em; -webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255,255,255,0.3)));}
 .counter span.digit {background:#161616;background: #3F3F3F; /* Old browsers */background: linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -o-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -moz-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -webkit-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -ms-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%); background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0A0A0A), color-stop(0.5, #2B2B2B), color-stop(1, #3F3F3F)); filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F'); /* IE6 & IE7 */-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F')"; /* IE8 */zoom:1; background-clip:border; color:#FFF;display:block;float:left; height:44px;overflow:hidden; padding:0; position:relative;text-align:center;width:30px;}
 .counter span.digit span {line-height:44px;position:relative;top:0;}
@@ -236,7 +236,7 @@ code,pre{font:inherit;}
 .exploredetailsspace button   { margin-top:10px}
 .exploretextdetails h2        { font-size:23px; font-weight:bold; font-style:italic;}
 
-/* modal/help close button*/
+/* modal/help close button/Revolution*/
 .exploreheader>.modal_close{ margin: -8px 6px 0 0; }
 .modal_close, .help_close { float:right; cursor:pointer;}
 .modal_close, .help_close img{ width:20px; height: inherit;}
@@ -270,7 +270,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
 .quizspace button{float:right;}
 
-/*cr completion page */
+/*cr completion page/Revolution */
 .completioncontent{margin: 12px;font-size: 13px;border: 1px solid rgba(0, 0, 0, .1);padding: 9px 9px 0 9px;border-radius: 6px;background-color: #F9F9F9;}
 .completioncontent h4{display:inline;}
 .completioncontent ul{margin-left:43px; margin-top:3px;}
@@ -328,11 +328,11 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .introintcontent>ul>li>.intdetails{margin-left:45px;}
 .dropdown_modal.modal.fade { width: 100%; top: 0%; background-color: transparent; border: 0; box-shadow: 0 0 0; margin-left: auto; margin-right: auto; left: inherit; margin-top: 0px; }
 
-/* Create and Administer */
+/* Create and Administer/Revolution */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
 .pills a { line-height: 23px; cursor: pointer }
 
-/* Footer */
+/* Footer/Revolution */
 .footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position:absolute; bottom:inherit; width:100%;}
 .copyright{}
 .footerlinks{}
@@ -340,7 +340,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .feedback_tab{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); padding:3px; border-top-width: 1px;border-right-width: 1px;border-left-width: 1px;border-style: solid solid none;border-top-color: rgb(255, 255, 255);border-right-color: rgb(255, 255, 255);border-left-color: rgb(255, 255, 255);border-top-left-radius: 4px;border-top-right-radius: 4px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;-webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;font-style: normal;font-variant: normal;font-weight: bold;font-size: 14px;line-height: 1em;font-family: Arial, sans-serif;position: fixed;right: 10px;bottom: 0px;z-index: 9999;background-color: rgb(64, 64, 64);margin-bottom: 0px;display: block;background-position: 0px 50%;background-repeat: no-repeat no-repeat;}
 .feedback_tab a{ background-color: transparent;display: block;padding: 6px 10px 2px 42px;text-decoration: none; color:white; cursor:pointer; font-size:15px; }
 
-/* About */
+/* About/Revolution */
 .aboutcontainer{margin-top:85px; margin-bottom:10px; overflow:hidden; width:695px;margin-left:auto;margin-right:auto;border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .aboutbox{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:20px 20px 5px 20px;}
 .aboutheader span{font-size:50px; position:relative; bottom:42px;}
@@ -354,7 +354,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .challengepagechallenge:nth-child(3n){margin-right:33px;}
 .challengepagechallenge:nth-child(4n){margin-right:0px;}
 
-/* Popover -- guided help */
+/* Popover -- guided help/Revolution */
 .popover{background-color: #FFECBD;border-width: 10px;border-style: solid;border-color: #FDD05B; z-index:1001;}
 .popover.left .arrow{right:-20px; border-left-color:#FDD05B;}
 .popover.right .arrow{left:-20px; border-right-color:#FDD05B;}
@@ -374,14 +374,14 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .highlighted { -moz-box-shadow: inset 0px 0px 20px 0px whiteSmoke; -webkit-box-shadow: inset 0px 0px 20px 0px whiteSmoke; box-shadow: inset 0px 0px 20px 0px whiteSmoke; }
 .mb-tooltip{height:17px; width:16px; background-image:url('https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/question_mark_tooltip.png'); margin-bottom:-3px; display:inline-block; cursor:pointer;}
 
-/* FF specific CSS */
+/* FF specific CSS/Revolution */
 @-moz-document url-prefix() {
 	.persona_progress_area img{vertical-align:baseline; position:relative; top:8px;}
 	.singleprogressentry img{vertical-align:baseline;}
 }
 
 
-/* notifications panel */
+/* notifications panel/Revolution */
 .notificationpanelbody {padding-top:0; padding:0 20px;}
 .notificationpanelbody h4 {font-weight: bold;line-height: 32px;font-size: 18px;}
 .settingsmanagementarea{display: block;padding: 9.5px;margin: 0 0 10px;font-size: 13px;line-height: 20px;word-break: break-all;word-wrap: break-word;background-color: #f5f5f5;border: 1px solid #ccc;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
@@ -390,12 +390,12 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .settingsmanagementarea .control-label{font-weight:bold; padding:0; margin:0; position:relative; top:3px; }
 .settingsmanagementarea>div{margin-bottom:15px; }
 
-/* Edit Profile */
+/* Edit Profile/Revolution */
 .editprofilemanagementarea{display: block;padding: 15px 9.5px 4.5px 9.5px;margin: 0 0 10px;font-size: 13px;line-height: 20px;word-break: break-all;word-wrap: break-word;background-color: #f5f5f5;border: 1px solid #ccc;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;}
 .editprofilemanagementarea .control-group{display:inline-block; margin:0; padding:0;position: relative; bottom:3px;}
 .editprofilemanagementarea control-label{font-weight:bold; padding:0; margin:0; position:relative; top:3px; }
 
-/* Idea page */
+/* Idea page/Revolution */
 .ideas_header { vertical-align: middle; border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
 .ideas_header img { height:115px; }
 .ideas_header h1 {font-size:50px; display:inline-block; position: relative; top: 11px; }
@@ -418,7 +418,7 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .ideacontent h4 a {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
 .ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
 
-/* Challenge creator */
+/* Challenge creator/Revolution */
 h3 { font-size: 28px; }
 .action_group { margin-bottom: 40px; }
 .action_group h3 { margin: 0 0 15px 0; }
@@ -428,11 +428,11 @@ h3 { font-size: 28px; }
 .template_image { width: 60px; height: 60px; }
 .action_group .image_preview { width: 200px; height: 200px; max-width: 200px; }
 
-/* Signed Out Challenge page */
+/* Signed Out Challenge page/Revolution */
 .challenge_stats{float:right; font-size:13px;position:relative; bottom:7px;}
 .challenge_stats ul{list-style:none;}
 .challenge_stats li{line-height:15px;}
 .challenge_stats span{font-weight:bold; }
 
-/* New Image */
+/* New Image/Revolution */
 .image_preview { height: 70px; max-width: 150px; } 
