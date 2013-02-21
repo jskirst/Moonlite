@@ -1,0 +1,3 @@
+heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
+
+http://nerdery.crowdmob.com/post/33143120111/heroku-ruby-on-rails-and-phantomjs
