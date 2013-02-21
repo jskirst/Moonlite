@@ -32,8 +32,9 @@
   .challengebucket {margin: 15px 0 0 60px; padding: 12px;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
   .challengebucket h2 { color: rgb(196, 196, 196); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; }
+  .challengebucket h4 { font-weight:bold; margin-bottom:6px; }
   .profilecontent { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,0.1); }
-  .bucketsubtitle { font-size:18px; margin-left:15px; margin-bottom:20px;}
+  .bucketsubtitle { font-size:18px; padding:12px;}
   .arenabucket .bucketsubtitle p { font-size: 15px; }
   .bucketsubtitle p { font-weight:bold; }
   .bucketsubtitle ul { margin:0 0 15px 50px; font-size:15px; }
@@ -96,7 +97,7 @@
                           %li Another achievement here
                 %div.taskbucket
                   %h2 What I've done...
-                  %h4{ style: "font-weight:bold; margin-bottom:6px;" } 18 Tasks Completed
+                  %h4 18 Tasks Completed
                   %div.profilecontent
                     .post
                       .postphotospace
@@ -196,16 +197,9 @@
                       %a See more
                 %div.crbucket
                   %h2 What I can do...
+                  %h4 18 Creative Response questions answered.
                   %div.profilecontent
-                    %div.bucketsubtitle
-                      %p 23 Creative Responses answered
-                    %div.taskboxheader                  
-                      %h3 Explain why the Orioles will never win another World Series
-                    %div.taskbox
-                      %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
-                    %center
-                      %a See more
-    %div#profilerail.span3
+    %div.span3
       %div.leftbox
         %div.leftboxheader Jump to...
         %div.leftboxfooter
@@ -308,9 +302,3 @@
                   %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), user_path(@user, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
         = render "shared/newsfeed"
         
-
-:javascript
-  $(function() {
-     $("#profilerail").jScroll({
-     });
-});
