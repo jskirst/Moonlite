@@ -12,13 +12,17 @@
   });
   
 :css
+  #profile .span69 { margin-left:20px; width:708px; }
+  #profile .span3 { margin-left:12px; }
+  #profile .leftboxfooter { background-color:white; padding-right:0; }
+  #profile .leftrailicon { height:58px; width:58px; margin-right:8px; }
   #updatespace{ min-height:162px; }
   #topboxcontent { }
   #topboxcontent h1{ font-size:45px; line-height:45px; }
   #bottomboxcontent { margin-top: 97px; }
   #bottomboxcontent .span9 div { display:inline-block; color:gray; font-size: 20px; min-width:330px; }
   #bottomboxcontent .span9 ul { list-style:none; }
-  #profilemeat { padding:10px 12px; border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; margin-bottom: 12px;}
+  #profilemeat { padding:10px 12px; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }
   .personabucket img { height:60px; width:60px; display:inline-block; }
   .headerinfo { display:inline-block; font-size:20px; border-bottom: 1px solid rgb(209, 209, 209); padding-bottom: 4px; width: 89%; }
   .bigname { font-weight:bold;  }
@@ -28,6 +32,7 @@
   .challengebucket {margin: 15px 0 0 60px; padding: 12px;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
   .challengebucket h2 { color: rgb(196, 196, 196); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; }
+  .profilecontent { background-color: #f9f9f9; padding: 12px; border: 1px solid rgba(0,0,0,0.1); }
   .bucketsubtitle { font-size:18px; margin-left:15px; margin-bottom:20px;}
   .arenabucket .bucketsubtitle p { font-size: 15px; }
   .bucketsubtitle p { font-weight:bold; }
@@ -40,7 +45,7 @@
   .taskboxheader { padding:0 20px; border: 1px solid rgba(0, 0, 0, .1);margin-left: 40px;border-top-left-radius: 6px;width: 87%;background-color: rgb(66, 66, 66);color: white;border-top-right-radius: 6px;border-bottom: transparent;}
   .taskboxheader h3 { font-size:20px; }
   
-%div#homepage
+%div#profile
   %div#topsection
     %div#updatespace
       = image_tag @user.picture, class: "bigheaderimage", alt: "#{@user.name}"
@@ -63,69 +68,66 @@
                 %li Looking for:
                 %li Personal links:              
   %div.row
-    %div.span12
-      %div#profilemeat
-        %div.personabucket
-          %img{ src: "http://www.placekitten.com/100/100" }
-          %div.headerinfo
-            %span.bigname Persona name
-            %span.littledetails | Level 8 
-          %div.challengebucket
-            %img{ src: "http://www.placekitten.com/150/150" }
+    %div.span69
+      %div.leftbox
+        %div.leftboxheader My Collection
+        %div#profilemeat
+          %div.personabucket
+            %img{ src: "http://www.placekitten.com/100/100" }
             %div.headerinfo
-              %span.bigname Challenge name
-              %span.littledetails | 4,280 points, Rank: 23
-            %div.challengecontent
-              %div.arenabucket
-                %h2 What I know...
-                %div.bucketsubtitle
-                  %p Beginner Section:
-                  %div{ style: "display:inline-block; "}
-                    %ul
-                      %li ## questions answered correctly
-                      %li Another achievement here
-                  %div{ style: "display:inline-block; margin-left:85px;"}
-                    %ul
-                      %li And a third achievement here
-                      %li This is the fourth achievement
-                  %p Intermediate Section:
-                  %div{ style: "display:inline-block; "}
-                    %ul
-                      %li ## questions answered correctly
-                      %li Another achievement here
-                  %div{ style: "display:inline-block; margin-left:85px;"}
-                    %ul
-                      %li And a third achievement here
-                      %li This is the fourth achievement
-                  %p Advanced Section:
-                  %div{ style: "display:inline-block; "}
-                    %ul
-                      %li ## questions answered correctly
-                      %li Another achievement here
-                  %div{ style: "display:inline-block; margin-left:85px;"}
-                    %ul
-                      %li And a third achievement here
-                      %li This is the fourth achievement
-              %div.taskbucket
-                %h2 What I've done...
-                %div.bucketsubtitle
-                  %p 17 Tasks completed
-                %div.taskboxheader
-                  %h3 "I jumped off a 15-story bridge and survived"
-                %div.taskbox                  
-                  %img{ src: "http://www.slovenia.info/pictures%5Cprogram%5C1%5C2008%5CBungee_jumping_-_Solkan_(500_x_374)_190854.jpg"}
-                %center
-                  %a See more
-              %div.crbucket
-                %h2 What I can do...
-                %div.bucketsubtitle
-                  %p 23 Creative Responses answered
-                %div.taskboxheader                  
-                  %h3 Explain why the Orioles will never win another World Series
-                %div.taskbox
-                  %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
-                %center
-                  %a See more  
+              %span.bigname Persona name
+              %span.littledetails | Level 8 
+            %div.challengebucket
+              %img{ src: "http://www.placekitten.com/150/150" }
+              %div.headerinfo
+                %span.bigname Challenge name
+                %span.littledetails | 4,280 points, Rank: 23
+              %div.challengecontent
+                %div.arenabucket
+                  %h2 What I know...
+                  %div.profilecontent
+                    %div.bucketsubtitle
+                      %p Beginner Section:
+                      %div{ style: "display:inline-block; "}
+                        %ul
+                          %li ## questions answered correctly
+                          %li Another achievement here
+                %div.taskbucket
+                  %h2 What I've done...
+                  %div.profilecontent
+                    %div{ style: " background-color:white; border:1px solid rgba(0,0,0,.1); width:400px; min-height:100px; margin-right:auto; margin-left:auto; " }
+                      %div{ style: "margin-top: 10px; background-color: rgb(229, 242, 245); padding: 9px 12px; text-shadow:none; font-size:13px;" }
+                        Here is an awesome Creative Response question. Good luck answering it because it is so tricky. Actually its a Task.
+                      %div{ style: " " }
+                        %img{ src: "http://www.placekitten.com/300/300", style: " height:200px; width:200px; "}
+                      %div{ style: " " }
+                        
+                    %center
+                      %a See more
+                %div.crbucket
+                  %h2 What I can do...
+                  %div.profilecontent
+                    %div.bucketsubtitle
+                      %p 23 Creative Responses answered
+                    %div.taskboxheader                  
+                      %h3 Explain why the Orioles will never win another World Series
+                    %div.taskbox
+                      %pre{ style: "margin:20px; word-break:normal;" } kljf sadkljashd jfkahsfh askjf hjfasjfh sda fajfh afaljksfh jasj fkjf k
+                    %center
+                      %a See more
+    %div.span3
+      %div.leftbox
+        %div.leftboxheader Jump to...
+        %div.leftboxfooter
+          %li.leftrailcontent
+            %img.leftrailicon{ src: "http://www.placekitten.com/60/60" }
+            %img.leftrailicon{ src: "http://www.placekitten.com/61/60" }
+            %img.leftrailicon{ src: "http://www.placekitten.com/62/60" }
+            %img.leftrailicon{ src: "http://www.placekitten.com/63/60" }
+    %div.span3
+      %div.leftbox
+        %div.leftboxheader Connect
+        %div.leftboxfooter
             
   
   
