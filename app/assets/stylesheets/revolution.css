@@ -107,7 +107,7 @@ code,pre{font:inherit;}
 .container.body { margin-bottom:11px; border-radius:6px; width: 940px; padding: 15px; background-color: rgba(255, 255, 255, .3); border:none; box-shadow:none; }
 #content { padding-top: 42px; min-height: 450px;}
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
-.navbar .nav > li > a { padding: 4px 25px; text-decoration: none;}
+.navbar .nav > li > a { padding: 6px 25px; text-decoration: none;}
 .navbar .nav.pull-right a:hover { color:white; }
 .navbar .nav.pull-right .leftboxfooter a {text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);}
 .nav.pull-right .caret{ border-top-color: #c7ced6; border-bottom-color: #c7ced6; color: #c7ced6; margin-top:7px; }
