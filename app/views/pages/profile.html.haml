@@ -22,19 +22,25 @@
   #bottomboxcontent { margin-top: 97px; display:none; }
   #bottomboxcontent .span9 div { display:inline-block; color:gray; font-size: 20px; min-width:330px; }
   #bottomboxcontent .span9 ul { list-style:none; }
-  #profilemeat { padding:10px 12px; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: whitesmoke; min-height:200px; }
+  #profilemeat { padding:10px 12px; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }
   .personabucket img { height:60px; width:60px; display:inline-block; }
-  .headerinfo { display:inline-block; font-size:20px; padding-bottom: 4px; width: 89%; }
-  .bigname { font-weight:bold; font-size:25px; }
+  .headerinfo { display:inline-block; font-size:20px; padding-bottom: 4px; width: 89%; border-bottom: 1px solid #e9e9e9;bottom: 20px;position: relative;}
+  .challengelabel .headerinfo { border:none; }
+  .headerinfo h3 { background-color:white; display:inline; position:relative; padding-right:10px; top:24px; left:0;}
+  .challengebucket .headerinfo h3 { background-color: #FCFCFC;; }
+  .bigname { font-size:25px; }
   .littledetails { font-size:20px; }
   .challengecontent { margin: 20px 0 0 30px;}
   .challengecontent h2 { margin-bottom:15px; }
   .challengecontent > div { margin-bottom:40px; }
-  .challengebucket {margin: 15px 0 0 60px; padding: 12px;}
+  .challengebucket {margin: 15px 0 0 60px; padding: 12px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;margin-right: 10px; background-color: #FCFCFC;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
   .challengebucket h2 { color: rgb(196, 196, 196); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; }
-  .challengebucket h4 { font-weight:bold; margin-bottom:6px; }
-  .profilecontent { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,0.1); padding-bottom:8px;}
+  .challengebucket h4 { font-weight:bold; text-transform: uppercase; font-size: 14px;}
+  .profilecontent { padding-bottom:8px;}
+  .profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white; }
+  .profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width:88px; border-top:none; }
+  .arenabucket .profilecontent { }  
   .bucketsubtitle { font-size:18px; padding:12px;}
   .arenabucket .bucketsubtitle p { font-size: 15px; }
   .bucketsubtitle p { font-weight:bold; }
@@ -46,10 +52,12 @@
   .taskbucket a { cursor: pointer; }
   .taskboxheader { padding:0 20px; border: 1px solid rgba(0, 0, 0, .1);margin-left: 40px;border-top-left-radius: 6px;width: 87%;background-color: rgb(66, 66, 66);color: white;border-top-right-radius: 6px;border-bottom: transparent;}
   .taskboxheader h3 { font-size:20px; }
-  #profile .post {width: 500px;margin-right: auto;margin-left: auto;margin-top: 5px;}
+  #profile .post {width: 500px;margin-right: auto;margin-left: auto;}
+  #profile .post:hover { background-color: transparent; }
   #profile .postspace { width:474px; }
   #profile .postspace img { height:20px; width:20px; }
   #profile .postphotospace img { height:50px; width:50px; }
+  .personalabel { background-color:white; }
   
 %div#profile
   %div#topsection
@@ -79,27 +87,42 @@
         %div.leftboxheader My Collection
         %div#profilemeat
           %div.personabucket
-            %img{ src: "http://www.placekitten.com/100/100" }
-            %div.headerinfo
-              %h3
-                %span.bigname Persona name
-                %span.littledetails | Level 8 
-            %div.challengebucket
-              %img{ src: "http://www.placekitten.com/150/150" }
+            %div.personalabel
+              %img{ src: "http://www.placekitten.com/100/100" }
               %div.headerinfo
                 %h3
-                  %span.bigname Challenge name
-                  %span.littledetails | 4,280 points, Rank: 23
+                  %span.bigname Persona name
+                  %span.littledetails | Level 8
+            %div.challengebucket
+              %div.challengelabel
+                %img{ src: "http://www.placekitten.com/150/150" }
+                %div.headerinfo
+                  %h3
+                    %span.bigname Challenge name
+                    %span.littledetails | 4,280 points, Rank: 23
               %div.challengecontent
                 %div.arenabucket
                   %h2 What I know...
                   %div.profilecontent
-                    %div.bucketsubtitle
-                      %p Beginner Section:
-                      %div{ style: "display:inline-block; "}
-                        %ul
-                          %li ## questions answered correctly
-                          %li Another achievement here
+                    %table.table.overview
+                      %tbody
+                        %tr
+                          %td
+                            %h3 0
+                            %p Questions Correct
+                          %td
+                            %h3 0
+                            %p Highest Rank
+                          %td
+                            %h3 0
+                            %p Longest Streak
+                          %td
+                            %h3 0
+                            %p Upvotes Received
+                          %td
+                            %h3 0
+                            %p Comments Received
+                %hr{ style: "width:94.7%;" }
                 %div.taskbucket
                   %h2 What I've done...
                   %h4 18 Tasks Completed
@@ -193,13 +216,13 @@
                                 %textarea#comment_content{:cols => "40", :name => "comment[content]", :rows => "2", :style => "width: 510px; height: 55px; "}
                               %input#comment_owner_type{:name => "comment[owner_type]", :type => "hidden", :value => "SubmittedAnswer"}/
                               %input#comment_owner_id{:name => "comment[owner_id]", :type => "hidden", :value => "683"}/
-                              %input.button.button-standard.button-small{:name => "commit", :style => "margin-top:15px;", :type => "submit", :value => "Add Comment"}/
-                        
+                              %input.button.button-standard.button-small{:name => "commit", :style => "margin-top:15px;", :type => "submit", :value => "Add Comment"}/                        
                     %center
                       %a See more
+                %hr{ style: "width:94.7%;" }
                 %div.crbucket
                   %h2 What I can do...
-                  %h4 18 Creative Response questions answered.
+                  %h4 18 Creative Responses
                   %div.profilecontent
     %div.span3
       %div.leftbox
@@ -212,8 +235,7 @@
             %img.leftrailicon{ src: "http://www.placekitten.com/63/60" }
       %div.leftbox
         %div.leftboxheader Connect
-        %div.leftboxfooter
-          
+        %div.leftboxfooter          
   %div.row{ style: "display:none;"}
     %div.span5
       %div.leftbox{}
