@@ -19,13 +19,14 @@
   #updatespace{ min-height:162px; }
   #topboxcontent { }
   #topboxcontent h1{ font-size:45px; line-height:45px; }
-  #bottomboxcontent { margin-top: 97px; }
+  #bottomboxcontent { margin-top: 97px; display:none; }
   #bottomboxcontent .span9 div { display:inline-block; color:gray; font-size: 20px; min-width:330px; }
   #bottomboxcontent .span9 ul { list-style:none; }
-  #profilemeat { padding:10px 12px; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }
+  #profilemeat { padding:10px 12px; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: whitesmoke; min-height:200px; }
   .personabucket img { height:60px; width:60px; display:inline-block; }
-  .headerinfo { display:inline-block; font-size:20px; border-bottom: 1px solid rgb(209, 209, 209); padding-bottom: 4px; width: 89%; }
-  .bigname { font-weight:bold;  }
+  .headerinfo { display:inline-block; font-size:20px; padding-bottom: 4px; width: 89%; }
+  .bigname { font-weight:bold; font-size:25px; }
+  .littledetails { font-size:20px; }
   .challengecontent { margin: 20px 0 0 30px;}
   .challengecontent h2 { margin-bottom:15px; }
   .challengecontent > div { margin-bottom:40px; }
@@ -33,7 +34,7 @@
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px;}
   .challengebucket h2 { color: rgb(196, 196, 196); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; }
   .challengebucket h4 { font-weight:bold; margin-bottom:6px; }
-  .profilecontent { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,0.1); }
+  .profilecontent { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,0.1); padding-bottom:8px;}
   .bucketsubtitle { font-size:18px; padding:12px;}
   .arenabucket .bucketsubtitle p { font-size: 15px; }
   .bucketsubtitle p { font-weight:bold; }
@@ -45,6 +46,8 @@
   .taskbucket a { cursor: pointer; }
   .taskboxheader { padding:0 20px; border: 1px solid rgba(0, 0, 0, .1);margin-left: 40px;border-top-left-radius: 6px;width: 87%;background-color: rgb(66, 66, 66);color: white;border-top-right-radius: 6px;border-bottom: transparent;}
   .taskboxheader h3 { font-size:20px; }
+  #profile .post {width: 500px;margin-right: auto;margin-left: auto;margin-top: 5px;}
+  #profile .postspace { width:474px; }
   #profile .postspace img { height:20px; width:20px; }
   #profile .postphotospace img { height:50px; width:50px; }
   
@@ -60,7 +63,7 @@
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
             %p{ style: "font-size: 26px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
-        %div#bottomboxcontent{ }
+        %div#bottomboxcontent
           %div.span9
             %div{ style: "display:inline-block; "}
               %ul
@@ -78,13 +81,15 @@
           %div.personabucket
             %img{ src: "http://www.placekitten.com/100/100" }
             %div.headerinfo
-              %span.bigname Persona name
-              %span.littledetails | Level 8 
+              %h3
+                %span.bigname Persona name
+                %span.littledetails | Level 8 
             %div.challengebucket
               %img{ src: "http://www.placekitten.com/150/150" }
               %div.headerinfo
-                %span.bigname Challenge name
-                %span.littledetails | 4,280 points, Rank: 23
+                %h3
+                  %span.bigname Challenge name
+                  %span.littledetails | 4,280 points, Rank: 23
               %div.challengecontent
                 %div.arenabucket
                   %h2 What I know...
@@ -99,11 +104,8 @@
                   %h2 What I've done...
                   %h4 18 Tasks Completed
                   %div.profilecontent
-                    .post
-                      .postphotospace
-                        %a{:href => "/nathanielsokollward"}
-                          %img.photo{:alt => "Photo", :src => "https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAIfk/EGQexs3Mcf4/photo.jpg"}/
-                      .postspace{:style => "\r\n    width: 450px;\r\n"}
+                    .post                      
+                      .postspace
                         .postheader
                           %h3
                             %a.username{:href => "/nathanielsokollward"} Nathaniel Sokoll-Ward
