@@ -15,7 +15,7 @@
             %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
               %div.bar{style:"width: #{@enrollment.level_percent}%;" }
         
-        - @achievements = [3, false]
+        - @achievements = [false, 20]
         - if @achievements
           - new_level = @achievements[0]
           - new_rank = @achievements[1]
@@ -28,13 +28,13 @@
                 Congratulations!
                 - if new_level && new_rank
                   You just leveled up and reached the Top #{new_rank} on the leaderboard!
-                  - sharing_text = "I leveled up and reached the Top #{new_rank} on the #{@path.name} leaderboard!" 
+                  - sharing_text = "Just leveled up and am now ranked number #{new_rank} in the #{@path.name} Challenge on @MetaBright!" 
                 - elsif new_level
                   You just leveled up!
-                  - sharing_text = "I reached Level #{new_level} on the #{@path.name} Challenge!"
+                  - sharing_text = "Just hit Level #{new_level} in the #{@path.name} Challenge on @MetaBright!"
                 - elsif new_rank
                   You reached the Top #{new_rank} on the leaderboard!
-                  - sharing_text = "You reached the Top #{new_rank} on the #{@path.name} leaderboard!"
+                  - sharing_text = "I'm now ranked number #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
                   
               %div{ style: "text-align: middle; margin: 15px 0;" }
                 - if new_level
