@@ -68,6 +68,7 @@
   .challengeselector { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,.1);border-bottom-left-radius: 6px; border-bottom:none; border-right:none; }
   .challengeselector ul { list-style: none; margin:0;  }
   .challengeselector li { font-size:15px; border-bottom:1px solid rgba(0,0,0,.1); padding: 7px 12px; cursor:pointer; }
+  .challengeselector li span { font-size:11px; float:right; }
   .challengeselector li:last-child:hover { border-bottom-left-radius:6px; }
   .challengeselector li:hover { background-image: -moz-linear-gradient(white, white 5%, #E6E6E6); background-image: -ms-linear-gradient(white, white 5%, #E6E6E6);  background-image: -o-linear-gradient(white, white 5%, #E6E6E6);  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(0.05, white), to(#E6E6E6));  background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6);  background-image: linear-gradient(white, white 5%, #E6E6E6);  color: rgb(75, 75, 75);  text-shadow: 0 1px 0px whitesmoke;  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6');  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6')";  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.2);    box-shadow: 0 1px 1px rgba(0,0,0,0.2);}
   .challengeselector li:active { background-color: rgb(245, 245, 245);  background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  -moz-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);}
@@ -117,10 +118,18 @@
     %div.span5
       %div.challengeselector
         %ul
-          %li Challenge name
-          %li Challenge name
-          %li Challenge name
-          %li Challenge name
+          %li 
+            Challenge name 
+            %span 9,123 points, Level 8
+          %li 
+            Challenge name 
+            %span 9,123 points, Level 8
+          %li
+            Challenge name 
+            %span 9,123 points, Level 8
+          %li 
+            Challenge name 
+            %span 9,123 points, Level 8
       %div.leftbox
         %div.leftboxheader Vital Stats
         %div.leftboxfooter Stuff
