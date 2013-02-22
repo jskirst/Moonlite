@@ -157,6 +157,9 @@ class PagesController < ApplicationController
     render text: robots, layout: false, content_type: "text/plain"
   end
   
+  def phantom
+  end
+  
   private
     def authorize_resource
       return true
