@@ -64,7 +64,6 @@
   
   .profileheader { background-image: -webkit-linear-gradient(top,white,rgb(243, 243, 243)); padding: 4px 10px 8px 10px; border: 1px solid rgba(0,0,0,.1);border-bottom: none;border-top-right-radius: 6px;border-top-left-radius: 6px;}
   .profileheader img{ display:inline-block; width:35px; height:35px;  }
-  .profileheader > div { display: inline-block; }
   .profileheader h3 { display:inline-block; font-size: 20px; text-transform: uppercase;top: 3px;left: 4px; position: relative;}
   .challengeselector { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,.1);border-bottom-left-radius: 6px; border-bottom:none; border-right:none; }
   .challengeselector ul { list-style: none; margin:0;  }
@@ -77,10 +76,11 @@
   #profile .span5 .leftbox { width:288px; margin-top:12px; }
   .challengecontent {background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
   .progresssection { float: right; margin-top: 12px;}
-  .progresssection .progress { display:inline-block; }
   .challengecontent h2 { color: rgb(111, 111, 111);font-weight:bold; font-size:35px; letter-spacing:1px;}
   .arenabucket, .taskbucket, .crbucket { display: block;padding: 15px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
   #profile hr { margin:25px 0; }
+  .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
+  .profileheader h5 { display: inline-block; float: right; margin-top:14px; font-size:18px; }
   
 %div#profile
   %div#topsection
@@ -107,11 +107,12 @@
   %div.row
     %div.span12
       %div.profileheader
-        %div
+        %div{style: "display:inline-block;"}
           %img{src:"http://www.placekitten.com/50/50"}
           %h3 Persona Name
-        %div.progresssection
-          %h4 Level 5
+        %div.progress.progress-success.progress-striped
+          %div.bar{ style:"width:40%"}
+        %h5 Level 5
   %div.row
     %div.span5
       %div.challengeselector
