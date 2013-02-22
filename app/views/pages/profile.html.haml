@@ -34,7 +34,6 @@
   .bigname { font-size:25px; }
   .littledetails { font-size:20px; }
   .challengecontent h2 { margin-bottom:15px; }
-  .challengecontent > div { margin-bottom:40px; }
   .challengebucket { margin: 20px auto 20px auto; width: 600px; padding: 12px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: #FCFCFC;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px; vertical-align: baseline; }
 
@@ -76,10 +75,12 @@
   #profile .span11 { margin:0; }
   #profile .span5 { width: 300px; }
   #profile .span5 .leftbox { width:288px; margin-top:12px; }
-  .challengecontent {background-color: #fcfcfc; padding: 12px 12px 12px 40px;border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
+  .challengecontent {background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
   .progresssection { float: right; margin-top: 12px;}
   .progresssection .progress { display:inline-block; }
-  .challengecontent h2 { color: rgb(154, 195, 197); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; letter-spacing:1px;}
+  .challengecontent h2 { color: rgb(111, 111, 111);font-weight:bold; font-size:35px; letter-spacing:1px;}
+  .arenabucket, .taskbucket, .crbucket { display: block;padding: 15px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
+  #profile hr { margin:25px 0; }
   
 %div#profile
   %div#topsection
@@ -145,7 +146,7 @@
                   %td
                     %h3 8
                     %p Comments Received
-        %hr{ style: "width:94.7%;" }
+        %hr
         %div.taskbucket
           %h2 What I've done...
           %h4 18 Tasks Completed
@@ -242,7 +243,7 @@
                       %input.button.button-standard.button-small{:name => "commit", :style => "margin-top:15px;", :type => "submit", :value => "Add Comment"}/                        
             %center
               %a See more
-        %hr{ style: "width:94.7%;" }
+        %hr
         %div.crbucket
           %h2 What I can do...
           %h4 18 Creative Responses
