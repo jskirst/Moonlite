@@ -14,6 +14,7 @@
 :css
   #profile .span69 { margin-left:20px; width:708px; }
   #profile .span3 { margin-left:12px; }
+  
   #profile .leftboxfooter { background-color:white; padding-right:0; }
   #profile .leftrailicon { height:58px; width:58px; margin-right:8px; }
   #updatespace{ min-height:162px; }
@@ -30,13 +31,11 @@
   .challengelabel .headerinfo h3 {line-height:30px; }
   .personalabel .headerinfo h3 { position:relative; padding-right:10px; top:24px; left:0;}
   .headerinfo {  display:inline-block;  }
-  .challengebucket .headerinfo h3 { background-color: #FCFCFC;; }
   .bigname { font-size:25px; }
   .littledetails { font-size:20px; }
-  .challengecontent { margin: 20px 0 0 30px;}
   .challengecontent h2 { margin-bottom:15px; }
   .challengecontent > div { margin-bottom:40px; }
-  .challengebucket {margin: 15px 24px 0 60px; padding: 12px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: #FCFCFC;}
+  .challengebucket { margin: 20px auto 20px auto; width: 600px; padding: 12px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: #FCFCFC;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px; vertical-align: baseline; }
   .challengebucket h2 { color: rgb(196, 196, 196); text-shadow: 1px 0 0 #fff; font-weight:bold; font-size:35px; letter-spacing:1px;}
   .challengebucket h4 { font-weight:bold; text-transform: uppercase; font-size: 14px;}
@@ -64,6 +63,14 @@
   .personalabel:hover {border-color: rgba(82, 168, 236, 0.8);outline: 0;outline: thin dotted 9;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}  
   .challengebucket .sub {font-size:14px;}
   
+  .profileheader { background-color: whitesmoke; padding: 10px; border: 1px solid rgba(0,0,0,.1);border-bottom: none;border-top-right-radius: 6px;border-top-left-radius: 6px;}
+  .profileheader img{ display:inline-block; }
+  .profileheader h3 { display:inline-block; }
+  .challengeselector { background-color:wheat; border: 1px solid rgba(0,0,0,.1);border-bottom-left-radius: 6px;}
+  #profile .span11 { margin:0; }
+  #profile .span5 { width: 300px; }
+  .challengecontent {background-color: white; padding:12px;border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
+  
 %div#profile
   %div#topsection
     %div#updatespace
@@ -85,251 +92,144 @@
             %div{ style: "display:inline-block; "}
               %ul
                 %li Looking for:
-                %li Personal links:              
+                %li Personal links:
   %div.row
-    %div.span69
-      %div.leftbox
-        %div.leftboxheader My Collection
-        %div#profilemeat
-          %div.personabucket
-            %div.personalabel
-              %img{ src: "http://www.placekitten.com/100/100" }
-              %div.headerinfo
-                %h3
-                  %span.bigname Persona name
-                  %span.littledetails | Level 8
-            %div.challengebucket
-              %div.challengelabel
-                %img{ src: "http://www.placekitten.com/150/150" }
-                %div.headerinfo
-                  %h3
-                    %span.bigname Challenge name
-                    %span.littledetails | Level 3
-                  %div.sub
-                    4,280 points, Rank: 23
-              %div.challengecontent
-                %div.arenabucket
-                  %h2 What I know...
-                  %div.profilecontent
-                    %table.table.overview
-                      %tbody
-                        %tr
-                          %td
-                            %h3 0
-                            %p Questions Correct
-                          %td
-                            %h3 0
-                            %p Highest Rank
-                          %td
-                            %h3 0
-                            %p Longest Streak
-                          %td
-                            %h3 0
-                            %p Upvotes Received
-                          %td
-                            %h3 0
-                            %p Comments Received
-                %hr{ style: "width:94.7%;" }
-                %div.taskbucket
-                  %h2 What I've done...
-                  %h4 18 Tasks Completed
-                  %div.profilecontent
-                    .post                      
-                      .postspace
-                        .postheader
-                          %h3
-                            %a.username{:href => "/nathanielsokollward"} Nathaniel Sokoll-Ward
-                          %span{:style => ""}
-                            %a.challengename{:href => "/challenges/rubyrailstesting"} Ruby / Rails testing
-                          .votingandpointsarea
-                            %span.vote_points{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"} 150
-                            %span{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
-                            .dropdown.submission-icon{:style => "padding-top:0px; margin: 0px;"}
-                              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", :style => "padding:0px;"}
-                                %span.caret{:style => "margin: 6px 0 0 0;"}
-                              %ul.dropdown-menu{:role => "button", :style => "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;"}
-                                %li{:style => "margin-left: -10px;"}
-                                  .graynub{:style => "top:-17px; left: 75px; margin:0; "}
-                                  %div{:style => "padding: 3px 0px; margin:0;"}
-                                    %ul.profile_dropdown{:style => "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
-                                      %li
-                                        %a.retract_link{"data-confirm" => "Are you sure you want to delete your submission?", "data-remote" => "true", :href => "/retract/8086", :style => "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px;"} Delete Submission
-                        .posttext.leveltext.dropdown
-                          %pre.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", :role => "button", :style => "color:inherit; cursor:default;"} Why do you think testing your software may be important?
-                          %ul.dropdown-menu{:role => "menu", :style => "left:99.5%; top:-70%; min-width:152px;"}
-                            %li
-                              %div
-                                .sidenub
-                              %div{:style => "padding: 3px 0px;"}
-                                %ul.profile_dropdown{:style => "list-style: none; margin: 0 2px 0 4px;"}
-                                  %li.CR_dropdown_option{:style => "display:none;"}
-                                    %a{:href => "/sections/97/take/494"} Answer this question
-                                  %li.CR_dropdown_option
-                                    %a{:href => "/tasks/494/view"} View all responses
-                                  %li.CR_dropdown_option
-                                    %a{:href => "/submissions/683/view"} View all comments
-                        #cr_pop.CRarea
-                          %pre{:style => "margin:20px; word-break:normal;"}
-                            It's smart business. Nobody likes losing time or money because of a bug. The classic (albeit hyperbolic) example here is the failure of the Ariane 5 rocket.
-                            
-                            "Ariane 5's first test flight (Ariane 5 Flight 501) on 4 June 1996 failed, with the rocket self-destructing 37 seconds after launch because of a malfunction in the control software. A data conversion from 64-bit floating point value to 16-bit signed integer value to be stored in a variable representing horizontal bias caused a processor trap (operand error) because the floating point value was too large to be represented by a 16-bit signed integer."
-                            %a{:href => "http://en.wikipedia.org/wiki/Ariane_5#Notable_launches", :target => "_blank"} http://en.wikipedia.org/wiki/Ariane_5#Notable_launches
-                        .postfooter
-                          .leftstuff
-                            .displayin.floatl
-                              %a.comment{:onclick => "open_comments(this);", :style => "position: relative; top: 5px;"} 3 Comments
-                            .addthis_toolbox.social_toolbar{"addthis:title" => "Great response in the Ruby / Rails testing Challenge on @MetaBright.", "addthis:url" => "http://www.metabright.com/paths/rubyrailstesting/submission/683", :style => "display: inline; margin-right: 10px; float: right;"}
-                              %a{:href => "#", :onclick => "javascript:void window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.metabright.com/paths/rubyrailstesting/submission/683','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
-                                %img{:alt => "Share on Facebook", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"}/
-                              %a{:href => "#", :onclick => "javascript:void window.open('https://twitter.com/intent/tweet?text=Great response in the Ruby / Rails testing Challenge on @MetaBright.&url=http://www.metabright.com/paths/rubyrailstesting/submission/683&related=','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
-                                %img{:alt => "Share on Twitter", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"}/
-                              %a{:href => "#", :onclick => "javascript:void window.open('https://plus.google.com/share?url=http://www.metabright.com/paths/rubyrailstesting/submission/683&t=Great response in the Ruby / Rails testing Challenge on @MetaBright.','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
-                                %img{:alt => "Share on Google+", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"}/
-                          .comments{:style => "text-align: left; display: none;"}
-                            %ul{:style => "list-style: none; margin: 10px 0 20px 0;"}
-                              %li
-                                %div{:style => "float:left;"}
-                                  %a{:href => "/nathanielsokollward"}
-                                    %img.commentphoto{:alt => "Photo", :src => "https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAIfk/EGQexs3Mcf4/photo.jpg"}/
-                                %div{:style => "overflow:hidden; margin: 0 0 0 43px;"}
-                                  %pre.unstyled.text_content{:style => "font-size: 13px; color: black; margin-left: 0;"} The lesson here is obvious: test your software, or get ready to lose $7 billion
-                                  %p{:style => "margin-left: 0;"}
-                                    %a{:href => "/nathanielsokollward"} Nathaniel Sokoll-Ward
-                                    about 9 days ago.
-                                    %a.comment_delete{"data-method" => "delete", "data-remote" => "true", :href => "/comments/204", :rel => "nofollow"} Remove.
-                              %li
-                                %div{:style => "float:left;"}
-                                  %a{:href => "/joelpearson"}
-                                    %img.commentphoto{:alt => "F001c1cf1c39f6e0c44f25676b93ce968cb0e293_full", :src => "http://media.steampowered.com/steamcommunity/public/images/avatars/f0/f001c1cf1c39f6e0c44f25676b93ce968cb0e293_full.jpg"}/
-                                %div{:style => "overflow:hidden; margin: 0 0 0 43px;"}
-                                  %pre.unstyled.text_content{:style => "font-size: 13px; color: black; margin-left: 0;"} + for citing references :)
-                                  %p{:style => "margin-left: 0;"}
-                                    %a{:href => "/joelpearson"} Joel Pearson
-                                    about 8 days ago.
-                              %li
-                                %div{:style => "float:left;"}
-                                  %a{:href => "/jonathankirst4"}
-                                    %img.commentphoto{:alt => "Photo", :src => "https://lh3.googleusercontent.com/-biyqY3RVSnQ/AAAAAAAAAAI/AAAAAAAAAAA/JoQ9BiBg0kE/photo.jpg"}/
-                                %div{:style => "overflow:hidden; margin: 0 0 0 43px;"}
-                                  %pre.unstyled.text_content{:style => "font-size: 13px; color: black; margin-left: 0;"} Totally. New feature idea....
-                                  %p{:style => "margin-left: 0;"}
-                                    %a{:href => "/jonathankirst4"} Jonathan Kirst
-                                    about 8 days ago.
-                            %form#new_comment.new_comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post"}
-                              %div{:style => "margin:0;padding:0;display:inline"}
-                                %input{:name => "utf8", :type => "hidden", :value => "✓"}/
-                                %input{:name => "authenticity_token", :type => "hidden", :value => "weJUF/4iOHFMISu/oL/ae4dV3Y3HFc+cbXm9p9ExuMs="}/
-                              %div{:style => "width: 100%"}
-                                %textarea#comment_content{:cols => "40", :name => "comment[content]", :rows => "2", :style => "width: 510px; height: 55px; "}
-                              %input#comment_owner_type{:name => "comment[owner_type]", :type => "hidden", :value => "SubmittedAnswer"}/
-                              %input#comment_owner_id{:name => "comment[owner_id]", :type => "hidden", :value => "683"}/
-                              %input.button.button-standard.button-small{:name => "commit", :style => "margin-top:15px;", :type => "submit", :value => "Add Comment"}/                        
-                    %center
-                      %a See more
-                %hr{ style: "width:94.7%;" }
-                %div.crbucket
-                  %h2 What I can do...
-                  %h4 18 Creative Responses
-                  %div.profilecontent
-    %div.span3
-      %div.leftbox
-        %div.leftboxheader Jump to...
-        %div.leftboxfooter
-          %li.leftrailcontent
-            %img.leftrailicon{ src: "http://www.placekitten.com/60/60" }
-            %img.leftrailicon{ src: "http://www.placekitten.com/61/60" }
-            %img.leftrailicon{ src: "http://www.placekitten.com/62/60" }
-            %img.leftrailicon{ src: "http://www.placekitten.com/63/60" }
-      %div.leftbox
-        %div.leftboxheader Connect
-        %div.leftboxfooter          
-  %div.row{ style: "display:none;"}
+    %div.span12
+      %div.profileheader
+        %div
+          %img{src:"http://www.placekitten.com/50/50"}
+          %h3 Persona Name
+        %div.personaprogressbar          
+  %div.row
     %div.span5
-      %div.leftbox{}
-        %div.leftboxheader
-          Completed Tasks
-        - if @completed_tasks_by_challenge.count > 0
-          %div.leftboxfooter
-            %div.accordion
-              - counter = 0
-              - @completed_tasks_by_challenge.each do |challenge_name, tasks|
-                - challenge_id = "challenge_#{counter.to_s}"
-                - counter += 1
-                %div.accordion-group
-                  %div.accordion-heading
-                    %a.accordion-toggle{ "data-toggle" => "collapse", href: "##{challenge_id}" }
-                      %div.expand_contract
-                      %span{ style: "color:#404040; font-size:14px;"}= challenge_name
-                  %div.accordion-body.collapse{ id: challenge_id }
-                    %div.accordion-inner
-                      - tasks.each do |task|
-                        %div.singletaskentry
-                          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/check_blue3.png", alt: "Check" }
-                          %div
-                            %span{ style: "display:block;" }= task.question
-        - else
-          %div.leftboxfooter{style: "padding-top:6px;"}
-            %span
-              No Tasks have been completed yet.                           
-      %div.leftbox{ style: "" }
-        %div.leftboxheader Persona Progress
-        %div.leftboxfooter{style:"padding-top: 6px"}
-          %div.accordion
-            - @user_personas.each do |user_persona|
-              - persona_id = "persona_#{user_persona.persona_id}"
-              %div.accordion-group
-                %div.accordion-heading
-                  %a.accordion-toggle{ "data-toggle" => "collapse", href: "##{persona_id}", style: "padding:0;" }
-                    %div.expand_contract
-                    %div.persona_progress_area
-                      = image_tag user_persona.persona.image, style:"width:50px; height:50px;", alt: "#{user_persona.persona.image}"            
-                      %div.personaprogress
-                        %span{ style: "font-size:18px;" }= user_persona.persona.name
-                        %span{style: "font-size:14px; float:right; "} Level #{user_persona.level}
-                        %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{user_persona.points_to_next_level} more points to level up!
-                        %div.progress.progress-info
-                          %div.bar{ style: "width: #{user_persona.percent_level}%;"} 
-                %div.accordion-body.collapse{ id: persona_id }
-                  %div.accordion-inner{ style: "padding-right:0;" }
-                    - user_persona.enrollments.each do |enrollment|
-                      %div.profile_challenge
-                        = link_to challenge_path(enrollment.path.permalink) do
-                          = image_tag enrollment.path.picture, style:"width:30px; height:30px;", title: "#{enrollment.path.name}", alt: "#{enrollment.path.name}"
-                        %div.challenge_progress
-                          %h5{ style: "font-size: 13px;" }= enrollment.path.name
-                          %span #{enrollment.total_points} pts
-                          %span{ style: "float:right; "} Rank: #{enrollment.rank}
-
-      %div.leftbox
-        %div.leftboxheader Vital Stats
-        %div.leftboxfooter{style:"padding-top: 6px"}
-          %ul
-            - unless @user.description.blank?
-              %li About: #{@user.description}
-            %li Location: #{@user.location || "A galaxy far, far away..."}
-            - unless @user.education.blank? 
-              %li Education: #{@user.education}
-            - unless @user.company_name.blank?
-              %li Company: #{@user.company_name}  
-            - unless @user.title.blank?
-              %li Title: #{@user.title}            
-            - unless @user.link.blank?
-              %li Link: <a href='#{@user.link}' target='_newtab'>#{truncate(@user.link)}</a> 
+      %div.challengeselector
+        %ul
+          %li Challenge name
+          %li Challenge name
+          %li Challenge name
+          %li Challenge name
     %div.span11
-      %div.newsfeed{ style: "min-height: 285px;" }
-        %div.leftboxheader
-          %div
-            %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
-            = link_to "Votes", user_path(@user, order: "votes"), class: "btn leftbtn"
-            = link_to "Date", user_path(@user, order: "date"), class: "btn midbtn"
-            %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
-          %div.questions_filter{ style: "display:none; text-transform: none;" }
-            - if @creative_task_questions.empty?
-              %p There are no responses to be viewed yet.
-            - else
-              %p{ style: "font-size: 13px; margin: 10px 5px; color: black;" } Click on one of the questions below to see the response for that question only.
-              %ol
-                - @creative_task_questions.each do |task|
-                  %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), user_path(@user, task: task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
-        = render "shared/newsfeed"
-        
+      %div.challengecontent
+        %div.arenabucket
+          %h2 What I know...
+          %div.profilecontent
+            %table.table.overview
+              %tbody
+                %tr
+                  %td
+                    %h3 12
+                    %p Questions Correct
+                  %td
+                    %h3 2
+                    %p Highest Rank
+                  %td
+                    %h3 5
+                    %p Longest Streak
+                  %td
+                    %h3 21
+                    %p Upvotes Received
+                  %td
+                    %h3 8
+                    %p Comments Received
+        %hr{ style: "width:94.7%;" }
+        %div.taskbucket
+          %h2 What I've done...
+          %h4 18 Tasks Completed
+          %div.profilecontent
+            .post                      
+              .postspace
+                .postheader
+                  %h3
+                    %a.username{:href => "/nathanielsokollward"} Nathaniel Sokoll-Ward
+                  %span{:style => ""}
+                    %a.challengename{:href => "/challenges/rubyrailstesting"} Ruby / Rails testing
+                  .votingandpointsarea
+                    %span.vote_points{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"} 150
+                    %span{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
+                    .dropdown.submission-icon{:style => "padding-top:0px; margin: 0px;"}
+                      %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", :style => "padding:0px;"}
+                        %span.caret{:style => "margin: 6px 0 0 0;"}
+                      %ul.dropdown-menu{:role => "button", :style => "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;"}
+                        %li{:style => "margin-left: -10px;"}
+                          .graynub{:style => "top:-17px; left: 75px; margin:0; "}
+                          %div{:style => "padding: 3px 0px; margin:0;"}
+                            %ul.profile_dropdown{:style => "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
+                              %li
+                                %a.retract_link{"data-confirm" => "Are you sure you want to delete your submission?", "data-remote" => "true", :href => "/retract/8086", :style => "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px;"} Delete Submission
+                .posttext.leveltext.dropdown
+                  %pre.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", :role => "button", :style => "color:inherit; cursor:default;"} Why do you think testing your software may be important?
+                  %ul.dropdown-menu{:role => "menu", :style => "left:99.5%; top:-70%; min-width:152px;"}
+                    %li
+                      %div
+                        .sidenub
+                      %div{:style => "padding: 3px 0px;"}
+                        %ul.profile_dropdown{:style => "list-style: none; margin: 0 2px 0 4px;"}
+                          %li.CR_dropdown_option{:style => "display:none;"}
+                            %a{:href => "/sections/97/take/494"} Answer this question
+                          %li.CR_dropdown_option
+                            %a{:href => "/tasks/494/view"} View all responses
+                          %li.CR_dropdown_option
+                            %a{:href => "/submissions/683/view"} View all comments
+                #cr_pop.CRarea
+                  %pre{:style => "margin:20px; word-break:normal;"}
+                    It's smart business. Nobody likes losing time or money because of a bug. The classic (albeit hyperbolic) example here is the failure of the Ariane 5 rocket.
+                    
+                    "Ariane 5's first test flight (Ariane 5 Flight 501) on 4 June 1996 failed, with the rocket self-destructing 37 seconds after launch because of a malfunction in the control software. A data conversion from 64-bit floating point value to 16-bit signed integer value to be stored in a variable representing horizontal bias caused a processor trap (operand error) because the floating point value was too large to be represented by a 16-bit signed integer."
+                    %a{:href => "http://en.wikipedia.org/wiki/Ariane_5#Notable_launches", :target => "_blank"} http://en.wikipedia.org/wiki/Ariane_5#Notable_launches
+                .postfooter
+                  .leftstuff
+                    .displayin.floatl
+                      %a.comment{:onclick => "open_comments(this);", :style => "position: relative; top: 5px;"} 3 Comments
+                    .addthis_toolbox.social_toolbar{"addthis:title" => "Great response in the Ruby / Rails testing Challenge on @MetaBright.", "addthis:url" => "http://www.metabright.com/paths/rubyrailstesting/submission/683", :style => "display: inline; margin-right: 10px; float: right;"}
+                      %a{:href => "#", :onclick => "javascript:void window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.metabright.com/paths/rubyrailstesting/submission/683','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
+                        %img{:alt => "Share on Facebook", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"}/
+                      %a{:href => "#", :onclick => "javascript:void window.open('https://twitter.com/intent/tweet?text=Great response in the Ruby / Rails testing Challenge on @MetaBright.&url=http://www.metabright.com/paths/rubyrailstesting/submission/683&related=','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
+                        %img{:alt => "Share on Twitter", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"}/
+                      %a{:href => "#", :onclick => "javascript:void window.open('https://plus.google.com/share?url=http://www.metabright.com/paths/rubyrailstesting/submission/683&t=Great response in the Ruby / Rails testing Challenge on @MetaBright.','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
+                        %img{:alt => "Share on Google+", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"}/
+                  .comments{:style => "text-align: left; display: none;"}
+                    %ul{:style => "list-style: none; margin: 10px 0 20px 0;"}
+                      %li
+                        %div{:style => "float:left;"}
+                          %a{:href => "/nathanielsokollward"}
+                            %img.commentphoto{:alt => "Photo", :src => "https://lh5.googleusercontent.com/-3ms2Fcl-wBI/AAAAAAAAAAI/AAAAAAAAIfk/EGQexs3Mcf4/photo.jpg"}/
+                        %div{:style => "overflow:hidden; margin: 0 0 0 43px;"}
+                          %pre.unstyled.text_content{:style => "font-size: 13px; color: black; margin-left: 0;"} The lesson here is obvious: test your software, or get ready to lose $7 billion
+                          %p{:style => "margin-left: 0;"}
+                            %a{:href => "/nathanielsokollward"} Nathaniel Sokoll-Ward
+                            about 9 days ago.
+                            %a.comment_delete{"data-method" => "delete", "data-remote" => "true", :href => "/comments/204", :rel => "nofollow"} Remove.
+                      %li
+                        %div{:style => "float:left;"}
+                          %a{:href => "/joelpearson"}
+                            %img.commentphoto{:alt => "F001c1cf1c39f6e0c44f25676b93ce968cb0e293_full", :src => "http://media.steampowered.com/steamcommunity/public/images/avatars/f0/f001c1cf1c39f6e0c44f25676b93ce968cb0e293_full.jpg"}/
+                        %div{:style => "overflow:hidden; margin: 0 0 0 43px;"}
+                          %pre.unstyled.text_content{:style => "font-size: 13px; color: black; margin-left: 0;"} + for citing references :)
+                          %p{:style => "margin-left: 0;"}
+                            %a{:href => "/joelpearson"} Joel Pearson
+                            about 8 days ago.
+                      %li
+                        %div{:style => "float:left;"}
+                          %a{:href => "/jonathankirst4"}
+                            %img.commentphoto{:alt => "Photo", :src => "https://lh3.googleusercontent.com/-biyqY3RVSnQ/AAAAAAAAAAI/AAAAAAAAAAA/JoQ9BiBg0kE/photo.jpg"}/
+                        %div{:style => "overflow:hidden; margin: 0 0 0 43px;"}
+                          %pre.unstyled.text_content{:style => "font-size: 13px; color: black; margin-left: 0;"} Totally. New feature idea....
+                          %p{:style => "margin-left: 0;"}
+                            %a{:href => "/jonathankirst4"} Jonathan Kirst
+                            about 8 days ago.
+                    %form#new_comment.new_comment{"accept-charset" => "UTF-8", :action => "/comments", "data-remote" => "true", :method => "post"}
+                      %div{:style => "margin:0;padding:0;display:inline"}
+                        %input{:name => "utf8", :type => "hidden", :value => "✓"}/
+                        %input{:name => "authenticity_token", :type => "hidden", :value => "weJUF/4iOHFMISu/oL/ae4dV3Y3HFc+cbXm9p9ExuMs="}/
+                      %div{:style => "width: 100%"}
+                        %textarea#comment_content{:cols => "40", :name => "comment[content]", :rows => "2", :style => "width: 510px; height: 55px; "}
+                      %input#comment_owner_type{:name => "comment[owner_type]", :type => "hidden", :value => "SubmittedAnswer"}/
+                      %input#comment_owner_id{:name => "comment[owner_id]", :type => "hidden", :value => "683"}/
+                      %input.button.button-standard.button-small{:name => "commit", :style => "margin-top:15px;", :type => "submit", :value => "Add Comment"}/                        
+            %center
+              %a See more
+        %hr{ style: "width:94.7%;" }
+        %div.crbucket
+          %h2 What I can do...
+          %h4 18 Creative Responses
+          %div.profilecontent
