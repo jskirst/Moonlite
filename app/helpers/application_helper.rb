@@ -107,4 +107,8 @@ module ApplicationHelper
       # }
     }
   end
+  
+  def hash_to_array(hash)
+    hash.collect{ |k, v| [v, k] }
+  end
 end
