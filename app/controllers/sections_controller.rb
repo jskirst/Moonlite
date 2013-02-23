@@ -123,7 +123,7 @@ class SectionsController < ApplicationController
   
   def take
     @task = @section.tasks.find(params[:task_id])
-    raise "Access Denied: Not a challenge." unless @task.is_challenge_question?
+    raise "Access Denied: Not a challenge." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
     @path = @section.path
     @stored_resource = @task.stored_resources.first
@@ -132,7 +132,7 @@ class SectionsController < ApplicationController
   def took
     @task = @section.tasks.find(params[:task_id])
     raise "Task already completed" if current_user.completed_tasks.find_by_task_id(@task.id)
-    raise "Only CRs can be taken." unless @task.is_challenge_question?
+    raise "Only CRs can be taken." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
     
     if !params[:answer].blank? || params[:answer] != "false" || params[:obj]

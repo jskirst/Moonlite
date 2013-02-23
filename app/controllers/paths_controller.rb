@@ -178,7 +178,7 @@ class PathsController < ApplicationController
       @completed = params[:c]
       @points_gained = params[:p]
       if @completed && @points_gained
-        @achievements = check_achievements(@points_gained, @enrollment)
+        @achievements = check_achievements(@points_gained.to_i, @enrollment)
       end
     else
       @display_sign_in = true
@@ -187,7 +187,7 @@ class PathsController < ApplicationController
     
     @similar_paths = @path.similar_paths
     social_tags(@path.name, @path.picture, @path.description)
-    @display_launchpad = params[:completed]
+    @display_launchpad = @completed
     @display_type = params[:type] || 2
     
     @enrollments = @path.enrollments.includes(:user)

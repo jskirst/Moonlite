@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130214054718) do
+ActiveRecord::Schema.define(:version => 20130222181146) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -251,6 +251,7 @@ ActiveRecord::Schema.define(:version => 20130214054718) do
     t.boolean  "is_locked",   :default => false
     t.datetime "reviewed_at"
     t.datetime "locked_at"
+    t.text     "caption"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
@@ -279,8 +280,8 @@ ActiveRecord::Schema.define(:version => 20130214054718) do
     t.string   "resource"
     t.integer  "points"
     t.integer  "section_id"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                                                               :null => false
+    t.datetime "updated_at",                                                                               :null => false
     t.integer  "correct_answer",     :default => 1
     t.integer  "position"
     t.integer  "answer_type",        :default => 2
@@ -292,6 +293,8 @@ ActiveRecord::Schema.define(:version => 20130214054718) do
     t.boolean  "is_reviewed",        :default => false
     t.datetime "reviewed_at"
     t.datetime "locked_at"
+    t.string   "url_template",       :default => "/^(https?://)?([da-z.-]+).([a-z.]{2,6})([/w .-]*)*/?$/"
+    t.integer  "url_type",           :default => 0
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

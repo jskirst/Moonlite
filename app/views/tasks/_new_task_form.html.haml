@@ -1,7 +1,7 @@
-= form_tag("/tasks", {remote: true, "data-type" => "html", class: "form-horizontal"}) do
-  = hidden_field_tag "task[section_id]", section.id
+= form_for(section.tasks.new, remote: true, html: { "data-type" => "html", class: "form-horizontal"}) do |f|
+  = f.hidden_field :section_id
   %div.floatr
-    = submit_tag "Save", :id => "save_question_button", :class => "button button-info"
+    = f.submit "Save", id: "save_question_button", class: "button button-info"
     %span#close_question_button.button.button-standard{ onclick: "clear_form();" } Clear
   %div.new_task{ style: "margin-top:10px;" }
     %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
@@ -9,23 +9,19 @@
     %div.control-group
       %label.control-label Question
       %div.controls
-        = text_area_tag("task[question]", nil, { class: "input-xlarge question_input", rows: "3", placeholder: "Type your question here..." })
+        = f.text_area :question, class: "input-xlarge question_input", placeholder: "Type your question here...", style: "width: 450px; height: 100px;"
     %div.row
       %div.answers{ style: "margin-left: 20px;" }
+        
         %div.control-group
           %label.control-label Answer type
           %div.controls
-            %select.task_answer_type{ name: "task[answer_type]" }
-              %option{ value: "2", selected: "selected" } Multiple choice
-              %option{ value: "0" } Creative response
-              %option{ value: "3" } Task
+            = f.select :answer_type, hash_to_array(Task::TYPES)
         %div.control-group.hide
           %label.control-label Response type
           %div.controls
-            %select.task_answer_sub_type{ name: "task[answer_sub_type]" }
-              %option{ value: "100", selected: "selected" } Free text
-              %option{ value: "101" } Image (JPEG, PNG, GIF)
-              %option{ value: "102" } Youtube video
+            = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
+        
         %div.multiple_choice
           - (1..4).each do |i|
             %div.control-group
@@ -33,13 +29,22 @@
               %label.control-label= status
               %div.controls
                 = text_field_tag("task[answer"+i.to_s+"]", nil, { maxlength: 255, size: 75, class: status.downcase.gsub(" ","_") })
+        
         %div.creative.hide
           %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
           %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.
           %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
+        
         %div.checkin.hide
-          %p.answer_note Users can only answer this question in the affirmative, and may do so at any time.
-          %p.answer_note They can, for example, confirm at any time that they have surfed at Maverick's, or explored Central Park.
+          %div.control-group
+            %label.control-label
+              = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px;"
+            %div.controls{ style: "width: 450px;" }
+              %p All tasks require proof of completion in the form of a webpage. If you select "Any valid website", users will also be given a chance to upload an image as proof they completed the task.
+            %label.control-label Source
+            %div.controls
+              = f.select :url_type, hash_to_array(Task::URL_TEMPLATE_NAMES)
+        
         %div.control-group
           %div.controls
             = render "stored_resources/new_image"
@@ -61,12 +66,12 @@
   }
   
   $(function(){
-    $(".task_answer_sub_type").change(function(){
+    $("#task_answer_sub_type").change(function(){
       log("Changin sub type.");
       display_sub_type_message();
     });
   
-    $(".task_answer_type").change(function(){
+    $("#task_answer_type").change(function(){
       var type = $(this).val();
       log("Changin type.");
       if(type == 0){

@@ -6,7 +6,7 @@ class Task < ActiveRecord::Base
   FIB       = 1
   MULTIPLE  = 2
   CHECKIN   = 3
-  TYPES = { CREATIVE => "Creative Response", MULTIPLE => "Arena", CHECKIN => "Task" }
+  TYPES = { MULTIPLE => "Multiple Choice", CREATIVE => "Creative Response", CHECKIN => "Task" }
   
   # Creative Subtypes
   TEXT      = 100
@@ -14,29 +14,29 @@ class Task < ActiveRecord::Base
   YOUTUBE   = 102
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video" }
   
-  # Challenge Subtypes
-  CHECKIN_CONFIRM   = 200
-  CHECKIN_IMAGE     = 201
-  CHECKIN_TEXT      = 201
-  CHECKIN_LINK      = 201
+  # Checkin URL's allowed
+  WILDCARD_URL = 0
+  GITHUB_URL   = 1
+  
+  URL_TEMPLATES = {
+    WILDCARD_URL  => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i, 
+    GITHUB_URL    => /^(https:\/\/github\.com\/)([\/\w \.-]*)*\/?$/i
+  }
+  
+  URL_TEMPLATE_NAMES = {
+    WILDCARD_URL  => "Any valid website",
+    GITHUB_URL    => "GitHub"
+  }
   
   attr_readonly :section_id
-  attr_accessor :answer_content, 
-    :source, 
-    :answer1, 
-    :answer2, 
-    :answer3, 
-    :answer4,
-    :stored_resource_id
+  attr_accessor :source, :answer_content, :stored_resource_id, :answer1, :answer2, :answer3, :answer4
   attr_accessible :question,
-    :points,
-    :position, 
     :answer_type, 
     :answer_sub_type,
-    :disable_time_limit,
-    :time_limit,
     :answer_content,
     :creator_id,
+    :url_type,
+    :url_template,
     :source
   
   belongs_to :section
@@ -51,21 +51,16 @@ class Task < ActiveRecord::Base
   has_many :task_issues
   
   validates :question, length: { within: 1..1000 }
-  validates :points, presence: true, numericality: { less_than: 51 }
   validates_presence_of :section_id
   validates_presence_of :creator_id
+  validates_presence_of :url_template
+  validates :answer_type, inclusion: { in: [0, 1, 2, 3] }
+  validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
   
-  before_validation { self.points = 10 if self.points.to_i == 0 }
-  before_create { self.position = get_next_position_for_section }
-  before_save do
-    if self.answer_type == 0
-      self.disable_time_limit = true
-    else
-      self.answer_sub_type = nil
-    end
-  end
+  before_validation { self.url_template = URL_TEMPLATES[url_type.to_i] if task? and url_template.blank? }
+  
   after_create do
-    if answer_type == 2
+    if multiple_choice?
       answer_content.each do |a|
         answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
       end
@@ -92,13 +87,18 @@ class Task < ActiveRecord::Base
   
   def correct_answer() answers.find_by_is_correct(true) end
   def total_answers() total_answers = answers.sum(:answer_count) end
-  def is_challenge_question?() self.answer_type == 0 || self.answer_type == 3 end
+    
+  def multiple_choice?() answer_type == MULTIPLE end
+  def creative_response?() answer_type == CREATIVE end
+  def task?() answer_type == CHECKIN end
+    
+  def text?() answer_sub_type == TEXT end
+  def image?() answer_sub_type == IMAGE end
+  def youtube?() answer_sub_type == YOUTUBE end
+    
+  def image_allowed?() url_template == URL_TEMPLATES[WILDCARD_URL] end
   
   private
-    def get_next_position_for_section
-      return section.tasks.last.position + 1 unless section.tasks.empty?
-      return 1
-    end
-    
-    def answers_to_array() answers.to_a.collect { |a| a.content } end
+  
+  def answers_to_array() answers.to_a.collect { |a| a.content } end
 end
