@@ -15,33 +15,27 @@
             %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
               %div.bar{style:"width: #{@enrollment.level_percent}%;" }
         
-        - @achievements = [false, 20]
+        - @achievements = [2, false]
         - if @achievements
           - new_level = @achievements[0]
           - new_rank = @achievements[1]
-          %div#launchpad_headlines{ style: "width: 100%; height: 90%; padding: 5% 6% 0 6%;" }
-            %div{ style: "width: 20%; height: 100%; display: inline-block; vertical-align: top" }
-              = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}", style: "width: 100%;"
-            %div{ style: "display: inline-block; width: 67%; padding: 10px 0;"}
-              
-              %h3{ style: "font-size: 25px; line-height: 32px;" }
-                Congratulations!
-                - if new_level && new_rank
-                  You just leveled up and reached the Top #{new_rank} on the leaderboard!
-                  - sharing_text = "Just leveled up and am now ranked number #{new_rank} in the #{@path.name} Challenge on @MetaBright!" 
-                - elsif new_level
-                  You just leveled up!
-                  - sharing_text = "Just hit Level #{new_level} in the #{@path.name} Challenge on @MetaBright!"
-                - elsif new_rank
-                  You reached the Top #{new_rank} on the leaderboard!
-                  - sharing_text = "I'm now ranked number #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
+          %div#launchpad_headlines{ style: "width: 73.9%; height: 90%; margin-right:auto; margin-left:auto;" }
+            %div{ style: "box-shadow: 0 6px 14px rgba(0, 0, 0, .1); padding: 0 0 8px 10px; border-radius: 6px; background-color:white; border: 1px solid rgba(0,0,0,.1); margin-top:55px;"}
+              = image_tag STONY_SMALL_URL, style: "display: inline-block; vertical-align: middle", alt: "Stoney"
+              %div{ style: "display:inline-block; top:30px; position:relative; "}
+                %span{ style:"font-size: 64px;" } Congratulations!              
+                %h3{ style: "font-size: 25px; line-height: 32px; position: relative; top: 9px;" }
+                  - if new_level && new_rank
+                    You just leveled up and reached the Top #{new_rank}!
+                    - sharing_text = "Just leveled up and made it into the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!" 
+                  - elsif new_level
+                    You've jumped to Level #{new_level}!
+                    - sharing_text = "Just hit Level #{new_level} in the #{@path.name} Challenge on @MetaBright!"
+                  - elsif new_rank
+                    You just reached the Top #{new_rank}!
+                    - sharing_text = "Just broke the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
                   
-              %div{ style: "text-align: middle; margin: 15px 0;" }
-                - if new_level
-                  %h4{ style: "margin: 10px 0;" } You are now Level #{new_level} - only #{@enrollment.points_to_next_level} points to Level #{new_level + 1}.
-                - if new_rank
-                  %h4{ style: "margin: 10px 0;" } You're now in #{ActiveSupport::Inflector.ordinalize(new_rank)} place on the #{@path.name} Leaderboard.
-                
+              %div{ style: "text-align: middle; margin: 0 0 15px 27px;" }
                 %p{ style: "font-size: 17px;" } You deserve a round of applause. In fact, you deserve a standing ovation. Share this achievement and brag to your friends.
                 %div{ style: "margin-top: 15px;" }
                   %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, profile_path(current_user.username), sharing_text) } Share on Google+
