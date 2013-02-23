@@ -64,11 +64,11 @@
   
   .profileheader { background-image: -webkit-linear-gradient(top,white,rgb(243, 243, 243)); padding: 4px 10px 8px 10px; border: 1px solid rgba(0,0,0,.1);border-bottom: none;border-top-right-radius: 6px;border-top-left-radius: 6px;}
   .profileheader img{ display:inline-block; width:35px; height:35px;  }
-  .profileheader > div { display: inline-block; }
   .profileheader h3 { display:inline-block; font-size: 20px; text-transform: uppercase;top: 3px;left: 4px; position: relative;}
   .challengeselector { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,.1);border-bottom-left-radius: 6px; border-bottom:none; border-right:none; }
   .challengeselector ul { list-style: none; margin:0;  }
   .challengeselector li { font-size:15px; border-bottom:1px solid rgba(0,0,0,.1); padding: 7px 12px; cursor:pointer; }
+  .challengeselector li span { font-size:11px; float:right; }
   .challengeselector li:last-child:hover { border-bottom-left-radius:6px; }
   .challengeselector li:hover { background-image: -moz-linear-gradient(white, white 5%, #E6E6E6); background-image: -ms-linear-gradient(white, white 5%, #E6E6E6);  background-image: -o-linear-gradient(white, white 5%, #E6E6E6);  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(0.05, white), to(#E6E6E6));  background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6);  background-image: linear-gradient(white, white 5%, #E6E6E6);  color: rgb(75, 75, 75);  text-shadow: 0 1px 0px whitesmoke;  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6');  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6')";  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.2);    box-shadow: 0 1px 1px rgba(0,0,0,0.2);}
   .challengeselector li:active { background-color: rgb(245, 245, 245);  background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  -moz-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);}
@@ -77,10 +77,11 @@
   #profile .span5 .leftbox { width:288px; margin-top:12px; }
   .challengecontent {background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
   .progresssection { float: right; margin-top: 12px;}
-  .progresssection .progress { display:inline-block; }
   .challengecontent h2 { color: rgb(111, 111, 111);font-weight:bold; font-size:35px; letter-spacing:1px;}
   .arenabucket, .taskbucket, .crbucket { display: block;padding: 15px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
   #profile hr { margin:25px 0; }
+  .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
+  .profileheader h5 { display: inline-block; float: right; margin-top:14px; font-size:18px; }
   
 %div#profile
   %div#topsection
@@ -107,19 +108,28 @@
   %div.row
     %div.span12
       %div.profileheader
-        %div
+        %div{style: "display:inline-block;"}
           %img{src:"http://www.placekitten.com/50/50"}
           %h3 Persona Name
-        %div.progresssection
-          %h4 Level 5
+        %div.progress.progress-success.progress-striped
+          %div.bar{ style:"width:40%"}
+        %h5 Level 5
   %div.row
     %div.span5
       %div.challengeselector
         %ul
-          %li Challenge name
-          %li Challenge name
-          %li Challenge name
-          %li Challenge name
+          %li 
+            Challenge name 
+            %span 9,123 points, Level 8
+          %li 
+            Challenge name 
+            %span 9,123 points, Level 8
+          %li
+            Challenge name 
+            %span 9,123 points, Level 8
+          %li 
+            Challenge name 
+            %span 9,123 points, Level 8
       %div.leftbox
         %div.leftboxheader Vital Stats
         %div.leftboxfooter Stuff
