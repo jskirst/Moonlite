@@ -1,18 +1,6 @@
-:css
-  .container.body { background-color: transparent; border: 0px; box-shadow: none;}
-  #content { padding-top: 0px; }
-
-
-= form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
-  :javascript
-    $(function(){
-      $('#challenge_form').submit(function(){
-        $("#loading_image").show();
-        $("#submit_button").attr("disabled","disabled").addClass("disabled").text("Submitting...");
-      });
-    });
-  %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
-    = render "layouts/report_issue_modal"
+%div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
+  = render "layouts/report_issue_modal"
+  = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
     %div.CRquizspace
       %div.quizheader
         = image_tag @path.path_pic, style: "height:50px; width:50px;", alt: "#{@path.name}"
@@ -25,35 +13,24 @@
         = render "stored_resource", { stored_resource: @stored_resource }
       
       %div.CRquestionandresponsespace
-        %div.CRquestionspace
+        %div.CRquestionspace{ style: "height: 100%;" }
           - if @task.creative_response?
-            %span.CRquestionheader Creative response:
+            %span.cr_question_header Creative response:
           - elsif @task.task?
-            %span.CRquestionheader Task:
+            %span.cr_question_header Your task, should you choose to accept it:
           %p
             %pre.CRquestion= @task.question
-          %p{ style: "vertical-align: bottom;" }= To prove you completed this task, you must retrieve a URL from #{Task::URL_TEMPLATE_NAMES[@task.url_type]}
+          - if @task.task?
+            %hr{ style: "margin: 20px 10px;" }
+            %p{ style: "vertical-align: bottom;" } To prove you completed this task, you must supply a URL from #{Task::URL_TEMPLATE_NAMES[@task.url_type]} that satisfies the question above.
         
         %div.CRresponsespace{ style: "min-height: 175px;" }           
           - if @task.creative_response?
             %span Your answer:
             - if @task.text?
-              :javascript
-                $(function(){ check_text_before_submit(); });
               %textarea{ name: "answer", id: "answer_input", rows: "7", autofocus: "autofocus" }
             
             - elsif @task.image?
-              :javascript
-                $(function(){
-                  check_image_before_submit();
-                  $("#answer_preview_button").click(function(){
-                    var url = $("#answer_input").val();
-                    is_valid_image(url, function(valid){
-                      if(valid == true) { $("#image_placeholder").attr("src", url);
-                      } else { alert("Please provide a link to a valid image."); }
-                    });
-                  });
-                });
               %div.input{ style: "margin-left: 0px; " }
                 %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px;"} Preview
@@ -63,20 +40,6 @@
                     = image_tag "/images/image_thumb.png", style: "width: 125px;", id: "image_placeholder", alt: "Image placeholder"
             
             - elsif @task.youtube?
-              :javascript
-                $(function(){
-                  check_youtube_before_submit();
-                  $("#answer_preview_button").click(function(){
-                    var url = $("#answer_input").val();
-                    var youtube_id = get_youtube_id_from_link(url);
-                    if(is_valid_youtube_id(youtube_id)){
-                      $("#youtube_placeholder").remove();
-                      set_youtube_preview(url, "answer_preview");
-                    } else {
-                      alert("Please provide a link to a valid Youtube video.");
-                    }
-                  });
-                });
               %div.input{ style: "margin-left: 0px; " }
                 %input#answer_input{ type: "text", name: "answer", style: "width: 250px;", placeholder: "Copy & paste link to youtube video here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:5px;" } Preview
@@ -85,29 +48,128 @@
                     = image_tag "/images/youtube_thumb.jpg", size: "380x200", id: "youtube_placeholder", alt: "YouTube placeholder"
           
           - elsif @task.task?
-            :javascript
-                $(function(){
-                  check_image_before_submit();
-                  $("#answer_preview_button").click(function(){
-                    var url = $("#answer_input").val();
-                    is_valid_image(url, function(valid){
-                      if(valid == true) { $("#image_placeholder").attr("src", url);
-                      } else { alert("Please provide a link to a valid image."); }
-                    });
-                  });
-                });
             %div.input{ style: "margin-left: 0px;" }
               %input#answer_input{ type: "text", name: "answer", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus" }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px;"} Preview
+              
               - if @task.image_allowed?
                 %p{ style: "margin:4px; line-height:18px; font-size: 13px;"} Upload an optional #{file_field_tag("obj")}
+              
               %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                 %div#answer_preview{ style: "text-align: center; padding: 10px;" }
                   = image_tag "/images/image_thumb.png", style: "width: 125px;", id: "image_placeholder", alt: "Image placeholder"
           - else
             - raise "Fatal: Invalid answer_type"
+            
+          %div{ style: "margin: 10px 0 5px 0;" }
+            %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
+              %span.text Add caption
+            = text_area_tag "caption", nil, style: "height: 40px; width: 96%; display: none; margin: 5px 0;", placeholder: "Caption will appear immediately below your response..."
+      
       %div.CRbuttonspace
         = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
         %a.arena_report_link{ href:"#", style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
-        = submit_tag "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+        = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
         = image_tag "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif", size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
+  
+  :css
+    .container.body { background-color: transparent; border: 0px; box-shadow: none;}
+    #content { padding-top: 0px; }
+    .quizcontainer { width: 926px; margin-top: 30px; }
+    .quizcontainer form { margin: 0; }
+    .CRquestionspace { width: 46%; margin-right: 1%; }
+    .CRresponsespace { width: 50%; }
+    .add_caption .text { font-size: 14px; cursor: pointer; vertical-align: top; }
+    .add_caption .caret { border-top-color: #0088cc; border-bottom-color: #0088cc; vertical-align: bottom; }
+        
+  :javascript
+    var url_regex = #{@task.task? ? Task::URL_TEMPLATES[@task.url_type].inspect : false};
+    var previewer_url = "#{preview_url}"
+    
+    function check_url(regex_string){
+      regex = new RegExp(regex_string);
+      if(regex.test($("#answer_input").val())){
+        return true
+      } return false;
+    }
+    
+    $(function(){
+      $('#challenge_form').submit(function(){
+        if(url_regex){
+          if(check_url(url_regex) == false){ 
+            alert("Please supply a URL that matches the criteria stated in the question.");
+            return false; 
+          }
+        }
+        $("#loading_image").show();
+        $("#submit_button").attr("disabled","disabled").addClass("disabled").text("Submitting...");
+      });
+    });
+    
+  - if @task.text?
+    :javascript
+      $(function(){ check_text_before_submit(); });
+  
+  - if @task.image?
+    :javascript
+      $(function(){
+        check_image_before_submit();
+        $("#answer_preview_button").click(function(){
+          var url = $("#answer_input").val();
+          is_valid_image(url, function(valid){
+            if(valid == true) { $("#image_placeholder").attr("src", url);
+            } else { alert("Please provide a link to a valid image."); }
+          });
+        });
+      });
+      
+  - if @task.image?
+    :javascript
+      $(function(){
+        check_image_before_submit();
+        $("#answer_preview_button").click(function(){
+          var url = $("#answer_input").val();
+          is_valid_image(url, function(valid){
+            if(valid == true) { $("#image_placeholder").attr("src", url);
+            } else { alert("Please provide a link to a valid image."); }
+          });
+        });
+      });
+  
+  - if @task.youtube?
+    :javascript
+      $(function(){
+        check_youtube_before_submit();
+        $("#answer_preview_button").click(function(){
+          var url = $("#answer_input").val();
+          var youtube_id = get_youtube_id_from_link(url);
+          if(is_valid_youtube_id(youtube_id)){
+            $("#youtube_placeholder").remove();
+            set_youtube_preview(url, "answer_preview");
+          } else {
+            alert("Please provide a link to a valid Youtube video.");
+          }
+        });
+      });
+  
+  - if @task.task?
+    :javascript
+      $(function(){
+        $("#answer_preview_button").click(function(){
+          var url = $("#answer_input").val();
+          if(check_url(url_regex)){
+            console.log("Success");
+            if(url.indexOf("github") >= 0){
+              var raw_url = url.replace("github.com", "raw.github.com");
+              $.get(previewer_url, 
+                { url: raw_url }, 
+                function(data){
+                  $("#answer_preview").html("<pre class='unstyled'>"+data.data+"</pre>");
+                }
+              );
+            }
+          } else {
+            alert("Please supply a URL that matches the criteria stated in the question.");
+          }
+        });
+      });

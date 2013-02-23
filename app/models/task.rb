@@ -19,8 +19,8 @@ class Task < ActiveRecord::Base
   GITHUB_URL   = 1
   
   URL_TEMPLATES = {
-    WILDCARD_URL  => "/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/", 
-    GITHUB_URL    => "/^(https:\/\/github\.com\/)([\/\w \.-]*)*\/?$/"
+    WILDCARD_URL  => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i, 
+    GITHUB_URL    => /^(https:\/\/github\.com\/)([\/\w \.-]*)*\/?$/i
   }
   
   URL_TEMPLATE_NAMES = {
