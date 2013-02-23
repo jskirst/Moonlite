@@ -38,9 +38,6 @@
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px; vertical-align: baseline; }
 
   .challengebucket h4 { font-weight:bold; text-transform: uppercase; font-size: 14px;}
-  .profilecontent { padding-bottom:8px;}
-  .profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white; }
-  .profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width:88px; border-top:none; }
   .arenabucket .profilecontent { }  
   .bucketsubtitle { font-size:18px; padding:12px;}
   .arenabucket .bucketsubtitle p { font-size: 15px; }
@@ -82,6 +79,15 @@
   #profile hr { margin:25px 0; }
   .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
   .profileheader h5 { display: inline-block; float: right; margin-top:14px; font-size:18px; }
+  .profilecontent { padding-bottom:8px;}
+  .profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; }
+  .profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width:83px; border-top:none; }
+  .profilecontent .table p { color: gray; margin:5px 0 0 0;}
+  .profilecontent .table h3 { font-size: 45px; }
+  .arenabucket { padding: 15px 12px 27px 28px;}
+  .myrank { display:inline-block; text-align: center;position: relative; top: 29px;}
+  .myrank span { font-size:86px; }
+  .myrank p { margin-top:10px; font-weight:bold; font-size:15px; }
   
 %div#profile
   %div#topsection
@@ -138,15 +144,15 @@
         %div.arenabucket
           %h2 What I know...
           %div.profilecontent
+            %div.myrank
+              %span 79
+              %p My Rank
             %table.table.overview
               %tbody
                 %tr
                   %td
                     %h3 12
                     %p Questions Correct
-                  %td
-                    %h3 2
-                    %p Highest Rank
                   %td
                     %h3 5
                     %p Longest Streak
