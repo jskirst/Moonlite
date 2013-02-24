@@ -47,14 +47,12 @@ class CompaniesController < ApplicationController
   end
   
   def paths
-    if request.get?
-      conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
-      @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions)
-    else
-      path = Path.find(params[:id])
-      toggle(:approved_at, path)
-      render json: { status: status }
-    end
+    conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
+    @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions)
+  end
+  
+  def path
+    @path = Path.find(params[:id])
   end
   
   def submissions

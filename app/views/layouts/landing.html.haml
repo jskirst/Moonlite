@@ -18,8 +18,8 @@
 %body
   = render "layouts/navbar" if show_header
   - if current_user
-    = render "layouts/explore_modal" if show_footer
+    = render "modals/explore" if show_footer
   - else
-    = render "layouts/login_modal"
+    = render "modals/login"
   = yield
   = render "layouts/footer" if show_footer

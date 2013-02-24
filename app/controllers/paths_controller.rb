@@ -59,9 +59,19 @@ class PathsController < ApplicationController
   end
   
   def update
-    @path.name = params[:path][:name]
-    @path.description = params[:path][:description]
+    @path.name = params[:path][:name] if params[:path][:name]
+    @path.description = params[:path][:description] if params[:path][:name]
+    
+    if @enable_administration
+      unless params[:path][:persona].blank?
+        @path.path_personas.destroy_all
+        @path.path_personas.create!(persona_id: params[:path][:persona])
+      end
+      @path.approved_at = params[:path][:approved].to_i == 1 ? Time.now : nil
+    end
+    
     @path.save
+    
     unless params[:stored_resource_id].blank?
       @path.stored_resource.destroy if @path.stored_resource
       sr = StoredResource.find(params[:stored_resource_id])
@@ -70,7 +80,12 @@ class PathsController < ApplicationController
       sr.owner_type = @path.class.to_s
       sr.save
     end
-    redirect_to edit_path_path(@path.permalink)
+    
+    if @enable_administration
+      redirect_to admin_paths_path
+    else
+      redirect_to edit_path_path(@path.permalink)
+    end
   end
   
   def publish

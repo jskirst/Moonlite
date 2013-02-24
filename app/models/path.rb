@@ -1,5 +1,5 @@
 class Path < ActiveRecord::Base
-  attr_accessor :persona_id, :template_type
+  attr_accessor :persona, :approved, :template_type
   attr_readonly :company_id
   attr_protected :approved_at, :published_at, :public_at
   attr_accessible :user_id,
@@ -8,7 +8,6 @@ class Path < ActiveRecord::Base
     :description, 
     :image_url,  
     :tags,
-    :persona_id,
     :permalink,
     :template_type
   
