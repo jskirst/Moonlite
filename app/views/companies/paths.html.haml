@@ -18,13 +18,13 @@
         %tr
           %td= i
           %td= link_to p.name, challenge_path(p.permalink)
-          %td= p.personas.first.name
+          %td= p.personas.empty? ? "" : p.personas.first.name
           %td= p.sections.count
           %td= p.all_tasks.count
           %td= link_to p.user.name, p.user
           %td= p.published? ? "published" : "waiting"
           %td
             - if p.approved?
-              = link_to "approved", admin_update_path_path(p), class: "mark_approved approved", remote: true, method: "put"
+              = link_to "Approved", admin_edit_path_path(p)
             - else
-              = link_to "waiting", admin_update_path_path(p), class: "mark_approved waiting", remote: true, method: "put"
+              = link_to "Waiting", admin_edit_path_path(p)

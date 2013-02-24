@@ -11,10 +11,10 @@
         
   %body
     - if current_user
-      = render "layouts/launchpad_modal"
-      = render "layouts/explore_modal"
+      = render "modals/launchpad"
+      = render "modals/explore"
     - else
-      = render "layouts/login_modal"
+      = render "modals/login"
     = render "layouts/navbar"
     %div.container.body{ style: "padding-top: 51px;" }
       - flash.each do |key, value|

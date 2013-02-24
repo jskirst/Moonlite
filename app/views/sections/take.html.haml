@@ -1,5 +1,5 @@
 %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
-  = render "layouts/report_issue_modal"
+  = render "modals/report_issue"
   = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
     %div.CRquizspace
       %div.quizheader
