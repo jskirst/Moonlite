@@ -20,9 +20,7 @@
   #updatespace{ min-height:162px; }
   #topboxcontent { }
   #topboxcontent h1{ font-size:45px; line-height:45px; }
-  #bottomboxcontent { margin-top: 97px; display:none; }
-  #bottomboxcontent .span9 div { display:inline-block; color:gray; font-size: 20px; min-width:330px; }
-  #bottomboxcontent .span9 ul { list-style:none; }
+  #bottomboxcontent { margin-top: 97px; }
   #profilemeat { padding:10px 0; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }
   .personabucket img { height:60px; width:60px; display:inline-block; }
   .personalabel .headerinfo { letter-spacing:2px; display:inline-block; font-size:20px; padding-bottom: 4px; width: 89%; ;bottom: 20px;position: relative;}
@@ -78,7 +76,7 @@
   .arenabucket, .taskbucket, .crbucket { display: block;padding: 15px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
   #profile hr { margin:25px 0; }
   .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
-  .profileheader h5 { display: inline-block; float: right; margin-top:14px; font-size:18px; }
+  .profileheader h5 { display: inline-table; float: right; margin-top:14px; font-size:18px; }
   .profilecontent { padding-bottom:8px;}
   .profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; }
   .profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width:83px; border-top:none; }
@@ -88,6 +86,13 @@
   .myrank { display:inline-block; text-align: center;position: relative; top: 29px;}
   .myrank span { font-size:86px; }
   .myrank p { margin-top:10px; font-weight:bold; font-size:15px; }
+  .usercard { padding-top: 6px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: whitesmoke;display: inline-block;color: gray;font-size: 12px;min-width: 597px;padding: 2px 10px 10px;}
+  .usercard ul { }
+  .shareprofile { float:right;border: 1px solid rgba(0,0,0,.1);padding: 5px 8px;background-color: #f9f9f9;border-radius: 5px; }
+  .shareprofile p { font-weight:bold; font-size:14px; }
+  #profile .span9 { width: 727px; position: relative; margin:0; }
+  .vitalinfo {  position: absolute; bottom: 14px; width:69%; }
+  .vitalinfo div { display:inline-block; }
   
 %div#profile
   %div#topsection
@@ -100,17 +105,24 @@
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
-            %p{ style: "font-size: 26px; margin: 5px 0 0px 0;"}= truncate(@enrolled_personas.collect(&:name).join(", "), length: 70)
+            %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 5px 0 0px 0; "} "We are two wild and crazy guys"
+            %p{ style: "font-size: 18px; margin: 5px 0 0px 0; color: rgb(80, 80, 80);"}= truncate(@enrolled_personas.collect(&:name).join(" | "), length: 70)
         %div#bottomboxcontent
           %div.span9
-            %div{ style: "display:inline-block; "}
-              %ul
-                %li Education:
-                %li Company:
-            %div{ style: "display:inline-block; "}
-              %ul
-                %li Looking for:
-                %li Personal links:
+            %div.vitalinfo
+              %div
+                LOCATION: San Francisco, CA
+              %div{ style: "float:right;"}
+                LOOKING FOR: Internship
+            %div.shareprofile
+              %p Share profile:
+              .addthis_toolbox.social_toolbar{"addthis:title" => "Great response in the Ruby / Rails testing Challenge on @MetaBright.", "addthis:url" => "http://www.metabright.com/paths/rubyrailstesting/submission/683", :style => "display: inline; margin-right: 10px; float: right;"}
+                %a{:href => "#", :onclick => "javascript:void window.open('https://www.facebook.com/sharer/sharer.php?u=http://www.metabright.com/paths/rubyrailstesting/submission/683','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
+                  %img{:alt => "Share on Facebook", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"}/
+                %a{:href => "#", :onclick => "javascript:void window.open('https://twitter.com/intent/tweet?text=Great response in the Ruby / Rails testing Challenge on @MetaBright.&url=http://www.metabright.com/paths/rubyrailstesting/submission/683&related=','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
+                  %img{:alt => "Share on Twitter", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"}/
+                %a{:href => "#", :onclick => "javascript:void window.open('https://plus.google.com/share?url=http://www.metabright.com/paths/rubyrailstesting/submission/683&t=Great response in the Ruby / Rails testing Challenge on @MetaBright.','sharing','width=550,height=300,toolbar=0,menubar=0,location=0,status=0,scrollbars=0,resizable=1,left=0,top=0');return false;"}
+                  %img{:alt => "Share on Google+", :src => "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"}/
   %div.row
     %div.span12
       %div.profileheader
