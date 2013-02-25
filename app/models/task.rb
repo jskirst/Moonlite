@@ -96,7 +96,8 @@ class Task < ActiveRecord::Base
   def image?() answer_sub_type == IMAGE end
   def youtube?() answer_sub_type == YOUTUBE end
     
-  def image_allowed?() url_template == URL_TEMPLATES[WILDCARD_URL] end
+  def image_allowed?() url_type == WILDCARD_URL end
+  def caption_allowed?() image? or youtube? or task? end
   
   private
   

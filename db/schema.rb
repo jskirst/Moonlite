@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130222181146) do
+ActiveRecord::Schema.define(:version => 20130224214632) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -252,6 +252,11 @@ ActiveRecord::Schema.define(:version => 20130222181146) do
     t.datetime "reviewed_at"
     t.datetime "locked_at"
     t.text     "caption"
+    t.text     "url"
+    t.text     "title"
+    t.text     "description"
+    t.text     "image_url"
+    t.text     "site_name"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
