@@ -76,10 +76,10 @@
               %pre.unstyled= ct.submitted_answer.content
             = image_tag (ct.submitted_answer.task_image_url.blank? ? "/images/image_thumb.png" : ct.submitted_answer.task_image_url), alt: "Image placeholder", class: "preview_image", style:"#{ct.submitted_answer.content.blank? ? 'width: 70%;' : 'height: 125px;float: right;'} top: 0px; z-index: 500;"
             %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
-              %h4.title= ct.submitted_answer.title.blank? ? "Completed on #{ct.submitted_answer.created_at}" : ct.submitted_answer.title
+              %h4.title= ct.submitted_answer.title.blank? ? "#{ct.user.name} marked this task complete on #{ct.submitted_answer.created_at.strftime('%B %d, %Y')}." : ct.submitted_answer.title
               - if not ct.submitted_answer.caption.blank?
-                %h3.description= ct.submitted_answer.caption
-              - elsif not ct.submitted_answer.description.blank?
+                %h5.description= ct.submitted_answer.caption
+              - if not ct.submitted_answer.description.blank?
                 %h5.description= ct.submitted_answer.description
             
         - if not ct.task.task? and ct.submitted_answer.caption
