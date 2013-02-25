@@ -24,7 +24,7 @@
             %pre.CRquestion= @task.question
           - if @task.task?
             %hr{ style: "margin: 20px 10px;" }
-            %p{ style: "vertical-align: bottom;" } To prove you completed this task, you must supply a URL from #{Task::URL_TEMPLATE_NAMES[@task.url_type]} that satisfies the question above.
+            %p{ style: "vertical-align: bottom;" } To prove you completed this task, you must provide a link to a website that displays some sort of public proof that you accomplished this task.
         
         %div.CRresponsespace{ style: "min-height: 175px;" }           
           %h4{ style: "margin-bottom: 5px;" } Your answer:
@@ -53,7 +53,8 @@
           
           - elsif @task.task?
             %div.input{ style: "margin-left: 0px;" }
-              %input#answer_input{ type: "text", name: "url", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus" }
+              %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus" }
+              %input{ type: "hidden", name: "url"}
               %input{ type: "hidden", name: "content"}
               %input{ type: "hidden", name: "title"}
               %input{ type: "hidden", name: "description"}
@@ -69,8 +70,8 @@
                     %pre.unstyled
                   = image_tag "/images/image_thumb.png", alt: "Image placeholder", class: "preview_image", style:"height: 125px; top: 0px; float: right; z-index: 500;"
                   %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
-                    %h4.title asfasdf
-                    %h5.description aadassdfasdfdf
+                    %h4.title
+                    %h5.description
           
           - if @task.caption_allowed?  
             %div{ style: "margin: 10px 0 5px 0;" }
@@ -97,7 +98,6 @@
     .error { font-size: 13px; color: #971D1C; }
         
   :javascript
-    var url_regex = #{@task.task? ? Task::URL_TEMPLATES[@task.url_type].inspect : false};
     var previewer_url = "#{preview_url}"
     
     function check_url(regex_string){
@@ -109,12 +109,6 @@
     
     $(function(){
       $('#challenge_form').submit(function(){
-        if(url_regex){
-          if(check_url(url_regex) == false){ 
-            alert("Please supply a URL that matches the criteria stated in the question.");
-            return false; 
-          }
-        }
         $("#loading_image").show();
         $("#submit_button").attr("disabled","disabled").addClass("disabled").text("Submitting...");
       });
@@ -170,6 +164,7 @@
     :javascript
       $(function(){
         $("#answer_preview_button").click(function(){
+          $(".errors").text("").hide();
           var url = $("#answer_input").val();
           $.ajax(previewer_url, 
             {
@@ -188,11 +183,12 @@
                 } else {
                   $("#answer_preview").hide();
                 
+                  $("input[name=url]").val(result.url);
                   $("input[name=content]").val(result.content);
-                  $("input[name=content]").val(result.title);
-                  $("input[name=content]").val(result.description);
-                  $("input[name=content]").val(result.site_name);
-                  $("input[name=content]").val(result.image_url);
+                  $("input[name=title]").val(result.title);
+                  $("input[name=description]").val(result.description);
+                  $("input[name=site_name]").val(result.site_name);
+                  $("input[name=image_url]").val(result.image_url);
                   
                   var $preview = $("#task_preview");
                   

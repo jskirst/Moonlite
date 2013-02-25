@@ -48,4 +48,9 @@ class SubmittedAnswer < ActiveRecord::Base
     end
     return false
   end
+  
+  def task_image_url
+    return stored_resources.first.obj.url unless stored_resources.empty?
+    return image_url if image_url
+  end
 end

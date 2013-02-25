@@ -14,20 +14,6 @@ class Task < ActiveRecord::Base
   YOUTUBE   = 102
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video" }
   
-  # Checkin URL's allowed
-  WILDCARD_URL = 0
-  GITHUB_URL   = 1
-  
-  URL_TEMPLATES = {
-    WILDCARD_URL  => /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/i, 
-    GITHUB_URL    => /^(https:\/\/github\.com\/)([\/\w \.-]*)*\/?$/i
-  }
-  
-  URL_TEMPLATE_NAMES = {
-    WILDCARD_URL  => "Any valid website",
-    GITHUB_URL    => "GitHub"
-  }
-  
   attr_readonly :section_id
   attr_accessor :source, :answer_content, :stored_resource_id, :answer1, :answer2, :answer3, :answer4
   attr_accessible :question,
@@ -35,8 +21,6 @@ class Task < ActiveRecord::Base
     :answer_sub_type,
     :answer_content,
     :creator_id,
-    :url_type,
-    :url_template,
     :source
   
   belongs_to :section
@@ -53,11 +37,8 @@ class Task < ActiveRecord::Base
   validates :question, length: { within: 1..1000 }
   validates_presence_of :section_id
   validates_presence_of :creator_id
-  validates_presence_of :url_template
   validates :answer_type, inclusion: { in: [0, 1, 2, 3] }
   validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
-  
-  before_validation { self.url_template = URL_TEMPLATES[url_type.to_i] if task? and url_template.blank? }
   
   after_create do
     if multiple_choice?

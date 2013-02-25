@@ -237,9 +237,9 @@ class PathsController < ApplicationController
       if params[:task]
         @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
       elsif params[:order] && params[:order] == "votes"
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("total_votes DESC")
       else
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("completed_tasks.created_at DESC")
       end
     end
     @more_available_url = @completed_tasks.size == 20 ? newsfeed_path_path(@path.id, page: @page+1) : false

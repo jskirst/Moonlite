@@ -9,6 +9,7 @@ module PreviewHelper
   def parse_url_for_preview(url)
     @url = url
     @results = {
+      url: @url,
       warnings: nil,
       error: nil,
       title: nil,
@@ -21,6 +22,11 @@ module PreviewHelper
     
     if @url.blank?
       @results[:error] = "Please supply a valid site url."
+    end
+    
+    unless @url.include?("http://") or @url.include?("https://")
+      @url = "http://#{@url}"
+      @results[:url] = @url
     end
     
     begin
@@ -48,7 +54,7 @@ module PreviewHelper
       end
     end
     
-    if @results[:title].blank?
+    if @results[:title].blank? && page.at_css("title")
       @results[:title] = page.at_css("title").text
     end
     

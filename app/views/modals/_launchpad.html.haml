@@ -15,7 +15,6 @@
             %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
               %div.bar{style:"width: #{@enrollment.level_percent}%;" }
         
-        - @achievements = [2, false]
         - if @achievements
           - new_level = @achievements[0]
           - new_rank = @achievements[1]

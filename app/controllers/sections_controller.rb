@@ -139,16 +139,27 @@ class SectionsController < ApplicationController
       (@task.text? and params[:content]) or 
       ((@task.image? and params[:stored_resource_id]))
       
-      submitted_answer = @task.submitted_answers.create!(url: params[:url], content: params[:content], caption: params[:caption])
+      sa = @task.submitted_answers.new
+      sa.content = params[:content]
+      sa.url = params[:url]
+      sa.image_url = params[:image_url]
+      sa.title = params[:title]
+      sa.description = params[:description]
+      sa.caption = params[:caption]
+      sa.site_name = params[:site_name]
+      sa.save!
+      
       unless params[:stored_resource_id].blank?
-        assign_resource(submitted_answer, params[:stored_resource_id])
-      end 
+        sr = assign_resource(sa, params[:stored_resource_id])
+        sa.image_url = sr.obj.url
+        sa.save!
+      end
       
       ct = current_user.completed_tasks.new(task_id: @task.id)
       ct.status_id = Answer::CORRECT
       ct.points_awarded = CompletedTask::CORRECT_POINTS
       ct.award_points = true
-      ct.submitted_answer_id = submitted_answer.id
+      ct.submitted_answer_id = sa.id
       ct.save!
       
       redirect_to challenge_path(@section.path.permalink, c: true, p: ct.points_awarded, type: @task.answer_type)

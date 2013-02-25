@@ -14,5 +14,6 @@ class ApplicationController < ActionController::Base
     sr.owner_id = obj.id
     sr.owner_type = obj.class.to_s
     sr.save
+    return sr
   end
 end
