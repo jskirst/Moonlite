@@ -1,6 +1,7 @@
 :css
   div.posttext.leveltext.dropdown:hover ul.dropdown-menu{display: block;}
   a.menu:after, .dropdown-toggle:after {content: none;}
+  .CRarea .details h4 a:hover { color: rgb(50, 187, 255); }
 
 - if @completed_tasks.empty?
   %div.post.empty_post{ style: "height: 300px;"}
@@ -73,10 +74,12 @@
         - elsif ct.task.task?
           %div{ style: "position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
             %div.content{ style: "position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 20px;"}
-              %pre.unstyled= ct.submitted_answer.content
-            = image_tag (ct.submitted_answer.task_image_url.blank? ? "/images/image_thumb.png" : ct.submitted_answer.task_image_url), alt: "Image placeholder", class: "preview_image", style:"#{ct.submitted_answer.content.blank? ? 'width: 70%;' : 'height: 125px;float: right;'} top: 0px; z-index: 500;"
-            %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
-              %h4.title= ct.submitted_answer.title.blank? ? "#{ct.user.name} marked this task complete on #{ct.submitted_answer.created_at.strftime('%B %d, %Y')}." : ct.submitted_answer.title
+              
+            = image_tag (ct.submitted_answer.task_image_url.blank? ? "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle_check_clip.png" : ct.submitted_answer.task_image_url), alt: "Image placeholder", class: "preview_image", style:"width:200px; margin-top:10px; z-index: 500;"
+            %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: rgb(29, 29, 29);"}
+              %h4.title{ style: "margin-bottom:14px; "}= ct.submitted_answer.title.blank? ? "#{ct.user.name} marked this task complete on #{ct.submitted_answer.created_at.strftime('%B %d, %Y')}." : ct.submitted_answer.title
+              %h4 
+                %pre.unstyled= ct.submitted_answer.content
               - if not ct.submitted_answer.caption.blank?
                 %h5.description= ct.submitted_answer.caption
               - if not ct.submitted_answer.description.blank?
