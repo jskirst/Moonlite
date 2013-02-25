@@ -2,7 +2,13 @@ class SubmittedAnswer < ActiveRecord::Base
   POINTS_PER_VOTE = 50
 
   attr_protected :task_id, :total_votes, :locked_at, :reviewed_at
-  attr_accessible :content
+  attr_accessible :url, 
+    :content, 
+    :caption,
+    :description,
+    :title,
+    :image_url,
+    :site_name
   
   belongs_to :task
   has_one :completed_task, dependent: :destroy
@@ -13,6 +19,12 @@ class SubmittedAnswer < ActiveRecord::Base
   has_many :stored_resources, as: :owner
  
   validates :content, length: { maximum: 2500 }
+  
+  def preview
+    return stored_resources.first.obj.url unless stored_resources.empty?
+    return url unless url.blank?
+    return STONY_SMALL_URL
+  end
     
   def add_vote(voting_user)
     if vote = voting_user.votes.create!(owner_id: self.id)

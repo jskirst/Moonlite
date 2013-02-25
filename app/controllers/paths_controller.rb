@@ -19,11 +19,7 @@ class PathsController < ApplicationController
     @path.published_at = nil
     if @path.save
       if params[:stored_resource_id]
-        sr = StoredResource.find(params[:stored_resource_id])
-        raise "FATAL: STEALING RESOURCE" if sr.owner_id
-        sr.owner_id = @path.id
-        sr.owner_type = @path.class.to_s
-        sr.save
+        assign_resource(@path, params[:stored_resource_id])
       end
       
       if @path.template_type == "blank"

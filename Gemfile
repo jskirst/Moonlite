@@ -21,6 +21,7 @@ gem 'taps'
 gem 'haml'
 gem 'faker'
 gem 'quiet_assets'
+gem 'nokogiri'
 
 group :assets do
   gem 'sass-rails'

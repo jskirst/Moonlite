@@ -135,27 +135,23 @@ class SectionsController < ApplicationController
     raise "Only CRs can be taken." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
     
-    if !params[:answer].blank? || params[:answer] != "false" || params[:obj]
-      unless params[:obj]
-        submitted_answer = @task.submitted_answers.create!(content: params[:answer])
-      else
-        submitted_answer = @task.submitted_answers.create!
-        sr = submitted_answer.stored_resources.new(params)
-        sr.save
-        submitted_answer.content = sr.obj.url
-        submitted_answer.save
-      end
+    if ((@task.task? or @task.youtube?) and params[:url]) or 
+      (@task.text? and params[:content]) or 
+      ((@task.image? and params[:stored_resource_id]))
+      
+      submitted_answer = @task.submitted_answers.create!(url: params[:url], content: params[:content], caption: params[:caption])
+      unless params[:stored_resource_id].blank?
+        assign_resource(submitted_answer, params[:stored_resource_id])
+      end 
+      
       ct = current_user.completed_tasks.new(task_id: @task.id)
       ct.status_id = Answer::CORRECT
       ct.points_awarded = CompletedTask::CORRECT_POINTS
       ct.award_points = true
       ct.submitted_answer_id = submitted_answer.id
       ct.save!
-      if current_user.completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::CREATIVE).size == 1
-        render "completed_cr"
-      else
-        redirect_to challenge_path(@section.path.permalink, c: true, p: ct.points_awarded, type: @task.answer_type)
-      end
+      
+      redirect_to challenge_path(@section.path.permalink, c: true, p: ct.points_awarded, type: @task.answer_type)
     else
       redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
     end

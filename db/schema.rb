@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130222181146) do
+ActiveRecord::Schema.define(:version => 20130224214632) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -252,6 +252,11 @@ ActiveRecord::Schema.define(:version => 20130222181146) do
     t.datetime "reviewed_at"
     t.datetime "locked_at"
     t.text     "caption"
+    t.text     "url"
+    t.text     "title"
+    t.text     "description"
+    t.text     "image_url"
+    t.text     "site_name"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
@@ -280,8 +285,8 @@ ActiveRecord::Schema.define(:version => 20130222181146) do
     t.string   "resource"
     t.integer  "points"
     t.integer  "section_id"
-    t.datetime "created_at",                                                                                                                            :null => false
-    t.datetime "updated_at",                                                                                                                            :null => false
+    t.datetime "created_at",                                                                               :null => false
+    t.datetime "updated_at",                                                                               :null => false
     t.integer  "correct_answer",     :default => 1
     t.integer  "position"
     t.integer  "answer_type",        :default => 2
@@ -293,7 +298,7 @@ ActiveRecord::Schema.define(:version => 20130222181146) do
     t.boolean  "is_reviewed",        :default => false
     t.datetime "reviewed_at"
     t.datetime "locked_at"
-    t.string   "url_template",       :default => "--- !ruby/regexp /^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/\\w \\.-]*)*\\/?$/i\n...\n"
+    t.string   "url_template",       :default => "/^(https?://)?([da-z.-]+).([a-z.]{2,6})([/w .-]*)*/?$/"
     t.integer  "url_type",           :default => 0
   end
 

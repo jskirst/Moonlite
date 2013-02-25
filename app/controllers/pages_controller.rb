@@ -1,5 +1,6 @@
-require 'open-uri'
 class PagesController < ApplicationController
+  include PreviewHelper
+  
   before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :mark_help_read, :robots, :url]
   before_filter :authorize_resource, only: [:create]
   
@@ -24,13 +25,12 @@ class PagesController < ApplicationController
     relevant_paths = current_user.enrollments.to_a.collect &:path_id
     if relevant_paths.empty?
       @completed_tasks = CompletedTask.joins(:task, :submitted_answer)
-        .where("tasks.answer_type = ?", Task::CREATIVE)
         .order("completed_tasks.created_at DESC")
         .limit(30)
         .offset(@page * 30)
     else
       @completed_tasks = CompletedTask.joins({:task => :section}, :submitted_answer)
-        .where("sections.path_id in (?) and tasks.answer_type = ?", relevant_paths, Task::CREATIVE)
+        .where("sections.path_id in (?)", relevant_paths)
         .order("completed_tasks.created_at DESC")
         .limit(30)
         .offset(@page * 30)
@@ -160,18 +160,14 @@ class PagesController < ApplicationController
   
   def preview
     url = params[:url]
-    url = url.gsub("/blob", "")
-    url = URI.parse(url)
-    begin
-      data = open(url).read
-      render json: { data: data }
-    rescue
-      raise "Could not read #{url}"
-    end
+    preview = parse_url_for_preview(url)
+    
+    render json: { data: preview.to_json }
   end
   
   private
-    def authorize_resource
-      return true
-    end
+  
+  def authorize_resource
+    return true
+  end
 end
