@@ -246,6 +246,7 @@ DEPENDENCIES
   heroku
   jquery-rails (= 2.0.2)
   meta_request
+  nokogiri
   omniauth
   omniauth-facebook
   omniauth-google-oauth2

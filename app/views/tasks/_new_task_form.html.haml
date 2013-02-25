@@ -40,10 +40,7 @@
             %label.control-label
               = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px;"
             %div.controls{ style: "width: 450px;" }
-              %p All tasks require proof of completion in the form of a webpage. If you select "Any valid website", users will also be given a chance to upload an image as proof they completed the task.
-            %label.control-label Source
-            %div.controls
-              = f.select :url_type, hash_to_array(Task::URL_TEMPLATE_NAMES)
+              %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
         
         %div.control-group
           %div.controls

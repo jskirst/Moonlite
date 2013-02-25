@@ -191,10 +191,7 @@
                   %div.control-group
                     %div.controls{ style: "width: 350px;" }
                       %p
-                        Tasks require proof of completion in the form of a URL or image.
-                    %label.control-label Source
-                    %div.controls
-                      = f.select :url_type, hash_to_array(Task::URL_TEMPLATE_NAMES)                
+                        Tasks require proof of completion in the form of a URL or image.          
                   %span.error_message
                   %a.next.button.button-actionable{ href: "#", style:"float:right;"} Next
                 %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:200px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}

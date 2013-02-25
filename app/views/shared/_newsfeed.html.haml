@@ -63,13 +63,27 @@
                 %li.CR_dropdown_option
                   = link_to "View all comments", submission_drilldown_path(ct.submitted_answer.id)         
       %div#cr_pop.CRarea
-        - if ct.task.answer_sub_type == Task::TEXT
-          %pre{ style: "margin:20px; word-break:normal;" }= ct.submitted_answer.content
-        - elsif ct.task.answer_sub_type == Task::IMAGE
-          = image_tag(sanitize(ct.submitted_answer.content))
-        - elsif ct.task.answer_sub_type == Task::YOUTUBE
+        - if ct.task.text?
+          %code{ style: "margin:20px; word-break:normal;" }= ct.submitted_answer.content
+        - elsif ct.task.image?
+          = image_tag(sanitize(ct.submitted_answer.preview))
+        - elsif ct.task.youtube?
           %center
-            %div.youtube_answer{ id: "youtube_answer_#{ct.id}", alt: ct.submitted_answer.content }        
+            %div.youtube_answer{ id: "youtube_answer_#{ct.id}", alt: ct.submitted_answer.url }
+        - elsif ct.task.task?
+          %div{ style: "position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
+            %div.content{ style: "position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 20px;"}
+              %pre.unstyled= ct.submitted_answer.content
+            = image_tag (ct.submitted_answer.task_image_url.blank? ? "/images/image_thumb.png" : ct.submitted_answer.task_image_url), alt: "Image placeholder", class: "preview_image", style:"#{ct.submitted_answer.content.blank? ? 'width: 70%;' : 'height: 125px;float: right;'} top: 0px; z-index: 500;"
+            %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
+              %h4.title= ct.submitted_answer.title.blank? ? "#{ct.user.name} marked this task complete on #{ct.submitted_answer.created_at.strftime('%B %d, %Y')}." : ct.submitted_answer.title
+              - if not ct.submitted_answer.caption.blank?
+                %h5.description= ct.submitted_answer.caption
+              - if not ct.submitted_answer.description.blank?
+                %h5.description= ct.submitted_answer.description
+            
+        - if not ct.task.task? and ct.submitted_answer.caption
+          %div.caption{ style: "margin: 10px 5px; font-size: 13px; color: #999" }= ct.submitted_answer.caption      
       = render "comments/comments", social_details(ct)
         
 

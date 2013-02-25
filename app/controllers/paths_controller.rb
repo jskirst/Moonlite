@@ -19,11 +19,7 @@ class PathsController < ApplicationController
     @path.published_at = nil
     if @path.save
       if params[:stored_resource_id]
-        sr = StoredResource.find(params[:stored_resource_id])
-        raise "FATAL: STEALING RESOURCE" if sr.owner_id
-        sr.owner_id = @path.id
-        sr.owner_type = @path.class.to_s
-        sr.save
+        assign_resource(@path, params[:stored_resource_id])
       end
       
       if @path.template_type == "blank"
@@ -241,9 +237,9 @@ class PathsController < ApplicationController
       if params[:task]
         @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
       elsif params[:order] && params[:order] == "votes"
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("total_votes DESC")
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("total_votes DESC")
       else
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("tasks.answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
+        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("completed_tasks.created_at DESC")
       end
     end
     @more_available_url = @completed_tasks.size == 20 ? newsfeed_path_path(@path.id, page: @page+1) : false
