@@ -45,6 +45,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .commentphoto{ width:32px; border-radius:3px; }
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
+.social_toolbar a { text-decoration: none; }
 
 /* Progress/Revolution rails */
 .singleprogressentry{ padding: 4px 0 9px 12px;}

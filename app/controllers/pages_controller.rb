@@ -45,42 +45,22 @@ class PagesController < ApplicationController
     if @user.nil? || @user.locked? 
       redirect_to root_path
       return
-    end 
-    
-    @page = params[:page].to_i
-    offset = @page * 20
-    if params[:task]
-      @completed_tasks = [@user.completed_tasks.joins(:submitted_answer, :task).find_by_task_id(params[:task])]
-      social_tags("My response to the #{@completed_tasks.first.path.name} challenge!", @user.picture)
-      @compact_social = false
-    else
-      if params[:order] && params[:order] == "votes"
-        @completed_tasks = @user.completed_tasks.offset(offset).limit(20).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("total_votes DESC")
-      else
-        @completed_tasks = @user.completed_tasks.offset(offset).limit(20).joins(:submitted_answer, :task).where("answer_type = ?", Task::CREATIVE).order("completed_tasks.created_at DESC")
-      end
-      social_tags("#{@user.name}'s Profile on MetaBright", @user.picture)
-      @compact_social = true
-    end  
-    
-    @completed_tasks_by_challenge = @user.completed_tasks
-      .joins(:task, :path)
-      .select("tasks.question, tasks.answer_type, paths.name")
-      .where("tasks.answer_type = ?", Task::CHECKIN)
-      .group_by(&:name)
-    
-    @enrolled_personas = @user.personas
-    @user_personas = @user.user_personas.includes(:persona)
-    
-    @creative_task_questions = @completed_tasks.collect { |item| item.task }
-    @enrollments = @user.enrollments.includes(:path).where("total_points > ? and paths.approved_at is not ?", 50, nil).sort { |a,b| b.total_points <=> a.total_points }
-    
-    @votes = current_user.nil? ? [] : current_user.vote_list
-    @title = @user.name
-    @more_available_url = @completed_tasks.size == 20 ? profile_path(@user.username, page: @page+1) : false
-    if request.xhr?
-      render partial: "shared/newsfeed"
     end
+    
+    @user_personas = @user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }
+    if params[:p].blank?
+      @current_user_persona = @user_personas.first
+    else
+      @current_user_persona = @user_personas.find_by_persona_id(params[:p])
+    end
+    
+    @enrollments = @current_user_persona.enrollments.sort{ |a, b| b.total_points <=> a.total_points }
+    
+    @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
+      .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
+      .limit(10)
+    
+    @title = @user.name
   end
   
   def intro

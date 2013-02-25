@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130224214632) do
+ActiveRecord::Schema.define(:version => 20130225201500) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20130224214632) do
     t.integer  "answer_id"
     t.boolean  "is_private",          :default => false
     t.boolean  "is_restricted",       :default => false
+    t.integer  "enrollment_id"
   end
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"
@@ -106,6 +107,8 @@ ActiveRecord::Schema.define(:version => 20130224214632) do
     t.integer  "total_points",             :default => 0
     t.boolean  "contribution_unlocked",    :default => false
     t.datetime "contribution_unlocked_at"
+    t.integer  "highest_rank",             :default => 0
+    t.integer  "longest_streak",           :default => 0
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"

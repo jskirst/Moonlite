@@ -2,7 +2,7 @@ class Enrollment < ActiveRecord::Base
   CONTRIBUTION_THRESHOLD = 300
   
   attr_readonly :path_id
-  attr_protected :total_points, :contribution_unlocked_at
+  attr_protected :total_points, :contribution_unlocked_at, :highest_rank, :longest_streak
   attr_accessible :path_id, :total_points, :contribution_unlocked
   
   belongs_to  :user
@@ -58,6 +58,9 @@ class Enrollment < ActiveRecord::Base
   def self.rank(points, path_id) Enrollment.where("path_id = ? and total_points > ?", path_id, points).count + 1 end
   
   def contribution_unlocked?() contribution_unlocked_at.nil? ? false : true end
+    
+  def tasks() completed_tasks.includes(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::CHECKIN) end
+  def creative_responses() completed_tasks.includes(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::CREATIVE) end
   
   private
   

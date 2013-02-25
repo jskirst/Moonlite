@@ -1,6 +1,6 @@
 - title ||= "Challenge yourself on MetaBright!"
 - url ||= request.url
-%div.addthis_toolbox.social_toolbar{ style: custom_style, "addthis:url" => url, "addthis:title" => title }
+%div.social_toolbar{ style: custom_style }
   = link_to "#", onclick: sharing_popup_javascript(:facebook, url) do
     = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png", alt: "Share on Facebook"
   = link_to "#", onclick: sharing_popup_javascript(:twitter, url, title) do
