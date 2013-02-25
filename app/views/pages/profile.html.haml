@@ -13,9 +13,7 @@
   
 :css
   #profile .span69 { margin-left:20px; width:708px; }
-  #profile .span3 { margin-left:12px; }
-  
-  #profile .leftboxfooter { background-color:white; padding-right:0; }
+  #profile .span3 { margin-left:12px; }  
   #profile .leftrailicon { height:58px; width:58px; margin-right:8px; }
   #updatespace{ min-height:162px; }
   #topboxcontent { }
@@ -34,7 +32,6 @@
   .challengecontent h2 { margin-bottom:15px; }
   .challengebucket { margin: 20px auto 20px auto; width: 600px; padding: 12px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: #FCFCFC;}
   .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px; vertical-align: baseline; }
-
   .challengebucket h4 { font-weight:bold; text-transform: uppercase; font-size: 14px;}
   .arenabucket .profilecontent { }  
   .bucketsubtitle { font-size:18px; padding:12px;}
@@ -47,12 +44,7 @@
   .taskbox img { height:auto; width: auto; border-radius:0;  max-width: 100%; max-height: 300px; border-color: #ccc; border-style: solid; border-width: 0px; display: block; margin-left: auto; margin-right: auto; margin-top:10px; }
   .taskbucket a { cursor: pointer; }
   .taskboxheader { padding:0 20px; border: 1px solid rgba(0, 0, 0, .1);margin-left: 40px;border-top-left-radius: 6px;width: 87%;background-color: rgb(66, 66, 66);color: white;border-top-right-radius: 6px;border-bottom: transparent;}
-  .taskboxheader h3 { font-size:20px; }
-  #profile .post {width: 500px;margin-right: auto;margin-left: auto;}
-  #profile .post:hover { background-color: transparent; }
-  #profile .postspace { width:474px; }
-  #profile .postspace img { height:20px; width:20px; }
-  #profile .postphotospace img { height:50px; width:50px; }
+  .taskboxheader h3 { font-size:20px; }  
   .personalabel { cursor:pointer; background-color:white; padding:12px 27px; border-bottom: 1px solid rgba(0,0,0,.1); border-top: 1px solid rgba(0,0,0,.1); background-image: -webkit-linear-gradient(top,white,rgb(243, 243, 243)); }
   .personalabel:hover {border-color: rgba(82, 168, 236, 0.8);outline: 0;outline: thin dotted 9;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}  
   .challengebucket .sub {font-size:14px;}
@@ -75,7 +67,8 @@
   .challengecontent h2 { color: rgb(111, 111, 111);font-weight:bold; font-size:35px; letter-spacing:1px;}
   .arenabucket, .taskbucket, .crbucket { display: block;padding: 15px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
   #profile hr { margin:25px 0; }
-  .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
+  .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;}
+  .profileprog {background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
   .profileheader h5 { display: inline-table; float: right; margin-top:14px; font-size:18px; }
   .profilecontent { padding-bottom:8px;}
   .profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; }
@@ -91,9 +84,19 @@
   .shareprofile { float:right;border: 1px solid rgba(0,0,0,.1);padding: 5px 8px;background-color: #f9f9f9;border-radius: 5px; }
   .shareprofile p { font-weight:bold; font-size:14px; }
   #profile .span9 { width: 727px; position: relative; margin:0; }
-  .vitalinfo {  position: absolute; bottom: 14px; width:69%; }
+  .vitalinfo {  position: absolute; bottom: 10px; width:69%; }
   .vitalinfo div { display:inline-block; }
-  
+  .vitalinfo span { font-weight:bold;}
+  #profile hr { border-top: 1px solid rgb(226, 226, 226); border-bottom: 1px solid rgb(248, 248, 248); }
+  .similarpeople img { width:58px; height:58px; border-radius:4px; margin: 10px 8px 0 0; }
+  .similarpeople .leftrailcontent { margin-top:0; }
+  #profile .leftboxfooter { background-color:white; padding-right:0; padding-top:0; }
+  #profile .post {width: 500px;margin-right: auto;margin-left: auto;}
+  #profile .post:hover { background-color: transparent; }
+  #profile .postspace { width:474px; }
+  #profile .postspace img { height:20px; width:20px; }
+  #profile .postphotospace img { height:50px; width:50px; }
+   
 %div#profile
   %div#topsection
     %div#updatespace
@@ -111,9 +114,11 @@
           %div.span9
             %div.vitalinfo
               %div
-                LOCATION: San Francisco, CA
+                LOCATION:
+                %span San Francisco, CA
               %div{ style: "float:right;"}
-                LOOKING FOR: Internship
+                LOOKING FOR: 
+                %span Internship
             %div.shareprofile
               %p Share profile:
               .addthis_toolbox.social_toolbar{"addthis:title" => "Great response in the Ruby / Rails testing Challenge on @MetaBright.", "addthis:url" => "http://www.metabright.com/paths/rubyrailstesting/submission/683", :style => "display: inline; margin-right: 10px; float: right;"}
@@ -129,7 +134,7 @@
         %div{style: "display:inline-block;"}
           %img{src:"http://www.placekitten.com/50/50"}
           %h3 Persona Name
-        %div.progress.progress-success.progress-striped
+        %div.progress.progress-success.progress-striped.profileprog
           %div.bar{ style:"width:40%"}
         %h5 Level 5
   %div.row
@@ -149,8 +154,23 @@
             Challenge name 
             %span 9,123 points, Rank: 69
       %div.leftbox
-        %div.leftboxheader Vital Stats
-        %div.leftboxfooter Stuff
+        %div.leftboxheader Similar People
+        %div.leftboxfooter.similarpeople 
+          %li.leftrailcontent
+            %a
+              %img{ src: "http://www.placekitten.com/50/50" }
+            %a
+              %img{ src: "http://www.placekitten.com/52/50" }
+            %a
+              %img{ src: "http://www.placekitten.com/51/50" }
+            %a
+              %img{ src: "http://www.placekitten.com/54/50" }
+            %a
+              %img{ src: "http://www.placekitten.com/53/50" }
+            %a
+              %img{ src: "http://www.placekitten.com/56/50" }
+            %a
+              %img{ src: "http://www.placekitten.com/57/50" }          
     %div.span11
       %div.challengecontent
         %div.arenabucket
@@ -159,7 +179,7 @@
             %div.myrank
               %span 12
               %p Level
-              %div.progress.progress-striped.progress-info{ style: "height:10px; width:92px; margin:0;" }
+              %div.progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
                 %div.bar{ style: "width 50%; width:50px;" }
             %table.table.overview
               %tbody
