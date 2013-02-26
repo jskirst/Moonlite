@@ -47,11 +47,11 @@
             - @similar_people.each do |person|
               = link_to profile_path(person.username) do
                 = image_tag person.picture, size: "50x50"
-                
-    - @enrollments.each do |enrollment|
-      - path = enrollment.path
-      %div.span11.challenge_details{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
-        %div.challengecontent
+         
+    %div.span11.challenge_details
+      - @enrollments.each do |enrollment|
+        - path = enrollment.path
+        %div.challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
           %div.arenabucket
             %h2{ style: "margin-left: -13px;"}
               = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
@@ -147,7 +147,7 @@
       $(".challengeselector li.selected").removeClass("selected");
       $(this).addClass("selected");
       
-      $(".challenge_details").hide();
-      $("#enrollment_"+$(this).attr("data-enrollment")).show();
+      $(".challengecontent").fadeOut();
+      $("#enrollment_"+$(this).attr("data-enrollment")).fadeIn();
     });
   });

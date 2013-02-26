@@ -52,7 +52,7 @@
 #profile .span11 { margin:0; }
 #profile .span5 { width: 300px; }
 #profile .span5 .leftbox { width:288px; margin-top:12px; }
-.challengecontent { background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
+.span11.challenge_details { width: 598px; background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
 .challengecontent h2 img { position:relative; bottom:3px;  }
 .progresssection { float: right; margin-top: 12px;}
 .challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px;}
