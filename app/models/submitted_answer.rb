@@ -23,7 +23,7 @@ class SubmittedAnswer < ActiveRecord::Base
   def preview
     return stored_resources.first.obj.url unless stored_resources.empty?
     return url unless url.blank?
-    return STONY_SMALL_URL
+    return STONEY_SMALL_URL
   end
     
   def add_vote(voting_user)
