@@ -48,23 +48,28 @@
   .personalabel:hover {border-color: rgba(82, 168, 236, 0.8);outline: 0;outline: thin dotted 9;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}  
   .challengebucket .sub {font-size:14px;}
   
-  .profileheader { background-image: -webkit-linear-gradient(top,white,rgb(243, 243, 243)); padding: 4px 10px 8px 10px; border: 1px solid rgba(0,0,0,.1);border-bottom: none;border-top-right-radius: 6px;border-top-left-radius: 6px;}
-  .profileheader img{ display:inline-block; width:35px; height:35px;  }
+  .profileheader { background-image: -webkit-linear-gradient(top,white,rgb(243, 243, 243)); padding: 3px 10px 6px 10px; border: 1px solid rgba(0,0,0,.1);border-bottom: none;border-top-right-radius: 6px;border-top-left-radius: 6px;}
+  .profileheader img{ display:inline-block; width:40px; height:40px;  }
   .profileheader h3 { display:inline-block; font-size: 20px; text-transform: uppercase;top: 3px;left: 4px; position: relative;}
   .challengeselector { background-color: #f9f9f9; border: 1px solid rgba(0,0,0,.1);border-bottom-left-radius: 6px; border-bottom: none; border-right: none; }
+  .challengeselector img { width:27px; height:27px; border-radius:3px; display:inline-block; }
   .challengeselector ul { list-style: none; margin:0;  }
-  .challengeselector li { font-size:16px; border-bottom:1px solid rgba(0,0,0,.1); padding: 12px 12px; cursor:pointer; }
-  .challengeselector li span { font-size:11px; float:right; }
+  .challengeselector li { font-size:16px; border-bottom:1px solid rgba(0,0,0,.1); padding: 8px 12px; cursor:pointer; color:gray; }
+  .challengeselector .selected { color: rgb(75, 75, 75);-webkit-box-shadow: inset 0 2px 12px rgba(0,0,0,.15);-moz-box-shadow: inset 0 2px 12px rgba(0,0,0,.15);box-shadow: inset 0 2px 12px rgba(0,0,0,.15);background-color: #eee;background-image: -webkit-linear-gradient(top,#eee,#e0e0e0);background-image: -moz-linear-gradient(top,#eee,#e0e0e0);background-image: -ms-linear-gradient(top,#eee,#e0e0e0);background-image: -o-linear-gradient(top,#eee,#e0e0e0);background-image: linear-gradient(top,#eee,#e0e0e0); }
+  .challengeselector .selected:hover { -webkit-box-shadow: inset 0 2px 12px rgba(0,0,0,.15);-moz-box-shadow: inset 0 2px 12px rgba(0,0,0,.15);box-shadow: inset 0 2px 12px rgba(0,0,0,.15);background-color: #eee;background-image: -webkit-linear-gradient(top,#eee,#e0e0e0);background-image: -moz-linear-gradient(top,#eee,#e0e0e0);background-image: -ms-linear-gradient(top,#eee,#e0e0e0);background-image: -o-linear-gradient(top,#eee,#e0e0e0);background-image: linear-gradient(top,#eee,#e0e0e0); }
+  .challengeselector li .pts { font-size:11px; float:right; position:relative; top:5px; }
   .challengeselector li:last-child:hover { border-bottom-left-radius:6px; }
   .challengeselector li:hover { background-image: -moz-linear-gradient(white, white 5%, #E6E6E6); background-image: -ms-linear-gradient(white, white 5%, #E6E6E6);  background-image: -o-linear-gradient(white, white 5%, #E6E6E6);  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(0.05, white), to(#E6E6E6));  background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6);  background-image: linear-gradient(white, white 5%, #E6E6E6);  color: rgb(75, 75, 75);  text-shadow: 0 1px 0px whitesmoke;  filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6');  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6')";  -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.2);  -moz-box-shadow: 0 1px 1px rgba(0,0,0,0.2);    box-shadow: 0 1px 1px rgba(0,0,0,0.2);}
   .challengeselector li:active { background-color: rgb(245, 245, 245);  background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  -moz-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);}
+  .challengeselector li div { position:relative; display:inline-block; top:4px;}
   #profile .span11 { margin:0; }
   #profile .span5 { width: 300px; }
   #profile .span5 .leftbox { width:288px; margin-top:12px; }
-  .challengecontent {background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
+  .challengecontent { background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
+  .challengecontent h2 img { position:relative; bottom:3px;  }
   .progresssection { float: right; margin-top: 12px;}
-  .challengecontent h2 { color: rgb(111, 111, 111);font-weight:bold; font-size:28px; letter-spacing:1px;}
-  .arenabucket, .taskbucket, .crbucket { display: block;padding: 15px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
+  .challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px;}
+  .arenabucket, .taskbucket, .crbucket { display: block;padding: 13px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
   #profile hr { margin:25px 0; }
   .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;}
   .profileprog {background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
@@ -74,7 +79,7 @@
   .profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width:87px; border-top:none; }
   .profilecontent .table p { color: gray; margin:5px 0 0 0;}
   .profilecontent .table h3 { font-size: 45px; }
-  .arenabucket { padding: 15px 12px 27px 28px;}
+  .arenabucket { padding: 13px 12px 27px 28px;}
   .myrank { display:inline-block; text-align: center;position: relative; top: 23px;}
   .myrank span { font-size:79px; }
   .myrank p { margin-bottom:5px; margin-top:6px; font-weight:bold; font-size:15px; }
@@ -107,7 +112,7 @@
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
             %h1= @user.name
-            %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 5px 0 0px 0; "}= @user.description
+            %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 5px 0 0px 0; "}= %Q("#{@user.description}")
             %p{ style: "font-size: 18px; margin: 5px 0 0px 0; color: rgb(80, 80, 80);"}= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
         %div#bottomboxcontent
           %div.span9
@@ -122,20 +127,20 @@
   %div.span12{ style: "margin-left: 0px;" }
     %div.profileheader
       %div{style: "display:inline-block;"}
-        %img{src:"http://www.placekitten.com/50/50"}
+        =image_tag @current_user_persona.persona.picture
         %h3= @current_user_persona.persona.name
       %div.progress.progress-success.progress-striped.profileprog
         %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
-      %h5 #{@current_user_persona.persona.name} lvl #{@current_user_persona.level}
+      %h5 #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
   %div.row
     %div.span5
       %div.challengeselector
         %ul
           - @enrollments.each do |enrollment|
             %li{ class: ("selected" if enrollment == @enrollments.first), "data-enrollment" => enrollment.id } 
-              = image_tag enrollment.path.picture, style: "width: 16px; height: 16px;"
-              = truncate(enrollment.path.name, length: 20)
-              %span #{enrollment.total_points} points
+              = image_tag enrollment.path.picture
+              %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
+              %span.pts #{enrollment.total_points} points
               
       %div.leftbox
         %div.leftboxheader Similar People
@@ -151,7 +156,7 @@
         %div.challengecontent
           %div.arenabucket
             %h2{ style: "margin-left: -13px;"}
-              = image_tag enrollment.path.picture, style: "width: 38px; height: 38px;"
+              = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
               What I know...
             %div.profilecontent
               %div.myrank
@@ -178,7 +183,7 @@
           %hr
           %div.crbucket
             %h2{ style: "margin-left: -13px;"}
-              = image_tag enrollment.path.picture, style: "width: 38px; height: 38px;"
+              = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
               What I can do...
             %h4 #{enrollment.creative_responses.count} Creative Responses
             %div.profilecontent
@@ -231,7 +236,7 @@
           %div.taskbucket
             - tasks = enrollment.tasks
             %h2{ style: "margin-left: -13px;"}
-              = image_tag enrollment.path.picture, style: "width: 38px; height: 38px;"
+              = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
               What I have done...
             %h4 #{tasks.size} Tasks Completed
             %div.profilecontent
