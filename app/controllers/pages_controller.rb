@@ -60,6 +60,7 @@ class PagesController < ApplicationController
       .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
       .limit(10)
     
+    @compact_social = true
     @title = @user.name
   end
   

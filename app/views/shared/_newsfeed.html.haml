@@ -49,7 +49,7 @@
           - else
             %span.vote_points{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= ct.points_awarded
             %span{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
-      %div.posttext.leveltext.dropdown
+      %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if ct.task.task?}" }
         %pre.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{ct.task.question}
         %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
           %li
@@ -78,8 +78,6 @@
             = image_tag (ct.submitted_answer.task_image_url.blank? ? "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle_check_clip.png" : ct.submitted_answer.task_image_url), alt: "Image placeholder", class: "preview_image", style:"width:200px; margin-top:10px; z-index: 500;"
             %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: rgb(29, 29, 29);"}
               %h4.title{ style: "margin-bottom:14px; "}= ct.submitted_answer.title.blank? ? "#{ct.user.name} marked this task complete on #{ct.submitted_answer.created_at.strftime('%B %d, %Y')}." : ct.submitted_answer.title
-              %h4 
-                %pre.unstyled= ct.submitted_answer.content
               - if not ct.submitted_answer.caption.blank?
                 %h5.description= ct.submitted_answer.caption
               - if not ct.submitted_answer.description.blank?
