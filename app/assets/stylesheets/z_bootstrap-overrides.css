@@ -39,7 +39,6 @@
 .navbar { height: 40px; position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
 .chunk.cloudy { display:inline-block; width:2%; height:100%; background-color:rgba(255, 255, 255, .15); z-index: 1;}
 .navbar h3 a, .navbar .brand { float: left;display: block; padding: 0; margin:0; line-height: 1; text-decoration: none;font: normal 18px arial, sans-serif;}
-.container h3 { left:68px; }
 .navicons img { width:25px; }
 .navitem { border-right: 1px solid #020D25; border-left: 1px solid #56698B;}
 .navitem a { opacity:.8}

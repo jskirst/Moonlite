@@ -24,9 +24,11 @@
                 
   %div.span12{ style: "margin-left: 0px;" }
     %div.profileheader
-      %div{style: "display:inline-block;"}
-        =image_tag @current_user_persona.persona.picture
-        %h3= @current_user_persona.persona.name
+      %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
+        =image_tag @current_user_persona.persona.picture, style: "vertical-align: middle;"
+        %h3{ style: "vertical-align: middle; padding-top: 5px;" }= @current_user_persona.persona.name
+        - if @user_personas.size > 1
+          %span.caret{ style: "margin-left: 6px; margin-top: 22px; border-top: 6px solid #999; border-right: 6px solid transparent; border-left: 6px solid transparent;"}
       %div.progress.progress-success.progress-striped.profileprog
         %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
       %h5 #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
