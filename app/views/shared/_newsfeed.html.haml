@@ -65,7 +65,7 @@
                   = link_to "View all comments", submission_drilldown_path(ct.submitted_answer.id)         
       %div#cr_pop.CRarea
         - if ct.task.text?
-          %code{ style: "margin:20px; word-break:normal;" }= ct.submitted_answer.content
+          %pre.unstyled{ style: "margin:20px; word-break:normal;" }= ct.submitted_answer.content
         - elsif ct.task.image?
           = image_tag(sanitize(ct.submitted_answer.preview))
         - elsif ct.task.youtube?

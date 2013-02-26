@@ -223,7 +223,7 @@
                                 %a{:href => "/submissions/683/view"} View all comments
                     #cr_pop.CRarea
                       - if task.task.text?
-                        %code{ style: "margin:20px; word-break:normal;" }= task.submitted_answer.content
+                        %pre.unstyled{ style: "margin:20px; word-break:normal;" }= task.submitted_answer.content
                       - elsif task.task.image?
                         = image_tag(sanitize(task.submitted_answer.preview))
                       - elsif task.task.youtube?
