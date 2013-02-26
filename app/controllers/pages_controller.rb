@@ -58,7 +58,7 @@ class PagesController < ApplicationController
     
     @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
       .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
-      .limit(10)
+      .limit(8)
     
     @compact_social = true
     @title = @user.name

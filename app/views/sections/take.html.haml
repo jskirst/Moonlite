@@ -19,12 +19,12 @@
           - if @task.creative_response?
             %span.cr_question_header Creative response:
           - elsif @task.task?
-            %span.cr_question_header Your task, should you choose to accept it:
+            %span.cr_question_header Your Task, should you choose to accept it:
           %p
             %pre.CRquestion= @task.question
           - if @task.task?
             %hr{ style: "margin: 20px 10px;" }
-            %p{ style: "vertical-align: bottom;" } To prove you completed this task, you must provide a link to a website that displays some sort of public proof that you accomplished this task.
+            %p{ style: "vertical-align: bottom;" } To prove you completed this Task, you must provide a link to a website or upload an image that displays some sort of proof that you accomplished this Task.
         
         %div.CRresponsespace{ style: "min-height: 175px;" }           
           %h4{ style: "margin-bottom: 5px;" } Your answer:

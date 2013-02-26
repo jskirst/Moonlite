@@ -3,7 +3,7 @@
     %div#updatespace
       = image_tag @user.picture, class: "bigheaderimage", alt: "#{@user.name}"
       %div.rightofbigheaderimage
-        %div#topboxcontent{}
+        %div#topprofilecontent{}
           %div{ style: "width: 119px; float:right;" }
             - if @user == current_user
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"

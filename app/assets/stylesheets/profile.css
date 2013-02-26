@@ -2,8 +2,8 @@
 #profile .span3 { margin-left:12px; }  
 #profile .leftrailicon { height:58px; width:58px; margin-right:8px; }
 #updatespace{ min-height:162px; }
-#topboxcontent { width:737px; }
-#topboxcontent h1{ font-size:45px; line-height:45px; }
+#topprofilecontent { width:737px; }
+#topprofilecontent h1{ font-size:40px; line-height:45px; }
 #bottomboxcontent { margin-top: 97px; }
 #profilemeat { padding:10px 0; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }
 .personabucket img { height:60px; width:60px; display:inline-block; }
@@ -15,7 +15,6 @@
 .headerinfo {  display:inline-block;  }
 .bigname { font-size:25px; }
 .littledetails { font-size:20px; }
-.challengecontent h2 { margin-bottom:10px; }
 .challengebucket { margin: 20px auto 20px auto; width: 600px; padding: 12px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: #FCFCFC;}
 .challengebucket img { height:60px; width:60px; display:inline-block; border-radius:6px; vertical-align: baseline; }
 .challengebucket h4 { font-weight:bold; text-transform: uppercase; font-size: 14px;}
@@ -53,9 +52,9 @@
 #profile .span5 { width: 300px; }
 #profile .span5 .leftbox { width:288px; margin-top:12px; }
 .span11.challenge_details { width: 598px; background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
-.challengecontent h2 img { position:relative; bottom:3px;  }
+.challengecontent h2 img { position:relative; bottom:3px; border-radius:3px;  }
 .progresssection { float: right; margin-top: 12px;}
-.challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px;}
+.challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px; margin-bottom:10px; }
 .arenabucket, .taskbucket, .crbucket { display: block;padding: 13px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
 #profile hr { margin:25px 0; }
 .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;}
@@ -87,3 +86,5 @@
 #profile .postspace { width:474px; }
 #profile .postspace img { height:20px; width:20px; }
 #profile .postphotospace img { height:50px; width:50px; }
+.profilecontent a { text-decoration: none; cursor: pointer; }
+.profilecontent .leftstuff .floatr p { margin-right:9px; }
