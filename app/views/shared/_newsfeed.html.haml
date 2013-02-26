@@ -84,8 +84,7 @@
                 %h5.description= ct.submitted_answer.description            
         - if not ct.task.task? and ct.submitted_answer.caption
           %div.caption{ style: "margin: 10px 5px; font-size: 13px; color: #999" }= ct.submitted_answer.caption
-      %div{ style: "margin-top:12px; font-family: 'MuliItalic';"}= %Q("#{ct.submitted_answer.caption}")
-      %hr{style: "margin:5px 0 0 0;"}  
+      %div{ style: "margin-top:12px; font-family: 'MuliItalic'; border-bottom: 1px solid #ccc; padding-bottom:5px; margin-bottom:-4px;"}= %Q("#{ct.submitted_answer.caption}")
       = render "comments/comments", social_details(ct)
         
 
