@@ -24,7 +24,7 @@
                 
   %div.span12{ style: "margin-left: 0px;" }
     %div.profileheader
-      %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
+      %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;", onclick: "$('.hidden_personas').show();"}
         =image_tag @current_user_persona.persona.picture, style: "vertical-align: middle;"
         %h3{ style: "vertical-align: middle; padding-top: 5px;" }= @current_user_persona.persona.name
         - if @user_personas.size > 1
@@ -32,6 +32,18 @@
       %div.progress.progress-success.progress-striped.profileprog
         %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
       %h5 #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
+    - if @user_personas.size > 1
+      %div.hidden_personas{ style: "display: none;" }
+        - @user_personas.each do |p|
+          - next if p == @current_user_persona
+          %div.profileheader{ style: "border: none; border-radius: 0px; background-image: none; background-color: white;" }
+            = link_to profile_path(@user.username, p: p.persona.id) do
+              %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
+                =image_tag p.persona.picture, style: "vertical-align: middle;"
+                %h3{ style: "vertical-align: middle; padding-top: 5px;" }= p.persona.name
+              %div.progress.progress-success.progress-striped.profileprog
+                %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
+              %h5 #{p.persona.name} lvl. #{p.level}
   %div.row
     %div.span5
       %div.challengeselector

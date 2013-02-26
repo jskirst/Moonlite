@@ -51,7 +51,7 @@ class PagesController < ApplicationController
     if params[:p].blank?
       @current_user_persona = @user_personas.first
     else
-      @current_user_persona = @user_personas.find_by_persona_id(params[:p])
+      @current_user_persona = @user_personas.select{ |up| up.persona_id == params[:p].to_i }.first
     end
     
     @enrollments = @current_user_persona.enrollments.sort{ |a, b| b.total_points <=> a.total_points }

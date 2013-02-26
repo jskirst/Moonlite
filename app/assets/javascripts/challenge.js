@@ -32,6 +32,7 @@ function start_question_timer(){
 }
 
 function get_youtube_id_from_link(youtube_link){
+  if(!youtube_link){ return false }
   if(youtube_link.indexOf("youtu.be")>=0){
     var start_pos = youtube_link.indexOf("be/") + 3;
   } else {
