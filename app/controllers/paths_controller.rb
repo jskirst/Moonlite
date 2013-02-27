@@ -227,7 +227,7 @@ class PathsController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new
+    feed = Feed.new(params, current_user, newsfeed_path_path(@path.id))
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
     offset = feed.page * 20
@@ -242,8 +242,7 @@ class PathsController < ApplicationController
         feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("completed_tasks.created_at DESC")
       end
     end
-    feed.url = feed.posts.size == 20 ? newsfeed_path_path(@path.id, page: feed.page + 1) : false
-
+    
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
 
@@ -256,7 +255,7 @@ class PathsController < ApplicationController
     end
     
     def authorize_edit
-      raise "Edit Access Denied" unless @path.nil? || can_edit_path(@path)
+      raise "Edit Access Denied" unless @path.nil? || can_edit_path(@path) || @enable_administration
     end
     
     def authorize_view
@@ -265,13 +264,13 @@ class PathsController < ApplicationController
     
     def generate_newsfeed_url
       if params[:submission]
-        return newsfeed_path_path(@path, submission: params[:submission])
+        return newsfeed_path_path(@path.permalink, submission: params[:submission])
       elsif params[:task]
-        return newsfeed_path_path(@path, task: params[:task], page: params[:page])
+        return newsfeed_path_path(@path.permalink, task: params[:task], page: params[:page])
       elsif params[:order] && params[:order] == "votes"
-        return newsfeed_path_path(@path, order: params[:order], page: params[:page])
+        return newsfeed_path_path(@path.permalink, order: params[:order], page: params[:page])
       else
-        return newsfeed_path_path(@path)
+        return newsfeed_path_path(@path.permalink)
       end
     end
 end

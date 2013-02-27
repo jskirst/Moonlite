@@ -1,16 +1,14 @@
 %div.explorenewusercontent
   :javascript
-    $(function(){
-      $(".back_to_preview_index").on("ajax:success", function(xhr, data){
-        $(".explorecontainer").fadeOut('fast', function(){
-          $(this).replaceWith(data, function(){
-            $(this).fadeIn();
-          });
+    $(".back_to_preview_index").on("ajax:success", function(xhr, data){
+      $(".explorecontainer").fadeOut('fast', function(){
+        $(this).replaceWith(data, function(){
+          $(this).fadeIn();
         });
       });
-      $('.bar2').mosaic({ animation : 'slide' });
-      close_button();
     });
+    $('.bar2').mosaic({ animation : 'slide' });
+    close_button();
 
   :css
     .exploreheader{ margin:0px; width:669px;padding:12px 0 0px 12px; background-color:#F9F9F9;}

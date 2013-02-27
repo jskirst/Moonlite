@@ -25,14 +25,14 @@
   - unless @user_personas.size == 0 || @enrollments.size == 0            
     %div.span12{ style: "margin-left: 0px;" }
       %div.profileheader
-        %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;", onclick: "$('.hidden_personas').show();"}
+        %div#persona_list_link{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
           =image_tag @current_user_persona.persona.picture, style: "vertical-align: middle;"
           %h3{ style: "vertical-align: middle; padding-top: 5px;" }= @current_user_persona.persona.name
           - if @user_personas.size > 1
             %span.caret{ style: "margin-left: 6px; margin-top: 22px; border-top: 6px solid #999; border-right: 6px solid transparent; border-left: 6px solid transparent;"}
         %div.progress.progress-success.progress-striped.profileprog
           %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
-        %h5 #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
+        %h5{ style: "width: 115px;" } #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
       - if @user_personas.size > 1
         %div.hidden_personas{ style: "display: none;" }
           - @user_personas.each do |p|
@@ -43,7 +43,7 @@
                   =image_tag p.persona.picture, style: "vertical-align: middle;"
                   %h3{ style: "vertical-align: middle; padding-top: 5px;" }= p.persona.name
                 %div.progress.progress-success.progress-striped.profileprog
-                  %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
+                  %div.bar{ style:"width: #{p.percent_level}%"}
                 %h5 #{p.persona.name} lvl. #{p.level}
     %div.row
       %div.span5
@@ -113,13 +113,19 @@
                 = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.tasks.limit(5))
 
 :javascript
-  $(function(){
-    $('.comment').click({ animation: 'slide', hover_x: '400px' });
-    $(".challengeselector li").click(function(){
-      $(".challengeselector li.selected").removeClass("selected");
-      $(this).addClass("selected");
-      
-      $(".challengecontent").fadeOut();
-      $("#enrollment_"+$(this).attr("data-enrollment")).fadeIn();
-    });
+  $('.comment').click({ animation: 'slide', hover_x: '400px' });
+  $(".challengeselector li").click(function(){
+    $(".challengeselector li.selected").removeClass("selected");
+    $(this).addClass("selected");
+    
+    $(".challengecontent").fadeOut();
+    $("#enrollment_"+$(this).attr("data-enrollment")).fadeIn();
+  });
+  
+  $("#persona_list_link").click(function(){
+    if($('.hidden_personas').visible()){
+      $('.hidden_personas').hide();
+    } else {
+      $('.hidden_personas').show();
+    }
   });

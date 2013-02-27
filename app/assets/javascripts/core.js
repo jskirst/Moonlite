@@ -111,6 +111,17 @@ function convert_links(){
   }) 
 }
 
+function mark_notifications_as_read(){
+  $.ajax({ 
+    type: "GET", 
+    url: "#{mark_read_path}", 
+    complete: function(){ 
+      $("title").text($("title").text().replace(/\([0-9]+\)/,''));
+      $(".notifications_bubble").remove();
+    } 
+  });
+}
+
 
 
 $(function(){

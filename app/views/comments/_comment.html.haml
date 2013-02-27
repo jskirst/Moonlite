@@ -1,7 +1,7 @@
 %li
   %div{ style: "float:left;" }
     :javascript
-      $(function(){ $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); }); });
+      $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); });
     = link_to (image_tag comment.user.picture, class: "commentphoto"), profile_path(comment.user.username)
   %div{ style: "overflow:hidden; margin: 0 0 0 43px;" }
     %pre.unstyled.text_content{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content

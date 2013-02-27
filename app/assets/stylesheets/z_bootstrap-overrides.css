@@ -54,6 +54,8 @@
 #content { padding-top: 42px; min-height: 450px;}
 .navbar .nav.pull-right li a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
 
+a { cursor: pointer; }
+
 /* browser compatibility */
 a:active, a:focus{ outline: none; }
 h1, h2, h3, h4, h5 { margin-top: 0px; margin-bottom: 0px; }

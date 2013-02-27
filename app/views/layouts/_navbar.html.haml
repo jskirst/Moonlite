@@ -1,18 +1,3 @@
-:javascript
-  function mark_notifications_as_read(){
-    $.ajax({ 
-      type: "GET", 
-      url: "#{mark_read_path}", 
-      complete: function(){ 
-        $("title").text($("title").text().replace(/\([0-9]+\)/,''));
-        $(".notifications_bubble").remove();
-      } 
-    });
-  }
-:css
-  .profile_dropdown li:hover { color: white; }
-  .navbar{ z-index:1010; }
-  
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner{ style: "height: 100%;" }
     %div{ style: "margin-left: 8%; height: 100%;" }
@@ -25,7 +10,7 @@
             = link_to root_url do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png",  alt: "Home"
           %li.navitem{ title: "Explore", style: "height: 100%;" }
-            = link_to "#", class: "explore_link" do
+            %a.explore_link
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;", alt: "Explore"
           %li.navitem{ title: "Profile", style: "height: 100%;" }
             = link_to profile_path(current_user.username) do

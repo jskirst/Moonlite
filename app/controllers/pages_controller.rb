@@ -20,7 +20,7 @@ class PagesController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new(params, current_user, request.url)
+    feed = Feed.new(params, current_user, newsfeed_url)
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     if relevant_paths.empty?
       feed.posts = CompletedTask.joins(:task, :submitted_answer)
@@ -51,11 +51,12 @@ class PagesController < ApplicationController
       @current_user_persona = @user_personas.select{ |up| up.persona_id == params[:p].to_i }.first
     end
     
-    @enrollments = @current_user_persona.enrollments.sort{ |a, b| b.total_points <=> a.total_points }
-    
-    @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
-      .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
-      .limit(8)
+    if @current_user_persona
+      @enrollments = @current_user_persona.enrollments.sort{ |a, b| b.total_points <=> a.total_points }
+      @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
+        .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
+        .limit(8)
+    end
     
     @title = @user.name
   end

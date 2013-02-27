@@ -72,16 +72,16 @@
       $("#topboxcontent .button-actionable").click(function(){
         $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
       });
-       
-      $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
-        if(data.status){
-          log("Cannot access this content.");
-        } else {
-          $("span.pointer_caret").remove();
-          $(".sectioninfocontainer").replaceWith(data);
-          $(this).find("a").prepend("<span class='pointer_caret'>» </span>");
-        }
-      });
+    });
+    
+    $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
+      if(data.status){
+        log("Cannot access this content.");
+      } else {
+        $("span.pointer_caret").remove();
+        $(".sectioninfocontainer").replaceWith(data);
+        $(this).find("a").prepend("<span class='pointer_caret'>» </span>");
+      }
     });
   
   - if @display_launchpad
