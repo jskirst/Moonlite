@@ -99,60 +99,17 @@
               What I can do...
             %h4 #{enrollment.creative_responses.count} Creative Responses
             %div.profilecontent
-              - enrollment.creative_responses.limit(5).each do |task|
-                .post                      
-                  .postspace
-                    .postheader
-                      %h3
-                        %a.username= @user.name
-                      = link_to path.name, challenge_path(path.permalink), class: "challengename" 
-                      .votingandpointsarea
-                        %span.vote_points{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= task.points_awarded
-                        %span{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
-                    .posttext.leveltext.dropdown
-                      %pre.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", :role => "button", :style => "color:inherit; cursor:default;"} Why do you think testing your software may be important?
-                    #cr_pop.CRarea
-                      - if task.task.text?
-                        %pre.unstyled{ style: "margin:20px; word-break:normal;" }= task.submitted_answer.content
-                      - elsif task.task.image?
-                        = image_tag(sanitize(task.submitted_answer.preview))
-                      - elsif task.task.youtube?
-                        %center
-                          %div.youtube_answer{ id: "youtube_answer_#{task.id}", alt: task.submitted_answer.url }
-                    = render "comments/comments", social_details(task)                        
+              = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.creative_responses.limit(5))                
 
           %hr
           %div.taskbucket
-            - tasks = enrollment.tasks
+            - tasks = 
             %h2{ style: "margin-left: -13px;"}
               = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
               What I have done...
-            %h4 #{tasks.size} Tasks Completed
+            %h4 #{enrollment.tasks.count} Tasks Completed
             %div.profilecontent
-              - tasks.each do |task|
-                .post                      
-                  .postspace
-                    .postheader
-                      %h3
-                        %a.username= @user.name
-                      = link_to path.name, challenge_path(path.permalink), class: "challengename" 
-                      .votingandpointsarea
-                        %span.vote_points{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= task.points_awarded
-                        %span{:style => "font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
-                    .posttext.leveltext.dropdown
-                      %pre.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", :role => "button", :style => "color:inherit; cursor:default;"} Why do you think testing your software may be important?
-                    #cr_pop.CRarea
-                      %div{ style: "position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
-                        %div.content{ style: "position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 20px;"}
-                          %pre.unstyled= task.submitted_answer.content
-                        = image_tag (task.submitted_answer.task_image_url.blank? ? "/images/image_thumb.png" : task.submitted_answer.task_image_url), alt: "Image placeholder", class: "preview_image", style:"#{task.submitted_answer.content.blank? ? 'width: 70%;' : 'height: 125px;float: right;'} top: 0px; z-index: 500;"
-                        %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
-                          %h4.title= task.submitted_answer.title.blank? ? "#{task.user.name} marked this task complete on #{task.submitted_answer.created_at.strftime('%B %d, %Y')}." : task.submitted_answer.title
-                          - if not task.submitted_answer.caption.blank?
-                            %h5.description= task.submitted_answer.caption
-                          - if not task.submitted_answer.description.blank?
-                            %h5.description= task.submitted_answer.description
-                    = render "comments/comments", social_details(task)
+              = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.tasks.limit(5))
 
 :javascript
   $(function(){

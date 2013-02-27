@@ -24,6 +24,8 @@ class CompletedTask < ActiveRecord::Base
     end
   end
   
+  delegate :content, :url, :title, :description, :caption, :image_url, :site_name, to: :submitted_answer
+  
   def incomplete?() status_id == Answer::INCOMPLETE end
   def correct?() status_id == Answer::CORRECT end
   def incorrect?() status_id == Answer::INCORRECT end

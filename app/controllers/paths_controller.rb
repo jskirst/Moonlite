@@ -1,5 +1,6 @@
 class PathsController < ApplicationController
   include PathsHelper
+  include NewsfeedHelper
   
   before_filter :authenticate, except: [:show, :newsfeed, :drilldown]
   before_filter :load_resource, except: [:index, :new, :create, :drilldown]
@@ -226,24 +227,24 @@ class PathsController < ApplicationController
   end
   
   def newsfeed
-    @votes = current_user.nil? ? [] : current_user.vote_list
-    @page = params[:page].to_i
-    offset = @page * 20
+    feed = Feed.new
+    feed.votes = current_user.vote_list if current_user
+    feed.page = params[:page].to_i
+    offset = feed.page * 20
     if params[:submission]
-      @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
-      @compact_social = false
+      feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
     else
-      @compact_social = true
       if params[:task]
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
       elsif params[:order] && params[:order] == "votes"
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("total_votes DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("total_votes DESC")
       else
-        @completed_tasks = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("completed_tasks.created_at DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("completed_tasks.created_at DESC")
       end
     end
-    @more_available_url = @completed_tasks.size == 20 ? newsfeed_path_path(@path.id, page: @page+1) : false
-    render partial: "shared/newsfeed"
+    feed.url = feed.posts.size == 20 ? newsfeed_path_path(@path.id, page: feed.page + 1) : false
+
+    render partial: "newsfeed/feed", locals: { feed: feed }
   end
 
   private

@@ -1,5 +1,6 @@
 class PagesController < ApplicationController
   include PreviewHelper
+  include NewsfeedHelper
   
   before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :mark_help_read, :robots, :url]
   before_filter :authorize_resource, only: [:create]
@@ -19,25 +20,21 @@ class PagesController < ApplicationController
   end
   
   def newsfeed
-    @votes = current_user.votes.to_a.collect {|v| v.owner_id } 
-    @completed_tasks = []
-    @page = params[:page].to_i
-    relevant_paths = current_user.enrollments.to_a.collect &:path_id
+    feed = Feed.new(params, current_user, request.url)
+    relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     if relevant_paths.empty?
-      @completed_tasks = CompletedTask.joins(:task, :submitted_answer)
+      feed.posts = CompletedTask.joins(:task, :submitted_answer)
         .order("completed_tasks.created_at DESC")
         .limit(30)
-        .offset(@page * 30)
+        .offset(feed.page * 30)
     else
-      @completed_tasks = CompletedTask.joins({:task => :section}, :submitted_answer)
+      feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
         .where("sections.path_id in (?)", relevant_paths)
         .order("completed_tasks.created_at DESC")
         .limit(30)
-        .offset(@page * 30)
+        .offset(feed.page * 30)
     end
-    @compact_social = true
-    @more_available_url = @completed_tasks.size == 30 ? newsfeed_path(page: @page+1) : false
-    render partial: "shared/newsfeed"
+    render partial: "newsfeed/feed", locals: { feed: feed }
   end
   
   def profile
@@ -60,7 +57,6 @@ class PagesController < ApplicationController
       .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
       .limit(8)
     
-    @compact_social = true
     @title = @user.name
   end
   

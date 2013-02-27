@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include NewsfeedHelper
+  
   before_filter :authenticate, except: [:notifications]
   before_filter :load_resource, except: [:retract, :notifications]
   before_filter :authorize_resource, except: [:retract, :notifications]

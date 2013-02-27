@@ -1,0 +1,74 @@
+%div.post
+  - unless feed.context == :profile
+    %div.postphotospace
+      = link_to profile_path(post.user.username) do
+        = image_tag post.user.picture, class: "photo"
+  %div.postspace
+    %div.postheader
+      %h3
+        = link_to truncate(post.user.to_s, length: 50), profile_path(post.user.username), class:"username"
+      %span
+        = link_to truncate(post.path.name.to_s, length: 40), challenge_path(post.path.permalink), class:"challengename"
+      %div.votingandpointsarea{ id: ("points_pop" unless current_user == post.user)}
+        - if current_user
+          %span.vote_points= post.points_awarded
+          %span.vote_points{ style:"margin-right:5px;"} pts
+          - if current_user == post.user
+            %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
+              %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:0px;" }
+                %span.caret{ style: "margin: 6px 0 0 0;" }
+              %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
+                %li{ style: "margin-left: -10px;" }
+                  %div.graynub{ style: "top:-17px; left: 75px; margin:0; "}
+                  %div{ style: "padding: 3px 0px; margin:0;"}
+                    %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
+                      %li= link_to "Delete Submission", retract_submission_path(post.id), remote: true, confirm: "Are you sure you want to delete your submission?", class: "retract_link"
+          - else
+            = link_to vote_task_path(post.task.id, sa_id: post.submitted_answer.id), remote: true, class: ("btn vote_button " + (feed.votes.include?(post.submitted_answer.id) ? "btn-info" : "")) do
+              %img{ src: ICON_UPVOTE_URL, alt: "Up-vote" }
+        - else
+          %span.vote_points= post.points_awarded
+          %span{ style:"margin-right:5px;" } pts
+    
+    %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post.task.task?}" }
+      %pre.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{post.task.question}
+      %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
+        %li
+          %div
+            %div.sidenub
+          %div{ style: "padding: 3px 0px;"}
+            %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
+              %li.CR_dropdown_option{ style: ("display:none;" if current_user == post.user)} 
+                = link_to "Answer this question", take_section_path(post.task.section_id, task_id: post.task.id)
+              %li.CR_dropdown_option
+                = link_to "View all responses", task_drilldown_path(post.task.id)
+              %li.CR_dropdown_option
+                = link_to "View all details", submission_drilldown_path(post.submitted_answer.id)         
+    
+    %div#cr_pop.CRarea
+      - if post.task.text?
+        %pre.unstyled{ style: "margin:20px; word-break:normal;" }= post.content
+      
+      - elsif post.task.image?
+        = image_tag(sanitize(post.image_url))
+      
+      - elsif post.task.youtube?
+        %center
+          %div.youtube_answer{ id: "youtube_answer_#{post.id}", alt: post.url }
+      
+      - elsif post.task.task?
+        %div.task_post
+          %div.content= post.content
+          = image_tag (post.image_url.blank? ? ICON_CHECK_URL : post.image_url), alt: "Image placeholder", class: "preview_image", style:"width:100%; height:auto; z-index: 500;"
+          %div.details
+            %h4.title
+              - if post.title.blank?
+                #{post.user.name} marked this task complete on #{post.created_at.strftime('%B %d, %Y')}.
+              - else
+                = post.title
+            - if not post.submitted_answer.description.blank?
+              %h5.description= post.description            
+    
+    - unless post.caption.blank?
+      %div.post_caption= post.caption
+    = render "comments/comments", social_details(post)

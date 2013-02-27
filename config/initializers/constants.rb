@@ -35,12 +35,14 @@ end
 
 # URLS
 
-LIGHT_BULB_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"
+LIGHT_BULB_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"
 
-STONEY_SMALL_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
+STONEY_SMALL_URL  = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
 
-ICON_CLOSE_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"
-ICON_CAMERA_URL = "https://s3-us-west-1.amazonaws.com/moonlite/static/image.png"
-ICON_LOADING_URL = "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif"
+ICON_CLOSE_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"
+ICON_CAMERA_URL   = "https://s3-us-west-1.amazonaws.com/moonlite/static/image.png"
+ICON_LOADING_URL  = "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif"
+ICON_CHECK_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle_check_clip.png"
+ICON_UPVOTE_URL   = "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"
 
 
