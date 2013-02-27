@@ -7,7 +7,7 @@
           %div{ style: "width: 119px; float:right;" }
             - if @user == current_user
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
-          %div.span7{style: "min-height: 65px; vertical-align: top; margin: 0; width: 600px;"}
+          %div.span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1= @user.name
             - if @user.description
               %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 10px 0 10px 0;"} "#{@user.description}"
@@ -61,7 +61,7 @@
             %div.leftrailcontent
               - @similar_people.each do |person|
                 = link_to profile_path(person.username) do
-                  = image_tag person.picture, size: "50x50"
+                  = image_tag person.picture, size: "50x50", title: person.name, alt: person.name
            
       %div.span11.challenge_details
         - @enrollments.each do |enrollment|
