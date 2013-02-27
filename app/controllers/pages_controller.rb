@@ -25,14 +25,14 @@ class PagesController < ApplicationController
     if relevant_paths.empty?
       feed.posts = CompletedTask.joins(:task, :submitted_answer)
         .order("completed_tasks.created_at DESC")
-        .limit(30)
-        .offset(feed.page * 30)
+        .limit(15)
+        .offset(feed.page * 15)
     else
       feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
         .where("sections.path_id in (?)", relevant_paths)
         .order("completed_tasks.created_at DESC")
-        .limit(30)
-        .offset(feed.page * 30)
+        .limit(15)
+        .offset(feed.page * 15)
     end
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
@@ -55,7 +55,7 @@ class PagesController < ApplicationController
       @enrollments = @current_user_persona.enrollments.sort{ |a, b| b.total_points <=> a.total_points }
       @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
         .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
-        .limit(8)
+        .limit(4)
     end
     
     @title = @user.name

@@ -1,6 +1,6 @@
 module NewsfeedHelper
   class Feed
-    MAX_POSTS = 30
+    MAX_POSTS = 15
     
     attr_accessor :posts, :votes, :url, :page, :context
     

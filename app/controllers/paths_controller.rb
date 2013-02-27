@@ -230,16 +230,16 @@ class PathsController < ApplicationController
     feed = Feed.new(params, current_user, newsfeed_path_path(@path.id))
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
-    offset = feed.page * 20
+    offset = feed.page * 15
     if params[:submission]
       feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
     else
       if params[:task]
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(15).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
       elsif params[:order] && params[:order] == "votes"
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("total_votes DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(15).order("total_votes DESC")
       else
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(20).order("completed_tasks.created_at DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(15).order("completed_tasks.created_at DESC")
       end
     end
     

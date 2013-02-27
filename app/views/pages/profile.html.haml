@@ -32,7 +32,7 @@
             %span.caret{ style: "margin-left: 6px; margin-top: 22px; border-top: 6px solid #999; border-right: 6px solid transparent; border-left: 6px solid transparent;"}
         %div.progress.progress-success.progress-striped.profileprog
           %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
-        %h5{ style: "width: 115px;" } #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
+        %h5{ style: "width: 150px;" } #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
       - if @user_personas.size > 1
         %div.hidden_personas{ style: "display: none;" }
           - @user_personas.each do |p|
