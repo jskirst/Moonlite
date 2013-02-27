@@ -76,11 +76,13 @@ namespace :db do
       end
       
       PATHS.each do |p|
-        path = moonlite_company.paths.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id, category_id: default_cat.id, persona_id: Persona.first.id)
+        path = moonlite_company.paths.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id, category_id: default_cat.id)
         path.published_at = now
         path.approved_at = now
         path.public_at = now
         path.save!
+        
+        path.path_personas.create!(persona_id: Persona.first.id)
       end
     
       Path.all.each do |path|
@@ -105,6 +107,9 @@ namespace :db do
           section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin)
           section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE, creator_id: moonlite_admin)
           section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE, creator_id: moonlite_admin)
+          section.tasks.create!(question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin)
+          section.tasks.create!(question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin)
+          section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin)
         end
       end
     end

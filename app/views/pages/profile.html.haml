@@ -21,95 +21,96 @@
             %div.shareprofile
               %p Share profile:
               = render "shared/sharing", { custom_style: "display: inline; margin-right: 10px; float: right;", title: "#{@user.name}'s awesome profile on MetaBright.com", url: request.url }
+  
+  - unless @user_personas.size == 0 || @enrollments.size == 0            
+    %div.span12{ style: "margin-left: 0px;" }
+      %div.profileheader
+        %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;", onclick: "$('.hidden_personas').show();"}
+          =image_tag @current_user_persona.persona.picture, style: "vertical-align: middle;"
+          %h3{ style: "vertical-align: middle; padding-top: 5px;" }= @current_user_persona.persona.name
+          - if @user_personas.size > 1
+            %span.caret{ style: "margin-left: 6px; margin-top: 22px; border-top: 6px solid #999; border-right: 6px solid transparent; border-left: 6px solid transparent;"}
+        %div.progress.progress-success.progress-striped.profileprog
+          %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
+        %h5 #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
+      - if @user_personas.size > 1
+        %div.hidden_personas{ style: "display: none;" }
+          - @user_personas.each do |p|
+            - next if p == @current_user_persona
+            %div.profileheader{ style: "border: none; border-radius: 0px; background-image: none; background-color: white;" }
+              = link_to profile_path(@user.username, p: p.persona.id) do
+                %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
+                  =image_tag p.persona.picture, style: "vertical-align: middle;"
+                  %h3{ style: "vertical-align: middle; padding-top: 5px;" }= p.persona.name
+                %div.progress.progress-success.progress-striped.profileprog
+                  %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
+                %h5 #{p.persona.name} lvl. #{p.level}
+    %div.row
+      %div.span5
+        %div.challengeselector
+          %ul
+            - @enrollments.each do |enrollment|
+              %li{ class: ("selected" if enrollment == @enrollments.first), "data-enrollment" => enrollment.id } 
+                = image_tag enrollment.path.picture
+                %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
+                %span.pts #{enrollment.total_points} points
                 
-  %div.span12{ style: "margin-left: 0px;" }
-    %div.profileheader
-      %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;", onclick: "$('.hidden_personas').show();"}
-        =image_tag @current_user_persona.persona.picture, style: "vertical-align: middle;"
-        %h3{ style: "vertical-align: middle; padding-top: 5px;" }= @current_user_persona.persona.name
-        - if @user_personas.size > 1
-          %span.caret{ style: "margin-left: 6px; margin-top: 22px; border-top: 6px solid #999; border-right: 6px solid transparent; border-left: 6px solid transparent;"}
-      %div.progress.progress-success.progress-striped.profileprog
-        %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
-      %h5 #{@current_user_persona.persona.name} lvl. #{@current_user_persona.level}
-    - if @user_personas.size > 1
-      %div.hidden_personas{ style: "display: none;" }
-        - @user_personas.each do |p|
-          - next if p == @current_user_persona
-          %div.profileheader{ style: "border: none; border-radius: 0px; background-image: none; background-color: white;" }
-            = link_to profile_path(@user.username, p: p.persona.id) do
-              %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
-                =image_tag p.persona.picture, style: "vertical-align: middle;"
-                %h3{ style: "vertical-align: middle; padding-top: 5px;" }= p.persona.name
-              %div.progress.progress-success.progress-striped.profileprog
-                %div.bar{ style:"width: #{@current_user_persona.percent_level}%"}
-              %h5 #{p.persona.name} lvl. #{p.level}
-  %div.row
-    %div.span5
-      %div.challengeselector
-        %ul
-          - @enrollments.each do |enrollment|
-            %li{ class: ("selected" if enrollment == @enrollments.first), "data-enrollment" => enrollment.id } 
-              = image_tag enrollment.path.picture
-              %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
-              %span.pts #{enrollment.total_points} points
-              
-      %div.leftbox
-        %div.leftboxheader Similar People
-        %div.leftboxfooter.similarpeople 
-          %div.leftrailcontent
-            - @similar_people.each do |person|
-              = link_to profile_path(person.username) do
-                = image_tag person.picture, size: "50x50"
-         
-    %div.span11.challenge_details
-      - @enrollments.each do |enrollment|
-        - path = enrollment.path
-        %div.challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
-          %div.arenabucket
-            %h2{ style: "margin-left: -13px;"}
-              = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
-              What I know...
-            %div.profilecontent
-              %div.myrank
-                %span= enrollment.level
-                %p Level
-                %div.progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
-                  %div.bar{ style: "width: #{enrollment.level_percent}%;" }
-              %table.table.overview
-                %tbody
-                  %tr
-                    %td
-                      %h3= enrollment.completed_tasks.joins(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::MULTIPLE).count
-                      %p Questions Correct
-                    %td
-                      %h3= enrollment.longest_streak
-                      %p Longest Streak
-                    %td
-                      %h3= enrollment.highest_rank
-                      %p Highest Rank
-                    %td
-                      %h3 8
-                      %p Comments Received
-
-          %hr
-          %div.crbucket
-            %h2{ style: "margin-left: -13px;"}
-              = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
-              What I can do...
-            %h4 #{enrollment.creative_responses.count} Creative Responses
-            %div.profilecontent
-              = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.creative_responses.limit(5))                
-
-          %hr
-          %div.taskbucket
-            - tasks = 
-            %h2{ style: "margin-left: -13px;"}
-              = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
-              What I have done...
-            %h4 #{enrollment.tasks.count} Tasks Completed
-            %div.profilecontent
-              = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.tasks.limit(5))
+        %div.leftbox
+          %div.leftboxheader Similar People
+          %div.leftboxfooter.similarpeople 
+            %div.leftrailcontent
+              - @similar_people.each do |person|
+                = link_to profile_path(person.username) do
+                  = image_tag person.picture, size: "50x50"
+           
+      %div.span11.challenge_details
+        - @enrollments.each do |enrollment|
+          - path = enrollment.path
+          %div.challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
+            %div.arenabucket
+              %h2{ style: "margin-left: -13px;"}
+                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                What I know...
+              %div.profilecontent
+                %div.myrank
+                  %span= enrollment.level
+                  %p Level
+                  %div.progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
+                    %div.bar{ style: "width: #{enrollment.level_percent}%;" }
+                %table.table.overview
+                  %tbody
+                    %tr
+                      %td
+                        %h3= enrollment.completed_tasks.joins(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::MULTIPLE).count
+                        %p Questions Correct
+                      %td
+                        %h3= enrollment.longest_streak
+                        %p Longest Streak
+                      %td
+                        %h3= enrollment.highest_rank
+                        %p Highest Rank
+                      %td
+                        %h3 8
+                        %p Comments Received
+  
+            %hr
+            %div.crbucket
+              %h2{ style: "margin-left: -13px;"}
+                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                What I can do...
+              %h4 #{enrollment.creative_responses.count} Creative Responses
+              %div.profilecontent
+                = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.creative_responses.limit(5))                
+  
+            %hr
+            %div.taskbucket
+              - tasks = 
+              %h2{ style: "margin-left: -13px;"}
+                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                What I have done...
+              %h4 #{enrollment.tasks.count} Tasks Completed
+              %div.profilecontent
+                = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.tasks.limit(5))
 
 :javascript
   $(function(){
