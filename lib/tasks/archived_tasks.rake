@@ -99,3 +99,15 @@ task :user_transaction_switch => :environment do
     end
   end
 end
+
+task :add_enrollment_to_completed_tasks => :environment do    
+  CompletedTask.all.each do |ct|
+    next if ct.enrollment_id
+    next if ct.task.nil? or ct.user.nil? or ct.task.path.nil?
+    enrollment = ct.user.enrollments.find_by_path_id(ct.task.path.id)
+    next if enrollment.nil?
+    
+    ct.enrollment_id = enrollment.id
+    ct.save
+  end
+end

@@ -19,6 +19,7 @@ module PathsHelper
     rank_jump = 25  if current_rank <= 25 and previous_rank > 25
     rank_jump = 10  if current_rank <= 10 and previous_rank > 10
     
+    return false if rank_jump.nil? and level_jump.nil?
     return level_jump, rank_jump
   end
   
