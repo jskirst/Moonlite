@@ -143,6 +143,7 @@ class SectionsController < ApplicationController
       sa.content = params[:content]
       sa.url = params[:url]
       sa.image_url = params[:image_url]
+      sa.image_url = params[:url] if @task.image? && params[:url] && sa.image_url.blank?
       sa.title = params[:title]
       sa.description = params[:description]
       sa.caption = params[:caption]
