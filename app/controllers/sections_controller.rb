@@ -161,6 +161,7 @@ class SectionsController < ApplicationController
       ct.points_awarded = CompletedTask::CORRECT_POINTS
       ct.award_points = true
       ct.submitted_answer_id = sa.id
+      ct.enrollment_id = @enrollment.id
       ct.save!
       
       redirect_to challenge_path(@section.path.permalink, c: true, p: ct.points_awarded, type: @task.answer_type)
@@ -192,6 +193,7 @@ class SectionsController < ApplicationController
       completed_task.points_awarded = 0
       session[:ssf] = 0
     end
+    completed_task.enrollment_id = @enrollment.id
     completed_task.save!
     Answer.increment_counter(:answer_count, answer_id)
     render json: { correct_answer: correct_answer.id, supplied_answer: answer_id }
