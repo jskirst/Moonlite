@@ -38,6 +38,7 @@ class Path < ActiveRecord::Base
     end
   end
   
+  after_create { user.enroll!(self) }
   before_validation :grant_permalink
   
   def published?() published_at.nil? ? false : true end
