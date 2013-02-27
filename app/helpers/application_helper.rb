@@ -52,9 +52,9 @@ module ApplicationHelper
       when :facebook
         "https://www.facebook.com/sharer/sharer.php?u=#{url}"
       when :twitter
-        "https://twitter.com/intent/tweet?text=#{text}&url=#{url}&related="
+        "https://twitter.com/intent/tweet?text=#{CGI.escape(text)}&url=#{url}&related="
       when :google_plus
-        "https://plus.google.com/share?url=#{url}&t=#{text}"
+        "https://plus.google.com/share?url=#{url}&t=#{CGI.escape(text)}"
       end
     popup_javascript(url)
   end

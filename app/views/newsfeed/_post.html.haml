@@ -58,7 +58,8 @@
       
       - elsif post.task.task?
         %div.task_post
-          %div.content= post.content
+          %div.content
+            %pre.unstyled= post.content
           - if post.image_url.blank?
             = image_tag ICON_CHECK_URL, alt: "Image placeholder", class: "preview_image", style:"height:auto; width:190px; margin-top:10px; z-index: 500;"
           - else

@@ -3,11 +3,6 @@
     %div.displayin.floatl
       %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{owner.comments.size.to_i} Comments
     = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url } 
-    %div.displayin.floatr{ style: "position: relative; top: 5px;" }
-      - if created_at.today?
-        %p #{time_ago_in_words(created_at)} ago
-      - else
-        %p= created_at.strftime("%B %d, %Y")
   %div.comments{ style: "text-align: left; display: none;" }
     - if owner.comments.empty?
       %p.no_comments There are no comments for this yet. 
