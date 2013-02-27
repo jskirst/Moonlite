@@ -9,15 +9,19 @@
           %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
             = link_to root_url do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png",  alt: "Home"
+              %span Home
           %li.navitem{ title: "Explore", style: "height: 100%;" }
             %a.explore_link
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "width:22px;", alt: "Explore"
-          %li.navitem{ title: "Profile", style: "height: 100%;" }
-            = link_to profile_path(current_user.username) do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png", alt: "Profile"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "", alt: "Explore"
+              %span Explore
           %li.navitem{ title: "Create", style: "height: 100%;" }
             = link_to create_path do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "width:22px;", alt: "Create"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "", alt: "Create"
+              %span Create
+          %li.navitem{ title: "Profile", style: "height: 100%;" }
+            = link_to profile_path(current_user.username) do
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png", alt: "Profile"  
+              %span Profile        
         %ul.nav.pull-right{ style: "float:right; margin-right: 8%; " }
           - if current_user
             %li.navuser
