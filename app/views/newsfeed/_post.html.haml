@@ -65,8 +65,8 @@
               - if post.title.blank?
                 #{post.user.name} marked this task complete on #{post.created_at.strftime('%B %d, %Y')}.
               - else
-                = post.title
-            - if not post.submitted_answer.description.blank?
+                = truncate(post.title, length: 40)
+            - unless post.description.blank?
               %h5.description= post.description            
     
     - unless post.caption.blank?
