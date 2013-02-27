@@ -59,7 +59,10 @@
       - elsif post.task.task?
         %div.task_post
           %div.content= post.content
-          = image_tag (post.image_url.blank? ? ICON_CHECK_URL : post.image_url), alt: "Image placeholder", class: "preview_image", style:"height:auto; z-index: 500;"
+          - if post.image_url.blank?
+            = image_tag ICON_CHECK_URL, alt: "Image placeholder", class: "preview_image", style:"height:auto; width:190px; margin-top:10px; z-index: 500;"
+          - else
+            = image_tag post.image_url, alt: "Image content", class: "preview_image", style:"height:auto; z-index: 500;"
           %div.details
             %h4.title
               - if post.title.blank?
