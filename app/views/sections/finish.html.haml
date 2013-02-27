@@ -22,7 +22,7 @@
         %ul
           %li
             Complete Creative Responses
-            %p= link_to "#{@available_crs} available", challenge_path(@section.path.permalink, completed: true)
+            %p= link_to "#{@available_crs} available", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user))
           %li Take additional sections
-          %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", challenge_path(@section.path.permalink, completed: true, type: 2) 
-    = link_to "Continue", challenge_path(@section.path.permalink, completed: "true"), class: "button button-actionable", style: "float: right;"
+          %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user), type: 2) 
+    = link_to "Continue", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-actionable", style: "float: right;"
