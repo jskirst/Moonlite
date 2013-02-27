@@ -46,6 +46,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
 .social_toolbar a { text-decoration: none; }
+.task_post h5 a:hover {  color: rgb(0, 204, 255); }
 
 /* Progress/Revolution rails */
 .singleprogressentry{ padding: 4px 0 9px 12px;}
@@ -174,7 +175,7 @@ code,pre{font:inherit;}
 .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
 .quizheader{margin-bottom:12px;}
 .quizheader img{display:inline-block; margin-right:4px;}
-.quizheader span{ font:normal 29px'Muli', sans-serif; position:relative; left:5px;}
+.quizheader span{ font:normal 29px'MuliRegular', sans-serif; position:relative; left:5px;}
 .quizheader div{position:relative; top:4px; display:inline-block;}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
@@ -196,7 +197,7 @@ code,pre{font:inherit;}
 .label.notice {font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
 #CRprogressbar {width:632px; height: 40px; margin: 0 auto;}
 .CRquestionspace {width:40%; display:inline-block; padding-top:9px;}
-.cr_question_header {font:bold 15px 'Muli', sans-serif;}
+.cr_question_header {font:bold 15px 'MuliRegular', sans-serif;}
 .CRquestion {font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none; font: normal 18px 'Muli', sans-serif;} 
 .CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'Muli', sans-serif;width:56.5%;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}

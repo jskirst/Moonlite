@@ -84,7 +84,6 @@
 #profile .post {width: 500px;margin-right: auto;margin-left: auto;}
 #profile .post:hover { background-color: transparent; }
 #profile .postspace { width:474px; }
-#profile .postspace img { height:20px; width:20px; }
 #profile .postphotospace img { height:50px; width:50px; }
 .profilecontent a { text-decoration: none; cursor: pointer; }
 .profilecontent .leftstuff .floatr p { margin-right:9px; }

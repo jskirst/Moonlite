@@ -59,7 +59,7 @@
       - elsif post.task.task?
         %div.task_post
           %div.content= post.content
-          = image_tag (post.image_url.blank? ? ICON_CHECK_URL : post.image_url), alt: "Image placeholder", class: "preview_image", style:"width:100%; height:auto; z-index: 500;"
+          = image_tag (post.image_url.blank? ? ICON_CHECK_URL : post.image_url), alt: "Image placeholder", class: "preview_image", style:"height:auto; z-index: 500;"
           %div.details
             %h4.title
               - if post.title.blank?
@@ -67,7 +67,8 @@
               - else
                 = truncate(post.title, length: 40)
             - unless post.description.blank?
-              %h5.description= post.description            
+              %h5.description{ style: "margin-bottom:2px; "}= post.description
+            %h5{ style: "margin-top:0" }= link_to truncate(post.url, length:85), post.url            
     
     - unless post.caption.blank?
       %div.post_caption= post.caption
