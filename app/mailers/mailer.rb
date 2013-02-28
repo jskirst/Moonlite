@@ -61,7 +61,7 @@ class Mailer < ActionMailer::Base
     return false unless @user.can_email?(:powers)
     
     @challenge_name = path.name
-    @challenge_link = challenge_url(path.permalink, completed: true) 
+    @challenge_link = challenge_url(path.permalink, c: true) 
     mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
     @user.log_email
   end
