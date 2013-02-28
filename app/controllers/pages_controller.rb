@@ -56,7 +56,7 @@ class PagesController < ApplicationController
       @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
         .where("users.id != ? and user_personas.persona_id = ?", @user.id, @current_user_persona.persona_id)
         .limit(4)
-      social_tags("#{@user.name}'s Profile on Metabright", @user.picture, "#{@user.name} is a lvl. #{@current_user_persona.level} #{@current_user_persona.persona.name} on MetaBright.com")
+      social_tags("#{@user.name}'s Profile on MetaBright", @user.picture, "#{@user.name} is a lvl. #{@current_user_persona.level} #{@current_user_persona.persona.name} on MetaBright.com")
     end
   end
   
