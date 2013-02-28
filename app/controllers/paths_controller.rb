@@ -2,8 +2,8 @@ class PathsController < ApplicationController
   include PathsHelper
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:show, :newsfeed, :drilldown]
-  before_filter :load_resource, except: [:index, :new, :create, :drilldown]
+  before_filter :authenticate, except: [:show, :newsfeed, :drilldown, :marketing]
+  before_filter :load_resource, except: [:index, :new, :create, :drilldown, :marketing]
   before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
@@ -244,6 +244,15 @@ class PathsController < ApplicationController
     end
     
     render partial: "newsfeed/feed", locals: { feed: feed }
+  end
+  
+  def marketing
+    path_name = request.url.split("/").last
+    if path = Path.find_by_permalink(path_name)
+      redirect_to challenge_path(path_name)
+    else
+      redirect_to root_path
+    end
   end
 
   private

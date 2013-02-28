@@ -1,6 +1,9 @@
 Metabright::Application.routes.draw do
 	resources :sessions
 	
+	# Custom Challenge Routing
+	get '/heroku' => 'paths#marketing'
+	
 	resources :users
 	match '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
 	match '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
