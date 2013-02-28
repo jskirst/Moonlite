@@ -72,7 +72,8 @@
                 = truncate(post.title, length: 75)
             - unless post.description.blank?
               %h5.description{ style: "margin-bottom:2px; "}= truncate(post.description, length: 100)
-            %h5{ style: "margin-top:0" }= link_to truncate(post.url, length:85), post.url            
+            - unless post.url.nil?
+              %h5{ style: "margin-top:0" }= link_to truncate(post.url, length:85), post.url            
     
     - unless post.caption.blank?
       %div.post_caption= post.caption
