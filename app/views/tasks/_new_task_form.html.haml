@@ -17,7 +17,7 @@
           %label.control-label Answer type
           %div.controls
             = f.select :answer_type, hash_to_array(Task::TYPES)
-        %div.control-group.hide
+        %div.control-group.hide.sub_type
           %label.control-label Response type
           %div.controls
             = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
@@ -52,6 +52,8 @@
 :javascript
   function display_sub_type_message(){
     var sub_type = $("#task_answer_sub_type").val();
+    log("Displaying subtype.");
+    log(sub_type);
     $(".answer_note").hide();
     if(sub_type=="100"){
       $(".free_text_note").show();
@@ -68,32 +70,24 @@
       display_sub_type_message();
     });
   
-    $("#task_answer_type").change(function(){
+    $("select[name='task[answer_type]']").change(function(){
       var type = $(this).val();
       log("Changin type.");
+      log(type);
       if(type == 0){
-        $(".task_answer_sub_type").parents("div.control-group").show();
+        $(this).parents("div.control-group").siblings(".sub_type").show();
         $(".creative").show();
         $(".multiple_choice").hide();
-        $(".fib").hide();
         $(".checkin").hide();
         display_sub_type_message();
-      } else if (type == 1){
-        $(".task_answer_sub_type").parents("div.control-group").hide();
-        $(".fib").show();
-        $(".creative").hide();
-        $(".multiple_choice").hide();
-        $(".checkin").hide();
       } else if(type == 2) {
-        $(".task_answer_sub_type").parents("div.control-group").hide();
+        $(this).parents("div.control-group").siblings(".sub_type").hide();
         $(".multiple_choice").show();
-        $(".fib").hide();
         $(".creative").hide();
         $(".checkin").hide();
       } else if(type == 3) {
-        $(".task_answer_sub_type").parents("div.control-group").hide();
+        $(this).parents("div.control-group").siblings(".sub_type").hide();
         $(".multiple_choice").hide();
-        $(".fib").hide();
         $(".creative").hide();
         $(".checkin").show();
       }

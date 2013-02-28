@@ -91,7 +91,7 @@ function init_iph(){
   $(".popover-close").click(function(){
     var $popover = $(this).parents(".popover");
     $popover.fadeOut();
-    $.ajax({ data: { id: $popover.attr("data-id") }, url: mark_read_url });
+    $.ajax({ data: { id: $popover.attr("data-id") }, url: mark_help_read_url });
   });
 }
 
@@ -114,7 +114,7 @@ function convert_links(){
 function mark_notifications_as_read(){
   $.ajax({ 
     type: "GET", 
-    url: "#{mark_read_path}", 
+    url: mark_read_url, 
     complete: function(){ 
       $("title").text($("title").text().replace(/\([0-9]+\)/,''));
       $(".notifications_bubble").remove();
