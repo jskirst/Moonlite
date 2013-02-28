@@ -9,7 +9,7 @@
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
           %div.span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1= @user.name
-            - if @user.description
+            - unless @user.description.blank?
               %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 10px 0 10px 0;"} "#{@user.description}"
             %p{ style: "font-size: 18px; margin: 10px 0 5px 0; color: rgb(80, 80, 80);"}= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
         %div#bottomboxcontent
@@ -69,7 +69,8 @@
           %div.challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
             %div.arenabucket
               %h2{ style: "margin-left: -13px;"}
-                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                = link_to challenge_path(enrollment.path.permalink) do
+                  = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I know...
               %div.profilecontent
                 %div.myrank
