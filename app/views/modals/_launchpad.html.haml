@@ -37,9 +37,9 @@
               %div{ style: "text-align: middle; margin: 0 0 15px 27px;" }
                 %p{ style: "font-size: 17px;" } You deserve a round of applause. In fact, you deserve a standing ovation. Share this achievement and brag to your friends.
                 %div{ style: "margin-top: 15px;" }
-                  %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, profile_path(current_user.username), sharing_text) } Share on Google+
-                  %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, profile_path(current_user.username), sharing_text) } Share on Facebook
-                  %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, profile_path(current_user.username), sharing_text) } Share on Twitter
+                  %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, profile_url(current_user.username), sharing_text) } Share on Google+
+                  %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, profile_url(current_user.username), sharing_text) } Share on Facebook
+                  %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, profile_url(current_user.username), sharing_text) } Share on Twitter
               
               %div{ style: "float: right; margin-top: 30px;" }
                 %a{ href: "#", style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
