@@ -69,7 +69,8 @@
           %div.challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
             %div.arenabucket
               %h2{ style: "margin-left: -13px;"}
-                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                = link_to challenge_path(enrollment.path.permalink) do
+                  = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I know...
               %div.profilecontent
                 %div.myrank

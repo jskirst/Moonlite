@@ -53,6 +53,7 @@
 #profile .span5 .leftbox { width:288px; margin-top:12px; }
 .span11.challenge_details { width: 598px; background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
 .challengecontent h2 img { position:relative; bottom:3px; border-radius:3px;  }
+.challengecontent h2 a { text-decoration: none; }
 .progresssection { float: right; margin-top: 12px;}
 .challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px; margin-bottom:10px; }
 .arenabucket, .taskbucket, .crbucket { display: block;padding: 13px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
