@@ -3,17 +3,18 @@
 
 %div.explorecontainer
   %div.explorenewusercontent
-    :javascript
-      $(".persona_select").click(function(){
-        $(".persona_select.active").removeClass("active");
-        $(this).addClass("active");
-        var id = $(this).attr("id").substring(15);
-        $(".persona_preview").html($(".persona_preview_"+id).html());
+    - unless params[:action] == "start"
+      :javascript
+        $(".persona_select").click(function(){
+          $(".persona_select.active").removeClass("active");
+          $(this).addClass("active");
+          var id = $(this).attr("id").substring(15);
+          $(".persona_preview").html($(".persona_preview_"+id).html());
+          show_persona_challenges();
+        });
+        $(".persona_select:first").addClass("active");
+        close_button();
         show_persona_challenges();
-      });
-      $(".persona_select:first").addClass("active");
-      close_button();
-      show_persona_challenges();
     %div.exploreheader
       %div.modal_close{ style: "margin: -8px 14px 0 0;" }
         %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt: "Close"}

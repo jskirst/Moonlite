@@ -58,8 +58,12 @@ class PersonasController < ApplicationController
   end
   
   def explore
-    @personas = Persona.includes(:path_personas).all
-    render partial: "explore"
+    if request.xhr?
+      @personas = Persona.includes(:path_personas).all
+      render partial: "explore"
+    else
+      redirect_to root_url
+    end
   end
   
   private

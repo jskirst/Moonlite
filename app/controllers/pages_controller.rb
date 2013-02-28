@@ -63,14 +63,14 @@ class PagesController < ApplicationController
   def intro
     @show_nav_bar = false
     @show_footer = false
-    render "intro", layout: "landing"
+    render "intro"
   end
   
   def start
     @show_nav_bar = false
     @show_footer = false
     @personas = current_company.personas.all
-    render "start", layout: "landing"
+    render "start"
   end
   
   def create

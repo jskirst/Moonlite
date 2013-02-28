@@ -1,8 +1,20 @@
 :javascript
   $(function(){
     $(".explorenewusercontent").hide().fadeIn(1000);
+    $(".persona_select").click(function(){
+      $(".persona_select.active").removeClass("active");
+      $(this).addClass("active");
+      var id = $(this).attr("id").substring(15);
+      $(".persona_preview").html($(".persona_preview_"+id).html());
+      show_persona_challenges();
+    });
+    $(".persona_select:first").addClass("active");
+    close_button();
+    show_persona_challenges();
   });
+  
 :css
-  .explorecontainer { margin: 60px auto 12px auto; }
+  .explorecontainer { margin: 15px auto 12px auto; }
   .modal_close { display: none; }
+  .body.container { background-color: transparent; padding-top: 0px; }
 = render "personas/explore"
