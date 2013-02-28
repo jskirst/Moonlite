@@ -59,6 +59,8 @@
           %div.leftboxheader Similar People
           %div.leftboxfooter.similarpeople 
             %div.leftrailcontent
+              - if @similar_people.empty?
+                %p{ style: "padding: 10px 10px 10px 0;" } Truly, there is no equal for this person. Unique in every sense of the word.
               - @similar_people.each do |person|
                 = link_to profile_path(person.username) do
                   = image_tag person.picture, size: "50x50", title: person.name, alt: person.name
