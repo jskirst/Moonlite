@@ -17,5 +17,11 @@ task :statistics => :environment do
   
   visits = Visit.where("user_id in (?)", user_ids)
   
+  puts "First visit: " + visits.first.created_at.to_s
+  
   puts "Total Visits: " + visits.count.to_s
+  
+  distinct_visitors = visits.count(:user_id, distinct: true)
+  
+  puts "Distinct visitors: " + distinct_visitors.to_s
 end
