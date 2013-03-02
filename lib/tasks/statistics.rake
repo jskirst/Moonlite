@@ -24,4 +24,9 @@ task :statistics => :environment do
   distinct_visitors = visits.count(:user_id, distinct: true)
   
   puts "Distinct visitors: " + distinct_visitors.to_s
+  
+  user_counts = {}
+  visits.group_by(&:user_id).each do |user_id, visits|
+    puts "User_id: " + visits.size.to_s
+  end  
 end
