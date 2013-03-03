@@ -50,8 +50,6 @@ task :statistics => :environment do
     last_visit = visit
   end
   
-  puts user_sessions.to_yaml
-  
   minimum_time = (ENV["MINIMUM_TIME"] || 10).to_i
   times = []
   user_sessions.each do |user, sessions|
