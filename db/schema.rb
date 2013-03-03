@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130225201500) do
+ActiveRecord::Schema.define(:version => 20130303170108) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -406,7 +406,10 @@ ActiveRecord::Schema.define(:version => 20130225201500) do
     t.string   "request_url"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.string   "external_id"
   end
+
+  add_index "visits", ["external_id"], :name => "index_visits_on_external_id", :unique => true
 
   create_table "votes", :force => true do |t|
     t.integer  "owner_id"

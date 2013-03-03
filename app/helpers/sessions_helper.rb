@@ -138,8 +138,7 @@ module SessionsHelper
         unless request.xhr?
           if current_user
             visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
-            Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url)
-            #current_user.update_attribute(:login_at, DateTime.now())
+            @visit = Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url)
           else
             if cookies[:visitor_id].to_i > 0
               visitor_id = cookies[:visitor_id]  
@@ -147,7 +146,7 @@ module SessionsHelper
               visitor_id = rand(1000000000)
               cookies.permanent[:visitor_id] = visitor_id
             end
-            Visit.create!(visitor_id: visitor_id, request_url: request.url)
+            @visit = Visit.create!(visitor_id: visitor_id, request_url: request.url)
           end
         end
       rescue

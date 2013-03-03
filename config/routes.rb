@@ -79,6 +79,7 @@ Metabright::Application.routes.draw do
   match '/intro' => 'pages#intro'
   match '/start' => 'pages#start'
   match '/mark_read' => 'pages#mark_read'
+  match '/visit/:id' => 'pages#visit'
   match '/mark_help_read' => 'pages#mark_help_read'
   match '/create' => 'pages#create'
   match '/explore', to: 'personas#explore'

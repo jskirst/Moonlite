@@ -1,9 +1,14 @@
 class Visit < ActiveRecord::Base
-  attr_readonly :user_id, :visitor_id, :request_url
+  attr_readonly :user_id, :visitor_id, :request_url, :external_id
+  attr_protected :updated_at
   
   belongs_to :user
   
   validates_presence_of :request_url
+  validates_presence_of :external_id
   
-  before_validation { self.request_url = self.request_url.slice(0..255) }
+  before_validation do 
+    self.request_url = self.request_url.slice(0..255)
+    self.external_id = SecureRandom.hex(16)
+  end
 end

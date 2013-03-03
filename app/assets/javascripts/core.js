@@ -31,10 +31,6 @@ function close_button(){
   $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
 }
 
-function help_button(){
-  $(".help_close").click(function(){ $(this).parents('.help_box').fadeOut(); });
-}
-
 function show_persona_challenges(){
   $(".show_persona_select").on("ajax:success", function(xhr, data){
     $(".explorenewusercontent").fadeOut('fast', function(){
@@ -121,6 +117,18 @@ function mark_notifications_as_read(){
     } 
   });
 }
+
+function update_visit(){
+  $.ajax({ 
+    type: "GET", 
+    url: mark_read_url, 
+    complete: function(){ 
+      $("title").text($("title").text().replace(/\([0-9]+\)/,''));
+      $(".notifications_bubble").remove();
+    } 
+  });
+}
+
 
 function show_loading_icon(){
   if($.data(document.body, 'reload') == true){
