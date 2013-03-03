@@ -212,6 +212,13 @@ class SectionsController < ApplicationController
         @partial = "intro"
       else
         @streak = session[:ssf].to_i
+        if @streak > @enrollment.longest_streak
+          current_user.update_attribute(:longest_streak, @streak)
+        end
+        @rank = @enrollment.rank
+        if @rank > @enrollment.highest_rank
+          current_user.update_attribute(:highest_rank, @rank)
+        end
         @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
         @answers = @task.answers.to_a.shuffle
         @stored_resource = @task.stored_resources.first
