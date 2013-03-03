@@ -141,7 +141,6 @@ $(function(){
   $("a[href*='/']").click(function(){
     setTimeout("show_loading_icon();", 1500);
     $.data(document.body, 'reload', true);
-    return false;
   });
   
   $("#image_url_input").change(function(){
