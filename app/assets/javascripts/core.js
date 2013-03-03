@@ -122,12 +122,27 @@ function mark_notifications_as_read(){
   });
 }
 
+function show_loading_icon(){
+  if($.data(document.body, 'reload') == true){
+    $("#page_loading").show();
+    setTimeout("$('#page_loading').hide();", 6000);
+  } else {
+    log("reset load;");
+  }
+}
+
 
 
 $(function(){
   close_button();
   help_button();
   $('.hoverscroll').hoverscroll();
+  
+  $("a[href*='/']").click(function(){
+    setTimeout("show_loading_icon();", 1500);
+    $.data(document.body, 'reload', true);
+    return false;
+  });
   
   $("#image_url_input").change(function(){
     var link = $(this).val();

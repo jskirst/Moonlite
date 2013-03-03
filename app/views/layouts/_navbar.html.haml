@@ -21,7 +21,9 @@
           %li.navitem{ title: "Profile", style: "height: 100%;" }
             = link_to profile_path(current_user.username) do
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png", alt: "Profile"  
-              %span Profile        
+              %span Profile
+        %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
+          = image_tag "ajax-trial.gif", alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
         %ul.nav.pull-right{ style: "float:right; margin-right: 8%; " }
           - if current_user
             %li.navuser

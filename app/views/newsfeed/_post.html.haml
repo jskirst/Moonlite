@@ -47,7 +47,7 @@
     
     %div#cr_pop.CRarea
       - if post.task.text?
-        %code.content{ style: "margin:20px; word-break:normal;" }= post.content
+        %code.content{ style: "word-break:normal;" }= post.content
       
       - elsif post.task.image?
         = image_tag(sanitize(post.image_url))
