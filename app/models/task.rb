@@ -45,7 +45,6 @@ class Task < ActiveRecord::Base
       answer_content.each do |a|
         answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
       end
-      PhrasePairing.create_phrase_pairings(answers_to_array)
     end
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end

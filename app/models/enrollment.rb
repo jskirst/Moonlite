@@ -62,6 +62,18 @@ class Enrollment < ActiveRecord::Base
   def tasks() completed_tasks.includes(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::CHECKIN) end
   def creative_responses() completed_tasks.includes(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::CREATIVE) end
   
+  def comments_received
+    completed_tasks.joins(:submitted_answer)
+      .joins("INNER JOIN comments on comments.owner_id = submitted_answers.id and comments.owner_type = 'SubmittedAnswer'")
+      .count
+  end
+  
+  def votes_received
+    completed_tasks.joins(:submitted_answer)
+      .joins("INNER JOIN votes on votes.owner_id = submitted_answers.id and votes.owner_type = 'SubmittedAnswer'")
+      .count
+  end
+  
   private
   
   def check_for_events(points)

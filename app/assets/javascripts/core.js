@@ -130,30 +130,3 @@ function show_loading_icon(){
     log("reset load;");
   }
 }
-
-
-
-$(function(){
-  close_button();
-  help_button();
-  $('.hoverscroll').hoverscroll();
-  
-  $("a[href*='/']").click(function(){
-    setTimeout("show_loading_icon();", 1500);
-    $.data(document.body, 'reload', true);
-  });
-  
-  $("#image_url_input").change(function(){
-    var link = $(this).val();
-    $(".image_url_preview").attr("src", link);
-    $("#image_url_preview").attr("src", link);
-  });
-  
-  $(".login_link").click(function(){
-    $("#login_modal").modal({ keyboard: true, backdrop: 'static', show: true });
-  });
-  
-  $(".arena_report_link").click(function(){
-  	$("#report_issue_modal").modal({ keyboard: true, backdrop: 'static', show: true });
-  })
-});

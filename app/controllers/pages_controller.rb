@@ -57,7 +57,9 @@ class PagesController < ApplicationController
         .joins("INNER JOIN user_personas on users.id = user_personas.user_id")
       	.where("user_roles.enable_administration = ? and users.id != ? and user_personas.persona_id = ?", false, @user.id, @current_user_persona.persona_id)
 	      .where("users.image_url is not ?", nil)
-      	.limit(8)
+      	.limit(100)
+      	.to_a.shuffle
+      	.first(8)
       social_tags("#{@user.name}'s Profile on Metabright", @user.picture, "#{@user.name} is a lvl. #{@current_user_persona.level} #{@current_user_persona.persona.name} on MetaBright.com")
     end
   end

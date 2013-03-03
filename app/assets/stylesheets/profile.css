@@ -63,7 +63,7 @@
 .profileheader h5 { display: inline-table; float: right; margin-top:14px; font-size:18px; }
 .profilecontent { padding-bottom:8px;}
 .profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; }
-.profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width:87px; border-top:none; }
+.profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width: 70px; border-top:none; }
 .profilecontent .table p { color: gray; margin:5px 0 0 0;}
 .profilecontent .table h3 { font-size: 45px; }
 .arenabucket { padding: 13px 12px 27px 28px;}

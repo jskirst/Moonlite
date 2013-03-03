@@ -21,7 +21,7 @@
           %div#launchpad_headlines{ style: "width: 73.9%; height: 90%; margin-right:auto; margin-left:auto;" }
             %div{ style: "box-shadow: 0 6px 14px rgba(0, 0, 0, .1); padding: 0 0 8px 10px; border-radius: 6px; background-color:white; border: 1px solid rgba(0,0,0,.1); margin-top:55px;"}
               = image_tag STONEY_SMALL_URL, style: "display: inline-block; vertical-align: middle", alt: "Stoney"
-              %div{ style: "display:inline-block; top:30px; position:relative; "}
+              %div{ style: "display:inline-block; top:30px; position:relative; min-height: 115px;" }
                 %span{ style:"font-size: 64px;" } Congratulations!              
                 %h3{ style: "font-size: 25px; line-height: 32px; position: relative; top: 9px;" }
                   - if new_level && new_rank
@@ -42,7 +42,7 @@
                   %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, profile_url(current_user.username), sharing_text) } Share on Twitter
               
               %div{ style: "float: right; margin-top: 30px;" }
-                %a{ href: "#", style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
+                %a{ style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
         
         %div.launchpadcontent{ style: ("display: none;" if @achievements) }
           %div.launchpadsectioncolumn

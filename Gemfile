@@ -1,17 +1,9 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails'
-gem 'gravatar_image_tag'
 gem 'will_paginate'
 gem 'jquery-rails', '= 2.0.2'
-gem 'actionpack'
-gem 'actionmailer'
-gem 'activerecord'
-gem 'activemodel'
-gem 'activesupport'
-gem 'zip'
 gem 'paperclip'
-gem 'aws-sdk'
 gem 'pg'
 gem 'thin'
 gem 'omniauth'
@@ -42,7 +34,6 @@ group :development do
 end
 
 group :test do
-	gem 'spork'
 	gem 'webrat'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
