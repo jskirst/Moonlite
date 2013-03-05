@@ -118,17 +118,9 @@ function mark_notifications_as_read(){
   });
 }
 
-function update_visit(){
-  $.ajax({ 
-    type: "GET", 
-    url: mark_read_url, 
-    complete: function(){ 
-      $("title").text($("title").text().replace(/\([0-9]+\)/,''));
-      $(".notifications_bubble").remove();
-    } 
-  });
+function ping(url){
+  $.get(url);
 }
-
 
 function show_loading_icon(){
   if($.data(document.body, 'reload') == true){

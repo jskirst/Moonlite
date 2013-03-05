@@ -41,7 +41,7 @@ task :statistics => :environment do
       next
     end
     
-    if last_visit.created_at > (visit.created_at - time_limit.minutes)
+    if last_visit.updated_at > (visit.created_at - time_limit.minutes)
       user_sessions[visit.user_id][session_start.id] << visit
     else
       session_start = visit
@@ -56,9 +56,9 @@ task :statistics => :environment do
     starts = sessions.keys
     starts.each do |s|
       if sessions[s].size == 1
-        times << minimum_time
+        times << s.created_at == s.visited_at ? minimum_time : (s.updated_at - s.created_at)
       else
-        times << (sessions[s].last.created_at - sessions[s].first.created_at) / 60
+        times << (sessions[s].last.updated_at - sessions[s].first.created_at) / 60
       end
     end
   end

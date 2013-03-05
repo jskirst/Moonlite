@@ -8,8 +8,9 @@
       = render "modals/explore"
     - else
       = render "modals/login"
+      
     = render "layouts/navbar"
-    %div.container.body{ style: "padding-top: 51px;", data: { veid: @visit.try(:external_id) } }
+    %div.container.body{ style: "padding-top: 51px;" }
       - flash.each do |key, value|
         = content_tag(:div, value, class: "alert alert-#{key}")
       = yield
@@ -19,6 +20,7 @@
       var all_help = #{get_all_help.to_json};
       var mark_read_url = '#{mark_read_url}';
       var mark_help_read_url = '#{mark_help_read_url}';
+      var visit_url = '#{visit_url(@visit.external_id)}';
       
       $('.explore_link').click(function(){
         $("#explore_modal").modal({ keyboard: true, show: true, backdrop: true});
@@ -54,7 +56,15 @@
       
       $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
       
-      $(function(){ init_iph(); });
+      $(function(){ 
+        init_iph();
+        try { 
+          clearInterval(ping_interval); 
+        } catch(err) {
+          log("No interval to clear");
+        }
+        ping_interval = setInterval(function(){ log(visit_url); ping(visit_url) }, 10000);
+      });
     
     - if Rails.env == "production"
       :javascript

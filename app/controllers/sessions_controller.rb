@@ -52,6 +52,12 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
   
+  def visit
+    @visit = Visit.find_by_external_id(params[:external_id])
+    @visit.update_attribute(:updated_at, Time.now())
+    render json: { status: "success" }
+  end
+  
   # Secret methods to help with testing
   def locallink
     redirect_to "http://localhost:3000/auth/facebook/callback?code=#{params[:code]}"
