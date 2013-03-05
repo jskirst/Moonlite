@@ -1,17 +1,3 @@
-function show_creative_list(){
-  $('#creative_tasks_list').show();
-  $('#knowledge_tasks_list').hide();
-  $('.creative_link').addClass('underlined');
-  $('.creative_link').siblings('a').removeClass('underlined');
-}
-
-function show_knowledge_list(){
-  $('#knowledge_tasks_list').show();
-  $('#creative_tasks_list').hide();
-  $('.knowledge_link').addClass('underlined');
-  $('.knowledge_link').siblings('a').removeClass('underlined');
-}
-
 function animate_point_change($target, addition, limit){
   var points = parseInt($target.text());
   if(points == limit || points <= 0 || points >= 100000){ return false; }
