@@ -1,6 +1,7 @@
 Metabright::Application.routes.draw do
 	resources :sessions
 	get '/visit/:external_id' => 'sessions#visit', as: 'visit'
+	get '/share' => 'sessions#share', as: 'share'
 	
 	# Custom Challenge Routing
 	get '/heroku' => 'paths#marketing'

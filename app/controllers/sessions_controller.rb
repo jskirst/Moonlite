@@ -58,6 +58,10 @@ class SessionsController < ApplicationController
     render json: { status: "success" }
   end
   
+  def share
+    redirect_to params[:url]
+  end
+  
   # Secret methods to help with testing
   def locallink
     redirect_to "http://localhost:3000/auth/facebook/callback?code=#{params[:code]}"
