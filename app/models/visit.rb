@@ -8,7 +8,7 @@ class Visit < ActiveRecord::Base
   validates_presence_of :external_id
   
   before_validation do 
-    self.request_url = self.request_url.slice(0..255)
-    self.external_id = SecureRandom.hex(16)
+    self.request_url = self.request_url.slice(0..255) if request_url.length >= 255
+    self.external_id = SecureRandom.hex(16) unless external_id
   end
 end
