@@ -1,6 +1,6 @@
 class Visit < ActiveRecord::Base
-  attr_readonly :user_id, :visitor_id, :request_url, :external_id
-  attr_protected :updated_at
+  attr_readonly :user_id, :visitor_id, :request_url
+  attr_protected :updated_at, :external_id
   
   belongs_to :user
   
