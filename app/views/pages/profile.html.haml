@@ -102,7 +102,8 @@
             %hr
             %div.crbucket
               %h2{ style: "margin-left: -13px;"}
-                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                = link_to challenge_path(enrollment.path.permalink) do
+                  = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I can do...
               %h4 #{enrollment.creative_responses.count} Creative Responses
               %div.profilecontent
@@ -112,7 +113,8 @@
             %div.taskbucket
               - tasks = 
               %h2{ style: "margin-left: -13px;"}
-                = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
+                = link_to challenge_path(enrollment.path.permalink) do
+                  = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I have done...
               %h4 #{enrollment.tasks.count} Tasks Completed
               %div.profilecontent
