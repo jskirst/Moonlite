@@ -125,49 +125,52 @@ class SectionsController < ApplicationController
     @task = @section.tasks.find(params[:task_id])
     raise "Access Denied: Not a challenge." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
+    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
+    @submitted_answer = completed_task ? completed_task.submitted_answer : SubmittedAnswer.new
     @path = @section.path
     @stored_resource = @task.stored_resources.first
   end
   
   def took
     @task = @section.tasks.find(params[:task_id])
-    raise "Task already completed" if current_user.completed_tasks.find_by_task_id(@task.id)
+    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
     raise "Only CRs can be taken." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
     
-    if ((@task.task? or @task.youtube?) and params[:url]) or 
-      (@task.text? and params[:content]) or 
-      ((@task.image? and params[:stored_resource_id]))
-      
-      sa = @task.submitted_answers.new
-      sa.content = params[:content]
-      sa.url = params[:url]
-      sa.image_url = params[:image_url]
-      sa.image_url = params[:url] if @task.image? && params[:url] && sa.image_url.blank?
-      sa.title = params[:title]
-      sa.description = params[:description]
-      sa.caption = params[:caption]
-      sa.site_name = params[:site_name]
-      sa.save!
-      
-      unless params[:stored_resource_id].blank?
-        sr = assign_resource(sa, params[:stored_resource_id])
-        sa.image_url = sr.obj.url
-        sa.save!
-      end
-      
-      ct = current_user.completed_tasks.new(task_id: @task.id)
-      ct.status_id = Answer::CORRECT
-      ct.points_awarded = CompletedTask::CORRECT_POINTS
-      ct.award_points = true
-      ct.submitted_answer_id = sa.id
-      ct.enrollment_id = @enrollment.id
-      ct.save!
-      
-      redirect_to challenge_path(@section.path.permalink, c: true, p: ct.points_awarded, type: @task.answer_type)
-    else
+    sa = completed_task ? completed_task.submitted_answer : @task.submitted_answers.new
+    sa.content = params[:content] unless params[:content].blank?
+    sa.url = params[:url] unless params[:url].blank?
+    sa.image_url = params[:image_url] unless params[:image_url].blank?
+    sa.title = params[:title] unless params[:title].blank?
+    sa.description = params[:description] unless params[:description].blank?
+    sa.caption = params[:caption] unless params[:caption].blank?
+    sa.site_name = params[:site_name] unless params[:site_name].blank?
+    
+    unless sa.save
       redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
+      return
     end
+    
+    unless params[:stored_resource_id].blank?
+      sr = assign_resource(sa, params[:stored_resource_id])
+      sa.image_url = sr.obj.url
+      unless sa.save
+        redirect_to challenge_path(@section.path.permalink), alert: "Image could not be uploaded. Please try again."
+        return
+      end
+    end
+      
+    unless completed_task
+      new_ct = current_user.completed_tasks.new(task_id: @task.id)
+      new_ct.status_id = Answer::CORRECT
+      new_ct.points_awarded = CompletedTask::CORRECT_POINTS
+      new_ct.award_points = true
+      new_ct.submitted_answer_id = sa.id
+      new_ct.enrollment_id = @enrollment.id
+      new_ct.save!
+    end
+    
+    redirect_to challenge_path(@section.path.permalink, c: true, p: (new_ct ? new_ct.points_awarded : nil), type: @task.answer_type)
   end
   
   def complete

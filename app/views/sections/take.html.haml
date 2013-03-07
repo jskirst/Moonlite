@@ -30,19 +30,25 @@
         %div.CRresponsespace{ style: "min-height: 175px;" }           
           %h4{ style: "margin-bottom: 5px;" } Your answer:
           %div.error.hide
+          %input{ type: "hidden", name: "url", value: @submitted_answer.url }
+          %input{ type: "hidden", name: "content", value: @submitted_answer.content }
+          %input{ type: "hidden", name: "title", value: @submitted_answer.title }
+          %input{ type: "hidden", name: "description", value: @submitted_answer.description }
+          %input{ type: "hidden", name: "site_name", value: @submitted_answer.site_name }
+          %input{ type: "hidden", name: "image_url", value: @submitted_answer.image_url }
           - if @task.creative_response?
             - if @task.text?
-              %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus" }
+              %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus" }= @submitted_answer.content
             
             - elsif @task.image?
               
               %div.input{ style: "margin-left: 0px; " }
-                %input#answer_input{ type: "text", name: "url", style: "width: 300px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
+                %input#answer_input{ type: "text", name: "image_url", style: "width: 300px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:5px;" } Preview
                 = render "stored_resources/new_image"
                 %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                   %div#answer_preview{ style: "text-align: center;" }
-                    = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
+                    = image_tag @submitted_answer.image_url || "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
             
             - elsif @task.youtube?
               %div.input{ style: "margin-left: 0px; " }
@@ -54,31 +60,27 @@
           
           - elsif @task.task?
             %div.input{ style: "margin-left: 0px;" }
-              %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus" }
-              %input{ type: "hidden", name: "url"}
-              %input{ type: "hidden", name: "content"}
-              %input{ type: "hidden", name: "title"}
-              %input{ type: "hidden", name: "description"}
-              %input{ type: "hidden", name: "site_name"}
-              %input{ type: "hidden", name: "image_url"}
+              %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus", value: @submitted_answer.url }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px;"} Preview
               = render "stored_resources/new_image" 
               %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
-                %div#answer_preview{ style: "text-align: center;" }
-                  = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
-                %div#task_preview.hide{ style: "position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
-                  %div.content{ style: "height:76%; position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 11px;"}
-                    %pre.unstyled{ style: "font-size:11px; height:95%;"}
-                  = image_tag "/images/image_thumb.png", alt: "Image placeholder", class: "preview_image", style:"display:block; margin-right:auto; margin-left:auto; width:207px; z-index: 500;"
-                  %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
-                    %h4.title
-                    %h5.description
+                - if @submitted_answer.new_record?
+                  %div#answer_preview{ style: "text-align: center;" }
+                    = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
+                - else
+                  %div#task_preview{ style: "#{'display: none;' if @submitted_answer.new_record?} position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
+                    %div.content{ style: "height:76%; position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 11px;"}
+                      %pre.unstyled{ style: "font-size:11px; height:95%;"}
+                    = image_tag "/images/image_thumb.png", alt: "Image placeholder", class: "preview_image", style:"display:block; margin-right:auto; margin-left:auto; width:207px; z-index: 500;"
+                    %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
+                      %h4.title= @submitted_answer.title
+                      %h5.description= @submitted_answer.description
           
           - if @task.caption_allowed?  
             %div{ style: "margin: 10px 0 5px 0;" }
               %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
                 %span.text Add caption
-              = text_area_tag "caption", nil, style: "height: 40px; width: 96%; display: none; margin: 5px 0;", placeholder: "Caption will appear immediately below your response..."
+              = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 96%; display: none; margin: 5px 0;", placeholder: "Caption will appear immediately below your response..."
       
       %div.CRbuttonspace
         = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
@@ -101,12 +103,9 @@
   :javascript
     var previewer_url = "#{preview_url}"
     
-    function check_url(regex_string){
-      regex = new RegExp(regex_string);
-      if(regex.test($("#answer_input").val())){
-        return true
-      } return false;
-    }
+    $("input[name=stored_resource_id]").change(function(){
+      $("input[name=image_url]").val($("#image_preview").attr("src"));
+    });
     
     $(function(){
       $('#challenge_form').submit(function(){
@@ -205,9 +204,13 @@
                   
                   if(result.title){
                     $preview.find(".title").text(result.title);
+                  } else {
+                    $preview.find(".title").text("");
                   }
                   if(result.description){
                     $preview.find(".description").text(result.description);
+                  } else {
+                    $preview.find(".description").text("");
                   }
                   
                   $("#task_preview").show();
