@@ -177,7 +177,7 @@ code,pre{font:inherit;}
 
 .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
 .quizheader{margin-bottom:12px;}
-.quizheader img{display:inline-block; margin-right:4px;}
+.quizheader img{display:inline-block; margin-right:4px; border-radius:3px;}
 .quizheader span{ font:normal 29px'MuliRegular', sans-serif; position:relative; left:5px;}
 .quizheader div{position:relative; top:4px; display:inline-block;}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
