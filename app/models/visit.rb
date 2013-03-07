@@ -1,6 +1,6 @@
 class Visit < ActiveRecord::Base
-  attr_readonly :user_id, :visitor_id, :request_url, :external_id
-  attr_protected :updated_at
+  attr_readonly :user_id, :visitor_id, :request_url
+  attr_protected :updated_at, :external_id
   
   belongs_to :user
   
@@ -8,7 +8,7 @@ class Visit < ActiveRecord::Base
   validates_presence_of :external_id
   
   before_validation do 
-    self.request_url = self.request_url.slice(0..255)
-    self.external_id = SecureRandom.hex(16)
+    self.request_url = self.request_url.slice(0..255) if request_url.length >= 255
+    self.external_id = SecureRandom.hex(16) unless external_id
   end
 end
