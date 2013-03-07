@@ -43,19 +43,13 @@
         %li.active
           %a{href:"#", "data-tab" => "hacker"} Hacker
         %li
-          %a{href: "#", "data-tab" => "foodie" } Foodie
-        %li
           %a{href: "#", "data-tab" => "maker"} Maker
-        %li
-          %a{href: "#", "data-tab" => "critic"} Critic
         %li
           %a{href: "#", "data-tab" => "explorer"} Explorer
         %li
           %a{href: "#", "data-tab" => "strategist"} Strategist
         %li
           %a{href: "#", "data-tab" => "designer"} Designer
-        %li
-          %a{href: "#", "data-tab" => "audiophile"} Audiophile
     - @personas.each do |persona|
       %div.tab_content.active_tab{ id: persona.name.downcase.gsub(" ", "_") }
         %div.row-fluid
