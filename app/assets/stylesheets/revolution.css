@@ -182,7 +182,7 @@ code,pre{font:inherit;}
 .quizheader div{position:relative; top:4px; display:inline-block;}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
-.questionspace span{font:normal 18px 'Muli', sans-serif;}
+.questionspace span{font:normal 18px 'MuliRegular', sans-serif;}
 .questionspace pre{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none;}
 .pointbar { background-color: rgba(255, 163, 102, 0.5); height:20px; margin:3px 0px; border-radius: 3px; text-align: center; }
 .pointbarfiller { line-height: 20px; width: 100%; border-radius: 3px; height: 20px; padding-left: 3px; background-color: #FFA366; color: #404040; float: left; }
@@ -202,7 +202,7 @@ code,pre{font:inherit;}
 .CRquestionspace {width:40%; display:inline-block; padding-top:9px;}
 .cr_question_header {font:bold 15px 'MuliRegular', sans-serif;}
 .CRquestion {font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliRegular', sans-serif;} 
-.CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'Muli', sans-serif;width:56.5%;}
+.CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', sans-serif;width:56.5%;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace {margin-top:12px; }
 .input input{background-color: #F9F9F9;}
@@ -218,7 +218,7 @@ code,pre{font:inherit;}
 .explorecontainer { overflow: hidden; margin-left: auto; margin-right: auto; width: 700px; margin-top: 0px; }
 .explorenewusercontent { background-color: white; overflow: hidden; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1); margin: 12px; box-shadow: 0 0 30px 12px #888; }
 .exploreheader{ margin:0px; width:669px;padding:12px 0 5px 12px; background-color:#F9F9F9;}
-.exploreheader span{font: normal 21px 'Muli', sans-serif;}
+.exploreheader span{font: normal 21px 'MuliRegular', sans-serif;}
 
 .personatiles{ margin-top:18px;}
 
@@ -256,7 +256,7 @@ code,pre{font:inherit;}
 .counter span.separator {display:block;float:left; font-family:Georgia, serif; font-size:0.5em;position:relative; top:0.5em;}
 .counter span.separator hr {display:none;}
 
-body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif; line-height:18px; font-size:13px;}
+body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'MuliRegular', sans-serif; line-height:18px; font-size:13px;}
 .quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 60px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .completionmessagespace{display:inline-block; width:396px;overflow: hidden; border-right:1px solid rgba(0, 0, 0, .1);}
