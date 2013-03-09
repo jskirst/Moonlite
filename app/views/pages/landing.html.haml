@@ -1,4 +1,73 @@
+%div#landingbox
+  %div#logospace{ style: "width:720px;margin-right:auto;margin-left:auto;position: relative;" }
+    %img#landinglogo{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo", alt: "MetaBright"}
+  %div#tagline
+    %span We believe everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
+  %div#buttonspace{ style: "margin-top:30px;" }
+    %center
+      = link_to "/auth/google_oauth2", class: "btn danger", style: "margin-right: 40px; width:205px; padding-top:7px; padding-bottom:7px;" do
+        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png", alt: "Google" }
+        %span.landingbuttontext Sign in with Google »
+      = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
+        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png", alt: "Facebook" }
+        %span.landingbuttontext Sign in with Facebook »
+%div.row-fluid
+  %div#landing_carousel_box.span12
+    %div.persona_horizontal_table
+      %ul.nav.nav-tabs
+        %li.active
+          %a{ "data-tab" => "hacker"} Hacker
+        %li
+          %a{ "data-tab" => "maker"} Maker
+        %li
+          %a{ "data-tab" => "explorer"} Explorer
+        %li
+          %a{ "data-tab" => "strategist"} Strategist
+        %li
+          %a{ "data-tab" => "designer"} Designer
+    - @personas.each do |persona|
+      %div.tab_content.active_tab{ id: persona.name.downcase.gsub(" ", "_") }
+        %div.row-fluid
+          %div.span12 
+            %div.challenge_table
+              - if persona.paths.where("approved_at is not ?", nil).empty?
+                %span You must be registered and achieve a higher MetaBright level before you can view Challenges in this Persona.
+              %ul
+                - persona.paths.where("approved_at is not ? and public_at is not ?", nil, nil).limit(5).each do |path|
+                  %li
+                    = link_to challenge_path(path.permalink) do
+                      %div.mosaic-block.bar2
+                        %div.mosaic-overlay
+                          %div.details
+                            %h4= truncate(path.name,length:17, separator: ' ')
+                            %h5 #{path.tasks.count() * 100} points
+                        %div
+                          = image_tag path.picture, class: "mosaic-backdrop clip_pic", style: "display: inline-block;", alt: "#{path.name}"
+                            
+:javascript
+  $(function () {
+   $(".tab_content").hide();
+    var open_tab_id = $("ul.nav-tabs li.active a").data("tab");
+    $("#"+open_tab_id).show().addClass("active_tab");
+  
+    $(".nav-tabs li a").click(function(){
+      var open_tab_id = $(this).data("tab");
+      $(".tab_content").hide();
+      $("ul.nav-tabs li.active").removeClass("active");
+      $(this).parent().addClass("active");
+      $(".active_tab").removeClass("active_tab");
+      var $open_tab = $("#"+open_tab_id);
+      $open_tab.addClass("active_tab").show();
+    });
+  })
+  
 :css
+  body { background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg'); background-repeat:no-repeat; background-attachment:fixed;background-size:100% 100%;font-family: 'Muli', sans-serif;}
+  .explorenewusercontent{ box-shadow: none; }
+  .show_persona_select button { margin-top: 0px; }
+  .persona_preview { height; 172px; margin-top:15px;}
+  .explorecontainer{border-radius: 6px;border: 1px solid rgba(0, 0, 0, 0.0980392);background: rgba(255, 255, 255, 0.8);}
+  .container.body { width: 100%; background-color: transparent; padding: 0px; }
   #landinglogo{width:720px;margin-top:-40px; margin-bottom:-30px; }
   #tagline{ width:627px; margin-right:auto; margin-left:auto; text-align:center;}
   #tagline span{ font-size:22px; line-height:22px; }
@@ -22,66 +91,3 @@
   .challenge_table .details h5 { text-align:center; }
   .challenge_table .bar2 .mosaic-overlay:hover {}
   .challenge_table span{ color: #f9f9f9; font-size: 15px;position: relative;top: 27px;}
-  
-%div#landingbox
-  %div#logospace{ style: "width:720px;margin-right:auto;margin-left:auto;position: relative;" }
-    %img#landinglogo{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo", alt: "MetaBright"}
-  %div#tagline
-    %span We believe everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
-  %div#buttonspace{ style: "margin-top:30px;" }
-    %center
-      = link_to "/auth/google_oauth2", class: "btn danger", style: "margin-right: 40px; width:205px; padding-top:7px; padding-bottom:7px;" do
-        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png", alt: "Google" }
-        %span.landingbuttontext Sign in with Google »
-      = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
-        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png", alt: "Facebook" }
-        %span.landingbuttontext Sign in with Facebook »
-%div.row-fluid
-  %div#landing_carousel_box.span12
-    %div.persona_horizontal_table
-      %ul.nav.nav-tabs
-        %li.active
-          %a{href:"#", "data-tab" => "hacker"} Hacker
-        %li
-          %a{href: "#", "data-tab" => "maker"} Maker
-        %li
-          %a{href: "#", "data-tab" => "explorer"} Explorer
-        %li
-          %a{href: "#", "data-tab" => "strategist"} Strategist
-        %li
-          %a{href: "#", "data-tab" => "designer"} Designer
-    - @personas.each do |persona|
-      %div.tab_content.active_tab{ id: persona.name.downcase.gsub(" ", "_") }
-        %div.row-fluid
-          %div.span12 
-            %div.challenge_table
-              - if persona.paths.where("approved_at is not ?", nil).empty?
-                %span You must be registered and achieve a higher MetaBright level before you can view Challenges in this Persona.
-              %ul
-                - persona.paths.where("approved_at is not ? and public_at is not ?", nil, nil).limit(5).each do |path|
-                  %li
-                    .mosaic-block.bar2
-                      = link_to challenge_path(path.permalink), class: "mosaic-overlay" do
-                        %div.details
-                          %h4= truncate(path.name,length:17, separator: ' ')
-                          %h5 #{path.tasks.count() * 100} points
-                      %div
-                        = image_tag path.picture, class: "mosaic-backdrop clip_pic", style: "display: inline-block;", alt: "#{path.name}"
-                            
-:javascript
-  $(function () {
-   $(".tab_content").hide();
-    var open_tab_id = $("ul.nav-tabs li.active a").attr("data-tab");
-    console.log(open_tab_id); 
-    $("#"+open_tab_id).show().addClass("active_tab");
-  
-    $(".nav-tabs li a").click(function(){
-      var open_tab_id = $(this).attr("data-tab");
-      $(".tab_content").hide();
-      $("ul.nav-tabs li.active").removeClass("active");
-      $(this).parent().addClass("active");
-      $(".active_tab").removeClass("active_tab");
-      var $open_tab = $("#"+open_tab_id);
-      $open_tab.addClass("active_tab").show();
-    });
-  })

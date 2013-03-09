@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     else
       @show_header = false
       @personas = Persona.all
-      render "landing", layout: "landing"
+      render "landing"
     end
   end
   
@@ -104,26 +104,26 @@ class PagesController < ApplicationController
   def about
     @title = "About"
     @show_footer = true
-    render "about", layout: "landing"
+    render "about"
   end
   
   def challenges
     @title = "Challenges"
     @show_footer = true
     @personas = current_company.personas
-    render "challenges", layout: "landing"
+    render "challenges"
   end
   
   def tos
     @title = "Terms of Service"
     @show_footer = true
-    render "tos", layout: "landing"
+    render "tos"
   end
   
   def ideas
     @title = "Ideas"
     @show_footer = true
-    render "ideas", layout: "landing"
+    render "ideas"
   end
   
   def email_test

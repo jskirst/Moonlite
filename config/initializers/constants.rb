@@ -44,5 +44,9 @@ ICON_CAMERA_URL   = "https://s3-us-west-1.amazonaws.com/moonlite/static/image.pn
 ICON_LOADING_URL  = "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif"
 ICON_CHECK_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle_check_clip.png"
 ICON_UPVOTE_URL   = "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"
+ICON_DIVIDER_URL  = "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png"
+
+ICON_LOGIN_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png"
+ICON_LOGIN_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png"
 
 

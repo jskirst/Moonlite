@@ -1,38 +1,30 @@
 :css
-  div.intcontainer{ display: none; }
-  #landingbox{ margin-top: 90px; background: transparent; background-color: none; border: 0; }
-  h3 { display: inline; margin-bottom: 2px; }
-  p { font-size: 15px; }
-  strong { color: #404040; }
-  .intcontainer { margin: 20px auto 12px auto; }
-  .modal_close { display: none; }
   .body.container { background-color: transparent; padding-top: 0px; }
 
 :javascript
-  $(function(){ $(".intcontainer").fadeIn(1000); });
+  $(function(){ $(".intro_wrapper").fadeIn(1000); });
 
-%div.intcontainer
-  %div.firstchallengeint
-    %div.firstchallengeintheader{ style:"padding: 7px 0 0 9px" }
+.intro_wrapper.hide
+  .intro
+    .header{ style:"padding: 7px 0 0 9px" }
       %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style: "width:42px; height:47px; margin:4px 4px 0 0; vertical-align:baseline;", alt: "Stoney"}
       %span{ style:"font-size:35px; position:relative; bottom:9px;" } Welcome to MetaBright!
     %hr{ style:"margin:0" }
-    %div.introintcontent
-      %p{ style:"font-size:18px; margin-bottom:0;" } Here's how it works:
+    .body
       %ul
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png", alt: "One" }
-          %h3.inttitle Choose a Persona
-          %p.intdetails
+          %h3 Choose a Persona
+          %p
             The world of MetaBright is organized according to Personas. Personas represent <strong>who you are</strong> or <strong>who you want to be</strong>.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png", alt: "Two" }
-          %h3.inttitle Prove yourself
-          %p.intdetails 
+          %h3 Prove yourself
+          %p 
             Personas are made up of <strong>Challenges</strong> - areas of knowledge, skill, and adventure. Your progress in Challenges corresponds to advancement in your Persona.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png", alt: "Three" }
-          %h3.inttitle Grow
-          %p.intdetails
+          %h3 Grow
+          %p
             Use Challenges to <strong>build out your profile</strong> and <strong>showcase your skills</strong>. Dominate the leaderboard and create your own Challenges to become a master of MetaBright.
     = link_to "Let's go!", start_path, style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
