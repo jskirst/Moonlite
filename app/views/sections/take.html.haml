@@ -68,14 +68,13 @@
                 - if @submitted_answer.new_record?
                   %div#answer_preview{ style: "text-align: center;" }
                     = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
-                - else
-                  %div#task_preview{ style: "#{'display: none;' if @submitted_answer.new_record?} position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
-                    %div.content{ style: "height:76%; position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 11px;"}
-                      %pre.unstyled{ style: "font-size:11px; height:95%;"}
-                    = image_tag @submitted_answer.image_url || "/images/image_thumb.png", alt: "Image placeholder", class: "preview_image", style:"#{'width:207px;' unless @submitted_answer.content.blank?} display:block; margin-right:auto; margin-left:auto; z-index: 500;"
-                    %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
-                      %h4.title= @submitted_answer.title
-                      %h5.description= @submitted_answer.description
+                %div#task_preview{ style: "#{'display: none;' if @submitted_answer.new_record?} position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
+                  %div.content{ style: "height:76%; position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 11px;"}
+                    %pre.unstyled{ style: "font-size:11px; height:95%;"}
+                  = image_tag @submitted_answer.image_url || "/images/image_thumb.png", alt: "Image placeholder", class: "preview_image", style:"#{'width:207px;' unless @submitted_answer.content.blank?} display:block; margin-right:auto; margin-left:auto; z-index: 500;"
+                  %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
+                    %h4.title= @submitted_answer.title
+                    %h5.description= @submitted_answer.description
           
           - if @task.caption_allowed?  
             %div{ style: "margin: 10px 0 5px 0;" }
