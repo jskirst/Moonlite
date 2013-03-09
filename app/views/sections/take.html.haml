@@ -37,12 +37,12 @@
           %input{ type: "hidden", name: "description", value: @submitted_answer.description }
           %input{ type: "hidden", name: "site_name", value: @submitted_answer.site_name }
           %input{ type: "hidden", name: "image_url", value: @submitted_answer.image_url }
+          
           - if @task.creative_response?
             - if @task.text?
               %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus" }= @submitted_answer.content
             
             - elsif @task.image?
-              
               %div.input{ style: "margin-left: 0px; " }
                 %input#answer_input{ type: "text", name: "image_url", style: "width: 300px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
                 %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:5px;" } Preview
@@ -63,6 +63,7 @@
             %div.input{ style: "margin-left: 0px;" }
               %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus", value: @submitted_answer.url }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px;"} Preview
+              = image_tag ICON_LOADING_URL, size: "25x25", style: "display: none; padding: 0; margin-top: -10px;", id: "loading_preview", alt: "Loading preview"
               = render "stored_resources/new_image" 
               %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                 - if @submitted_answer.new_record?
@@ -164,12 +165,14 @@
     :javascript
       $(function(){
         $("#answer_preview_button").click(function(){
+          $("#loading_preview").show();
           $(".errors").text("").hide();
           var url = $("#answer_input").val();
           $.ajax(previewer_url, 
             {
               data: { url: url },
               dataType: "json",
+              complete: function(){ $("#loading_preview").hide(); },
               success: function(results){
                 result = $.parseJSON(results.data);
                 
