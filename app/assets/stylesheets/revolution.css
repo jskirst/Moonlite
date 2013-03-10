@@ -326,9 +326,9 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 .intro .body { padding:12px; }
 .intro .body ul { list-style: none; margin:0 0 0 2px; }
 .intro .body ul li { line-height:17px; padding:0 0 10px 0; }
-.intro .body ul li img { display:inline; height:18px; margin-right:5px; position:relative; top:2px;}
+.intro .body ul li img { display:inline; height:35px; margin-right:5px; position:relative; top:2px; opacity:.8; }
 .intro .body h3 { display: inline; font-weight:bold; font-size:18px; color:#404040; }
-.intro .body p { margin-left:28px; display:inline-block; font-size: 15px; }
+.intro .body p { margin-left:45px; display:inline-block; font-size: 15px; }
 .intro .body button { float:right; margin: 0 12px 12px 12px; }
 
 /* Create and Administer/Revolution */
