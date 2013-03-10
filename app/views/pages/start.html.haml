@@ -9,14 +9,9 @@
       show_persona_challenges();
     });
     $(".persona_select:first").addClass("active");
-    close_button();
     show_persona_challenges();
+    $(".modal_close").hide();
   });
   
-:css
-  .explorecontainer { margin: 65px auto 12px auto; width:697px; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1); background: rgba(255, 255, 255, .8);}
-  .explorenewusercontent { box-shadow:none; margin:12px; }
-  .modal_close { display: none; }
-  .body.container { background-color: transparent; padding-top: 0px; }
-  
-= render "personas/explore"
+.start
+  = render "personas/explore"

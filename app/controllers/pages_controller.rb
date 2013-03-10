@@ -14,6 +14,8 @@ class PagesController < ApplicationController
       @suggested_paths = Path.suggested_paths(current_user)
     else
       @show_header = false
+      @show_footer = false
+      @hide_background = true
       @personas = Persona.all
       render "landing"
     end
@@ -73,6 +75,7 @@ class PagesController < ApplicationController
   def start
     @show_nav_bar = false
     @show_footer = false
+    @hide_background = true
     @personas = current_company.personas.all
     render "start"
   end
@@ -104,12 +107,14 @@ class PagesController < ApplicationController
   def about
     @title = "About"
     @show_footer = true
+    @hide_background = true
     render "about"
   end
   
   def challenges
     @title = "Challenges"
     @show_footer = true
+    @hide_background = true
     @personas = current_company.personas
     render "challenges"
   end
@@ -117,6 +122,7 @@ class PagesController < ApplicationController
   def tos
     @title = "Terms of Service"
     @show_footer = true
+    @hide_background = true
     render "tos"
   end
   

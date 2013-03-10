@@ -33,9 +33,9 @@ function close_button(){
 
 function show_persona_challenges(){
   $(".show_persona_select").on("ajax:success", function(xhr, data){
-    $(".explorenewusercontent").fadeOut('fast', function(){
+    $(".explorenewusercontent").hide(0, function(){
       $(this).replaceWith(data, function(){
-        $(this).fadeIn();
+        $(this).show();
       });
     });
   });

@@ -1,26 +1,14 @@
-%div.explorenewusercontent
+%div#persona_challenge_list.explorenewusercontent
   :javascript
     $(".back_to_preview_index").on("ajax:success", function(xhr, data){
-      $(".explorecontainer").fadeOut('fast', function(){
+      $(".explorecontainer").hide(10, function(){
         $(this).replaceWith(data, function(){
-          $(this).fadeIn();
+          $(this).show();
         });
       });
     });
     $('.bar2').mosaic({ animation : 'slide' });
     close_button();
-
-  :css
-    .exploreheader{ margin:0px; width:669px;padding:12px 0 0px 12px; background-color:#F9F9F9;}
-    .exploreheader h1 {font-size: 21px; margin-bottom: 10px;}
-    .exploreheader img {width:40px; height: 40px; border-radius:4px; float:left; margin-right: 8px;}
-    .exploretiledetailsarea{border-radius:10px; padding:10px 10px 0 10px;}
-    .exploredetailsspace{display:inline-block; width:485px;vertical-align: top;}
-    .exploredetailsspace button{float:right; margin-top:10px}
-    .exploretextdetails span{font-size:20px; font-weight:bold; font-style:italic;}
-    .explorenewuserfooter{position:relative; bottom:12px; left:16px; margin-bottom:8px;}
-    .modal_close img{width:20px; height:20px;}
-    .challengetiles .mosaic-block.bar2 { margin-bottom: 12px; }
     
   %div.exploreheader
     - unless current_user.personas.empty?

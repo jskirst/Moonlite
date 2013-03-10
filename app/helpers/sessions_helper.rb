@@ -25,6 +25,10 @@ module SessionsHelper
     Company.find(1)
   end
   
+  def hide_background
+    return @hide_background.nil? ? false : @hide_background
+  end
+  
   def show_header
     return @show_header.nil? ? true : @show_header
   end

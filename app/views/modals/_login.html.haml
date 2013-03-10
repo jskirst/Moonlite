@@ -11,26 +11,25 @@
       
       %hr{ style: "margin: 0;" }
       
-      .explorebody{ style: "min-height: 235px;" }
-        %center
-          %p{ style: "padding: 10px; font-size: 14px;" } We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.
-          
-          %div
-            = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px;" do
-              = image_tag ICON_LOGIN_GOOGLE, style: "height:30px;", alt: "Google"
-              %span.landingbuttontext Sign in with Google »
-          
-          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px 0; "} OR
-          
-          %div
-            = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
-              = image_tag ICON_LOGIN_FACEBOOK, style: "height:30px;", alt: "Facebook"
-              %span.landingbuttontext Sign in with Facebook »
-          
-          %div{style:"padding:12px;"}
-            %span Learn about these sign in options
-            %span
-              %a#signin_options_pop.mb-tooltip{ rel:"popover" }
+      .explorebody{ style: "min-height: 235px; text-align: center;" }
+        %p{ style: "padding: 10px; font-size: 14px;" } We believe that everyone has the right to be recognized for their knowledge and skills. From accordion playing to zoology, compete with others, and grow together.
+        
+        %div
+          = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px;" do
+            = image_tag ICON_LOGIN_GOOGLE, style: "height:30px;", alt: "Google"
+            %span.landingbuttontext Sign in with Google »
+        
+        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "} OR
+        
+        %div
+          = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
+            = image_tag ICON_LOGIN_FACEBOOK, style: "height:30px;", alt: "Facebook"
+            %span.landingbuttontext Sign in with Facebook »
+        
+        %div{style:"padding:12px;"}
+          %span Learn about these sign in options
+          %span
+            %a#signin_options_pop.mb-tooltip
             
   :javascript
     $('#signin_options_pop').popover({trigger: 'click', placement:'bottom', content:'We think online communities work best when people use their real identities, and the best way to encourage this is to have people use a social sign-up before contributing. We take your privacy seriously and will never post on your behalf, or do anything our mothers would not approve of.'})

@@ -337,14 +337,13 @@ h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weigh
 /* Create and Administer/Revolution */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
 .pills a { line-height: 23px; cursor: pointer }
+ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 
 /* Footer/Revolution */
-.footer{height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position:absolute; bottom:inherit; width:100%;}
-.copyright{}
-.footerlinks{}
-.footerlinks a{text-decoration: none; color:#707070}
-.feedback_tab{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); padding:3px; border-top-width: 1px;border-right-width: 1px;border-left-width: 1px;border-style: solid solid none;border-top-color: rgb(255, 255, 255);border-right-color: rgb(255, 255, 255);border-left-color: rgb(255, 255, 255);border-top-left-radius: 4px;border-top-right-radius: 4px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;-webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;font-style: normal;font-variant: normal;font-weight: bold;font-size: 14px;line-height: 1em;font-family: Arial, sans-serif;position: fixed;right: 10px;bottom: 0px;z-index: 9999;background-color: rgb(64, 64, 64);margin-bottom: 0px;display: block;background-position: 0px 50%;background-repeat: no-repeat no-repeat;}
-.feedback_tab a{ background-color: transparent;display: block;padding: 6px 10px 2px 42px;text-decoration: none; color:white; cursor:pointer; font-size:15px; }
+.footer{ height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position: relative; bottom: 0; width:100%; }
+.footerlinks a {text-decoration: none; color:#707070}
+.feedback_tab { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); padding:3px; border-top-width: 1px;border-right-width: 1px;border-left-width: 1px;border-style: solid solid none;border-top-color: rgb(255, 255, 255);border-right-color: rgb(255, 255, 255);border-left-color: rgb(255, 255, 255);border-top-left-radius: 4px;border-top-right-radius: 4px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;-webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;font-style: normal;font-variant: normal;font-weight: bold;font-size: 14px;line-height: 1em;font-family: Arial, sans-serif;position: fixed;right: 10px;bottom: 0px;z-index: 9999;background-color: rgb(64, 64, 64);margin-bottom: 0px;display: block;background-position: 0px 50%;background-repeat: no-repeat no-repeat;}
+.feedback_tab a { background-color: transparent;display: block;padding: 6px 10px 2px 42px;text-decoration: none; color:white; cursor:pointer; font-size:15px; }
 
 /* About/Revolution */
 .aboutcontainer{margin-top:85px; margin-bottom:10px; overflow:hidden; width:695px;margin-left:auto;margin-right:auto;border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
@@ -442,3 +441,41 @@ h3 { font-size: 28px; }
 
 /* New Image/Revolution */
 .image_preview { height: 70px; max-width: 150px; } 
+
+/* Landing/Revolution */
+#tagline{ width:627px; margin-right:auto; margin-left:auto; text-align:center;}
+#tagline span{ font-size:22px; line-height:22px; }
+#landinglogo{width:720px;margin-top:-40px; margin-bottom:-30px; }
+#landingbox{ margin-bottom:70px; margin-top: 100px; height:304px; width: 695px; margin-left: auto; margin-right: auto; background-color: whiteSmoke;border-radius: 6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, 0.8); }
+#landing_carousel_box {z-index:10; min-height:132px; position:absolute; bottom:0; width: 100%; margin-left: auto; margin-right: auto; background: #3A5A5A; /* Old browsers */background: -moz-linear-gradient(top, #3A5A5A 0%, #000000 100%); /* FF3.6+ */background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#3A5A5A), color-stop(100%,#000000)); /* Chrome,Safari4+ */background: -webkit-linear-gradient(top, #3A5A5A 0%,#000000 100%); /* Chrome10+,Safari5.1+ */background: -o-linear-gradient(top, #3A5A5A 0%,#000000 100%); /* Opera 11.10+ */background: -ms-linear-gradient(top, #3A5A5A 0%,#000000 100%); /* IE10+ */background: linear-gradient(to bottom, #3A5A5A 0%,#000000 100%); /* W3C */filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3A5A5A', endColorstr='#000000',GradientType=0 ); /* IE6-9 */}
+.persona_horizontal_table{ display:table; margin: 0 auto; width:90%; margin-bottom:10px;}
+.persona_horizontal_table li{ width: 19.8%; font-size:18px;}
+.persona_horizontal_table li a{ text-align:center; width: 45%; margin-right: auto; margin-left: auto; padding-bottom:1px; border-bottom-width:2px; color: rgb(207, 214, 255);}
+.persona_horizontal_table .nav-tabs > li > a:hover { color: rgb(207, 214, 255); border-color:transparent; background-color:transparent; border-bottom-color: rgb(58, 153, 201); border-bottom-width:2px;}
+.persona_horizontal_table ul { border-bottom: none; margin-bottom:0; }
+.persona_horizontal_table .nav-tabs > .active > a { border-bottom-width: 2px; font-weight: bold; border-bottom-color: rgb(58, 153, 201); background-color:transparent; border-right:none; border-left:none; border-top:none; color: rgb(207, 214, 255);}
+.persona_horizontal_table .nav-tabs > .active > a:hover { border:0px solid; color: rgb(207, 214, 255); }
+.challenge_table ul {list-style:none; margin-left:0; text-align:center; margin-bottom:5px;}
+.challenge_table{ display:table; margin: 0 auto; width:90%;}
+.challenge_table li{ width: 19.5%; display:inline-block; text-align:left; }
+.challenge_table .mosaic-overlay{background-color: rgba(0, 0, 0, .8);}
+.challenge_table .details h4 {font-size: 13px; text-shadow:none; color:#fff; text-align:center;}
+.challenge_table .details h5 { text-align:center; }
+.challenge_table .bar2 .mosaic-overlay:hover {}
+.challenge_table span{ color: #f9f9f9; font-size: 15px;position: relative;top: 27px;}
+
+/* Start/Revolution */
+.start .explorecontainer { margin: 65px auto 12px auto; width:697px; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1); background: rgba(255, 255, 255, .8);}
+.start .explorenewusercontent { box-shadow:none; margin:12px; }
+
+/* Explore Modal/Revolution */
+#persona_challenge_list .exploreheader { margin:0px; width:669px;padding:12px 0 0px 12px; background-color:#F9F9F9;}
+#persona_challenge_list .exploreheader h1 {font-size: 21px; margin-bottom: 10px;}
+#persona_challenge_list .exploreheader img {width:40px; height: 40px; border-radius:4px; float:left; margin-right: 8px;}
+#persona_challenge_list .exploretiledetailsarea{border-radius:10px; padding:10px 10px 0 10px;}
+#persona_challenge_list .exploredetailsspace{display:inline-block; width:485px;vertical-align: top;}
+#persona_challenge_list .exploredetailsspace button{float:right; margin-top:10px}
+#persona_challenge_list .exploretextdetails span{font-size:20px; font-weight:bold; font-style:italic;}
+#persona_challenge_list .explorenewuserfooter{position:relative; bottom:12px; left:16px; margin-bottom:8px;}
+#persona_challenge_list .modal_close img{width:20px; height:20px;}
+#persona_challenge_list .challengetiles .mosaic-block.bar2 { margin-bottom: 12px; }
