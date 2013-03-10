@@ -19,17 +19,17 @@
           - if @task.creative_response?
             %span.cr_question_header Creative response:
           - elsif @task.task?
-            %span.cr_question_header{ style: "margin-left:10px; "} Your Task, should you choose to accept it:
+            %span.cr_question_header{ style: "margin-left:10px;"} Your Task, should you choose to accept it:
           %p
             %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
           - if @task.task?
             %hr{ style: "margin: 15px 10px;" }        
-        %div.CRresponsespace{ style: "min-height: 175px;" }
+        %div.CRresponsespace{ style: "min-height: 175px; text-align: center;" }
           - if @task.task?           
-            %h4{ style: "margin-bottom: 5px;" } Provide proof you completed this Task:
+            %h4{ style: "margin-bottom: 0px; font-size: 14px;" } Provide proof you completed this Task
           -else
-            %h4{ style: "margin-bottom: 5px;" } Your answer:
-          %div.error.hide
+            %h4{ style: "margin-bottom: 0px; font-size: 14px;" } Your answer
+    
           %input{ type: "hidden", name: "url", value: @submitted_answer.url }
           %input{ type: "hidden", name: "content", value: @submitted_answer.content }
           %input{ type: "hidden", name: "title", value: @submitted_answer.title }
@@ -60,30 +60,28 @@
           
           - elsif @task.task?
             %div.task_proof_options
-              %span Submit a URL
+              %span{ onclick: "$('#url_input').show();$('#image_input').hide();" } Submit a URL
               or
-              %span Upload an Image
-            // If submit a URL is clicked
-            %div{ style: "text-align:center; margin-top:15px; "}
-              %input{ type: "text", style: "width:300px; margin-bottom:4px; ", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus"}
+              %span{ onclick: "$('#image_input').show();$('#url_input').hide();" } Upload an Image
+
+            %div#url_input{ style: "text-align:center; margin-top:15px; margin-left: 20px; display: none; height: 50px;" }
+              %input#answer_input{ type: "text", name: "answer_url", style: "width: 250px; margin-bottom: 3px;", placeholder: "Copy & paste link to here...", autofocus: "autofocus", value: @submitted_answer.url }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:2px; "} Preview
+              = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -3px; opacity: 0;", id: "loading_preview", alt: "Loading preview"
+              %div.error.hide
               %div{ style: "text-align:center; "}
-                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:20px; display:inline;" }
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
                 %p{ style: "display:inline; font-size:12px; " } Link to code in your public repo on GitHub, or to your work in the wild. 
-            // If Upload an Image is clicked
-            %div{ style: "text-align:center; display:none;" }
+
+            %div#image_input{ style: "text-align:center; display:none; height: 50px;" }
               %div{ style: "margin:15px 0 5px 27px;" }
                 = render "stored_resources/new_image"
               %div
-                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:20px; display:inline;" }
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
                 %p{ style: "display:inline; font-size:12px; " } Upload pictures of you completing the Task, or screenshots of your work.
                 
             
-            %div.input{ style: "margin-left: 0px;" }
-              %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px; display:none;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus", value: @submitted_answer.url }
-              %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px; display:none;"} Preview
-              = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -10px; display:none;", id: "loading_preview", alt: "Loading preview"
-              // = render "stored_resources/new_image"
+            %div.input{ style: "margin-left: 0px; text-align: left;" }
               %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                 - if @submitted_answer.new_record?
                   %div#answer_preview{ style: "text-align: center;" }
@@ -95,12 +93,11 @@
                   %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
                     %h4.title= @submitted_answer.title
                     %h5.description= @submitted_answer.description
-          
-          - if @task.caption_allowed?  
-            %div{ style: "margin: 10px 0 5px 0;" }
-              %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
-                %span.text Add caption
-              = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 96%; display: none; margin: 5px 0;", placeholder: "Caption will appear immediately below your response..."
+            
+          %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
+            %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
+              %span.text Add caption
+            = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 97%; display: none; margin: 0;", placeholder: "Caption will appear immediately below your response..."
       
       %div.CRbuttonspace
         = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
@@ -184,14 +181,14 @@
     :javascript
       $(function(){
         $("#answer_preview_button").click(function(){
-          $("#loading_preview").show();
+          $("#loading_preview").fadeTo(100, 1);
           $(".errors").text("").hide();
           var url = $("#answer_input").val();
           $.ajax(previewer_url, 
             {
               data: { url: url },
               dataType: "json",
-              complete: function(){ $("#loading_preview").hide(); },
+              complete: function(){ $("#loading_preview").fadeTo(100, 0); },
               success: function(results){
                 result = $.parseJSON(results.data);
                 
