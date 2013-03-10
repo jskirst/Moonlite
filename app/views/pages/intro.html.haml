@@ -6,9 +6,9 @@
 
 .intro_wrapper.hide
   .intro
-    .header{ style:"padding: 7px 0 0 9px" }
-      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style: "width:42px; height:47px; margin:4px 4px 0 0; vertical-align:baseline;", alt: "Stoney"}
-      %span{ style:"font-size:35px; position:relative; bottom:9px;" } Welcome to MetaBright!
+    .header
+      = image_tag STONEY_MEDIUM_URL, style: "width:42px; height:47px; margin:4px 4px 0 0;", alt: "Stoney"
+      %h1 Welcome to MetaBright!
     %hr{ style:"margin:0" }
     .body
       %ul
