@@ -46,9 +46,12 @@
               %li.CR_dropdown_option
                 = link_to "View all details", submission_drilldown_path(post.submitted_answer.id)         
     
-    %div#cr_pop.CRarea
+    %div#cr_pop.CRarea{ data: { content: post.content }}
       - if post.task.text?
-        %code.content{ style: "word-break:normal;" }= post.content
+        - if post.content.downcase.index("<html>") == 0
+          %iframe{ src: raw_path(post.submitted_answer.id), style: "height: 300px; width: 100%; border: 0;" }
+        - else
+          %code.content{ style: "word-break:normal;" }= post.content
       
       - elsif post.task.image?
         = image_tag(sanitize(post.image_url))

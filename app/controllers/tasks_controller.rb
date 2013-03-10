@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate
-  before_filter :load_resource, except: [:create]
-  before_filter :authorize_resource, except: [:vote, :report, :create]
+  before_filter :load_resource, except: [:create, :raw]
+  before_filter :authorize_resource, except: [:vote, :report, :create, :raw]
   
   respond_to :json, :html
   
@@ -103,6 +103,10 @@ class TasksController < ApplicationController
         flash[:error] = "Error occurred, could not add your image."
       end
     end
+  end
+    
+  def raw
+    render text: SubmittedAnswer.find(params[:id]).content
   end
   
   private

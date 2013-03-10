@@ -46,6 +46,7 @@ Metabright::Application.routes.draw do
       put :add_stored_resource
     end
   end
+  get '/submissions/:id/raw' => "tasks#raw", as: "raw"
 	
 	resources :sections do
 		member do
