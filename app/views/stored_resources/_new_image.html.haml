@@ -11,9 +11,13 @@
           if(result.status == "success"){
             $(".original_image_preview").remove();
             $parent.find("input.image_input_field").val(result.id);
-            //$parent.find("div.image_input").remove();
-            $parent.find("img.image_preview").attr("src", result.link).show();
             $("#loading_image_#{unique_id}").hide();
+            
+            while($parent.find("img.image_preview").size() == 0){
+              $parent = $parent.parent();
+              if(!$parent){ break }
+            }
+            $parent.find("img.image_preview").attr("src", result.link).show();
           }
         },
         send: function(e){
