@@ -23,15 +23,12 @@
           %p
             %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
           - if @task.task?
-            %hr{ style: "margin: 15px 10px;" }
-            %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:20px; display:inline;" }
-            %p{ style: "vertical-align: top; display:inline-block; width:93%;" } 
-              To prove you completed this Task, you must provide a link to a website or upload an image that displays proof of completion. 
-              %br 
-              For instance, link to files in your public GitHub repository, or post screenshots from your projects.
-        
-        %div.CRresponsespace{ style: "min-height: 175px;" }           
-          %h4{ style: "margin-bottom: 5px;" } Your answer:
+            %hr{ style: "margin: 15px 10px;" }        
+        %div.CRresponsespace{ style: "min-height: 175px;" }
+          - if @task.task?           
+            %h4{ style: "margin-bottom: 5px;" } Provide proof you completed this Task:
+          -else
+            %h4{ style: "margin-bottom: 5px;" } Your answer:
           %div.error.hide
           %input{ type: "hidden", name: "url", value: @submitted_answer.url }
           %input{ type: "hidden", name: "content", value: @submitted_answer.content }
@@ -62,11 +59,31 @@
                     = image_tag "/images/youtube_thumb.jpg", size: "380x200", id: "youtube_placeholder", alt: "YouTube placeholder"
           
           - elsif @task.task?
+            %div.task_proof_options
+              %span Submit a URL
+              or
+              %span Upload an Image
+            // If submit a URL is clicked
+            %div{ style: "text-align:center; margin-top:15px; "}
+              %input{ type: "text", style: "width:300px; margin-bottom:4px; ", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus"}
+              %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:2px; "} Preview
+              %div{ style: "text-align:center; "}
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:20px; display:inline;" }
+                %p{ style: "display:inline; font-size:12px; " } Link to code in your public repo on GitHub, or to your work in the wild. 
+            // If Upload an Image is clicked
+            %div{ style: "text-align:center; display:none;" }
+              %div{ style: "margin:15px 0 5px 27px;" }
+                = render "stored_resources/new_image"
+              %div
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:20px; display:inline;" }
+                %p{ style: "display:inline; font-size:12px; " } Upload pictures of you completing the Task, or screenshots of your work.
+                
+            
             %div.input{ style: "margin-left: 0px;" }
-              %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus", value: @submitted_answer.url }
-              %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px;"} Preview
-              = image_tag ICON_LOADING_URL, size: "25x25", style: "display: none; padding: 0; margin-top: -10px;", id: "loading_preview", alt: "Loading preview"
-              = render "stored_resources/new_image" 
+              %input#answer_input{ type: "text", name: "answer_url", style: "width: 300px; display:none;", placeholder: "Copy & paste link to proof URL here...", autofocus: "autofocus", value: @submitted_answer.url }
+              %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:5px; display:none;"} Preview
+              = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -10px; display:none;", id: "loading_preview", alt: "Loading preview"
+              // = render "stored_resources/new_image"
               %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
                 - if @submitted_answer.new_record?
                   %div#answer_preview{ style: "text-align: center;" }
