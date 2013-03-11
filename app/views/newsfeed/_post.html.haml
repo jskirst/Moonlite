@@ -29,7 +29,7 @@
               %img{ src: ICON_UPVOTE_URL, alt: "Up-vote" }
         - else
           %span.vote_points= post.points_awarded
-          %span{ style:"margin-right:5px;" } pts
+          %span.vote_points{ style:"margin-right:5px;" } pts
     
     %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post.task.task?}" }
       %pre.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{post.task.question}
