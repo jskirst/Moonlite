@@ -26,7 +26,7 @@
             %hr{ style: "margin: 15px 10px;" }        
         %div.CRresponsespace{ style: "min-height: 175px; text-align: center;" }
           - if @task.task?           
-            %h4{ style: "margin-bottom: 0px; font-size: 14px;" } Provide proof you completed this Task
+            %h4{ style: "margin-bottom: 0px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 310px; margin-right: auto; margin-left: auto;" } Provide proof you completed this Task:
           -else
             %h4{ style: "margin-bottom: 0px; font-size: 14px;" } Your answer
     
@@ -64,8 +64,8 @@
               or
               %span{ onclick: "$('#image_input').show();$('#url_input').hide();" } Upload an Image
 
-            %div#url_input{ style: "text-align:center; margin-top:15px; margin-left: 20px; display: none; height: 50px;" }
-              %input#answer_input{ type: "text", name: "answer_url", style: "width: 250px; margin-bottom: 3px;", placeholder: "Copy & paste link to here...", autofocus: "autofocus", value: @submitted_answer.url }
+            %div#url_input{ style: "text-align:center; margin-top:15px; display: none; height: 50px;" }
+              %input#answer_input{ type: "text", name: "answer_url", style: "width: 250px; margin-bottom: 3px; margin-left:6%;", placeholder: "Copy & paste link to here...", autofocus: "autofocus", value: @submitted_answer.url }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:2px; "} Preview
               = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -3px; opacity: 0;", id: "loading_preview", alt: "Loading preview"
               %div.error.hide
