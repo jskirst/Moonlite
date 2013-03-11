@@ -25,6 +25,13 @@
     $(".retract_link").unbind("ajax:success").on("ajax:success", function(xhr, data){
       $(this).parents(".post").hide("slow");
     });
+    
+    $(".CRarea iframe").parent().hover(
+      function(){ $(this).find(".onhover").show(); },
+      function(){ $(this).find(".onhover").hide(); }
+    );
+    
+    $(".reload").click(function(){ $(this).parent().find("iframe").attr("src", $(this).parent().find("iframe").attr("src")); });
 
   = render partial: "newsfeed/post", collection: feed.posts, locals: { feed: feed }
   
