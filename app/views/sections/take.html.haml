@@ -1,5 +1,4 @@
 %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
-  
   = render "modals/report_issue"
   
   = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
@@ -39,7 +38,8 @@
           
           - if @task.creative_response?
             - if @task.text?
-              %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus" }= @submitted_answer.content
+              %div.expanded_textarea{ style: "width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 12px;" }
+                %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus", style: "font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px; width: 1000px; margin: 0; border: 0;" }= @submitted_answer.content
             
             - elsif @task.image?
               %div.input{ style: "margin-left: 0px; " }
