@@ -207,7 +207,7 @@ code,pre{font:inherit;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace {margin-top:12px; }
 .input input{background-color: #F9F9F9;}
-.task_proof_options { font-size: 12px; text-align:center; margin:15px auto 0 auto; width: 258px; border-bottom: 1px solid rgba(0, 0, 0, .1); }
+.task_proof_options { font-size: 12px; text-align:center; margin:15px auto 0 auto; width: 258px; }
 .task_proof_options span { text-transform:uppercase; color: #0088cc; font-weight:bold; cursor:pointer; }
 #report_issue_modal.modal.fade {  background-color: transparent; border: 0; box-shadow: 0 0 0; }
 .explorebody .radio{padding-left:35px;}
