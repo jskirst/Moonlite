@@ -61,7 +61,7 @@ class IdeasController < ApplicationController
   def create
     @idea = current_user.ideas.new(params[:idea])
     if @idea.save
-      flash[:alert] = "You're idea was created."
+      flash[:alert] = "Your idea was created."
       redirect_to @idea
     else
       flash[:alert] = @idea.errors.full_messages.join(". ")
