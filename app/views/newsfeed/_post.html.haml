@@ -49,10 +49,11 @@
     %div#cr_pop.CRarea{ data: { content: post.content }}
       - if post.task.text?
         - if post.content.downcase.index("<html>") == 0
-          %div.onhover.reload{ style: "opacity: 0.9; display: none; position: absolute; text-align: center; margin: 20% auto; z-index: 2; width: 100%; font-size: 35px; cursor: pointer;" } Reload
-          %div.onhover{ style: "display: none; position: absolute; text-align: right; z-index: 2; width: 100%; font-size: 14px; margin-top: 5px;" }
-            = link_to "View raw", raw_path(post.submitted_answer.id), target: "_blank", style: "color: black; padding-right: 5px;"
-          %iframe{ src: raw_path(post.submitted_answer.id), style: "height: 300px; width: 100%; border: 0; z-index: 1;" }
+          %div.onhover{ style: "display: none; position: absolute; text-align: right; z-index: 2; width: 100%; font-size: 15px; margin-top: 5px;" }
+            %span.reload{ style: "color: black; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('iframe').attr('src', $(this).parents('.CRarea').find('iframe').attr('src'));" } Reload
+            |
+            %span= link_to "View raw", raw_path(post.submitted_answer.id), target: "_blank", style: "color: black; padding-right: 5px;"
+          %iframe{ src: raw_path(post.submitted_answer.id), style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
         - else
           %code.content{ style: "word-break:normal;" }= post.content
       
