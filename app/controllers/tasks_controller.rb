@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, except: [:raw]
   before_filter :load_resource, except: [:create, :raw]
   before_filter :authorize_resource, except: [:vote, :report, :create, :raw]
   

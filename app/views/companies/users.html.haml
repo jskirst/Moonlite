@@ -20,7 +20,7 @@
         %tr
           %td= link_to truncate(u.name, length: 20), profile_path(u.username)
           %td= link_to u.user_role.name, update_users_role_path(u.id)
-          %td= u.email
+          %td= truncate(u.email, length:25)
           %td= u.login_at.strftime("%m/%d/%Y")
           %td= u.created_at.strftime("%m/%d/%Y")
           %td= u.earned_points
