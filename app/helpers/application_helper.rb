@@ -84,10 +84,6 @@ module ApplicationHelper
         content: "Vote on answers you like so they earn more points.",
         placement: "right"
       },
-      cr_pop: {
-        content: "This is an answer to the above Creative Response question.",
-        placement: "left"
-      },
       questions_pop: {
         content: "Create questions for your Challenge here.",
         placement: "bottom"
