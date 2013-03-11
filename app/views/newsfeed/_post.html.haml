@@ -12,14 +12,14 @@
       %div.votingandpointsarea{ id: ("points_pop" unless current_user == post.user)}
         - if current_user
           %span.vote_points= post.points_awarded
-          %span.vote_points{ style:"margin-right:5px;"} pts
+          %span.vote_points{ style:"margin-right:1px;"} pts
           - if current_user == post.user
             %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
-              %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:0px;" }
+              %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:0px 4px;" }
                 %span.caret{ style: "margin: 6px 0 0 0;" }
               %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
                 %li{ style: "margin-left: -10px;" }
-                  %div.graynub{ style: "top:-37px; left: 74px; margin:0; "}
+                  %div.graynub{ style: "top:-37px; left: 78px; margin:0; "}
                   %div{ style: "padding: 3px 0px; margin:0;"}
                     %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
                       %li{ style: "margin-left:-8px; "}= link_to "Edit Submission", take_section_path(post.section.id, task_id: post.task_id), style: "padding:0; padding-left:8px;"
