@@ -68,7 +68,7 @@ task :send_newsletter => :environment do
   raise "Fatal: No newsletter specified" unless ENV["NEWSLETTER_PATH"]
   User.where("locked_at is ?", nil).each do |user|
     begin
-      Newsletters.newsletter(user.email, ENV["NEWSLETTER_PATH"]).deliver
+      Newsletters.newsletter(user.email, ENV["NEWSLETTER_PATH"], ENV["NEWSLETTER_SUBJECT"]).deliver
     rescue
       puts "Newsletter alert rejected: #{$!}"
     end
