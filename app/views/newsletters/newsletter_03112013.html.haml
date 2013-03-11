@@ -27,16 +27,17 @@
                   %li{ style: "margin-bottom:4px;"}
                     %strong Totally revamped profile:
                     Highlighting your awesomeness in every Challenge you're enrolled in.
+                    = link_to "Check out your profile.", profile_url(@user.username) 
                   %li{ style: "margin-bottom:4px;"}
-                    %strong Executable code in CR's:
-                    See the output of your code in HTML, jQuery, and CSS.
-                    = link_to "See it in action.", "#"
+                    %strong Executable code in Creative Responses's:
+                    See the output of your code in HTML, jQuery, and CSS, with Ruby and Python on the way.
+                    = link_to "See it in action.", "http://www.metabright.com/challenges/jquery"
                   %li{ style: "margin-bottom:4px;"}
                     %strong Prove that you completed Tasks:
                     Visually demonstrate the impressiveness of your accomplishments.
                   %li{ style: "margin-bottom:4px;"}
-                    %strong Edit your CR's and Tasks:
-                    Since you're always improving, your CR's and Tasks can too.
+                    %strong Edit your Creative Responses's and Tasks:
+                    Since you're always improving, your Creative Responses's and Tasks can too.
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             %h3{ style: "font-size: 20px; margin:0;"} Challenges
@@ -64,7 +65,7 @@
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
                     %span{ style: "font-size: 16px; font-weight:normal"} Ruby / Rails Testing
                     %p{ style: "margin:3px 0 4px 0;"} 6 questions
-                    %p{ style: "margin:0;"} Much like a slum-lord or a prohibition-era gangster, the Ruby / Rails Tester is steeped in a seedy underworld. 
+                    %p{ style: "margin:0;"} You can run your code - but do you know how to test it? 
         %tr
           %td{ style: "padding:3px 12px 6px;"}
             %span{style:"font-size:10px; color:gray;"}
