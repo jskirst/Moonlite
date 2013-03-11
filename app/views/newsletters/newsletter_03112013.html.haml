@@ -16,34 +16,34 @@
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
             %h3{ style: "font-size:15px; font-weight:bold; margin:0;" } Hey #{@user.name.split.first},
-            %hp{ style: "font-size:15px;"} Here's what's happening on MetaBright...
+            %p{ style: "font-size:15px; margin: 0;" } Here's what's happening on MetaBright...
         %tr
-          %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
+          %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 6px; "}
             %h3{ style: "font-size: 20px; margin:0;"} Updates
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
               %div
                 %h4{ style: "font-size:15px; font-weight:normal;"} This week, we're rolling out updates that make you look <em>good</em>.
                 %ul{ style: "font-size:15px;"}
-                  %li{ style: "margin-bottom:6px;"}
+                  %li{ style: "margin-bottom:7px;"}
                     %strong Totally revamped profile:
                     Highlighting your awesomeness in every Challenge you're enrolled in.
                     = link_to "Check out your profile.", profile_url(@user.username) 
-                  %li{ style: "margin-bottom:6px;"}
-                    %strong Executable code in Creative Responses's:
+                  %li{ style: "margin-bottom:7px;"}
+                    %strong Executable code in Creative Responses:
                     See the output of your code in HTML, jQuery, and CSS, with Ruby and Python on the way.
                     = link_to "See it in action.", "http://www.metabright.com/challenges/jquery"
-                  %li{ style: "margin-bottom:6px;"}
+                  %li{ style: "margin-bottom:7px;"}
                     %strong Prove that you completed Tasks:
                     Visually demonstrate the impressiveness of your accomplishments.
-                  %li{ style: "margin-bottom:6px;"}
-                    %strong Edit your Creative Responses's and Tasks:
-                    Since you're always improving, your Creative Responses's and Tasks can too.
+                  %li{ style: "margin-bottom:7px;"}
+                    %strong Edit and improve your existing answers:
+                    Since you're always improving, your Creative Responses and Tasks can too.
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             %h3{ style: "font-size: 20px; margin:0;"} Challenges
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
               = link_to "http://www.metabright.com/challenges/css", style: s[:challenge_box] do
-                %div{ style: "margin-bottom:12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
                   %img{ src: "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", height: 75, width:75, style: s[:challenge_image], title: "CSS" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
@@ -51,7 +51,7 @@
                     %p{ style: "margin:3px 0 4px 0;"} 61 questions
                     %p{ style: "margin:0;"} Styling the Interwebz to your heart's content. This Challenge is for CSS jockeys of all levels. Try to work your way up to the Master section! 
               = link_to "http://www.metabright.com/challenges/html", style: s[:challenge_box] do
-                %div{ style: "margin-bottom:5px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
                   %img{ src: "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", height: 75, width:75, style: s[:challenge_image], title: "HTML" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
@@ -59,7 +59,7 @@
                     %p{ style: "margin:3px 0 4px 0;"} 24 questions
                     %p{ style: "margin:0;"} Practically the entire universe is built in HTML. Your domination of this Challenge means that you're essentially a diety.
               = link_to "http://www.metabright.com/challenges/rubyrailstesting", style: s[:challenge_box] do
-                %div{ style: "margin-bottom:5px; padding:12px;"}                
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
                   %img{ src: "http://moonlite.s3.amazonaws.com/objs/110/original.png?1359677420", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
