@@ -12,30 +12,30 @@
         %tr
           %td{ style: "background:#F9F9F9; padding:6px 0 3px 6px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             = link_to root_url do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", style: "width:145px", title: "MetaBright.com"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", style: "width:145px", alt: "MetaBright.com"
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
-            %h3{ style: "font-size:14px; font-weight:bold; margin:0;" } #{@user.name},
-            %hp{ style: "font-size:14px;"} Here's what's happening on MetaBright...
+            %h3{ style: "font-size:15px; font-weight:bold; margin:0;" } Hey #{@user.name.split.first},
+            %hp{ style: "font-size:15px;"} Here's what's happening on MetaBright...
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
             %h3{ style: "font-size: 20px; margin:0;"} Updates
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
               %div
-                %h4{ style: "font-size:14px; font-weight:normal;"} This week, we're rolling out updates that make you look <em>good</em>.
-                %ul{ style: "font-size:12px;"}
-                  %li{ style: "margin-bottom:4px;"}
+                %h4{ style: "font-size:15px; font-weight:normal;"} This week, we're rolling out updates that make you look <em>good</em>.
+                %ul{ style: "font-size:15px;"}
+                  %li{ style: "margin-bottom:6px;"}
                     %strong Totally revamped profile:
                     Highlighting your awesomeness in every Challenge you're enrolled in.
                     = link_to "Check out your profile.", profile_url(@user.username) 
-                  %li{ style: "margin-bottom:4px;"}
+                  %li{ style: "margin-bottom:6px;"}
                     %strong Executable code in Creative Responses's:
                     See the output of your code in HTML, jQuery, and CSS, with Ruby and Python on the way.
                     = link_to "See it in action.", "http://www.metabright.com/challenges/jquery"
-                  %li{ style: "margin-bottom:4px;"}
+                  %li{ style: "margin-bottom:6px;"}
                     %strong Prove that you completed Tasks:
                     Visually demonstrate the impressiveness of your accomplishments.
-                  %li{ style: "margin-bottom:4px;"}
+                  %li{ style: "margin-bottom:6px;"}
                     %strong Edit your Creative Responses's and Tasks:
                     Since you're always improving, your Creative Responses's and Tasks can too.
         %tr
