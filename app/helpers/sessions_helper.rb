@@ -139,7 +139,7 @@ module SessionsHelper
   private
     def log_visit
       begin
-        unless request.xhr?
+        unless request.xhr? || params[:action] == "raw"
           if current_user
             visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
             @visit = Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url)
