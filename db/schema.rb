@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130303170108) do
+ActiveRecord::Schema.define(:version => 20130312182010) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -404,9 +404,10 @@ ActiveRecord::Schema.define(:version => 20130303170108) do
     t.integer  "user_id"
     t.integer  "visitor_id"
     t.string   "request_url"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
     t.string   "external_id"
+    t.text     "referral_url"
   end
 
   add_index "visits", ["external_id"], :name => "index_visits_on_external_id", :unique => true
