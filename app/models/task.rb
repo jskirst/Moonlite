@@ -72,11 +72,10 @@ class Task < ActiveRecord::Base
   def creative_response?() answer_type == CREATIVE end
   def task?() answer_type == CHECKIN end
     
-  def text?() answer_sub_type == TEXT end
-  def image?() answer_sub_type == IMAGE end
-  def youtube?() answer_sub_type == YOUTUBE end
+  def text?() creative_response? and answer_sub_type == TEXT end
+  def image?() creative_response? and answer_sub_type == IMAGE end
+  def youtube?() creative_response? and answer_sub_type == YOUTUBE end
     
-  def image_allowed?() url_type == WILDCARD_URL end
   def caption_allowed?() image? or youtube? or task? end
   
   private
