@@ -24,18 +24,12 @@ class PagesController < ApplicationController
   def newsfeed
     feed = Feed.new(params, current_user, newsfeed_url)
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
-    if relevant_paths.empty?
-      feed.posts = CompletedTask.joins(:task, :submitted_answer)
-        .order("completed_tasks.created_at DESC")
-        .limit(15)
-        .offset(feed.page * 15)
-    else
-      feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
-        .where("sections.path_id in (?)", relevant_paths)
-        .order("completed_tasks.created_at DESC")
-        .limit(15)
-        .offset(feed.page * 15)
-    end
+    relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
+    feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
+      .where("sections.path_id in (?)", relevant_paths)
+      .order("completed_tasks.created_at DESC")
+      .limit(15)
+      .offset(feed.page * 15)
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
   
