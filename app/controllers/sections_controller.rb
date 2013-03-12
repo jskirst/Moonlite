@@ -122,6 +122,7 @@ class SectionsController < ApplicationController
   end
   
   def take
+    @hide_background = true
     @task = @section.tasks.find(params[:task_id])
     raise "Access Denied: Not a challenge." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
@@ -203,6 +204,7 @@ class SectionsController < ApplicationController
   end
     
   def continue
+    @hide_background = true
     @streak = 0
     @question_count = params[:count].to_i || 0
     if @question_count < 10

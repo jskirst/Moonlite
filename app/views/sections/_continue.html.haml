@@ -1,19 +1,17 @@
 %div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
   = render "modals/report_issue"
   %div.quizspace
-    - unless @stop_counter
-      :javascript
-        var continue_countdown = true;
-        var count_down_bar_width = 100;
-        
-        $count_down_bar = $(".pointbarfiller");
-        $count_down_points = $count_down_bar.parent().find("div.pointbartext");
-        setTimeout(function(){
-          setTimeout(count_down_bar, 300);
-          setTimeout(count_down_points, 300); 
-        }, 1000);
-    
     :javascript
+      var continue_countdown = true;
+      var count_down_bar_width = 100;
+      
+      $count_down_bar = $(".pointbarfiller");
+      $count_down_points = $count_down_bar.parent().find("div.pointbartext");
+      setTimeout(function(){
+        setTimeout(count_down_bar, 300);
+        setTimeout(count_down_points, 300); 
+      }, 1000);
+      
       $(".answer_content").click(function(){
         continue_countdown = false;
         $(this).find("input").attr("checked", "checked");

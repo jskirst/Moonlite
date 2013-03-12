@@ -1,7 +1,7 @@
-%div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
+%div.quizcontainer{ style: "width: 926px;" }
   = render "modals/report_issue"
   
-  = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
+  = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true, style: "margin: 0;" }) do |f|
     %div.CRquizspace
       %div.quizheader
         = image_tag @path.path_pic, style: "height:50px; width:50px;", alt: "#{@path.name}"
@@ -68,7 +68,7 @@
               %input#answer_input{ type: "text", name: "answer_url", style: "width: 250px; margin-bottom: 3px; margin-left:6%;", placeholder: "Copy & paste link to here...", autofocus: "autofocus", value: @submitted_answer.url }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:2px; "} Preview
               = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -3px; opacity: 0;", id: "loading_preview", alt: "Loading preview"
-              %div.error.hide
+              %div.error.hide{ style: "font-size: 13px; color: #971D1C;" }
               %div{ style: "text-align:center; "}
                 %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
                 %p{ style: "display:inline; font-size:12px; " } Link to code in your public repo on GitHub, or to your work in the wild. 
@@ -104,19 +104,7 @@
         %a.arena_report_link{ href:"#", style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
         = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
         = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
-  
-  :css
-    .container.body { background-color: transparent; border: 0px; box-shadow: none;}
-    #content { padding-top: 0px; }
-    .quizcontainer { width: 926px; margin-top: 30px; }
-    .quizcontainer form { margin: 0; }
-    .CRquestionspace { width: 46%; margin-right: 1%; }
-    .CRresponsespace { width: 50%; }
-    .add_caption .text { font-size: 14px; cursor: pointer; vertical-align: top; }
-    .add_caption .caret { border-top-color: #0088cc; border-bottom-color: #0088cc; vertical-align: bottom; }
-    #answer_preview .image_preview { height: 200px;  width: inherit; max-width: inherit; }
-    .error { font-size: 13px; color: #971D1C; }
-        
+            
   :javascript
     var previewer_url = "#{preview_url}";
     
