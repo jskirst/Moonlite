@@ -48,7 +48,7 @@
     
     %div#cr_pop.CRarea{ data: { content: post.content }}
       - if post.task.text?
-        - if post.content.downcase.index("<html>") == 0
+        - if post.content && post.content.downcase.include?("<html>")
           %div.onhover{ style: "width: 100%; text-align: right; opacity: 0.7; padding: 3px; background-color: white; display: none; position: absolute; float: right; z-index: 2; font-size: 15px; margin-top: 5px;" }
             %span.reload{ style: "color: black; cursor: pointer; text-decoration: underline;", onclick: "$(this).parents('.CRarea').find('iframe').attr('src', $(this).parents('.CRarea').find('iframe').attr('src'));" } Reload
             |

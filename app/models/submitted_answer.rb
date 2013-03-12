@@ -20,6 +20,8 @@ class SubmittedAnswer < ActiveRecord::Base
  
   validates :content, length: { maximum: 2500 }
   
+  after_initialize :set_template
+  
   def preview
     return stored_resources.first.obj.url unless stored_resources.empty?
     return url unless url.blank?
@@ -47,5 +49,11 @@ class SubmittedAnswer < ActiveRecord::Base
       raise "Fatal: Have negative votes somehow"
     end
     return false
+  end
+  
+  def set_template
+    if new_record?
+      true
+    end
   end
 end
