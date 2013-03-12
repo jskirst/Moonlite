@@ -14,7 +14,7 @@
         = render "stored_resource", { stored_resource: @stored_resource }
       
       %div.CRquestionandresponsespace
-        %div.CRquestionspace{ style: "height: 100%;" }
+        %div.CRquestionspace{ style: "height: 100%; #{'width: 98%;' if @task.text?}" }
           - if @task.creative_response?
             %span.cr_question_header Creative response:
           - elsif @task.task?
