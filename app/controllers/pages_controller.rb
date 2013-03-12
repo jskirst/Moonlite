@@ -61,6 +61,7 @@ class PagesController < ApplicationController
   end
   
   def intro
+    @hide_background = true
     @show_nav_bar = false
     @show_footer = false
     render "intro"
