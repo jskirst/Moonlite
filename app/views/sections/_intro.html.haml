@@ -1,9 +1,11 @@
 .intro_wrapper
   .intro
     :javascript
-      $("#nextbutton").on("ajax:success", function(xhr, data){
-        $(".intro_wrapper").fadeOut('slow', function(){
-          $(this).replaceWith(data).fadeIn();
+      $(function(){
+        $("#nextbutton").on("ajax:success", function(xhr, data){
+          $(".intro_wrapper").fadeOut('slow', function(){
+            $(this).replaceWith(data).fadeIn();
+          });
         });
       });
     .header
