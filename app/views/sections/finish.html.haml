@@ -7,7 +7,7 @@
       %div{ style: "display:inline-block;" }
         %span <strong>#{@section.path.name}:</strong> #{@section.name}</span>
         %div#idprogressbar
-    %div.completionmessagespace
+    %div.completionmessagespace{ style: "display:none;"}
       %div.completionheader
         %span Congratulations!
       %div.completionsubheader You just scored <strong>#{@section.points_earned(current_user)} points</strong> in this section!
@@ -16,7 +16,7 @@
         %p Current level: <strong>#{@enrollment.level}</strong>
       %div{ style: "float: right; margin: 15px 10px 0 0;" }
         = render "shared/sharing", { custom_style: "", title: "Just finished a section of the #{@path.name} challenge on @MetaBright and scored #{@enrollment.total_points} points", url: challenge_url(@section.path.permalink) }
-    %div{ style: "display:inline-block; vertical-align:top;" }
+    %div{ style: "display:none; vertical-align:top;" }
       %div.completionnextsteps
         %span Continue improving your score
         %ul

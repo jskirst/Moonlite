@@ -3,7 +3,7 @@
     :javascript
       $(function(){
         $("#nextbutton").on("ajax:success", function(xhr, data){
-          $(".intcontainer").fadeOut('slow', function(){
+          $(".intro_wrapper").fadeOut('slow', function(){
             $(this).replaceWith(data).fadeIn();
           });
         });

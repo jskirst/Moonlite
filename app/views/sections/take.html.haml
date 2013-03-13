@@ -1,7 +1,7 @@
-%div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
+%div.quizcontainer{ style: "width: 926px;" }
   = render "modals/report_issue"
   
-  = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true }) do |f|
+  = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", multipart: true, style: "margin: 0;" }) do |f|
     %div.CRquizspace
       %div.quizheader
         = image_tag @path.path_pic, style: "height:50px; width:50px;", alt: "#{@path.name}"
@@ -14,7 +14,7 @@
         = render "stored_resource", { stored_resource: @stored_resource }
       
       %div.CRquestionandresponsespace
-        %div.CRquestionspace{ style: "height: 100%;" }
+        %div.CRquestionspace{ style: "height: 100%; #{'width: 98%;' if @task.text?}" }
           - if @task.creative_response?
             %span.cr_question_header Creative response:
           - elsif @task.task?
@@ -23,11 +23,11 @@
             %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
           - if @task.task?
             %hr{ style: "margin: 15px 10px;" }        
-        %div.CRresponsespace{ style: "min-height: 175px; text-align: center;" }
+        %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
           - if @task.task?           
             %h4{ style: "margin-bottom: 0px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 310px; margin-right: auto; margin-left: auto;" } Provide proof you completed this Task:
           -else
-            %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 104px; margin-right: auto; margin-left: auto;" } Your answer:
+            %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     
           %input{ type: "hidden", name: "url", value: @submitted_answer.url }
           %input{ type: "hidden", name: "content", value: @submitted_answer.content }
@@ -38,8 +38,7 @@
           
           - if @task.creative_response?
             - if @task.text?
-              %div.expanded_textarea{ style: "width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 12px;" }
-                %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus", style: "font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px; width: 1000px; margin: 0; border: 0;" }= @submitted_answer.content
+              %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus", style: "height: 250px; width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 12px;font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px;" }= @submitted_answer.content
             
             - elsif @task.image?
               %div.input{ style: "margin-left: 0px; " }
@@ -69,7 +68,7 @@
               %input#answer_input{ type: "text", name: "answer_url", style: "width: 250px; margin-bottom: 3px; margin-left:6%;", placeholder: "Copy & paste link to here...", autofocus: "autofocus", value: @submitted_answer.url }
               %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:2px; "} Preview
               = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -3px; opacity: 0;", id: "loading_preview", alt: "Loading preview"
-              %div.error.hide
+              %div.error.hide{ style: "font-size: 13px; color: #971D1C;" }
               %div{ style: "text-align:center; "}
                 %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
                 %p{ style: "display:inline; font-size:12px; " } Link to code in your public repo on GitHub, or to your work in the wild. 
@@ -105,21 +104,9 @@
         %a.arena_report_link{ href:"#", style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
         = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
         = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
-  
-  :css
-    .container.body { background-color: transparent; border: 0px; box-shadow: none;}
-    #content { padding-top: 0px; }
-    .quizcontainer { width: 926px; margin-top: 30px; }
-    .quizcontainer form { margin: 0; }
-    .CRquestionspace { width: 46%; margin-right: 1%; }
-    .CRresponsespace { width: 50%; }
-    .add_caption .text { font-size: 14px; cursor: pointer; vertical-align: top; }
-    .add_caption .caret { border-top-color: #0088cc; border-bottom-color: #0088cc; vertical-align: bottom; }
-    #answer_preview .image_preview { height: 200px;  width: inherit; max-width: inherit; }
-    .error { font-size: 13px; color: #971D1C; }
-        
+            
   :javascript
-    var previewer_url = "#{preview_url}"
+    var previewer_url = "#{preview_url}";
     
     $("input[name=stored_resource_id]").change(function(){
       $("input[name=image_url]").val($("#image_preview").attr("src"));
@@ -134,109 +121,133 @@
     
   - if @task.text?
     :javascript
-      $(function(){ check_text_before_submit(); });
+      $("#challenge_form").submit(function(){
+        if($("#answer_input").val() != ""){
+          $("#challenge_form").unbind("submit");
+          $("#challenge_form").submit();
+          $("#submit_button").attr("disabled","disabled");
+          return true;
+        } else {
+          alert("Please enter an answer before submitting.");
+          $("#submit_button").removeAttr("disabled");
+          return false;
+        }
+      });
   
   - if @task.image?
     :javascript
-      $(function(){
-        check_image_before_submit();
-        $("#answer_preview_button").click(function(){
-          var url = $("#answer_input").val();
-          is_valid_image(url, function(valid){
-            if(valid == true) { $("#image_preview").attr("src", url);
-            } else { alert("Please provide a link to a valid image."); }
-          });
+      $("#challenge_form").submit(function(){
+        if($("#uploaded_object").val() != ""){ return true; }
+        var url = $("#answer_input").val();
+        is_valid_image(url, function(valid){
+          if(valid == true){
+            $("#challenge_form").unbind("submit");
+            $("#challenge_form").submit();
+            $(".loading_image").show();
+            $("#submit_button").attr("disabled","disabled");
+            return true;
+          } else {
+            alert("Please provide a link to a valid image.");
+            $("#submit_button").removeAttr("disabled");
+            return false;
+          }
         });
+        return false;
       });
-      
-  - if @task.image?
-    :javascript
-      $(function(){
-        check_image_before_submit();
-        $("#answer_preview_button").click(function(){
-          var url = $("#answer_input").val();
-          is_valid_image(url, function(valid){
-            if(valid == true) { $(".image_preview").attr("src", url);
-            } else { alert("Please provide a link to a valid image."); }
-          });
+      $("#answer_preview_button").click(function(){
+        var url = $("#answer_input").val();
+        is_valid_image(url, function(valid){
+          if(valid == true) { $("#image_preview").attr("src", url);
+          } else { alert("Please provide a link to a valid image."); }
         });
       });
   
   - if @task.youtube?
     :javascript
-      $(function(){
-        check_youtube_before_submit();
-        $("#answer_preview_button").click(function(){
-          var url = $("#answer_input").val();
-          var youtube_id = get_youtube_id_from_link(url);
-          if(is_valid_youtube_id(youtube_id)){
-            $("#youtube_placeholder").remove();
-            set_youtube_preview(url, "answer_preview");
-          } else {
-            alert("Please provide a link to a valid Youtube video.");
-          }
-        });
+      $("#challenge_form").submit(function(){  
+        $('body').data("needs_reload", false);
+        var url = $("#answer_input").val();
+        var youtube_id = get_youtube_id_from_link(url);
+        if(is_valid_youtube_id(youtube_id)){
+          $("#challenge_form").unbind("submit");
+          $("#challenge_form").submit();
+          $(".loading_image").show();
+          $("#submit_button").attr("disabled","disabled");
+          return true;
+        } else {
+          alert("Please provide a link to a valid Youtube video.");
+          $("#submit_button").removeAttr("disabled");
+          return false;
+        }
+      });
+      $("#answer_preview_button").click(function(){
+        var url = $("#answer_input").val();
+        var youtube_id = get_youtube_id_from_link(url);
+        if(is_valid_youtube_id(youtube_id)){
+          $("#youtube_placeholder").remove();
+          set_youtube_preview(url, "answer_preview");
+        } else {
+          alert("Please provide a link to a valid Youtube video.");
+        }
       });
   
   - if @task.task?
     :javascript
-      $(function(){
-        $("#answer_preview_button").click(function(){
-          $("#loading_preview").fadeTo(100, 1);
-          $(".errors").text("").hide();
-          var url = $("#answer_input").val();
-          $.ajax(previewer_url, 
-            {
-              data: { url: url },
-              dataType: "json",
-              complete: function(){ $("#loading_preview").fadeTo(100, 0); },
-              success: function(results){
-                result = $.parseJSON(results.data);
+      $("#answer_preview_button").click(function(){
+        $("#loading_preview").fadeTo(100, 1);
+        $(".errors").text("").hide();
+        var url = $("#answer_input").val();
+        $.ajax(previewer_url, 
+          {
+            data: { url: url },
+            dataType: "json",
+            complete: function(){ $("#loading_preview").fadeTo(100, 0); },
+            success: function(results){
+              result = $.parseJSON(results.data);
+              
+              if(result.warnings){
+                log(result.warnings);
+              }
+              
+              if(result.error){
+                log(result.error);
+                $("div.error").text(result.error).show();
+              } else {
+                $("#answer_preview").hide();
+              
+                $("input[name=url]").val(result.url);
+                $("input[name=content]").val(result.content);
+                $("input[name=title]").val(result.title);
+                $("input[name=description]").val(result.description);
+                $("input[name=site_name]").val(result.site_name);
+                $("input[name=image_url]").val(result.image_url);
                 
-                if(result.warnings){
-                  log(result.warnings);
-                }
+                var $preview = $("#task_preview");
                 
-                if(result.error){
-                  log(result.error);
-                  $("div.error").text(result.error).show();
+                if(result.image_url){
+                  $preview.find("img").attr("src", result.image_url);
+                }  
+                
+                if(result.content){
+                  $preview.find(".content pre").text(result.content);
                 } else {
-                  $("#answer_preview").hide();
-                
-                  $("input[name=url]").val(result.url);
-                  $("input[name=content]").val(result.content);
-                  $("input[name=title]").val(result.title);
-                  $("input[name=description]").val(result.description);
-                  $("input[name=site_name]").val(result.site_name);
-                  $("input[name=image_url]").val(result.image_url);
-                  
-                  var $preview = $("#task_preview");
-                  
-                  if(result.image_url){
-                    $preview.find("img").attr("src", result.image_url);
-                  }  
-                  
-                  if(result.content){
-                    $preview.find(".content pre").text(result.content);
-                  } else {
-                    $preview.find("img").css("height", "100%").css("width", "100%");
-                  }
-                  
-                  if(result.title){
-                    $preview.find(".title").text(result.title);
-                  } else {
-                    $preview.find(".title").text("");
-                  }
-                  if(result.description){
-                    $preview.find(".description").text(result.description);
-                  } else {
-                    $preview.find(".description").text("");
-                  }
-                  
-                  $("#task_preview").show();
+                  $preview.find("img").css("height", "100%").css("width", "100%");
                 }
+                
+                if(result.title){
+                  $preview.find(".title").text(result.title);
+                } else {
+                  $preview.find(".title").text("");
+                }
+                if(result.description){
+                  $preview.find(".description").text(result.description);
+                } else {
+                  $preview.find(".description").text("");
+                }
+                
+                $("#task_preview").show();
               }
             }
-          );
-        });
+          }
+        );
       });

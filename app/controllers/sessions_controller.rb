@@ -27,7 +27,7 @@ class SessionsController < ApplicationController
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
         if session[:referer]
           path = Path.find_by_id(session[:referer])
-          session[:referrer] = nil
+          session[:referer] = nil
           current_user.enroll!(path)
           redirect_to continue_path_path(path)
         else

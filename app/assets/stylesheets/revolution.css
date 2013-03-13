@@ -49,7 +49,18 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .comments li{ margin-bottom:10px; overflow:hidden; padding-right:12px;}
 code,pre{font:inherit;}
 .social_toolbar a { text-decoration: none; }
+
+div.posttext.leveltext.dropdown:hover ul.dropdown-menu{display: block;}
+a.menu:after, .dropdown-toggle:after {content: none;}
+.CRarea .details h4 a:hover { color: rgb(50, 187, 255); }
+.vote_points { font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; }
+.post_caption { margin-top:12px; font-family: 'MuliItalic'; border-bottom: 1px solid #ccc; padding-bottom:5px; margin-bottom:-4px; }
+.retract_link { padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px; }
+.task_post { position: relative; font-size: 12px; min-height: 150px; max-height: 300px; overflow-x: hidden; overflow-y: hidden; }
+.task_post .content { position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; }
+.task_post .details { padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: rgb(29, 29, 29); }
 .task_post h5 a:hover {  color: rgb(0, 204, 255); }
+code.content { color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre; background-color: inherit; }
 
 /* Progress/Revolution rails */
 .singleprogressentry{ padding: 4px 0 9px 12px;}
@@ -197,20 +208,26 @@ code,pre{font:inherit;}
 .counterbox{border:1px solid rgba(0, 0, 0, .1); background-color:white; border-radius:4px; padding: 7px 7px 0;}
 .messagespace{margin:12px 9px 0 37px; font-size:15px; word-wrap:normal; width:240px; font-weight:bold;}
 
-.CRquizspace {background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px; min-height:300px;}
-.label.notice {font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
-#CRprogressbar {width:632px; height: 40px; margin: 0 auto;}
-.CRquestionspace {width:40%; display:inline-block; padding-top:9px;}
-.cr_question_header {font:bold 15px 'MuliRegular', sans-serif;}
-.CRquestion {font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliRegular', sans-serif;} 
-.CRresponsespace {display:inline-block;background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', sans-serif;width:56.5%;}
+/* Take/Revolution */
+
+.CRquizspace { background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px; min-height:300px;}
+.label.notice { font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
+#CRprogressbar { width:632px; height: 40px; margin: 0 auto;}
+.CRquestionspace { width: 46%; display:inline-block; padding-top:9px; margin-right: 1%;}
+.cr_question_header { font:bold 15px 'MuliRegular', sans-serif;}
+.CRquestion { font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliRegular', sans-serif;} 
+.CRresponsespace { display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', sans-serif;width:56.5%;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
-.CRbuttonspace {margin-top:12px; }
-.input input{background-color: #F9F9F9;}
+.CRbuttonspace { margin-top:12px; }
+.input input{ background-color: #F9F9F9;}
 .task_proof_options { font-size: 12px; text-align:center; margin:15px auto 0 auto; width: 258px; }
 .task_proof_options span { text-transform:uppercase; color: #0088cc; font-weight:bold; cursor:pointer; }
 #report_issue_modal.modal.fade {  background-color: transparent; border: 0; box-shadow: 0 0 0; }
-.explorebody .radio{padding-left:35px;}
+.explorebody .radio{ padding-left:35px;}
+#answer_preview .image_preview { height: 200px;  width: inherit; max-width: inherit; }
+.CRresponsespace { width: 50%; }
+.add_caption .text { font-size: 14px; cursor: pointer; vertical-align: top; }
+.add_caption .caret { border-top-color: #0088cc; border-bottom-color: #0088cc; vertical-align: bottom; }
 
 #topsection { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; position:relative; background-clip: padding-box; color:#333; background-color:white; margin-bottom:12px; }
 .headerspace { text-shadow: 0 1px 0 white; padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; background-color: #FCFCFC;}
@@ -264,7 +281,7 @@ code,pre{font:inherit;}
 .counter span.separator hr {display:none;}
 
 body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'MuliRegular', sans-serif; line-height:18px; font-size:13px;}
-.quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 60px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+.quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 110px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .completionmessagespace{display:inline-block; width:396px;overflow: hidden; border-right:1px solid rgba(0, 0, 0, .1);}
 .completionmessagespace a{ text-decoration:none; }
