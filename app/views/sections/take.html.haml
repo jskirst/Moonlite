@@ -25,7 +25,7 @@
             %hr{ style: "margin: 15px 10px;" }        
         %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
           - if @task.task?           
-            %h4{ style: "margin-bottom: 0px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 310px; margin-right: auto; margin-left: auto;" } Provide proof you completed this Task:
+            %h4{ style: "margin-bottom: 0px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 310px; margin-right: auto; margin-left: auto;" } Provide proof of completion:
           -else
             %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     
@@ -71,9 +71,9 @@
               %div.error.hide{ style: "font-size: 13px; color: #971D1C;" }
               %div{ style: "text-align:center; "}
                 %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
-                %p{ style: "display:inline; font-size:12px; " } Link to code in your public repo on GitHub, or to your work in the wild. 
+                %p{ style: "display:inline; font-size:12px; " } Example: code on Github, pictures on Flickr, blog post or Youtube video 
 
-            %div#image_input{ style: "text-align:center; display:none; height: 50px;" }
+            %div#image_input{ style: "text-align:center; display: none; height: 35px; margin-top: 15px;" }
               %div{ style: "margin:15px 0 5px 27px;" }
                 = render "stored_resources/new_image"
               %div
@@ -212,6 +212,7 @@
               if(result.error){
                 log(result.error);
                 $("div.error").text(result.error).show();
+                $('#image_input').show();
               } else {
                 $("#answer_preview").hide();
               
@@ -226,7 +227,9 @@
                 
                 if(result.image_url){
                   $preview.find("img").attr("src", result.image_url);
-                }  
+                } else {
+                  $('#image_input').show();
+                } 
                 
                 if(result.content){
                   $preview.find(".content pre").text(result.content);
