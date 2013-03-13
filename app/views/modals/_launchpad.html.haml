@@ -12,8 +12,30 @@
           %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
           %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
             %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-      
-      - if @achievements
+              
+      - if true
+        %div#launchpad_headlines{ style: "width: 73.9%; margin-right:auto; margin-left:auto;" }
+          %div{ style: "box-shadow: 0 6px 14px rgba(0, 0, 0, .1); padding: 0 0 0 10px; border-radius: 6px; background-color:white; border: 1px solid rgba(0,0,0,.1); margin-top:8px;"}
+            = image_tag STONEY_SMALL_URL, style: "display: inline-block; vertical-align: middle; position:relative; bottom:12px; right:12px;", alt: "Stoney"
+            %div{ style: "display:inline-block; top:15px; right:10px; position:relative; " }
+              %span{ style:"font-size: 52px;" } New power unlocked!              
+              %h3{ style: "font-size: 25px; line-height: 32px; position: relative; top: 9px;" } You can now create questions...
+            %div{ style: "position:relative; bottom:22px; border:1px solid black; height:300px;" }
+              %fieldset{style: "display: inline-block; margin-right:15px; width:58.1%; "}
+              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+                %h4 
+                  %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
+                  Tips:
+                %ul{style:"font-size:13px;"}
+                  %li Questions should cover the core knowledge area of the section they're placed.
+                  %li Keep the tone informal but direct.
+                  %li Make sure you check for spelling and grammar.
+                  %li 
+                    You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question.
+              %a.next.button.button-actionable{ href: "#", style:"float:right; margin-right:10px;"} Next
+            %div{ style: "float: right; margin-top: 10px;" }
+              %a{ style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
+      - if false#@achievements
         - new_level = @achievements[0]
         - new_rank = @achievements[1]
         %div#launchpad_headlines{ style: "width: 73.9%; height: 90%; margin-right:auto; margin-left:auto;" }

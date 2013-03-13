@@ -9,8 +9,8 @@
         %div#idprogressbar
     %div.completionmessagespace
       %div.completionheader
-        %span Congratulations!
-      %div.completionsubheader You just scored <strong>#{@section.points_earned(current_user)} points</strong> in this section!
+        %span Nice work!
+      %div.completionsubheader You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
       %div.completionstats
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
         %p Current level: <strong>#{@enrollment.level}</strong>
