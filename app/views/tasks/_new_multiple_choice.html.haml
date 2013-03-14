@@ -1,42 +1,41 @@
 %div.editor_view{ class: ("hide" unless display) }
-  = form_for(section.tasks.new, remote: true, html: { class: "form-horizontal", style: "width:599px; padding:0; height:90%; margin-top:-10px;" }) do |f|
+  = form_for(section.tasks.new, remote: true, html: { class: "form-horizontal" }) do |f|
     %div.step1
       = f.hidden_field(:answer_type, value: Task::MULTIPLE)
       = f.hidden_field(:section_id, value: section.id)
       = f.hidden_field(:source, value: "launchpad")
-      %fieldset{style: "display: inline-block; margin-right:15px; width:58.1%;"}
+      %fieldset
         %legend Create an Arena question
         %span.help-block What's your question?
-        = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
+        = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...")
         %span.help-block What are the possible answers?
         %label Correct answer
         = f.text_field(:answer1, placeholder: "Required", style:"margin-left:17px;")
         %label Wrong answer
-        = f.text_field(:answer2, placeholder: "Required", style:"margin-left:22px;")
+        = f.text_field(:answer2, placeholder: "Required")
         %label Wrong answer
-        = f.text_field(:answer3, placeholder: "Optional", style:"margin-left:22px;")
+        = f.text_field(:answer3, placeholder: "Optional")
         %label Wrong answer
-        = f.text_field(:answer4, placeholder: "Optional", style:"margin-left:22px;")
+        = f.text_field(:answer4, placeholder: "Optional")
         %span.error_message
         %a.next.button.button-actionable{ style:"float:right;" } Next
-      %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
+      .tips
         %h4 
-          %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
+          %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip"}
           Tips:
-        %ul{style:"font-size:13px;"}
+        %ul
           %li Questions should cover the core knowledge area of the section they're placed.
           %li Keep the tone informal but direct.
           %li Make sure you check for spelling and grammar.
           %li 
             You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question.
     
-    %div.step2{ style: "display: none;" }
+    %div.step2.hide
       %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
         %legend{style:"margin-bottom:5px; "} Create an Arena question
         %h4{style:"margin-top:12px; font-size:14px;"} Your question:
         %div{style:"margin-left:12px;"}
-          %pre
-            %span.question{style:"font-weight:bold;font-size:14px;"}
+          %code.content.question{ style:"font-weight:bold;font-size:14px;" }
         %h4{style:"margin-top:12px; font-size:14px;"} Correct answer:
         %div{style:"margin-left:12px;"}
           %span.correct_answer{style:"font-weight:bold;font-size:14px;"}
@@ -51,10 +50,9 @@
         %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;" } Back
         = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
     
-    %div.step3{ style: "display: none;" }
-      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;", alt: "Stoney"}
-      %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
-      %h4{style:"margin-top:12px; font-size:16px;"} Your question is now visible to the MetaBright community!
-      %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} You earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a question!
+    %div.step3.hide
+      %span{ style:"position:relative; top:7px; font-size:30px;"} Nice work!
+      %h4{ style:"margin-top:12px; font-size:16px;"} Your question is now visible to the MetaBright community!
+      %h4{ style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} You earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a question!
       %a.restart.button.button-actionable{ style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
       %a.finish.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish

@@ -1,27 +1,26 @@
 - new_level = @achievements[0]
 - new_rank = @achievements[1]
-%div#launchpad_headlines{ style: "width: 73.9%; height: 90%; margin-right:auto; margin-left:auto;" }
-  %div{ style: "box-shadow: 0 6px 14px rgba(0, 0, 0, .1); padding: 0 0 8px 10px; border-radius: 6px; background-color:white; border: 1px solid rgba(0,0,0,.1); margin-top:55px;"}
+%div#headlines
+  .header
     = image_tag STONEY_SMALL_URL, style: "display: inline-block; vertical-align: middle", alt: "Stoney"
-    %div{ style: "display:inline-block; top:30px; position:relative; min-height: 115px;" }
-      %span{ style:"font-size: 64px;" } Congratulations!              
-      %h3{ style: "font-size: 25px; line-height: 32px; position: relative; top: 9px;" }
-        - if new_level && new_rank
-          You just leveled up and reached the Top #{new_rank}!
-          - sharing_text = "Just leveled up and made it into the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!" 
-        - elsif new_level
-          You've jumped to Level #{new_level}!
-          - sharing_text = "Just made it to level #{new_level} in the #{@path.name} Challenge on @MetaBright!"
-        - elsif new_rank
-          You just reached the Top #{new_rank}!
-          - sharing_text = "Just broke the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
-        
-    %div{ style: "text-align: middle; margin: 0 0 15px 27px;" }
-      %p{ style: "font-size: 17px;" } You deserve a round of applause. In fact, you deserve a standing ovation. Share this achievement and brag to your friends.
-      %div{ style: "margin-top: 15px;" }
-        %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
-        %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
-        %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter
-    
-    %div{ style: "float: right; margin-top: 30px;" }
-      %a{ style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
+    %h1 Congratulations!              
+    %h2
+      - if new_level && new_rank
+        You just leveled up and reached the Top #{new_rank}!
+        - sharing_text = "Just leveled up and made it into the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!" 
+      - elsif new_level
+        You've jumped to Level #{new_level}!
+        - sharing_text = "Just made it to level #{new_level} in the #{@path.name} Challenge on @MetaBright!"
+      - elsif new_rank
+        You just reached the Top #{new_rank}!
+        - sharing_text = "Just broke the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
+      
+  .body{ style: "text-align: middle; margin: 0 0 15px 27px;" }
+    %p{ style: "font-size: 17px;" } You deserve a round of applause. In fact, you deserve a standing ovation. Share this achievement and brag to your friends.
+    %div{ style: "margin-top: 15px;" }
+      %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
+      %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
+      %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter
+  
+  .exit{ style: "float: right; margin-top: 30px;" }
+    %a{ onclick: "$('#headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »

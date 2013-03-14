@@ -33,13 +33,13 @@
           %li Make sure you check for spelling and grammar.
           %li 
             You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question.
-    %div.step2{ style: "display: none;" }
+    
+    %div.step2.hide
       %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
         %legend{style:"margin-bottom:5px; "} Create a CR
         %h4{style:"margin-top:12px; font-size:14px;"} Your question:
         %div{style:"margin-left:12px;"}
-          %pre
-            %span.question{style:"font-weight:bold;font-size:14px;"}
+          %code.content.question
         %h4{style:"margin-top:12px; font-size:14px;"} Question type:
         %div{style:"margin-left:12px;"}
           %span.task_subtype{style:"font-weight:bold;font-size:14px;"} 
@@ -53,7 +53,8 @@
         %h4{style:"margin-top:12px; font-size:14px; margin-bottom:5px;"} Ready to post?
         %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
         = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
-    %div.step3{ style: "display: none;" }
+    
+    %div.step3.hide
       %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;", alt: "Stoney"}
       %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
       %h4{style:"margin-top:12px; font-size:16px;"} Your CR is now visible to the MetaBright community!

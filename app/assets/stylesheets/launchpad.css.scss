@@ -13,17 +13,39 @@
   h1>img { border-radius:4px; height:36px; width:36px; }
   h1>div { position:relative; bottom:8px; display:inline;}
   
-  .editor_view .radio { padding-left:35px; height:100%; }
-  .editor_view .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
-  #arena_tab .step1 label { display:inline-block; }
-  #arena_tab .step1 input { position:relative; top:2px; }
+  .editor_view {
+    .radio { padding-left:35px; height:100%; }
+    .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
+    textarea { width: 100%; }
+    .form-horizontal { margin: 0; }
+    .form-horizontal label { display:inline-block; }
+    .form-horizontal input { margin: 5px 0 3px 0; margin-left:22px;}
+    fieldset { display: inline-block; margin-right:15px; width:58.1%; }
+    legend { margin-bottom: 10px; }
+    a.next { margin-top: 5px; float: right; }
+    code.question { max-height: 60px; overflow-y: auto; }
+    
+    .tips {
+      display:inline-block; 
+      margin-left:20px; 
+      vertical-align:top; 
+      width:199px; 
+      border-left: 1px solid #E7E7E7; 
+      position:relative; 
+      top:48px; 
+      padding-left:10px;
+      
+      img { height:25px; width:25px; }
+      ul { font-size:13px; }
+    }
+  }
 
   .launchpadcontent { 
     margin-left: 10px; 
     margin-top:10px; 
     border-collapse:collapse;
     
-    .launchpadcolumnheader { 
+    .launchpadcolumnheader {
       font-weight:bold; text-align: left; margin-bottom:10px;
       
       button { position:relative; top:5px; float:right;}
@@ -82,6 +104,28 @@
         img { display:inline; position:relative; height:17px; }
         .points { font-weight:bold; font-size:11px; white-space:nowrap; position:relative; top:2px; }
       }
+    }
+  }
+  
+  #headlines {
+    background-color:white; 
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 6px; 
+    box-shadow: 0 6px 14px rgba(0, 0, 0, .1);
+    margin: 20px auto 0 auto;
+    padding: 10px 25px; 
+    width: 75%;
+    min-height: 275px;
+    
+    .header {
+      img { float: left; height: 100px; margin: -13px 0 0 -10px; }
+      h1 { font-size: 47px; font-weight: normal; width: inherit;  display: inline-block; }
+      h2 { font-size: 22px; line-height: 28px; display: inline-block; }
+    }
+    .body { margin: 5px auto; }
+    .exit {
+      float: right; margin-top: 5px;
+      a { font-size: 15px; }
     }
   }
 }

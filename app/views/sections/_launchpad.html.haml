@@ -16,7 +16,7 @@
           = render "tasks/new_multiple_choice", section: @current_section
         %div.task_view
           %div.tip
-            %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip"}
+            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
             %p Enter the Arena and take multiple-choice questions to discover where you stand. 
           - tasks_completed = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
           - if @core_tasks.empty?
@@ -122,6 +122,7 @@
     $(".editor_view").each(function(){
       var $editor = $(this);
       $editor.find(".step1 a.next").click(function(){
+        $("#headlines .exit").hide();
         if($editor.find("textarea").val() == ""){
           return log_error("You must provide a question.");
         }
@@ -142,7 +143,7 @@
             }
           }
         }
-        $editor.find(".step2 span.question").text($editor.find("textarea[name='task[question]']").val());
+        $editor.find(".step2 code.question").text($editor.find("textarea[name='task[question]']").val());
         $editor.find(".step1").hide();
         $editor.find(".step2").show();
       });
@@ -150,6 +151,7 @@
       $editor.find(".step2 a.back").click(function(){
         $editor.find(".step2").hide();
         $editor.find(".step1").show();
+        $("#headlines .exit").show();
       });
       
       $editor.find(".step3 a.restart").click(function(){
@@ -159,6 +161,8 @@
       });
       
       $editor.find(".step3 a.finish").click(function(){
+        $("#headlines").hide();
+        $(".launchpadcontent").show();
         $editor.find(".step3").hide();
         $editor.find(".step1").find("input[type=text],textarea").val("");
         $editor.find(".step1").show();
