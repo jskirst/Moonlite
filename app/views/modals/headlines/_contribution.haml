@@ -1,4 +1,4 @@
-%div#headlines
+.headlines.hide
   .header
     = image_tag STONEY_SMALL_URL, alt: "Stoney"
     %h1 New power unlocked!              
@@ -8,4 +8,4 @@
     = render "tasks/new_multiple_choice", section: @current_section, display: true
   
   .exit{ style: "margin-top: -15px;" }
-    %a{ onclick: "$('#headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
+    %a{ onclick: "$(this).parents('.headlines').fadeOut(300, function(){ $(this).remove(); if($('.headlines').size() > 0){ $('.headlines:first').show() } else { $('.launchpadcontent').show(); } });" } Continue to Launchpad »

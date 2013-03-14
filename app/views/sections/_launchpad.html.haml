@@ -122,7 +122,7 @@
     $(".editor_view").each(function(){
       var $editor = $(this);
       $editor.find(".step1 a.next").click(function(){
-        $("#headlines .exit").hide();
+        $editor.parents(".headlines").find(".exit").hide();
         if($editor.find("textarea").val() == ""){
           return log_error("You must provide a question.");
         }
@@ -151,13 +151,14 @@
       $editor.find(".step2 a.back").click(function(){
         $editor.find(".step2").hide();
         $editor.find(".step1").show();
-        $("#headlines .exit").show();
+        $editor.parents(".headlines").find(".exit").show();
       });
       
       $editor.find(".step3 a.restart").click(function(){
         $editor.find(".step3").hide();
         $editor.find(".step1").find("input[type=text],textarea").val("");
         $editor.find(".step1").show();
+        $editor.parents(".headlines").find(".exit").show();
       });
       
       $editor.find(".step3 a.finish").click(function(){

@@ -11,8 +11,11 @@
         %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
         %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
           %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-    
-    = render "modals/headlines/contribution"
+
+    - if @achievements[:level] or @achievements[:rank]
+      = render "modals/headlines/achievements"
+    - if @achievements[:contribution]
+      = render "modals/headlines/contribution"
     
     %div.launchpadcontent{ style: "display: none;" }
       %div.launchpadsectioncolumn
@@ -39,6 +42,7 @@
       $("#topboxcontent .button-actionable").click(function(){
         $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
       });
+      $(".headlines:first").removeClass("hide");
     });
 
     $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
