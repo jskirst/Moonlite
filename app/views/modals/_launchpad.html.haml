@@ -17,7 +17,7 @@
     - if @achievements[:contribution]
       = render "modals/headlines/contribution"
     
-    %div.launchpadcontent{ style: "display: none;" }
+    %div.launchpadcontent{ style: ("display: none;" if @achievements[:level] or @achievements[:rank] or @achievements[:contribution]) }
       %div.launchpadsectioncolumn
         %h3
           Sections

@@ -191,6 +191,8 @@ class PathsController < ApplicationController
       @points_gained = params[:p]
       if @completed && @points_gained
         @achievements = check_achievements(@points_gained.to_i, @enrollment)
+      else
+        @achievements = {}
       end
     else
       @display_sign_in = true

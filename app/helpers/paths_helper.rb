@@ -11,7 +11,7 @@ module PathsHelper
     if current_level > previous_level
       achievements[:level] = current_level
       if current_level > 1 and previous_level == 1
-        achievemens[:contribution] = true
+        achievements[:contribution] = true
       end
     end 
     
