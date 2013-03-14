@@ -207,9 +207,7 @@ class SectionsController < ApplicationController
     @hide_background = true
     @streak = 0
     @question_count = params[:count].to_i || 0
-    if @question_count < 10
-      @task = @section.next_task(current_user)
-    end
+    @task = @section.next_task(current_user)
     
     if @task
       @question_count += 1
@@ -242,7 +240,7 @@ class SectionsController < ApplicationController
         social_tags(@path.name, @path.picture, @path.description)
         render "finish"
       else
-        render json: { status: "reload" };
+        render json: { status: "reload" }
       end
     end
     session[:ssf] = @streak
