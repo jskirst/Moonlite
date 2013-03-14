@@ -1,8 +1,13 @@
+:css
+  legend { display:none; }
+  .tips { top:0; }
+  
 %div#headlines
   .header
     = image_tag STONEY_SMALL_URL, alt: "Stoney"
-    %h1 New power unlocked!              
-    %h2 You can now create questions...
+    %div
+      %h1 New power unlocked!              
+      %h2 You can now create questions...
 
   .body
     = render "tasks/new_multiple_choice", section: @current_section, display: true
