@@ -199,7 +199,7 @@ class SectionsController < ApplicationController
       completed_task.save!
       Answer.increment_counter(:answer_count, answer_id)
     end
-    render json: { correct_answer: correct_answer.id, supplied_answer: answer_id }
+    render json: { correct_answer: correct_answer.id, supplied_answer: supplied_answer.id }
   end
     
   def continue
@@ -262,7 +262,7 @@ class SectionsController < ApplicationController
     else
       raise "FATAL: attempt to access unknown path."
     end
-    @enrollment = current_user.enrollments.find_by_path_id(@path.id)
+    @enrollment = current_user.enrollments.find_by_path_id(@path.id) if current_user
   end
   
   def authorize_edit
