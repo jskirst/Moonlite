@@ -1,50 +1,52 @@
-%section
+#challenge
   - unless current_user
-    %div#newuserbox.help_box{ style:"background-color:#FFF7CD; padding-bottom:15px; padding-right:15px;" }
-      %div.help_close{style:"position:relative; left:10px;"}
-        %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt: "Close" }
-      %div{ style: "margin-top:-6px;"}
-        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", style: " display:inline; height:90px;", alt: "Stoney"}
-        %h1{style:"display:inline; position:relative; top:12px; font-size: 30px;"} Looks like you're new here...
-      %div{style:"margin-left:20px; margin-top:-10px;"}
-        %h4 MetaBright is the place to prove and showcase your skills. Learn more about us <a href="/about">here</a>.
-        %h4{style:"margin-top:15px;"} Poke around a little bit, and when you're ready to join the Challenge yourself, come back here to <a class="login_link">sign up</a>. It only takes five seconds. Honest!
-  %div#topsection
-    %div#updatespace
-      %div{ style: "display:inline;" }
-        = link_to challenge_path(@path.permalink) do
-          = image_tag @path.path_pic, class: "bigheaderimage", alt: "#{@path.name}"
-      %div.rightofbigheaderimage{ style: "width:81%;" }
-        %div#topboxcontent
-          - if current_user
-            %div.button.button-actionable{ style: "float: right;"} Continue Level #{@enrollment.level} »
-          %div{ style: "width: 550px; margin-top: 10px;" }
-            %h1= @path.name
-            - if current_user
-              %h3{ style: "font-size: 18px; line-height:33px; " } Level #{@enrollment.level}, #{@enrollment.total_points} points
-            - else              
-              %h4{ style: "height: 42px; cursor: pointer; margin-top:4px;" }
-                %a.login_link Login or register to join this Challenge!
-        %div#challengecarousel_container
-          - if @enrollments.size > 4
-            %div#challengeleft_scroll
-              %a{href: "javascript:challengeslide(\"left\");"}
-                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
-          %div#challengecarousel_inner{ style: "#{@enrollments.size < 4 ? 'margin-left: -12px;' : ''}" }
-            %ul#challengecarousel_ul
-              - if @enrollments.size < 4
-                = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
-              - @enrollments.shuffle.each do |e|
-                = render "shared/mosaic", { pic: e.user.picture, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
-          - if @enrollments.size > 4
-            %div#challengeright_scroll
-              %a{href: "javascript:challengeslide(\"right\");"}
-                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png", alt: "Right"}/
-      %input#challengehidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
+    #new_user.help_box
+      .help_close
+        = image_tag ICON_CLOSE_URL, alt: "Close"
+      .header
+        = image_tag STONEY_SMALL_URL, alt: "Stoney" 
+        %h1 Looks like you're new here...
+      .body
+        %h4 MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem to get started.
+        %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); start_countdown();" } Take Practice Problem
+        
+        - @enrollment = @path.enrollments.new
+        - @section = @path.sections.first
+        - @task = @section.core_tasks.first
+        - @answers = @task.answers
+        - @question_count = 0
+        - @streak = 0
+        = render "sections/continue"
+  
+  .top
+    = link_to challenge_path(@path.permalink), class: "home" do
+      = image_tag @path.path_pic, alt: "#{@path.name}"
+    - if current_user
+      %a#launch_button.button.button-actionable Continue Level #{@enrollment.level} »
+    %h1= @path.name
+    %h2
+      - if current_user
+        Level #{@enrollment.level}, #{@enrollment.total_points} points
+      - else
+        %a.login_link Login or register to join this Challenge!
+    .carousel
+      - if @enrollments.size > 4
+        .left_scroll{ onclick: "challengeslide('left');" }
+          = image_tag ICON_CAROUSEL_LEFT, alt: "Left"
+      .inner{ style: "#{@enrollments.size < 4 ? 'margin-left: -12px;' : ''}" }
+        %ul
+          - if @enrollments.size < 4
+            = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
+          - @enrollments.shuffle.each do |e|
+            = render "shared/mosaic", { pic: e.user.picture, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
+      - if @enrollments.size > 4
+        .right_scroll{ onclick: "challengeslide('right');" }
+          = image_tag ICON_CAROUSEL_RIGHT, alt: "Right"
+  
   %div.row
     %div.span5
       %div.leftbox.newsfeed{ style: "min-height: 361px;" }
-        %div.leftboxheader#leaderboard_pop{style: "padding: 10px 12px; "} Leaderboard
+        %div#leaderboard_pop.box_header{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
           - current_user_in_top = false
           - @leaderboard.each_with_index do |user, i|
@@ -94,7 +96,7 @@
       
       - if @similar_paths
         %div.leftbox
-          %div.leftboxheader Similar Challenges
+          %div.box_header Similar Challenges
           %div.leftboxfooter{style:"background-color:white;"}
             %li.leftrailcontent
               - @similar_paths.each do |p|
@@ -102,7 +104,7 @@
                   = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
     %div.span11
       %div.newsfeed
-        %div.leftboxheader
+        %div.box_header
           %div{ style: "display:inline;" }
             %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
             = link_to "Date", challenge_path(@path.permalink, order: "date"), class: "btn leftbtn"

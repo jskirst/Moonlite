@@ -1,5 +1,5 @@
 class SectionsController < ApplicationController
-  before_filter :authenticate
+  before_filter :authenticate, except: [:complete]
   before_filter :load_resource
   before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]
   before_filter :disable_navbar, except: [:new, :create]  
@@ -176,30 +176,29 @@ class SectionsController < ApplicationController
   
   def complete
     task_id = params[:task_id]
-    answer_id = params[:answer]
     points = params[:points_remaining].to_i
+    supplied_answer = Answer.find(params[:answer])
+    correct_answer = supplied_answer.is_correct ? supplied_answer : Answer.where(task_id: task_id, is_correct: true).first
     
-    completed_task = current_user.completed_tasks.find_by_task_id(task_id)
-    raise "Already answered" if completed_task.status_id != Answer::INCOMPLETE
-    raise "Out of time" if points > 0 and completed_task.created_at <= 45.seconds.ago
-    
-    supplied_answer = Answer.find(answer_id)
-    completed_task.answer_id = answer_id
-    if supplied_answer.is_correct == true
-      correct_answer = supplied_answer
-      completed_task.status_id = Answer::CORRECT
-      completed_task.points_awarded = points
-      completed_task.award_points = true
-      session[:ssf] = session[:ssf].to_i + 1
-    else
-      correct_answer = Answer.where(task_id: task_id, is_correct: true).first
-      completed_task.status_id = Answer::INCORRECT
-      completed_task.points_awarded = 0
-      session[:ssf] = 0
+    if current_user
+      completed_task = current_user.completed_tasks.find_by_task_id(task_id)
+      raise "Already answered" if completed_task.status_id != Answer::INCOMPLETE
+      raise "Out of time" if points > 0 and completed_task.created_at <= 45.seconds.ago
+      completed_task.enrollment_id = @enrollment.id
+      completed_task.answer_id = supplied_answer.id
+      if supplied_answer == correct_answer
+        completed_task.status_id = Answer::CORRECT
+        completed_task.points_awarded = points
+        completed_task.award_points = true
+        session[:ssf] = session[:ssf].to_i + 1
+      else
+        completed_task.status_id = Answer::INCORRECT
+        completed_task.points_awarded = 0
+        session[:ssf] = 0
+      end
+      completed_task.save!
+      Answer.increment_counter(:answer_count, answer_id)
     end
-    completed_task.enrollment_id = @enrollment.id
-    completed_task.save!
-    Answer.increment_counter(:answer_count, answer_id)
     render json: { correct_answer: correct_answer.id, supplied_answer: answer_id }
   end
     

@@ -1,0 +1,64 @@
+#challenge { 
+  #new_user {
+    background-clip: padding-box;
+    background-color:#FFF7CD;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 6px;
+    color: #333;
+    margin-bottom: 12px;
+    padding-bottom:15px;
+    padding-right:15px;
+    position: relative;
+    
+    span { font-size:18px; padding:10px 0; }
+    
+    .help_close { position:relative; left:10px; }
+    .header { margin-top:-6px; }
+    .header h1 { display:inline; position:relative; top:12px; font-size: 30px; }
+    .header img { display:inline; height:90px; }
+    .body { 
+      margin: 0 0 10px 10px;
+      text-align: center;
+      
+      h4 { text-align: left; }
+      .quizcontainer { display: none; margin-top: 20px; text-align: left; }
+    }
+  }
+  
+  .top {
+    border: 1px solid rgba(0, 0, 0, .1); 
+    border-radius: 6px; 
+    background-clip: padding-box; 
+    margin-bottom:12px;
+    background-color: white;
+    padding: 12px 0 9px 13px; 
+    overflow: hidden;
+    h1 { font-size: 30px; line-height: 28px; }
+    h2 { font-size: 18px; }
+    #launch_button { float: right; margin-right: 20px; }
+    
+    .home img { float: left; height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
+    .carousel {
+      .inner { position:relative; top:6px; margin-left:12px; float:left; width:672px; overflow: hidden; }   
+      .inner ul { position:relative; left:-224px; list-style-type: none; margin: 0px;  padding: 0px;  width:9999px; padding-bottom:10px; }   
+      .inner ul li { float: left; width:200px; padding:0px; height:80px; background: #000000; margin:6px 12px 10px 12px; }  
+      .left_scroll, .right_scroll { float:left; height:80px;  width:15px; }  
+      .left_scroll img, .right_scroll img { max-width:none; margin-top: 28px; width:25px; border:0; cursor: pointer; cursor: hand; }
+      .right_scroll img { margin-left:6px; }
+    }
+  }
+  
+  .box_header {background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: normal; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
+  .box_header a, .box_header button{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+  .newsfeed>.box_header{padding:6px 12px;}
+  .box_header>div>.btn{text-transform:none;}
+}
+
+#carousel_container { background-color: whitesmoke; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
+#carousel_inner { margin-left:23px; float:left; /* important for inline positioning */ width:864px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */position:relative; }   
+#carousel_ul { position:relative; left:-216px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
+#carousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:10px 8px; }  
+#left_scroll, #right_scroll{ float:left; height:80px;  width:15px; }  
+#left_scroll img, #right_scroll img{ max-width:none; margin: 28px 0 0 10px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
+#left_scroll img {margin-left:10px;}
+#right_scroll img{margin-left:1px;}

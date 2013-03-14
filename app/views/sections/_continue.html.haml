@@ -2,15 +2,21 @@
   = render "modals/report_issue"
   %div.quizspace
     :javascript
-      var continue_countdown = true;
-      var count_down_bar_width = 100;
+      continue_countdown = true;
+      count_down_bar_width = 100;
+      $(document).ready(function(){
+        $count_down_bar = $(".pointbarfiller");
+        $count_down_points = $count_down_bar.parent().find("div.pointbartext");
+      });
       
-      $count_down_bar = $(".pointbarfiller");
-      $count_down_points = $count_down_bar.parent().find("div.pointbartext");
-      setTimeout(function(){
-        setTimeout(count_down_bar, 300);
-        setTimeout(count_down_points, 300); 
-      }, 1000);
+      function start_countdown(){
+        setTimeout(function(){
+          setTimeout(count_down_bar, 300);
+          setTimeout(count_down_points, 300); 
+        }, 1000);
+      }
+      
+      #{"$(document).ready(start_countdown);" if params[:action] == "continue" }
       
       $(".answer_content").click(function(){
         continue_countdown = false;
@@ -45,7 +51,7 @@
         %span <strong>#{@path.name}:</strong> #{@section.name}</span>
         %div#idprogressbar
     %div{ style: "text-align:center;" }
-      = render "stored_resource", { :stored_resource => @stored_resource }
+      = render "sections/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
       %div.questionspace
         %pre.CRquestion= @task.question
@@ -85,4 +91,5 @@
       %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
         - if @task.resource
           %p= @task.resource
-    %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question
+    - if current_user
+      %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question
