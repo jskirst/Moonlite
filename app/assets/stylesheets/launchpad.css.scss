@@ -17,14 +17,21 @@
     .radio { padding-left:35px; height:100%; }
     .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
     textarea { width: 100%; }
-    .form-horizontal { margin: 0; }
-    .form-horizontal label { display:inline-block; }
-    .form-horizontal input { margin: 5px 0 3px 0; margin-left:22px;}
+    form { padding:0 0 0 10px; margin-top: -10px; }
+    form.form-horizontal { margin: 0; }
+    form.form-horizontal label { display:inline-block; }
+    form.form-horizontal input { margin: 5px 0 3px 0; margin-left:22px;}
     fieldset { display: inline-block; margin-right:15px; width:58.1%; }
     legend { margin-bottom: 10px; }
     a.next { margin-top: 5px; float: right; }
-    code.question { max-height: 60px; overflow-y: auto; }
-    
+    .step2 {
+      h4 { margin-top: 12px; font-size: 14px; }
+      code.question { max-height: 60px; overflow-y: auto; }
+      .correct_answer { font-weight: bold; font-size: 14px; }
+    }
+    .step3 {
+      h4 { margin-top:12px; font-size:16px; }
+    }
     .tips {
       display:inline-block; 
       margin-left:20px; 
