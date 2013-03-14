@@ -35,7 +35,7 @@
           - else
             %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
       
-      %div#questions_tab.tab_content{ style: "" }
+      %div#questions_tab.tab_content
         - if @enrollment.contribution_unlocked?
           = render "tasks/new_creative_response", section: @current_section
         %div.task_view
@@ -162,7 +162,7 @@
       });
       
       $editor.find(".step3 a.finish").click(function(){
-        $("#headlines").hide();
+        $(".headlines").hide();
         $(".launchpadcontent").show();
         $editor.find(".step3").hide();
         $editor.find(".step1").find("input[type=text],textarea").val("");
