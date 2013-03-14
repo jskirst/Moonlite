@@ -11,7 +11,7 @@
         %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
         %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
           %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-    - @achievements = { level: 10, rank: false, contribution: true }
+          
     - if @achievements[:level] or @achievements[:rank]
       = render "modals/headlines/achievements"
     - if @achievements[:contribution]
