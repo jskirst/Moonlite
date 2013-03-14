@@ -1,0 +1,87 @@
+.launchpad { 
+  width:880px; 
+  min-height:545px; 
+  margin: 0px auto; 
+  border: 10px solid rgba(43, 43, 43, 0.69); 
+  text-align: left; 
+  border-radius: 10px; 
+  box-shadow: 0 0 50px 20px rgba(0, 0, 0, .05); 
+  padding: 11px 11px 0 11px; 
+  background-color: #F9F9F9;
+  
+  h1 { font: bold 23px 'Muli', sans-serif; margin:0px; width:868px; padding:0px; }
+  h1>img { border-radius:4px; height:36px; width:36px; }
+  h1>div { position:relative; bottom:8px; display:inline;}
+  
+  .editor_view .radio { padding-left:35px; height:100%; }
+  .editor_view .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
+  #arena_tab .step1 label { display:inline-block; }
+  #arena_tab .step1 input { position:relative; top:2px; }
+
+  .launchpadcontent { 
+    margin-left: 10px; 
+    margin-top:10px; 
+    border-collapse:collapse;
+    
+    .launchpadcolumnheader { 
+      font-weight:bold; text-align: left; margin-bottom:10px;
+      
+      button { position:relative; top:5px; float:right;}
+      ul.nav-tabs li { font-size: 14px; }
+      ul.nav-tabs li a { border-bottom-color: transparent; cursor: pointer; }
+    }
+    
+    .launchpadsectioncolumn {
+      background-color: #F9F9F9;
+      display: inline-block; 
+      border-radius:6px; 
+      border: 1px solid rgba(0, 0, 0, .1); 
+      padding: 10px 5px 0 7px; 
+      width: 185px; 
+      vertical-align: top;
+      overflow: auto; 
+      height:460px;
+      
+      h3 { font-size: 16px; margin: 0 0 10px 0; font-weight: bold; line-height: 30px; }
+      ul { margin: 0; }
+      li { 
+        border-bottom: 1px solid #EEE; 
+        margin: 4px 0px; 
+        list-style: none; 
+        line-height: 28px;
+        
+        .pointsandprogress { display:inline-block; font-size:10px; font-style:italic; float:right; text-align:right; margin-top:-6px; width:24%;}
+        .pointsandprogress div { margin-bottom:-16px;}
+      }
+      a { font-size:14px; }
+    }
+    
+    .sectioninfocontainer { 
+      background-color:white; border-radius:6px; border: 1px solid rgba(0, 0, 0, .1);  display:inline-block; width:635px; height:460px; margin: 0 0 0 10px;  padding:10px;  overflow:auto;
+      .tab_content table td { padding: 0px 10px 0px 10px; height: 40px; border: 0px; border-bottom: 1px solid #DDD; font-size:14px; }
+      .tab_content table td p { margin-bottom: 0px; }
+      .tabs > li > a:hover {cursor:pointer; }
+
+      .tip { background-color: rgb(253, 240, 213);border-radius: 6px;margin-right: 12px;padding:3px 8px; margin-bottom:12px; }
+      .tip img { width:15px; position:relative; bottom:2px; }
+      .tip p { font-size: 14px; line-height: 18px; display:inline; }      
+      
+      .cr_create_tt .tooltip { top:172px !important; left:38px !important; }
+      .arena_create_tt .tooltip { top:152px !important; left:39.5px !important; }
+      .task_create_tt .tooltip { top:132px !important; right:-22px !important; left:72px !important; }
+      
+      .launchpadCRcolumn { 
+        width: 100%; 
+        display:inline-block; 
+        vertical-align: top; 
+        overflow:auto;
+        
+        table { width: 100%; }
+        td.question_status { text-align: right; }
+        pre { padding: 0; margin:0; word-break: normal; background-color: inherit; border: none; }
+        img { display:inline; position:relative; height:17px; }
+        .points { font-weight:bold; font-size:11px; white-space:nowrap; position:relative; top:2px; }
+      }
+    }
+  }
+}

@@ -1,99 +1,43 @@
-- if current_user && @current_section
-  %div#launchpad.dropdown_modal.modal.hide.fade{ style: "top: 5%; margin: 0; width: 0px; background-color: transparent;", tabindex: "-1"}
-    %div.launchpad{ style: "height: 545px; width: 900px; margin-left: -470px;" }
-      %div.modal_close
-        = image_tag ICON_CLOSE_URL, alt:"Close"
-      %h1
-        = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}"
-        %div{style:"position:relative; bottom:10px; "}
-          %span #{@path.name}
-        %div{style:"float:right; position:relative; top:3px; width: 205px; height; 42px; overflow-y: hidden; margin-right:12px; "}
-          %span{style:"font-size:21px;"} Level #{@enrollment.level}
-          %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
-          %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
-            %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-              
-      - if true
-        %div#launchpad_headlines{ style: "width: 73.9%; margin-right:auto; margin-left:auto;" }
-          %div{ style: "box-shadow: 0 6px 14px rgba(0, 0, 0, .1); padding: 0 0 0 10px; border-radius: 6px; background-color:white; border: 1px solid rgba(0,0,0,.1); margin-top:8px;"}
-            = image_tag STONEY_SMALL_URL, style: "display: inline-block; vertical-align: middle; position:relative; bottom:12px; right:12px;", alt: "Stoney"
-            %div{ style: "display:inline-block; top:15px; right:10px; position:relative; " }
-              %span{ style:"font-size: 52px;" } New power unlocked!              
-              %h3{ style: "font-size: 25px; line-height: 32px; position: relative; top: 9px;" } You can now create questions...
-            %div{ style: "position:relative; bottom:22px; border:1px solid black; height:300px;" }
-              %fieldset{style: "display: inline-block; margin-right:15px; width:58.1%; "}
-              %div{style: "display:inline-block; margin-left:20px; vertical-align:top; width:199px; border-left: 1px solid #E7E7E7; position:relative; top:48px; padding-left:10px"}
-                %h4 
-                  %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
-                  Tips:
-                %ul{style:"font-size:13px;"}
-                  %li Questions should cover the core knowledge area of the section they're placed.
-                  %li Keep the tone informal but direct.
-                  %li Make sure you check for spelling and grammar.
-                  %li 
-                    You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published question.
-              %a.next.button.button-actionable{ href: "#", style:"float:right; margin-right:10px;"} Next
-            %div{ style: "float: right; margin-top: 10px;" }
-              %a{ style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
-      - if false#@achievements
-        - new_level = @achievements[0]
-        - new_rank = @achievements[1]
-        %div#launchpad_headlines{ style: "width: 73.9%; height: 90%; margin-right:auto; margin-left:auto;" }
-          %div{ style: "box-shadow: 0 6px 14px rgba(0, 0, 0, .1); padding: 0 0 8px 10px; border-radius: 6px; background-color:white; border: 1px solid rgba(0,0,0,.1); margin-top:55px;"}
-            = image_tag STONEY_SMALL_URL, style: "display: inline-block; vertical-align: middle", alt: "Stoney"
-            %div{ style: "display:inline-block; top:30px; position:relative; min-height: 115px;" }
-              %span{ style:"font-size: 64px;" } Congratulations!              
-              %h3{ style: "font-size: 25px; line-height: 32px; position: relative; top: 9px;" }
-                - if new_level && new_rank
-                  You just leveled up and reached the Top #{new_rank}!
-                  - sharing_text = "Just leveled up and made it into the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!" 
-                - elsif new_level
-                  You've jumped to Level #{new_level}!
-                  - sharing_text = "Just made it to level #{new_level} in the #{@path.name} Challenge on @MetaBright!"
-                - elsif new_rank
-                  You just reached the Top #{new_rank}!
-                  - sharing_text = "Just broke the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
-                
-            %div{ style: "text-align: middle; margin: 0 0 15px 27px;" }
-              %p{ style: "font-size: 17px;" } You deserve a round of applause. In fact, you deserve a standing ovation. Share this achievement and brag to your friends.
-              %div{ style: "margin-top: 15px;" }
-                %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
-                %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
-                %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter
-            
-            %div{ style: "float: right; margin-top: 30px;" }
-              %a{ style: "font-size: 15px;", onclick: "$('#launchpad_headlines').fadeOut(300, function(){ $('.launchpadcontent').show(); });" } Continue to Launchpad »
-      
-      %div.launchpadcontent{ style: ("display: none;" if @achievements) }
-        %div.launchpadsectioncolumn
-          %div.launchpadcolumnheader
-            Sections
-          %ul.sectionlist
-            - @path.sections.all(order: "id ASC").each do |s|
-              %li.launchpad_link{ title:"#{s.name}"}
-                - if s.points_until_unlock(@enrollment) <= 0
-                  %div{ style: "display:inline-block; width:73%; line-height:16px;" }
-                    = link_to launchpad_section_path(s), remote: true do
-                      %span.pointer_caret= "»" if s == @current_section
-                      %span= truncate(s.name, length: 40)
-                  %div.pointsandprogress
-                    %div #{s.points_earned(current_user)} pts
-                    %div #{s.percentage_complete(current_user)}%
-                - elsif s.points_to_unlock == 9999
-                  %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
-                  %p{ style: "font-size: 9px; line-height: 12px;" } Coming soon!
-                - else
-                  %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
-                  %p{ style: "font-size: 9px; line-height: 12px;" } #{s.points_until_unlock(@enrollment)} more points to unlock
-        = render "sections/launchpad"
-  
+%div#launchpad.dropdown_modal.modal.hide.fade{ style: "top: 5%; margin: 0; width: 0px; background-color: transparent;", tabindex: "-1"}
+  %div.launchpad{ style: "height: 545px; width: 900px; margin-left: -470px;" }
+    %div.modal_close
+      = image_tag ICON_CLOSE_URL, alt:"Close"
+    %h1
+      = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}"
+      %div{style:"position:relative; bottom:10px; "}
+        %span #{@path.name}
+      %div{style:"float:right; position:relative; top:3px; width: 205px; height; 42px; overflow-y: hidden; margin-right:12px; "}
+        %span{style:"font-size:21px;"} Level #{@enrollment.level}
+        %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
+        %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
+          %div.bar{style:"width: #{@enrollment.level_percent}%;" }
+    / Hear lies achievements
+    %div.launchpadcontent{ style: ("display: none;" if @achievements) }
+      %div.launchpadsectioncolumn
+        %h3 Sections
+        %ul
+          - @path.sections.all(order: "id ASC").each do |s|
+            %li.launchpad_link{ title:"#{s.name}"}
+              - if s.points_until_unlock(@enrollment) <= 0
+                %div{ style: "display:inline-block; width:73%; line-height:16px;" }
+                  = link_to launchpad_section_path(s), remote: true do
+                    %span.pointer_caret= "»" if s == @current_section
+                    %span= truncate(s.name, length: 40)
+                %div.pointsandprogress
+                  %div #{s.points_earned(current_user)} pts
+                  %div #{s.percentage_complete(current_user)}%
+              - else
+                %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
+                %p{ style: "font-size: 9px; line-height: 12px;" } #{s.points_until_unlock(@enrollment)} more points to unlock
+      = render "sections/launchpad"
+
   :javascript
     $(function(){
       $("#topboxcontent .button-actionable").click(function(){
         $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
       });
     });
-    
+
     $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
       if(data.status){
         log("Cannot access this content.");
@@ -103,9 +47,9 @@
         $(this).find("a").prepend("<span class='pointer_caret'>» </span>");
       }
     });
-  
-  - if @display_launchpad
-    :javascript
-      $(function(){ 
-        $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
-      });
+
+- if @display_launchpad
+  :javascript
+    $(function(){ 
+      $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
+    });

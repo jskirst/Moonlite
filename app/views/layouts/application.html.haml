@@ -4,7 +4,8 @@
     = render "layouts/head"
   %body
     - if current_user
-      = render "modals/launchpad"
+      - if @path && @current_section
+        = render "modals/launchpad"
       = render "modals/explore"
     - else
       = render "modals/login"
@@ -14,6 +15,7 @@
       - flash.each do |key, value|
         = content_tag(:div, value, class: "alert alert-#{key}")
       = yield
+      
     :javascript
       var iph_off = #{!params[:iph].nil?};
       var viewed_help = #{get_viewed_help.to_json};
