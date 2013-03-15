@@ -1,8 +1,14 @@
 $.MB ||= {}
+$.MB.Arena ||= {}
 
-$.MB.init_arena = ->
-  $.log("starting countdown")
-  
+$.MB.Arena.init = ->
+  $.log("Init arena")
+  if $.MB.Arena.initialized == true
+    $.log("Arena already initialized")
+    return false
+  else
+    $.MB.Arena.initialized = true
+    
   count_down_points = ->
     if $.points_remaining > 0 and $.continue_countdown == true
       $.points_remaining = $.points_remaining - 1
@@ -32,6 +38,7 @@ $.MB.init_arena = ->
     $(this).find("input").attr("checked", "checked")
     $("#challenge_form").submit()
     $(".answer_content").unbind()
+    $.MB.Arena.initialized = false
   
   $("#challenge_form").on "ajax:success", (xhr, data) ->
     $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")

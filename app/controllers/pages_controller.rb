@@ -61,6 +61,7 @@ class PagesController < ApplicationController
   end
   
   def intro
+    current_user.brand_new = true
     @hide_background = true
     @show_nav_bar = false
     @show_footer = false

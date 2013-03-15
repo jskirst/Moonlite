@@ -214,6 +214,7 @@ class SectionsController < ApplicationController
     if @task
       @question_count += 1
       if @enrollment.total_points == 0 && current_user.enrollments.size == 1 && params[:intro] != "complete"
+        current_user.brand_new = true
         render "intro"
       else
         @streak = session[:ssf].to_i

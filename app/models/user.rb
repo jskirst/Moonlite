@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     :locked_at,
     :last_email_sent_at, 
     :emails_today
-  attr_accessor :password, :password_confirmation
+  attr_accessor :password, :password_confirmation, :brand_new
   attr_accessible :name,
     :email, 
     :image_url,
@@ -79,12 +79,15 @@ class User < ActiveRecord::Base
   end
   
   after_create do
+    self.brand_new = true
     NotificationSettings.create!(user_id: self.id)
   end
   
   def to_s() self.name end
     
   def locked?() locked_at.nil? ? false : true end
+  
+  def brand_new?() brand_new == true end
   
   def self.find_with_omniauth(auth)
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])

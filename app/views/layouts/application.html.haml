@@ -2,6 +2,32 @@
 %html
   %head
     = render "layouts/head"
+    - if current_user.try(:brand_new?)
+      :javascript
+        var fb_param = {};
+        fb_param.pixel_id = '6007496132600';
+        fb_param.value = '0.00';
+        (function(){
+          var fpw = document.createElement('script');
+          fpw.async = true;
+          fpw.src = '//connect.facebook.net/en_US/fp.js';
+          var ref = document.getElementsByTagName('script')[0];
+          ref.parentNode.insertBefore(fpw, ref);
+        })();
+      <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/offsite_event.php?id=6007496132600&amp;value=0" /></noscript>
+
+      <script type="text/javascript">
+      /* <![CDATA[ */
+      var google_conversion_id = 1005446889;
+      var google_conversion_language = "en";
+      var google_conversion_format = "3";
+      var google_conversion_color = "ffffff";
+      var google_conversion_label = "akOkCOfWvwQQ6c233wM";
+      var google_conversion_value = 0;
+      /* ]]> */
+      </script>
+      <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+      <noscript><div style="display:inline;"><img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1005446889/?value=0&amp;label=akOkCOfWvwQQ6c233wM&amp;guid=ON&amp;script=0"/></div></noscript>
   %body
     - if current_user
       - if @path && @current_section
