@@ -5,7 +5,7 @@
     %div#carousel_container
       - if @enrollments.size > 1
         %div#left_scroll
-          %a{href: "javascript:slide(\"left\");"}
+          %a{href: "javascript:home_slide(\"left\");"}
             %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
       %div#carousel_inner
         %ul#carousel_ul
@@ -18,7 +18,7 @@
             = render "shared/mosaic", { link: edit_user_path(current_user), title: "Whoooo are you?", subtitle: "Tell your story to the world!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/complete_profile_pic_carousel_altered.png" }
       - if @enrollments.size > 1
         %div#right_scroll
-          %a{href: "javascript:slide(\"right\");"}
+          %a{href: "javascript:home_slide(\"right\");"}
             %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png", alt: "Right"}/
       %input#hidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
   

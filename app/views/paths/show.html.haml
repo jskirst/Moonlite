@@ -1,14 +1,14 @@
 #challenge
   - unless current_user
     #new_user.help_box
-      .help_close
+      .help_close{ onclick: "$(this).parent().slideUp();" }
         = image_tag ICON_CLOSE_URL, alt: "Close"
       .header
         = image_tag STONEY_SMALL_URL, alt: "Stoney" 
         %h1 Looks like you're new here...
       .body
         %h4 MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem to get started.
-        %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); start_countdown();" } Take Practice Problem
+        %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); $.MB.init_arena();" } Take Practice Problem
         
         - @enrollment = @path.enrollments.new
         - @section = @path.sections.first
@@ -16,13 +16,14 @@
         - @answers = @task.answers
         - @question_count = 0
         - @streak = 0
-        = render "sections/continue"
+        = render file: "sections/continue"
   
   .top
     = link_to challenge_path(@path.permalink), class: "home" do
       = image_tag @path.path_pic, alt: "#{@path.name}"
     - if current_user
-      %a#launch_button.button.button-actionable Continue Level #{@enrollment.level} »
+      %a#launch_button.button.button-actionable{ onclick: "$('#launchpad').removeClass('hide').modal({ keyboard: true, backdrop: 'static', show: true });" } 
+        Continue Level #{@enrollment.level} »
     %h1= @path.name
     %h2
       - if current_user
@@ -31,7 +32,7 @@
         %a.login_link Login or register to join this Challenge!
     .carousel
       - if @enrollments.size > 4
-        .left_scroll{ onclick: "challengeslide('left');" }
+        .left_scroll{ onclick: "slide('left');" }
           = image_tag ICON_CAROUSEL_LEFT, alt: "Left"
       .inner{ style: "#{@enrollments.size < 4 ? 'margin-left: -12px;' : ''}" }
         %ul
@@ -40,7 +41,7 @@
           - @enrollments.shuffle.each do |e|
             = render "shared/mosaic", { pic: e.user.picture, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
       - if @enrollments.size > 4
-        .right_scroll{ onclick: "challengeslide('right');" }
+        .right_scroll{ onclick: "slide('right');" }
           = image_tag ICON_CAROUSEL_RIGHT, alt: "Right"
   
   %div.row

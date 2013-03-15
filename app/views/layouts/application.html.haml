@@ -17,6 +17,7 @@
       = yield
       
     :javascript
+      $.MB.env = '#{Rails.env}';
       var iph_off = #{!params[:iph].nil?};
       var viewed_help = #{get_viewed_help.to_json};
       var all_help = #{get_all_help.to_json};
@@ -87,10 +88,10 @@
         try { 
           clearInterval(ping_interval); 
         } catch(err) {
-          log("No interval to clear");
+          $.log("No interval to clear");
         }
         $(".fadein").fadeIn(1000);
-        ping_interval = setInterval(function(){ log(visit_url); ping(visit_url) }, 10000);
+        ping_interval = setInterval(function(){ $.log(visit_url); ping(visit_url) }, 10000);
       });
     
     - if Rails.env == "production"
@@ -105,11 +106,6 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
         
-        function log(){ return true; }
-        
-    - else
-      :javascript
-        function log(str){ console.log(str); }
       
     - if show_footer
       = render "layouts/footer"

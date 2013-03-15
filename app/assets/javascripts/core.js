@@ -127,6 +127,6 @@ function show_loading_icon(){
     $("#page_loading").show();
     setTimeout("$('#page_loading').hide();", 6000);
   } else {
-    log("reset load;");
+    $.log("reset load;");
   }
 }

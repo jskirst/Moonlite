@@ -10,27 +10,6 @@ function set_answer_status(previously_correct){
   }
 }
 
-function start_question_timer(){
-  if(typeof $("#countdown_timer").data("running") == 'undefined' || $(this).data("running") == false) {
-    $("#countdown_timer").data("running", true);
-    clearInterval(streak_countdown);
-    var count = 30;
-    streak_countdown = setInterval(function(){
-      if(count >= 10){
-        $(".timer").html("00:"+count);
-      } else {
-        $(".timer").html("00:0"+count);
-      }
-      if(count<=0){
-        $(".timer").removeClass("timer").addClass("expired-timer");
-        $(".streak").animate({opacity: 0.25}, 250);
-        $("#listless").val(false);
-        clearInterval(streak_countdown);
-      } count --;
-    }, 1000);
-  }
-}
-
 function get_youtube_id_from_link(youtube_link){
   if(!youtube_link){ return false }
   if(youtube_link.indexOf("youtu.be")>=0){
@@ -60,25 +39,4 @@ function set_large_youtube_preview(youtube_link, preview_id){
   var params = { allowScriptAccess: "always", wmode: "transparent" }
   var attr = { id: preview_id };
   swfobject.embedSWF("http://www.youtube.com/v/"+youtube_id+"?enablejsapi=1&playerapiid=ytplayer&version=3", preview_id, "544", "320", "8", null, null, params, attr);
-}
-
-function count_down_points(){
-  var points = $count_down_points.text().replace(" points", "");
-  points = parseInt(points);
-  if(points > 0){
-    points = points - 1;
-    $count_down_points.text(points + " points");
-    $("#points_remaining").val(points);
-    if(continue_countdown == true){
-      setTimeout(count_down_points, 300);
-    }
-  }
-}
-
-function count_down_bar(){
-  if(continue_countdown == true){
-    count_down_bar_width = count_down_bar_width - .1
-    $count_down_bar.css("width", count_down_bar_width+"%")
-    setTimeout(count_down_bar, 30);
-  }
 }

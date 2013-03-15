@@ -1,49 +1,12 @@
-%div.quizcontainer{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
+%div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'}" }
   = render "modals/report_issue"
   %div.quizspace
-    :javascript
-      continue_countdown = true;
-      count_down_bar_width = 100;
-      $(document).ready(function(){
-        $count_down_bar = $(".pointbarfiller");
-        $count_down_points = $count_down_bar.parent().find("div.pointbartext");
-      });
-      
-      function start_countdown(){
-        setTimeout(function(){
-          setTimeout(count_down_bar, 300);
-          setTimeout(count_down_points, 300); 
-        }, 1000);
-      }
-      
-      #{"$(document).ready(start_countdown);" if params[:action] == "continue" }
-      
-      $(".answer_content").click(function(){
-        continue_countdown = false;
-        $(this).find("input").attr("checked", "checked");
-        $("#challenge_form").submit();
-      });
-      
-      $("#challenge_form").on("ajax:success", function(xhr, data){
-        $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white");
-        if(data.correct_answer != data.supplied_answer){
-          $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white");
-        }$("#nextbutton").show();
-      });
-      
-      $("#nextbutton").click(function(){
-        $(this).addClass("disabled").attr("disabled", "disabled");
-      });
-    
-      $("#nextbutton").on("ajax:success", function(xhr, data){
-        $(".quizcontainer").fadeOut('slow', function(){
-          if(data.status == "reload"){
-            window.location.reload(true);
-          } else {
-            $(this).replaceWith(data).fadeIn();
-          }
+    - if params[:action] == "continue"
+      :javascript
+        $(function(){
+          $.MB.init_arena();
+          $(".quizcontainer").fadeIn();
         });
-      });
      
     %div.quizheader
       = image_tag @path.path_pic, style: "width: 50px; height: 50px;", alt: "#{@path.name}"
@@ -66,10 +29,13 @@
           = hidden_field_tag :streak, @streak
           %ol{ style: "list-style-position: inside; margin-left: 0px;" }
             - @answers.each do |a|
-              %li.answer_content{ id: "answer_#{a.id}", onclick: "$(this).css('background-color', '#C6C6DA');" }
+              %li.answer_content{ id: "answer_#{a.id}" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
-        = link_to "Next", continue_section_path(@section.id, @question_count), id: "nextbutton", style: "display: none; float: right;", remote: true, class: "button button-actionable", method: "post" 
+        - if current_user
+          = link_to "Next", start_section_path(@section.id), id: "nextbutton", class: "hide button button-actionable", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
+        - else
+          %a#nextbutton.login_link.button.button-actionable.hide Continue
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.pointsandstreakspace
         %div.pointspace.counterbox
