@@ -10,8 +10,6 @@
     padding-right:15px;
     position: relative;
     
-    span { font-size:18px; padding:10px 0; }
-    
     .help_close { position:relative; left:10px; }
     .header { margin-top:-6px; }
     .header h1 { display:inline; position:relative; top:12px; font-size: 30px; }
@@ -33,10 +31,10 @@
     background-color: white;
     padding: 12px 0 9px 13px; 
     overflow: hidden;
+    
     h1 { font-size: 30px; line-height: 28px; }
     h2 { font-size: 18px; }
     #launch_button { float: right; margin-right: 20px; }
-    
     .home img { float: left; height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
     .carousel {
       .inner { position:relative; top:6px; margin-left:12px; float:left; width:672px; overflow: hidden; }   
