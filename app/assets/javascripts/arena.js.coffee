@@ -27,7 +27,7 @@ $.MB.init_arena = ->
   $("#challenge_form").unbind();
   
   $(".answer_content").on "click", ->
-    $(this).css('background-color', '#C6C6DA');
+    $(this).css('background-color', '#C6C6DA')
     $.continue_countdown = false
     $(this).find("input").attr("checked", "checked")
     $("#challenge_form").submit()
@@ -40,6 +40,6 @@ $.MB.init_arena = ->
     $("#nextbutton").show()
   
   setTimeout ->
-    setTimeout(count_down_bar, 300);
-    setTimeout(count_down_points, 300); 
+    setTimeout(count_down_bar, 300)
+    setTimeout(count_down_points, 300)
   ,1000
