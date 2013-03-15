@@ -164,14 +164,6 @@ code.content { color: #404040; display: block; padding: 10px; font-size: 13px; l
 .active_accordion .expand_contract{background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/minus.png); height:3px; }
 
 /* Profile and challenge page carousels/Revolution */
-#challengecarousel_container {margin-top:-18px; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
-#challengecarousel_inner { position:relative; top:6px; margin-left:12px; float:left; /* important for inline positioning */ width:672px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */}   
-#challengecarousel_ul { position:relative; left:-224px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
-#challengecarousel_ul li{ float: left; /* important for inline positioning of the list items */  width:200px;  /* fixed width, important */ padding:0px; height:80px; background: #000000; margin:6px 12px 10px 12px; }  
-#challengeleft_scroll, #challengeright_scroll{ float:left; height:80px;  width:15px; }  
-#challengeleft_scroll img, #challengeright_scroll img{ max-width:none; margin-top: 28px; width:25px; border:0; /* remove the default border of linked image */cursor: pointer; cursor: hand; }
-#challengeright_scroll img{margin-left:6px;}
-
 #carousel_container { background-color: whitesmoke; height:100px; border-bottom-left-radius:6px; border-bottom-right-radius:6px;}
 #carousel_inner { margin-left:23px; float:left; /* important for inline positioning */ width:864px; /* important (this width = width of list item(including margin) * items shown */ overflow: hidden;  /* important (hide the items outside the div) */position:relative; }   
 #carousel_ul { position:relative; left:-216px; /* important (this should be negative number of list items width(including margin) */  list-style-type: none; /* removing the default styling for unordered list items */ margin: 0px;  padding: 0px;  width:9999px; /* important */ padding-bottom:10px; }   
