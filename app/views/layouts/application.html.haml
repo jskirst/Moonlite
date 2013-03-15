@@ -22,7 +22,7 @@
       var all_help = #{get_all_help.to_json};
       var mark_read_url = '#{mark_read_url}';
       var mark_help_read_url = '#{mark_help_read_url}';
-      var visit_url = '#{visit_url(@visit.external_id)}';
+      var visit_url = '#{visit_url(@visit.external_id) if @visit}';
       
       $('.explore_link').click(function(){
         $("#explore_modal").modal({ keyboard: true, show: true, backdrop: true});
