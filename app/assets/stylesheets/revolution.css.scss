@@ -182,7 +182,7 @@ code.content { color: #404040; display: block; padding: 10px; font-size: 13px; l
 #right_scroll img{margin-left:1px;}
 
 /* Arena/Revolution */
-.counter {display:block;float:left;font-size:2em;line-height:1.2em; -webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255,255,255,0.3)));}
+.counter {display:block;float:left;font-size:2em;line-height:1.2em;}
 .counter span.digit {background:#161616;background: #3F3F3F; /* Old browsers */background: linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -o-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -moz-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -webkit-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -ms-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%); background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0A0A0A), color-stop(0.5, #2B2B2B), color-stop(1, #3F3F3F)); filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F'); /* IE6 & IE7 */-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F')"; /* IE8 */zoom:1; background-clip:border; color:#FFF;display:block;float:left; height:44px;overflow:hidden; padding:0; position:relative;text-align:center;width:30px;}
 .counter span.digit span {line-height:44px;position:relative;top:0;}
 .counter span.digit hr {border-color: transparent;-webkit-box-shadow: inset 0 2px 1px  rgba(0,0,0,0.5);-moz-box-shadow: inset 0 2px 1px  rgba(0,0,0,0.5);box-shadow: inset 0 2px 1px   rgba(0,0,0,0.5);  height: 3px; margin: -2px 0 0 0;  position: absolute;top: 50%; width: 100%;z-index: 1;}
@@ -244,13 +244,6 @@ code.content { color: #404040; display: block; padding: 10px; font-size: 13px; l
 .help_close { margin: 4px 0 0 0; }
 
 .login_link { cursor: pointer; }
-
-.counter {display:block;float:left;font-size:2em;line-height:1.2em; -webkit-box-reflect: below -15px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(60%, transparent), to(rgba(255,255,255,0.3)));}
-.counter span.digit {background:#161616;background: #3F3F3F; /* Old browsers */background: linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -o-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -moz-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -webkit-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%);background: -ms-linear-gradient(bottom, #0A0A0A 0%, #2B2B2B 50%, #3F3F3F 100%); background: -webkit-gradient(linear, left bottom, left top, color-stop(0, #0A0A0A), color-stop(0.5, #2B2B2B), color-stop(1, #3F3F3F)); filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F'); /* IE6 & IE7 */-ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#FF0A0A0A', endColorstr='#FF3F3F3F')"; /* IE8 */zoom:1; background-clip:border; color:#FFF;display:block;float:left; height:44px;overflow:hidden; padding:0; position:relative;text-align:center;width:30px;}
-.counter span.digit span {line-height:44px;position:relative;top:0;}
-.counter span.digit hr {border-color: transparent;-webkit-box-shadow: inset 0 2px 1px  rgba(0,0,0,0.5);-moz-box-shadow: inset 0 2px 1px  rgba(0,0,0,0.5);box-shadow: inset 0 2px 1px   rgba(0,0,0,0.5);  height: 3px; margin: -2px 0 0 0;  position: absolute;top: 50%; width: 100%;z-index: 1;}
-.counter span.separator {display:block;float:left; font-family:Georgia, serif; font-size:0.5em;position:relative; top:0.5em;}
-.counter span.separator hr {display:none;}
 
 body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'MuliRegular', sans-serif; line-height:18px; font-size:13px;}
 .quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 110px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
