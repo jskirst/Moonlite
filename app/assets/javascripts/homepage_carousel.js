@@ -52,7 +52,7 @@ function init_homepage_carousel(){
   }
 }
 
-function slide(where){  
+function home_slide(where){  
   //get the item width  
   var item_width = $('#carousel_ul li').outerWidth() + 16;
   /* using a if statement and the where variable check 

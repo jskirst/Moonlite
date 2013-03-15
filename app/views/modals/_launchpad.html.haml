@@ -1,4 +1,4 @@
-%div#launchpad.dropdown_modal.modal.hide.fade{ style: "top: 5%; margin: 0; width: 0px; background-color: transparent;", tabindex: "-1"}
+%div#launchpad.dropdown_modal.modal.hide{ style: "top: 5%; margin: 0; width: 0px; background-color: transparent;", tabindex: "-1"}
   %div.launchpad{ style: "height: 545px; width: 900px; margin-left: -470px;" }
     %div.modal_close
       = image_tag ICON_CLOSE_URL, alt:"Close"
@@ -39,9 +39,6 @@
 
   :javascript
     $(function(){
-      $("#topboxcontent .button-actionable").click(function(){
-        $('#launchpad').modal({ keyboard: true, backdrop: 'static', show: true });
-      });
       $(".headlines:first").removeClass("hide");
     });
 

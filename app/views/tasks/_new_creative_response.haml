@@ -51,7 +51,7 @@
           %span{style:" font-size:14px;"} Section: 
           %span{style:"font-weight:bold;font-size:14px;"} #{section.name}
         %h4{ style:"margin-bottom:5px;" } Ready to post?
-        %a.back.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
+        %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
         = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
     
     %div.step3.hide
@@ -60,5 +60,5 @@
       %h4{style:"margin-top:12px; font-size:16px;"} Your CR is now visible to the MetaBright community!
       %h4{style:"margin-top:12px; font-size:16px;"} You earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a CR!
       %h4{style:"margin-top:12px; font-size:16px; margin-bottom:12px;"} If you'd like, you can <a class="take">post a response</a> to your CR now. 
-      %a.restart.button.button-actionable{ href: "#", style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
-      %a.finish.button.button-standard{ href: "#", style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
+      %a.restart.button.button-actionable{ style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
+      %a.finish.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish

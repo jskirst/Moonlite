@@ -28,7 +28,7 @@
           - if current_user
             %li.navuser
               %div.dropdown.pull-right
-                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown"}
+                %a.dropdown-toggle{ "data-toggle" => "dropdown"}
                   = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
                   %span{ style: "vertical-align: middle;" }= current_user.name 
                   %span.caret
@@ -49,7 +49,7 @@
                               %div.bar{ style: "width: #{e.level_percent}%;"}
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
-                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
+                %a.dropdown-toggle{ "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
                   = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;", title: "Notifications", alt: "Notifications"
                   - if unread_notification_count > 0
                     %span.notifications_bubble= unread_notification_count
@@ -67,7 +67,7 @@
                             %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
-                %a.dropdown-toggle{ href: "#", "data-toggle" => "dropdown", style: "padding:10px;" }
+                %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:10px;" }
                   %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png", style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
                 %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-52px; min-width: 25px; min-height: 50px;" }
                   %li

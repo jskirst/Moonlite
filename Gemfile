@@ -16,7 +16,6 @@ gem 'faker'
 gem 'quiet_assets'
 gem 'nokogiri'
 gem 'turbolinks'
-gem 'jquery-turbolinks'
 
 group :assets do
   gem 'sass-rails'

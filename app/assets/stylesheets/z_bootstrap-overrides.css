@@ -59,3 +59,5 @@ a { cursor: pointer; }
 /* browser compatibility */
 a:active, a:focus{ outline: none; }
 h1, h2, h3, h4, h5 { margin-top: 0px; margin-bottom: 0px; }
+
+.button.hide { display: none; }

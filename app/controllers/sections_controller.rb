@@ -184,6 +184,7 @@ class SectionsController < ApplicationController
       completed_task = current_user.completed_tasks.find_by_task_id(task_id)
       raise "Already answered" if completed_task.status_id != Answer::INCOMPLETE
       raise "Out of time" if points > 0 and completed_task.created_at <= 45.seconds.ago
+      
       completed_task.enrollment_id = @enrollment.id
       completed_task.answer_id = supplied_answer.id
       if supplied_answer == correct_answer
@@ -197,7 +198,7 @@ class SectionsController < ApplicationController
         session[:ssf] = 0
       end
       completed_task.save!
-      Answer.increment_counter(:answer_count, answer_id)
+      Answer.increment_counter(:answer_count, supplied_answer.id)
     end
     render json: { correct_answer: correct_answer.id, supplied_answer: supplied_answer.id }
   end
@@ -210,8 +211,8 @@ class SectionsController < ApplicationController
     
     if @task
       @question_count += 1
-      if request.get? && @enrollment.total_points == 0 && current_user.enrollments.size == 1
-        @partial = "intro"
+      if @enrollment.total_points == 0 && current_user.enrollments.size == 1 && params[:intro] != "complete"
+        render "intro"
       else
         @streak = session[:ssf].to_i
         if @streak > @enrollment.longest_streak
@@ -224,23 +225,13 @@ class SectionsController < ApplicationController
         @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
         @answers = @task.answers.to_a.shuffle
         @stored_resource = @task.stored_resources.first
-        @partial = "continue"
-      end
-      
-      if request.get?
-        render "start" 
-      else
-        render partial: "continue"
+        render "continue"
       end
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
-      if request.get?
-        social_tags(@path.name, @path.picture, @path.description)
-        render "finish"
-      else
-        render json: { status: "reload" }
-      end
+      social_tags(@path.name, @path.picture, @path.description)
+      render "finish"
     end
     session[:ssf] = @streak
   end
