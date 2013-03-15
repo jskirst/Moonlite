@@ -1,6 +1,6 @@
 DEFAULT_PASSWORD = "a1b2c3"
 NUMBER_OF_USERS = 3
-NUMBER_OF_TASKS = 5
+NUMBER_OF_TASKS = 20
 TIME_PERIOD = 7
 AVG_SCORE = 9
 
@@ -91,13 +91,19 @@ namespace :db do
           section.published_at = now
           section.save!
           NUMBER_OF_TASKS.times do |n|
+            x = rand(100)
+            y = rand(100)
+            
+            z1 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
+            z2 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
+            z3 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
             section.tasks.create!(
-              question: "What is #{n} + #{n}?",
+              question: "What is #{x} + #{y}?",
               answer_content: [
-                { content: "#{2*n}", is_correct: true },
-                { content: "#{n-10}", is_correct: false },
-                { content: "#{n-10}", is_correct: false },
-                { content: "#{(4*n)+2}", is_correct: false }
+                { content: "#{x+y}", is_correct: true },
+                { content: "#{x+z1}", is_correct: false },
+                { content: "#{x+z2}", is_correct: false },
+                { content: "#{x+z3}", is_correct: false }
               ],
               points: 10,
               answer_type: 2,
