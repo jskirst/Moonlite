@@ -6,13 +6,13 @@
         .modal_close
           = image_tag ICON_CLOSE_URL, alt: "Close"
         %h1{ style: "margin-bottom: 0; line-height: 23px;" }
-          = image_tag STONEY_SMALL_URL, style: "height:45px;", alt:"Stoney"
+          = image_tag STONEY_SMALL_URL, style: "height:65px; margin:-16px -4px -10px -5px;", alt:"Stoney"
           %span{style: "font-size:26px;"} Welcome to MetaBright! 
       
       %hr{ style: "margin: 0;" }
       
       .explorebody{ style: "min-height: 235px; text-align: center;" }
-        %p{ style: "padding: 10px; font-size: 14px;" } We believe that everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
+        %p{ style: "padding: 10px; font-size: 15px;" } We believe that everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
         
         %div
           = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px;" do

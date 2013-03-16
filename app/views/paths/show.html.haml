@@ -7,7 +7,7 @@
         = image_tag STONEY_SMALL_URL, alt: "Stoney" 
         %h1 Looks like you're new here...
       .body
-        %h4 MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem to get started.
+        %h4 MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem.
         %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); $.MB.init_arena();" } Take Practice Problem
         
         - @enrollment = @path.enrollments.new
