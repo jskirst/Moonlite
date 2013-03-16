@@ -6,20 +6,21 @@
     border-radius: 6px;
     color: #333;
     margin-bottom: 12px;
-    padding-bottom:15px;
-    padding-right:15px;
+    padding: 2px 15px 5px 5px;
     position: relative;
     
     .help_close { position:relative; left:10px; }
     .header { margin-top:-6px; }
-    .header h1 { display:inline; position:relative; top:12px; font-size: 30px; }
+    .header h1 { display:inline; position:relative; top:12px; font-size: 40px; }
     .header img { display:inline; height:90px; }
     .body { 
       margin: 0 0 10px 10px;
       text-align: center;
       
       h4 { text-align: left; }
+      a { margin-top:14px; }
       .quizcontainer { display: none; margin-top: 20px; text-align: left; }
+      
     }
   }
   

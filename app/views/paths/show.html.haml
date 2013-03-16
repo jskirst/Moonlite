@@ -7,16 +7,19 @@
         = image_tag STONEY_SMALL_URL, alt: "Stoney" 
         %h1 Looks like you're new here...
       .body
-        %h4 MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem to get started.
-        %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); $.MB.Arena.init();" } Take Practice Problem
-        
         - @enrollment = @path.enrollments.new
-        - @section = @path.sections.first
-        - @task = @section.core_tasks.first
-        - @answers = @task.answers
-        - @question_count = 0
-        - @streak = 0
-        = render file: "sections/continue"
+        - @section = @path.sections.where(is_published: true).first
+        - if @section && @task = @section.core_tasks.first
+          - @answers = @task.answers
+          - @question_count = 0
+          - @streak = 0
+        
+        %h4 
+          MetaBright is the place to prove and showcase your skills. 
+          - if @task
+            Poke around for a bit and try a practice problem.
+            %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); $.MB.Arena.init();" } Take Practice Problem
+            = render file: "sections/continue"
   
   .top
     = link_to challenge_path(@path.permalink), class: "home" do

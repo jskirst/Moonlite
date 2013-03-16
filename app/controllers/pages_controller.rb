@@ -56,7 +56,7 @@ class PagesController < ApplicationController
       	.limit(100)
       	.to_a.shuffle
       	.first(8)
-      social_tags("#{@user.name}'s Profile on Metabright", @user.picture, "#{@user.name} is a lvl. #{@current_user_persona.level} #{@current_user_persona.persona.name} on MetaBright.com")
+      social_tags("#{@user.name}'s Profile on Metabright", @user.picture, "#{@user.name} is a lvl. #{@current_user_persona.level} #{@current_user_persona.persona.name} on MetaBright.")
     end
   end
   
