@@ -1,8 +1,8 @@
-.headlines.hide
+.headlines.hide{ style: " min-height: auto; width:66%;"}
   .header
-    = image_tag STONEY_SMALL_URL, style: "display: inline-block; vertical-align: middle", alt: "Stoney"
-    %h1 Congratulations!              
-    %h2{ style: "width: 80%" }
+    = image_tag STONEY_SMALL_URL, style: "display: inline-block; height:auto;", alt: "Stoney"
+    %h1{ style: "font-size: 59px; padding-top: 8px;"} Congratulations!              
+    %h2{ style: "font-size: 25px;"  }
       - new_level = @achievements[:level]
       - new_rank = @achievements[:rank]
       - if new_level && new_rank
@@ -18,12 +18,12 @@
         - subtext = "You're now ranked #{@enrollment.rank.ordinalize} in the #{@path.name} Challenge!"
         - sharing_text = "Just broke the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
       
-  .body{ style: "text-align: middle; margin: 20px 0 17px 27px;" }
-    %p{ style: "font-size: 17px; margin-bottom: 20px;" } #{subtext} Share this achievement and brag to your friends.
-    %div{ style: "margin-top: 15px;" }
+  .body{ style: "margin: 30px 0 8px 0;" }
+    %p{ style: "font-size: 17px; margin: 0 0 20px 15px;" } #{subtext} Share this achievement and brag to your friends.
+    %div{ style: "text-align: center; "}
       %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
       %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
       %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter
   
-  .exit{ style: "float: right; margin-top: 30px;" }
+  .exit{ style: "float: right; margin-top: 24px;" }
     %a{ onclick: "$(this).parents('.headlines').fadeOut(300, function(){ $(this).remove(); if($('.headlines').size() > 0){ $('.headlines:first').show() } else { $('.launchpadcontent').show(); } });" } Continue to Launchpad »
