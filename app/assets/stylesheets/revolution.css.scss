@@ -294,20 +294,6 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weight: lighter; }
 .button.disabled { opacity: 0.70; box-shadow: 0px 0px 1px black; }
 
-/* Intro/Revolution */
-.intro_wrapper { overflow:hidden; width:695px; margin-left:auto; margin-right:auto; margin:100px auto 200px auto; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
-.intro { background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden;}
-.intro .header { padding: 7px 0 5px 9px; margin:0px; width:669px; background-color:#F9F9F9; }
-.intro .header h1 { font-size: 35px; color:#404040; display: inline-block; vertical-align: middle; }
-.intro .header h2 { font-size: 27px; color:#404040; display: inline-block; vertical-align: middle; }
-.intro .body { padding:12px; }
-.intro .body ul { list-style: none; margin:0 0 0 2px; }
-.intro .body ul li { line-height:17px; padding:0 0 10px 0; }
-.intro .body ul li img { display:inline; height:35px; margin-right:5px; position:relative; top:2px; opacity:.8; }
-.intro .body h3 { display: inline; font-weight:bold; font-size:18px; color:#404040; }
-.intro .body p { margin-left:45px; display:inline-block; font-size: 15px; }
-.intro .body button { float:right; margin: 0 12px 12px 12px; }
-
 /* Create and Administer/Revolution */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
 .pills a { line-height: 23px; cursor: pointer }
