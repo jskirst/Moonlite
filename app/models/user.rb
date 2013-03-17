@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     :locked_at,
     :last_email_sent_at, 
     :emails_today
-  attr_accessor :password, :password_confirmation, :brand_new
+  attr_accessor :password, :password_confirmation, :brand_new, :guest_user
   attr_accessible :name,
     :email, 
     :image_url,
@@ -28,7 +28,8 @@ class User < ActiveRecord::Base
     :education,
     :link,
     :location,
-    :viewed_help
+    :viewed_help,
+    :guest_user
 
   belongs_to  :company
   belongs_to  :user_role
@@ -64,7 +65,6 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, length: { within: 6..40 }, on: :create
   validates :password, confirmation: true, length: { within: 6..40 }, on: :update, if: Proc.new { self.password.present? }
   
-  before_validation :grant_username
   before_save do
     if self.password.present?
       self.salt = make_salt
@@ -74,7 +74,7 @@ class User < ActiveRecord::Base
   end
   
   before_create do
-    self.signup_token = random_alphanumeric
+    self.signup_token = SecureRandom::hex(16)
     self.login_at = Time.now
   end
   
@@ -88,11 +88,23 @@ class User < ActiveRecord::Base
   def locked?() locked_at.nil? ? false : true end
   
   def brand_new?() brand_new == true end
+  def guest_user?() guest_user == true end
   
   def self.find_with_omniauth(auth)
     user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
     return user_auth.user if user_auth
     return nil
+  end
+  
+  def self.create_with_nothing(email = nil)
+    user = Company.first.users.new
+    user.name = "user#{SecureRandom::hex(4)}"
+    user.email = email || "#{user.name}@metabright.com"
+    user.grant_username
+    user.password = SecureRandom::hex(16)
+    user.password_confirmation = user.password
+    user.save!
+    return user
   end
   
   def self.create_with_omniauth(auth)
@@ -137,10 +149,12 @@ class User < ActiveRecord::Base
     user = User.find_by_email(auth["info"]["email"])
     if user
       user.update_attributes(user_details)
+      user.grant_username
     else
       user = Company.first.users.new(user_details)
-      user.password = (1..15).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+      user.password = SecureRandom::hex(16)
       user.password_confirmation = user.password
+      user.grant_username
       user.save
     end
     
@@ -149,8 +163,10 @@ class User < ActiveRecord::Base
   end
   
   def merge_with_omniauth(auth)
-    user = User.find_by_email(auth["info"]["email"])
-    return false if user && user.id != self.id
+    unless guest_user?
+      user = User.find_by_email(auth["info"]["email"])
+      return false if user && user.id != self.id
+    end
     
     user_auth = user_auths.find_or_create_by_provider_and_uid(auth["provider"], auth["uid"])
     
@@ -247,19 +263,6 @@ class User < ActiveRecord::Base
   def level(path) enrollments.find_by_path_id(path).level end
   def points(path) enrollments.find_by_path_id(path).total_points end
   
-  def grant_username
-    if self.username.blank?
-      new_username = self.name.downcase.gsub(/[^a-z]/,'')
-      new_combined_username = new_username
-      username_count = User.where(username: new_combined_username).size
-      while User.where(username: new_combined_username).size > 0
-        username_count += 1
-        new_combined_username = "#{new_username}#{username_count}"
-      end
-      self.username = new_combined_username
-    end
-  end
-  
   def get_viewed_help
     return [] if self.viewed_help.blank?
     return self.viewed_help.split(",")
@@ -313,18 +316,31 @@ class User < ActiveRecord::Base
     votes.to_a.collect {|v| v.owner_id }
   end
   
-  private
-    def check_image_url() self.image_url = nil if self.image_url && self.image_url.length < 9 end
-    
-    def encrypt(string) secure_hash("#{salt}--#{string}") end
-    def make_salt() secure_hash("#{Time.now.utc}--#{password}") end
-    def secure_hash(string) Digest::SHA2.hexdigest(string) end
-    
-    def random_alphanumeric(size=15)
-      (1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
+  def grant_username
+    if username.blank?
+      self.username = generate_username
     end
-    
-    def log_transaction(obj, points)
-      user_transactions.create!(owner_id: obj.id, owner_type: obj.class.to_s, amount: points, status: 1)
+  end
+
+  def generate_username
+    new_username = name.downcase.gsub(/[^a-z0-9]/i,'')
+    new_combined_username = new_username
+    username_count = User.where(username: new_combined_username).size
+    while User.where(username: new_combined_username).size > 0
+      username_count += 1
+      new_combined_username = "#{new_username}#{username_count}"
     end
+    return new_combined_username
+  end
+  
+  private  
+  def check_image_url() self.image_url = nil if self.image_url && self.image_url.length < 9 end
+  
+  def encrypt(string) secure_hash("#{salt}--#{string}") end
+  def make_salt() secure_hash("#{Time.now.utc}--#{password}") end
+  def secure_hash(string) Digest::SHA2.hexdigest(string) end
+  
+  def log_transaction(obj, points)
+    user_transactions.create!(owner_id: obj.id, owner_type: obj.class.to_s, amount: points, status: 1)
+  end
 end

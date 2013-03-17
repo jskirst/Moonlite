@@ -32,8 +32,12 @@ PERSONAS = YAML.load(File.read(File.join(Rails.root, "/lib/tasks/personas.yml"))
 PATHS = [
   ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
   ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
-  ["Challenge ","Our solar system is a cool place.", "http://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Moons_of_solar_system_v7.jpg/1024px-Moons_of_solar_system_v7.jpg", 0],
-  ["Pelopponesian War","Brutal stuff.", "http://upload.wikimedia.org/wikipedia/commons/a/a9/Peloponnesian_war_alliances_431_BC.png", 0]
+  ["Heroku","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],
+  ["jQuery","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", 0],
+  ["HTML5","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", 0],
+  ["CSS","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", 0],
+  ["Ruby Without Rails","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", 0],
+  ["RubyGems","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", 0]
 ]
 
 PATH_SECTIONS = [
@@ -44,7 +48,13 @@ PATH_SECTIONS = [
 ]
 
 def create_user(company,user_role,name,email,image_url)
-  u = company.users.create!(:name => name, :email => email, :image_url => image_url, :password => DEFAULT_PASSWORD, :password_confirmation => DEFAULT_PASSWORD, :earned_points => 10)
+  u = company.users.new(name: name, 
+    email: email, 
+    image_url: image_url, 
+    password: DEFAULT_PASSWORD, 
+    password_confirmation: DEFAULT_PASSWORD, 
+    earned_points: 10)
+  u.grant_username
   u.user_role = user_role
   u.save
   return u

@@ -1,0 +1,34 @@
+.headlines.hide{ style: " min-height: auto; width:66%;"}
+  :javascript
+    $(function(){
+      $("#update_name").on("ajax:success", function(){
+        $(this).parents('.headlines').fadeOut(300, function(){ 
+          $(this).remove(); 
+          if($('.headlines').size() > 0){ 
+            $('.headlines:first').show() 
+          } else { 
+            $('.launchpadcontent').show(); 
+          }
+        });
+      });
+    })
+  .header
+    = image_tag STONEY_SMALL_URL, style: "display: inline-block; height:auto;", alt: "Stoney"
+    %h1{ style: "font-size: 35px; padding-top: 8px;"} Welcome to MetaBright!              
+    %h2{ style: "font-size: 20px;"  }
+      Add your high score to the leaderboard and keep racking up points!
+      
+  .body{ style: "text-align: center; margin-top: 40px;" }
+    %div{ style: "text-align: center; "}
+      = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px; margin-right: 30px;" do
+        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png", alt: "Google" }
+        %span.landingbuttontext Sign in with Google »
+      = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
+        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png", alt: "Facebook" }
+        %span.landingbuttontext Sign in with Facebook »
+      %hr
+      = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
+        = f.text_field :email, value: nil, placeholder: "Or enter email or username...", style: "padding: 15px; font-size: 22px; width: 400px; text-align: center;"
+  
+  .exit{ style: "float: right; margin-top: 24px;" }
+    %a{ onclick: "$(this).parents('.headlines').fadeOut(300, function(){ $(this).remove(); if($('.headlines').size() > 0){ $('.headlines:first').show() } else { $('.launchpadcontent').show(); } });" } Continue to Launchpad »

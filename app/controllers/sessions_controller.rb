@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    if signed_in?
+    if current_user
       redirect_to root_path
     else
       @title = "Sign in"
@@ -8,42 +8,7 @@ class SessionsController < ApplicationController
   end
   
   def create
-    auth = request.env["omniauth.auth"]
-    if auth
-      if user = User.find_with_omniauth(auth)
-        sign_in(user)
-      elsif user = User.find_by_email(auth["info"]["email"])
-        if user.merge_with_omniauth(auth)
-          sign_in(user)
-        else
-          flash[:error] = "An error occured. Please try another form of authentication."
-        end
-      else
-        user = User.create_with_omniauth(auth)
-        user.set_viewed_help(session[:viewed_help])
-        user.reload
-        sign_in(user)
-        Mailer.welcome(current_user.email).deliver
-        UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
-        if session[:referer]
-          path = Path.find_by_id(session[:referer])
-          session[:referer] = nil
-          current_user.enroll!(path)
-          redirect_to continue_path_path(path)
-        else
-          redirect_to intro_path
-        end
-        return true
-      end
-    else
-      credentials = params[:session]
-      if user = User.authenticate(credentials[:email],credentials[:password])
-        sign_in(user)
-      else
-        flash.now[:error] = "Invalid email/password combination."
-        render('new') and return
-      end
-    end
+    create_or_sign_in
     redirect_back_or_to root_path
   end
   

@@ -1,5 +1,5 @@
 class SectionsController < ApplicationController
-  before_filter :authenticate, except: [:complete]
+  before_filter :authenticate, except: [:continue, :complete]
   before_filter :load_resource
   before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]
   before_filter :disable_navbar, except: [:new, :create]  
@@ -204,6 +204,11 @@ class SectionsController < ApplicationController
   end
     
   def continue
+    unless current_user
+      create_or_sign_in(stop_redirect: true)
+      @enrollment = current_user.enroll!(@path)
+    end
+    
     @hide_background = true
     @streak = 0
     @question_count = params[:count].to_i || 0
@@ -215,7 +220,7 @@ class SectionsController < ApplicationController
       @question_count += 1
       if @enrollment.total_points == 0 && current_user.enrollments.size == 1 && params[:intro] != "complete"
         current_user.brand_new = true
-        render "intro"
+        @page = "intro"
       else
         @streak = session[:ssf].to_i
         if @streak > @enrollment.longest_streak
@@ -228,15 +233,20 @@ class SectionsController < ApplicationController
         @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
         @answers = @task.answers.to_a.shuffle
         @stored_resource = @task.stored_resources.first
-        render "continue"
+        @page = "continue"
       end
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
       social_tags(@path.name, @path.picture, @path.description)
-      render "finish"
+      @page = "finish"
     end
     session[:ssf] = @streak
+    if request.xhr?
+      render file: "sections/#{@page}", layout: false
+    else
+      render @page
+    end
   end
   
   private

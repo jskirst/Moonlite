@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   
   def home
     @title = "Home"
-    if signed_in?
+    if current_user
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
@@ -16,8 +16,8 @@ class PagesController < ApplicationController
       @show_header = false
       @show_footer = false
       @hide_background = true
-      @personas = Persona.all
-      render "landing"
+      @paths = Path.all.to_a
+      render "origin"
     end
   end
   

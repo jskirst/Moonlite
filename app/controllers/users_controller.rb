@@ -22,8 +22,12 @@ class UsersController < ApplicationController
   
   def update
     if @user.update_attributes(params[:user])
-      flash[:success] = "Profile successfully updated."
-      redirect_to profile_path(@user.username)
+      if request.xhr?
+        render json: { status: "success" }
+      else
+        flash[:success] = "Profile successfully updated."
+        redirect_to profile_path(@user.username)
+      end
     else
       render 'edit'
     end
