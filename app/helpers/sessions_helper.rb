@@ -20,7 +20,9 @@ module SessionsHelper
     else
       auth = request.env["omniauth.auth"]
       if auth
-        if user = User.find_with_omniauth(auth)
+        if user = current_user
+          user.merge_existing_with_omniauth(auth)
+        elsif user = User.find_with_omniauth(auth)
           sign_in(user)
         elsif user = User.find_by_email(auth["info"]["email"])
           if user.merge_with_omniauth(auth)
@@ -43,14 +45,6 @@ module SessionsHelper
           Mailer.welcome(current_user.email).deliver
         end
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
-        if session[:referer]
-          path = Path.find_by_id(session[:referer])
-          session[:referer] = nil
-          current_user.enroll!(path)
-          redirect_to continue_path_path(path)
-        else
-          redirect_to intro_path
-        end
       end
       return true
     end

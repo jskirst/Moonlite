@@ -9,7 +9,13 @@ class SessionsController < ApplicationController
   
   def create
     create_or_sign_in
-    redirect_back_or_to root_path
+    if session[:referer]
+      path = Path.find_by_id(session[:referer])
+      session[:referer] = nil
+      redirect_to challenge_path(path.permalink)
+    else
+      redirect_to root_path
+    end
   end
   
   def destroy

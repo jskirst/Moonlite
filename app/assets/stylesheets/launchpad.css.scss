@@ -14,6 +14,9 @@
   h1>div { position:relative; bottom:8px; display:inline;}
   
   .headlines .editor_view legend { display: none; }
+  .headlines input.error { border-color: #971D1C; }
+  .headlines input.successful { border-color: #62c462; color: #62c462 }
+  .headlines p.error { color: #971D1C; }
   
   .editor_view {
     .radio { padding-left:35px; height:100%; }

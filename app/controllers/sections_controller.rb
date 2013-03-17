@@ -218,7 +218,7 @@ class SectionsController < ApplicationController
     
     if @task
       @question_count += 1
-      if @enrollment.total_points == 0 && current_user.enrollments.size == 1 && params[:intro] != "complete"
+      if @enrollment.total_points == 0 && current_user.completed_tasks.count == 0 && params[:intro] != "complete"
         current_user.brand_new = true
         @page = "intro"
       else
