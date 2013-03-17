@@ -20,14 +20,16 @@
         %tr.tiles
           - (0..3).each do |i|
             - path = @paths[i]
-            - if path
+            - first_section = path.try { |p| p.sections.first }
+            - if path && first_section
               %td
                 = link_to start_section_path(path.sections.first), rel: "nofolow", remote: true do
                   = image_tag path.picture
         %tr.tiles
           - (4..8).each do |i|
             - path = @paths[i]
-            - if path
+            - first_section = path.try { |p| p.sections.first }
+            - if path && first_section
               %td
                 = link_to start_section_path(path.sections.first), rel: "nofolow", remote: true do
                   = image_tag path.picture            
