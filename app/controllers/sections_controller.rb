@@ -204,10 +204,8 @@ class SectionsController < ApplicationController
   end
     
   def continue
-    unless current_user
-      create_or_sign_in(stop_redirect: true)
-      @enrollment = current_user.enroll!(@path)
-    end
+    create_or_sign_in(stop_redirect: true) unless current_user
+    @enrollment = current_user.enroll!(@path) unless @enrollment
     
     @hide_background = true
     @streak = 0
