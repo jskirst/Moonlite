@@ -7,12 +7,13 @@ class PagesController < ApplicationController
   
   def home
     @title = "Home"
-    if current_user
+    if current_user and not current_user.completed_tasks.empty?
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
     else
+      @show_nav_bar = false
       @show_header = false
       @show_footer = false
       @hide_background = true
