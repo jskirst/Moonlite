@@ -10,23 +10,25 @@
     });
   });
 #origin
-  %table
-    %tr.tiles
-      - (0..3).each do |i|
-        - path = @paths[i]
-        - if path
-          %td
-            = link_to start_section_path(path.sections.first), remote: true do
-              = image_tag path.picture
-    %tr.logo
-      %td{ colspan: 4 }
-        %div.hero
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo", alt: "MetaBright"}
-          %h2 Prove yourself. Be discovered.
-    %tr.tiles
-      - (4..8).each do |i|
-        - path = @paths[i]
-        - if path
-          %td
-            = link_to start_section_path(path.sections.first), remote: true do
-              = image_tag path.picture
+  .hero
+    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+less+white+space", alt: "MetaBright"}
+    %h2 Prove yourself. Be discovered.
+  .container
+    .body
+      %h3 Try it out! Choose your Challenge...
+      %table
+        %tr.tiles
+          - (0..3).each do |i|
+            - path = @paths[i]
+            - if path
+              %td
+                = link_to start_section_path(path.sections.first), remote: true do
+                  = image_tag path.picture
+        %tr.tiles
+          - (4..8).each do |i|
+            - path = @paths[i]
+            - if path
+              %td
+                = link_to start_section_path(path.sections.first), remote: true do
+                  = image_tag path.picture            
+                   
