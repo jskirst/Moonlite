@@ -32,10 +32,7 @@
               %li.answer_content{ id: "answer_#{a.id}" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
-        - if current_user
-          = link_to "Next", continue_section_path(@section.id, @question_count), id: "nextbutton", class: "hide button button-actionable", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
-        - else
-          %a#nextbutton.login_link.button.button-actionable.hide Continue
+        = link_to "Next", continue_section_path(@section.id, @question_count), id: "nextbutton", class: "hide button button-actionable", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
     %div{ style: "display:inline-block; vertical-align:top;" }
       %div.pointsandstreakspace
         %div.pointspace.counterbox
