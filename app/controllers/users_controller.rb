@@ -22,6 +22,11 @@ class UsersController < ApplicationController
   
   def update
     if @user.update_attributes(params[:user])
+      if params[:user][:password]
+        @user.reload
+        sign_in(@user)
+      end
+      
       if request.xhr?
         render json: { status: "success" }
       else

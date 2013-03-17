@@ -30,7 +30,7 @@
               %div.dropdown.pull-right
                 %a.dropdown-toggle{ "data-toggle" => "dropdown"}
                   = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
-                  %span{ style: "vertical-align: middle;" }= current_user.name 
+                  %span.users_name{ style: "vertical-align: middle;" }= current_user.name 
                   %span.caret
                 %ul.dropdown-menu{ role: "button", style: "padding: 0; top:42px; right:-138px; min-width: 312px; min-height: 135px;" }
                   %div

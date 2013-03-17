@@ -1,5 +1,9 @@
 .headlines.hide{ style: " min-height: auto; width:66%;"}
   :javascript
+    function checkSubmit(e, input){
+      if(e && e.keyCode == 13){ $(input).parents('form').submit(); }
+    }
+  
     $(function(){
       $("#update_name").on("ajax:success", function(e, result){
         if(result.status == "error"){
@@ -7,6 +11,7 @@
           $(this).append("<p class='error'>Email invalid or already registered.</p>")
           $(this).find("#user_email").addClass("error")
         } else {
+          $("nav.navbar .users_name").text($(this).find("#user_name").val());
           $(this).find("#user_email").removeClass("error").addClass("successful");
           $(this).parents('.headlines').fadeOut(700, function(){ 
             $(this).remove(); 
@@ -25,19 +30,21 @@
     %h2{ style: "font-size: 20px;"  }
       Add your high score to the leaderboard and keep racking up points!
       
-  .body{ style: "text-align: center; margin-top: 30px;" }
-    %div{ style: "text-align: center; "}
-      = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px; margin-right: 30px;" do
-        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png", alt: "Google" }
+  .body.centered{ style: "margin-top: 30px;" }
+    .signup
+      = link_to "/auth/google_oauth2", class: "btn danger" do
+        = image_tag ICON_LOGIN_GOOGLE, alt: "Google"
         %span.landingbuttontext Sign in with Google »
-      = link_to "/auth/facebook", class: "btn danger", style: "width:205px; padding-top:7px; padding-bottom:7px;" do
-        %img{ style: "height:30px;", src: "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png", alt: "Facebook" }
+      
+      = link_to "/auth/facebook", class: "btn danger" do
+        = image_tag ICON_LOGIN_FACEBOOK, alt: "Google"
         %span.landingbuttontext Sign in with Facebook »
-      %div{ style: "background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/divider.png);background-repeat: no-repeat;background-position: center 10px;width: 374px;margin: 15px auto;"} OR
+      
+      %div.divider OR
       = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
-        = f.text_field :name, value: nil, placeholder: "Name", style: "padding: 3px; font-size: 14px; width: 180px; text-align: left;"
-        = f.text_field :email, value: nil, placeholder: "E-Mail", style: "padding: 3px; font-size: 14px; width: 180px; text-align: left; margin-right:5px; margin-left:5px;"
-        = f.text_field :password, value: nil, placeholder: "Password", style: "padding: 3px; font-size: 14px; width: 180px; text-align: left;"
+        = f.text_field :name, value: nil, placeholder: "Name"
+        = f.text_field :email, value: nil, placeholder: "E-Mail"
+        = f.password_field :password, value: nil, placeholder: "Password", onKeyPress: "return checkSubmit(event, this);"
   
   .exit{ style: "float: right; margin-top: 24px;" }
-    %a{ onclick: "$(this).parents('.headlines').fadeOut(300, function(){ $(this).remove(); if($('.headlines').size() > 0){ $('.headlines:first').show() } else { $('.launchpadcontent').show(); } });" } Continue to Launchpad »
+    %a{ onclick: "$('#update_name').submit();" } Continue to Launchpad »
