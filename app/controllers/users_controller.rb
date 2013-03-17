@@ -29,7 +29,12 @@ class UsersController < ApplicationController
         redirect_to profile_path(@user.username)
       end
     else
-      render 'edit'
+      if request.xhr?
+        render json: { status: "error" }
+      else
+        flash[:success] = "Profile successfully updated."
+        redirect_to profile_path(@user.username)
+      end
     end
   end
   

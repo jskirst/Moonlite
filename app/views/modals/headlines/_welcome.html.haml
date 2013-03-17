@@ -1,15 +1,22 @@
 .headlines.hide{ style: " min-height: auto; width:66%;"}
   :javascript
     $(function(){
-      $("#update_name").on("ajax:success", function(){
-        $(this).parents('.headlines').fadeOut(300, function(){ 
-          $(this).remove(); 
-          if($('.headlines').size() > 0){ 
-            $('.headlines:first').show() 
-          } else { 
-            $('.launchpadcontent').show(); 
-          }
-        });
+      $("#update_name").on("ajax:success", function(e, result){
+        if(result.status == "error"){
+          $(this).find("p.error").remove();
+          $(this).append("<p class='error'>Email invalid or already registered.</p>")
+          $(this).find("#user_email").addClass("error")
+        } else {
+          $(this).find("#user_email").removeClass("error").addClass("successful");
+          $(this).parents('.headlines').fadeOut(700, function(){ 
+            $(this).remove(); 
+            if($('.headlines').size() > 0){ 
+              $('.headlines:first').show() 
+            } else { 
+              $('.launchpadcontent').show(); 
+            }
+          });
+        }
       });
     })
   .header

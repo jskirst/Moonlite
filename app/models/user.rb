@@ -90,12 +90,6 @@ class User < ActiveRecord::Base
   def brand_new?() brand_new == true end
   def guest_user?() guest_user == true end
   
-  def self.find_with_omniauth(auth)
-    user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
-    return user_auth.user if user_auth
-    return nil
-  end
-  
   def self.create_with_nothing(email = nil)
     user = Company.first.users.new
     user.name = "user#{SecureRandom::hex(4)}"
@@ -107,9 +101,19 @@ class User < ActiveRecord::Base
     return user
   end
   
-  def self.create_with_omniauth(auth)
-    user_auth = find_with_omniauth(auth)
+  def self.find_with_omniauth(auth)
+    user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
     return user_auth.user if user_auth
+    return nil
+  end
+  
+  def merge_existing_with_omniauth(auth)
+    User.create_with_omniauth(auth, self)
+  end
+  
+  def self.create_with_omniauth(auth, user = nil)
+    user_from_auth = User.find_with_omniauth(auth)
+    return user_from_auth if user_from_auth
     
     user_details = { 
         name: auth["info"]["name"], 
@@ -146,10 +150,10 @@ class User < ActiveRecord::Base
       logger.debug $!.to_s
     end
     
-    user = User.find_by_email(auth["info"]["email"])
+    user = User.find_by_email(auth["info"]["email"]) unless user
     if user
       user.update_attributes(user_details)
-      user.grant_username
+      user.grant_username(force_rename: true)
     else
       user = Company.first.users.new(user_details)
       user.password = SecureRandom::hex(16)
@@ -316,8 +320,8 @@ class User < ActiveRecord::Base
     votes.to_a.collect {|v| v.owner_id }
   end
   
-  def grant_username
-    if username.blank?
+  def grant_username(options = {})
+    if username.blank? or options[:force_rename]
       self.username = generate_username
     end
   end
