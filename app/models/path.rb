@@ -128,4 +128,13 @@ class Path < ActiveRecord::Base
       self.permalink = new_combined_permalink
     end
   end
+  
+  def self.by_popularity(limit = nil)
+    paths = Path.select("paths.*, count(enrollments.id) as enrollments_count")
+      .joins("LEFT JOIN enrollments on enrollments.path_id = paths.id")
+      .group("paths.id")
+      .order("enrollments_count DESC")
+    return paths.limit(limit) if limit
+    return paths
+  end
 end

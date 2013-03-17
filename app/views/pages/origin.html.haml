@@ -22,13 +22,13 @@
             - path = @paths[i]
             - if path
               %td
-                = link_to start_section_path(path.sections.first), remote: true do
+                = link_to start_section_path(path.sections.first), rel: "nofolow", remote: true do
                   = image_tag path.picture
         %tr.tiles
           - (4..8).each do |i|
             - path = @paths[i]
             - if path
               %td
-                = link_to start_section_path(path.sections.first), remote: true do
+                = link_to start_section_path(path.sections.first), rel: "nofolow", remote: true do
                   = image_tag path.picture            
                    
