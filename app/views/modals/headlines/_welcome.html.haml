@@ -3,6 +3,21 @@
     function checkSubmit(e, input){
       if(e && e.keyCode == 13){ $(input).parents('form').submit(); }
     }
+    
+    function submit_or_close(exit_button){
+      if($("#user_password").val() == ""){
+        $(exit_button).parents('.headlines').fadeOut(300, function(){ 
+          $(this).remove(); 
+          if($('.headlines').size() > 0){ 
+            $('.headlines:first').show() 
+          } else { 
+            $('.launchpadcontent').show(); 
+          } 
+        });
+      } else {
+        $('#update_name').submit();
+      }
+    }
   
     $(function(){
       $("#update_name").on("ajax:success", function(e, result){
@@ -47,4 +62,4 @@
         = f.password_field :password, value: nil, placeholder: "Password", onKeyPress: "return checkSubmit(event, this);"
   
   .exit{ style: "float: right; margin-top: 24px;" }
-    %a{ onclick: "$('#update_name').submit();" } Continue to Launchpad »
+    %a{ onclick: "submit_or_close(this);" } Continue to Launchpad »
