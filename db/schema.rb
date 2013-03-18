@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130312182010) do
+ActiveRecord::Schema.define(:version => 20130318031431) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(:version => 20130312182010) do
     t.datetime "approved_at"
     t.datetime "published_at"
     t.datetime "public_at"
+    t.datetime "promoted_at"
   end
 
   add_index "paths", ["permalink"], :name => "index_paths_on_permalink"
