@@ -23,11 +23,6 @@ class UserRole < ActiveRecord::Base
     end
   end
   
-  def send_invitation_email(email)
-    email_details = { :email => email, :signup_link => self.signup_link }
-    Mailer.welcome(email_details).deliver
-  end
-  
   private    
     def random_alphanumeric(size=15)
       (1..size).collect { (i = Kernel.rand(62); i += ((i < 10) ? 48 : ((i < 36) ? 55 : 61 ))).chr }.join
