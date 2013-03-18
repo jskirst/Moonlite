@@ -8,14 +8,15 @@ module SessionsHelper
     end
   end
   
-  def create_or_sign_in(options = {})
+  def create_or_sign_in
     if params[:session]
       credentials = params[:session]
       if user = User.authenticate(credentials[:email],credentials[:password])
         sign_in(user)
       else
-        flash.now[:error] = "Invalid email/password combination."
-        render('new') and return
+        flash[:error] = "Invalid email/password combination."
+        redirect_to signin_path
+        return false
       end
     else
       auth = request.env["omniauth.auth"]
@@ -34,17 +35,16 @@ module SessionsHelper
           user = User.create_with_omniauth(auth)
         end
       else
-        user = User.create_with_nothing
+        unless current_user
+          user = User.create_with_nothing
+        end
       end
       user.reload
       sign_in(user)
-      
-      if not options[:stop_redirect] && user.brand_new?
-        user.set_viewed_help(session[:viewed_help])
-        unless user.guest_user?
-          Mailer.welcome(current_user.email).deliver
-        end
-        UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")
+      user.set_viewed_help(session[:viewed_help])
+      if not user.guest_user? && user.created_at > 30.minutes.ago
+        Mailer.welcome(current_user.email).deliver
+        UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end
       return true
     end

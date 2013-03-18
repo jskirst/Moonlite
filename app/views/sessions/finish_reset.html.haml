@@ -1,0 +1,24 @@
+.aboutcontainer
+  .aboutbox
+    .aboutheader
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+      %span Sign in to MetaBright
+    %hr{ style: "margin:0"}
+    .aboutbody
+      %h4{ style: "margin-bottom: 5px;" } Enter your new password and submit to continue.
+      = form_for(:session, url: finish_reset_path) do |f|
+        = f.hidden_field :t, value: @token
+        %table{ style: "width: 700px;" }
+          %tr
+            %td{ style: "border-top:none;" }
+              %div.control-group
+                %label.control-label Password
+                %div.controls
+                  = f.password_field :password, autofocus: true
+              %div.control-group
+                %label.control-label Confirm Password
+                %div.controls
+                  = f.password_field :password_confirmation, autofocus: true
+              %div.control-group
+                %div.controls
+                  = f.submit "Save & Sign In", class: "button button-actionable"

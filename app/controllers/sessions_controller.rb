@@ -3,18 +3,65 @@ class SessionsController < ApplicationController
     if current_user
       redirect_to root_path
     else
+      @hide_background = true
       @title = "Sign in"
     end
   end
   
-  def create
-    create_or_sign_in
-    if session[:referer]
-      path = Path.find_by_id(session[:referer])
-      session[:referer] = nil
-      redirect_to challenge_path(path.permalink)
-    else
+  def request_reset
+    if current_user
       redirect_to root_path
+    else
+      @hide_background = true
+    end
+  end
+  
+  def send_reset
+    if current_user
+      redirect_to root_path
+    else
+      if user = User.find_by_email(params[:user][:email])
+        Mailer.password_reset(user).deliver
+        @hide_background = true
+      else
+        flash[:error] = "Could not find a user account associated with #{params[:user][:email]}."
+        redirect_to request_reset_path
+      end
+    end
+  end
+  
+  def finish_reset
+    if current_user
+      redirect_to root_path
+    else
+      if request.get?
+        @hide_background = true
+        @token = params[:t]
+      else
+        user = User.find_by_signup_token(params[:session][:t])
+        user.password = params[:session][:password]
+        user.password_confirmation = params[:session][:password_confirmation]
+        if user.save!
+          user.reload
+          sign_in(user)
+          redirect_to root_path
+        else
+          flash[:error] = user.errors.full_messages.join(". ")
+          redirect_to finish_reset_path(params[:t])
+        end
+      end
+    end
+  end
+  
+  def create
+    if create_or_sign_in
+      if session[:referer]
+        path = Path.find_by_id(session[:referer])
+        session[:referer] = nil
+        redirect_to challenge_path(path.permalink)
+      else
+        redirect_to root_path
+      end
     end
   end
   

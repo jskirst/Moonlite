@@ -2,7 +2,7 @@
 %html
   %head
     = render "layouts/head"
-    - if current_user.try(:brand_new?)
+    - if false
       :javascript
         var fb_param = {};
         fb_param.pixel_id = '6007496132600';
@@ -39,7 +39,7 @@
     = render "layouts/navbar"
     %div.container.body{ style: ("background-color: transparent; padding: 0px;" if hide_background) }
       - flash.each do |key, value|
-        = content_tag(:div, value, class: "alert alert-#{key}")
+        = content_tag(:div, value, class: "alert alert-#{key}", style: ("margin:60px 0 -50px;" if hide_background))
       = yield
       
     :javascript

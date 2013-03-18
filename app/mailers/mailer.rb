@@ -8,6 +8,13 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
+  def password_reset(user)
+    @user = user
+    @url = finish_reset_url(t: @user.signup_token)
+    mail(to: @user.email, subject: "Password reset for MetaBright")
+    @user.log_email
+  end
+  
   def content_comment_alert(comment)
     @submission = comment.owner
     @user = @submission.user
