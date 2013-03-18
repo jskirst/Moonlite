@@ -43,6 +43,18 @@
           %label.control-label About
           %div.controls
             = f.text_area :description, rows: "5", style: "width: 390px;", placeholder: "Tell us about yourself..."
+      %h4 Change password
+      %div.editprofilemanagementarea
+        %div.control-group
+          %label.control-label New password
+          %div.controls
+            = f.text_field :location, style: "width: 150px;"
+        %div.control-group
+          %label.control-label Confirm new password
+          %div.controls
+            = f.text_field :location, style: "width: 150px;"
+        %a.button.button-actionable{ style: "padding: 4px 10px 3px 10px; font-size:13px; position: relative; float: right; bottom: 3px;"} Save new password
+        
       %h4 Your email address
       %span{style:"position:relative; bottom:5px;"}
         (We hate spam too. We'll never sell, rent, or otherwise abuse your email address.)
