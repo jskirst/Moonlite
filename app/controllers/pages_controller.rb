@@ -15,7 +15,7 @@ class PagesController < ApplicationController
     else
       @show_nav_bar = false
       @show_header = false
-      @show_footer = false
+      @show_footer = true
       @hide_background = true
       @paths = Path.by_popularity(8).to_a
       render "origin"
