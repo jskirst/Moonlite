@@ -1,27 +1,47 @@
 #profile
-  .help_box
-    .help_close{ onclick: "$(this).parent().slideUp();" }
-      = image_tag ICON_CLOSE_URL, alt: "Close"
-    .header
-      = image_tag STONEY_SMALL_URL, alt: "Stoney" 
-      %h1 Kind of bare, isn't it?
-    .body
-      %h4
-        Sign up with Google or Facebook to make your profile awesome in a hurry. Or sign up with your email address, and edit your profile manually.
-      %div{ style: "margin-top: 20px;" }
-        %div
-          = link_to "/auth/google_oauth2", class: "btn danger", style: "width: 205px; margin-right: 60px; " do
-            = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-            %span.landingbuttontext Sign in with Google »        
-          = link_to "/auth/facebook", class: "btn danger" do
-            = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-            %span.landingbuttontext Sign in with Facebook »
-        %div.divider OR
-        = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
-          = f.text_field :name, value: nil, placeholder: "Name"
-          = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
-          = f.password_field :password, value: nil, placeholder: "Password", onKeyPress: "return checkSubmit(event, this);"
-        %a{ style: "float: right; bottom: 13px; position: relative; text-decoration: none; right: 149px;"} Submit
+  - if @user == current_user && current_user.guest_user?
+    .help_box
+      :javascript
+        function checkSubmit(e, input){
+          if(e && e.keyCode == 13){ $(input).parents('form').submit(); }
+        }
+      
+        $(function(){
+          $("#update_user").on("ajax:success", function(e, result){
+            if(result.status == "error"){
+              $(this).find("p.error").remove();
+              $(this).append("<p class='error'>Email invalid or already registered.</p>")
+              $(this).find("#user_email").addClass("error")
+            } else {
+              $("nav.navbar .users_name").text($(this).find("#user_name").val());
+              $(this).find("#user_email").removeClass("error").addClass("successful");
+              $(this).parents('.help_box').fadeOut(800);
+            }
+          });
+        });
+    
+      .help_close{ onclick: "$(this).parent().slideUp();" }
+        = image_tag ICON_CLOSE_URL, alt: "Close"
+      .header
+        = image_tag STONEY_SMALL_URL, alt: "Stoney" 
+        %h1 Kind of bare, isn't it?
+      .body
+        %h4
+          Sign up with Google or Facebook to make your profile awesome in a hurry. Or sign up with your email address, and edit your profile manually.
+        %div{ style: "margin-top: 20px;" }
+          %div
+            = link_to "/auth/google_oauth2", class: "btn danger", style: "width: 205px; margin-right: 60px; " do
+              = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+              %span.landingbuttontext Sign in with Google »        
+            = link_to "/auth/facebook", class: "btn danger" do
+              = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
+              %span.landingbuttontext Sign in with Facebook »
+          %div.divider OR
+          = form_for(current_user, remote: true, html: { id: "update_user" }) do |f|
+            = f.text_field :name, value: nil, placeholder: "Name"
+            = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
+            = f.password_field :password, value: nil, placeholder: "Password", onKeyPress: "return checkSubmit(event, this);", style: "margin-right: 10px;"
+            = f.submit "Submit", class: "button button-standard button-small", style: "margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px;"
   #topsection
     #updatespace
       = image_tag @user.picture, class: "bigheaderimage", alt: "#{@user.name}"
