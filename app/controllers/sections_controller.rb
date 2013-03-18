@@ -204,7 +204,7 @@ class SectionsController < ApplicationController
   end
     
   def continue
-    create_or_sign_in(stop_redirect: true) unless current_user
+    create_or_sign_in unless current_user
     @enrollment = current_user.enroll!(@path) unless @enrollment
     
     @hide_background = true
@@ -217,7 +217,6 @@ class SectionsController < ApplicationController
     if @task
       @question_count += 1
       if @enrollment.total_points == 0 && current_user.completed_tasks.count == 0 && params[:intro] != "complete"
-        current_user.brand_new = true
         @page = "intro"
       else
         @streak = session[:ssf].to_i

@@ -17,7 +17,7 @@ class PagesController < ApplicationController
       @show_header = false
       @show_footer = true
       @hide_background = true
-      @paths = Path.by_popularity(8).to_a
+      @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
       render "origin"
     end
   end
@@ -62,7 +62,6 @@ class PagesController < ApplicationController
   end
   
   def intro
-    current_user.brand_new = true
     @hide_background = true
     @show_nav_bar = false
     @show_footer = false

@@ -1,7 +1,7 @@
 class Path < ActiveRecord::Base
-  attr_accessor :persona, :approved, :template_type
+  attr_accessor :persona, :approved, :promoted, :template_type
   attr_readonly :company_id
-  attr_protected :approved_at, :published_at, :public_at
+  attr_protected :approved_at, :published_at, :public_at, :promoted_at
   attr_accessible :user_id,
     :category_id,
     :name, 
@@ -44,6 +44,7 @@ class Path < ActiveRecord::Base
   def published?() published_at.nil? ? false : true end
   def public?() public_at.nil? ? false : true end
   def approved?() approved_at.nil? ? false : true end
+  def promoted?() promoted_at.nil? ? false : true end
   
   def path_pic
     return stored_resource.obj.url if stored_resource
@@ -98,7 +99,8 @@ class Path < ActiveRecord::Base
   end
   
   def next_section(section=nil)
-    return sections.where(["position > ? and published_at is not ?", section.position, nil]).first(order: "position ASC")
+    position = section ? section.position : 0
+    return sections.where(["position > ? and published_at is not ?", position, nil]).first(order: "position ASC")
   end
   
   def tags_to_array

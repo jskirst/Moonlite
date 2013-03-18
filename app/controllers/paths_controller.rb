@@ -64,6 +64,7 @@ class PathsController < ApplicationController
         @path.path_personas.destroy_all
         @path.path_personas.create!(persona_id: params[:path][:persona])
       end
+      @path.promoted_at = params[:path][:promoted].to_i == 1 ? Time.now : nil
       @path.approved_at = params[:path][:approved].to_i == 1 ? Time.now : nil
     end
     

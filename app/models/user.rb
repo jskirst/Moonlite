@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
     :locked_at,
     :last_email_sent_at, 
     :emails_today
-  attr_accessor :password, :password_confirmation, :brand_new, :guest_user
+  attr_accessor :password, :password_confirmation, :guest_user
   attr_accessible :name,
     :email, 
     :image_url,
@@ -79,16 +79,13 @@ class User < ActiveRecord::Base
   end
   
   after_create do
-    self.brand_new = true
     NotificationSettings.create!(user_id: self.id)
   end
   
   def to_s() self.name end
     
   def locked?() locked_at.nil? ? false : true end
-  
-  def brand_new?() brand_new == true end
-  def guest_user?() guest_user == true end
+  def guest_user?() email.include?("@metabright") and email.include?("user") end
   
   def self.create_with_nothing(email = nil)
     user = Company.first.users.new

@@ -1,0 +1,27 @@
+.aboutcontainer
+  .aboutbox
+    .aboutheader
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+      %span Sign in to MetaBright
+    %hr{ style: "margin:0"}
+    .aboutbody
+      = form_for(:session, :url => sessions_path) do |f|
+        %table{ style: "width: 700px;" }
+          %tr
+            %td{ style: "border-top:none; padding-top:35px;" }
+              %div.control-group
+                %label.control-label Email
+                %div.controls
+                  = f.text_field :email, autofocus: true
+              %div.control-group
+                %label.control-label Password
+                %div.controls
+                  = f.password_field :password
+              %div.control-group
+                %div.controls
+                  %p 
+                    Forgot your password?
+                    = link_to "Reset it here.", request_reset_path
+              %div.control-group
+                %div.controls
+                  = f.submit "Sign In", class: "button button-actionable"

@@ -206,11 +206,11 @@
               result = $.parseJSON(results.data);
               
               if(result.warnings){
-                log(result.warnings);
+                $.log(result.warnings);
               }
               
               if(result.error){
-                log(result.error);
+                $.log(result.error);
                 $("div.error").text(result.error).show();
                 $('#image_input').show();
               } else {

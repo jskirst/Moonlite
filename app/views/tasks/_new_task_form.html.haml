@@ -52,8 +52,6 @@
 :javascript
   function display_sub_type_message(){
     var sub_type = $("#task_answer_sub_type").val();
-    log("Displaying subtype.");
-    log(sub_type);
     $(".answer_note").hide();
     if(sub_type=="100"){
       $(".free_text_note").show();
@@ -66,14 +64,11 @@
   
   $(function(){
     $("#task_answer_sub_type").change(function(){
-      log("Changin sub type.");
       display_sub_type_message();
     });
   
     $("select[name='task[answer_type]']").change(function(){
       var type = $(this).val();
-      log("Changin type.");
-      log(type);
       if(type == 0){
         $(this).parents("div.control-group").siblings(".sub_type").show();
         $(".creative").show();

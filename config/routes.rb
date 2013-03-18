@@ -114,10 +114,12 @@ Metabright::Application.routes.draw do
   match '/auth/:provider/callback' => 'sessions#create'
 	match '/signin' => 'sessions#new'
 	match '/signout' => 'sessions#destroy'
+	match '/request_reset' => 'sessions#request_reset'
+	match '/send_reset' => 'sessions#send_reset'
+	match '/finish_reset' => 'sessions#finish_reset'
 	match '/robots.txt' => 'pages#robots'
 
   match '/emailtest' => 'pages#email_test', as: 'email'
-	match '/password_reset' => 'users#request_send'
 	match '/send_reset' => 'users#send_reset'
 	
 	match '/challenges/:permalink' => 'paths#show', as: 'challenge'
