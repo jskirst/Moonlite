@@ -317,7 +317,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 .aboutbody span{font-size:11px; line-height:18px;}
 .aboutbody h4{font-weight:bold; line-height:32px; font-size:16px}
 .challengeset{margin-bottom:5px;}
-.challengepagechallenge:nth-child(3n){margin-right:33px;}
+.challengepagechallenge { margin-bottom:20px; margin-right: 34px; height: 130px; width: 130px; }
 .challengepagechallenge:nth-child(4n){margin-right:0px;}
 
 /* Popover -- guided help/Revolution */
