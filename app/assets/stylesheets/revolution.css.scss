@@ -137,6 +137,42 @@ code.content { color: #404040; display: block; padding: 10px; font-size: 13px; l
 
 
 /* Profile/Revolution */
+#profile{
+  .help_box{
+    background-clip: padding-box;
+    background-color:#FFF7CD;
+    border: 1px solid rgba(0, 0, 0, .1);
+    border-radius: 6px;
+    color: #333;
+    margin-bottom: 12px;
+    padding: 2px 15px 5px 5px;
+    position: relative;
+    
+    .help_close { position:relative; left:10px; }
+    .header { margin-top:-6px; }
+    .header h1 { display:inline; position:relative; top:12px; font-size: 40px; }
+    .header img { display:inline; height:90px; }
+    .body { 
+      margin: 0 0 10px 10px;
+      text-align: center;
+      
+      h4 { text-align: left; }
+      img { height: 30px; width: 30px; }
+      form { margin-bottom: 5px; }
+      input { width:180px; }
+      
+      .divider{
+        background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/divider.png);
+        background-repeat: no-repeat;
+        background-position: center 10px;
+        width: 466px;
+        margin: 10px auto;
+      }
+    }
+  }
+}
+
+
 #homepage{color:#333;}
 #topboxcontent{ width:729px; margin-top: 0px; }
 #topboxcontent h1{ margin:0px; font-size:30px; display:inline; }
@@ -317,7 +353,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 .aboutbody span{font-size:11px; line-height:18px;}
 .aboutbody h4{font-weight:bold; line-height:32px; font-size:16px}
 .challengeset{margin-bottom:5px;}
-.challengepagechallenge:nth-child(3n){margin-right:33px;}
+.challengepagechallenge { margin-bottom:20px; margin-right: 34px; height: 130px; width: 130px; }
 .challengepagechallenge:nth-child(4n){margin-right:0px;}
 
 /* Popover -- guided help/Revolution */
