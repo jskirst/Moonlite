@@ -14,15 +14,12 @@ function init_voting(){
       } else {
         var $vote_points = $(this).siblings("span.vote_points:first");
         var points = parseInt($vote_points.text());
-        log(points);
         if($(this).hasClass("btn-info")){
           $(this).removeClass("btn-info");
           animate_point_change($vote_points, -1, (points-50));
-          log("Decreased points");
         } else {
           $(this).addClass("btn-info");
           animate_point_change($vote_points, +1, (points+50));
-          log("Increased points");
         }
       }
     }

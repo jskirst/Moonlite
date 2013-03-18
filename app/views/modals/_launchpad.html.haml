@@ -48,7 +48,7 @@
 
     $(".launchpad_link").on("ajax:success", function(xhr, data, etc){
       if(data.status){
-        log("Cannot access this content.");
+        $.log("Cannot access this content.");
       } else {
         $("span.pointer_caret").remove();
         $(".sectioninfocontainer").replaceWith(data);

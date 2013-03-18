@@ -98,7 +98,8 @@ class Path < ActiveRecord::Base
   end
   
   def next_section(section=nil)
-    return sections.where(["position > ? and published_at is not ?", section.position, nil]).first(order: "position ASC")
+    position = section ? section.position : 0
+    return sections.where(["position > ? and published_at is not ?", position, nil]).first(order: "position ASC")
   end
   
   def tags_to_array
