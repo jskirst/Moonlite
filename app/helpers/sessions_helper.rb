@@ -42,7 +42,7 @@ module SessionsHelper
       user.reload
       sign_in(user)
       user.set_viewed_help(session[:viewed_help])
-      if not user.guest_user? && user.created_at > 30.minutes.ago
+      if (not user.guest_user?) and user.created_at > 30.minutes.ago
         Mailer.welcome(current_user.email).deliver
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end
