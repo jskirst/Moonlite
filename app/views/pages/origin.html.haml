@@ -27,8 +27,9 @@
                   %div.details
                     %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 14, separator: ' ')}
                     %h5 ## points  
-                %div
-                  = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                %div                  
+                  = link_to start_section_path(first_section), rel: "nofolow", remote: true do
+                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
         %tr.tiles
           - (4..8).each do |i|
             - path = @paths[i]
@@ -40,4 +41,5 @@
                     %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 14, separator: ' ')}
                     %h5 ## points
                 %div
-                  = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  = link_to start_section_path(first_section), rel: "nofolow", remote: true do
+                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
