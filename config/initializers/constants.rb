@@ -22,7 +22,7 @@ level = 1
     current_level = 1
   else
     current_level = current_level.to_f
-    current_level = (i.to_f**0.55) / Math.log(i)
+    current_level = (i.to_f**0.57) / Math.log(i)
     current_level = current_level - (current_level % 1)
     current_level = (current_level - 3).to_i
   end

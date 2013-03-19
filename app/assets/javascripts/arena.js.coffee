@@ -1,29 +1,35 @@
 $.MB ||= {}
 $.MB.Arena ||= {}
 
-$.MB.Arena.init = ->
+$.MB.Arena.count_down_points = ->
+  if $.points_remaining > 0 and $.continue_countdown == true
+    $.points_remaining = $.points_remaining - 1
+    $(".pointbarfiller").parent().find("div.pointbartext").text($.points_remaining + " points")
+    $("#points_remaining").val($.points_remaining);
+    setTimeout($.Roostify.Arena.count_down_points, 300)
+  else
+    $.continue_countdown = false
+
+$.MB.Arena.count_down_bar = ->
+  if $.continue_countdown == true
+    $bar = $(".pointbarfiller")
+    $.percent_remaining = $.percent_remaining - .1
+    $bar.css("width", $.percent_remaining+"%")
+    setTimeout($.Roostify.Arena.count_down_bar, 30)
+    
+$.MB.Arena.start_countdown = ->
+  setTimeout ->
+    setTimeout($.Roostify.Arena.count_down_bar, 300)
+    setTimeout($.Roostify.Arena.count_down_points, 300)
+  ,1000
+
+$.MB.Arena.init = (options = {}) ->
   $.log("Init arena")
   if $.MB.Arena.initialized == true
     $.log("Arena already initialized")
     return false
   else
     $.MB.Arena.initialized = true
-    
-  count_down_points = ->
-    if $.points_remaining > 0 and $.continue_countdown == true
-      $.points_remaining = $.points_remaining - 1
-      $(".pointbarfiller").parent().find("div.pointbartext").text($.points_remaining + " points")
-      $("#points_remaining").val($.points_remaining);
-      setTimeout(count_down_points, 300)
-    else
-      $.continue_countdown = false
-
-  count_down_bar = ->
-    if $.continue_countdown == true
-      $bar = $(".pointbarfiller")
-      $.percent_remaining = $.percent_remaining - .1
-      $bar.css("width", $.percent_remaining+"%")
-      setTimeout(count_down_bar, 30)
   
   $.continue_countdown = true
   $.percent_remaining = 100
@@ -46,7 +52,5 @@ $.MB.Arena.init = ->
       $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white")
     $("#nextbutton").show()
   
-  setTimeout ->
-    setTimeout(count_down_bar, 300)
-    setTimeout(count_down_points, 300)
-  ,1000
+  if options["start_countdown"]
+    $.Roostify.Arena.start_countdown()

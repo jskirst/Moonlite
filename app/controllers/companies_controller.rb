@@ -5,11 +5,11 @@ class CompaniesController < ApplicationController
   def overview
     excluded = [0]
     unless params[:excluded]
-      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ?", true, true, true, nil).to_a.collect &:id
+      excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ? and earned_points > 0", true, true, true, nil).to_a.collect &:id
     end
 
-    @users                  = User.where("created_at >= '01-27-2013'").where("id not in (?)", excluded).count
-    @returning_users        = User.where("created_at >= '01-27-2013'").where("id not in (?)", excluded).where("created_at != login_at").count
+    @users                  = User.where("created_at >= '01-27-2013'").where("id not in (?) and earned_points > 0", excluded).count
+    @visits                 = Visit.select("DISTINCT users.id").joins(:user).where("user_id not in (?)", excluded).group("users.id").count.size
     @arena_answers          = CompletedTask.where("completed_tasks.created_at >= '01-27-2013'").joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).count
     @creative_answers       = CompletedTask.where("completed_tasks.created_at >= '01-27-2013'").joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).count
     @task_answers           = CompletedTask.where("completed_tasks.created_at >= '01-27-2013'").joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).count
@@ -21,8 +21,8 @@ class CompaniesController < ApplicationController
     @issues                 = TaskIssue.where("task_issues.created_at >= '01-27-2013'").where("user_id not in (?)", excluded).count
     
     time_limit              = 24.hours.ago
-    @new_users              = User.where("id not in (?)", excluded).where("created_at >= ?", time_limit).count
-    @new_returning_users    = User.where("id not in (?)", excluded).where("created_at <= ? and login_at >= ?", time_limit, time_limit).count
+    @new_users              = User.select("DISTINCT users.id").where("id not in (?)", excluded).where("created_at >= ?  and earned_points > 0", time_limit).count
+    @new_visits             = Visit.joins(:user).where("user_id not in (?)", excluded).where("visits.created_at >= ?", time_limit).group("users.id").count.size
     @new_arena_answers      = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::MULTIPLE).where("completed_tasks.created_at >= ?", time_limit).count
     @new_creative_answers   = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CREATIVE).where("completed_tasks.created_at >= ?", time_limit).count
     @new_task_answers       = CompletedTask.joins(:task).where("user_id not in (?)", excluded).where("tasks.answer_type = ?", Task::CHECKIN).where("completed_tasks.created_at >= ?", time_limit).count
