@@ -99,6 +99,7 @@ Metabright::Application.routes.draw do
   get '/admin/settings' => 'companies#settings'
   get '/admin/users' => 'companies#users'
   put '/admin/users/:id/' => 'companies#users', as: 'admin_update_user'
+  get '/admin/user/:id/' => 'companies#user', as: 'admin_user_details'
   get '/admin/paths' => 'companies#paths'
   get '/admin/path/:id' => 'companies#path', as: 'admin_edit_path'
   get '/admin/submissions' => 'companies#submissions'

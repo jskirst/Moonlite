@@ -10,7 +10,8 @@
         %th Email
         %th= link_to "Last Login", admin_users_path(sort: "login_at")
         %th= link_to "Created", admin_users_path(sort: "created_at")
-        %th= link_to "Points", admin_users_path(sort: "earned_points")
+        %th= link_to "P", admin_users_path(sort: "earned_points")
+        %th CT
         %th E
         %th V
         %th C
@@ -21,9 +22,10 @@
           %td= link_to truncate(u.name, length: 20), profile_path(u.username)
           %td= link_to u.user_role.name, update_users_role_path(u.id)
           %td= truncate(u.email, length:25)
-          %td= u.login_at.strftime("%m/%d/%Y")
+          %td= link_to u.visits.last.try(:request_url), admin_user_details_path(u.id)
           %td= u.created_at.strftime("%m/%d/%Y")
           %td= u.earned_points
+          %td= u.completed_tasks.size
           %td= u.enrollments.size
           %td= u.votes.size
           %td= u.comments.size

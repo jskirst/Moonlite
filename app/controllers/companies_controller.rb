@@ -46,6 +46,11 @@ class CompaniesController < ApplicationController
     end
   end
   
+  def user
+    @user = User.find(params[:id])
+    @visits = @user.visits.order("id DESC")
+  end
+  
   def paths
     conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
     @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions).order("id DESC")

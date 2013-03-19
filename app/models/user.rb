@@ -58,6 +58,7 @@ class User < ActiveRecord::Base
   has_many    :followers, through: :subscribers
   has_many    :followed_users, through: :subscriptions, source: :followed
   has_many    :created_tasks, class_name: "Task", foreign_key: :creator_id
+  has_many    :visits
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
