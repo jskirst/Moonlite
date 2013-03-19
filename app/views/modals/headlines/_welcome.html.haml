@@ -57,9 +57,7 @@
       
       %div.divider OR
       = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
-        = f.text_field :name, value: nil, placeholder: "Name"
-        = f.text_field :email, value: nil, placeholder: "E-Mail"
-        = f.password_field :password, value: nil, placeholder: "Password", onKeyPress: "return checkSubmit(event, this);"
+        = f.text_field :email, value: nil, placeholder: "Or sign up with email..."
   
   .exit{ style: "float: right; margin-top: 24px;" }
     %a{ onclick: "submit_or_close(this);" } Continue to Launchpad »
