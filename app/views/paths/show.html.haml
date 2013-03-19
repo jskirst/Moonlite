@@ -8,8 +8,8 @@
         %h1 Looks like you're new here...
       .body
         - @enrollment = @path.enrollments.new
-        - section = @path.next_section
-        - if section && @task = section.core_tasks.first
+        - @section = @path.next_section
+        - if @section && @task = @section.core_tasks.first
           - @answers = @task.answers
           - @question_count = 0
           - @streak = 0
