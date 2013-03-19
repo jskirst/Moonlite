@@ -48,12 +48,12 @@
         %div.control-group
           %label.control-label New password
           %div.controls
-            = f.text_field :location, style: "width: 150px;"
+            = f.password_field :password, style: "width: 150px;"
         %div.control-group
           %label.control-label Confirm new password
           %div.controls
-            = f.text_field :location, style: "width: 150px;"
-        %a.button.button-actionable{ style: "padding: 4px 10px 3px 10px; font-size:13px; position: relative; float: right; bottom: 3px;"} Save new password
+            = f.password_field :password_confirmation, style: "width: 150px;"
+        = f.submit "Save new password", class: "button button-actionable", style: "padding: 4px 10px 3px 10px; font-size:13px; position: relative; float: right; bottom: 3px;"
         
       %h4 Your email address
       %span{style:"position:relative; bottom:5px;"}
