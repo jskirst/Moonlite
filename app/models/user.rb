@@ -325,6 +325,10 @@ class User < ActiveRecord::Base
   end
 
   def generate_username
+    if name.nil?
+      return SecureRandom::hex(4)
+    end
+    
     new_username = name.downcase.gsub(/[^a-z0-9]/i,'')
     new_combined_username = new_username
     username_count = User.where(username: new_combined_username).size
