@@ -1,0 +1,19 @@
+.intro_wrapper
+  :javascript
+    $(function(){ $.MB.Arena.init(); });
+  .intro
+    .header
+      = image_tag STONEY_MEDIUM_URL, style: "width:42px; height:47px; margin:4px 4px 0 0;", alt: "Stoney"
+      %h1 You're about to start your first Challenge!
+    %hr{ style:"margin:0"}
+    .body
+      %ul
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
+          %h3 Streak bonus
+          %p Get multiple questions correct consecutively and you'll earn streak multipliers!
+      - @next_text = "Continue"
+      - @next_link = start_section_path(@section.id, i: "1")
+      - @start_countdown = false
+      - @show_stats = false
+      = render file: "sections/continue"

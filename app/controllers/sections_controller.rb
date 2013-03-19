@@ -182,8 +182,13 @@ class SectionsController < ApplicationController
     
     if current_user
       completed_task = current_user.completed_tasks.find_by_task_id(task_id)
-      raise "Already answered" if completed_task.status_id != Answer::INCOMPLETE
-      raise "Out of time" if points > 0 and completed_task.created_at <= 45.seconds.ago
+      if completed_task.nil?
+        completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE)
+      elsif completed_task.status_id != Answer::INCOMPLETE
+        raise "Already answered"
+      elsif completed_task.created_at <= 45.seconds.ago and points > 0
+        raise "Out of time"
+      end
       
       completed_task.enrollment_id = @enrollment.id
       completed_task.answer_id = supplied_answer.id
@@ -216,8 +221,10 @@ class SectionsController < ApplicationController
     
     if @task
       @question_count += 1
-      if @enrollment.total_points == 0 && current_user.completed_tasks.count == 0 && params[:intro] != "complete"
-        @page = "intro"
+      if @enrollment.total_points == 0 and current_user.completed_tasks.count == 0 and params[:i].to_i == 0
+        @page = "intro1"
+      elsif params[:i] == "1"
+        @page = "intro2"
       else
         @streak = session[:ssf].to_i
         if @streak > @enrollment.longest_streak
