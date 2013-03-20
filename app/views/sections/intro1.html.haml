@@ -1,18 +1,31 @@
+:css
+  .quizcontainer { width: 500px !important; margin-top:10px; }
+  .quizheader span { font-size: 22px; }
+
 .intro_wrapper
   :javascript
     $(function(){ $.MB.Arena.init(); });
   .intro
     .header
       = image_tag STONEY_MEDIUM_URL, style: "width:42px; height:47px; margin:4px 4px 0 0;", alt: "Stoney"
-      %h1 You're about to start your first Challenge!
+      %h1 Welcome to MetaBright!
     %hr{ style:"margin:0"}
     .body
       %ul
         %li
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
-          %h3 Streak bonus
-          %p Get multiple questions correct consecutively and you'll earn streak multipliers!
-      - @next_text = "Continue"
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png", alt: "One" }
+          %h3 Prove yourself
+          %p MetaBright Challenges give you the chance to show off your knowledge and skills. 
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png", alt: "Two" }
+          %h3 Take a variety of questions
+          %p Challenges are made up of different question types that help you demonstrate your strengths in different ways.
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png", alt: "Three" }
+          %h3 Try it out
+          %p You're about to take some "Arena" questions. Don't worry about getting questions wrong, your profile will only highlight your top achievements.
+      %p Do a practice question to get a feel for how it works. (This practice question isn't timed, but the real ones are!)
+      - @next_text = "Let's go!"
       - @next_link = start_section_path(@section.id, i: "1")
       - @start_countdown = false
       - @show_stats = false
