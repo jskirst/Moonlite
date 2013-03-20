@@ -15,14 +15,14 @@
     - if 
       :javascript
         $(function(){
-          $.MB.Arena.init({countdown: #{@start_countdown}});
+          $.MB.Arena.init({start_countdown: #{@start_countdown}});
           $(".quizcontainer").fadeIn();
         });
      
     %div.quizheader
       = image_tag @path.path_pic, style: "width: 50px; height: 50px;", alt: "#{@path.name}"
       %div{ style: "display:inline-block;" }
-        %span <strong>#{@path.name}:</strong> #{@section.name}</span>
+        %span.name <strong>#{@path.name}</strong></span>
         %div#idprogressbar
     %div{ style: "text-align:center;" }
       = render "sections/stored_resource", { :stored_resource => @stored_resource }

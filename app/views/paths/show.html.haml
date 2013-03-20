@@ -9,8 +9,10 @@
       .body
         %h4 
           MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem.
-        %a#practice_button.button.button-actionable{ onclick: "$('.quizcontainer').slideDown(); $.MB.Arena.init();" } Take Practice Problem
+        - @section ||= @path.next_section
         - @start_countdown = false
+        - @next_text = "Let's Go!"
+        - @next_link = start_section_path(@section.id, i: "c")
         = render file: "sections/continue"
   
   .top

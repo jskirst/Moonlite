@@ -15,18 +15,17 @@
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png", alt: "One" }
           %h3 Prove yourself
-          %p MetaBright Challenges give you the chance to show off your knowledge and skills. 
+          %p User MetaBright to show off and improve your skills. We could all use some practice!
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png", alt: "Two" }
           %h3 Take a variety of questions
-          %p Challenges are made up of different question types that help you demonstrate your strengths in different ways.
+          %p Different types of questions will test your knowledge in different ways.
         %li
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png", alt: "Three" }
           %h3 Try it out
-          %p You're about to take some "Arena" questions. Don't worry about getting questions wrong, your profile will only highlight your top achievements.
-      %p Do a practice question to get a feel for how it works. (This practice question isn't timed, but the real ones are!)
+          %p Do a practice question to get a feel for how it works!
       - @next_text = "Let's go!"
-      - @next_link = start_section_path(@section.id, i: "1")
+      - @next_link = start_section_path(@section.id, i: "c")
       - @start_countdown = false
       - @show_stats = false
       = render file: "sections/continue"
