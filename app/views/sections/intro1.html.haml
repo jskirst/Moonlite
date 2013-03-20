@@ -1,13 +1,20 @@
 :css
   .quizcontainer { width: 500px !important; margin-top:10px; }
   .quizheader span { font-size: 22px; }
+  .header { padding: 0px 0 5px 9px; }
+  .header h1 { font-size: 25px; position: relative; top: 3px; }
+  .intro .body h3 { font-size: 15px; }
+  .intro .body p { font-size: 13px; }
+  .intro .body ul li { line-height: 8px; }
+  .intro .body ul li img { top: 8px; }
+  .quizheader { display: none; }
 
 .intro_wrapper
   :javascript
     $(function(){ $.MB.Arena.init(); });
   .intro
     .header
-      = image_tag STONEY_MEDIUM_URL, style: "width:42px; height:47px; margin:4px 4px 0 0;", alt: "Stoney"
+      = image_tag STONEY_MEDIUM_URL, style: "width:36px; height:41px; margin:4px 4px 0 0;", alt: "Stoney"
       %h1 Welcome to MetaBright!
     %hr{ style:"margin:0"}
     .body
