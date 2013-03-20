@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130318031431) do
+ActiveRecord::Schema.define(:version => 20130320013542) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -42,7 +42,7 @@ ActiveRecord::Schema.define(:version => 20130318031431) do
   create_table "comments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "owner_id"
-    t.string   "content"
+    t.text     "content"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.string   "owner_type"
@@ -227,7 +227,7 @@ ActiveRecord::Schema.define(:version => 20130318031431) do
 
   create_table "stored_resources", :force => true do |t|
     t.string   "description"
-    t.string   "link"
+    t.text     "link"
     t.integer  "path_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
@@ -318,7 +318,7 @@ ActiveRecord::Schema.define(:version => 20130318031431) do
 
   create_table "user_events", :force => true do |t|
     t.integer  "user_id"
-    t.string   "content"
+    t.text     "content"
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.boolean  "is_read",     :default => false
@@ -404,7 +404,7 @@ ActiveRecord::Schema.define(:version => 20130318031431) do
   create_table "visits", :force => true do |t|
     t.integer  "user_id"
     t.integer  "visitor_id"
-    t.string   "request_url"
+    t.text     "request_url"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "external_id"

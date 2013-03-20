@@ -157,8 +157,8 @@ class User < ActiveRecord::Base
       user.password = SecureRandom::hex(16)
       user.password_confirmation = user.password
       user.grant_username
-      user.save
     end
+    user.save!
     
     user.user_auths.create!(provider: auth["provider"], uid: auth["uid"])
     return user
@@ -325,6 +325,8 @@ class User < ActiveRecord::Base
   end
 
   def generate_username
+    return SecureRandom::hex(6) if name.nil?
+    
     new_username = name.downcase.gsub(/[^a-z0-9]/i,'')
     new_combined_username = new_username
     username_count = User.where(username: new_combined_username).size
@@ -332,6 +334,8 @@ class User < ActiveRecord::Base
       username_count += 1
       new_combined_username = "#{new_username}#{username_count}"
     end
+    
+    new_combined_username = SecureRandom::hex(6) if new_combined_username.length >= 255
     return new_combined_username
   end
   
