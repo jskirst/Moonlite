@@ -22,15 +22,24 @@
             - path = @paths[i]
             - first_section = path.try { |p| p.next_section }
             - if path && first_section
-              %td
-                = link_to start_section_path(first_section), rel: "nofolow", remote: true do
-                  = image_tag path.picture
+              %td.mosaic-block.bar2
+                = link_to start_section_path(first_section), class: "mosaic-overlay", title: "#{path.name}", rel: "nofolow", remote: true do
+                  %div.details
+                    %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 14, separator: ' ')}
+                    %h5 ## points  
+                %div                  
+                  = link_to start_section_path(first_section), rel: "nofolow", remote: true do
+                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
         %tr.tiles
           - (4..8).each do |i|
             - path = @paths[i]
-            - first_section = path.try { |p| path.next_section }
+            - first_section = path.try { |p| p.next_section }
             - if path && first_section
-              %td
-                = link_to start_section_path(first_section), rel: "nofolow", remote: true do
-                  = image_tag path.picture            
-                   
+              %td.mosaic-block.bar2
+                = link_to start_section_path(first_section), class: "mosaic-overlay", title: "#{path.name}", rel: "nofolow", remote: true do
+                  %div.details
+                    %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 14, separator: ' ')}
+                    %h5 ## points
+                %div
+                  = link_to start_section_path(first_section), rel: "nofolow", remote: true do
+                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"

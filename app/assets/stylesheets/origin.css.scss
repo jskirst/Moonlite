@@ -40,7 +40,9 @@
   } 
 
   table {
-    margin-bottom: -6px; 
+    margin: 0 0 -6px 20px; 
+    text-align: left;
+    
     
     tr.logo{
       height: 150px;
@@ -50,17 +52,18 @@
     
     tr.tiles {
       td {
-        width:154px;
-        padding: 5px 5px 25px 5px;
-        margin: 5px;
+        width:110px;
+        height: 90px;
+        padding: 5px 5px 25px 0;
+        display: inline-block; 
+        margin-right: 33px;
+        margin-bottom: 25px;
+        &:nth-child(4){ margin-right: 0; }
         
         img { 
-          height: 110px; 
-          width: 110px; 
-          box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;
-          border-radius:8px;
-          background-color: white;
-          &:hover { box-shadow: rgba(0, 0, 0, 0.75) 0px 2px 5px; }
+          height: 120px; 
+          width: 120px;
+          
         }
       }
     }
