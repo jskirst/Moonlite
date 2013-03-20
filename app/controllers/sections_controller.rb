@@ -186,7 +186,7 @@ class SectionsController < ApplicationController
         completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE)
       elsif completed_task.status_id != Answer::INCOMPLETE
         raise "Already answered"
-      elsif completed_task.created_at <= 45.seconds.ago and points > 0
+      elsif completed_task.created_at <= 60.seconds.ago and points > 0
         raise "Out of time"
       end
       
