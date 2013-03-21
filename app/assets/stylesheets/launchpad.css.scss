@@ -142,16 +142,18 @@
       
       .signup {
         text-align: center;
+        
         .btn.danger { width:205px; padding-top:7px; padding-bottom:7px; }
-        .btn.danger:first-child { margin-right: 30px; }
+        .btn.danger:first-child { margin-bottom: 12px; }
         .btn.danger img { height:30px; }
         .divider {
           background-image: url($divider);
           background-repeat: no-repeat;
           background-position: center 10px;
-          width: 374px;
+          width: 350px;
           margin: 15px auto;
         }
+        form { margin-bottom: 0; }
         input { padding: 10px 15px; font-size: 16px; width: 180px; text-align: left; }
         input:nth-child(3) { margin-right:5px; margin-left:5px; }
       }
