@@ -5,7 +5,7 @@
     }
     
     function submit_or_close(exit_button){
-      if($("#user_password").val() == ""){
+      if($("#user_email").val() == ""){
         $(exit_button).parents('.headlines').fadeOut(300, function(){ 
           $(this).remove(); 
           if($('.headlines').size() > 0){ 

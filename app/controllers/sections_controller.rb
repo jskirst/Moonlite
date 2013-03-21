@@ -215,7 +215,7 @@ class SectionsController < ApplicationController
     @hide_background = true
     @streak = 0
     @question_count = params[:count].to_i || 0
-    if @question_count <= 8
+    if @question_count <= 6
       @task = @section.next_task(current_user)
     end
     
