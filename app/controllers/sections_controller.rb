@@ -221,22 +221,18 @@ class SectionsController < ApplicationController
     
     if @task
       @question_count += 1
-      if false and @enrollment.total_points == 0 and current_user.completed_tasks.count == 0 and params[:i] != "c"
-        @page = "intro1"
-      else
-        @streak = session[:ssf].to_i
-        if @streak > @enrollment.longest_streak
-          @enrollment.update_attribute(:longest_streak, @streak)
-        end
-        @rank = @enrollment.rank
-        if @rank > @enrollment.highest_rank
-          @enrollment.update_attribute(:highest_rank, @rank)
-        end
-        @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
-        @answers = @task.answers.to_a.shuffle
-        @stored_resource = @task.stored_resources.first
-        @page = "continue"
+      @streak = session[:ssf].to_i
+      if @streak > @enrollment.longest_streak
+        @enrollment.update_attribute(:longest_streak, @streak)
       end
+      @rank = @enrollment.rank
+      if @rank > @enrollment.highest_rank
+        @enrollment.update_attribute(:highest_rank, @rank)
+      end
+      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
+      @answers = @task.answers.to_a.shuffle
+      @stored_resource = @task.stored_resources.first
+      @page = "continue"
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 

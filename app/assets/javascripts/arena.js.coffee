@@ -21,7 +21,7 @@ $.MB.Arena.start_countdown = ->
   setTimeout ->
     setTimeout($.MB.Arena.count_down_bar, 450)
     setTimeout($.MB.Arena.count_down_points, 450)
-  ,2000
+  ,3000
 
 $.MB.Arena.init = (options = {}) ->
   $.continue_countdown = true
