@@ -10,12 +10,15 @@
         %th Page
         %th Time on Page (secs)
     %tbody
-    - visit_list = @visits.each
-    - begin
-      - while visit_list.peek
-        - visit = visit_list.next
-        %tr
-          %td= visit.page
-          %td= visit.time_on_page(visit_list.peek)
-    - rescue
+      - visit_list = @visits.each
+      - begin
+        - while visit_list.peek
+          - visit = visit_list.next
+          %tr
+            %td= visit.page
+            %td= visit.time_on_page(visit_list.peek)
+      - rescue
+      %tr
+        %td= @visits.last.page
+        %td= @visits.last.time_on_page()
       

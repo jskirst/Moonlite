@@ -48,7 +48,7 @@ class CompaniesController < ApplicationController
   
   def user
     @user = User.find(params[:id])
-    @visits = @user.visits.order("id DESC")
+    @visits = @user.visits.order("id ASC")
   end
   
   def paths
