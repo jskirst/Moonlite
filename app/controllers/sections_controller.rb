@@ -221,7 +221,7 @@ class SectionsController < ApplicationController
     
     if @task
       @question_count += 1
-      if @enrollment.total_points == 0 and current_user.completed_tasks.count == 0 and params[:i] != "c"
+      if false and @enrollment.total_points == 0 and current_user.completed_tasks.count == 0 and params[:i] != "c"
         @page = "intro1"
       else
         @streak = session[:ssf].to_i

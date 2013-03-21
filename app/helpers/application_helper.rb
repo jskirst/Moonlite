@@ -56,7 +56,6 @@ module ApplicationHelper
       when :google_plus
         "https://plus.google.com/share?url=#{url}"
       end
-    url = share_url(url: url)
     popup_javascript(url)
   end
   
