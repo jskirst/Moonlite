@@ -11,4 +11,14 @@ class Visit < ActiveRecord::Base
     self.request_url = self.request_url.slice(0..255) if request_url.length >= 255
     self.external_id = SecureRandom.hex(16) unless external_id
   end
+  
+  def page
+    return "" if request_url.blank?
+    return request_url.split("/").last(2).join("/").slice(0..20)
+  end
+  
+  def time_on_page(next_page = nil)
+    return created_at - next_page.created_at if next_page
+    return updated_at - created_at
+  end
 end
