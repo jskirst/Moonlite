@@ -39,25 +39,25 @@
         }
       });
     })
-  .header
-    = image_tag STONEY_SMALL_URL, style: "display: inline-block; height:auto;", alt: "Stoney"
-    %h1{ style: "font-size: 35px; padding-top: 15px;"} Welcome to MetaBright!              
-    %h2{ style: "font-size: 20px;"  }
-      Add your high score to the leaderboard and keep racking up points!
-      
-  .body.centered{ style: "margin-top: 30px;" }
-    .signup
-      = link_to "/auth/google_oauth2", class: "btn danger" do
-        = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-        %span.landingbuttontext Sign in with Google »
-      
-      = link_to "/auth/facebook", class: "btn danger" do
-        = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-        %span.landingbuttontext Sign in with Facebook »
-      
-      %div.divider OR
-      = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
-        = f.text_field :email, value: nil, placeholder: "Or sign up with email..."
-  
+    
+  %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/GiantStoney.png", style: "display: inline-block; height: 250px; vertical-align:top; position: relative; top:32px; "}
+  %div{ style: "display: inline-block; width: 65%; margin-top:10px"}
+    .header     
+      %h1{ style: "font-size: 32px;"} Welcome to MetaBright!              
+      %h2{ style: "font-size: 18px;"  }
+        Add your high score to the leaderboard and keep racking up points!
+    .body.centered{ style: "margin-top: 17px; margin-bottom: 0; " }
+      .signup
+        = link_to "/auth/google_oauth2", class: "btn danger" do
+          = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+          %span.landingbuttontext Sign in with Google »
+        
+        = link_to "/auth/facebook", class: "btn danger" do
+          = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
+          %span.landingbuttontext Sign in with Facebook »
+        
+        %div.divider OR
+        = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
+          = f.text_field :email, value: nil, placeholder: "Or sign up with email..."   
   .exit{ style: "float: right; margin-top: 24px;" }
     %a{ onclick: "submit_or_close(this);" } Continue to Launchpad »
