@@ -32,7 +32,7 @@
           %span.vote_points{ style:"margin-right:5px;" } pts
     
     %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post.task.task?}" }
-      %pre.dropdown-toggle{ "data-toggle" => "dropdown", role: "button", style: "color:inherit; cursor:default;" } #{post.task.question}
+      %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post.task.question}
       %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
         %li
           %div

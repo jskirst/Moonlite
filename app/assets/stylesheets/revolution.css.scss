@@ -22,7 +22,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .photo{ border-radius:4px; width: 50px; height: 50px; }
 .username{ text-decoration: none; color:#005C1F; font-size:17px; }
 .posttext { margin: -2px -12px 0 -12px; padding: 9px 12px; background-color:rgb(211, 241, 220); }
-.posttext pre{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none;}
+.posttext code{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none; color:inherit; cursor:default;}
 .leveltext { font-weight: normal; }
 .challengetext { font-weight: bold; text-decoration:none; color:black; display:inline; }
 .enrolledminiimages { height:13px; width:13px; }
