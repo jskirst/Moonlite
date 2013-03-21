@@ -17,7 +17,7 @@ class Section < ActiveRecord::Base
       
   def next_task(user = nil)
     if user.nil?
-      tasks.where(["locked_at is ? and answer_type = ?", nil, Task::MULTIPLE, user.id]).first
+      tasks.where(["locked_at is ? and answer_type = ?", nil, Task::MULTIPLE]).first
     else
       tasks.where(["locked_at is ? and answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", nil, Task::MULTIPLE, user.id]).first
     end
