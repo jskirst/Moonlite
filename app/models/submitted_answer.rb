@@ -22,6 +22,8 @@ class SubmittedAnswer < ActiveRecord::Base
   
   after_initialize :set_template
   
+  def reviewed?() not reviewed_at.nil? end
+  
   def preview
     return stored_resources.first.obj.url unless stored_resources.empty?
     return url unless url.blank?
