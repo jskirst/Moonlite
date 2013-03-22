@@ -15,11 +15,18 @@ class Section < ActiveRecord::Base
   before_create { self.position = get_next_position_for_path }
   before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
       
-  def next_task(user = nil)
+  def next_task(user = nil, exclude_first = false)
     if user.nil?
-      tasks.where(["locked_at is ? and answer_type = ?", nil, Task::MULTIPLE]).first
+      next_tasks = tasks.where("locked_at is ? and answer_type = ?", nil, Task::MULTIPLE)
     else
-      tasks.where(["locked_at is ? and answer_type = ? and NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", nil, Task::MULTIPLE, user.id]).first
+      next_tasks = tasks.where("locked_at is ? and answer_type = ?", nil, Task::MULTIPLE)
+        .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id)
+    end
+    
+    unless exclude_first
+      next_tasks.order("position DESC").first
+    else
+      next_tasks.order("position DESC").first(2).last
     end
   end
   

@@ -10,6 +10,7 @@
         %h4 
           MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem.
         - @section ||= @path.next_section
+        - @task ||= @section.next_task(nil, true)
         - @start_countdown = false
         - @next_text = "Let's Go!"
         - @next_link = start_section_path(@section.id)
