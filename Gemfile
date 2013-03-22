@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'will_paginate'
-gem 'jquery-rails', '= 2.0.2'
+gem 'jquery-rails'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'pg'
@@ -15,7 +15,6 @@ gem 'haml'
 gem 'faker'
 gem 'quiet_assets'
 gem 'nokogiri'
-gem 'turbolinks'
 
 group :assets do
   gem 'sass-rails'
