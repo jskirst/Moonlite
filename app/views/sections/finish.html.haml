@@ -13,16 +13,12 @@
       %div.completionsubheader You've earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
       %div.completionstats
         %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
-        %p Current level: <strong>#{@enrollment.level}</strong>
-      %div{ style: "float: right; margin: 15px 10px 0 0;" }
-        = render "shared/sharing", { custom_style: "", title: "Just finished a section of the #{@path.name} challenge on @MetaBright and scored #{@enrollment.total_points} points", url: challenge_url(@section.path.permalink) }
+        %p Current level: <strong>#{@enrollment.level}</strong>     
     %div{ style: "display:inline-block; vertical-align:top;" }
-      %div.completionnextsteps
-        %span Continue improving your score
-        %ul
-          %li
-            Complete Creative Responses
-            %p= link_to "#{@available_crs} available", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user))
-          %li Take additional sections
-          %p= link_to "#{@unlocked_sections} of #{@section.path.sections.size} sections unlocked", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user), type: 2) 
-    = link_to "Continue", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-actionable", style: "float: right;"
+      %div.completionnextsteps{ style: "height: 130px; "}
+        %span{ style: "font-weight: bold; "} But wait, there's more...
+        %ul{ style: "font-size: 15px; "}
+          %li{ style: "margin-bottom: 4px; "}
+            Additional Sections
+          %li All new questions
+        = link_to "Continue", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-actionable", style: "float: right;"
