@@ -88,3 +88,15 @@ task :test_notifications => :environment do
     u.save
   end
 end
+
+task :order_by_easy => :environment do
+  Task.all.each do |t|
+    correct_count = t.completed_tasks.where(status_id: Answer::CORRECT).count
+    total = t.completed_tasks.count
+    
+    total = 1 if total == 0
+    correct_ratio = ((correct_count.to_f / total.to_f).to_f * 10).ceil
+    t.position = correct_ratio
+    t.save
+  end
+end

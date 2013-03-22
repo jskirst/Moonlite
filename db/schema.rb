@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130320013542) do
+ActiveRecord::Schema.define(:version => 20130322001712) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -292,7 +292,7 @@ ActiveRecord::Schema.define(:version => 20130320013542) do
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.integer  "correct_answer",     :default => 1
-    t.integer  "position"
+    t.integer  "position",           :default => 0
     t.integer  "answer_type",        :default => 2
     t.integer  "answer_sub_type"
     t.boolean  "disable_time_limit", :default => false
