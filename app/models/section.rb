@@ -26,7 +26,7 @@ class Section < ActiveRecord::Base
     unless exclude_first
       next_tasks.order("position DESC").first
     else
-      next_tasks.order("position DESC").first(2).last
+      next_tasks.order("position DESC").first(2).first
     end
   end
   
