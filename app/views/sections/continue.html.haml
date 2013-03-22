@@ -1,6 +1,6 @@
 - @enrollment ||= @path.enrollments.new
 - @section ||= @path.next_section
-- @task ||= @section.core_tasks.first
+- @task ||= @section.next_task
 - @answers ||= @task.answers
 - @question_count ||= 0
 - @streak ||= 0
@@ -23,8 +23,9 @@
       = image_tag @path.path_pic, style: "width: 50px; height: 50px;", alt: "#{@path.name}"
       %div{ style: "display:inline-block;" }
         %span.name <strong>#{@path.name}</strong></span>
-      %div.quiz_progress
-        Question X / Y
+      - if current_user
+        %div.quiz_progress
+          Question #{@question_count} / 7
     %div{ style: "text-align:center;" }
       = render "sections/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }

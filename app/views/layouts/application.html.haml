@@ -32,7 +32,8 @@
     - if current_user
       - if @path && @current_section
         = render "modals/launchpad"
-      = render "modals/explore"
+      - if show_nav_bar
+        = render "modals/explore"
     - else
       = render "modals/login"
       

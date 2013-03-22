@@ -25,7 +25,9 @@
       this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
     });
 
-  = render partial: "newsfeed/post", collection: feed.posts, locals: { feed: feed }
+  - feed.posts.each do |post|
+    - if post.reviewed? or (current_user and post.user == current_user)
+      = render "newsfeed/post", { post: post, feed: feed }
   
   - if feed.url
     :javascript

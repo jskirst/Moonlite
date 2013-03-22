@@ -5,6 +5,10 @@ class UsersController < ApplicationController
   before_filter :load_resource, except: [:retract, :notifications]
   before_filter :authorize_resource, except: [:retract, :notifications]
   
+  def show
+    redirect_to profile_path(@user.username)
+  end
+  
   def notifications
     @user = User.find_by_signup_token(params[:signup_token])
     raise "Access Denied: Attempt to change settings" if current_user && current_user != @user
