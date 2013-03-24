@@ -1,24 +1,19 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
+  .quizcontainer { width: 676px; }
 %div.quizcontainer
   %div.quizspace
     %div.quizheader
       = image_tag @section.path.path_pic, style: "height:50px; width:50px;", alt: "#{@section.path.name}"
       %div{ style: "display:inline-block;" }
-        %span <strong>#{@section.path.name}:</strong> #{@section.name}</span>
+        %span <strong>#{@section.path.name}</strong>
         %div#idprogressbar
-    %div.completionmessagespace
-      %div.completionheader
-        %span Nice work!
-      %div.completionsubheader You've earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
-      %div.completionstats
-        %p Total Challenge points: <strong>#{@enrollment.total_points}</strong>
-        %p Current level: <strong>#{@enrollment.level}</strong>     
-    %div{ style: "display:inline-block; vertical-align:top;" }
-      %div.completionnextsteps{ style: "height: 130px; "}
-        %span{ style: "font-weight: bold; "} But wait, there's more...
-        %ul{ style: "font-size: 15px; "}
-          %li{ style: "margin-bottom: 4px; "}
-            Additional Sections
-          %li All new questions
+    %div
+      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/GiantStoney.png", style: "width:60px; height:73px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
+      %div{ style: "display: inline-block; margin-left: 8px; font-size:50px; line-height:58px; margin-top:-6px;"}
+        Nice work!
+        %div{ style: "font-size: 21px; margin-left: 0; line-height: 21px; " }
+          You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
+      %div{ style: "margin-left: 50px; margin-top: 20px;"}       
         = link_to "Continue", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-actionable", style: "float: right;"
+        %div{ style: "font-weight: bold; font-size:21px; margin-top:8px; margin-right: 25px; float: right;"} But wait, there's more...
