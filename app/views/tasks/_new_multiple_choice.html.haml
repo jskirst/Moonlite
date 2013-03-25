@@ -30,7 +30,7 @@
           %li Check for spelling and grammar.
     
     %div.step2.hide
-      %fieldset
+      %fieldset{ style: "width: 98%; "}
         %legend Create an Arena question
         %h4 Your question:
         %div{style:"margin-left:12px;"}
@@ -49,8 +49,9 @@
         %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;" } Back
         = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
     
-    %div.step3.hide
-      %span{ style:"position:relative; top:7px; font-size:30px;"} Nice work!
+    %div.step3.hide{ style: "width: 98%; "}
+      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px; width: 40px;", alt: "Stoney"}
+      %span{style:"position:relative; top:7px; font-size:35px;"} Nice work!
       %h4 Your question is now visible to the MetaBright community!
       %h4{ style: "margin-bottom:12px;" } You earn #{(Task::CREATOR_AWARD_POINTS+100).to_s} points every time you publish a question!
       %a.restart.button.button-actionable{ style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question

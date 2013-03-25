@@ -24,7 +24,7 @@
             You <strong>earn #{Task::CREATOR_AWARD_POINTS.to_s} points</strong> per published Task.
     
     %div.step2.hide
-      %fieldset{style: "display: inline-block; margin-right:28px; width:99%;"}
+      %fieldset{style: "display: inline-block; width:98%;"}
         %legend Create a Task
         %h4 Your new Task:
         %div{style:"margin-left:12px;"}
@@ -40,9 +40,9 @@
         %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Back
         = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
     
-    %div.step3.hide
-      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px;", alt: "Stoney"}
-      %span{style:"position:relative; top:7px; font-size:30px;"} Nice work!
+    %div.step3.hide{ style: "width: 98%; "}
+      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px; width: 40px;", alt: "Stoney"}
+      %span{style:"position:relative; top:7px; font-size:35px;"} Nice work!
       %h4 Your Task is now visible to the MetaBright community!
       %h4 You earn #{Task::CREATOR_AWARD_POINTS.to_s} points every time you publish a Task!
       %h4{ style:"margin-bottom:12px;" } If you've already personally completed this Task, you can <a class="take">mark it as complete</a> now. 
