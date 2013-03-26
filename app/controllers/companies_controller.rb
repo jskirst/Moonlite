@@ -50,7 +50,7 @@ class CompaniesController < ApplicationController
     @user = User.find(params[:id])
     @visits = @user.visits.order("id ASC")
     if not @visits.empty? and not @visits.first.visitor_id.nil?
-      presignup_visits = Visit.where(visitor_id: @visits.first.visitor_id)
+      presignup_visits = Visit.where("visitor_id = ? and user_id is ?", @visits.first.visitor_id, nil)
       @visits = presignup_visits + @visits
     end
   end
