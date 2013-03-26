@@ -4,21 +4,24 @@
     td { min-width: 300px; }
   = link_to "Back", admin_users_path, class: "button button-standard", style: "float: right;"
   %h1{ style: "border-bottom: 1px solid #DDD; margin-bottom: 20px; padding: 10px 0;" }= @user.name
-  %table
-    %thead
-      %tr
-        %th Page
-        %th Time on Page (secs)
-    %tbody
-      - visit_list = @visits.each
-      - begin
-        - while visit_list.peek
-          - visit = visit_list.next
-          %tr
-            %td= visit.page
-            %td= visit.time_on_page(visit_list.peek)
-      - rescue
-      %tr
-        %td= @visits.last.page
-        %td= @visits.last.time_on_page()
+  - if @visits.empty?
+    %p No visits could be found.
+  - else
+    %table
+      %thead
+        %tr
+          %th Page
+          %th Time on Page (secs)
+      %tbody
+        - visit_list = @visits.each
+        - begin
+          - while visit_list.peek
+            - visit = visit_list.next
+            %tr
+              %td= visit.page
+              %td= visit.time_on_page(visit_list.peek)
+        - rescue
+        %tr
+          %td= @visits.last.page
+          %td= @visits.last.time_on_page()
       

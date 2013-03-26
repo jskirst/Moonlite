@@ -49,6 +49,10 @@ class CompaniesController < ApplicationController
   def user
     @user = User.find(params[:id])
     @visits = @user.visits.order("id ASC")
+    if not @visits.empty? and not @visits.first.visitor_id.nil?
+      presignup_visits = Visit.where(visitor_id: @visits.first.visitor_id)
+      @visits = presignup_visits + @visits
+    end
   end
   
   def paths
