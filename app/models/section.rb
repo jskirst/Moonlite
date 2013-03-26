@@ -32,9 +32,15 @@ class Section < ActiveRecord::Base
   
   def completed?(user) remaining_tasks(user) <= 0 end
   
-  def remaining_tasks(user)
+  def remaining_tasks(user, type = nil)
     unless self.published_at.nil?
-      return tasks.where(["NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id]).count
+      if type
+        tasks.where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id)
+          .where("tasks.answer_type = ?", type)
+          .count
+      else
+        tasks.where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id).count
+      end
     else
       return 0
     end

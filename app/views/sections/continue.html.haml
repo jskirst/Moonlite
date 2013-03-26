@@ -7,7 +7,7 @@
 - @start_countdown = true if @start_countdown.nil?
 - @show_stats = true if @show_stats.nil?
 - @next_text ||= "Next"
-- @next_link ||= continue_section_path(@section.id, @question_count)
+- @next_link ||= continue_section_path(@section.id, @session_id)
 
 %div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'} #{'width: inherit;' unless @show_stats}" }
   = render "modals/report_issue"
@@ -25,7 +25,7 @@
         %span.name <strong>#{@path.name}</strong></span>
       - if current_user
         %div.quiz_progress
-          Question #{@question_count} / 7
+          Question #{@question_count} / #{@session_total}
     %div{ style: "text-align:center;" }
       = render "sections/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
@@ -40,12 +40,14 @@
           = hidden_field_tag :task_id, @task.id
           = hidden_field_tag :points_remaining, 100
           = hidden_field_tag :streak, @streak
+          
           %ol{ style: "list-style-position: inside; margin-left: 0px;" }
             - @answers.each do |a|
               %li.answer_content{ id: "answer_#{a.id}" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
         = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
+    
     - if @show_stats
       %div{ style: "display:inline-block; vertical-align:top;" }
         %div.pointsandstreakspace

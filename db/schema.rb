@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130322001712) do
+ActiveRecord::Schema.define(:version => 20130326122544) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -86,6 +86,7 @@ ActiveRecord::Schema.define(:version => 20130322001712) do
     t.boolean  "is_private",          :default => false
     t.boolean  "is_restricted",       :default => false
     t.integer  "enrollment_id"
+    t.integer  "session_id"
   end
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"

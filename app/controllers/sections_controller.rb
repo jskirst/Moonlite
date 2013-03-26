@@ -181,9 +181,10 @@ class SectionsController < ApplicationController
     correct_answer = supplied_answer.is_correct ? supplied_answer : Answer.where(task_id: task_id, is_correct: true).first
     
     if current_user
+      session_id = params[:session_id]
       completed_task = current_user.completed_tasks.find_by_task_id(task_id)
       if completed_task.nil?
-        completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE)
+        completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE, session_id: session_id)
       elsif completed_task.status_id != Answer::INCOMPLETE
         raise "Already answered"
       elsif completed_task.created_at <= 60.seconds.ago and points > 0
@@ -212,9 +213,12 @@ class SectionsController < ApplicationController
     create_or_sign_in unless current_user
     @enrollment = current_user.enroll!(@path) unless @enrollment
     
-    @hide_background = true
-    @streak = 0
-    @question_count = params[:count].to_i || 0
+    @session_id = params[:session_id] || Time.now().to_i + current_user.id
+    current_session = current_user.completed_tasks.where(session_id: @session_id)
+    @question_count = current_session.count
+    @session_total = @section.remaining_tasks(current_user, Task::MULTIPLE) + @question_count
+    @session_total = 7 if @session_total > 7
+     
     if @question_count <= 6
       @task = @section.next_task(current_user)
     end
@@ -229,21 +233,22 @@ class SectionsController < ApplicationController
       if @rank > @enrollment.highest_rank
         @enrollment.update_attribute(:highest_rank, @rank)
       end
-      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE)
+      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE, session_id: @session_id)
       @answers = @task.answers.to_a.shuffle
       @stored_resource = @task.stored_resources.first
-      @page = "continue"
+      page = "continue"
     else
       @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
       @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
       social_tags(@path.name, @path.picture, @path.description)
-      @page = "finish"
+      page = "finish"
     end
     session[:ssf] = @streak
+    @hide_background = true
     if request.xhr?
-      render file: "sections/#{@page}", layout: false
+      render file: "sections/#{page}", layout: false
     else
-      render @page
+      render page
     end
   end
   
