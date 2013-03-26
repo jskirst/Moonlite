@@ -160,18 +160,33 @@ class SectionsController < ApplicationController
         return
       end
     end
-      
+    
     unless completed_task
       new_ct = current_user.completed_tasks.new(task_id: @task.id)
-      new_ct.status_id = Answer::CORRECT
-      new_ct.points_awarded = CompletedTask::CORRECT_POINTS
-      new_ct.award_points = true
+      if params[:mode] == "preview" or params[:mode] == "draft"
+        new_ct.status_id = Answer::INCOMPLETE
+      else
+        new_ct.status_id = Answer::CORRECT
+        new_ct.points_awarded = CompletedTask::CORRECT_POINTS
+        new_ct.award_points = true
+      end
       new_ct.submitted_answer_id = sa.id
       new_ct.enrollment_id = @enrollment.id
       new_ct.save!
+    else
+      if completed_task.incomplete? and params[:mode] == "submit"
+        completed_task.status_id = Answer::CORRECT
+        completed_task.points_awarded = CompletedTask::CORRECT_POINTS
+        completed_task.award_points = true
+        completed_task.save!
+      end
     end
     
-    redirect_to challenge_path(@section.path.permalink, c: true, p: (new_ct ? new_ct.points_awarded : nil), type: @task.answer_type)
+    if params[:mode] == "draft" or params[:mode] == "preview"
+      redirect_to take_section_path(@section, task_id: @task.id, preview: params[:mode] == "preview")
+    else
+      redirect_to challenge_path(@section.path.permalink, c: true, p: (new_ct ? new_ct.points_awarded : nil), type: @task.answer_type)
+    end
   end
   
   def complete

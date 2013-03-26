@@ -8,5 +8,5 @@ class Comment < ActiveRecord::Base
   validates :user_id, presence: true
   validates :owner_id, presence: true
   validates :owner_type, presence: true
-  validates :content, presence: true, length: { within: 1..255 }
+  validates :content, presence: true
 end

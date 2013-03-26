@@ -1,0 +1,52 @@
+%div.CRquestionandresponsespace
+  %div.CRquestionspace{ style: "width: 98%;" }
+    %span.cr_question_header Creative response:
+    %p
+      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
+  %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
+    %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
+    
+    %input{ type: "hidden", name: "content", value: @submitted_answer.content }
+    %input{ type: "hidden", name: "mode", value: "submit" }
+    
+    %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus", style: "height: 250px; width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 12px;font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px;" }= @submitted_answer.content
+
+    - if params[:preview] == "true"
+      %iframe{ src: raw_path(@submitted_answer.id), style: "height: 300px; width: 95%; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
+      
+    %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
+      %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
+        %span.text Add caption
+      = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 97%; display: none; margin: 0;", placeholder: "Caption will appear immediately below your response..."
+
+%div.CRbuttonspace
+  = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
+  %a.arena_report_link{ style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
+  - if @submitted_answer.reviewed?
+    = f.submit "Update", class: "button button-actionable", id: "submit_button", style: "float:right;"
+  - else
+    = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+    = f.submit "Save as Draft", class: "button button-standard", id: "draft_button", style: "float:right; margin-right: 10px;"
+  = f.submit "View Preview", class: "button button-standard", id: "preview_button", style: "float:right; margin-right: 10px;"
+  = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
+      
+:javascript
+  $("#preview_button").click(function(){
+    $("input[name=mode]").val("preview");
+  });
+  $("#draft_button").click(function(){
+    $("input[name=mode]").val("preview");
+  });
+
+  $("#challenge_form").submit(function(){
+    if($("#answer_input").val() != ""){
+      $("#challenge_form").unbind("submit");
+      $("#challenge_form").submit();
+      $("#submit_button").attr("disabled","disabled");
+      return true;
+    } else {
+      alert("Please enter an answer before submitting.");
+      $("#submit_button").removeAttr("disabled");
+      return false;
+    }
+  });

@@ -1,0 +1,70 @@
+%div.CRquestionandresponsespace
+  %div.CRquestionspace{ style: "height: 100%;" }
+    %span.cr_question_header Creative response:
+    %p
+      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
+  %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
+    %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
+
+    %input{ type: "hidden", name: "url", value: @submitted_answer.url }
+    %input{ type: "hidden", name: "content", value: @submitted_answer.content }
+    %input{ type: "hidden", name: "image_url", value: @submitted_answer.image_url }
+    
+    %div.input{ style: "margin-left: 0px; " }
+      %input#answer_input{ type: "text", name: "image_url", style: "width: 300px; margin-bottom:5px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
+      %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:2px;" } Preview
+      %div{ style: "font-size:14px; margin-bottom:-6px;"} or
+      = render "stored_resources/new_image"
+      %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+        %div#answer_preview{ style: "text-align: center;" }
+          = image_tag @submitted_answer.image_url || "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
+      
+    %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
+      %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
+        %span.text Add caption
+      = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 97%; display: none; margin: 0;", placeholder: "Caption will appear immediately below your response..."
+
+%div.CRbuttonspace
+  = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
+  %a.arena_report_link{ style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
+  = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+  = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
+      
+:javascript  
+  $("input[name=stored_resource_id]").change(function(){
+    $("input[name=image_url]").val($("#image_preview").attr("src"));
+  });
+
+  $(function(){
+    $('#challenge_form').submit(function(){
+      $("#loading_image").show();
+      $("#submit_button").attr("disabled","disabled").addClass("disabled").text("Submitting...");
+    });
+  });
+
+  $("#challenge_form").submit(function(){
+    if($("#uploaded_object").val() != ""){ return true; }
+    var url = $("#answer_input").val();
+    is_valid_image(url, function(valid){
+      if(valid == true){
+        $("#challenge_form").unbind("submit");
+        $("#challenge_form").submit();
+        $(".loading_image").show();
+        $("#submit_button").attr("disabled","disabled");
+        return true;
+      } else {
+        alert("Please provide a link to a valid image.");
+        $("#submit_button").removeAttr("disabled");
+        return false;
+      }
+    });
+    return false;
+  });
+
+  $("#answer_preview_button").click(function(){
+    var url = $("#answer_input").val();
+    is_valid_image(url, function(valid){
+      if(valid == true) { $("#image_preview").attr("src", url);
+      } else { alert("Please provide a link to a valid image."); }
+    });
+  });

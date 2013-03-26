@@ -1,0 +1,137 @@
+%div.CRquestionandresponsespace
+  %div.CRquestionspace{ style: "height: 100%;" }
+    %span.cr_question_header{ style: "margin-left:10px;"} Your Task, should you choose to accept it:
+    %p
+      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
+      %hr{ style: "margin: 15px 10px;" }        
+  %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
+    %h4{ style: "margin-bottom: 0px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 310px; margin-right: auto; margin-left: auto;" } Provide proof of completion:
+    
+    %input{ type: "hidden", name: "url", value: @submitted_answer.url }
+    %input{ type: "hidden", name: "content", value: @submitted_answer.content }
+    %input{ type: "hidden", name: "title", value: @submitted_answer.title }
+    %input{ type: "hidden", name: "description", value: @submitted_answer.description }
+    %input{ type: "hidden", name: "site_name", value: @submitted_answer.site_name }
+    %input{ type: "hidden", name: "image_url", value: @submitted_answer.image_url }
+    
+    %div.task_proof_options
+      %span{ onclick: "$('#url_input').show();$('#image_input').hide();" } Submit a URL
+      or
+      %span{ onclick: "$('#image_input').show();$('#url_input').hide();" } Upload an Image
+
+    %div#url_input{ style: "text-align:center; margin-top:15px; display: none; height: 50px;" }
+      %input#answer_input{ type: "text", name: "answer_url", style: "width: 250px; margin-bottom: 3px; margin-left:6%;", placeholder: "Copy & paste link to here...", autofocus: "autofocus", value: @submitted_answer.url }
+      %a#answer_preview_button.btn.secondary{style:"position:relative; bottom:2px; "} Preview
+      = image_tag ICON_LOADING_URL, size: "25x25", style: "padding: 0; margin-top: -3px; opacity: 0;", id: "loading_preview", alt: "Loading preview"
+      %div.error.hide{ style: "font-size: 13px; color: #971D1C;" }
+      %div{ style: "text-align:center; "}
+        %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
+        %p{ style: "display:inline; font-size:12px; " } Example: code on Github, pictures on Flickr, blog post or Youtube video 
+
+    %div#image_input{ style: "text-align:center; display: none; height: 35px; margin-top: 15px;" }
+      %div{ style: "margin:15px 0 5px 27px;" }
+        = render "stored_resources/new_image"
+      %div
+        %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "height:15px; display:inline;" }
+        %p{ style: "display:inline; font-size:12px; " } Upload pictures of you completing the Task, or screenshots of your work.
+        
+    
+    %div.input{ style: "margin-left: 0px; text-align: left;" }
+      %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+        - if @submitted_answer.new_record?
+          %div#answer_preview{ style: "text-align: center;" }
+            = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
+        %div#task_preview{ style: "#{'display: none;' if @submitted_answer.new_record?} position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
+          %div.content{ style: "height:76%; position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 11px;"}
+            %pre.unstyled{ style: "font-size:11px; height:95%;"}
+          = image_tag @submitted_answer.image_url || "/images/image_thumb.png", alt: "Image placeholder", class: "image_preview", style:"#{'width:207px;' unless @submitted_answer.content.blank?} display:block; margin-right:auto; margin-left:auto; z-index: 500;"
+          %div.details{ style: "padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: black;"}
+            %h4.title= @submitted_answer.title
+            %h5.description= @submitted_answer.description
+      
+    %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
+      %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
+        %span.text Add caption
+      = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 97%; display: none; margin: 0;", placeholder: "Caption will appear immediately below your response..."
+
+%div.CRbuttonspace
+  = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
+  %a.arena_report_link{ style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
+  = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+  = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
+      
+:javascript
+  var previewer_url = "#{preview_url}";
+
+  $("input[name=stored_resource_id]").change(function(){
+    $("input[name=image_url]").val($("#image_preview").attr("src"));
+  });
+
+  $(function(){
+    $('#challenge_form').submit(function(){
+      $("#loading_image").show();
+      $("#submit_button").attr("disabled","disabled").addClass("disabled").text("Submitting...");
+    });
+  });
+
+  $("#answer_preview_button").click(function(){
+    $("#loading_preview").fadeTo(100, 1);
+    $(".errors").text("").hide();
+    var url = $("#answer_input").val();
+    $.ajax(previewer_url, 
+      {
+        data: { url: url },
+        dataType: "json",
+        complete: function(){ $("#loading_preview").fadeTo(100, 0); },
+        success: function(results){
+          result = $.parseJSON(results.data);
+        
+          if(result.warnings){
+            $.log(result.warnings);
+          }
+        
+          if(result.error){
+            $.log(result.error);
+            $("div.error").text(result.error).show();
+            $('#image_input').show();
+          } else {
+            $("#answer_preview").hide();
+        
+            $("input[name=url]").val(result.url);
+            $("input[name=content]").val(result.content);
+            $("input[name=title]").val(result.title);
+            $("input[name=description]").val(result.description);
+            $("input[name=site_name]").val(result.site_name);
+            $("input[name=image_url]").val(result.image_url);
+          
+            var $preview = $("#task_preview");
+          
+            if(result.image_url){
+              $preview.find("img").attr("src", result.image_url);
+            } else {
+              $('#image_input').show();
+            } 
+          
+            if(result.content){
+              $preview.find(".content pre").text(result.content);
+            } else {
+              $preview.find("img").css("height", "100%").css("width", "100%");
+            }
+          
+            if(result.title){
+              $preview.find(".title").text(result.title);
+            } else {
+              $preview.find(".title").text("");
+            }
+            if(result.description){
+              $preview.find(".description").text(result.description);
+            } else {
+              $preview.find(".description").text("");
+            }
+          
+            $("#task_preview").show();
+          }
+        }
+      }
+    );
+  });

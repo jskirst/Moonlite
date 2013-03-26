@@ -238,13 +238,14 @@ class PathsController < ApplicationController
       feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
     else
       if params[:task]
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(15).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
       elsif params[:order] && params[:order] == "votes"
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(15).order("total_votes DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).order("total_votes DESC")
       else
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).offset(offset).limit(15).order("completed_tasks.created_at DESC")
+        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).order("completed_tasks.created_at DESC")
       end
     end
+    feed.posts = feed.posts.where("completed_tasks.status_id = ?", Answer::CORRECT).offset(offset).limit(15)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
