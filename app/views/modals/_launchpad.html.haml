@@ -11,7 +11,7 @@
         %span{style:"font-size:14px;"} #{@enrollment.points_to_next_level} pts to level up
         %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
           %div.bar{style:"width: #{@enrollment.level_percent}%;" }
-    - if current_user.completed_tasks.count > 10
+    - if current_user.completed_tasks.count > 7
       - if current_user.guest_user?
         - headlines = true
         = render "modals/headlines/welcome"
