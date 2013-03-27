@@ -1,16 +1,16 @@
 %div.CRquestionandresponsespace
-  %div.CRquestionspace{ style: "height: 100%;" }
+  %div.CRquestionspace{ style: "width: 98%;" }
     %span.cr_question_header Creative Response:
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
-  %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
-    %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
+  %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; #{if @task.text? then 'margin-top: 20px;' end}" }
+    %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
 
     %input{ type: "hidden", name: "url", value: @submitted_answer.url }
     %input{ type: "hidden", name: "content", value: @submitted_answer.content }
     %input{ type: "hidden", name: "image_url", value: @submitted_answer.image_url }
     
-    %div.input{ style: "margin-left: 0px; " }
+    %div.input{ style: "margin-left: 0px; text-align: center;" }
       %input#answer_input{ type: "text", name: "image_url", style: "width: 300px; margin-bottom:5px;", placeholder: "Copy & paste link to image URL here...", autofocus: "autofocus" }
       %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:2px;" } Preview
       %div{ style: "font-size:14px; margin-bottom:-6px;"} or
