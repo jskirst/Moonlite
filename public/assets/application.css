@@ -7810,12 +7810,16 @@ code.content {
   text-decoration: none; }
 
 .leftrailicon {
-  height: 46px;
-  width: 46px;
+  height: 57px;
+  width: 57px;
   border-radius: 3px;
-  margin-right: 3px;
+  margin-right: 8px;
   margin-top: 5px;
   vertical-align: baseline; }
+  
+.leftrailcontent a:nth-child(4n) img {
+	margin-right: 0;
+}
 
 .leftbox {
   text-shadow: 0 1px 0 white;
