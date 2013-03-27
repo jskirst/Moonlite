@@ -1,4 +1,6 @@
 = form_for(@task, action: :update, remote: true, "data-type" => "html", html: { class: "form-horizontal edit_task" } ) do |f|
+  :javascript
+    $(function(){ $.MB.capture_tabs(); })
   %div{ style: "margin-bottom:20px; float:right;" }
     = f.submit "Save", :id => "save_question_button", :class => "button button-info"
     %span.button.button-standard{ onclick: "$(this).parents('td').find('div.question_display').show(); $(this).parents('td').find('.edit_task').remove();" } Close
@@ -21,3 +23,7 @@
             = link_to "Remove", delete_stored_resource_path(@stored_resource.id), method: :delete, confirm: "Are you sure you want to remove this attachment?"
           - else
             = link_to "Add Image", add_stored_resource_task_path(@task)
+    %div.control-group
+      %label.control-label Template
+      %div.controls
+        = f.text_area :template, style: "height: 150px; width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px;"

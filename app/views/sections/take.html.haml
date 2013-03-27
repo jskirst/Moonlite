@@ -4,6 +4,10 @@
   = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", style: "margin: 0;" }) do |f|
     %div.CRquizspace
       %div.quizheader
+        - if params[:m]
+          :javascript
+            $(function(){ $(".draft_saved").fadeOut(8000); });
+          %div.draft_saved{ style: "float: right; font-size: 15px;" } Draft saved...
         = image_tag @path.path_pic, style: "height:50px; width:50px;", alt: "#{@path.name}"
         %div{ style: "display:inline-block;" }
           %span

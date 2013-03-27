@@ -183,7 +183,7 @@ class SectionsController < ApplicationController
     end
     
     if params[:mode] == "draft" or params[:mode] == "preview"
-      redirect_to take_section_path(@section, task_id: @task.id, preview: params[:mode] == "preview")
+      redirect_to take_section_path(@section, task_id: @task.id, m: params[:mode])
     else
       redirect_to challenge_path(@section.path.permalink, c: true, p: (new_ct ? new_ct.points_awarded : nil), type: @task.answer_type)
     end
