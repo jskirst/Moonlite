@@ -14,7 +14,7 @@
       $(this).parents(".post").hide("slow");
     });
     
-    $(".CRarea iframe").parent().hover(
+    $(".preview, .raw").parent().hover(
       function(){ $(this).find(".onhover").show(); },
       function(){ $(this).find(".onhover").hide(); }
     );
