@@ -56,7 +56,7 @@ def create_user(company,user_role,name,email,image_url)
     earned_points: 10)
   u.grant_username
   u.user_role = user_role
-  u.save
+  u.save!
   return u
 end
     
@@ -69,11 +69,11 @@ namespace :db do
     default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_content_creation: true)
     second_role = moonlite_company.user_roles.create!(name: "Test")
     moonlite_company.user_role_id = default_role.id
-    moonlite_company.save
+    moonlite_company.save!
     default_cat = moonlite_company.categories.create!(:name => "Everything")
     
     moonlite_admin = create_user(moonlite_company, default_role, "Jonathan Kirst", "admin@metabright.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
-    
+    raise "Failed to create user" unless moonlite_admin.valid?
     PHRASE_PAIRINGS.each do |pp|
       PhrasePairing.create_phrase_pairings(pp)
     end
@@ -121,12 +121,12 @@ namespace :db do
               creator_id: moonlite_admin.id
             )
           end
-          section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin)
-          section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE, creator_id: moonlite_admin)
-          section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE, creator_id: moonlite_admin)
-          section.tasks.create!(question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin)
-          section.tasks.create!(question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin)
-          section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin)
+          section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin.id)
+          section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE, creator_id: moonlite_admin.id)
+          section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE, creator_id: moonlite_admin.id)
+          section.tasks.create!(question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id)
+          section.tasks.create!(question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id)
+          section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id)
         end
       end
     end
