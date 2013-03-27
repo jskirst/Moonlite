@@ -2,7 +2,9 @@ $.MB ||= {}
 
 $.log = (str) ->
   if $.MB.env == "development"
-    console.log(str)
+    if console
+      if console.log
+        console.log(str)
 
 # http://stackoverflow.com/questions/6140632/how-to-handle-tab-in-textarea
 # Slightly modified - changed insertion of '\t' to double space

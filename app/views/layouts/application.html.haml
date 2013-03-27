@@ -93,10 +93,9 @@
         try { 
           clearInterval(ping_interval); 
         } catch(err) {
-          $.log("No interval to clear");
         }
         $(".fadein").fadeIn(1000);
-        ping_interval = setInterval(function(){ $.log(visit_url); ping(visit_url) }, 10000);
+        ping_interval = setInterval(function(){ ping(visit_url) }, 10000);
       });
     
     - if Rails.env == "production"
