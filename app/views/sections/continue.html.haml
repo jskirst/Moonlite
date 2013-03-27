@@ -30,11 +30,7 @@
       = render "sections/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
       %div.questionspace
-        %pre.CRquestion= @task.question
-      %div.questionfooter
-        %div.pointbar{ style: "position: relative;" }
-          %div.pointbarfiller{ style: "display: inline-block;"}
-          %div.pointbartext{ style: "position: absolute; left: 44%;" } 100 points
+        %pre.CRquestion= @task.question      
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id
@@ -49,7 +45,11 @@
         = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
     
     - if @show_stats
-      %div{ style: "display:inline-block; vertical-align:top;" }
+      %div{ style: "display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 261px; margin-left: 28px;" }
+        %div.questionfooter
+          %div.pointbar{ style: "position: relative;" }
+            %div.pointbarfiller{ style: "display: inline-block;"}
+            %div.pointbartext{ style: "position: absolute; left: 44%;" } 100 points
         %div.pointsandstreakspace
           %div.pointspace.counterbox
             %span.counter{style: "display:block"}

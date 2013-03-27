@@ -1,23 +1,25 @@
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header Creative response:
+    %span.cr_question_header Creative Response:
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
-  %div.CRresponsespace{ style: "min-height: 175px; text-align: center; #{if @task.text? then 'width: 98%; margin-top: 20px;' end}" }
-    %h4{ style: "margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
-    
+  %div.CRresponsespace{ style: "min-height: 175px; #{if @task.text? then 'width: 97.4%; margin-top: 20px;' end}" }
+    %p{ style:"float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
+    %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:    
     %input{ type: "hidden", name: "content", value: @submitted_answer.content }
     %input{ type: "hidden", name: "mode", value: "submit" }
     
-    %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus", style: "height: 250px; width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 12px;font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px;" }= @submitted_answer.content
+    %textarea{ name: "content", id: "answer_input", rows: "7", autofocus: "autofocus", style: "height: 250px; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 14px;font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px;" }= @submitted_answer.content
 
     - if params[:m] == "preview"
-      %iframe{ src: raw_path(@submitted_answer.id), style: "height: 300px; width: 544px; margin: 10px auto; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
+      %div{ style: "text-align:center; "}
+        %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 120px; margin-right: auto; margin-left: auto;" } Preview:
+        %iframe{ src: raw_path(@submitted_answer.id), style: "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
       
     %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
       %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
         %span.text Add caption
-      = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 97%; display: none; margin: 0;", placeholder: "Caption will appear immediately below your response..."
+      = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; display: none; margin: 2px 12px;", placeholder: "Caption will appear immediately below your response..."
 
 %div.CRbuttonspace
   = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
