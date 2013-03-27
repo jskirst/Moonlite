@@ -60,7 +60,7 @@ a.menu:after, .dropdown-toggle:after {content: none;}
 .task_post .content { position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; }
 .task_post .details { padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: rgb(29, 29, 29); }
 .task_post h5 a:hover {  color: rgb(0, 204, 255); }
-code.content { color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre; background-color: inherit; }
+code.content { border: none; color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre; background-color: inherit; }
 
 /* Progress/Revolution rails */
 .singleprogressentry { 

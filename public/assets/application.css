@@ -7394,6 +7394,7 @@ a.menu:after, .dropdown-toggle:after {
   color: #00ccff; }
 
 code.content {
+	border: none; 
   color: #404040;
   display: block;
   padding: 10px;
