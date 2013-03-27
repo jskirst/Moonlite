@@ -1,5 +1,4 @@
 require 'open-uri'
-
 class User < ActiveRecord::Base
   MAX_DAILY_EMAILS = 8
   
