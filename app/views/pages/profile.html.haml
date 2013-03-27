@@ -144,10 +144,12 @@
   
             %hr
             %div.crbucket
-              %h2{ style: "margin-left: -13px;"}
+              %h2{ style: "margin-left: -13px; display: inline-block; "}
                 = link_to challenge_path(enrollment.path.permalink) do
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I can do...
+              - if @user == current_user
+                %button.button.button-small.button-actionable{ style: "float: right; right: -13px; position: relative;" } Add new CR
               %h4 #{enrollment.creative_responses.count} Creative Responses
               %div.profilecontent
                 = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.creative_responses.limit(5))                
@@ -155,10 +157,12 @@
             %hr
             %div.taskbucket
               - tasks = 
-              %h2{ style: "margin-left: -13px;"}
+              %h2{ style: "margin-left: -13px; display: inline-block; "}
                 = link_to challenge_path(enrollment.path.permalink) do
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I have done...
+              - if @user == current_user
+                %button.button.button-small.button-actionable{ style: "float: right; right: -13px; position: relative;" } Add new Task
               %h4 #{enrollment.tasks.count} Tasks Completed
               %div.profilecontent
                 = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.tasks.limit(5))

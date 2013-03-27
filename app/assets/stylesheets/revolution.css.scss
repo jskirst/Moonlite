@@ -228,13 +228,13 @@ code.content { color: #404040; display: block; padding: 10px; font-size: 13px; l
 .questionspace span{font:normal 18px 'MuliRegular', sans-serif;}
 .questionspace pre{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none;}
 .pointbar { background-color: rgba(255, 163, 102, 0.5); height:20px; margin:3px 0px; border-radius: 3px; text-align: center; }
-.pointbarfiller { line-height: 20px; width: 100%; border-radius: 3px; height: 20px; padding-left: 3px; background-color: #FFA366; color: #404040; float: left; }
+.pointbarfiller { line-height: 20px; width: 100%; border-radius: 3px; height: 20px; background-color: #FFA366; color: #404040; float: left; }
 .nextbutton{ float: right; }
 #nextbutton{ float: right; }
 .responsespace{margin-top:8px;}
 .responsespace li{background-color: #F9F9F9; padding:5px 8px; border-radius:6px; margin-bottom:5px; cursor:pointer;border:1px solid rgba(0, 0, 0, .1) }
 .responsespace li:hover{background-color:whitesmoke; border:1px solid rgba(0, 0, 0, .1);}
-.pointsandstreakspace{margin:25px 0 0 25px; border:1px solid rgba(0, 0, 0, .1);vertical-align: top; padding:9px; border-radius:6px; width:241px; background-color:#F9F9F9;}
+.pointsandstreakspace{margin-top: 5px; border:1px solid rgba(0, 0, 0, .1);vertical-align: top; padding:9px; border-radius:6px; width:241px; background-color:#F9F9F9;}
 .pointspace{display:inline-block; text-align:center;}
 .streakspace{display:inline-block; text-align:center; margin-left:25px;}
 .counterbox{border:1px solid rgba(0, 0, 0, .1); background-color:white; border-radius:4px; padding: 7px 7px 0;}
