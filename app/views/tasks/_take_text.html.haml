@@ -1,7 +1,9 @@
 :css
+  .ace_identifier, .ace_storage, .ace_type, .ace_content, .ace_layer, .ace_active_line, ace_active_line .start { font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace !important; }
   .ace_gutter { border-left: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; }
   .ace_scroller { border: 1px solid #CCC; height: 248px !important; }
   .ace_sb { border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; width: 16px !important; }
+  .ace_cursor { width: 6px !important; }
 
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
@@ -43,9 +45,9 @@
 %script{:charset => "utf-8", :src => "http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js", :type => "text/javascript"}
 :javascript
   var editor = ace.edit("content");
-  editor.setTheme("ace/theme/clouds");
+  editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/javascript");
-  document.getElementById('content').style.fontSize='13px';
+  document.getElementById('content').style.fontSize='18px';
   var textarea = $('textarea[name="content"]').hide();
   editor.getSession().setValue(textarea.val());
   editor.getSession().on('change', function(){
