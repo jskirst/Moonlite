@@ -37,7 +37,8 @@
   - else
     = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
     = f.submit "Save as Draft", class: "button button-standard", id: "draft_button", style: "float:right; margin-right: 10px;"
-  = f.submit "View Preview", class: "button button-standard", id: "preview_button", style: "float:right; margin-right: 10px;"
+  - if @task.template
+    = f.submit "View Preview", class: "button button-standard", id: "preview_button", style: "float:right; margin-right: 10px;"
   = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
       
 :javascript
