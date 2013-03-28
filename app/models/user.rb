@@ -85,7 +85,7 @@ class User < ActiveRecord::Base
   def to_s() self.name end
     
   def locked?() locked_at.nil? ? false : true end
-  def guest_user?() email.include?("@metabright") and email.include?("user") end
+  def guest_user?() email.include?("@metabright") end
   
   def self.create_with_nothing(email = nil)
     user = Company.first.users.new
