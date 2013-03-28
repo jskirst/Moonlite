@@ -14,7 +14,7 @@
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
         - if @enrollment.contribution_unlocked?
           = render "tasks/new_multiple_choice", section: @current_section
-        %div.task_view
+        %div.task_view{ style: "text-align: center;" }
           %div.tip
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
             %p Enter the Arena and take multiple-choice questions to discover where you stand. 
@@ -29,11 +29,11 @@
             %p You answered <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> Arena questions correctly, and scored <strong>#{earned_points} points</strong>!
             - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0
             - if tasks_remaining
-              %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable"
+              %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable button-large"
             - else
               %p Arena questions are added frequently. When more are available, you can return here to take them. Complete <strong>Tasks</strong> or answer some <strong>Creative Responses</strong> to earn more points and continue to level up. 
           - else
-            %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable"            
+            %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable button-large"            
       
       %div#questions_tab.tab_content
         - if @enrollment.contribution_unlocked?
@@ -52,8 +52,13 @@
                     %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
-                      %span.points= t.points_awarded.to_i.to_s + " points"
+                      - if t.status_id.to_i == Answer::INCOMPLETE
+                        = link_to "Draft", take_section_path(@current_section, task_id: t.id), class: "label label-info"
+                      - elsif t.status_id.to_i == Answer::CORRECT
+                        = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
+                        %span.points= t.points_awarded.to_i.to_s + " points"
+                      - else
+                        - raise "Bad status: #{t.status_id.to_s}"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
       

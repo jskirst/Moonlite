@@ -126,19 +126,43 @@ class SectionsController < ApplicationController
     @task = @section.tasks.find(params[:task_id])
     raise "Access Denied: Not a challenge." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
-    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
-    @submitted_answer = completed_task ? completed_task.submitted_answer : SubmittedAnswer.new
     @path = @section.path
     @stored_resource = @task.stored_resources.first
+    
+    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
+    unless completed_task
+      completed_task = current_user.completed_tasks.new(task_id: @task.id)
+      completed_task.status_id = Answer::INCOMPLETE
+      completed_task.enrollment_id = @enrollment.id
+      completed_task.session_id = params[:session_id]
+      completed_task.save!
+      @submitted_answer = SubmittedAnswer.new
+    else
+      @submitted_answer = completed_task.submitted_answer || SubmittedAnswer.new
+    end
   end
   
   def took
     @task = @section.tasks.find(params[:task_id])
-    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
     raise "Only CRs can be taken." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
     
-    sa = completed_task ? completed_task.submitted_answer : @task.submitted_answers.new
+    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
+    unless completed_task
+      completed_task = current_user.completed_tasks.new(task_id: @task.id)
+      completed_task.status_id = Answer::INCOMPLETE
+      completed_task.enrollment_id = @enrollment.id
+      completed_task.save!
+    end
+    
+    if completed_task.incomplete? and not (params[:mode] == "preview" or params[:mode] == "draft")
+      completed_task.status_id = Answer::CORRECT
+      completed_task.points_awarded = CompletedTask::CORRECT_POINTS
+      completed_task.award_points = true
+      completed_task.save!
+    end
+    
+    sa = completed_task.submitted_answer ||  @task.submitted_answers.new
     sa.content = params[:content] unless params[:content].blank?
     sa.url = params[:url] unless params[:url].blank?
     sa.image_url = params[:image_url] unless params[:image_url].blank?
@@ -150,42 +174,20 @@ class SectionsController < ApplicationController
     unless sa.save
       redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
       return
-    end
-    
-    unless params[:stored_resource_id].blank?
-      sr = assign_resource(sa, params[:stored_resource_id])
-      sa.image_url = sr.obj.url
-      unless sa.save
-        redirect_to challenge_path(@section.path.permalink), alert: "Image could not be uploaded. Please try again."
-        return
+    else
+      completed_task.submitted_answer_id = sa.id
+      completed_task.save!
+      
+      unless params[:stored_resource_id].blank?
+        sr = assign_resource(sa, params[:stored_resource_id])
+        sa.update_attribute(:image_url, sr.obj.url)
       end
-    end
     
-    unless completed_task
-      new_ct = current_user.completed_tasks.new(task_id: @task.id)
-      if params[:mode] == "preview" or params[:mode] == "draft"
-        new_ct.status_id = Answer::INCOMPLETE
+      if params[:mode] == "draft" or params[:mode] == "preview"
+        redirect_to take_section_path(@section, task_id: @task.id, m: params[:mode])
       else
-        new_ct.status_id = Answer::CORRECT
-        new_ct.points_awarded = CompletedTask::CORRECT_POINTS
-        new_ct.award_points = true
+        redirect_to challenge_path(@section.path.permalink, c: true, type: @task.answer_type)
       end
-      new_ct.submitted_answer_id = sa.id
-      new_ct.enrollment_id = @enrollment.id
-      new_ct.save!
-    else
-      if completed_task.incomplete? and params[:mode] == "submit"
-        completed_task.status_id = Answer::CORRECT
-        completed_task.points_awarded = CompletedTask::CORRECT_POINTS
-        completed_task.award_points = true
-        completed_task.save!
-      end
-    end
-    
-    if params[:mode] == "draft" or params[:mode] == "preview"
-      redirect_to take_section_path(@section, task_id: @task.id, m: params[:mode])
-    else
-      redirect_to challenge_path(@section.path.permalink, c: true, p: (new_ct ? new_ct.points_awarded : nil), type: @task.answer_type)
     end
   end
   
@@ -253,10 +255,14 @@ class SectionsController < ApplicationController
       @stored_resource = @task.stored_resources.first
       page = "continue"
     else
-      @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
-      @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
-      social_tags(@path.name, @path.picture, @path.description)
-      page = "finish"
+      if @task = @section.next_task(current_user, false, Task::CREATIVE)
+        redirect_to take_bonus_section_path(@section, @task.id, @session_id) and return
+      else
+        @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
+        @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
+        social_tags(@path.name, @path.picture, @path.description)
+        page = "finish"
+      end
     end
     session[:ssf] = @streak
     @hide_background = true

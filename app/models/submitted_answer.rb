@@ -24,7 +24,7 @@ class SubmittedAnswer < ActiveRecord::Base
   validates :content, length: { maximum: 2500 }
   
   before_save do
-    if content.include?("#ruby")
+    if content.try{ |c| c.include?("#ruby") }
       url = URI.parse("http://www.evaluatron.com/?quarry=#{CGI.escape(content)}")
       result = JSON.parse(open(url).read)
       self.preview = result["output"]

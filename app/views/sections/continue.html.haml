@@ -42,7 +42,7 @@
               %li.answer_content{ id: "answer_#{a.id}" }
                 = radio_button_tag :answer, a.id, false, style: "display: none;"
                 %span= a.content
-        = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
+        = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
     
     - if @show_stats
       %div{ style: "display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 261px; margin-left: 28px;" }

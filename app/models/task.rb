@@ -22,7 +22,8 @@ class Task < ActiveRecord::Base
     :answer_content,
     :creator_id,
     :source,
-    :template
+    :template,
+    :position
   
   belongs_to :section
   belongs_to :creator, class_name: "User"

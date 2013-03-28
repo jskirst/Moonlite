@@ -43,6 +43,7 @@ class TasksController < ApplicationController
       errors = @task.errors.full_messages unless @task.save
     end
     @task.update_attribute(:template, params[:task][:template])
+    @task.update_attribute(:position, params[:task][:position])
     errors += @task.update_answers(params[:task])
     
     if errors.empty?
