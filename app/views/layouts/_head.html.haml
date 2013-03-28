@@ -8,3 +8,64 @@
 %meta{ property: "og:title", content: "#{social_title}" } 
 %meta{ property: "og:description", content: "#{social_description}" } 
 %meta{ property: "og:image", content: "#{social_image}" }
+
+:javascript
+  $.MB.env = '#{Rails.env}';
+  var iph_off = #{!params[:iph].nil?};
+  var viewed_help = #{get_viewed_help.to_json};
+  var all_help = #{get_all_help.to_json};
+  var mark_read_url = '#{mark_read_url}';
+  var mark_help_read_url = '#{mark_help_read_url}';
+  var visit_url = '#{visit_url(@visit.external_id) if @visit}';
+  
+  $(function(){
+    $('.explore_link').click(function(){
+      $("#explore_modal").modal({ keyboard: true, show: true, backdrop: true});
+    });
+
+    $('.bar2').mosaic({ animation: 'slide' });
+
+    $('.notifications_link').on("ajax:success", function(xhr, data){
+      $("#notifications_modal").html(data).modal({ keyboard: true, show: true, backdrop: true});
+      $(".navitem").removeClass("highlighted");
+    });
+
+    $('.hoverscroll').hoverscroll();
+
+    $("#image_url_input").change(function(){
+      var link = $(this).val();
+      $(".image_url_preview").attr("src", link);
+      $("#image_url_preview").attr("src", link);
+    });
+
+    $(".login_link").click(function(){
+      $("#login_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+    });
+
+    $(".arena_report_link").click(function(){
+      $("#report_issue_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+    });
+
+    $(".modal_close").click(function(){ $(this).parents('.modal').modal('hide'); });
+    
+    init_iph();
+    $.MB.capture_tabs();
+    try { 
+      clearInterval(ping_interval); 
+    } catch(err) {
+    }
+    $(".fadein").fadeIn(1000);
+    ping_interval = setInterval(function(){ ping(visit_url) }, 10000);
+  });
+
+- if Rails.env == "production"
+  :javascript
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-28492737-1']);
+    _gaq.push(['_trackPageview']);
+    
+    (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();

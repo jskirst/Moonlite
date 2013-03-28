@@ -3,26 +3,28 @@
     %p There are no responses yet.
 - else
   :javascript
-    $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
+    $(function(){
+      $(".youtube_answer").each(function(){ set_large_youtube_preview($(this).attr("alt"), $(this).attr("id")); });
     
-    init_voting();
-    init_comments();
-    init_iph();
-    convert_links();
+      init_voting();
+      init_comments();
+      init_iph();
+      convert_links();
     
-    $(".retract_link").unbind("ajax:success").on("ajax:success", function(xhr, data){
-      $(this).parents(".post").hide("slow");
-    });
+      $(".retract_link").unbind("ajax:success").on("ajax:success", function(xhr, data){
+        $(this).parents(".post").hide("slow");
+      });
     
-    $(".preview, .raw").parent().hover(
-      function(){ $(this).find(".onhover").show(); },
-      function(){ $(this).find(".onhover").hide(); }
-    );
+      $(".preview, .raw").parent().hover(
+        function(){ $(this).find(".onhover").show(); },
+        function(){ $(this).find(".onhover").hide(); }
+      );
     
-    $(".reload").click(function(){ $(this).parent().find("iframe").attr("src", $(this).parent().find("iframe").attr("src")); });
+      $(".reload").click(function(){ $(this).parent().find("iframe").attr("src", $(this).parent().find("iframe").attr("src")); });
     
-    $('iframe').load(function() {
-      this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+      $('iframe').load(function() {
+        this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
+      });
     });
 
   - feed.posts.each do |post|
