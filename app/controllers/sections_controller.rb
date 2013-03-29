@@ -250,10 +250,6 @@ class SectionsController < ApplicationController
       if @streak > @enrollment.longest_streak
         @enrollment.update_attribute(:longest_streak, @streak)
       end
-      @rank = @enrollment.rank
-      if @rank > @enrollment.highest_rank
-        @enrollment.update_attribute(:highest_rank, @rank)
-      end
       @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE, session_id: @session_id)
       @answers = @task.answers.to_a.shuffle
       @stored_resource = @task.stored_resources.first

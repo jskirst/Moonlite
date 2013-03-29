@@ -18,6 +18,9 @@ class Enrollment < ActiveRecord::Base
     points = points.to_i
     self.total_points = self.total_points + points
     check_for_events(points)
+    if rank < highest_rank
+      self.highest_rank = rank
+    end
     save
   end
   def remove_earned_points(points)

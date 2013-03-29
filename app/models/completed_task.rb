@@ -22,6 +22,7 @@ class CompletedTask < ActiveRecord::Base
     if correct? && award_points
       user.award_points(self, self.points_awarded)
     end
+    self.award_points = false
   end
   
   delegate :content, :url, :title, :description, :caption, :image_url, :site_name, to: :submitted_answer
