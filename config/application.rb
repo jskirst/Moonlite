@@ -32,6 +32,8 @@ module Metabright
     config.assets.initialize_on_precompile = false
 
     config.assets.enabled = true
+    
+    config.assets.version = '2.0'
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
