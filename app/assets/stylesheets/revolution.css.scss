@@ -329,7 +329,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .button.button-standard { background-image: -moz-linear-gradient(white, white 5%, #E6E6E6);background-image: -ms-linear-gradient(white, white 5%, #E6E6E6);background-image: -o-linear-gradient(white, white 5%, #E6E6E6);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(0.05, white), to(#E6E6E6));background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6);background-image: linear-gradient(white, white 5%, #E6E6E6); color: rgb(75, 75, 75); text-shadow: 0 1px 0px whitesmoke; filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6')";}
 .button.button-standard:hover { color: black; }
 .button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
-h1, h2, h3, h4, h5, h6, p, div, span, a { font-family: 'MuliRegular'; font-weight: lighter; }
+h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliRegular'; font-weight: lighter; }
 .button.disabled { opacity: 0.70; box-shadow: 0px 0px 1px black; }
 
 /* Create and Administer/Revolution */

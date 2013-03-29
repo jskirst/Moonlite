@@ -36,9 +36,9 @@
         %div.leftboxheader Enrolled Personas
         %div.leftboxfooter
           %li.leftrailcontent
-          - @enrolled_personas.each do |p|
-            %a.explore_link{ style: "cursor: pointer; text-decoration: none;" }
-              = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
+            - @enrolled_personas.each do |p|
+              %a.explore_link{ style: "cursor: pointer; text-decoration: none;" }
+                = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
     %div.span11
       %div.newsfeed
         %div
