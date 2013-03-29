@@ -15,7 +15,7 @@
     %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
     
-    %textarea{ name: "content", id: "answer_input"}= @submitted_answer.content
+    %textarea{ name: "content", id: "answer_input"}= @submitted_answer.content || @task.template
     %div{ id: "content", style:"width: 98%; margin: 0 auto 15px auto; min-height:250px; position: relative; padding-top:0;"}
         
     - if params[:m] == "preview" and (@task.template or @submitted_answer.preview or @submitted_answer.preview_errors)
