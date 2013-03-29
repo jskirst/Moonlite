@@ -5,8 +5,16 @@
   .ace_sb { border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; width: 16px !important; }
   
 %div.CRquestionandresponsespace
-  %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header= @completed_task.session_id ? "Bonus Question:" : "Creative Response:"
+  -if @completed_task.session_id 
+    %div.CRquestionspace{ style: "width: 98%; text-align:center;" }
+      %span{ style: "font-size: 45px; "}
+        Boss Question!
+    %p
+      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
+  -else 
+    %div.CRquestionspace{ style: "width: 98%;" }
+      %span.cr_question_header
+        Creative Response:    
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
   %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; margin-top: 20px;" }
