@@ -56,7 +56,8 @@
 .challengecontent h2 a { text-decoration: none; }
 .progresssection { float: right; margin-top: 12px;}
 .challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px; margin-bottom:10px; }
-.arenabucket, .taskbucket, .crbucket { display: block;padding: 13px 28px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
+.arenabucket, .taskbucket, .crbucket { display: block;padding: 13px 26px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
+.arenabucket h2, .taskbucket h2, .crbucket h2 { margin-left: -12px; display: inline-block; }
 #profile hr { margin:25px 0; }
 .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;}
 .profileprog {background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
@@ -82,9 +83,9 @@
 .similarpeople img { width:58px; height:58px; border-radius:4px; margin: 10px 8px 0 0; }
 .similarpeople .leftrailcontent { margin-top:0; }
 #profile .leftboxfooter { background-color:white; padding-right:0; padding-top:0; }
-#profile .post {width: 500px;margin-right: auto;margin-left: auto;}
+#profile .post {padding-left: 0; }
 #profile .post:hover { background-color: transparent; }
-#profile .postspace { width:474px; }
+#profile .postspace { }
 #profile .postphotospace img { height:50px; width:50px; }
 .profilecontent a { text-decoration: none; cursor: pointer; }
 .profilecontent .leftstuff .floatr p { margin-right:9px; }

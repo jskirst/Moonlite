@@ -7,7 +7,11 @@
 
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header= @completed_task.session_id ? "Bonus Question:" : "Creative Response:"
+    %span.cr_question_header
+      -if @completed_task.session_id 
+        Bonus Question:
+      -else 
+        Creative Response:
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
   %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; margin-top: 20px;" }
