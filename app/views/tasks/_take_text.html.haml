@@ -52,7 +52,7 @@
 %script{:charset => "utf-8", :src => "http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js", :type => "text/javascript"}
 :javascript
   var editor = ace.edit("content");
-  editor.setTheme("ace/theme/monokai");
+  editor.setTheme("ace/theme/cloud");
   editor.getSession().setMode("ace/mode/#{@path.name.downcase.include?('ruby') ? 'ruby' : 'html'}");
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);
