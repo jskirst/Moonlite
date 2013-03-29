@@ -186,7 +186,11 @@ class SectionsController < ApplicationController
       if params[:mode] == "draft" or params[:mode] == "preview"
         redirect_to take_section_path(@section, task_id: @task.id, m: params[:mode])
       else
-        redirect_to challenge_path(@section.path.permalink, c: true, type: @task.answer_type)
+        if completed_task.session_id
+          redirect_to finish_section_path(@section, completed_task.session_id) and return
+        else
+          redirect_to challenge_path(@section.path.permalink, c: true, type: @task.answer_type)
+        end
       end
     end
   end
@@ -258,10 +262,7 @@ class SectionsController < ApplicationController
       if @task = @section.next_task(current_user, false, Task::CREATIVE)
         redirect_to take_bonus_section_path(@section, @task.id, @session_id) and return
       else
-        @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
-        @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
-        social_tags(@path.name, @path.picture, @path.description)
-        page = "finish"
+        redirect_to finish_section_path(@section, @session_id) and return
       end
     end
     session[:ssf] = @streak
@@ -271,6 +272,14 @@ class SectionsController < ApplicationController
     else
       render page
     end
+  end
+  
+  def finish
+    @session_id = params[:session_id]
+    @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
+    @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
+    social_tags(@path.name, @path.picture, @path.description)
+    render "finish"
   end
   
   private

@@ -3,7 +3,6 @@
   .ace_gutter { border-left: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; }
   .ace_scroller { border: 1px solid #CCC; height: 248px !important; }
   .ace_sb { border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; width: 16px !important; }
-  .ace_line, .ace_line span { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace; }
   
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
@@ -38,7 +37,8 @@
       = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; display: none; margin: 2px 12px;", placeholder: "Caption will appear immediately below your response..."
 
 %div.CRbuttonspace
-  = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
+  - if @completed_task.session_id.nil?
+    = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
   %a.arena_report_link{ style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
   - if @submitted_answer.reviewed?
     = f.submit "Update", class: "button button-actionable", id: "submit_button", style: "float:right;"
