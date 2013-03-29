@@ -7,10 +7,10 @@
   
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header Creative Response:
+    %span.cr_question_header= @completed_task.session_id ? "Bonus Question:" : "Creative Response:"
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
-  %div.CRresponsespace{ style: "min-height: 175px; #{if @task.text? then 'width: 97.4%; margin-top: 20px;' end}" }
+  %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; margin-top: 20px;" }
     %p{ style:"display: none; float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
     %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
@@ -52,7 +52,7 @@
 %script{:charset => "utf-8", :src => "http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js", :type => "text/javascript"}
 :javascript
   var editor = ace.edit("content");
-  editor.setTheme("ace/theme/clouds");
+  editor.setTheme("ace/theme/monokai");
   editor.getSession().setMode("ace/mode/#{@path.name.downcase.include?('ruby') ? 'ruby' : 'html'}");
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);

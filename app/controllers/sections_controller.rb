@@ -129,16 +129,16 @@ class SectionsController < ApplicationController
     @path = @section.path
     @stored_resource = @task.stored_resources.first
     
-    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
-    unless completed_task
-      completed_task = current_user.completed_tasks.new(task_id: @task.id)
-      completed_task.status_id = Answer::INCOMPLETE
-      completed_task.enrollment_id = @enrollment.id
-      completed_task.session_id = params[:session_id]
-      completed_task.save!
+    @completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
+    unless @completed_task
+      @completed_task = current_user.completed_tasks.new(task_id: @task.id)
+      @completed_task.status_id = Answer::INCOMPLETE
+      @completed_task.enrollment_id = @enrollment.id
+      @completed_task.session_id = params[:session_id]
+      @completed_task.save!
       @submitted_answer = SubmittedAnswer.new
     else
-      @submitted_answer = completed_task.submitted_answer || SubmittedAnswer.new
+      @submitted_answer = @completed_task.submitted_answer || SubmittedAnswer.new
     end
   end
   

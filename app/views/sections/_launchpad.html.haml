@@ -14,7 +14,7 @@
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
         - if @enrollment.contribution_unlocked?
           = render "tasks/new_multiple_choice", section: @current_section
-        %div.task_view{ style: "text-align: center;" }
+        %div.task_view{ style: "text-align: center;font-size: 16px;" }
           %div.tip
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
             %p Enter the Arena and take multiple-choice questions to discover where you stand. 
@@ -26,8 +26,10 @@
             - earned_points = 0
             - @core_tasks.each { |t| earned_points += t.points_awarded.to_i }
             - incorrect_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::INCORRECT }.size
+            - tasks_remaining_count = @core_tasks.select{ |t| t.status_id.nil? }.size
             %p You answered <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> Arena questions correctly, and scored <strong>#{earned_points} points</strong>!
-            - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0
+            %p You have <strong>#{tasks_remaining_count} unanswered questions</strong>.
+            - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0           
             - if tasks_remaining
               %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable button-large"
             - else
