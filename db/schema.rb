@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130327012935) do
+ActiveRecord::Schema.define(:version => 20130327230829) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -248,12 +248,12 @@ ActiveRecord::Schema.define(:version => 20130327012935) do
 
   create_table "submitted_answers", :force => true do |t|
     t.text     "content"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
-    t.integer  "total_votes", :default => 0
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+    t.integer  "total_votes",    :default => 0
     t.integer  "task_id"
-    t.boolean  "is_reviewed", :default => false
-    t.boolean  "is_locked",   :default => false
+    t.boolean  "is_reviewed",    :default => false
+    t.boolean  "is_locked",      :default => false
     t.datetime "reviewed_at"
     t.datetime "locked_at"
     t.text     "caption"
@@ -262,6 +262,8 @@ ActiveRecord::Schema.define(:version => 20130327012935) do
     t.text     "description"
     t.text     "image_url"
     t.text     "site_name"
+    t.text     "preview"
+    t.text     "preview_errors"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"

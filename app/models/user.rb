@@ -1,5 +1,4 @@
 require 'open-uri'
-
 class User < ActiveRecord::Base
   MAX_DAILY_EMAILS = 8
   
@@ -86,11 +85,11 @@ class User < ActiveRecord::Base
   def to_s() self.name end
     
   def locked?() locked_at.nil? ? false : true end
-  def guest_user?() email.include?("@metabright") and email.include?("user") end
+  def guest_user?() email.include?("@metabright") end
   
   def self.create_with_nothing(email = nil)
     user = Company.first.users.new
-    user.name = "user#{SecureRandom::hex(4)}"
+    user.name = grant_anon_username
     user.email = email || "#{user.name}@metabright.com"
     user.grant_username
     user.password = SecureRandom::hex(16)
@@ -338,6 +337,8 @@ class User < ActiveRecord::Base
     new_combined_username = SecureRandom::hex(6) if new_combined_username.length >= 255
     return new_combined_username
   end
+  
+  def self.grant_anon_username() USERNAME_ADJS.shuffle.first.capitalize + USERNAME_NOUNS.shuffle.first.capitalize + rand(500).to_s end
   
   private  
   def check_image_url() self.image_url = nil if self.image_url && self.image_url.length < 9 end

@@ -28,6 +28,7 @@ class PagesController < ApplicationController
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
     feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
       .where("sections.path_id in (?)", relevant_paths)
+      .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .order("completed_tasks.created_at DESC")
       .limit(15)
       .offset(feed.page * 15)

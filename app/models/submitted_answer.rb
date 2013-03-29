@@ -1,3 +1,4 @@
+require 'open-uri'
 class SubmittedAnswer < ActiveRecord::Base
   POINTS_PER_VOTE = 50
 
@@ -8,7 +9,9 @@ class SubmittedAnswer < ActiveRecord::Base
     :description,
     :title,
     :image_url,
-    :site_name
+    :site_name,
+    :preview,
+    :preview_errors
   
   belongs_to :task
   has_one :completed_task, dependent: :destroy
@@ -20,15 +23,22 @@ class SubmittedAnswer < ActiveRecord::Base
  
   validates :content, length: { maximum: 2500 }
   
-  after_initialize :set_template
+  before_save do
+    if content.try{ |c| c.include?("#ruby") }
+      url = URI.parse("http://www.evaluatron.com/?quarry=#{CGI.escape(content)}")
+      result = JSON.parse(open(url).read)
+      self.preview = result["output"]
+      self.preview_errors = result["errors"]
+    end
+  end
   
   def reviewed?() not reviewed_at.nil? end
   
-  def preview
-    return stored_resources.first.obj.url unless stored_resources.empty?
-    return url unless url.blank?
-    return STONEY_SMALL_URL
-  end
+  # def preview
+  #   return stored_resources.first.obj.url unless stored_resources.empty?
+  #   return url unless url.blank?
+  #   return STONEY_SMALL_URL
+  # end
     
   def add_vote(voting_user)
     if vote = voting_user.votes.create!(owner_id: self.id)
@@ -51,11 +61,5 @@ class SubmittedAnswer < ActiveRecord::Base
       raise "Fatal: Have negative votes somehow"
     end
     return false
-  end
-  
-  def set_template
-    if new_record?
-      true
-    end
   end
 end

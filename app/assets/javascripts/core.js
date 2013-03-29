@@ -126,7 +126,5 @@ function show_loading_icon(){
   if($.data(document.body, 'reload') == true){
     $("#page_loading").show();
     setTimeout("$('#page_loading').hide();", 6000);
-  } else {
-    $.log("reset load;");
   }
 }

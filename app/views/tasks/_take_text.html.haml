@@ -1,31 +1,37 @@
 :css
-  .ace_identifier, .ace_storage, .ace_type, .ace_content, .ace_layer, .ace_active_line, ace_active_line .start { font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace !important; }
+  .ace_content { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace; }
   .ace_gutter { border-left: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; }
   .ace_scroller { border: 1px solid #CCC; height: 248px !important; }
   .ace_sb { border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; width: 16px !important; }
-  .ace_cursor { }
+  .ace_line, .ace_line span { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace; }
 
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header Creative Response:
+    %span.cr_question_header= @completed_task.session_id ? "Bonus Question:" : "Creative Response:"
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
-  %div.CRresponsespace{ style: "min-height: 175px; #{if @task.text? then 'width: 97.4%; margin-top: 20px;' end}" }
-    %p{ style:"float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
-    %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:    
-    %input{ type: "hidden", name: "content", value: @submitted_answer.content }
+  %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; margin-top: 20px;" }
+    %p{ style:"display: none; float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
+    %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
     
     %textarea{ name: "content", id: "answer_input"}= @submitted_answer.content
     %div{ id: "content", style:"width: 98%; margin: 0 auto 15px auto; min-height:250px; position: relative; padding-top:0;"}
         
-    - if params[:m] == "preview"
+    - if params[:m] == "preview" and (@task.template or @submitted_answer.preview or @submitted_answer.preview_errors)
       %div{ style: "text-align:center; "}
         %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 120px; margin-right: auto; margin-left: auto;" } Preview:
-        %iframe{ src: raw_path(@submitted_answer.id), style: "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
+        - if @submitted_answer.preview
+          %div{ style: "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
+            = @submitted_answer.preview
+        
+        - elsif @submitted_answer.preview_errors
+          %div{ style: "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px; color: red;" }
+            = @submitted_answer.preview_errors
           
+        - else
+          %iframe{ src: raw_path(@submitted_answer.id), style: "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
 
-            
     %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
       %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
         %span.text Add caption
@@ -39,16 +45,17 @@
   - else
     = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
     = f.submit "Save as Draft", class: "button button-standard", id: "draft_button", style: "float:right; margin-right: 10px;"
-  = f.submit "View Preview", class: "button button-standard", id: "preview_button", style: "float:right; margin-right: 10px;"
+  - if @task.template
+    = f.submit "View Preview", class: "button button-standard", id: "preview_button", style: "float:right; margin-right: 10px;"
   = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
 
 %script{:charset => "utf-8", :src => "http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js", :type => "text/javascript"}
 :javascript
   var editor = ace.edit("content");
   editor.setTheme("ace/theme/monokai");
-  document.getElementByID("ace_cursor").style.width="140px"
-  editor.getSession().setMode("ace/mode/javascript");
-  document.getElementById('content').style.fontSize='12px';
+  editor.getSession().setMode("ace/mode/#{@path.name.downcase.include?('ruby') ? 'ruby' : 'html'}");
+  editor.getSession().setUseSoftTabs(true);
+  editor.getSession().setTabSize(2);
   var textarea = $('textarea[name="content"]').hide();
   editor.getSession().setValue(textarea.val());
   editor.getSession().on('change', function(){
@@ -60,7 +67,7 @@
     $("input[name=mode]").val("preview");
   });
   $("#draft_button").click(function(){
-    $("input[name=mode]").val("preview");
+    $("input[name=mode]").val("draft");
   });
 
   $("#challenge_form").submit(function(){
