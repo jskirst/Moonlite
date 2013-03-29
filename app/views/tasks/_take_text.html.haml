@@ -6,12 +6,16 @@
   .ace_line, .ace_line span { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace; }
 
 %div.CRquestionandresponsespace
-  %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header
-      -if @completed_task.session_id 
-        Bonus Question:
-      -else 
-        Creative Response:
+  -if @completed_task.session_id 
+    %div.CRquestionspace{ style: "width: 98%; text-align:center;" }
+      %span{ style: "font-size: 45px; "}
+        Boss Question!
+    %p
+      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
+  -else 
+    %div.CRquestionspace{ style: "width: 98%;" }
+      %span.cr_question_header
+        Creative Response:    
     %p
       %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
   %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; margin-top: 20px;" }
