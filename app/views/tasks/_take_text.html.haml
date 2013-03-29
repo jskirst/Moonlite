@@ -3,7 +3,7 @@
   .ace_gutter { border-left: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; }
   .ace_scroller { border: 1px solid #CCC; height: 248px !important; }
   .ace_sb { border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; width: 16px !important; }
-  .ace_cursor { width: 6px !important; }
+  .ace_cursor { }
 
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
@@ -46,8 +46,9 @@
 :javascript
   var editor = ace.edit("content");
   editor.setTheme("ace/theme/monokai");
+  document.getElementByID("ace_cursor").style.width="140px"
   editor.getSession().setMode("ace/mode/javascript");
-  document.getElementById('content').style.fontSize='18px';
+  document.getElementById('content').style.fontSize='12px';
   var textarea = $('textarea[name="content"]').hide();
   editor.getSession().setValue(textarea.val());
   editor.getSession().on('change', function(){
