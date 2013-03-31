@@ -239,7 +239,7 @@ class PathsController < ApplicationController
     else
       if params[:task]
         feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
-      elsif params[:order] && params[:order] == "date"
+      elsif params[:order] == "date"
         feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).order("completed_tasks.created_at DESC")
       else
         feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).order("total_votes DESC")

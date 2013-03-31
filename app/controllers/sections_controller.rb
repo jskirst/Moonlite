@@ -256,7 +256,12 @@ class SectionsController < ApplicationController
       page = "continue"
     else
       if @task = @section.next_task(current_user, false, Task::CREATIVE)
-        redirect_to take_bonus_section_path(@section, @task.id, @session_id) and return
+        #if current_user.completed_tasks.where("submitted_answer_id is not ?", nil).count > 0
+          #redirect_to take_bonus_section_path(@section, @task.id, @session_id)
+        #else
+          redirect_to boss_section_path(@section, @task.id, @session_id)
+        #end
+        return
       else
         redirect_to finish_section_path(@section, @session_id) and return
       end
@@ -268,6 +273,10 @@ class SectionsController < ApplicationController
     else
       render page
     end
+  end
+  
+  def boss
+    render "pre_boss"
   end
   
   def finish
