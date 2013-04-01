@@ -244,7 +244,7 @@ class PathsController < ApplicationController
       elsif params[:order] == "newest"
         feed.posts = feed.posts.order("completed_tasks.created_at DESC")
       elsif params[:order] == "top"
-        feed.posts = feed.posts.order("completed_tasks.total_votes DESC")
+        feed.posts = feed.posts.order("total_votes DESC")
       else
         feed.posts = feed.posts.select("completed_tasks.*, ((total_votes + 1) - (current_date - DATE(completed_tasks.created_at)) * 0.1) as hotness").order("hotness DESC")
       end
