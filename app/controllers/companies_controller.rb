@@ -66,8 +66,11 @@ class CompaniesController < ApplicationController
   
   def submissions
     if request.get?
-      conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["content ILIKE ?", "%#{params[:search]}%"]
-      @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: conditions)
+      if params[:search]
+        @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: ["content ILIKE ?", "%#{params[:search]}%"])
+      else
+        @submissions = SubmittedAnswer.paginate(page: params[:page], joins: [:completed_task], conditions: ["submitted_answers.reviewed_at is ? and completed_tasks.status_id = ?", nil, Answer::CORRECT])
+      end
     else
       submission = SubmittedAnswer.find(params[:id])
       toggle(:reviewed_at, submission)
