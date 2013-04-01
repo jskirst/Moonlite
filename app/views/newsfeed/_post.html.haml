@@ -45,6 +45,8 @@
                 = link_to "View all responses", task_drilldown_path(post.task.id)
               %li.CR_dropdown_option
                 = link_to "View all details", submission_drilldown_path(post.submitted_answer.id)         
+              %li.CR_dropdown_option
+                = post.hotness
     
     %div#cr_pop.CRarea
       - if post.task.text?

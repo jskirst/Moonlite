@@ -230,19 +230,23 @@ class PathsController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new(params, current_user, newsfeed_path_path(@path.id))
+    feed = Feed.new(params, current_user)
+    feed.url = newsfeed_path_path(@path.id, order: params[:order])
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
     offset = feed.page * 15
+    feed.posts = @path.completed_tasks.joins(:submitted_answer, :task)
     if params[:submission]
-      feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.id = ?", params[:submission])
+      feed.posts = feed.posts.where("submitted_answers.id = ?", params[:submission])
     else
       if params[:task]
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
-      elsif params[:order] == "date"
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).order("completed_tasks.created_at DESC")
+        feed.posts = feed.posts.where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+      elsif params[:order] == "newest"
+        feed.posts = feed.posts.order("completed_tasks.created_at DESC")
+      elsif params[:order] == "top"
+        feed.posts = feed.posts.order("completed_tasks.total_votes DESC")
       else
-        feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).order("total_votes DESC")
+        feed.posts = feed.posts.select("completed_tasks.*, ((total_votes + 1) - (current_date - DATE(completed_tasks.created_at)) * 0.1) as hotness").order("hotness DESC")
       end
     end
     feed.posts = feed.posts.where("completed_tasks.status_id = ?", Answer::CORRECT).offset(offset).limit(15)
@@ -280,7 +284,7 @@ class PathsController < ApplicationController
         return newsfeed_path_path(@path.permalink, submission: params[:submission])
       elsif params[:task]
         return newsfeed_path_path(@path.permalink, task: params[:task], page: params[:page])
-      elsif params[:order] && params[:order] == "votes"
+      elsif params[:order]
         return newsfeed_path_path(@path.permalink, order: params[:order], page: params[:page])
       else
         return newsfeed_path_path(@path.permalink)

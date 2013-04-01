@@ -104,18 +104,9 @@
         %div.box_header
           %div{ style: "display:inline;" }
             %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
-            = link_to "Date", challenge_path(@path.permalink, order: "date"), class: "btn leftbtn"
-            = link_to "Votes", challenge_path(@path.permalink, order: "votes"), class: "btn midbtn"
-            - if @path
-              %a.btn.rightbtn{ onclick: "$(this).parents('.leftboxheader').find('.questions_filter').slideDown();" } Question
-          - if @path
-            %div.questions_filter{ style: "display:none; text-transform: none;" }
-              %p{ style: "font-size: 13px; margin: 10px 5px; color: black;" } Click on one of the questions below to see responses only for that question.
-              %ol
-                - @path.sections.each do |s|
-                  - s.challenge_tasks.each do |task|
-                    %li{ style: "padding: 5px;" }= link_to truncate(task.question, length: 80), task_details_path(@path, task.id), style: "font-size: 14px; text-decoration: none; color: #0064CD"
-
+            = link_to "Hot", challenge_path(@path.permalink, order: "hot"), class: "btn leftbtn"
+            = link_to "Newest", challenge_path(@path.permalink, order: "newest"), class: "btn midbtn"
+            = link_to "Top", challenge_path(@path.permalink, order: "top"), class: "btn rightbtn"
         :javascript
           $.ajax({ type: "GET", url: "#{@url_for_newsfeed}", success: function(data){ $(".empty_post").replaceWith(data); } });
         %div.post.empty_post{ style: "height: 5px;"}
