@@ -14,7 +14,7 @@
       - @submissions.to_a.each do |s|
         %tr
           %td= s.id
-          %td= s.path.name
+          %td= s.path.try(:name)
           %td= link_to s.user.name, profile_path(s.user.username)
           %td
             %pre.unstyled= s.content
