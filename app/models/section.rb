@@ -30,7 +30,7 @@ class Section < ActiveRecord::Base
     end
   end
   
-  def completed?(user) remaining_tasks(user) <= 0 end
+  def completed?(user) remaining_tasks(user, Task::MULTIPLE) <= 0 end
   
   def remaining_tasks(user, type = nil)
     unless self.published_at.nil?

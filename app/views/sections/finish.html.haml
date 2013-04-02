@@ -10,5 +10,6 @@
         %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
       %div{ style: "margin-left: 50px; margin-top: 20px;"}       
-        = link_to "Continue", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-actionable", style: "float: right;"
-        %div{ style: "font-weight: bold; font-size:24px; margin-top:8px; margin-right: 25px; float: right;"} But wait, there's more...
+        = link_to "Start Next Round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
+        = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
+        
