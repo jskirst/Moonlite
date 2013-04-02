@@ -69,11 +69,15 @@ class CompaniesController < ApplicationController
       if params[:search]
         @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: ["content ILIKE ?", "%#{params[:search]}%"])
       else
-        @submissions = SubmittedAnswer.paginate(page: params[:page], joins: [:completed_task], conditions: ["submitted_answers.reviewed_at is ? and completed_tasks.status_id = ?", nil, Answer::CORRECT])
+        @submissions = SubmittedAnswer.paginate(page: params[:page], joins: [:completed_task], conditions: ["reviewed_at is ? and locked_at is ? and completed_tasks.status_id = ?", nil, nil, Answer::CORRECT])
       end
     else
       submission = SubmittedAnswer.find(params[:id])
-      toggle(:reviewed_at, submission)
+      if params[:mark] == "locked"
+        toggle(:locked_at, submission)
+      else
+        toggle(:reviewed_at, submission)
+      end
       render json: { status: "success" }
     end
   end

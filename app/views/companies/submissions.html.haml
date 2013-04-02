@@ -18,7 +18,8 @@
           %td= link_to s.user.name, profile_path(s.user.username)
           %td
             %pre.unstyled= s.content
-          %td= link_to "approve", admin_update_submission_path(s), class: "mark_reviewed", remote: true, method: "put"
+          %td= link_to "approve", admin_update_submission_path(s, mark: "reviewed"), class: "mark_reviewed", remote: true, method: "put"
+          %td= link_to "deny", admin_update_submission_path(s, mark: "locked"), class: "mark_reviewed", remote: true, method: "put"
   = link_to "Refresh", admin_submissions_path, class: "button button-standard"
 :javascript
   $(function(){

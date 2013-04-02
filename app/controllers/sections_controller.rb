@@ -170,6 +170,8 @@ class SectionsController < ApplicationController
     sa.description = params[:description] unless params[:description].blank?
     sa.caption = params[:caption] unless params[:caption].blank?
     sa.site_name = params[:site_name] unless params[:site_name].blank?
+    sa.reviewed_at = nil
+    sa.locked_at = nil
     
     unless sa.save
       redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
