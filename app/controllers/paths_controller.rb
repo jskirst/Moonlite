@@ -235,7 +235,7 @@ class PathsController < ApplicationController
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
     offset = feed.page * 15
-    feed.posts = @path.completed_tasks.joins(:submitted_answer, :task)
+    feed.posts = @path.completed_tasks.joins(:submitted_answer, :task).where("submitted_answers.locked_at is ?", nil)
     if params[:submission]
       feed.posts = feed.posts.where("submitted_answers.id = ?", params[:submission])
     else

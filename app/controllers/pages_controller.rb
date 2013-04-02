@@ -29,6 +29,7 @@ class PagesController < ApplicationController
     feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
       .where("sections.path_id in (?)", relevant_paths)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
+      .where("submitted_answers.locked_at is ?", nil)
       .order("completed_tasks.created_at DESC")
       .limit(15)
       .offset(feed.page * 15)
