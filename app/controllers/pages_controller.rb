@@ -30,6 +30,7 @@ class PagesController < ApplicationController
       .where("sections.path_id in (?)", relevant_paths)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
+      .where("submitted_answers.reviewed_at is not ?", nil)
       .order("completed_tasks.created_at DESC")
       .limit(15)
       .offset(feed.page * 15)

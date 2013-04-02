@@ -1,6 +1,6 @@
 %div#launchpad.dropdown_modal.modal.hide{ style: "top: 5%; margin: 0; width: 0px; background-color: transparent;", tabindex: "-1"}
   %div.launchpad{ style: "height: 545px; width: 900px; margin-left: -470px;" }
-    %div.modal_close
+    %div.modal_close.hide
       = image_tag ICON_CLOSE_URL, alt:"Close"
     %h1
       = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}"
@@ -42,6 +42,9 @@
   :javascript
     $(function(){
       $(".headlines:first").removeClass("hide");
+      if($('.headlines').size() == 0){
+        $(".modal_close").show();
+      }
     });
 
     $(".launchpad_link").on("ajax:success", function(xhr, data, etc){

@@ -24,7 +24,8 @@
               - raise c.owner.class.to_s
           %td
             %pre.unstyled= c.content
-          %td= link_to "approve", admin_update_comment_path(c), class: "mark_reviewed", remote: true, method: "put"
+          %td= link_to "approve", admin_update_comment_path(c, mark: "reviewed"), class: "mark_reviewed", remote: true, method: "put"
+          %td= link_to "deny", admin_update_comment_path(c, mark: "locked"), class: "mark_reviewed", remote: true, method: "put"
   = link_to "Refresh", admin_comments_path, class: "button button-standard"
 :javascript
   $(function(){

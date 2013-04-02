@@ -1,45 +1,31 @@
-.headlines.hide{ style: " min-height: auto; width:66%;"}
-  :javascript
-    function checkSubmit(e, input){
-      if(e && e.keyCode == 13){ $(input).parents('form').submit(); }
-    }
-    
-    function submit_or_close(exit_button){
-      if($("#user_email").val() == ""){
-        $(exit_button).parents('.headlines').fadeOut(300, function(){ 
-          $(this).remove(); 
-          if($('.headlines').size() > 0){ 
-            $('.headlines:first').show() 
-          } else { 
-            $('.launchpadcontent').show(); 
-          } 
-        });
-      } else {
-        $('#update_name').submit();
-      }
-    }
+:javascript
+  function checkSubmit(e, input){
+    if(e && e.keyCode == 13){ $(input).parents('form').submit(); }
+  }
   
-    $(function(){
-      $("#update_name").on("ajax:success", function(e, result){
-        if(result.status == "error"){
-          $(this).find("p.error").remove();
-          $(this).append("<p class='error'>Email invalid or already registered.</p>")
-          $(this).find("#user_email").addClass("error")
-        } else {
-          $("nav.navbar .users_name").text($(this).find("#user_name").val());
-          $(this).find("#user_email").removeClass("error").addClass("successful");
-          $(this).parents('.headlines').fadeOut(700, function(){ 
-            $(this).remove(); 
-            if($('.headlines').size() > 0){ 
-              $('.headlines:first').show() 
-            } else { 
-              $('.launchpadcontent').show(); 
-            }
-          });
-        }
-      });
-    })
-    
+  function submit_or_close(exit_button){
+    if($("#user_email").val() == ""){
+      $.next_headline($(exit_button).parents('.headlines'));
+    } else {
+      $('#update_name').submit();
+    }
+  }
+
+  $(function(){
+    $("#update_name").on("ajax:success", function(e, result){
+      if(result.status == "error"){
+        $(this).find("p.error").remove();
+        $(this).append("<p class='error'>Email invalid or already registered.</p>")
+        $(this).find("#user_email").addClass("error")
+      } else {
+        $("nav.navbar .users_name").text($(this).find("#user_name").val());
+        $(this).find("#user_email").removeClass("error").addClass("successful");
+        $.next_headline($(this).parents('.headlines'));
+      }
+    });
+  })
+  
+.headlines.hide{ style: " min-height: auto; width:66%;"}
   %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/GiantStoney.png", style: "display: inline-block; height: 250px; vertical-align:top; position: relative; top:32px; "}
   %div{ style: "display: inline-block; width: 65%; margin-top:10px"}
     .header     

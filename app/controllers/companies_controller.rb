@@ -99,7 +99,12 @@ class CompaniesController < ApplicationController
       @comments = Comment.paginate(page: params[:page], conditions: conditions)
     else
       comment = Comment.find(params[:id])
-      toggle(:reviewed_at, comment)
+      if params[:mark] == "locked"
+        toggle(:reviewed_at, comment)
+        toggle(:locked_at, comment)
+      else
+        toggle(:reviewed_at, comment)
+      end
       render json: { status: "success" }
     end
   end
