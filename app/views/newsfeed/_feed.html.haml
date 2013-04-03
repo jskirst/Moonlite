@@ -15,10 +15,19 @@
         $(this).parents(".post").hide("slow");
       });
     
-      $(".preview, .raw").parent().hover(
-        function(){ $(this).find(".onhover").show(); },
-        function(){ $(this).find(".onhover").hide(); }
-      );
+      $('#cr_pop').mouseenter(function() {
+        $('#sliderbar1').slideDown(250);
+      });
+      $('#cr_pop').mouseleave(function() {        
+        $('#sliderbar1').slideUp(250);        
+      });
+      
+      $('#cr_pop').mouseenter(function() {
+        $('#sliderbar2').slideDown(250);
+      });
+      $('#cr_pop').mouseleave(function() {        
+        $('#sliderbar2').slideUp(250);        
+      });
     
       $(".reload").click(function(){ $(this).parent().find("iframe").attr("src", $(this).parent().find("iframe").attr("src")); });
     
