@@ -5,15 +5,17 @@ class TaskIssue < ActiveRecord::Base
   REPEAT    = 4
   QUALITY   = 5
   COPYRIGHT = 6
+  WRONG     = 7
   
-  ISSUE_TYPES = [SPAM, SPELLING, MISPLACED, REPEAT, QUALITY, COPYRIGHT]
+  ISSUE_TYPES = [SPAM, SPELLING, MISPLACED, REPEAT, QUALITY, COPYRIGHT, WRONG]
   ISSUE_TYPE_CONTENT = {
     SPAM => "Unwanted commercial content or spam",
     SPELLING => "Spelling or grammatical error",
     MISPLACED => "Doesn't belong in this section or Challenge",
     REPEAT => "Too similar to another question",
     QUALITY => "So poor that it detracts from the Challenge",
-    COPYRIGHT => "Copyrighted material"
+    COPYRIGHT => "Copyrighted material",
+    WRONG => "Incorrect answer"
   }
   
   attr_accessible :task_id, :issue_type, :resolved
