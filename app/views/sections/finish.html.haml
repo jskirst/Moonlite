@@ -9,7 +9,21 @@
         Nice work!
         %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
-      %div{ style: "margin-left: 50px; margin-top: 20px;"}       
-        = link_to "Start Next Round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
-        = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
+      - if @require_signup
+        %h2{ style: "font-size: 18px;" }
+          Save your score, reserve your username and keep racking up points.
+        %div{ style: "margin: 20px 0px 20px 180px; width: 100px;"}
+          .signup
+            = link_to "/auth/google_oauth2", class: "btn danger" do
+              = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+              %span.landingbuttontext Sign in with Google »
+
+            = link_to "/auth/facebook", class: "btn danger" do
+              = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
+              %span.landingbuttontext Sign in with Facebook »
+        = link_to "Continue and register later...", continue_path_path(@section.path.permalink), style: "float: right;"
+      - else
+        %div{ style: "margin: 20px 0 0 50px;"}
+          = link_to "Start Next Round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
+          = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
         

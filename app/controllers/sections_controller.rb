@@ -286,6 +286,7 @@ class SectionsController < ApplicationController
     @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
     @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
     social_tags(@path.name, @path.picture, @path.description)
+    @require_signup = true if @enrollment.completed_tasks.count > 10 and current_user.guest_user?
     render "finish"
   end
   
