@@ -15,18 +15,18 @@
         $(this).parents(".post").hide("slow");
       });
     
-      $('#cr_pop').mouseenter(function() {
-        $('#sliderbar1').slideDown(250);
+      $('.CRarea').mouseenter(function() {
+        $(this).find('.sliderbar1').slideDown(250);
       });
-      $('#cr_pop').mouseleave(function() {        
-        $('#sliderbar1').slideUp(250);        
+      $('.CRarea').mouseleave(function() {        
+        $(this).find('.sliderbar1').slideUp(250);        
       });
       
-      $('#cr_pop').mouseenter(function() {
-        $('#sliderbar2').slideDown(250);
+      $('.CRarea').mouseenter(function() {
+        $(this).find('.sliderbar2').slideDown(250);
       });
-      $('#cr_pop').mouseleave(function() {        
-        $('#sliderbar2').slideUp(250);        
+      $('.CRarea').mouseleave(function() {        
+        $(this).find('.sliderbar2').slideUp(250);        
       });
     
       $(".reload").click(function(){ $(this).parent().find("iframe").attr("src", $(this).parent().find("iframe").attr("src")); });

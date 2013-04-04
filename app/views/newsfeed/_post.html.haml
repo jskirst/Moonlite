@@ -50,13 +50,13 @@
       - if post.task.text?
         - if post.content && post.content.downcase.include?("<html>")
           .preview
-            %div#sliderbar1
+            %div.sliderbar1
               %span.reload{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('iframe').attr('src', $(this).parents('.CRarea').find('iframe').attr('src'));" } Reload
               |
               %span.view_raw{ style: "color: #404040; padding-right: 5px;cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.preview').hide(); $(this).parents('.CRarea').find('.raw').show();" } View Raw
             %iframe{ src: raw_path(post.submitted_answer.id), style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
           .raw.hide
-            %div#sliderbar2
+            %div.sliderbar2
               %span.view_preview{ style: "color: #404040; padding-right: 5px; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.raw').hide(); $(this).parents('.CRarea').find('.preview').show();"} View Preview
             %code.content{ style: "word-break:normal;" }= post.content
         - else
@@ -91,6 +91,3 @@
     - unless post.caption.blank?
       %div.post_caption= post.caption
     = render "comments/comments", social_details(post)
-    
-:javascript
-

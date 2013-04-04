@@ -265,7 +265,12 @@ class SectionsController < ApplicationController
         #end
         return
       else
-        redirect_to finish_section_path(@section, @session_id) and return
+        if @question_count == 0
+          redirect_to challenge_path(@path.permalink, c: true, p: @section.points_earned(current_user))
+        else
+          redirect_to finish_section_path(@section, @session_id)
+        end
+        return
       end
     end
     session[:ssf] = @streak
