@@ -23,7 +23,8 @@ class Task < ActiveRecord::Base
     :creator_id,
     :source,
     :template,
-    :position
+    :position,
+    :reviewed_at
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
