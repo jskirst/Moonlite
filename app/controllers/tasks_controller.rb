@@ -108,7 +108,7 @@ class TasksController < ApplicationController
   end
     
   def raw
-    render text: SubmittedAnswer.find(params[:id]).content
+    render text: SubmittedAnswer.find(params[:id]).content.gusb("</body>", "<script>alert=null;</script></body>").gusb("</BODY>", "<script>alert=null;</script></body>")
   end
   
   private
