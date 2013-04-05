@@ -28,9 +28,9 @@
             %li.launchpad_link{ title:"#{s.name}"}
               - if s.points_until_unlock(@enrollment) <= 0
                 %div{ style: "display:inline-block; width:73%; line-height:16px;" }
-                  = link_to launchpad_section_path(s), remote: true do
-                    %span.pointer_caret= "»" if s == @current_section
+                  = link_to launchpad_section_path(s), remote: true do                    
                     %span= truncate(s.name, length: 40)
+                    %span.pointer_caret= "»" if s == @current_section
                 %div.pointsandprogress
                   %div #{s.points_earned(current_user)} pts
                   %div #{s.percentage_complete(current_user)}%
@@ -53,7 +53,8 @@
       } else {
         $("span.pointer_caret").remove();
         $(".sectioninfocontainer").replaceWith(data);
-        $(this).find("a").prepend("<span class='pointer_caret'>» </span>");
+        $(this).find("a").append("<span class='pointer_caret'>» </span>");
+        $(this).find("a").addClass("active_section");
       }
     });
 
