@@ -33,7 +33,6 @@
                     %span= truncate(s.name, length: 40)
                 %div.pointsandprogress
                   %div #{s.points_earned(current_user)} pts
-                  %div #{s.percentage_complete(current_user)}%
               - else
                 %div{ style: "line-height: 16px;" }= truncate(s.name, length: 25)
                 %p{ style: "font-size: 9px; line-height: 12px;" } #{s.points_until_unlock(@enrollment)} more points to unlock

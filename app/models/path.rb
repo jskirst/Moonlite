@@ -103,6 +103,14 @@ class Path < ActiveRecord::Base
     return sections.where(["position > ? and published_at is not ?", position, nil]).first(order: "position ASC")
   end
   
+  def next_section_for_user(user)
+    section = user.most_recent_section_for_path(self) || next_section
+    while section && section.completed?(user)
+      section = next_section(section)
+    end
+    return section
+  end
+  
   def tags_to_array
     return self.tags.blank? ? [] : (self.tags.split(",").collect { |t| t.strip })
   end

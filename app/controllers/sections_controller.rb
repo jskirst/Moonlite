@@ -287,12 +287,16 @@ class SectionsController < ApplicationController
   end
   
   def finish
-    @session_id = params[:session_id]
-    @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
-    @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
-    social_tags(@path.name, @path.picture, @path.description)
-    @require_signup = true if @enrollment.completed_tasks.count > 10 and current_user.guest_user?
-    render "finish"
+    if @section.completed?(current_user) and @path.next_section(@section).nil?
+      redirect_to challenge_path(@path.permalink, c: true, p: @section.points_earned(current_user))
+    else
+      @session_id = params[:session_id]
+      @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
+      @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
+      social_tags(@path.name, @path.picture, @path.description)
+      @require_signup = true if @enrollment.completed_tasks.count > 10 and current_user.guest_user?
+      render "finish"
+    end
   end
   
   private
