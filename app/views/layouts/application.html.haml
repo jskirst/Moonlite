@@ -8,6 +8,8 @@
         = render "modals/launchpad"
       - if show_nav_bar
         = render "modals/explore"
+      - if current_user.guest_user?
+        = render "modals/login"
     - else
       = render "modals/login"
       

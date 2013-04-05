@@ -1,6 +1,5 @@
 DEFAULT_PASSWORD = "a1b2c3"
 NUMBER_OF_USERS = 3
-NUMBER_OF_TASKS = 20
 TIME_PERIOD = 7
 AVG_SCORE = 9
 
@@ -77,57 +76,56 @@ namespace :db do
     PHRASE_PAIRINGS.each do |pp|
       PhrasePairing.create_phrase_pairings(pp)
     end
+     
+    now = Time.now
+    PERSONAS.each do |persona|
+      persona = persona[1]
+      new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"])
+    end
     
-    unless ENV['DISABLE_FAKE']  
-      now = Time.now
-      PERSONAS.each do |persona|
-        persona = persona[1]
-        new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"])
-      end
+    PATHS.each do |p|
+      path = moonlite_company.paths.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id, category_id: default_cat.id)
+      path.published_at = now
+      path.approved_at = now
+      path.public_at = now
+      path.promoted_at = now
+      path.save!
       
-      PATHS.each do |p|
-        path = moonlite_company.paths.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id, category_id: default_cat.id)
-        path.published_at = now
-        path.approved_at = now
-        path.public_at = now
-        path.promoted_at = now
-        path.save!
+      path.path_personas.create!(persona_id: Persona.first.id)
+    end
+  
+    Path.all.each_with_index do |path, i|
+      PATH_SECTIONS.each do |s|
+        section = path.sections.create(name: s[0], category_id: default_cat.id, instructions: "Instructions to follow.")
+        section.published_at = now
+        section.save!
+        number_of_tasks = (i+1) * 3
         
-        path.path_personas.create!(persona_id: Persona.first.id)
-      end
-    
-      Path.all.each do |path|
-        PATH_SECTIONS.each do |s|
-          section = path.sections.create(name: s[0], category_id: default_cat.id, instructions: "Instructions to follow.")
-          section.published_at = now
-          section.save!
-          NUMBER_OF_TASKS.times do |n|
-            x = rand(100)
-            y = rand(100)
-            
-            z1 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
-            z2 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
-            z3 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
-            section.tasks.create!(
-              question: "What is #{x} + #{y}?",
-              answer_content: [
-                { content: "#{x+y}", is_correct: true },
-                { content: "#{x+z1}", is_correct: false },
-                { content: "#{x+z2}", is_correct: false },
-                { content: "#{x+z3}", is_correct: false }
-              ],
-              points: 10,
-              answer_type: 2,
-              creator_id: moonlite_admin.id
-            )
-          end
-          section.tasks.create!(question: "This is a text question", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin.id)
-          section.tasks.create!(question: "This is a image question", answer_type: Task::CREATIVE, answer_sub_type: Task::IMAGE, creator_id: moonlite_admin.id)
-          section.tasks.create!(question: "This is a youtube question", answer_type: Task::CREATIVE, answer_sub_type: Task::YOUTUBE, creator_id: moonlite_admin.id)
-          section.tasks.create!(question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id)
-          section.tasks.create!(question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id)
-          section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id)
+        number_of_tasks.times do |n|
+          x = rand(100)
+          y = rand(100)
+          
+          z1 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
+          z2 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
+          z3 = y + ((rand(6) + 1)*(rand(1) == 0 ? 1 : -1))
+          section.tasks.create!(
+            question: "What is #{x} + #{y}?",
+            answer_content: [
+              { content: "#{x+y}", is_correct: true },
+              { content: "#{x+z1}", is_correct: false },
+              { content: "#{x+z2}", is_correct: false },
+              { content: "#{x+z3}", is_correct: false }
+            ],
+            points: 10,
+            answer_type: 2,
+            creator_id: moonlite_admin.id,
+            reviewed_at: now
+          )
         end
+        section.tasks.create!(question: "Let's say you're making a footer for a website. How would you force the footer to always appear at the bottom of the page?", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin.id, reviewed_at: now)
+        section.tasks.create!(question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
+        section.tasks.create!(question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
+        section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
       end
     end
   end

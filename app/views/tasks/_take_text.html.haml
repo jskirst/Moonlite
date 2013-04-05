@@ -1,31 +1,23 @@
-:css
-  #editor div, #editor span { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace !important; }
-  .ace_gutter { border-left: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; }
-  .ace_scroller { border: 1px solid #CCC; height: 248px !important; }
-  .ace_sb { border-right: 1px solid #CCC; border-top: 1px solid #CCC; border-bottom: 1px solid #CCC; height: 248px; width: 16px !important; }
-  
 %div.CRquestionandresponsespace
   -if @completed_task.session_id 
-    %div.CRquestionspace{ style: "width: 98%; text-align:center;" }
-      %span{ style: "font-size: 45px; "}
+    %div.CRquestionspace
+      %span{ style: "font-size: 33px;"}
         Boss Question!
-    %p
-      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
+    %pre.CRquestion= @task.question
   -else 
-    %div.CRquestionspace{ style: "width: 98%;" }
+    %div.CRquestionspace
       %span.cr_question_header
         Creative Response:    
-    %p
-      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
-  %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; margin-top: 20px;" }
+    %pre.CRquestion= @task.question
+  %div.CRresponsespace{ style: "min-height: 175px;" }
     - if @task.template
       = f.submit "View Preview", class: "button button-small button-info", id: "preview_button", style: "float:right; margin-right: 6px; padding: 3px 10px;"
     %p{ style:"display: none; float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
-    %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
+    %h4{ style: "text-align: center; margin-bottom: 5px; font-size: 15px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
     
-    %textarea{ name: "content", id: "answer_input", data: { template: @task.template.to_s }, rows: "7", autofocus: "autofocus", style: "height: 250px; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; margin: 6px 12px 12px 14px; font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 13px;"}= @submitted_answer.content || @task.template
-    %div{ id: "editor", style:"width: 98%; margin: 0 auto 15px auto; min-height:250px; position: relative; padding-top:0;"}
+    %textarea{ name: "content", id: "answer_input", data: { template: @task.template.to_s } }= @submitted_answer.content || @task.template
+    %div{ id: "editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 275px; position: relative; padding-top:0;"}
         
     - if params[:m] == "preview" and (@task.template or @submitted_answer.preview or @submitted_answer.preview_errors)
       %div{ style: "text-align:center; "}

@@ -12,7 +12,7 @@
         %div.progress.progress-success.progress-striped{style:"height:10px; margin-bottom:0;"}
           %div.bar{style:"width: #{@enrollment.level_percent}%;" }
     - if current_user.completed_tasks.count > 7
-      - if current_user.guest_user?
+      - if current_user.guest_user? and params[:s].nil?
         - headlines = true
         = render "modals/headlines/welcome"
       - if @achievements[:level] or @achievements[:rank]

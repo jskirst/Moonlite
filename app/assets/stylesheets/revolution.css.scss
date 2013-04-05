@@ -222,9 +222,9 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .counter span.separator hr {display:none;}
 
 .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
-.quizheader{margin-bottom:12px;}
-.quizheader img{display:inline-block; margin-right:4px; border-radius:3px;}
-.quizheader span{ font:normal 29px'MuliRegular', sans-serif; position:relative; left:5px;}
+.quizheader { margin-bottom: 4px; }
+.quizheader img { width: 40px; height: 40px; display:inline-block; margin-right:4px; border-radius:3px;}
+.quizheader span{ font:normal 24px'MuliRegular', sans-serif; position:relative; left:5px;}
 .quizheader div{position:relative; top:4px; display:inline-block;}
 .quizheader .quiz_progress { float: right;font-size: 18px; margin-top: 5px; margin-right: 5px; color: rgb(139, 139, 139); top: 0; }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
@@ -249,10 +249,10 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .CRquizspace { background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px; min-height:300px;}
 .label.notice { font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
 #CRprogressbar { width:632px; height: 40px; margin: 0 auto;}
-.CRquestionspace { width: 45%; display:inline-block; padding-top:9px; margin-right: 1%;}
+.CRquestionspace { display:inline-block; padding-top:9px; text-align: center; width: 100%; }
 .cr_question_header { font:bold 15px 'MuliRegular', sans-serif;}
-.CRquestion { font-size:15px; padding: 0; margin: 10px 5px 0 0; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliRegular', sans-serif;} 
-.CRresponsespace { display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:9px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', sans-serif;width:56.5%;}
+.CRquestion { font-size:15px; padding: 0; margin: 15px 5px 0 10px; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliRegular', sans-serif;} 
+.CRresponsespace { width: calc(100% - 10px); margin-top: 20px; display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:5px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', sans-serif;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace { margin-top:12px; }
 .input input{ background-color: #F9F9F9;}
@@ -261,9 +261,12 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #report_issue_modal.modal.fade {  background-color: transparent; border: 0; box-shadow: 0 0 0; }
 .explorebody .radio{ padding-left:35px;}
 #answer_preview .image_preview { height: 200px;  width: inherit; max-width: inherit; }
-.CRresponsespace { width: 50%; }
 .add_caption .text { font-size: 14px; cursor: pointer; vertical-align: top; }
 .add_caption .caret { border-top-color: #0088cc; border-bottom-color: #0088cc; vertical-align: bottom; }
+#editor { border: 1px solid #CCC; }
+#editor div, #editor span { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace !important; }
+.ace_gutter { border-right: 1px solid #CCC; }
+
 
 .headerspace { text-shadow: 0 1px 0 white; padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; background-color: #FCFCFC;}
 #carouselupdatespace {background-color: whitesmoke;border-bottom-left-radius: 6px;border-bottom-right-radius: 6px;padding: 16px 0 3px 12px; }
