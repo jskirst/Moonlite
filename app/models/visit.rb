@@ -14,7 +14,7 @@ class Visit < ActiveRecord::Base
   
   def page
     return "" if request_url.blank?
-    return request_url.split("/").last(2).join("/").slice(0..70)
+    return request_url.split("/").last(3).join("/").slice(0..70)
   end
   
   def time_on_page(next_page = nil)
