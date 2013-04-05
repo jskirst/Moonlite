@@ -1,6 +1,6 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
-  .quizcontainer { width: 660px; }
+  .quizcontainer { width: 650px; }
 %div.quizcontainer
   %div.quizspace
     %div
@@ -9,21 +9,23 @@
         Nice work!
         %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
-      - if @require_signup
-        %h2{ style: "font-size: 18px;" }
-          Save your score, reserve your username and keep racking up points.
-        %div{ style: "margin: 20px 0px 20px 180px; width: 100px;"}
+      - if @require_signup        
+        %div{ style: "margin: 25px 0px 5px 0; "}
           .signup
-            = link_to "/auth/google_oauth2", class: "btn danger" do
+            = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "btn danger" do
               = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
               %span.landingbuttontext Sign in with Google »
 
-            = link_to "/auth/facebook", class: "btn danger" do
+            = link_to "/auth/facebook", style: "display: inline-block;", class: "btn danger" do
               = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
               %span.landingbuttontext Sign in with Facebook »
-        = link_to "Continue and register later...", continue_path_path(@section.path.permalink), style: "float: right;"
+        %h2{ style: "font-size: 18px; text-align: center; " }
+          Save your score, reserve your username, and keep racking up points.
+        %div{ style: "margin-top:10px; font-size:14px;"}
+          = link_to "Continue and register later", continue_path_path(@section.path.permalink), style: "float: right;"
+          = link_to "Back to Challenge page", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), style: "float: left;"
       - else
-        %div{ style: "margin: 20px 0 0 50px;"}
-          = link_to "Start Next Round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
+        %div{ style: "margin: 20px 0 0 0;"}
+          = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
           = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
         
