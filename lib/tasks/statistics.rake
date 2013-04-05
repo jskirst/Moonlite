@@ -1,10 +1,10 @@
 task :statistics => :environment do
+  # Completed Tasks greater >= 5
   users = User.joins(:user_role)
     .where("user_roles.enable_administration = ?", false)
     .where("locked_at is ?", nil)
     .where("is_fake_user = ? or is_test_user = ?", false, false)
     .where("earned_points > 0")
-    
   puts "Total Active Users: " + users.count.to_s
   
   completed_tasks = CompletedTask.joins(:user => :user_role)
@@ -14,8 +14,23 @@ task :statistics => :environment do
     .where("earned_points > 0")
   
   puts "Total Completed Tasks: " + completed_tasks.count.to_s
-  
   puts "Avg Completed Tasks: " + (completed_tasks.count / users.count).to_s
+  
+  # Break down by type
+  
+  # How many users visit their profile
+  # How many users edit their profile
+  # How many users visit someone elses profile
+  # Distinct sitewide visitors
+  
+  
+  #Total Registered user number
+  User.joins(:user_role)
+    .where("user_roles.enable_administration = ?", false)
+    .where("locked_at is ?", nil)
+    .where("is_fake_user = ? or is_test_user = ?", false, false)
+    .where("email not like ?", '%@metabright.com%')
+  
   
   visits = Visit.joins(:user => :user_role)
     .where("user_roles.enable_administration = ?", false)
