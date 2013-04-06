@@ -4,71 +4,110 @@
   %table.table.overview
     %tr
       %td
-        %h3= @users
+        %h3= when_count(@stats[:users])
         %p Total Users
       %td
-        %h3= @visits
-        %p Returning Users
+        %h3= when_count(@stats[:registrations])
+        %p Total Users
       %td
-        %h3= @arena_answers
+        %h3= when_count(@stats[:arena_answers])
         %p Arena Answers
       %td
-        %h3= @creative_answers
+        %h3= when_count(@stats[:creative_answers])
         %p Creative Answers
       %td
-        %h3= @task_answers
+        %h3= when_count(@stats[:task_answers])
         %p Task Answers
       %td
-        %h3= @arena_questions
+        %h3= when_count(@stats[:arena_questions])
         %p Arena Questions
       %td
-        %h3= @creative_questions
+        %h3= when_count(@stats[:creative_questions])
         %p Creative Questions
       %td
-        %h3= @task_questions
+        %h3= when_count(@stats[:task_questions])
         %p Task Questions
       %td
-        %h3= @votes
+        %h3= when_count(@stats[:votes])
         %p Votes
       %td
-        %h3= @comments
+        %h3= when_count(@stats[:comments])
         %p Comments
       %td
-        %h3= @issues
+        %h3= when_count(@stats[:issues])
         %p Task Issues
-  %h3 Recent Activity
+  %h3 Trailing 24 Hours
+  - start_time = 48.hours.ago
+  - end_time = 24.hours.ago
   %table.table.overview
     %tr
       %td
-        %h3= @new_users
-        %p Users
+        %h3= when_count(@stats[:users], :users, start_time, end_time)
+        %p Total Users
       %td
-        %h3= @new_visits
-        %p Returning Users
+        %h3= when_count(@stats[:registrations], :users, start_time, end_time)
+        %p Total Users
       %td
-        %h3= @new_arena_answers
+        %h3= when_count(@stats[:arena_answers], :completed_tasks, start_time, end_time)
         %p Arena Answers
       %td
-        %h3= @new_creative_answers
+        %h3= when_count(@stats[:creative_answers], :completed_tasks, start_time, end_time)
         %p Creative Answers
       %td
-        %h3= @new_task_answers
+        %h3= when_count(@stats[:task_answers], :completed_tasks, start_time, end_time)
         %p Task Answers
       %td
-        %h3= @new_arena_questions
+        %h3= when_count(@stats[:arena_questions], :tasks, start_time, end_time)
         %p Arena Questions
       %td
-        %h3= @new_creative_questions
+        %h3= when_count(@stats[:creative_questions], :tasks, start_time, end_time)
         %p Creative Questions
       %td
-        %h3= @new_task_questions
+        %h3= when_count(@stats[:task_questions], :tasks, start_time, end_time)
         %p Task Questions
       %td
-        %h3= @new_votes
+        %h3= when_count(@stats[:votes], :votes, start_time, end_time)
         %p Votes
       %td
-        %h3= @new_comments
+        %h3= when_count(@stats[:comments], :comments, start_time, end_time)
         %p Comments
       %td
-        %h3= @new_issues
+        %h3= when_count(@stats[:issues], :task_issues, start_time, end_time)
+        %p Task Issues
+  %h3 Last 24 Hours
+  - start_time = 24.hours.ago
+  %table.table.overview
+    %tr
+      %td
+        %h3= when_count(@stats[:users], :users, start_time)
+        %p Total Users
+      %td
+        %h3= when_count(@stats[:registrations], :users, start_time)
+        %p Total Users
+      %td
+        %h3= when_count(@stats[:arena_answers], :completed_tasks, start_time)
+        %p Arena Answers
+      %td
+        %h3= when_count(@stats[:creative_answers], :completed_tasks, start_time)
+        %p Creative Answers
+      %td
+        %h3= when_count(@stats[:task_answers], :completed_tasks, start_time)
+        %p Task Answers
+      %td
+        %h3= when_count(@stats[:arena_questions], :tasks, start_time)
+        %p Arena Questions
+      %td
+        %h3= when_count(@stats[:creative_questions], :tasks, start_time)
+        %p Creative Questions
+      %td
+        %h3= when_count(@stats[:task_questions], :tasks, start_time)
+        %p Task Questions
+      %td
+        %h3= when_count(@stats[:votes], :votes, start_time)
+        %p Votes
+      %td
+        %h3= when_count(@stats[:comments], :comments, start_time)
+        %p Comments
+      %td
+        %h3= when_count(@stats[:issues], :task_issues, start_time)
         %p Task Issues
