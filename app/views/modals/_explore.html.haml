@@ -1,7 +1,6 @@
-:javascript
-  $(function(){
-    $.get("#{explore_path}", function(data){ $("#explore_modal").html(data); });
-  })
-  
 %div#explore_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1" }
+  %div.explorecontainer
+    - @persona = current_user.user_personas.first.persona
+    - @paths = @persona.paths.order("public_at DESC")
+    = render "personas/show"
       

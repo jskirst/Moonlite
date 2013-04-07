@@ -1,14 +1,16 @@
 %div#persona_challenge_list.explorenewusercontent
   :javascript
-    $(".back_to_preview_index").on("ajax:success", function(xhr, data){
-      $(".explorecontainer").hide(10, function(){
-        $(this).replaceWith(data, function(){
-          $(this).show();
+    $(function(){
+      $(".back_to_preview_index").on("ajax:success", function(xhr, data){
+        $(".explorecontainer").hide(10, function(){
+          $(this).replaceWith(data, function(){
+            $(this).show();
+          });
         });
       });
+      $('.bar2').mosaic({ animation : 'slide' });
+      close_button();
     });
-    $('.bar2').mosaic({ animation : 'slide' });
-    close_button();
     
   %div.exploreheader
     - unless current_user.personas.empty?
