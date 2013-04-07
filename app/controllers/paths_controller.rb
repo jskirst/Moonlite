@@ -154,15 +154,12 @@ class PathsController < ApplicationController
   
   def continue
     current_user.enroll!(@path) unless current_user.enrolled?(@path)
-    @section = current_user.most_recent_section_for_path(@path) || @path.sections.first
-    while @section && @section.completed?(current_user)
-      @section = @path.next_section(@section)
-    end
+    section = @path.next_section_for_user(current_user)
     
-    if @section.nil? || @section.published_at.nil?
-      redirect_to @path
+    if section.nil? || section.published_at.nil?
+      redirect_to challenge_path(@path.permalink)
     else
-      redirect_to start_section_path(@section)
+      redirect_to start_section_path(section)
     end
   end
   
