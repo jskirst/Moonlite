@@ -1,9 +1,7 @@
 %div.CRquestionandresponsespace
   %div.CRquestionspace{ style: "width: 98%;" }
-    %span.cr_question_header Your Task, should you choose to accept it:
-    %p
-      %pre.CRquestion{ style: "margin-left:25px; "}= @task.question
-      %hr{ style: "margin: 15px 10px;" }        
+    %span.cr_question_header Your Task:
+    %pre.CRquestion{ style: "text-align: left; "}= @task.question
   %div.CRresponsespace{ style: "min-height: 175px; width: 97.4%; #{if @task.text? then 'margin-top: 20px;' end}" }
     %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 250px; margin-right: auto; margin-left: auto;" } Provide proof of completion:
     
@@ -37,7 +35,7 @@
         
     
     %div.input{ style: "margin-left: 0px; text-align: left;" }
-      %div#answer_preview_container{ style: "padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
+      %div#answer_preview_container{ style: "padding: 10px; margin: 20px 10px 0 10px; border: 1px solid lightgray;" }
         - if @submitted_answer.new_record?
           %div#answer_preview{ style: "text-align: center;" }
             = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
