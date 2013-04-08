@@ -84,3 +84,12 @@
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           %li
             %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in
+      - elsif current_user and params[:controller] == "sections"
+        %ul.nav.pull-right{ style: "float:right; margin-right: 175px;" }
+          %li
+            %div{ style: "width: 300px; margin-top: 2px;"}
+              = image_tag @enrollment.path.image, style: "width: 35px; height: 35px;", alt: "#{@path.name}"            
+              %div{ style: "vertical-align: top; width: 255px; display: inline-block; color: white;" }
+                %span Level #{@enrollment.level} - #{@enrollment.points_to_next_level} more points to next level
+                %div.progress.progress-info{ style: "height: 10px; margin:0;" }
+                  %div.bar{ style: "width: #{@enrollment.level_percent}%;"}
