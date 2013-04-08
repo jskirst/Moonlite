@@ -6,7 +6,6 @@ gem 'jquery-rails'
 gem 'paperclip'
 gem 'aws-sdk'
 gem 'pg'
-gem 'unicorn'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
@@ -22,7 +21,12 @@ group :assets do
   gem 'uglifier'
 end
 
+group :production do
+  gem 'unicorn'
+end
+
 group :development do
+  gem 'thin'
 	gem 'rspec-rails'
 	gem 'annotate'
 	gem 'faker'
