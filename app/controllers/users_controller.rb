@@ -41,7 +41,7 @@ class UsersController < ApplicationController
       if request.xhr?
         render json: { status: "error" }
       else
-        flash[:success] = "Profile successfully updated."
+        flash[:error] = @user.errors.full_messages.join(". ")
         redirect_to profile_path(@user.username)
       end
     end
