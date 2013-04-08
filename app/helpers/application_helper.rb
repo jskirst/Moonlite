@@ -107,4 +107,16 @@ module ApplicationHelper
   def hash_to_array(hash)
     hash.collect{ |k, v| [v, k] }
   end
+  
+  def when_count(query, table = nil, start_time = nil, end_time = nil)
+    if table
+      if start_time
+        query = query.where("#{table.to_s}.created_at >= ?", start_time)
+      end
+      if end_time
+        query = query.where("#{table.to_s}.created_at <= ?", end_time)
+      end
+    end
+    query.count
+  end
 end
