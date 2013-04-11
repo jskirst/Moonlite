@@ -12,6 +12,7 @@
   %div.CRresponsespace{ style: "min-height: 175px;" }
     - if @task.template
       = f.submit "View Preview", class: "button button-small button-info", id: "preview_button", style: "float:right; margin: 0px 10px 3px 0; padding: 3px 10px;"
+    = link_to "View hotkeys", "https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts", target: '_blank', style: "float: left; position: relative; font-size: 13px; top: 3px; margin-left: 10px;"
     %p{ style:"display: none; float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
     %h4{ style: "text-align: center; margin-bottom: 5px; font-size: 15px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
