@@ -5,37 +5,33 @@
         %button.login_link.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;", onclick: "$('#login_modal').modal({ keyboard: true, backdrop: 'static', show: true });" } Save Score
       %div#arena_tab.tab_content{style:"margin-left:12px;"}
         %div.task_view{ style: "text-align: center;font-size: 16px;" }
-          - section_started = @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
-          - if section_started
-            - correct_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::CORRECT }.size
-            - earned_points = 0
-            - @core_tasks.each { |t| earned_points += t.points_awarded.to_i }
-            - incorrect_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::INCORRECT }.size
-            - tasks_remaining_count = @core_tasks.select{ |t| t.status_id.nil? }.size
-            %p You answered <strong>#{correct_tasks} out of #{correct_tasks + incorrect_tasks}</strong> Arena questions correctly, and scored <strong>#{earned_points} points</strong>!
-            %p You have <strong>#{tasks_remaining_count} unanswered questions</strong>.
-            - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0           
-            - if tasks_remaining
+          - correct_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::CORRECT }.size
+          - earned_points = 0
+          - @core_tasks.each { |t| earned_points += t.points_awarded.to_i }
+          - incorrect_tasks = @core_tasks.select{ |t| t.status_id && t.status_id.to_i == Answer::INCORRECT }.size
+          - tasks_remaining_count = @core_tasks.select{ |t| t.status_id.nil? }.size
+          
+          - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0           
+          - if tasks_remaining
+            - if @core_tasks.select{ |t| not t.status_id.nil? }.size > 0
               %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable button-large"
             - else
-              - if @challenge_tasks.empty?
-                %p No Creative Responses available.
-              - else
-                %table
-                  - @challenge_tasks.each do |t|
-                    %tr
-                      %td
-                        %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
-                      %td.question_status
-                        - if t.status_id
-                          - if t.status_id.to_i == Answer::INCOMPLETE
-                            = link_to "Draft", take_section_path(@current_section, task_id: t.id), class: "label label-info"
-                          - elsif t.status_id.to_i == Answer::CORRECT
-                            = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
-                            %span.points= t.points_awarded.to_i.to_s + " points"
-                          - else
-                            - raise "Bad status: #{t.status_id.to_s}"
-                        - else
-                          = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
+              %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable button-large"
           - else
-            %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable button-large"
+            - unless @challenge_tasks.empty?
+              %table
+                - @challenge_tasks.each do |t|
+                  %tr
+                    %td
+                      %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
+                    %td.question_status
+                      - if t.status_id
+                        - if t.status_id.to_i == Answer::INCOMPLETE
+                          = link_to "Draft", take_section_path(@current_section, task_id: t.id), class: "label label-info"
+                        - elsif t.status_id.to_i == Answer::CORRECT
+                          = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
+                          %span.points= t.points_awarded.to_i.to_s + " points"
+                        - else
+                          - raise "Bad status: #{t.status_id.to_s}"
+                      - else
+                        = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"

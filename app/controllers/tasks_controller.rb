@@ -12,6 +12,7 @@ class TasksController < ApplicationController
     @task = @section.tasks.new(params[:task])
     @task.creator_id = current_user.id
     @task.answer_content = gather_answers(params[:task])
+
     if @task.save
       unless params[:stored_resource_id].blank?
         sr = StoredResource.find(params[:stored_resource_id])
@@ -125,12 +126,12 @@ class TasksController < ApplicationController
     end
     
     def gather_answers(task)
-      params[:task][:answer1] = params[:task][:fibanswer1] if params[:task][:answer_type] == "1"
       answers = []
-      answers << { content: task[:answer1], is_correct: true } if task[:answer1]
-      answers << { content: task[:answer2], is_correct: false } if task[:answer2]
-      answers << { content: task[:answer3], is_correct: false } if task[:answer3]
-      answers << { content: task[:answer4], is_correct: false } if task[:answer4]
+      answers << { content: task[:exact1], is_correct: true } unless task[:exact1].blank?
+      answers << { content: task[:answer1], is_correct: true } unless task[:answer1].blank?
+      answers << { content: task[:answer2], is_correct: false } unless task[:answer2].blank?
+      answers << { content: task[:answer3], is_correct: false } unless task[:answer3].blank?
+      answers << { content: task[:answer4], is_correct: false } unless task[:answer4].blank?
       return answers
     end
 end

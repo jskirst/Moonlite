@@ -1,12 +1,12 @@
 $.MB ||= {}
 
-$.log = (str) ->
+$.MB.log = (str) ->
   if $.MB.env == "development"
     if console
       if console.log
         console.log(str)
 
-$.next_headline = ($headline) ->
+$.MB.next_headline = ($headline) ->
   $headline.fadeOut 700, ->
     $(this).remove()
     if $('.headlines').size() > 0
@@ -14,3 +14,13 @@ $.next_headline = ($headline) ->
     else
       $('.launchpadcontent').show()
       $(".modal_close").show();
+      
+$.MB.checkSubmit = (e, input) ->
+  if e && e.keyCode == 13
+    $(input).parents('form').submit()
+
+$.MB.submit_or_close = (exit_button) ->
+  if $("#user_email").val() == ""
+    $.MB.next_headline($(exit_button).parents('.headlines'))
+  else
+    $('#update_name').submit()
