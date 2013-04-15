@@ -10,6 +10,10 @@ class Answer < ActiveRecord::Base
   has_many :completed_tasks
   
   validates :content, length: { :within => 1..255 }
+  
+  def match?(supplied_answer)
+    supplied_answer.downcase.gsub(/\s/,'') == content.downcase.gsub(/\s/,'')
+  end
     
   def answer_percent
     total_answers_for_task = task.total_answers

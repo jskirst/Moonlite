@@ -71,12 +71,14 @@ class Task < ActiveRecord::Base
   
   def correct_answer() answers.find_by_is_correct(true) end
   def total_answers() total_answers = answers.sum(:answer_count) end
+  
+  def core?() exact? or multiple_choice? end
+  def creative?() creative_response? end
     
-  def exact?() answer_type == EXACT end
-  def multiple_choice?() answer_type == MULTIPLE end
   def creative_response?() answer_type == CREATIVE end
   def task?() answer_type == CHECKIN end
-    
+  def exact?() answer_type == EXACT end
+  def multiple_choice?() answer_type == MULTIPLE end
   def text?() creative_response? and answer_sub_type == TEXT end
   def image?() creative_response? and answer_sub_type == IMAGE end
   def youtube?() creative_response? and answer_sub_type == YOUTUBE end

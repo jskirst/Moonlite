@@ -15,11 +15,13 @@ class Section < ActiveRecord::Base
   before_create { self.position = get_next_position_for_path }
   before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
       
-  def next_task(user = nil, exclude_first = false, type = Task::MULTIPLE)
+  def next_task(user = nil, exclude_first = false, type = [Task::MULTIPLE, Task::EXACT])
+    type = [type] unless type.is_a? Array
+    
     if user.nil?
-      next_tasks = tasks.where("locked_at is ? and answer_type = ?", nil, type)
+      next_tasks = tasks.where("locked_at is ? and answer_type in (?)", nil, type)
     else
-      next_tasks = tasks.where("locked_at is ? and answer_type = ?", nil, type)
+      next_tasks = tasks.where("locked_at is ? and answer_type in (?)", nil, type)
         .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id)
     end
     
@@ -30,13 +32,17 @@ class Section < ActiveRecord::Base
     end
   end
   
-  def completed?(user) remaining_tasks(user, Task::MULTIPLE) <= 0 end
+  def completed?(user) remaining_tasks(user, [Task::MULTIPLE, Task::EXACT]) <= 0 end
   
   def remaining_tasks(user, type = nil)
+    if type and not type.is_a? Array
+      type = [type]
+    end
+    
     unless self.published_at.nil?
       if type
         tasks.where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id)
-          .where("tasks.answer_type = ?", type)
+          .where("tasks.answer_type in (?)", type)
           .count
       else
         tasks.where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id).count

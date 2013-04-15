@@ -181,9 +181,10 @@ class PathsController < ApplicationController
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
         .where("tasks.section_id = ? and tasks.locked_at is ? and tasks.reviewed_at is not ?", @current_section.id, nil, nil)
-      @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
-      @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
-      @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
+
+      @core_tasks = @tasks.select { |t| t.core? }
+      @challenge_tasks = @tasks.select { |t| t.creative? }
+      @achievement_tasks = @tasks.select { |t| t.task? }
       
       @completed = params[:c]
       @points_gained = params[:p]
