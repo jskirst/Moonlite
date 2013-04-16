@@ -131,4 +131,10 @@ namespace :db do
       end
     end
   end
+  
+  User.all.each do |u|
+    Path.all.each do |p|
+      u.enroll!(p)
+    end
+  end
 end
