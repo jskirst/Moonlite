@@ -44,6 +44,7 @@ STONEY_SMALL_URL  = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x1
 STONEY_MEDIUM_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png"
 GIANT_STONEY       = "https://s3.amazonaws.com/moonlite-nsdub/static/GiantStoney.png"
 
+ICON_DEFAULT_PROFILE = "https://s3-us-west-1.amazonaws.com/moonlite/static/default_profile_pic.png"
 ICON_CLOSE_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"
 ICON_CAMERA_URL   = "https://s3-us-west-1.amazonaws.com/moonlite/static/image.png"
 ICON_LOADING_URL  = "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif"

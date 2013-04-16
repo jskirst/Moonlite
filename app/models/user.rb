@@ -185,7 +185,7 @@ class User < ActiveRecord::Base
   
   def self.picture(image_url)
     return image_url unless image_url.blank?
-    return "/images/default_profile_pic.png"
+    return ICON_DEFAULT_PROFILE
   end
   def picture() User.picture(self.image_url) end
   
