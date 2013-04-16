@@ -110,6 +110,13 @@ class PagesController < ApplicationController
     render "about"
   end
   
+  def internship
+    @title = "Internship"
+    @show_footer = true
+    @hide_background = true
+    render "internship"
+  end
+  
   def challenges
     @title = "Challenges"
     @show_footer = true

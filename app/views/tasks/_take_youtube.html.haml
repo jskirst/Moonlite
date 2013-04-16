@@ -14,7 +14,7 @@
       %a#answer_preview_button.btn.secondary{ style: "margin-left: 10px; position:relative; bottom:5px;" } Preview
       %div#answer_preview_container{ style: "text-align: center; padding: 10px; margin: 20px 0 0 0; border: 1px solid lightgray;" }
         %div#answer_preview
-          = image_tag "/images/youtube_thumb.jpg", size: "380x200", id: "youtube_placeholder", alt: "YouTube placeholder"
+          = image_tag YOUTUBE_PLACEHOLDER, size: "380x200", id: "youtube_placeholder", alt: "YouTube placeholder"
       
     %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
       %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 

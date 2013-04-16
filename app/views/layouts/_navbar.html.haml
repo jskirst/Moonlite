@@ -8,22 +8,22 @@
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
           %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
             = link_to root_url do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png",  alt: "Home"
+              = image_tag NAVBAR_HOME,  alt: "Home"
               %span Home
           %li.navitem{ title: "Explore", style: "height: 100%;" }
             %a.explore_link
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png", style: "", alt: "Explore"
+              = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
               %span Explore
           %li.navitem{ title: "Create", style: "height: 100%;" }
             = link_to create_path do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png", style: "", alt: "Create"
+              = image_tag NAVBAR_CREATE, style: "", alt: "Create"
               %span Create
           %li.navitem{ title: "Profile", style: "height: 100%;" }
             = link_to profile_path(current_user.username) do
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png", alt: "Profile"  
+              = image_tag NAVBAR_PROFILE, alt: "Profile"  
               %span Profile
         %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
-          = image_tag "ajax-trial.gif", alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
+          = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
         %ul.nav.pull-right{ style: "float:right; margin-right: 8%; " }
           - if current_user
             %li.navuser
@@ -50,7 +50,7 @@
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
-                  = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png", style: "width: 18px; height: 18px;", title: "Notifications", alt: "Notifications"
+                  = image_tag ICON_NOTIFICATIONS, style: "width: 18px; height: 18px;", title: "Notifications", alt: "Notifications"
                   - if unread_notification_count > 0
                     %span.notifications_bubble= unread_notification_count
                 %ul.dropdown-menu{ role: "button", style: "padding: 0 0 10px 0; top:42px; right:-104px; min-width: 317px; min-height: 135px;" }
@@ -68,7 +68,7 @@
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:10px;" }
-                  %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png", style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
+                  %img{ src: ICON_GEAR, style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
                 %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-52px; min-width: 25px; min-height: 50px;" }
                   %li
                     %div
@@ -88,8 +88,8 @@
         %ul.nav.pull-right{ style: "float:right; margin-right: 175px;" }
           %li
             %div{ style: "width: 300px; margin-top: 2px;"}
-              = image_tag @enrollment.path.image, style: "width: 30px; height: 30px; margin: 3px;", alt: "#{@path.name}"            
-              %div{ style: "vertical-align: top; width: 255px; display: inline-block; color: white;" }
+              = image_tag @enrollment.path.image, style: "width: 32px; height: 32px; margin-top: 2px;", alt: "#{@path.name}"            
+              %div{ style: "vertical-align: top; width: 255px; margin-left: 5px; display: inline-block; color: white;" }
                 %span Level #{@enrollment.level} - #{@enrollment.points_to_next_level} more points to next level
                 %div.progress.progress-info{ style: "height: 10px; margin:0;" }
                   %div.bar{ style: "width: #{@enrollment.level_percent}%;"}
