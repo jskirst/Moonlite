@@ -1,6 +1,6 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
-  .quizcontainer { width: 650px; }
+  .quizcontainer { width: 650px; margin-top: 50px;}
 %div.quizcontainer
   %div.quizspace
     %div
@@ -10,20 +10,32 @@
         %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
       - if @require_signup 
-        %h2{ style: "font-size: 18px; text-align: center; margin: 10px 0 10px 0;" }
-          Save your score, reserve your username, and keep racking up points.       
-        %div{ style: "margin: 10px 0px 30px 0; "}
-          .signup
-            = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "btn danger" do
-              = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-              %span.landingbuttontext Sign in with Google »
+        %hr
+        .professional_mb
+          .header
+            %h2{ style: "font-size: 25px; text-align: center; margin: 0 0 10px 0; line-height: 35px;" }
+              MetaBright is the game that can help land you your next job or internship.
+          .body
+            %h4
+              How does it work?
+            %ul
+              %li Employers can view people's <strong>anonymized</strong> responses. 
+              %li If an employer likes your responses, they can contact you through MetaBright with information about the position. (Your contact information is kept private.)
+              %li You get to decide whether or not you want to talk to the employer. 
+            %h4
+              Will I get spammed?
+            %p 
+              Absolutely not. Your contact information is only released if you want to connect with the employer.
+            %h4 
+              Can I change my mind?
+            %p
+              Yes. It's as simple as changing a setting on your profile
+          .signup{ style: "margin: 10px 0px 30px 0; "}
+            = link_to "#", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "btn danger" do
+              %span.landingbuttontext No thanks, I'll just play MetaBright as a game.
 
-            = link_to "/auth/facebook", style: "display: inline-block;", class: "btn danger" do
-              = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-              %span.landingbuttontext Sign in with Facebook »
-        %div{ style: "margin-top:10px; font-size:14px;"}
-          = link_to "Continue and register later", continue_path_path(@section.path.permalink), style: "float: right;"
-          = link_to "Back to Challenge page", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user), s:false), style: "float: left;"
+            = link_to "#", style: "display: inline-block;", class: "btn danger" do
+              %span.landingbuttontext Sign me up!
       - else
         %div{ style: "margin: 20px 0 0 0;"}
           = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
