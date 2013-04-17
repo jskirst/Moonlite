@@ -21,7 +21,7 @@ class SubmittedAnswer < ActiveRecord::Base
   has_many :votes, as: :owner, dependent: :destroy
   has_many :stored_resources, as: :owner
  
-  validates :content, length: { maximum: 2500 }
+  validates :content, length: { maximum: 100000 }
   
   before_save do
     if content.try{ |c| c.include?("#ruby") }

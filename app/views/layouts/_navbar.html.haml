@@ -61,8 +61,9 @@
                     - notifications.each do |event|
                       %li.notification_space
                         %div.notification{ class: "#{event.read_at ? '' : 'notification-unread'}" }
-                          = link_to event.link do
+                          = link_to event.actioner.nil? ? "#" : profile_path(event.actioner.try{ |a| a.username }) do 
                             = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;", alt: "Notification"
+                          = link_to event.link do
                             %p.notification_body= event.content
                             %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
