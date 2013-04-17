@@ -566,3 +566,33 @@ h3 { font-size: 28px; }
   .explorenewuserfooter { margin:15px; }
   .modal_close img { width:20px; height:20px; }
 }
+
+
+/* Finish page */
+
+.professional_mb{
+  .header{
+    
+    h2{ font-size: 25px; text-align: center; margin: 0 0 10px 0; line-height: 35px; }
+  }
+  .body{
+    padding: 0 27px;
+    font-size: 14px;
+        
+    h4 { font-size: 17px; margin-bottom: 4px;  }
+    ul { margin-bottom: 20px; }
+    p { margin-bottom: 20px; }
+  }
+  .signup{
+    margin: 10px 0px 8px 0; 
+    
+    .button{
+      width: 166px; 
+      
+      .landingbuttontext{
+        left: 0;
+      }
+    }
+  }
+}
+
