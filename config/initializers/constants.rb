@@ -35,23 +35,42 @@ end
 
 # URLS
 
+METABRIGHT_LOGO = "https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png"
+METABRIGHT_LOGO_200 = "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+200+wide.png"
+
 LIGHT_BULB_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon"
 
 STONEY_SMALL_URL  = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
 STONEY_MEDIUM_URL = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png"
+GIANT_STONEY       = "https://s3.amazonaws.com/moonlite-nsdub/static/GiantStoney.png"
 
+ICON_DEFAULT_PROFILE = "https://s3-us-west-1.amazonaws.com/moonlite/static/default_profile_pic.png"
 ICON_CLOSE_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png"
 ICON_CAMERA_URL   = "https://s3-us-west-1.amazonaws.com/moonlite/static/image.png"
 ICON_LOADING_URL  = "https://s3-us-west-1.amazonaws.com/moonlite/static/loading.gif"
 ICON_CHECK_URL    = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle_check_clip.png"
 ICON_UPVOTE_URL   = "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png"
 ICON_DIVIDER_URL  = "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png"
+ICON_LOADING      = "https://s3-us-west-1.amazonaws.com/moonlite/static/ajax-trial.gif"
+ICON_NOTIFICATIONS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png"
+ICON_GEAR = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png"
 
 ICON_LOGIN_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png"
 ICON_LOGIN_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png"
+
+SHARE_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
+SHARE_TWITTER = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
+SHARE_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
 
 ICON_CAROUSEL_LEFT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"
 ICON_CAROUSEL_RIGHT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"
 
 STATIC_DIVIDER = "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png"
+IMAGE_PLACEHOLDER = "https://s3-us-west-1.amazonaws.com/moonlite/static/image_thumb.png"
+YOUTUBE_PLACEHOLDER = "https://s3-us-west-1.amazonaws.com/moonlite/static/youtube_thumb.jpg"
+
+NAVBAR_HOME = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home.png"
+NAVBAR_EXPLORE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png"
+NAVBAR_PROFILE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
+NAVBAR_CREATE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png"
 

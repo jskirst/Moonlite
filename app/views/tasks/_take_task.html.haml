@@ -38,7 +38,7 @@
       %div#answer_preview_container{ style: "padding: 10px; margin: 20px 10px 0 10px; border: 1px solid lightgray;" }
         - if @submitted_answer.new_record?
           %div#answer_preview{ style: "text-align: center;" }
-            = image_tag "/images/image_thumb.png", class: "image_preview", id: "image_preview", alt: "Image placeholder"
+            = image_tag IMAGE_PLACEHOLDER, class: "image_preview", id: "image_preview", alt: "Image placeholder"
         %div#task_preview{ style: "#{'display: none;' if @submitted_answer.new_record?} position: relative; font-size: 12px; min-height: 250px; max-height: 300px; overflow-x: hidden; overflow-y: hidden;" }
           %div.content{ style: "height:76%; position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; font-size: 11px;"}
             %pre.unstyled{ style: "font-size:11px; height:95%;"}

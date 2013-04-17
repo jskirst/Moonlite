@@ -37,11 +37,21 @@
           = hidden_field_tag :points_remaining, 100
           = hidden_field_tag :streak, @streak
           
-          %ol{ style: "list-style-position: inside; margin-left: 0px;" }
-            - @answers.each do |a|
-              %li.answer_content{ id: "answer_#{a.id}" }
-                = radio_button_tag :answer, a.id, false, style: "display: none;"
-                %span= a.content
+          - if @task.multiple_choice?
+            %ol{ style: "list-style-position: inside; margin-left: 0px;" }
+              - @answers.each do |a|
+                %li.answer_content{ id: "answer_#{a.id}" }
+                  = radio_button_tag :answer, a.id, false, style: "display: none;"
+                  %span= a.content
+          - elsif @task.exact?
+            .control-group
+              .controls
+                = text_field_tag "answer_exact", nil, placeholder: "Enter exact answer here..."
+                %p.match_status
+            .control-group
+              .controls
+                = submit_tag "Submit", id: "submit_exact", class: "button button-actionable"
+            
         = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
     
     - if @show_stats

@@ -40,9 +40,16 @@ $.MB.Arena.init = (options = {}) ->
     $.MB.Arena.initialized = false
   
   $("#challenge_form").on "ajax:success", (xhr, data) ->
-    $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
-    if data.correct_answer != data.supplied_answer
-      $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white")
+    if data.type == "multiple"
+      $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
+      if not data.correct
+        $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white")
+    else if data.type == "exact"
+      if data.correct == true
+        $(".match_status").css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white").text("Correct!")
+      else
+        $(".match_status").css("background-color", "#FF9999").css("color", "white").text("Incorrect. Answer: "+data.correct_answer)
+      $("#submit_exact").remove()
     $("#nextbutton").show()
   
   if options["start_countdown"]

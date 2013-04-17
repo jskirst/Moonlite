@@ -45,7 +45,7 @@
                           %li= link_to "Remove Idea", idea_path(idea), method: :delete, confirm: "Are you sure you want to delete your submission?", style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px;"
               - else
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
-                  %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/purple+upvote+arrow.png", alt: "Up-vote" }   
+                  %img{ src: ICON_UPVOTE_URL, alt: "Up-vote" }   
           %div.ideacontent
             %h4
               = link_to idea.title, idea

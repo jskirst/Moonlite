@@ -58,9 +58,10 @@
         #bottomboxcontent
           .span9
             .vitalinfo
-              %div
-                LOCATION:
-                %span= @user.location
+              - unless @user.location.blank?
+                %div
+                  LOCATION:
+                  %span= @user.location
             .shareprofile
               %p Share profile:
               = render "shared/sharing", { custom_style: "display: inline; margin-right: 10px; float: right;", title: "#{@user.name}'s awesome profile on MetaBright.com", url: profile_url(@user.username) }

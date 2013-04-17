@@ -130,5 +130,10 @@ namespace :db do
         section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
       end
     end
+    User.all.each do |u|
+      Path.all.each do |p|
+        u.enroll!(p)
+      end
+    end
   end
 end

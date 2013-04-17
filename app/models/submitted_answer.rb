@@ -21,14 +21,18 @@ class SubmittedAnswer < ActiveRecord::Base
   has_many :votes, as: :owner, dependent: :destroy
   has_many :stored_resources, as: :owner
  
-  validates :content, length: { maximum: 2500 }
+  validates :content, length: { maximum: 100000 }
   
   before_save do
     if content.try{ |c| c.include?("#ruby") }
-      url = URI.parse("http://www.evaluatron.com/?quarry=#{CGI.escape(content)}")
-      result = JSON.parse(open(url).read)
-      self.preview = result["output"]
-      self.preview_errors = result["errors"]
+      begin
+        url = URI.parse("http://www.evaluatron.com/?quarry=#{CGI.escape(content)}")
+        result = JSON.parse(open(url).read)
+        self.preview = result["output"]
+        self.preview_errors = result["errors"]
+      rescue
+        # bad output
+      end
     end
   end
   

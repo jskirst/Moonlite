@@ -13,37 +13,44 @@
     %div.row
       %div.answers{ style: "margin-left: 20px;" }
         
-        %div.control-group
+        .control-group
           %label.control-label Answer type
-          %div.controls
+          .controls
             = f.select :answer_type, hash_to_array(Task::TYPES)
-        %div.control-group.hide.sub_type
+        
+        .control-group.hide.sub_type
           %label.control-label Response type
-          %div.controls
+          .controls
             = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
         
-        %div.multiple_choice
+        .exact.hide
+          .control-group
+            %label.control-label Exact answer (case insensitive)
+            .controls
+              = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
+        
+        .multiple_choice
           - (1..4).each do |i|
-            %div.control-group
+            .control-group
               - status = (i == 1 ? "Correct answer" : "Wrong answer")
               %label.control-label= status
-              %div.controls
+              .controls
                 = text_field_tag("task[answer"+i.to_s+"]", nil, { maxlength: 255, size: 75, class: status.downcase.gsub(" ","_") })
         
-        %div.creative.hide
+        .creative.hide
           %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
           %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.
           %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
         
-        %div.checkin.hide
-          %div.control-group
+        .checkin.hide
+          .control-group
             %label.control-label
               = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px;"
-            %div.controls{ style: "width: 450px;" }
+            .controls{ style: "width: 450px;" }
               %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
         
-        %div.control-group
-          %div.controls
+        .control-group
+          .controls
             = render "stored_resources/new_image"
 
 :css
@@ -68,22 +75,20 @@
     });
   
     $("select[name='task[answer_type]']").change(function(){
+      $(".creative").hide();
+      $(".multiple_choice").hide();
+      $(".checkin").hide();
+      $(".exact").hide();
+      $(this).parents("div.control-group").siblings(".sub_type").hide();
       var type = $(this).val();
       if(type == 0){
-        $(this).parents("div.control-group").siblings(".sub_type").show();
         $(".creative").show();
-        $(".multiple_choice").hide();
-        $(".checkin").hide();
         display_sub_type_message();
+      } else if(type == 1) {
+        $(".exact").show();
       } else if(type == 2) {
-        $(this).parents("div.control-group").siblings(".sub_type").hide();
         $(".multiple_choice").show();
-        $(".creative").hide();
-        $(".checkin").hide();
       } else if(type == 3) {
-        $(this).parents("div.control-group").siblings(".sub_type").hide();
-        $(".multiple_choice").hide();
-        $(".creative").hide();
         $(".checkin").show();
       }
     });

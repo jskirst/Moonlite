@@ -111,9 +111,9 @@ class SectionsController < ApplicationController
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
         .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
         .where("tasks.section_id = ? and tasks.locked_at is ? and tasks.reviewed_at is not ?", @current_section.id, nil, nil)
-      @core_tasks = @tasks.select { |t| t.answer_type == Task::MULTIPLE }
-      @challenge_tasks = @tasks.select { |t| t.answer_type == Task::CREATIVE }
-      @achievement_tasks = @tasks.select { |t| t.answer_type == Task::CHECKIN }
+      @core_tasks = @tasks.select { |t| t.core? }
+      @challenge_tasks = @tasks.select { |t| t.creative? }
+      @achievement_tasks = @tasks.select { |t| t.task? }
       @display_type = params[:type] || 2
       render partial: "launchpad"
     else
@@ -200,8 +200,15 @@ class SectionsController < ApplicationController
   def complete
     task_id = params[:task_id]
     points = params[:points_remaining].to_i
-    supplied_answer = Answer.find(params[:answer])
-    correct_answer = supplied_answer.is_correct ? supplied_answer : Answer.where(task_id: task_id, is_correct: true).first
+    if params[:answer]
+      supplied_answer = Answer.find(params[:answer])
+      correct = supplied_answer.is_correct?
+      correct_answer = correct ? supplied_answer : Answer.where(task_id: task_id, is_correct: true).first
+    else
+      supplied_answer = params[:answer_exact]
+      correct_answer = Answer.where(task_id: task_id, is_correct: true).first
+      correct = correct_answer.match?(supplied_answer)
+    end
     
     if current_user
       session_id = params[:session_id]
@@ -214,9 +221,13 @@ class SectionsController < ApplicationController
         raise "Out of time"
       end
       
-      completed_task.enrollment_id = @enrollment.id
-      completed_task.answer_id = supplied_answer.id
-      if supplied_answer == correct_answer
+      if supplied_answer.is_a? String
+        completed_task.answer = supplied_answer
+      else
+        completed_task.answer_id = supplied_answer.id
+      end
+      
+      if correct
         completed_task.status_id = Answer::CORRECT
         completed_task.points_awarded = points
         completed_task.award_points = true
@@ -226,10 +237,16 @@ class SectionsController < ApplicationController
         completed_task.points_awarded = 0
         session[:ssf] = 0
       end
+      completed_task.enrollment_id = @enrollment.id
       completed_task.save!
-      Answer.increment_counter(:answer_count, supplied_answer.id)
+      Answer.increment_counter(:answer_count, supplied_answer.id) if supplied_answer.is_a? Answer
     end
-    render json: { correct_answer: correct_answer.id, supplied_answer: supplied_answer.id }
+    
+    if supplied_answer.is_a? String
+      render json: { correct_answer: correct_answer.content, supplied_answer: supplied_answer, type: "exact", correct: correct }
+    else
+      render json: { correct_answer: correct_answer.id, supplied_answer: supplied_answer.id, type: "multiple", correct: correct }
+    end
   end
     
   def continue
@@ -239,7 +256,7 @@ class SectionsController < ApplicationController
     @session_id = params[:session_id] || Time.now().to_i + current_user.id
     current_session = current_user.completed_tasks.where(session_id: @session_id)
     @question_count = current_session.count
-    @session_total = @section.remaining_tasks(current_user, Task::MULTIPLE) + @question_count
+    @session_total = @section.remaining_tasks(current_user, [Task::MULTIPLE, Task::EXACT]) + @question_count
     @session_total = 7 if @session_total > 7
      
     if @question_count <= 6

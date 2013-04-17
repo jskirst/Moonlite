@@ -3,16 +3,17 @@ class Task < ActiveRecord::Base
   CREATOR_PENALTY_POINTS = 40
   
   CREATIVE  = 0
-  FIB       = 1
+  EXACT     = 1
   MULTIPLE  = 2
   CHECKIN   = 3
-  TYPES = { MULTIPLE => "Multiple Choice", CREATIVE => "Creative Response", CHECKIN => "Task" }
+  TYPES = { EXACT => "Exact", MULTIPLE => "Multiple Choice", CREATIVE => "Creative Response", CHECKIN => "Task" }
   
   # Creative Subtypes
-  TEXT      = 100
-  IMAGE     = 101
-  YOUTUBE   = 102
-  SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video" }
+  TEXT        = 100
+  IMAGE       = 101
+  YOUTUBE     = 102
+  LONG_EXACT  = 103
+  SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
   attr_readonly :section_id
   attr_accessor :source, :answer_content, :stored_resource_id, :answer1, :answer2, :answer3, :answer4
@@ -44,7 +45,7 @@ class Task < ActiveRecord::Base
   validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
   
   after_create do
-    if multiple_choice?
+    if exact? or multiple_choice?
       answer_content.each do |a|
         answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
       end
@@ -70,14 +71,18 @@ class Task < ActiveRecord::Base
   
   def correct_answer() answers.find_by_is_correct(true) end
   def total_answers() total_answers = answers.sum(:answer_count) end
+  
+  def core?() exact? or multiple_choice? end
+  def creative?() creative_response? end
     
-  def multiple_choice?() answer_type == MULTIPLE end
   def creative_response?() answer_type == CREATIVE end
   def task?() answer_type == CHECKIN end
-    
+  def exact?() answer_type == EXACT end
+  def multiple_choice?() answer_type == MULTIPLE end
   def text?() creative_response? and answer_sub_type == TEXT end
   def image?() creative_response? and answer_sub_type == IMAGE end
   def youtube?() creative_response? and answer_sub_type == YOUTUBE end
+  def long_exact?() creative_response? and answer_sub_type == LONG_EXACT end
     
   def caption_allowed?() image? or youtube? or task? end
   
