@@ -4,40 +4,44 @@
 %div.quizcontainer
   %div.quizspace
     %div
-      = image_tag GIANT_STONEY, style: "width:76px; height:94px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
-      %div{ style: "display: inline-block; margin-left: 8px; font-size:65px; line-height:74px; margin-top:-6px;"}
-        Nice work!
-        %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
-          You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
-      - if @require_signup 
-        %hr
-        .professional_mb
-          .header
-            %h2
-              MetaBright is the game that can help land you your next job or internship.
-          .body
-            %h4
-              How does it work?
-            %ul
-              %li Employers can view people's <strong>anonymized</strong> answers. 
-              %li If an employer likes your responses, they can contact you through MetaBright with information about the position. (Your contact information is kept private.)
-              %li You get to decide whether or not you want to talk to the employer. You're under no obligation whatsoever.
-            %h4
-              Will I get spammed?
-            %p 
-              Absolutely not. Your contact information is only released if you want to connect with the employer.
-            %h4 
-              Can I change my mind?
-            %p
-              Yes. It's as simple as changing a setting on your profile
-          .signup{ style: ""}
-            = link_to "#", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
-              %span.landingbuttontext No thanks, I'll just play MetaBright as a game.
-
-            = link_to "#", style: "display: inline-block; ", class: "button button-actionable" do
-              %span.landingbuttontext{ style: "font-size: 18px; line-height: 33px; "} Sounds great!
-      - else
-        %div{ style: "margin: 20px 0 0 0;"}
-          = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
-          = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
+      = image_tag GIANT_STONEY, style: "width:46px; height:55px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
+      %div{ style: "display: inline-block; margin-left: 8px; font-size:35px; line-height:56px; "}
+        We just need a few details...
+      .professional_mb_form{ style: "margin-top:15px;"}
+        .body
+          %h4 
+            What opportunities might interest you?
+          %label.checkbox
+            %input{ type: "checkbox", value: "" } Full time job
+          %label.checkbox
+            %input{ type: "checkbox", value: "" } Part time job or freelancing
+          %label.checkbox
+            %input{ type: "checkbox", value: "" } Internship
+          %label.checkbox
+            %input{ type: "checkbox", value: "" } College admissions
+          %h4
+            What's your location?
+          %div
+            %label Country
+            %select
+              %option United States
+              %option Canada
+              %option Iraq
+          %div
+            %label State/Province
+            %select
+              %option California
+              %option Canada
+              %option Iraq
+          %div
+            %label City
+            %input{ type:"text", class:"input-medium", placeholder:"City" }
+          %div
+            %label Zip Code
+            %input{ type:"text", class:"input-small", placeholder:"Zip" }
+        %div{ style: "margin: 12px 0 0 0; padding: 0 3px;"}
+          = link_to "Submit", "#", class: "button button-actionable", style: "float: right;"
+          = link_to "Back", "#", class: "button button-standard", style: "float: right; margin-right: 15px;"
+          
+          
         
