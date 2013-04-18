@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130327230829) do
+ActiveRecord::Schema.define(:version => 20130417211738) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -372,20 +372,20 @@ ActiveRecord::Schema.define(:version => 20130327230829) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
     t.string   "encrypted_password"
     t.string   "salt"
-    t.boolean  "admin",              :default => false
-    t.integer  "earned_points",      :default => 0
-    t.integer  "spent_points",       :default => 0
+    t.boolean  "admin",               :default => false
+    t.integer  "earned_points",       :default => 0
+    t.integer  "spent_points",        :default => 0
     t.string   "image_url"
     t.string   "signup_token"
     t.integer  "company_id"
     t.integer  "user_role_id"
     t.string   "username"
-    t.boolean  "is_fake_user",       :default => false
-    t.boolean  "is_test_user",       :default => false
+    t.boolean  "is_fake_user",        :default => false
+    t.boolean  "is_test_user",        :default => false
     t.datetime "login_at"
     t.datetime "logout_at"
     t.string   "description"
@@ -394,16 +394,71 @@ ActiveRecord::Schema.define(:version => 20130327230829) do
     t.string   "title"
     t.string   "location"
     t.string   "link"
-    t.boolean  "is_locked",          :default => false
+    t.boolean  "is_locked",           :default => false
     t.string   "large_image_url"
     t.text     "viewed_help"
     t.datetime "locked_at"
-    t.integer  "emails_today",       :default => 0
+    t.integer  "emails_today",        :default => 0
     t.datetime "last_email_sent_at"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.boolean  "wants_opportunities", :default => false
+    t.boolean  "wants_full_time",     :default => false
+    t.boolean  "wants_part_time",     :default => false
+    t.boolean  "wants_internship",    :default => false
+    t.boolean  "wants_university",    :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "vanity_conversions", :force => true do |t|
+    t.integer "vanity_experiment_id"
+    t.integer "alternative"
+    t.integer "conversions"
+  end
+
+  add_index "vanity_conversions", ["vanity_experiment_id", "alternative"], :name => "by_experiment_id_and_alternative"
+
+  create_table "vanity_experiments", :force => true do |t|
+    t.string   "experiment_id"
+    t.integer  "outcome"
+    t.datetime "created_at"
+    t.datetime "completed_at"
+  end
+
+  add_index "vanity_experiments", ["experiment_id"], :name => "index_vanity_experiments_on_experiment_id"
+
+  create_table "vanity_metric_values", :force => true do |t|
+    t.integer "vanity_metric_id"
+    t.integer "index"
+    t.integer "value"
+    t.string  "date"
+  end
+
+  add_index "vanity_metric_values", ["vanity_metric_id"], :name => "index_vanity_metric_values_on_vanity_metric_id"
+
+  create_table "vanity_metrics", :force => true do |t|
+    t.string   "metric_id"
+    t.datetime "updated_at"
+  end
+
+  add_index "vanity_metrics", ["metric_id"], :name => "index_vanity_metrics_on_metric_id"
+
+  create_table "vanity_participants", :force => true do |t|
+    t.string  "experiment_id"
+    t.string  "identity"
+    t.integer "shown"
+    t.integer "seen"
+    t.integer "converted"
+  end
+
+  add_index "vanity_participants", ["experiment_id", "converted"], :name => "by_experiment_id_and_converted"
+  add_index "vanity_participants", ["experiment_id", "identity"], :name => "by_experiment_id_and_identity"
+  add_index "vanity_participants", ["experiment_id", "seen"], :name => "by_experiment_id_and_seen"
+  add_index "vanity_participants", ["experiment_id", "shown"], :name => "by_experiment_id_and_shown"
+  add_index "vanity_participants", ["experiment_id"], :name => "index_vanity_participants_on_experiment_id"
 
   create_table "visits", :force => true do |t|
     t.integer  "user_id"
