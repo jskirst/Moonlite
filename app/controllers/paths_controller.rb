@@ -246,7 +246,7 @@ class PathsController < ApplicationController
       elsif params[:order] == "top"
         feed.posts = feed.posts.order("total_votes DESC")
       else
-        feed.posts = feed.posts.select("completed_tasks.*, ((total_votes + 1) - (current_date - DATE(completed_tasks.created_at)) * 0.1) as hotness").order("hotness DESC")
+        feed.posts = feed.posts.select("completed_tasks.*, ((total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
       end
     end
     feed.posts = feed.posts.where("completed_tasks.status_id = ?", Answer::CORRECT).offset(offset).limit(15)
