@@ -119,7 +119,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #ranks .points{ margin: 12px 8px 0 0; }
 .points{ float:right; font-style:italic; font-size:14px; }
 .level{ font: bold 11px arial, sans-serif; position:relative; bottom:-4px; }
-.name{ text-decoration:none; color:gray; font-size:12px; position:relative; bottom:-4px;}
+.name{ text-decoration:none; color:#404040; font-size:12px; position:relative; bottom:-4px;}
 .commentfeed { height:300px; width: 200px; border-radius: 4px; background-color:white; vertical-align:top; position:relative; left:337px; position:absolute; }
 .span5{ display:inline-block; vertical-align: top; width:288px;}
 .span11{ display: inline-block; vertical-align: top; width: 640px;} 
@@ -222,10 +222,10 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .counter span.separator hr {display:none;}
 
 .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
-.quizheader { margin-bottom: 4px; }
+.quizheader { margin-bottom: 10px; }
 .quizheader img { width: 40px; height: 40px; display:inline-block; margin-right:4px; border-radius:3px;}
 .quizheader span{ font:normal 24px'MuliRegular', sans-serif; position:relative; left:5px;}
-.quizheader div{position:relative; top:4px; display:inline-block;}
+.quizheader div{position:relative; display:inline-block;}
 .quizheader .quiz_progress { float: right;font-size: 18px; margin-top: 5px; margin-right: 5px; color: rgb(139, 139, 139); top: 0; }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
