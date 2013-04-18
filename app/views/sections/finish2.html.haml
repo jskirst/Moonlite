@@ -1,0 +1,26 @@
+:css
+  .body.container { border: 0px; background-color: transparent; box-shadow: none; }
+  .quizcontainer { width: 650px; margin-top: 50px;}
+%div.quizcontainer
+  %div.quizspace
+    %div.professional_mb_register
+      = image_tag GIANT_STONEY, style: "width:52px; height:62px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
+      %div{ style: "display: inline-block; margin-left: 8px; font-size:40px; line-height:56px; "}
+        You're almost done!
+      %h4 Choose how you want to register to save your preferences and get back to earning points.
+      .signup
+        = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
+          = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+          %span.landingbuttontext Sign up with Google »
+  
+        = link_to "/auth/facebook", style: "display: inline-block;", class: "button button-info" do
+          = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
+          %span.landingbuttontext Sign up with Facebook »
+        .divider OR
+        = form_for(current_user, html: { id: "#" }) do |f|
+          = f.text_field :name, value: nil, placeholder: "Name"
+          = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
+          = f.password_field :password, value: nil, placeholder: "Password"
+      %div{ style: "margin: 12px 0 0 0; padding: 0 3px;"}
+        = link_to "Submit", "#", class: "button button-actionable", style: "float: right;"
+        = link_to "Back", "#", class: "button button-standard", style: "float: right; margin-right: 15px;"         

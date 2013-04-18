@@ -1,3 +1,5 @@
+$divider: "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png";
+
 /* General/Revolution - this should always stay at the top */
 pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
 .profile_dropdown li:hover { color: white; }
@@ -613,3 +615,27 @@ h3 { font-size: 28px; }
     .checkbox { padding-left: 0; }
   }
 }
+
+.professional_mb_register{
+  
+  h4 { margin-top: 12px; text-align: center; }
+  
+  .signup{
+    text-align: center;
+    margin-top: 20px; 
+  
+    .button { width:210px; padding-top:7px; padding-bottom:7px; }
+    .button:first-child { margin-bottom: 12px; }
+    .button img { height:30px; }
+    .divider {
+      background-image: url($divider);
+      background-repeat: no-repeat;
+      background-position: center 10px;
+      width: 506px;
+      margin: 15px auto;
+    }
+    form { text-align: center;}
+    input { width: 160px; text-align: left; padding: 4px 6px; font-size: 14px; }
+  }
+}
+
