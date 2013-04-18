@@ -1,7 +1,7 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
   .quizcontainer { width: 650px; margin-top: 50px;}
-%div.quizcontainer
+%div.quizcontainer{ style: "display: none; "}
   %div.quizspace
     %div
       = image_tag GIANT_STONEY, style: "width:76px; height:94px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
@@ -9,6 +9,7 @@
         Nice work!
         %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
-        %div{ style: "margin: 20px 0 0 0;"}
-          = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
-          = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
+      %div{ style: "margin: 20px 0 0 0;"}
+        = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
+        = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
+

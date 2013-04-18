@@ -1,38 +1,41 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
   .quizcontainer { width: 650px; margin-top: 50px;}
+  .quispace {  }
 %div.quizcontainer
   %div.quizspace
     %div
-      = image_tag GIANT_STONEY, style: "width:76px; height:94px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
-      %div{ style: "display: inline-block; margin-left: 8px; font-size:65px; line-height:74px; margin-top:-6px;"}
-        Nice work!
-        %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
-          You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
-        %hr
+      = image_tag GIANT_STONEY, style: "width:46px; height:55px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
+      %div{ style: "display: inline-block; margin-left: 8px; font-size:28px; line-height:74px; margin-top:-6px;"}
+        You earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
+      %hr{ style: "margin-top:0; "}
       .professional_mb
         .header
-          %h4
-            MetaBright is the game that can help land you your next job or internship opportunity.
+          %h2
+            MetaBright is the game that can land you your next job or internship opportunity.
         .body
           %h4
             How does it work?
           %ul
             %li Employers can view people's <strong>anonymized</strong> score and answers. 
-            %li If an employer thinks you're a good fit, we'll send you details about the position they have open.
-            %li You get to decide whether or not you want to talk to the employer. You're under no obligation whatsoever.
-          %h4
-            Will I get spammed?
-          %p 
-            Absolutely not. Your contact information is only released if you want to connect with the employer.
-          %h4 
-            Can I change my mind?
-          %p
-            Yes. It's as simple as changing a setting on your profile.
+            %li If an employer thinks you're a good fit, we'll send you details about the position.
+            %li You get to decide whether or not you want to talk to the employer. You're under no obligation whatsoever.          
           %h4 
             But I already have a job...
           %p 
-            You never know if a better job is just around the corner. MetaBright will constantly work in the background to keep an eye out for you. But you're status is totally private - you're boss will never know!
+            You never know if a better job is just around the corner. MetaBright will keep an eye out for you. Best of all, your status is totally private - your boss will never know!
+          %h4
+            Can I improve my score?
+          %p
+            You bet. There are a bunch of ways to earn points, and you can retake questions you might have missed.
+          %h4
+            Will I get spammed?
+          %p 
+            Absolutely not. Your contact information is only revealed if you choose to connect with the employer.
+          %h4 
+            Can I change my mind?
+          %p
+            Yes. It's as simple as changing a setting on your profile.          
         .signup{ style: ""}
-          = link_to "No thanks, I'll just play MetaBright as a game.", finish_section_path(@section, @session_id, s: 9), style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "landingbuttontext button button-info"
-          = link_to "Sounds Great!", finish_section_path(@section, @session_id, s: 1), style: "display: inline-block; font-size: 18px; line-height: 33px;", class: "landingbuttontext button button-actionable"
+          = link_to "No thanks, I'll just play MetaBright as a game.", finish_section_path(@section, @session_id, s: 9), style: "display: inline-block; margin-right: 40px; margin-bottom: 0; font-size: 13px;", class: "landingbuttontext button button-info"
+          = link_to "Sounds Great!", finish_section_path(@section, @session_id, s: 1), style: "display: inline-block; font-size: 18px; line-height: 36px;", class: "landingbuttontext button button-actionable"
