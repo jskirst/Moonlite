@@ -3,7 +3,7 @@ class AddDetailsToUserRecordForEmployers < ActiveRecord::Migration
     add_column :users, :city, :string
     add_column :users, :state, :string
     add_column :users, :country, :string
-    add_column :users, :wants_opportunities, :boolean, default: false
+    add_column :users, :seen_opportunities, :boolean, default: false
     add_column :users, :wants_full_time, :boolean, default: false
     add_column :users, :wants_part_time, :boolean, default: false
     add_column :users, :wants_internship, :boolean, default: false

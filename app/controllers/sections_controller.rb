@@ -1,6 +1,6 @@
 class SectionsController < ApplicationController
   before_filter :authenticate, except: [:continue, :complete]
-  before_filter :load_resource
+  before_filter :load_resource, except: [:subregion_options]
   before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]
   before_filter :disable_navbar, except: [:new, :create]  
   
@@ -304,16 +304,17 @@ class SectionsController < ApplicationController
   end
   
   def finish
-    if @section.completed?(current_user) and @path.next_section(@section).nil?
-      redirect_to challenge_path(@path.permalink, c: true, p: @section.points_earned(current_user))
+    step = params[:s] || 0
+    @session_id = params[:session_id]
+    if current_user.guest_user? and !current_user.seen_opportunities?
+      render "register#{step}"
     else
-      @session_id = params[:session_id]
-      @available_crs = @section.tasks.where("answer_type = ?", Task::CREATIVE).size
-      @unlocked_sections = @path.sections.where("points_to_unlock <= ?", @enrollment.total_points).size 
-      social_tags(@path.name, @path.picture, @path.description)
-      @require_signup = true if @enrollment.completed_tasks.count > 10 and current_user.guest_user?
       render "finish"
     end
+  end
+  
+  def subregion_options
+    render partial: 'subregion_select'
   end
   
   private

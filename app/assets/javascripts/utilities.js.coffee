@@ -24,3 +24,10 @@ $.MB.submit_or_close = (exit_button) ->
     $.MB.next_headline($(exit_button).parents('.headlines'))
   else
     $('#update_name').submit()
+    
+$ ->
+  $('select#user_country').change (event) ->
+    $('select#user_state').attr('disabled', true)
+    country_code = $(this).val();
+    url = "/sections/subregion_options?parent_region=#{country_code}"
+    $('select#user_state').load(url).removeAttr("disabled")

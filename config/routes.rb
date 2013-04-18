@@ -49,6 +49,7 @@ Metabright::Application.routes.draw do
   end
   get '/submissions/:id/raw' => "tasks#raw", as: "raw"
 	
+	match '/sections/subregion_options' => "sections#subregion_options", as: 'user_subregion_options'
 	resources :sections do
 		member do
       get :publish
