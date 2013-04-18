@@ -1,3 +1,5 @@
+$divider: "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png";
+
 /* General/Revolution - this should always stay at the top */
 pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
 .profile_dropdown li:hover { color: white; }
@@ -119,7 +121,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #ranks .points{ margin: 12px 8px 0 0; }
 .points{ float:right; font-style:italic; font-size:14px; }
 .level{ font: bold 11px arial, sans-serif; position:relative; bottom:-4px; }
-.name{ text-decoration:none; color:gray; font-size:12px; position:relative; bottom:-4px;}
+.name{ text-decoration:none; color:#404040; font-size:12px; position:relative; bottom:-4px;}
 .commentfeed { height:300px; width: 200px; border-radius: 4px; background-color:white; vertical-align:top; position:relative; left:337px; position:absolute; }
 .span5{ display:inline-block; vertical-align: top; width:288px;}
 .span11{ display: inline-block; vertical-align: top; width: 640px;} 
@@ -222,10 +224,10 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .counter span.separator hr {display:none;}
 
 .quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
-.quizheader { margin-bottom: 4px; }
+.quizheader { margin-bottom: 10px; }
 .quizheader img { width: 40px; height: 40px; display:inline-block; margin-right:4px; border-radius:3px;}
 .quizheader span{ font:normal 24px'MuliRegular', sans-serif; position:relative; left:5px;}
-.quizheader div{position:relative; top:4px; display:inline-block;}
+.quizheader div{position:relative; display:inline-block;}
 .quizheader .quiz_progress { float: right;font-size: 18px; margin-top: 5px; margin-right: 5px; color: rgb(139, 139, 139); top: 0; }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
@@ -566,3 +568,74 @@ h3 { font-size: 28px; }
   .explorenewuserfooter { margin:15px; }
   .modal_close img { width:20px; height:20px; }
 }
+
+
+/* Finish page */
+
+.professional_mb{
+  .header{
+    
+    h2{ font-size: 25px; text-align: center; margin: 0 0 10px 0; line-height: 35px; }
+  }
+  .body{
+    padding: 0 27px;
+    font-size: 14px;
+        
+    h4 { font-size: 17px; margin-bottom: 4px;  }
+    ul { margin-bottom: 20px; }
+    p { margin-bottom: 20px; }
+    label { display: inline-block;}
+    select {width: 170px; }
+  }
+  .signup{
+    margin: 10px 0px 8px 0; 
+    
+    .button{
+      width: 166px; 
+      
+      .landingbuttontext{
+        left: 0;
+      }
+    }
+  }
+}
+
+.professional_mb_form{
+  .body{
+    padding: 0 27px;
+    font-size: 14px;
+    
+    input, label, select {margin-left: 10px; }
+    input { margin-right: 6px; }
+    label { }
+    select {width: 170px; }
+    h4 {margin-bottom:10px; margin-top: 20px; }
+    div {display: inline-block; margin-right: 70px; }
+    
+    .checkbox { padding-left: 0; }
+  }
+}
+
+.professional_mb_register{
+  
+  h4 { margin-top: 12px; text-align: center; }
+  
+  .signup{
+    text-align: center;
+    margin-top: 20px; 
+  
+    .button { width:210px; padding-top:7px; padding-bottom:7px; }
+    .button:first-child { margin-bottom: 12px; }
+    .button img { height:30px; }
+    .divider {
+      background-image: url($divider);
+      background-repeat: no-repeat;
+      background-position: center 10px;
+      width: 506px;
+      margin: 15px auto;
+    }
+    form { text-align: center;}
+    input { width: 160px; text-align: left; padding: 4px 6px; font-size: 14px; }
+  }
+}
+

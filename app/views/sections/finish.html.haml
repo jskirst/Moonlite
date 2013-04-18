@@ -13,15 +13,15 @@
         %hr
         .professional_mb
           .header
-            %h2{ style: "font-size: 25px; text-align: center; margin: 0 0 10px 0; line-height: 35px;" }
+            %h2
               MetaBright is the game that can help land you your next job or internship.
           .body
             %h4
               How does it work?
             %ul
-              %li Employers can view people's <strong>anonymized</strong> responses. 
-              %li If an employer likes your responses, they can contact you through MetaBright with information about the position. (Your contact information is kept private.)
-              %li You get to decide whether or not you want to talk to the employer. 
+              %li Employers can view people's <strong>anonymized</strong> score and answers. 
+              %li If an employer thinks you're a good fit, they can contact you through MetaBright with details about the position. (Your contact information is kept private.)
+              %li You get to decide whether or not you want to talk to the employer. You're under no obligation whatsoever.
             %h4
               Will I get spammed?
             %p 
@@ -30,12 +30,12 @@
               Can I change my mind?
             %p
               Yes. It's as simple as changing a setting on your profile
-          .signup{ style: "margin: 10px 0px 30px 0; "}
-            = link_to "#", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "btn danger" do
+          .signup{ style: ""}
+            = link_to "#", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
               %span.landingbuttontext No thanks, I'll just play MetaBright as a game.
 
-            = link_to "#", style: "display: inline-block;", class: "btn danger" do
-              %span.landingbuttontext Sign me up!
+            = link_to "#", style: "display: inline-block; ", class: "button button-actionable" do
+              %span.landingbuttontext{ style: "font-size: 18px; line-height: 33px; "} Sounds great!
       - else
         %div{ style: "margin: 20px 0 0 0;"}
           = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
