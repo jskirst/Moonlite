@@ -22,10 +22,10 @@
               %a.btn.secondary{ style: "margin-left:10px;" } Preview   
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
           %div
-            %p{ style: "font-size: 15px; word-break: normal;" } MetaBright can match you with opportunities that match your skills. Do you want this feature? 
-            %div.switch
+            %p{ style: "font-size: 15px; word-break: normal; width: 77%; display: inline-block; " } MetaBright can match you with opportunities that fit your skills. Do you want this feature? 
+            %div.switch{ style: "vertical-align: top; margin-left: 12px; "}
               %input{type:"checkbox"}
-        %div{ style:"position: relative; bottom: 34px; width: 31%; display: inline-block;" }
+        %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
           %div.control-group
             %div.controls{style:"margin-left:112px;"}
               = image_tag @user.picture, id: "image_url_preview", width: "150", alt: "#{@user.name}"      
