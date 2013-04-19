@@ -625,6 +625,7 @@ h3 { font-size: 28px; }
     padding: 0 0 0 27px;
     font-size: 14px;
     
+    form { margin-bottom: 0; }
     input, label, select {margin-left: 10px; }
     input { margin-right: 6px; }
     label { }
@@ -645,7 +646,6 @@ h3 { font-size: 28px; }
     margin-top: 20px; 
   
     .button { width:210px; padding-top:7px; padding-bottom:7px; }
-    .button:first-child { margin-bottom: 12px; }
     .button img { height:30px; }
     .divider {
       background-image: url($divider);
