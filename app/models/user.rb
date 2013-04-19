@@ -73,6 +73,8 @@ class User < ActiveRecord::Base
     
   def locked?() locked_at.nil? ? false : true end
   def guest_user?() email.include?("@metabright") end
+    
+  def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
   
   def self.create_with_nothing(email = nil)
     user = Company.first.users.new

@@ -20,7 +20,7 @@
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
           %div
             %p{ style: "font-size: 15px; word-break: normal; width: 77%; display: inline-block; " } MetaBright can match you with opportunities that fit your skills. 
-            %a.button.button-info.button-small{ href:"#", style:"vertical-align: top; margin-left: 12px; "} Edit settings
+            =link_to "Edit settings", professional_settings_path(current_user.signup_token), style:"vertical-align: top; margin-left: 12px;"
         %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
           %div.control-group
             %div.controls{style:"margin-left:112px;"}

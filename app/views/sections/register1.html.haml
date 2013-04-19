@@ -1,6 +1,27 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
-  .quizcontainer { width: 600px; margin-top: 20px;}
+  .quizcontainer { width: 600px; margin-top: 20px;}  
+:javascript
+  $(function(){
+    $(".professional_mb_form form").submit(function(){
+      var country = $("#user_country").val();
+      var subregion = $("#user_subregion").val();
+      var city = $("#user_city").val();
+
+      var error = ""
+      if(country == ""){ error = "Please select a country." }
+      if(subregion == ""){ error = "Please select a state or province." }
+      if(city == ""){ error = "Please enter a city." }
+
+      if(error != ""){
+        $(this).find(".errors").show().text(error);
+        return false;
+      } else {
+        $(this).find(".errors").hide();
+      }
+    });
+  })
+  
 %div.quizcontainer
   %div.quizspace
     %div
@@ -10,28 +31,31 @@
       .professional_mb_form{ style: "margin-top:15px;"}
         .body
           = form_for current_user, url: finish_section_path(@section, @session_id, s: 2) do |f|
-            %h4 
-              What opportunities might interest you?
-            %label.checkbox
-              Full time job
-              = f.check_box :wants_full_time
-            %label.checkbox
-              Part time job or freelancing
-              = f.check_box :wants_part_time
-            %label.checkbox
-              Internship
-              = f.check_box :wants_internship
-            %h4
-              What's your location?
-            %div{ style: "display: block; "}
-              %label Country
-              = f.country_select :country, priority: %w(US GB CA IN DE KE NL FR), prompt: 'Please select a country'
-            %div
-              %label State/Province
-              = render "subregion_select", { form: f }
-            %div{ style: "margin-right: 0;"}
-              %label City
-              = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
-            %div{ style: "margin: 15px 0 0 0; width: 100%;"}
-              = f.submit "Continue to Register", class: "button button-actionable", style: "float: right;"
-              = link_to "Back", finish_section_path(@section, @session_id, s:0), class: "button button-standard", style: "float: left; margin-left: -20px; "
+            - if @error
+              %p.errors{ style: "color: #b94a48;" }= @error
+            - else
+              %h4 
+                What opportunities might interest you?
+              %label.checkbox
+                Full time job
+                = f.check_box :wants_full_time
+              %label.checkbox
+                Part time job or freelancing
+                = f.check_box :wants_part_time
+              %label.checkbox
+                Internship
+                = f.check_box :wants_internship
+              %h4
+                What's your location?
+              %div{ style: "display: block; "}
+                %label Country
+                = f.country_select :country, priority: %w(US GB CA IN DE KE NL FR), prompt: 'Please select a country'
+              %div
+                %label State/Province
+                = render "subregion_select", { form: f }
+              %div{ style: "margin-right: 0;"}
+                %label City
+                = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
+              %div{ style: "margin: 15px 0 0 0; width: 100%;"}
+                = f.submit "Continue to Register", class: "button button-actionable", style: "float: right;"
+                = link_to "Back", finish_section_path(@section, @session_id, s:0), class: "button button-standard", style: "float: left; margin-left: -20px; "

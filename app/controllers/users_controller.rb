@@ -2,8 +2,8 @@ class UsersController < ApplicationController
   include NewsfeedHelper
   
   before_filter :authenticate, except: [:notifications]
-  before_filter :load_resource, except: [:retract, :notifications]
-  before_filter :authorize_resource, except: [:retract, :notifications]
+  before_filter :load_resource, except: [:retract, :notifications, :professional]
+  before_filter :authorize_resource, except: [:retract, :notifications, :professional]
   
   def show
     redirect_to profile_path(@user.username)
@@ -16,7 +16,17 @@ class UsersController < ApplicationController
     @notification_settings = @user.notification_settings
     unless request.get?
       @user.notification_settings.update_attributes(params[:notification_settings])
-      flash[:success] = "You're notification settings have been saved. Rock on."
+      flash[:success] = "Your notification settings have been saved. Rock on."
+    end
+  end
+  
+  def professional
+    @user = User.find_by_signup_token(params[:signup_token])
+    raise "Access Denied: Attempt to change settings" if current_user && current_user != @user
+    
+    unless request.get?
+      @user.update_attributes(params[:user])
+      flash[:success] = "Your settings have been saved. Rock on."
     end
   end
   

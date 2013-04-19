@@ -10,7 +10,8 @@ Metabright::Application.routes.draw do
 	resources :users
 	match '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
 	match '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
-	
+  match '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
+  	
   resources :paths do
 		member do
       get :publish

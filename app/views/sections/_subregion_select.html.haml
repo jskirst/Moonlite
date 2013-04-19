@@ -1,4 +1,4 @@
-- user = current_user
+- user = @user || current_user
 - parent_region = params[:parent_region] || user.country
 - country = Carmen::Country.coded(parent_region)
 - if country.nil?
