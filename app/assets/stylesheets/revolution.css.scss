@@ -177,6 +177,26 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
   }
 }
 
+/* Social stuff */ 
+
+.invite_tiles{
+  
+  li{    
+    &:first-child { margin-top: 0;}
+    margin-top: 10px;
+    
+    img { height: 40px; width: 40px; display: inline-block; vertical-align: top; border-radius: 3px;}
+    div {   
+      display: inline-block;
+      width: 81%; 
+     
+      h5 { font-size: 15px; }
+      span { color: gray; font-size: 12px; }
+      a { float: right; padding: 2px 12px; font-size: 12px; padding: 0 12px; margin-top: -2px; }
+    }
+  }
+}
+
 
 #homepage{color:#333;}
 #topboxcontent{ width:729px; margin-top: 0px; }
