@@ -66,7 +66,14 @@
                 %h5 Becca Lee
                 %span New York City
                 %a.button.button-info Invite
-            
+      - if @similar_paths
+        .leftbox
+          .box_header Similar Challenges
+          .leftboxfooter{style:"background-color:white;"}
+            %li.leftrailcontent
+              - @similar_paths.limit(8).each do |p|
+                = link_to challenge_path(p.permalink) do
+                  = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"            
       .leftbox.newsfeed{ style: "min-height: 361px;" }
         %div#leaderboard_pop.box_header{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
@@ -114,14 +121,7 @@
                   = link_to truncate(next_user.name, length: 22), profile_path(next_user.username), class: "name"
                   %span.level lvl. #{Enrollment.points_to_level(next_user.total_points.to_i)}
                   %span.points= next_user.total_points
-      - if @similar_paths
-        .leftbox
-          .box_header Similar Challenges
-          .leftboxfooter{style:"background-color:white;"}
-            %li.leftrailcontent
-              - @similar_paths.limit(8).each do |p|
-                = link_to challenge_path(p.permalink) do
-                  = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
+
     %div.span11
       %div.newsfeed
         %div.box_header
