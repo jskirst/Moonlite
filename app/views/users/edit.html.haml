@@ -1,3 +1,6 @@
+<link rel="stylesheet" href="http://www.larentis.eu/switch/bootstrapSwitch.css">
+<script src="http://www.larentis.eu/switch/bootstrapSwitch.js"></script>
+
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
   %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
   %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Profile
@@ -7,7 +10,7 @@
     %div.notificationpanelbody
       %h4 How you appear on MetaBright
       %div.editprofilemanagementarea 
-        %div{style:"display:inline;"}       
+        %div{ style:"display:inline-block; width: 60%;" }       
           %div.control-group
             %label.control-label Name
             %div.controls
@@ -16,13 +19,17 @@
             %label.control-label Profile Picture URL
             %div.controls
               = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
-              %a.btn.secondary{ style: "margin-left:10px;" } Preview
-        %div{style:"display:inline-block; vertical-align:top; position:relative; bottom:34px; margin-bottom:-25px;"}
+              %a.btn.secondary{ style: "margin-left:10px;" } Preview   
+          %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
+          %div
+            %p{ style: "font-size: 15px; word-break: normal;" } MetaBright can match you with opportunities that match your skills. Do you want this feature? 
+            %div.switch
+              %input{type:"checkbox"}
+        %div{ style:"position: relative; bottom: 34px; width: 31%; display: inline-block;" }
           %div.control-group
             %div.controls{style:"margin-left:112px;"}
-              = image_tag @user.picture, id: "image_url_preview", width: "150", alt: "#{@user.name}"
-        
-      %h4 Vital Stats
+              = image_tag @user.picture, id: "image_url_preview", width: "150", alt: "#{@user.name}"      
+      %h4 Vital stats
       %div.editprofilemanagementarea
         %div.control-group
           %label.control-label Location
