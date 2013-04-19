@@ -635,7 +635,7 @@ h3 { font-size: 28px; }
       margin: 15px auto;
     }
     form { text-align: center;}
-    input { width: 160px; text-align: left; padding: 4px 6px; font-size: 14px; }
+    input[type="text"], input[type="password"] { width: 160px; text-align: left; padding: 4px 6px; font-size: 14px; }
   }
 }
 

@@ -4,31 +4,18 @@ class User < ActiveRecord::Base
   
   attr_readonly :signup_token, :company_id
   attr_protected :admin, 
-    :login_at, 
-    :logout_at, 
-    :is_fake_user, 
-    :is_test_user, 
-    :earned_points, 
-    :spent_points, 
-    :user_role_id, 
-    :locked_at,
-    :last_email_sent_at, 
-    :emails_today
+    :login_at, :logout_at, :locked_at,
+    :is_fake_user, :is_test_user, :user_role_id,
+    :earned_points, :spent_points,
+    :last_email_sent_at,:emails_today
   attr_accessor :password, :password_confirmation, :guest_user
-  attr_accessible :name,
-    :email, 
-    :image_url,
-    :password, 
-    :password_confirmation, 
-    :username,
-    :description,
-    :title,
-    :company_name,
-    :education,
-    :link,
-    :location,
-    :viewed_help,
-    :guest_user
+  attr_accessible :name, :email, :image_url, :username,
+    :password,:password_confirmation, 
+    :description, :title, :company_name, :education, :link, :location,
+    :viewed_help, :guest_user,
+    :city, :state, :country, 
+    :seen_opportunities, :wants_full_time, :wants_part_time, :wants_internship
+    
 
   belongs_to  :company
   belongs_to  :user_role

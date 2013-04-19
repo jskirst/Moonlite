@@ -403,15 +403,62 @@ ActiveRecord::Schema.define(:version => 20130417211738) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.boolean  "seen_opportunities", :default => false
-    t.boolean  "wants_full_time",    :default => false
-    t.boolean  "wants_part_time",    :default => false
-    t.boolean  "wants_internship",   :default => false
-    t.boolean  "wants_university",   :default => false
+    t.boolean  "seen_opportunities"
+    t.boolean  "wants_full_time"
+    t.boolean  "wants_part_time"
+    t.boolean  "wants_internship"
+    t.boolean  "wants_university"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "vanity_conversions", :force => true do |t|
+    t.integer "vanity_experiment_id"
+    t.integer "alternative"
+    t.integer "conversions"
+  end
+
+  add_index "vanity_conversions", ["vanity_experiment_id", "alternative"], :name => "by_experiment_id_and_alternative"
+
+  create_table "vanity_experiments", :force => true do |t|
+    t.string   "experiment_id"
+    t.integer  "outcome"
+    t.datetime "created_at"
+    t.datetime "completed_at"
+  end
+
+  add_index "vanity_experiments", ["experiment_id"], :name => "index_vanity_experiments_on_experiment_id"
+
+  create_table "vanity_metric_values", :force => true do |t|
+    t.integer "vanity_metric_id"
+    t.integer "index"
+    t.integer "value"
+    t.string  "date"
+  end
+
+  add_index "vanity_metric_values", ["vanity_metric_id"], :name => "index_vanity_metric_values_on_vanity_metric_id"
+
+  create_table "vanity_metrics", :force => true do |t|
+    t.string   "metric_id"
+    t.datetime "updated_at"
+  end
+
+  add_index "vanity_metrics", ["metric_id"], :name => "index_vanity_metrics_on_metric_id"
+
+  create_table "vanity_participants", :force => true do |t|
+    t.string  "experiment_id"
+    t.string  "identity"
+    t.integer "shown"
+    t.integer "seen"
+    t.integer "converted"
+  end
+
+  add_index "vanity_participants", ["experiment_id", "converted"], :name => "by_experiment_id_and_converted"
+  add_index "vanity_participants", ["experiment_id", "identity"], :name => "by_experiment_id_and_identity"
+  add_index "vanity_participants", ["experiment_id", "seen"], :name => "by_experiment_id_and_seen"
+  add_index "vanity_participants", ["experiment_id", "shown"], :name => "by_experiment_id_and_shown"
+  add_index "vanity_participants", ["experiment_id"], :name => "index_vanity_participants_on_experiment_id"
 
   create_table "visits", :force => true do |t|
     t.integer  "user_id"

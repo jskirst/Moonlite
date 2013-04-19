@@ -1,6 +1,6 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
-  .quizcontainer { width: 600px; margin-top: 50px;}
+  .quizcontainer { width: 600px; margin-top: 20px;}
 %div.quizcontainer
   %div.quizspace
     %div
@@ -9,7 +9,7 @@
         We just need a few details...
       .professional_mb_form{ style: "margin-top:15px;"}
         .body
-          = form_for current_user do |f|
+          = form_for current_user, url: finish_section_path(@section, @session_id, s: 2) do |f|
             %h4 
               What opportunities might interest you?
             %label.checkbox
@@ -28,10 +28,10 @@
               = f.country_select :country, priority: %w(US GB CA IN DE KE NL FR), prompt: 'Please select a country'
             %div
               %label State/Province
-              = render "subregion_select"
+              = render "subregion_select", { form: f }
             %div{ style: "margin-right: 0;"}
               %label City
               = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
-        %div{ style: "margin: -8px 0 0 0; padding: 0 3px; "}
-          = link_to "Continue to Register", finish_section_path(@section, @session_id, s:2), class: "button button-actionable", style: "float: right;"
-          = link_to "Back", finish_section_path(@section, @session_id, s:0), class: "button button-standard", style: "float: left; "
+            %div{ style: "margin: 20px 0 0 0; width: 100%;"}
+              = f.submit "Continue to Register", class: "button button-actionable", style: "float: right;"
+              = link_to "Back", finish_section_path(@section, @session_id, s:0), class: "button button-standard", style: "float: left; "

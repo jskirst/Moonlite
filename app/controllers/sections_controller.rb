@@ -304,17 +304,30 @@ class SectionsController < ApplicationController
   end
   
   def finish
-    step = params[:s] || 0
+    step = params[:s].to_i
     @session_id = params[:session_id]
-    if current_user.guest_user? and !current_user.seen_opportunities?
-      render "register#{step}"
+    if step == 0
+      unless current_user.seen_opportunities
+        render "register#{step}"
+      else
+        render "finish"
+      end
     else
-      render "finish"
+      if params[:user]
+        current_user.update_attributes(params[:user])
+      end
+      if step == 3 or step == 10
+        current_user.update_attribute(:seen_opportunities, true)
+        sign_in(current_user)
+        redirect_to challenge_path(@section.path.permalink)
+      else
+        render "register#{step}"
+      end
     end
   end
   
   def subregion_options
-    render partial: 'subregion_select'
+    render partial: 'subregion_select', locals: { form: nil }
   end
   
   private
