@@ -50,8 +50,12 @@
               = f.submit "Submit", class: "button button-actionable", style: "float: right; width: auto; "
               = link_to "Back", finish_section_path(@section, @session_id, s: 1), class: "button button-standard", style: "float: left; width: auto; "
       - else
-        %div{ style: "display: inline-block; margin-left: 8px; font-size:40px; line-height:56px; "}
+        %div{ style: "display: inline-block; margin-left: 8px; font-size:46px; line-height:63px; "}
           You're all done!
-        %h4 We'll send you any opportunities we find that match your skills!
-        %div{ style: "margin: 20px 0 0 0; text-align: center;" }
-          = link_to "Continue", challenge_path(@path.permalink, c: true, sh: true), class: "button button-large button-actionable"
+        %h4 We'll send you new opportunities that match your skills on MetaBright.
+        %div{ style: "text-align: center; margin-top: 10px; "}
+          = image_tag LIGHT_BULB_URL, style: "display: inline-block; width: 16px; height: 16px; position: relative; bottom: 2px; "
+          %h5{ style: "display: inline-block;"} The more questions you answer, the better your chances of getting a good match! 
+        %div{ style: "margin: 15px 0 0 0; text-align: center;" }
+          = link_to "Continue with Challenge", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right; width: 176px;"
+          = link_to "Go to Challenge page", challenge_path(@path.permalink, c: true, sh: true), class: "button button-info", style: "float: left; width: 176px; "
