@@ -1,6 +1,6 @@
 - user = @user || current_user
 - parent_region = params[:parent_region] || user.country
-- country = Carmen::Country.coded(parent_region)
+- country = Carmen::Country.coded(parent_region.to_s)
 - if country.nil?
   = select_tag "user[state]", "<option>Please select a country</option>"
 - elsif country.subregions?
