@@ -304,30 +304,24 @@ class SectionsController < ApplicationController
   end
   
   def finish
-    step = params[:s].to_i
     @session_id = params[:session_id]
-    if step == 0
-      unless current_user.seen_opportunities
-        render "register0"
-      else
-        render "finish"
-      end
+    if params[:s].blank? and current_user.seen_opportunities
+      render "finish"
     else
+      step = params[:s].to_i
+      current_user.update_attributes(seen_opportunities: true)
+      
       if params[:user]
-        current_user.update_attributes(params[:user])
-      end
-      if step >= 3
-        if current_user.update_attributes(seen_opportunities: true)
-          if step == 3 or step == 10
-            sign_in(current_user)
-            redirect_to challenge_path(@section.path.permalink, c: true, sh: true)
-          else
-            render "register#{step}"
-          end
-        else
+        if !current_user.update_attributes(params[:user])
           @error = current_user.errors.full_messages.first
           render "register#{step - 1}"
+          return
         end
+      end
+      
+      if step == 3 or step == 10
+        sign_in(current_user)
+        redirect_to challenge_path(@section.path.permalink, c: true, sh: true)
       else
         render "register#{step}"
       end
