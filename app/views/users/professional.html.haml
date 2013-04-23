@@ -35,7 +35,7 @@
       %div.settingsmanagementarea
         %div
           %label Country
-          = f.country_select :country, priority: %w(US GB CA IN DE KE NL FR), prompt: 'Please select a country'
+          = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
         %div
           %label State/Province
           = render "sections/subregion_select", { form: f }

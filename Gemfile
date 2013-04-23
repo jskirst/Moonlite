@@ -14,7 +14,7 @@ gem 'haml'
 gem 'faker'
 gem 'quiet_assets'
 gem 'nokogiri'
-gem 'carmen-rails'
+gem 'carmen-rails', git: 'https://github.com/jim/carmen-rails.git'
 
 group :assets do
   gem 'sass-rails'

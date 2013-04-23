@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/jim/carmen-rails.git
+  revision: 9863002a57d839bc2b7092be6515536ea8ff438b
+  specs:
+    carmen-rails (1.0.0)
+      carmen (~> 1.0.0)
+      rails
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -42,10 +50,8 @@ GEM
     binding_of_caller (0.7.1)
       debug_inspector (>= 0.0.1)
     builder (3.0.4)
-    carmen (1.0.0.beta2)
-    carmen-rails (1.0.0.beta3)
-      carmen (~> 1.0.0.beta2)
-      rails
+    carmen (1.0.0)
+      unicode_utils (~> 1.4.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -218,6 +224,7 @@ GEM
     uglifier (2.0.1)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
+    unicode_utils (1.4.0)
     unicorn (4.6.2)
       kgio (~> 2.6)
       rack
@@ -238,7 +245,7 @@ DEPENDENCIES
   aws-sdk
   better_errors
   binding_of_caller
-  carmen-rails
+  carmen-rails!
   coffee-rails
   factory_girl_rails
   faker
