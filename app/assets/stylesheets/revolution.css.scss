@@ -181,9 +181,41 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 
 .invite_tiles{
   
+  list-style-type: none;
+  
   li{    
     &:first-child { margin-top: 0;}
     margin-top: 10px;
+    
+    img { height: 40px; width: 40px; display: inline-block; vertical-align: top; border-radius: 3px;}
+    div {   
+      display: inline-block;
+      width: 81%; 
+     
+      h5 { font-size: 15px; }
+      span { color: gray; font-size: 12px; }
+      a { float: right; padding: 2px 12px; font-size: 12px; padding: 0 12px; margin-top: -2px; }
+    }
+  }
+}
+
+.connect_tiles{
+  
+  list-style-type: none;
+  margin-left: 0;
+  
+  
+  li{    
+    
+    &:hover {background-color: #fcfcfc;}
+    &:nth-child(3n) {margin-right:0 ;}
+    
+    display: inline-block;
+    border: 1px solid rgba(0,0,0,.1);
+    border-radius: 3px;
+    padding: 8px 10px;
+    width: 250px;
+    margin: 10px 25px 0 0;
     
     img { height: 40px; width: 40px; display: inline-block; vertical-align: top; border-radius: 3px;}
     div {   
