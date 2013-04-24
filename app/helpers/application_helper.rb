@@ -62,6 +62,7 @@ module ApplicationHelper
   def admin_tabs
     [
       ["overview", "Overview", admin_overview_path],
+      ["funnel", "Funnel", admin_funnel_path],
       ["roles", "User Roles", user_roles_path],
       ["styles", "Custom Styles", admin_styles_path],
       ["personas", "Personas", personas_path],

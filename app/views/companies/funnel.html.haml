@@ -1,0 +1,18 @@
+%div.single_pane
+  = render "header"
+  %h1{ style: "border-bottom: 1px solid #DDD" } Funnel
+  %div{ style: "float:right;" }
+    - 10.downto(1) do |i|
+      = link_to i, admin_funnel_path(days: i)
+      %span | 
+  %h4{ style: "margin-top: 10px;" } Last #{@number_of_days} days
+  %ol{ style: "font-size: 16px; margin-top: 20px;" }
+    -#%li Total Visits: #{@total_visits}
+    %li Total New Users: #{@total_new}
+    %li Total Engaged: #{@total_engaged}
+    %li
+      Total Seen Opportunities: #{@total_seen_opportunities}
+      %ul
+        %li Total Unregistered: #{@total_unregistered}
+        %li Total Registered Professional: #{@total_registered_professional}
+        %li Total Registered Unprofessional: #{@total_registered_unprofressional}

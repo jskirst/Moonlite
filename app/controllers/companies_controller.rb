@@ -104,8 +104,23 @@ class CompaniesController < ApplicationController
     end
   end
   
-  private
+  def funnel
+    @number_of_days = (params[:days] || 7).to_i
+    time = @number_of_days.days.ago
+    #@total_visits = Visit.select("DISTINCT visitor_id").where("created_at > ?", time).where("user_id is ?", nil).count
+    all_new = User.where("created_at > ?", time)
+    @total_new = all_new.count
+    all_engaged = all_new.where("earned_points >= 300")
+    @total_engaged = all_engaged.count
+    all_seen_opportunities = all_engaged.where(seen_opportunities: true)
+    @total_seen_opportunities = all_seen_opportunities.count
+    @total_unregistered = all_seen_opportunities.where("email like ?", '%@metabright.com%').count
+    all_registered = all_seen_opportunities.where("email not like ?", '%@metabright.com%')
+    @total_registered_professional = all_registered.where("wants_full_time = ? or wants_part_time = ? or wants_internship = ?", true, true, true).count
+    @total_registered_unprofressional = all_registered.where("wants_full_time is ? and wants_part_time is ? and wants_internship is ?", nil, nil, nil).count
+  end
   
+  private
   def toggle(attr, obj)
     obj.update_attribute(attr, obj.read_attribute(attr).nil? ? Time.now : nil)
   end
