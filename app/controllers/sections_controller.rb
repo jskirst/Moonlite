@@ -321,6 +321,7 @@ class SectionsController < ApplicationController
       
       if step == 3
         sign_in(current_user)
+        session[:redirect_back_to] = nil
         render "register3"
       else
         session[:redirect_back_to] = finish_section_url(@section, @session_id, s: 3)
