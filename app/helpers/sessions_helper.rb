@@ -167,7 +167,7 @@ module SessionsHelper
   end
   
   def social_description
-    @social_description || "If you're not a nerd about something, do you really exist?"
+    @social_description || "MetaBright is the game that can land you your next job or internship!"
   end
   
   def store_location(location = nil)
