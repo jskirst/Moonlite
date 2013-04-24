@@ -34,10 +34,6 @@
         .body
           = form_for current_user, url: finish_section_path(@section, @session_id, s: 2) do |f|
             %h4 What opportunities might interest you?
-            - if @error
-              %p.errors{ style: "color: #b94a48;" }= @error
-            - else
-              %p.errors.hide{ style: "color: #b94a48;" }
             %label.checkbox
               Full time job
               = f.check_box :wants_full_time
@@ -48,6 +44,10 @@
               Internship
               = f.check_box :wants_internship
             %h4 What's your location?
+            - if @error
+              %p.errors{ style: "color: #b94a48;" }= @error
+            - else
+              %p.errors.hide{ style: "color: #b94a48;" }
             %div{ style: "display: block; "}
               %label Country
               = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
