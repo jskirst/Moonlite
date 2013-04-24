@@ -25,48 +25,26 @@
   %div.quizspace
     %div.professional_mb_register
       = image_tag GIANT_STONEY, style: "width:52px; height:62px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
-      - if current_user.guest_user?
-        %div{ style: "display: inline-block; margin-left: 8px; font-size:40px; line-height:56px; "}
-          You're almost done!
-        %h4 Choose how you want to register to save your preferences and get back to earning points.
-        .signup
-          = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
-            = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-            %span.landingbuttontext Sign up with Google »
-  
-          = link_to "/auth/facebook", style: "display: inline-block;", class: "button button-info" do
-            = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-            %span.landingbuttontext Sign up with Facebook »
-          .divider OR
-          = form_for(current_user, url: finish_section_path(@section, @session_id, s: 3)) do |f|
-            - if @error
-              %p.errors{ style: "color: #b94a48;" }= @error
-            - else
-              %p.errors.hide{ style: "color: #b94a48;" }
-            = f.text_field :name, value: nil, placeholder: "Name"
-            = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
-            = f.password_field :password, value: nil, placeholder: "Password"
-            %div{ style: "margin: 10px 0 0 0;" }
-              = f.submit "Submit", class: "button button-actionable", style: "float: right; width: auto; "
-              = link_to "Back", finish_section_path(@section, @session_id, s: 1), class: "button button-standard", style: "float: left; width: auto; "
-      - else
-        %div{ style: "display: inline-block; margin-left: 8px; font-size:46px; line-height:63px; "}
-          You're all done!
-        %h4 We'll send you new opportunities that match your skills on MetaBright.
-        %div{ style: "text-align: center; margin-top: 6px; "}
-          = image_tag LIGHT_BULB_URL, style: "display: inline-block; width: 16px; height: 16px; position: relative; bottom: 2px; "
-          %h5{ style: "display: inline-block;"} The more questions you answer, the better your chances of getting a good match! 
-        %div{ style: "border-radius: 6px; border: 1px solid rgba(0, 0, 0, 0.1); width: 67%; margin: 22px auto; text-align: center; " }
-          %div{ style: "border-radius: 6px 6px 0 0; background-color: #FCFCFC; padding: 8px 0; text-transform: uppercase; "}
-            %h5{ style: "font-size: 13px;"} Let your friends know about MetaBright
-          %hr{ style: "margin:0; "}
-          %div{ style: "padding: 6px 12px; height: 45px; "}
-            %a{ style: "position: relative; top: 9px; float:left; display: inline-block; margin-left: 7px; font-size: 17px;", onclick: sharing_popup_javascript(:facebook, "http://www.metabright.com", "Check out @MetaBright! It's a game that can help get you a job or internship!") }
-              On Facebook
-              %img{ style: "height: 30px; width: 30px; margin-left: 12px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/facebook_logo.png"}
-            %a{ style: "float: right; display: inline-block;font-size: 17px;", onclick: sharing_popup_javascript(:twitter, "http://www.metabright.com", "Check out @MetaBright! It's a game that can help get you a job or internship!") } 
-              On Twitter
-              %img{ style: "height: 48px; ", src:"https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/twitter_logo_blue_on_white.png"}
-        %div{ style: "margin: 15px 0 0 0; text-align: center;" }
-          = link_to "Continue with Challenge", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right; width: 176px;"
-          = link_to "Go to Challenge page", challenge_path(@path.permalink, c: true, sh: true), class: "button button-info", style: "float: left; width: 176px; "
+      %div{ style: "display: inline-block; margin-left: 8px; font-size:40px; line-height:56px; "}
+        You're almost done!
+      %h4 Choose how you want to register to save your preferences and get back to earning points.
+      .signup
+        = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
+          = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+          %span.landingbuttontext Sign up with Google »
+
+        = link_to "/auth/facebook", style: "display: inline-block;", class: "button button-info" do
+          = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
+          %span.landingbuttontext Sign up with Facebook »
+        .divider OR
+        = form_for(current_user, url: finish_section_path(@section, @session_id, s: 3)) do |f|
+          - if @error
+            %p.errors{ style: "color: #b94a48;" }= @error
+          - else
+            %p.errors.hide{ style: "color: #b94a48;" }
+          = f.text_field :name, value: nil, placeholder: "Name"
+          = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
+          = f.password_field :password, value: nil, placeholder: "Password"
+          %div{ style: "margin: 10px 0 0 0;" }
+            = f.submit "Submit", class: "button button-actionable", style: "float: right; width: auto; "
+            = link_to "Back", finish_section_path(@section, @session_id, s: 1), class: "button button-standard", style: "float: left; width: auto; "

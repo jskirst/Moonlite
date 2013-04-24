@@ -55,7 +55,9 @@ class SessionsController < ApplicationController
   
   def create
     if create_or_sign_in
-      if session[:referer]
+      if session[:redirect_back_to]
+        redirect_to session[:redirect_back_to]
+      elsif session[:referer]
         path = Path.find_by_id(session[:referer])
         session[:referer] = nil
         redirect_to challenge_path(path.permalink)

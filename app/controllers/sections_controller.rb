@@ -319,10 +319,11 @@ class SectionsController < ApplicationController
         end
       end
       
-      if step == 3 or step == 10
+      if step == 3
         sign_in(current_user)
-        redirect_to challenge_path(@section.path.permalink, c: true, sh: true)
+        render "register3"
       else
+        session[:redirect_back_to] = finish_section_url(@section, @session_id, s: 3)
         render "register#{step}"
       end
     end

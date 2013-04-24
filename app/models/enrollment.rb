@@ -59,7 +59,11 @@ class Enrollment < ActiveRecord::Base
   
   def rank() Enrollment.rank(total_points, path_id) end
   def self.rank(points, path_id) Enrollment.where("path_id = ? and total_points > ?", path_id, points).count + 1 end
-  
+  def points_to_next_rank
+    e = Enrollment.where("path_id = ? and total_points > ?", path_id, total_points).order("total_points ASC").first
+    return e ? (e.total_points - total_points) : 0
+  end
+    
   def contribution_unlocked?() contribution_unlocked_at.nil? ? false : true end
     
   def tasks() completed_tasks.includes(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::CHECKIN) end
