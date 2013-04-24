@@ -673,6 +673,23 @@ h3 { font-size: 28px; }
   
   h4 { margin-top: 12px; text-align: center; }
   
+  .signup_pro{
+    text-align: center;
+    margin-top: 20px; 
+  
+    .button { width:210px; padding-top:7px; padding-bottom:7px; }
+    .button img { height:30px; }
+    .divider {
+      background-image: url($divider);
+      background-repeat: no-repeat;
+      background-position: center 10px;
+      width: 506px;
+      margin: 15px auto;
+    }
+    form { text-align: center;}
+    input[type="text"], input[type="password"] { width: 154px; text-align: left; padding: 3px 6px; font-size: 13px; margin: 0 8px 10px 8px; }
+  }
+  
   .signup{
     text-align: center;
     margin-top: 20px; 
@@ -687,7 +704,8 @@ h3 { font-size: 28px; }
       margin: 15px auto;
     }
     form { text-align: center;}
-    input[type="text"], input[type="password"] { width: 140px; text-align: left; padding: 3px 5px; font-size: 12px; }
+    input[type="text"], input[type="password"] { width: 140px; text-align: left; padding: 3px 5px; font-size: 12px; margin: 0 8px 10px 8px; }
   }
+  
 }
 
