@@ -117,6 +117,13 @@ class PagesController < ApplicationController
     render "internship"
   end
   
+  def connect
+    @title = "Connect"
+    @show_footer = true
+    @hide_background = true
+    render "connect"
+  end
+  
   def challenges
     @title = "Challenges"
     @show_footer = true
