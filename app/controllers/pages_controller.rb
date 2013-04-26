@@ -121,7 +121,24 @@ class PagesController < ApplicationController
     @title = "Connect"
     @show_footer = true
     @hide_background = true
-    render "connect"
+    
+    # fb_auth = current_user.user_auths.find_by_provider "facebook"
+    #     if fb_auth
+    #       client = User.auth(connect_url).client
+    #       if params[:code]
+    #         # client.authorization_code = params[:code]
+    #         # access_token = client.access_token! :client_auth_body
+    #         # fb_user = FbGraph::User.me(access_token).fetch
+    #         # friends = fb_user.events({friends: "picture"})
+    #         render "connect"
+    #       elsif params[:error]
+    #         redirect_to root_url, :alert => "Access Denied"
+    #         return
+    #       else
+    #         redirect_to client.authorization_uri(scope: "user_about_me")
+    #       end
+    #     end
+    redirect_to root_path
   end
   
   def challenges

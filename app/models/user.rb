@@ -167,6 +167,10 @@ class User < ActiveRecord::Base
     return true
   end
   
+  def self.auth(redirect_url)
+    FbGraph::Auth.new(ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"], :redirect_uri =>  redirect_url)
+  end
+  
   def send_password_reset
     email_details = { :email => self.email, :token1 => self.signup_token }
     Mailer.reset(email_details).deliver
