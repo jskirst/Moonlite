@@ -219,6 +219,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
     
     img { height: 40px; width: 40px; display: inline-block; vertical-align: top; border-radius: 3px;}
     div {   
+      margin-left: 3px; 
       display: inline-block;
       width: 81%; 
      
@@ -387,6 +388,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .button.button-large:hover { box-shadow: 0px 0px 3px black; }
 .button.button-actionable { background-image: -moz-linear-gradient(top, #ee5f5b, #971D1C);background-image: -ms-linear-gradient(top, #ee5f5b, #971D1C);background-image: -o-linear-gradient(top, #ee5f5b, #971D1C);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#971D1C));background-image: -webkit-linear-gradient(top, #ee5f5b, #971D1C);background-image: linear-gradient(top, #ee5f5b, #971D1C); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee5f5b', EndColorStr='#971D1C'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee5f5b', EndColorStr='#971D1C')"; /* IE8 */}
 .button.button-info { background-image: -moz-linear-gradient(top, #5BC0DE, #339BB9);background-image: -ms-linear-gradient(top, #5BC0DE, #339BB9);background-image: -o-linear-gradient(top, #5BC0DE, #339BB9);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#5BC0DE), to(#339BB9));background-image: -webkit-linear-gradient(top, #5BC0DE, #339BB9);background-image: linear-gradient(top, #5BC0DE, #339BB9); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#5BC0DE', EndColorStr='#339BB9'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#5BC0DE', EndColorStr='#339BB9')"; background-image:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxIDEiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPgo8bGluZWFyR3JhZGllbnQgaWQ9Imc1NjEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+CjxzdG9wIHN0b3AtY29sb3I9IiM1QkMwREUiIG9mZnNldD0iMCIvPjxzdG9wIHN0b3AtY29sb3I9IiMzMzlCQjkiIG9mZnNldD0iMSIvPgo8L2xpbmVhckdyYWRpZW50Pgo8cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMSIgaGVpZ2h0PSIxIiBmaWxsPSJ1cmwoI2c1NjEpIiAvPgo8L3N2Zz4=);}
+.button.button-success { background-image: -moz-linear-gradient(top, #62c462, #51a351);background-image: -ms-linear-gradient(top, #62c462, #51a351);background-image: -o-linear-gradient(top, #62c462, #51a351);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#62c462), to(#51a351));background-image: -webkit-linear-gradient(top, #62c462, #51a351);background-image: linear-gradient(top, #62c462, #51a351); filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#62c462', EndColorStr='#51a351'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#62c462', EndColorStr='#51a351')"; /* IE8 */}
 .button.button-standard { background-image: -moz-linear-gradient(white, white 5%, #E6E6E6);background-image: -ms-linear-gradient(white, white 5%, #E6E6E6);background-image: -o-linear-gradient(white, white 5%, #E6E6E6);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(white), color-stop(0.05, white), to(#E6E6E6));background-image: -webkit-linear-gradient(white, white 5%, #E6E6E6);background-image: linear-gradient(white, white 5%, #E6E6E6); color: rgb(75, 75, 75); text-shadow: 0 1px 0px whitesmoke; filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6'); /* IE6,IE7 */ -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='white', EndColorStr='#E6E6E6')";}
 .button.button-standard:hover { color: black; }
 .button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
@@ -707,5 +709,32 @@ h3 { font-size: 28px; }
     input[type="text"], input[type="password"] { width: 140px; text-align: left; padding: 3px 5px; font-size: 12px; margin: 0 8px 10px 8px; }
   }
   
+}
+
+/* Connect Page */
+
+.connect{
+  width: 940px; 
+ 
+  .aboutheader{
+    padding: 10px;   
+  } 
+  .aboutbody{
+    &>div{ margin-top: 45px; }
+    &>div:nth-child(1){ margin-top: 0; }
+  
+    input{ display: inline-block; float: right; position: relative; top: 4px; }
+    h3{ display: inline-block; }
+    hr{ margin: 0; }
+    
+    .connect_accounts{
+      text-align: center; 
+      font-size: 16px; 
+      margin: 20px 0 -25px 0; 
+      
+      a{ text-decoration: none; margin-left: 4px; }
+      img{ display: inline-block; height: 30px; }
+    }
+  } 
 }
 
