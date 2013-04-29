@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   include PreviewHelper
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :mark_help_read, :robots, :url]
+  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :internship, :mark_help_read, :robots, :url]
   before_filter :authorize_resource, only: [:create]
   
   def home
