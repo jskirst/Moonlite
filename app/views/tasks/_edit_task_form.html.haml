@@ -14,13 +14,21 @@
           %label.control-label= a.is_correct ? "Correct answer" : "Wrong answer"
           %div.controls
             = f.text_field "answer_#{a.id}", value: a.content, maxlength: 255, size: 75, class: (a.is_correct ? "correct_answer" : "wrong_answer")
-      %div.control-group
-        %div.controls
+      .control-group
+        .controls
           - if @stored_resource
             = image_tag @stored_resource.obj.url, style: "height: 100px;"
             = link_to "Remove", delete_stored_resource_path(@stored_resource.id), method: :delete, confirm: "Are you sure you want to remove this attachment?"
           - else
-            = link_to "Add Image", add_stored_resource_task_path(@task)
+            = link_to "Add Image", add_stored_resource_task_path(@task)     
+      .control-group
+        %label.control-label Source URL
+        .controls
+          = f.text_field :resource                
+      .control-group 
+        %label.control-label Source Title
+        .controls
+          = f.text_field :resource_title
     - if @task.creative_response?
       %div.control-group
         %label.control-label Template

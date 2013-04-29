@@ -37,15 +37,15 @@
               %label.control-label= status
               .controls
                 = text_field_tag("task[answer"+i.to_s+"]", nil, { maxlength: 255, size: 75, class: status.downcase.gsub(" ","_") })
-          %h4 Source        
-          .control-group
-            %label.control-label URL
-            .controls
-              = f.text_field :resource                
-          .control-group 
-            %label.control-label Title
-            .controls
-              = f.text_field :resource_title
+        %h4 Source        
+        .control-group
+          %label.control-label URL
+          .controls
+            = f.text_field :resource                
+        .control-group 
+          %label.control-label Title
+          .controls
+            = f.text_field :resource_title
         
         .creative.hide
           %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.

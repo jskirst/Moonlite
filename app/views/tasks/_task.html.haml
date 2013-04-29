@@ -15,3 +15,9 @@
     %ol{ style: "padding-left:20px;" }
       - task.answers.each do |a|
         %li{ class: ("correct" if a.is_correct) }= a.content
+    - if task.template
+      %blockquote{ style: "margin-top:0px; width:77%;" }
+        %pre{ style:"word-break:normal;" }= task.template
+  %div{ style: "position: relative; bottom: 0px; margin-left: 45px; font-size: 11px;"}
+    - unless task.resource.blank?
+      = link_to "Source: "+task.resource_title, task.resource, target: "_blank"

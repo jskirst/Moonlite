@@ -45,6 +45,8 @@ class TasksController < ApplicationController
     end
     @task.update_attribute(:template, params[:task][:template])
     @task.update_attribute(:position, params[:task][:position])
+    @task.update_attribute(:resource, params[:task][:resource])
+    @task.update_attribute(:resource_title, params[:task][:resource_title])
     errors += @task.update_answers(params[:task])
     
     if errors.empty?
