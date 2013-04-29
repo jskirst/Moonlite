@@ -21,7 +21,7 @@
     %script{ src: "http://connect.facebook.net/en_US/all.js" }
     :javascript
       $(function(){
-        $("#invite_facebook_friends").click(function(){
+        $(".invite_facebook_friends").click(function(){
           FB.init({appId  : "#{ENV['FACEBOOK_KEY']}", frictionlessRequests: true});
           FB.ui({method: 'apprequests', message: 'Invite others to MetaBright'}); 
         });
