@@ -25,7 +25,9 @@ class Task < ActiveRecord::Base
     :source,
     :template,
     :position,
-    :reviewed_at
+    :reviewed_at,
+    :resource,
+    :resource_title
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
