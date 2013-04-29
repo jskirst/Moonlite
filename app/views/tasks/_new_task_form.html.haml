@@ -5,7 +5,7 @@
     %span#close_question_button.button.button-standard{ onclick: "clear_form();" } Clear
   %div.new_task{ style: "margin-top:10px;" }
     %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
-    %h4#form_title{ style: "margin-left:46px;" } Add Question
+    %h4#form_title{ style: "margin-left:46px; font-weight: bold; margin-bottom: 10px; " } Add Question
     %div.control-group
       %label.control-label Question
       %div.controls
@@ -15,8 +15,9 @@
         
         .control-group
           %label.control-label Answer type
-          .controls
-            = f.select :answer_type, hash_to_array(Task::TYPES)
+          .controls.image_upload
+            = f.select :answer_type, hash_to_array(Task::TYPES), style: "display: inline-block; "
+            = render "stored_resources/new_image"
         
         .control-group.hide.sub_type
           %label.control-label Response type
@@ -36,6 +37,15 @@
               %label.control-label= status
               .controls
                 = text_field_tag("task[answer"+i.to_s+"]", nil, { maxlength: 255, size: 75, class: status.downcase.gsub(" ","_") })
+          %h4{ style: "margin-left: 46px; font-weight: bold; margin-bottom: 10px;"} Source        
+          .control-group
+            %label.control-label URL
+            .controls
+              = f.text_field :resource                
+          .control-group 
+            %label.control-label Title
+            .controls
+              = f.text_field :resource_title
         
         .creative.hide
           %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
@@ -49,9 +59,6 @@
             .controls{ style: "width: 450px;" }
               %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
         
-        .control-group
-          .controls
-            = render "stored_resources/new_image"
 
 :css
   .answer_note { margin: 20px 0 0 150px; font-style: italic; width:300px;}
