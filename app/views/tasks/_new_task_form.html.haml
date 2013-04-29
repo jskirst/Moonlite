@@ -1,11 +1,11 @@
-= form_for(section.tasks.new, remote: true, html: { "data-type" => "html", class: "form-horizontal"}) do |f|
+= form_for(section.tasks.new, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator"}) do |f|
   = f.hidden_field :section_id
   %div.floatr
     = f.submit "Save", id: "save_question_button", class: "button button-info"
     %span#close_question_button.button.button-standard{ onclick: "clear_form();" } Clear
   %div.new_task{ style: "margin-top:10px;" }
     %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
-    %h4#form_title{ style: "margin-left:46px; font-weight: bold; margin-bottom: 10px; " } Add Question
+    %h4#form_title Add Question
     %div.control-group
       %label.control-label Question
       %div.controls
@@ -37,7 +37,7 @@
               %label.control-label= status
               .controls
                 = text_field_tag("task[answer"+i.to_s+"]", nil, { maxlength: 255, size: 75, class: status.downcase.gsub(" ","_") })
-          %h4{ style: "margin-left: 46px; font-weight: bold; margin-bottom: 10px;"} Source        
+          %h4 Source        
           .control-group
             %label.control-label URL
             .controls
