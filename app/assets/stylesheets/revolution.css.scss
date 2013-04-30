@@ -751,7 +751,38 @@ h3 { font-size: 28px; }
 }
 
 
+/* Employer page */
 
+#employer{
+  .aboutheader{
+   padding: 15px 0 0 15px;
+   
+   img{ height: 140px; }
+   span{ font-size: 64px; bottom: 52px; } 
+  }
+  .body{
+    
+    padding: 26px 16px;
+    
+    .divider{ 
+      border-left: 1px solid rgb(245, 245, 245);
+      border-right: 1px solid rgb(209, 209, 209);
+      height: 128px;
+      width: 0;
+      vertical-align: top;
+      left: 17px;
+      position: relative;
+    }
+    
+    div{ 
+      display: inline-block; 
+      width: 46%; 
+      
+      h2{ font-size: 30px; }
+      p{ font-size: 16px; line-height: 26px; }
+    }    
+  } 
+}
 
 
 
