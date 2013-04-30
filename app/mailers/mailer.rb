@@ -8,6 +8,12 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
+  def study_guide(email)
+    @user = User.find_by_email(email)
+    mail(to: @user.email, subject: "Your personalized MetaBright study guide!")
+    @user.log_email
+  end
+  
   def password_reset(user)
     @user = user
     @url = finish_reset_url(t: @user.signup_token)
