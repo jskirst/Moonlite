@@ -124,6 +124,13 @@ class PagesController < ApplicationController
     render "employer"
   end
   
+  def employer1
+    @title = "Employers"
+    @show_footer = true
+    @hide_background = true
+    render "employer1"
+  end
+  
   def connect
     @title = "Connect"
     @show_footer = true

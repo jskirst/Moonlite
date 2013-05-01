@@ -751,7 +751,7 @@ h3 { font-size: 28px; }
 }
 
 
-/* Employer page */
+/* Employer pages */
 
 #employer{
   .aboutheader{
@@ -784,9 +784,114 @@ h3 { font-size: 28px; }
   } 
 }
 
-
-
-
+#employer1{
+  .aboutheader{
+   padding: 15px 0 0 15px;
+   
+   img{ height: 140px; }
+   span{ font-size: 64px; bottom: 52px; } 
+  }
+  .body{ 
+    
+    padding: 26px 16px; 
+  
+    h2{ 
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      margin-bottom: 10px;
+    }    
+    p, ol{
+      font-size: 15px;
+      margin-bottom: 20px; 
+    }    
+    h3{
+     font-size: 22px;  
+    }
+    .pricing_table {
+      line-height: 150%;
+      font-size: 12px;
+      margin: 10px auto;
+      padding-top: 10px;
+      text-align: center; 
+      
+      h3{ text-transform: uppercase; padding: 5px 0; background: #333; margin: -10px 0 1px 0; }
+    
+    }
+    .price_block {
+      width: 100%;
+      color: #fff;
+      float: left;
+      list-style-type: none;
+      transition: all 0.25s;
+      position: relative;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+      border-bottom: 1px solid transparent;
+    
+      h3{ background: rgb(43, 43, 43);}
+    
+      &:hover{ box-shadow: 0 0 0px 5px rgba(0, 0, 0, 0.5); transform: scale(1.04) translateY(-5px); z-index: 1; border-bottom: 0 none; }
+      &:hover .price{ background:linear-gradient(#DB7224, #F9B84A); box-shadow: inset 0 0 45px 1px #DB7224; }
+      &:hover h3{ background: #222; }
+      &:hover .action_button{ background: linear-gradient(#F9B84A, #DB7224); }
+    }
+    .price {
+      display: table;
+      background: #444;
+      width: 100%;
+      height: 70px;
+    }
+    .price_figure {
+      font-size: 24px;
+      text-transform: uppercase;
+      vertical-align: middle;
+      display: table-cell;
+      margin-top: 12px; 
+    }
+    .price_number {
+      font-weight: bold;
+      display: block;
+    }
+    .price_tenure {
+      font-size: 11px;
+    }
+    .features {
+      background: rgb(219, 255, 202);
+      color: #404040;
+      margin: 0; 
+      
+      li{ padding: 8px 15px; border-bottom: 1px solid rgba(0,0,0,.1); font-size: 13px; list-style-type: none; }
+    }
+    .price_footer {
+      padding: 15px;
+      background: rgb(219, 255, 202);
+    }
+    .action_button {
+      text-decoration: none;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 5px;
+      background: linear-gradient(#666, #333);
+      padding: 5px 20px;
+      font-size: 13px;
+      text-transform: uppercase;
+    }      
+    @media only screen and (min-width : 480px) and (max-width : 768px) {
+      .price_block {width: 50%;}
+      .price_block:nth-child(odd) {border-right: 1px solid transparent;}
+      .price_block:nth-child(3) {clear: both;}
+      .price_block:nth-child(odd):hover {border: 0 none;}
+    }
+    @media only screen and (min-width : 768px){
+      .price_block {width: 25%;}
+      .price_block {border-right: 1px solid transparent; border-bottom: 0 none;}
+      .price_block:last-child {border-right: 0 none;}
+      .price_block:hover {border: 0 none;}
+    }
+  
+  }
+  
+}
 
 
 
