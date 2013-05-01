@@ -96,6 +96,7 @@ Metabright::Application.routes.draw do
   match '/internship' => 'pages#internship'
   match '/employer' => 'pages#employer'
   match '/employer1' => 'pages#employer1'
+  match '/employer2' => 'pages#employer2'
   match '/connect' => 'pages#connect'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
