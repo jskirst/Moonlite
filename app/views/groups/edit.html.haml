@@ -1,0 +1,47 @@
+%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+  %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Group
+  %hr{style:"margin:0;"}
+  = form_for(@group, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
+    = render 'shared/error_messages', object: f.object
+    %div.notificationpanelbody
+      %h4 How you appear on MetaBright
+      %div.editprofilemanagementarea 
+        %div{ style:"display:inline-block; width: 60%;" }       
+          %div.control-group
+            %label.control-label Name
+            %div.controls
+              = f.text_field :name
+          %div.control-group
+            %label.control-label Profile Picture URL
+            %div.controls
+              = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
+              %a.btn.secondary{ style: "margin-left:10px;" } Preview   
+          %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
+        %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
+          %div.control-group
+            %div.controls{style:"margin-left:112px;"}
+              = image_tag @group.picture, id: "image_url_preview", width: "150", alt: "#{@group.name}"      
+      %h4 Vital stats
+      %div.editprofilemanagementarea
+        %div.control-group
+          %label.control-label Location
+          %div.controls
+            = f.text_field :city
+            = f.text_field :state
+            = f.text_field :country
+        %div.control-group
+          %label.control-label Website
+          %div.controls
+            = f.text_field :website
+        
+        %div.control-group
+          %label.control-label About
+          %div.controls
+            = f.text_area :description, rows: "5", style: "width: 390px;", placeholder: "Tell us about yourself..."
+
+    %hr
+    %div.control-group
+      %div.controls
+      = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
+      = link_to "Cancel", profile_path(current_user.username), class: "button button-standard", style: "float: right;"

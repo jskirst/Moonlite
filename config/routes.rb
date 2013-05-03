@@ -39,6 +39,14 @@ Metabright::Application.routes.draw do
 	match '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
 	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
 	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
+
+  resources :groups do
+    member do
+      get :join
+      delete :leave         
+      get :newsfeed
+    end
+  end
 	
 	resources :tasks do
     member do

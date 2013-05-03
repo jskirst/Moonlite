@@ -7,6 +7,8 @@
     %div.postheader
       %h3
         = link_to truncate(post.user.to_s, length: 50), profile_path(post.user.username), class:"username"
+        - if badge = post.user.reputation_badge
+          = image_tag (post.user.reputation_badge), class: "rep_badge"
       %span
         = link_to truncate(post.path.name.to_s, length: 40), challenge_path(post.path.permalink), class:"challengename"
       %div.votingandpointsarea{ id: ("points_pop" unless current_user == post.user)}

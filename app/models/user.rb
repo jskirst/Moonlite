@@ -45,6 +45,7 @@ class User < ActiveRecord::Base
   has_many    :followed_users, through: :subscriptions, source: :followed
   has_many    :created_tasks, class_name: "Task", foreign_key: :creator_id
   has_many    :visits
+  has_many    :groups, through: :group_users
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
@@ -308,6 +309,30 @@ class User < ActiveRecord::Base
   
   def vote_list
     votes.to_a.collect {|v| v.owner_id }
+  end
+  
+  def reputation_badge
+    if earned_points < 2000
+      return nil
+    elsif earned_points < 4000
+      return ICON_BADGE_1
+    elsif earned_points < 6000
+      return ICON_BADGE_2
+    elsif earned_points < 10000
+      return ICON_BADGE_3
+    elsif earned_points < 15000
+      return ICON_BADGE_4
+    elsif earned_points < 20000
+      return ICON_BADGE_5
+    elsif earned_points < 25000
+      return ICON_BADGE_6
+    elsif earned_points < 35000
+      return ICON_BADGE_7
+    elsif earned_points < 40000
+      return ICON_BADGE_8
+    elsif earned_points > 40000
+      return ICON_BADGE_9
+    end
   end
   
   def grant_username(options = {})

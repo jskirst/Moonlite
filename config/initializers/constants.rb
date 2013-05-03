@@ -55,6 +55,17 @@ ICON_LOADING      = "https://s3-us-west-1.amazonaws.com/moonlite/static/ajax-tri
 ICON_NOTIFICATIONS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/notifications3.png"
 ICON_GEAR = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/gear.png"
 
+ICON_BADGE_1      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_yellow.png"
+ICON_BADGE_2      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_pink.png"
+ICON_BADGE_3      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_lime.png"
+ICON_BADGE_4      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_orange.png"
+ICON_BADGE_5      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_magenta.png"
+ICON_BADGE_6      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_blue.png"
+ICON_BADGE_7      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_green.png"
+ICON_BADGE_8      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_red.png"
+ICON_BADGE_9      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_black.png"
+
+
 ICON_LOGIN_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png"
 ICON_LOGIN_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png"
 

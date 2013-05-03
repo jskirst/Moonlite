@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130429170750) do
+ActiveRecord::Schema.define(:version => 20130501220501) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -115,6 +115,26 @@ ActiveRecord::Schema.define(:version => 20130429170750) do
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "group_users", :force => true do |t|
+    t.integer  "group_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.text     "image_url"
+    t.string   "permalink"
+    t.string   "website"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "ideas", :force => true do |t|
     t.integer  "creator_id"
