@@ -3,9 +3,12 @@
     = link_to group_path(@group), class: "home" do
       = image_tag @group.picture, alt: "#{@group.name}"
     - if @membership
-      =link_to "Remove", leave_group_path(@group), class: "button button-actionable", method: :delete
+      - if @membership.is_admin?
+        = link_to "Edit", edit_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;"
+      - else
+        = link_to "Leave", leave_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;", method: :delete      
     - else
-      =link_to "Join", join_group_path(@group), class: "button button-actionable"
+      =link_to "Join", join_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;"
     %h1= @group.name
     %h2
       #{@users.count} Members

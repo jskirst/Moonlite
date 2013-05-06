@@ -13,6 +13,10 @@
             %div.controls
               = f.text_field :name
           %div.control-group
+            %label.control-label Vanity URL
+            %div.controls
+              = f.text_field :permalink
+          %div.control-group
             %label.control-label Profile Picture URL
             %div.controls
               = f.text_field :image_url, id: "image_url_input", class: "xxlarge"

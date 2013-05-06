@@ -11,7 +11,8 @@
         = link_to truncate(user.to_s, length: 50), profile_path(user.username), class:"username"
         - if user.groups.size > 0
           - user.groups.each do |group|
-            = image_tag group.picture          
+            = link_to group_path(group.permalink) do
+              = image_tag group.picture, class: "mini_group_icon", title: "Member of #{group.name}", alt: "Member of #{group.name}"
         - if badge = user.reputation_badge
           = image_tag (user.reputation_badge[0]), class: "rep_badge", title: user.reputation_badge[1], alt: user.reputation_badge[1]
       %span

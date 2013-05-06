@@ -3,17 +3,21 @@ class GroupsController < ApplicationController
   
   before_filter :authenticate
   before_filter :load_resource
+  before_filter :authorize_resource, only: [:edit, :update]
   
   def show    
     @title = "#{@group.name} Group"
     @users = @group.users.order "earned_points desc"
-    @membership = @group.group_users.find_by_user_id(current_user)
+    @membership = @group.membership(current_user)
     @url_for_newsfeed = newsfeed_group_path(@group)
     render "show"
   end
   
   def newsfeed
     render text: "asoidjfoiasf asflkjalsd"
+  end
+  
+  def edit    
   end
   
   def update
@@ -38,5 +42,11 @@ class GroupsController < ApplicationController
     @group = Group.find_by_permalink(params[:id]) if params[:id] && @group.nil?
     @group = Group.find_by_id(params[:id]) if params[:id] && @group.nil?
     redirect_to root_path unless @group
+  end
+  
+  def authorize_resource
+    unless @group.admin?(current_user)
+      raise "Access Denied"
+    end
   end
 end

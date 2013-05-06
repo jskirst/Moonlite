@@ -49,9 +49,9 @@
 .challengeselector li:active { background-color: rgb(245, 245, 245);  background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  -moz-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);}
 .challengeselector li div { position:relative; display:inline-block; top:4px;}
 #profile .span11 { margin:0; }
-#profile .span5 { width: 300px; }
+#profile .span5 { width: 31.225%; }
 #profile .span5 .leftbox { width:288px; margin-top:12px; }
-.span11.challenge_details { width: 598px; background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
+.span11.challenge_details { width: 62.294%; background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
 .challengecontent h2 img { position:relative; bottom:3px; border-radius:3px;  }
 .challengecontent h2 a { text-decoration: none; }
 .progresssection { float: right; margin-top: 12px;}
