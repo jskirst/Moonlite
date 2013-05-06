@@ -312,26 +312,26 @@ class User < ActiveRecord::Base
   end
   
   def reputation_badge
-    if earned_points < 2000
+    if earned_points < 1
       return nil
     elsif earned_points < 4000
-      return ICON_BADGE_1
+      return [ICON_BADGE_1, "Earned more than 2,000 MetaBright points"]
     elsif earned_points < 6000
-      return ICON_BADGE_2
+      return [ICON_BADGE_2, "Earned more than 4,000 MetaBright points"]
     elsif earned_points < 10000
-      return ICON_BADGE_3
+      return [ICON_BADGE_3, "Earned more than 6,000 MetaBright points"]
     elsif earned_points < 15000
-      return ICON_BADGE_4
+      return [ICON_BADGE_4, "Earned more than 10,000 MetaBright points"]
     elsif earned_points < 20000
-      return ICON_BADGE_5
+      return [ICON_BADGE_5, "Earned more than 15,000 MetaBright points"]
     elsif earned_points < 25000
-      return ICON_BADGE_6
+      return [ICON_BADGE_6, "Earned more than 20,000 MetaBright points"]
     elsif earned_points < 35000
-      return ICON_BADGE_7
+      return [ICON_BADGE_7, "Earned more than 25,000 MetaBright points"]
     elsif earned_points < 40000
-      return ICON_BADGE_8
+      return [ICON_BADGE_8, "Earned more than 35,000 MetaBright points"]
     elsif earned_points > 40000
-      return ICON_BADGE_9
+      return [ICON_BADGE_9, "Earned more than 40,000 MetaBright points"]
     end
   end
   

@@ -68,7 +68,7 @@ a.menu:after, .dropdown-toggle:after {content: none;}
 .task_post h5 a:hover {  color: rgb(0, 204, 255); }
 code.content { border: none; color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre; background-color: inherit; }
 
-/* Progress/Revolution rails */
+/* Challenge jumper */
 .singleprogressentry { 
   padding: 4px 0 9px 12px;
   &:hover {background-color:#eee;}
@@ -85,6 +85,10 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
     width: 74%;
     .progress { height:10px; }
   }
+}
+
+.singlegroupentry {
+  &:hover {background-color:#eee;}
 }
 
 /* Other stuff/Revolution - organize by feature */
