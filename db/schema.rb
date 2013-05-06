@@ -119,8 +119,9 @@ ActiveRecord::Schema.define(:version => 20130501220501) do
   create_table "group_users", :force => true do |t|
     t.integer  "group_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.boolean  "is_admin",   :default => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
   end
 
   create_table "groups", :force => true do |t|

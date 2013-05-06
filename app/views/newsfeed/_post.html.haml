@@ -1,21 +1,26 @@
+- user = post.user
+
 %div.post
   - unless feed.context == :profile
     %div.postphotospace
-      = link_to profile_path(post.user.username) do
-        = image_tag post.user.picture, class: "photo"
+      = link_to profile_path(user.username) do
+        = image_tag user.picture, class: "photo"
   %div.postspace
     %div.postheader
       %h3
-        = link_to truncate(post.user.to_s, length: 50), profile_path(post.user.username), class:"username"
-        - if badge = post.user.reputation_badge
-          = image_tag (post.user.reputation_badge[0]), class: "rep_badge", title: post.user.reputation_badge[1], alt: post.user.reputation_badge[1]
+        = link_to truncate(user.to_s, length: 50), profile_path(user.username), class:"username"
+        - if user.groups.size > 0
+          - user.groups.each do |group|
+            = image_tag group.picture          
+        - if badge = user.reputation_badge
+          = image_tag (user.reputation_badge[0]), class: "rep_badge", title: user.reputation_badge[1], alt: user.reputation_badge[1]
       %span
         = link_to truncate(post.path.name.to_s, length: 40), challenge_path(post.path.permalink), class:"challengename"
-      %div.votingandpointsarea{ id: ("points_pop" unless current_user == post.user)}
+      %div.votingandpointsarea{ id: ("points_pop" unless current_user == user)}
         - if current_user
           %span.vote_points= post.points_awarded
           %span.vote_points{ style:"margin-right:1px;"} pts
-          - if current_user == post.user
+          - if current_user == user
             %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
               %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px 4px;" }
                 %span.caret{ style: "margin: 6px 0 0 0;" }
@@ -41,7 +46,7 @@
             %div.sidenub
           %div{ style: "padding: 3px 0px;"}
             %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
-              %li.CR_dropdown_option{ style: ("display:none;" if current_user == post.user)} 
+              %li.CR_dropdown_option{ style: ("display:none;" if current_user == user)} 
                 = link_to "Answer this question", take_section_path(post.task.section_id, task_id: post.task.id)
               %li.CR_dropdown_option
                 = link_to "View all responses", task_drilldown_path(post.task.id)
@@ -82,7 +87,7 @@
           %div.details
             %h4.title
               - if post.title.blank?
-                #{post.user.name} marked this task complete on #{post.created_at.strftime('%B %d, %Y')}.
+                #{user.name} marked this task complete on #{post.created_at.strftime('%B %d, %Y')}.
               - else
                 = truncate(post.title, length: 75)
             - unless post.description.blank?
