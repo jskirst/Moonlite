@@ -45,6 +45,7 @@ Metabright::Application.routes.draw do
       get :join
       delete :leave         
       get :newsfeed
+      get :dashboard
     end
   end
 	

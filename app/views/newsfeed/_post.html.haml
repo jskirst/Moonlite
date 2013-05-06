@@ -14,7 +14,7 @@
             = link_to group_path(group.permalink) do
               = image_tag group.picture, class: "mini_group_icon", title: "Member of #{group.name}", alt: "Member of #{group.name}"
         - if badge = user.reputation_badge
-          = image_tag (user.reputation_badge[0]), class: "rep_badge", title: user.reputation_badge[1], alt: user.reputation_badge[1]
+          = image_tag (user.reputation_badge[0]), class: "rep_badge_post", title: user.reputation_badge[1], alt: user.reputation_badge[1]
       %span
         = link_to truncate(post.path.name.to_s, length: 40), challenge_path(post.path.permalink), class:"challengename"
       %div.votingandpointsarea{ id: ("points_pop" unless current_user == user)}

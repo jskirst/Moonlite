@@ -3,7 +3,8 @@
 #profile .leftrailicon { height:58px; width:58px; margin-right:8px; }
 #updatespace{ min-height:162px; }
 #topprofilecontent { width:737px; }
-#topprofilecontent h1{ font-size:40px; line-height:26px; }
+#topprofilecontent h1{ font-size:40px; line-height:26px; display: inline-block; }
+.rep_badge { vertical-align: baseline; height: 25px; margin-left: 8px; }
 #bottomboxcontent { margin-top: 97px; }
 #profilemeat { padding:10px 0; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }
 .personabucket img { height:60px; width:60px; display:inline-block; }
@@ -77,6 +78,7 @@
 .shareprofile p { font-weight:bold; font-size:14px; }
 #profile .span9 { width: 735px; position: relative; margin:0; bottom:5px; }
 .vitalinfo {  position: absolute; bottom: 6px; width:69%; }
+.vitalinfo a:hover { text-decoration: none;  }
 .vitalinfo div { display:inline-block; }
 .vitalinfo span { font-weight:bold;}
 #profile hr { border-top: 1px solid rgb(226, 226, 226); border-bottom: 1px solid rgb(248, 248, 248); }

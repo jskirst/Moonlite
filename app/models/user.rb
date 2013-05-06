@@ -314,7 +314,7 @@ class User < ActiveRecord::Base
   end
   
   def reputation_badge
-    if earned_points < 1
+    if earned_points < 2000
       return nil
     elsif earned_points < 4000
       return [ICON_BADGE_1, "Earned more than 2,000 MetaBright points"]

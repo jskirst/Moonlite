@@ -1,0 +1,49 @@
+%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+  %span{ style: "font-size: 50px;position: relative;top:13px;" } Group Dashboard
+  %hr{style:"margin:0;"}
+    %div.notificationpanelbody
+      %table.table.overview
+        %tr
+          %td
+            %h3= when_count(@stats[:users])
+            %p Total Users
+          %td
+            %h3= when_count(@stats[:visits])
+            %p Total Users
+          %td
+            %h3= when_count(@stats[:arena_answers])
+            %p Arena Answers
+          %td
+            %h3= when_count(@stats[:creative_answers])
+            %p Creative Answers
+      .btn-group
+        %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          = @path.nil? ? "Filter by Challenge" : "Filtering by #{@path.name}"
+          %span.caret
+        %ul.dropdown-menu
+          %li= link_to "All Challenges", dashboard_group_path(@group.id)
+          %li.divider
+          - Path.all.each do |path|
+            %li= link_to path.name, dashboard_group_path(@group.id, p:path.id)
+      = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
+      = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th Created
+            %th Questions Answered            
+            %th Points
+            %th Enrollments
+        %tbody
+          - @users.to_a.each do |u|
+            %tr
+              %td= link_to truncate(u.name, length: 20), profile_path(u.username)
+              %td= truncate(u.email, length:25)
+              %td= u.created_at.strftime("%m/%d/%Y")              
+              %td= @path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
+              %td= u.enrolled?(@path).total_points
+              %td= u.enrollments.size
+              

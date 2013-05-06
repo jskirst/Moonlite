@@ -52,12 +52,18 @@
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
           .span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1= @user.name
+            - if badge = @user.reputation_badge
+              = image_tag (@user.reputation_badge[0]), class: "rep_badge", title: @user.reputation_badge[1], alt: @user.reputation_badge[1]
             - unless @user.description.blank?
               %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 10px 0 10px 0;"} "#{@user.description}"
             %p{ style: "font-size: 18px; margin: 10px 0 5px 0; color: rgb(80, 80, 80);"}= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
         #bottomboxcontent
           .span9
             .vitalinfo
+              - if @user.groups.size > 0
+                - @user.groups.each do |group|
+                  = link_to group_path(group.permalink) do
+                    = image_tag group.picture, class: "mini_group_icon", title: "Member of #{group.name}", alt: "Member of #{group.name}"
               - unless @user.location.blank?
                 %div
                   LOCATION:
