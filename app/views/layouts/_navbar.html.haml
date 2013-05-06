@@ -42,12 +42,12 @@
                     %div.leftboxheader Your Groups
                     %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD; border-radius: 0; "}
                       - current_user.groups.each do |group|
-                        = link_to "#", style: "text-decoration: none;" do
+                        = link_to group_path(group.permalink), style: "text-decoration: none;" do
                           %div.singlegroupentry{ style: "padding: 6px 12px; "}
                             = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px; border-radius: 30px;"
                             %div{ style: "margin-left: 5px; display: inline-block; color: gray; vertical-align: middle; "}
-                              %div{ style: "font-size: 20px; line-height: 23px; "} #{group.name}
-                              %div{ style: "font-size: 13px; "} 43 posts today · #{group.group_users.count} members
+                              %div{ style: "font-size: 20px; line-height: 23px; "} #{truncate(group.name, length:22, separator: ' ')}
+                              %div{ style: "font-size: 13px; "} #{truncate(group.description, length: 41, separator: ' ')}
                   %div.leftboxheader Your Challenges
                   %div.leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:auto;"}
                     - current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").each do |e|
