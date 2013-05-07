@@ -62,8 +62,9 @@
             .vitalinfo
               - if @user.groups.size > 0
                 - @user.groups.each do |group|
-                  = link_to group_path(group.permalink) do
-                    = image_tag group.picture, class: "mini_group_icon", title: "Member of #{group.name}", alt: "Member of #{group.name}"
+                  %div{ style: "display: block;" }
+                    = link_to group_path(group.permalink) do
+                      = image_tag group.picture, class: "profile_group_icon", title: "Member of #{group.name}", alt: "Member of #{group.name}"
               - unless @user.location.blank?
                 %div
                   LOCATION:

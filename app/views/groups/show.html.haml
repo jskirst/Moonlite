@@ -14,7 +14,7 @@
       =link_to "Join", join_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;"
     %div{ style: "height: 68px; "}
       %h1= @group.name
-      %h4{ style: "font-size: 18px; line-height: 34px;"}
+      %h4{ style: "font-size: 18px; line-height: 36px;"}
         #{@users.count} Members <span>·</span> #{@group.city}, #{@group.country} <span>·</span> 
         = link_to "#{@group.website}", "http://#{@group.website}", target: "_blank"
     .carousel
