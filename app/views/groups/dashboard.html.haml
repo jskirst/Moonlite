@@ -1,6 +1,7 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
   %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
   %span{ style: "font-size: 50px;position: relative;top:13px;" } Group Dashboard
+  = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 20px 0 0;"
   %div.notificationpanelbody
     %table.table.overview
       %tr

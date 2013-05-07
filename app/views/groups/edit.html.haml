@@ -1,6 +1,7 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
   %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
   %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Group
+  = link_to "Go to Dashboard", dashboard_group_path(@group), class: "button button-info button-small", style: "float: right; margin-top: 78px;"
   %hr{style:"margin:0;"}
   = form_for(@group, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
     = render 'shared/error_messages', object: f.object
@@ -59,4 +60,4 @@
     %div.control-group
       %div.controls
       = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
-      = link_to "Cancel", profile_path(current_user.username), class: "button button-standard", style: "float: right;"
+      = link_to "Cancel", group_path(@group.permalink), class: "button button-standard", style: "float: right;"

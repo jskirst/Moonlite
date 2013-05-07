@@ -4,14 +4,19 @@
       = image_tag @group.picture, alt: "#{@group.name}"
     - if @membership
       - if @membership.is_admin?
-        = link_to "Edit", edit_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;"
+        %div{ style: "float: right; margin-right: 12px;"}
+          = link_to "Edit Group", edit_group_path(@group), style: "margin-right: 10px;"
+          = link_to "Dashboard", dashboard_group_path(@group), class: "button button-actionable"
+          
       - else
         = link_to "Leave", leave_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;", method: :delete      
     - else
       =link_to "Join", join_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;"
-    %h1= @group.name
-    %h2
-      #{@users.count} Members
+    %div{ style: "height: 68px; "}
+      %h1= @group.name
+      %h4{ style: "font-size: 18px; line-height: 34px;"}
+        #{@users.count} Members <span>·</span> #{@group.city}, #{@group.country} <span>·</span> 
+        = link_to "#{@group.website}", "http://#{@group.website}", target: "_blank"
     .carousel
       - if @users.size > 4
         .left_scroll{ onclick: "slide('left');" }
@@ -29,7 +34,7 @@
   .row
     .span5          
       .leftbox.newsfeed{ style: "min-height: 361px;" }
-        %div#leaderboard_pop.box_header{style: "padding: 10px 12px; "} Leaderboard
+        %div.box_header{style: "padding: 10px 12px; "} Leaderboard
         %ul#ranks{ style: "padding: 0px;"}
           - current_user_in_top = false
           - @users.each_with_index do |user, i|
