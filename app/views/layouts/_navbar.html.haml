@@ -44,7 +44,7 @@
                       - current_user.groups.each do |group|
                         = link_to group_path(group.permalink), style: "text-decoration: none;" do
                           %div.singlegroupentry{ style: "padding: 6px 12px; "}
-                            = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px; border-radius: 30px;"
+                            = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px;", class: "img-circle"
                             %div{ style: "margin-left: 5px; display: inline-block; color: gray; vertical-align: middle; "}
                               %div{ style: "font-size: 20px; line-height: 23px; "} #{truncate(group.name, length:22, separator: ' ')}
                               %div{ style: "font-size: 13px; "} #{truncate(group.description, length: 41, separator: ' ')}

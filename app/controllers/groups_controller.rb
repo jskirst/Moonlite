@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper  
   
-  before_filter :authenticate
+  before_filter :authenticate, except: [:show, :newsfeed]
   before_filter :load_resource
   before_filter :authorize_resource, only: [:edit, :update, :dashboard]
   

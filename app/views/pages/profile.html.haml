@@ -64,7 +64,7 @@
                 - @user.groups.each do |group|
                   %div{ style: "display: block;" }
                     = link_to group_path(group.permalink) do
-                      = image_tag group.picture, class: "profile_group_icon", title: "Member of #{group.name}", alt: "Member of #{group.name}"
+                      = image_tag group.picture, class: "profile_group_icon img-circle", title: "Member of #{group.name}", alt: "Member of #{group.name}"
               - unless @user.location.blank?
                 %div
                   LOCATION:
