@@ -90,7 +90,11 @@
                   %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
                   %div
                     %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                      %span#question_counter #{s.tasks.size} Questions
+                      %span#question_counter #{s.core_tasks.size} Core Questions
+                    %span.label{ style: "font-size: 12px; vertical-align:middle;" }
+                      %span#question_counter #{s.challenge_tasks.size} Challenge Questions
+                    %span.label{ style: "font-size: 12px; vertical-align:middle;" }
+                      %span#question_counter #{s.achievement_tasks.size} Achievements
                     - unless s.published_at
                       %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
               %div.section_questions_container.row{ style: "display:none; margin-top: 20px;" }
