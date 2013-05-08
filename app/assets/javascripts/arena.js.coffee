@@ -30,6 +30,9 @@ $.MB.Arena.init = (options = {}) ->
   
   $(".answer_content").unbind();
   $("#challenge_form").unbind();
+  $("#challenge_form").on "submit", ->
+    $.continue_countdown = false
+    return true
   
   $(".answer_content").on "click", ->
     $(this).css('background-color', '#C6C6DA')
@@ -46,9 +49,12 @@ $.MB.Arena.init = (options = {}) ->
         $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white")
     else if data.type == "exact"
       if data.correct == true
-        $(".match_status").css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white").text("Correct!")
+        $(".match_status_text").css("font-size", "22px").css("color", "rgb(0, 206, 0)").css("margin-left", "12px").css("font-weight", "bold").text("Correct!")
+        $(".answer_feedback").css("border-color", "rgba(3, 233, 12, 0.8)").css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6)").css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6)").css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6)")
       else
-        $(".match_status").css("background-color", "#FF9999").css("color", "white").text("Incorrect. Answer: "+data.correct_answer)
+        $(".match_status_text").css("font-size", "22px").css("color", "rgb(233, 0, 0);").css("margin-left", "12px").css("font-weight", "bold").text("Incorrect...")
+        $(".match_status_exp").css("color", "rgb(185,0,0)").css("font-size", "14px").text("The correct answer is: "+data.correct_answer)
+        $(".answer_feedback").css("border-color", "rgba(236, 28, 28, 0.7)").css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)").css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)").css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)")
       $("#submit_exact").remove()
     $("#nextbutton").show()
   
