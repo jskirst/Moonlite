@@ -46,11 +46,12 @@
           - elsif @task.exact?
             .control-group
               .controls
-                = text_field_tag "answer_exact", nil, placeholder: "Enter exact answer here..."
-                %p.match_status
+                = text_field_tag "answer_exact", nil, placeholder: "Enter exact answer here...", class: "answer_feedback"
+                %span.match_status_text
+                %p.match_status_exp
             .control-group
               .controls
-                = submit_tag "Submit", id: "submit_exact", class: "button button-actionable"
+                = submit_tag "Submit", id: "submit_exact", class: "button button-info"
             
         = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
     
