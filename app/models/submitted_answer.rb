@@ -24,14 +24,19 @@ class SubmittedAnswer < ActiveRecord::Base
   validates :content, length: { maximum: 100000 }
   
   before_save do
-    if content.try{ |c| c.include?("#ruby") }
+    return true if content.blank?
+    url = "http://www.evaluatron.com/" if content.include?("#ruby")
+    url = "http://evaluatronphp.herokuapp.com/" if content.include?("//php")
+    
+    if url
       begin
-        url = URI.parse("http://www.evaluatron.com/?quarry=#{CGI.escape(content)}")
+        url = URI.parse("#{url}?quarry=#{CGI.escape(content)}")
         result = JSON.parse(open(url).read)
         self.preview = result["output"]
         self.preview_errors = result["errors"]
       rescue
-        # bad output
+        self.preview = "-"
+        self.preview_errors = "Error: code could not be run. Please check and try again."
       end
     end
   end
