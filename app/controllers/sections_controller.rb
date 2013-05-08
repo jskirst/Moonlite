@@ -128,13 +128,13 @@ class SectionsController < ApplicationController
     raise "Access Denied: Task is currently locked." if @task.locked_at
     @path = @section.path
     @stored_resource = @task.stored_resources.first
-    
+    @session_id = params[:session_id]
     @completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
     unless @completed_task
       @completed_task = current_user.completed_tasks.new(task_id: @task.id)
       @completed_task.status_id = Answer::INCOMPLETE
       @completed_task.enrollment_id = @enrollment.id
-      @completed_task.session_id = params[:session_id]
+      @completed_task.session_id = @session_id
       @completed_task.save!
       @submitted_answer = SubmittedAnswer.new
     else
