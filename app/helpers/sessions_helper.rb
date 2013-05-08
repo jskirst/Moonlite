@@ -36,7 +36,7 @@ module SessionsHelper
         end
       else
         unless current_user
-          user = User.create_with_nothing
+          user = User.create_with_nothing(params[:user])
         end
       end
       user.reload

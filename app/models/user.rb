@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     :is_fake_user, :is_test_user, :user_role_id,
     :earned_points, :spent_points,
     :last_email_sent_at,:emails_today
-  attr_accessor :password, :password_confirmation, :guest_user
+  attr_accessor :password, :password_confirmation, :guest_user, :group_id
   attr_accessible :name, :email, :image_url, :username,
     :password,:password_confirmation, 
     :description, :title, :company_name, :education, :link, :location,
@@ -70,6 +70,9 @@ class User < ActiveRecord::Base
   
   after_create do
     NotificationSettings.create!(user_id: self.id)
+    if group_id
+      GroupUser.create!(user_id: self.id, group_id: self.group_id)
+    end
   end
   
   def to_s() self.name end
@@ -79,14 +82,17 @@ class User < ActiveRecord::Base
     
   def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
   
-  def self.create_with_nothing(email = nil)
+  def self.create_with_nothing(details)
+    details = {} if details.nil?
+    group = Group.find(details["group_id"]) unless details["group_id"].blank?
     user = Company.first.users.new
-    user.name = grant_anon_username
-    user.email = email || "#{user.name}@metabright.com"
+    user.name = details["name"] || grant_anon_username
+    user.email = details["email"] || "#{user.name}@metabright.com"
     user.grant_username
-    user.password = SecureRandom::hex(16)
+    user.password = details["password"] || SecureRandom::hex(16)
     user.password_confirmation = user.password
-    user.save!
+    user.group_id = group.id if group
+    user.save!    
     return user
   end
   

@@ -1,6 +1,10 @@
 %div#explore_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1" }
   %div.explorecontainer
-    - @persona = current_user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }.first.persona
+    - personas = current_user.user_personas.includes(:persona).eager_load
+    - if personas.size > 0      
+      - @persona = current_user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }.first.persona
+    - else
+      - @persona = Persona.first
     - @paths = @persona.paths.order("public_at DESC")
     = render "personas/show"
       

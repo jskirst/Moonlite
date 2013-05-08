@@ -68,6 +68,7 @@ class PagesController < ApplicationController
     @hide_background = true
     @show_nav_bar = false
     @show_footer = false
+    @forward_to = continue_path_path(params[:c])
     render "intro"
   end
   

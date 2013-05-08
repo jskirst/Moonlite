@@ -10,6 +10,8 @@ class GroupsController < ApplicationController
     @users = @group.users.order "earned_points desc"
     @membership = @group.membership(current_user)
     @url_for_newsfeed = newsfeed_group_path(@group)
+    @suggested_paths = Path.suggested_paths(current_user)
+    session[:redirect_back_to] = root_url
     render "show"
   end
   

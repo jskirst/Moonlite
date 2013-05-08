@@ -1,10 +1,20 @@
 #origin
-  .hero
-    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+less+white+space", alt: "MetaBright"}
-    %h2 Prove yourself. Be discovered.
+  - unless current_user
+    .hero
+      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+less+white+space", alt: "MetaBright"}
+      %h2 Prove yourself. Be discovered.
   .container
     .body
-      %h3 Try it out! Choose your Challenge...
+      - if current_user
+        :css
+          .container{margin-top:100px;}
+        
+        %div{ style: "margin-bottom: 10px; text-align: left; margin-left: 12px; "}
+          = image_tag STONEY_MEDIUM_URL, style: "display: inline-block; height: 51px; "
+          %h1{ style: "margin-bottom: 10px; position: relative; display: inline; top: 6px; font-size: 28px; "} Welcome to MetaBright, #{current_user.name.split.first}!
+        %h3 To get started, select a Challenge...
+      - else
+        %h3 Try it out! Choose your Challenge...
       %table
         %tr.tiles
           - (0..3).each do |i|
@@ -12,23 +22,43 @@
             - first_section = path.try { |p| p.next_section }
             - if path && first_section
               %td.mosaic-block.bar2
-                = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
-                  .details
-                    %h4= truncate(path.name,length: 14, separator: ' ')
-                    %h5 +#{path.tasks.count * 100} points
-                %div                  
-                  = link_to challenge_url(path.permalink) do
-                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                - if current_user
+                  = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                - else
+                  = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                %div
+                  - if current_user
+                    = link_to intro_path(c: path.permalink) do
+                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  - else                  
+                    = link_to challenge_url(path.permalink) do
+                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
         %tr.tiles
           - (4..8).each do |i|
             - path = @paths[i]
             - first_section = path.try { |p| p.next_section }
             - if path && first_section
               %td.mosaic-block.bar2
-                = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
-                  .details
-                    %h4= truncate(path.name,length: 14, separator: ' ')
-                    %h5 +#{path.tasks.count * 100} points
+                - if current_user
+                  = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                - else
+                  = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
                 %div
-                  = link_to challenge_url(path.permalink) do
-                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  - if current_user
+                    = link_to intro_path(c: path.permalink) do
+                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  - else                  
+                    = link_to challenge_url(path.permalink) do
+                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"

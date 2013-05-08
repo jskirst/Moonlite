@@ -1,13 +1,13 @@
 #challenge
-  - if @user == current_user && current_user.guest_user?
+  - unless current_user
     .help_box
       :javascript
         function append_error(e){
-          $("#update_user").find("p.error").remove();
-          $("#update_user").append("<p class='error'>"+e+"</p>");
+          $("#new_user").find("p.error").remove();
+          $("#new_user").append("<p class='error'>"+e+"</p>");
         }
         $(function(){
-          $("#update_user").submit(function(){
+          $("#new_user").submit(function(){
             var e = "";
             if($("#user_name").val() == ""){
               e = "Please enter a name."
@@ -24,10 +24,10 @@
         });
       .header
         = image_tag STONEY_SMALL_URL, alt: "Stoney" 
-        %h1 Kind of bare, isn't it?
+        %h1 Join the #{@group.name} Group!
       .body
         %h4
-          Sign up with Google or Facebook to make your profile awesome in a hurry. Or sign up with your email address, and edit your profile manually.
+          Sign up and get started with the #{@group.name} Group on MetaBright! Prove and showcase your skills while competing with your friends.
         %div{ style: "margin-top: 20px;" }
           %div
             = link_to "/auth/google_oauth2", class: "btn danger", style: "width: 205px; margin-right: 60px; " do
@@ -37,10 +37,11 @@
               = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
               %span.landingbuttontext Sign in with Facebook »
           %div.divider OR
-          = form_for(current_user, html: { id: "update_user" }) do |f|
+          = form_for(User.new, url: sessions_path, style: "style: border: none; ") do |f|
             = f.text_field :name, value: nil, placeholder: "Name"
             = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
             = f.password_field :password, value: nil, placeholder: "Password", style: "margin-right: 10px;"
+            = f.hidden_field :group_id, value: @group.id
             = f.submit "Submit", class: "button button-standard button-small", style: "margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px;"
   .top
     = link_to group_path(@group), class: "home" do
@@ -50,10 +51,9 @@
         %div{ style: "float: right; margin-right: 12px;"}
           = link_to "Edit Group", edit_group_path(@group), style: "margin-right: 10px;"
           = link_to "Dashboard", dashboard_group_path(@group), class: "button button-actionable"
-          
       - else
-        = link_to "Leave", leave_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;", method: :delete      
-    - else
+        %span.label.label-success{ style: "float: right; margin-right: 12px; padding: 4px 6px;" } Member
+    - elsif current_user
       =link_to "Join", join_group_path(@group), class: "button button-actionable", style: "float: right; margin-right: 12px;"
     %div{ style: "height: 68px; "}
       %h1= @group.name
@@ -69,7 +69,7 @@
           - if @users.size < 4
             = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
           - @users.shuffle.each do |user|
-            = render "shared/mosaic", { pic: user.picture, link: profile_path(user.username), title: user.name, subtitle: "Member since..." }
+            = render "shared/mosaic", { pic: user.picture, link: profile_path(user.username), title: user.name, subtitle: "Member since #{time_ago_in_words(@membership.created_at)} ago" }
       - if @users.size > 4
         .right_scroll{ onclick: "slide('right');" }
           = image_tag ICON_CAROUSEL_RIGHT, alt: "Right"
@@ -123,7 +123,14 @@
                   = link_to truncate(next_user.name, length: 22), profile_path(next_user.username), class: "name"
                   %span.level lvl. #{Enrollment.points_to_level(next_user.earned_points.to_i)}
                   %span.points= next_user.earned_points
-
+      - unless @suggested_paths.empty?
+        %div.leftbox
+          %div.leftboxheader Suggested Challenges
+          %div.leftboxfooter
+            %li.leftrailcontent
+              - @suggested_paths.each do |p|
+                = link_to challenge_path(p.permalink) do
+                  = image_tag p.path_pic, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
     %div.span11
       %div.newsfeed
         %div.box_header

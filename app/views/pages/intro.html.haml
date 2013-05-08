@@ -1,7 +1,7 @@
 .intro_wrapper
   .intro
     .header
-      = image_tag STONEY_MEDIUM_URL, style: "width:42px; height:47px; margin:4px 4px 0 0;", alt: "Stoney"
+      = image_tag STONEY_MEDIUM_URL, style: "height:47px; margin:4px 4px 0 0;", alt: "Stoney"
       %h1 You're about to start your first Challenge!
     %hr{ style:"margin:0"}
     .body
@@ -18,4 +18,4 @@
           %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
           %h3 This is just the beginning!
           %p You can always improve your score by taking additional questions and retaking ones you missed.
-    = link_to "Let's Go!", "#", style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
+    = link_to "Let's Go!", @forward_to, style: "float: right; margin: 0 10px 10px 0;", class: "button button-actionable"
