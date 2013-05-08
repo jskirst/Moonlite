@@ -79,12 +79,16 @@ class Path < ActiveRecord::Base
     return personas.first.paths.where("public_at is not ? and published_at is not ? and approved_at is not ?", nil, nil, nil)
   end
   
-  def self.suggested_paths(user, excluded_path_id = -1)
-    personas = user.personas
-    personas = user.company.personas.to_a.last(3) if personas.empty?
-    enrolled_paths = user.enrolled_paths.to_a.collect &:id
-    suggested_paths = personas.to_a.collect do |persona|
-      persona.public_paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
+  def self.suggested_paths(user = nil, excluded_path_id = -1)
+    if user
+      personas = user.personas
+      personas = user.company.personas.to_a.last(3) if personas.empty?
+      enrolled_paths = user.enrolled_paths.to_a.collect &:id
+      suggested_paths = personas.to_a.collect do |persona|
+        persona.public_paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
+      end
+    else
+      suggested_paths = Persona.first.public_paths.to_a
     end
     return suggested_paths.flatten.compact
   end

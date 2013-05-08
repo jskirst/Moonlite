@@ -16,6 +16,7 @@
       - task.answers.each do |a|
         %li{ class: ("correct" if a.is_correct) }= a.content
     - if task.template
+      %h5{ style: "margin: 5px 0 5px 15px;"} Template
       %blockquote{ style: "margin-top:0px; width:77%;" }
         %pre{ style:"word-break:normal;" }= task.template
   %div{ style: "position: relative; bottom: 0px; margin-left: 45px; font-size: 11px;"}

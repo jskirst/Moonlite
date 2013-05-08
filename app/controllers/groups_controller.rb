@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
     @membership = @group.membership(current_user)
     @url_for_newsfeed = newsfeed_group_path(@group)
     @suggested_paths = Path.suggested_paths(current_user)
-    session[:redirect_back_to] = root_url
+    session[:redirect_back_to] = root_url unless current_user
     render "show"
   end
   

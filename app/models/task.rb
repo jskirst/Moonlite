@@ -46,6 +46,10 @@ class Task < ActiveRecord::Base
   validates :answer_type, inclusion: { in: [0, 1, 2, 3] }
   validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
   
+  before_save do
+    self.template = nil if template.blank?
+  end
+  
   after_create do
     if exact? or multiple_choice?
       answer_content.each do |a|
