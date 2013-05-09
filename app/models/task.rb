@@ -51,18 +51,18 @@ class Task < ActiveRecord::Base
   end
   
   after_create do
-    if exact? or multiple_choice?
-      answer_content.each do |a|
-        answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
-      end
+    answer_content.each do |a|
+      answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
     end
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   
   def update_answers(params)
     errors = []
-    params.each do |key,value| 
-      if key.include?("answer_")
+    params.each do |key,value|
+      if key == "answer_" and not value.blank?
+        answers.create!(content: value, is_correct: true)
+      elsif key.include?("answer_")
         answer = answers.find(key.gsub("answer_",""))
         if value.blank?
           answer.destroy

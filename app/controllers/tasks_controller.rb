@@ -34,6 +34,11 @@ class TasksController < ApplicationController
   def edit
     @stored_resource = @task.stored_resources.first
     @answers = @task.answers
+    if @task.multiple_choice?
+      (4 - @answers.size).times { @task.answers.new(is_correct: false) }
+    elsif (@task.exact? or @task.creative?) and @answers.empty?
+      @task.answers.new(is_correct: true)
+    end
     respond_to {|f| f.html { render :partial => "edit_task_form" } }
   end
     

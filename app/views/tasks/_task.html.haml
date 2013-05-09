@@ -8,13 +8,17 @@
       class: "button button-standard delete_button"
     = link_to "Edit", edit_task_path(task.id), remote: true, class: "button button-standard edit_button"
   %div{ style: "padding:15px;" }
+    %h5{ style: "margin: 5px 0 5px 15px;"} Question
     %blockquote{ style: "margin-top:0px; width:77%;" }
       %pre{ style:"word-break:normal;" }= task.question
     - if task.stored_resources.first
       = image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 40px; max-width: 500px;"
-    %ol{ style: "padding-left:20px;" }
-      - task.answers.each do |a|
-        %li{ class: ("correct" if a.is_correct) }= a.content
+    - answers = task.answers.eager_load
+    - unless answers.empty?
+      %h5{ style: "margin: 5px 0 5px 15px;"} Answer(s)
+      %ol{ style: "padding-left:20px;" }
+        - task.answers.each do |a|
+          %li{ class: ("correct" if a.is_correct) }= a.content
     - if task.template
       %h5{ style: "margin: 5px 0 5px 15px;"} Template
       %blockquote{ style: "margin-top:0px; width:77%;" }

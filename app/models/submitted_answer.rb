@@ -28,8 +28,8 @@ class SubmittedAnswer < ActiveRecord::Base
     if content.include?("#ruby")
       url = "http://www.evaluatron.com/" 
       default_error = "Syntax Error"
-    else
-      url = "http://evaluatronphp.herokuapp.com/" if content.include?("//php")
+    elsif content.include?("//php")
+      url = "http://evaluatronphp.herokuapp.com/" 
       default_error = "Syntax Error - check your semicolons and braces."
     end
     
@@ -40,6 +40,7 @@ class SubmittedAnswer < ActiveRecord::Base
         self.preview = result["output"]
         self.preview_errors = result["errors"]
       rescue
+        self.preview = nil
         self.preview_errors = default_error
       end
     end

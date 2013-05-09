@@ -24,18 +24,18 @@
           .controls
             = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
         
-        .exact.hide
-          .control-group
-            %label.control-label Exact answer (case insensitive)
-            .controls
-              = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
-        
         .creative.template_toggle.hide
           .control-group
             %label.control-label Template (optional)
             .controls{ style: "margin-top: 6px;" }
               %a.show_template{ onclick: "$(this).hide(); $(this).siblings('#task_template').show();" } Add template for question
               = text_area_tag("task[template]", nil, style: "display: none; height: 250px; width: 95%; overflow: auto; border: 1px solid #cccccc; background-color: #ffffff; box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); border-radius: 4px; font-family: 'Menlo', 'Courier New', 'Terminal', monospace; font-size: 14px;")
+        
+        .creative.exact.hide
+          .control-group
+            %label.control-label Exact answer (case insensitive)
+            .controls
+              = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
         
         .multiple_choice
           - (1..4).each do |i|
@@ -44,6 +44,7 @@
               %label.control-label= status
               .controls
                 = text_field_tag("task[answer"+i.to_s+"]", nil, { maxlength: 255, size: 75, class: status.downcase.gsub(" ","_") })
+        
         %h4 Source        
         .control-group
           %label.control-label URL

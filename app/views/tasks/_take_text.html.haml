@@ -22,9 +22,14 @@
         
     - if params[:m] == "preview" and (@task.template or @submitted_answer.preview or @submitted_answer.preview_errors)
       %div{ style: "text-align:center; "}
-        %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 120px; margin-right: auto; margin-left: auto;" } Preview:
+        - if @correct
+          %h4{ style: "color: rgb(0, 206, 0); text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(3, 233, 12, 0.8); width: 120px; margin-right: auto; margin-left: auto;" } Correct!
+        - else
+          %h4{ style: "text-align: center; margin-bottom: 12px; font-size: 17px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 120px; margin-right: auto; margin-left: auto;" } Preview
         - if @submitted_answer.preview
-          %div{ style: "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
+          - if @correct
+            - box_shadow = "box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6);"
+          %div{ style: box_shadow.to_s + "margin:0 auto; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
             = @submitted_answer.preview
         
         - elsif @submitted_answer.preview_errors
@@ -44,7 +49,7 @@
     = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
   - else
     = link_to "Skip for now", finish_section_path(@section, @session_id), class: "button button-standard", style: "float: left;"
-  - if @submitted_answer.reviewed?
+  - if @completed_task.correct?
     = f.submit "Update", class: "button button-actionable", id: "submit_button", style: "float:right;"
   - else
     = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
