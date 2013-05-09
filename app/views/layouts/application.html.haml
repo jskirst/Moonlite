@@ -7,6 +7,15 @@
       - if @path && @current_section
         = render "modals/launchpad"
       - if show_nav_bar
+        %script{ src: "http://connect.facebook.net/en_US/all.js" }
+        :javascript
+          $(function(){
+            $(".invite_facebook_friends").click(function(){
+              FB.init({appId  : "#{ENV['FACEBOOK_KEY']}", frictionlessRequests: true});
+              FB.ui({method: 'apprequests', message: 'Invite others to MetaBright'}); 
+            });
+          })
+        #fb-root
         = render "modals/explore"
       - if current_user.guest_user?
         = render "modals/login"
@@ -18,14 +27,5 @@
       - flash.each do |key, value|
         = content_tag(:div, value, class: "alert alert-#{key}", style: ("margin:60px 0 -50px;" if hide_background))
       = yield
-    %script{ src: "http://connect.facebook.net/en_US/all.js" }
-    :javascript
-      $(function(){
-        $(".invite_facebook_friends").click(function(){
-          FB.init({appId  : "#{ENV['FACEBOOK_KEY']}", frictionlessRequests: true});
-          FB.ui({method: 'apprequests', message: 'Invite others to MetaBright'}); 
-        });
-      })
-    #fb-root
     - if show_footer
       = render "layouts/footer"
