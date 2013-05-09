@@ -15,8 +15,8 @@ class Task < ActiveRecord::Base
   LONG_EXACT  = 103
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
-  attr_readonly :section_id
   attr_accessor :source, :answer_content, :stored_resource_id, :answer1, :answer2, :answer3, :answer4
+  attr_protected :section_id
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
