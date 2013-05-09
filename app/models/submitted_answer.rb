@@ -25,8 +25,13 @@ class SubmittedAnswer < ActiveRecord::Base
   
   before_save do
     return true if content.blank?
-    url = "http://www.evaluatron.com/" if content.include?("#ruby")
-    url = "http://evaluatronphp.herokuapp.com/" if content.include?("//php")
+    if content.include?("#ruby")
+      url = "http://www.evaluatron.com/" 
+      default_error = "Syntax Error"
+    else
+      url = "http://evaluatronphp.herokuapp.com/" if content.include?("//php")
+      default_error = "Syntax Error - check your semicolons and braces."
+    end
     
     if url
       begin
@@ -35,19 +40,12 @@ class SubmittedAnswer < ActiveRecord::Base
         self.preview = result["output"]
         self.preview_errors = result["errors"]
       rescue
-        self.preview = "-"
-        self.preview_errors = "Error: code could not be run. Please check and try again."
+        self.preview_errors = default_error
       end
     end
   end
   
   def reviewed?() not reviewed_at.nil? end
-  
-  # def preview
-  #   return stored_resources.first.obj.url unless stored_resources.empty?
-  #   return url unless url.blank?
-  #   return STONEY_SMALL_URL
-  # end
     
   def add_vote(voting_user)
     if vote = voting_user.votes.create!(owner_id: self.id)
