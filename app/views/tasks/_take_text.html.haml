@@ -60,7 +60,7 @@
 :javascript
   var editor = ace.edit("editor");
   editor.setTheme("ace/theme/github");
-  editor.getSession().setMode("ace/mode/#{@path.name.downcase.include?('ruby') ? 'ruby' : 'html'}");
+  editor.getSession().setMode("ace/mode/#{@task.language}");
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);
   var $textarea = $('textarea[name="content"]').hide();

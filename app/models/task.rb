@@ -91,6 +91,13 @@ class Task < ActiveRecord::Base
   def long_exact?() creative_response? and answer_sub_type == LONG_EXACT end
     
   def caption_allowed?() image? or youtube? or task? end
+    
+  def language
+    return "html" if template.blank? or template.downcase.include?("<html")
+    return "ruby" if template.include?("#ruby")
+    return "php" if template.include?("//php")
+    return "html"
+  end
   
   private
   
