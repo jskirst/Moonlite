@@ -107,7 +107,7 @@ module SessionsHelper
   
   def notifications
     return [] unless current_user
-    current_user.user_events.order("created_at DESC")
+    current_user.user_events.includes(:actioner).order("created_at DESC")
   end
   
   def sign_out
@@ -151,10 +151,12 @@ module SessionsHelper
   def name_for_personas() "Persona" end
   
   def determine_enabled_features
-    unless current_user.nil?
-      role = current_user.user_role
-      @is_consumer = true
-      @enable_administration = role.enable_administration
+    unless ["raw"].include?(params[:action])
+      unless current_user.nil?
+        role = current_user.user_role
+        @is_consumer = true
+        @enable_administration = role.enable_administration
+      end
     end
   end
   

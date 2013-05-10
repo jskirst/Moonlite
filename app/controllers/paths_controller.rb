@@ -233,9 +233,12 @@ class PathsController < ApplicationController
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
     offset = feed.page * 15
-    feed.posts = @path.completed_tasks.joins(:submitted_answer, :task)
+    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+      .select(newsfeed_fields)
+      .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
+      .where("path_id = ?", @path.id)
     if params[:submission]
       feed.posts = feed.posts.where("submitted_answers.id = ?", params[:submission])
     else
@@ -246,10 +249,10 @@ class PathsController < ApplicationController
       elsif params[:order] == "top"
         feed.posts = feed.posts.order("total_votes DESC")
       else
-        feed.posts = feed.posts.select("completed_tasks.*, ((total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
+        feed.posts = feed.posts.order("hotness DESC")
       end
     end
-    feed.posts = feed.posts.where("completed_tasks.status_id = ?", Answer::CORRECT).offset(offset).limit(15)
+    feed.posts = feed.posts.offset(offset).limit(15)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end

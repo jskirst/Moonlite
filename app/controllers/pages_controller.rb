@@ -26,8 +26,9 @@ class PagesController < ApplicationController
     feed = Feed.new(params, current_user, newsfeed_url)
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
-    feed.posts = CompletedTask.joins({:task => :section}, :submitted_answer)
-      .where("sections.path_id in (?)", relevant_paths)
+    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+      .select(newsfeed_fields)
+      .where("path_id in (?)", relevant_paths)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
@@ -52,7 +53,25 @@ class PagesController < ApplicationController
     end
     
     if @current_user_persona
-      @enrollments = @current_user_persona.enrollments.sort{ |a, b| b.total_points <=> a.total_points }
+      @enrollments = @current_user_persona.enrollments.includes(:path).sort{ |a, b| b.total_points <=> a.total_points }
+      completed_tasks = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+        .select(newsfeed_fields)
+        .where("completed_tasks.status_id = ?", Answer::CORRECT)
+        .where("submitted_answers.locked_at is ?", nil)
+        .where("submitted_answers.reviewed_at is not ?", nil)
+        .where("users.id = ?", @user.id)
+        .order("completed_tasks.points_awarded DESC")
+        .eager_load
+
+      @creative_feeds_by_path = {}
+      @task_feeds_by_path = {}
+      @enrollments.each do |e|
+        @creative_feeds_by_path[e.path_id] = Feed.new(params, current_user, nil, 
+          completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CREATIVE.to_s })
+        @task_feeds_by_path[e.path_id] = Feed.new(params, current_user, nil, 
+          completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CHECKIN.to_s })
+      end
+      
       @similar_people = User.joins(:user_role)
         .joins("INNER JOIN user_personas on users.id = user_personas.user_id")
       	.where("user_roles.enable_administration = ? and users.id != ? and user_personas.persona_id = ?", false, @user.id, @current_user_persona.persona_id)
@@ -137,30 +156,6 @@ class PagesController < ApplicationController
     @show_footer = true
     @hide_background = true
     render "employer2"
-  end
-  
-  def connect
-    @title = "Connect"
-    @show_footer = true
-    @hide_background = true
-    
-    # fb_auth = current_user.user_auths.find_by_provider "facebook"
-    #     if fb_auth
-    #       client = User.auth(connect_url).client
-    #       if params[:code]
-    #         # client.authorization_code = params[:code]
-    #         # access_token = client.access_token! :client_auth_body
-    #         # fb_user = FbGraph::User.me(access_token).fetch
-    #         # friends = fb_user.events({friends: "picture"})
-    #         render "connect"
-    #       elsif params[:error]
-    #         redirect_to root_url, :alert => "Access Denied"
-    #         return
-    #       else
-    #         redirect_to client.authorization_uri(scope: "user_about_me")
-    #       end
-    #     end
-    redirect_to root_path
   end
   
   def challenges

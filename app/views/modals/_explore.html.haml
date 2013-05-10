@@ -5,6 +5,6 @@
       - @persona = current_user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }.first.persona
     - else
       - @persona = Persona.first
-    - @paths = @persona.paths.order("public_at DESC")
+    - @paths = @persona.public_paths.order("public_at DESC")
     = render "personas/show"
       

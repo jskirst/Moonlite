@@ -19,15 +19,14 @@ module ApplicationHelper
     @social_image = image
   end
   
-  def social_details(completed_task)
+  def social_details(post)
     { 
-      owner: completed_task.submitted_answer, 
+      owner_has_comments: post["has_comments"],
       owner_type: "SubmittedAnswer", 
-      owner_id: completed_task.submitted_answer_id, 
-      comment_count: completed_task.submitted_answer.comments.size, 
-      created_at: completed_task.created_at, 
-      sharing_url: submission_details_url(completed_task.path.permalink, completed_task.submitted_answer.id), 
-      sharing_title: "Great response in the #{completed_task.path.name} Challenge on @MetaBright." 
+      owner_id: post["submitted_answer_id"],
+      created_at: post["created_at"], 
+      sharing_url: submission_details_url(post["path_permalink"], post["submitted_answer_id"]), 
+      sharing_title: "Great response in the #{post["path_name"]} Challenge on @MetaBright." 
     } 
   end
   
@@ -119,5 +118,18 @@ module ApplicationHelper
       end
     end
     query.count
+  end
+  
+  def newsfeed_fields
+    %Q[ 
+      completed_tasks.id as id, completed_tasks.created_at as created_at, completed_tasks.points_awarded, completed_tasks.status_id,
+      paths.id as path_id, paths.name as path_name, paths.permalink as path_permalink, 
+      submitted_answers.id as submitted_answer_id, submitted_answers.total_votes as total_votes, 
+        submitted_answers.content as submitted_answer_content, submitted_answers.caption as submitted_answer_caption,
+        submitted_answers.has_comments as has_comments,
+      tasks.id as task_id, tasks.section_id, tasks.question as question, tasks.answer_type as answer_type, tasks.answer_sub_type as answer_sub_type, 
+      users.id as user_id, users.username, users.name, users.image_url as user_image_url, users.earned_points,
+      ((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness
+    ]
   end
 end

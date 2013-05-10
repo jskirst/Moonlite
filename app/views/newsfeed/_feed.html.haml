@@ -37,7 +37,7 @@
     });
 
   - feed.posts.each do |post|
-    = render "newsfeed/post", { post: post, feed: feed }
+    = render "newsfeed/post", { post: post.attributes, feed: feed }
   
   - if feed.url
     :javascript

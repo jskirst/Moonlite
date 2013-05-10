@@ -52,8 +52,8 @@
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
           .span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1= @user.name
-            - if badge = @user.reputation_badge
-              = image_tag (@user.reputation_badge[0]), class: "rep_badge", title: @user.reputation_badge[1], alt: @user.reputation_badge[1]
+            - if badge = User.reputation_badge(@user.earned_points)
+              = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
             - unless @user.description.blank?
               %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 10px 0 10px 0;"} "#{@user.description}"
             %p{ style: "font-size: 18px; margin: 10px 0 5px 0; color: rgb(80, 80, 80);"}= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
@@ -106,47 +106,48 @@
                 %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
                 %span.pts #{enrollment.total_points} points
         
-        %div.leftbox.creations{ style: "display: none;" }
-          %div.leftboxheader My Creations
-          %div.leftboxfooter
-            %div 
-              %h2 Author
-              %div
-                = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
+        - if Rails.env == "development"
+          %div.leftbox.creations
+            %div.leftboxheader My Creations
+            %div.leftboxfooter
+              %div 
+                %h2 Author
                 %div
-                  %h3 Challenge name
-                  %h4 
-                    381 Users
-                    %span · 
-                    61 questions
-              %div
-                = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
+                  = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
+                  %div
+                    %h3 Challenge name
+                    %h4 
+                      381 Users
+                      %span · 
+                      61 questions
                 %div
-                  %h3 Challenge name
-                  %h4 
-                    381 Users
-                    %span ·
-                    61 questions
-            %div 
-              %h2 Top Contributor
-              %ul
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-            %div 
-              %h2 Contributor
-              %ul
-                %li
-                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                  = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
+                  %div
+                    %h3 Challenge name
+                    %h4 
+                      381 Users
+                      %span ·
+                      61 questions
+              %div 
+                %h2 Top Contributor
+                %ul
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+              %div 
+                %h2 Contributor
+                %ul
+                  %li
+                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
                 
         %div.leftbox
           %div.leftboxheader Similar People
@@ -202,22 +203,21 @@
                 What I can do...
               - if @user == current_user
                 = link_to "Add new CR", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
-              %h4 #{enrollment.creative_responses.count} Creative Responses
+              %h4 #{@creative_feeds_by_path[enrollment.path_id].posts.size} Creative Responses
               %div.profilecontent
-                = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.creative_responses.where("completed_tasks.status_id = ?", Answer::CORRECT))                
+                = render "newsfeed/feed", feed: @creative_feeds_by_path[enrollment.path_id]
   
             %hr
             %div.taskbucket
-              - tasks = 
               %h2
                 = link_to challenge_path(enrollment.path.permalink) do
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I have done...
               - if @user == current_user
                 = link_to "Add new Task", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
-              %h4 #{enrollment.tasks.count} Tasks Completed
+              %h4 #{@task_feeds_by_path[enrollment.path_id].posts.size} Tasks Completed
               %div.profilecontent
-                = render "newsfeed/feed", feed: NewsfeedHelper::Feed.new(params, current_user, nil, enrollment.tasks.limit(5))
+                = render "newsfeed/feed", feed: @task_feeds_by_path[enrollment.path_id]
 
 :javascript
   $('.comment').click({ animation: 'slide', hover_x: '400px' });

@@ -47,7 +47,7 @@ class Path < ActiveRecord::Base
   def promoted?() promoted_at.nil? ? false : true end
   
   def path_pic
-    return stored_resource.obj.url if stored_resource
+    #return stored_resource.obj.url if stored_resource
     return self.image_url if self.image_url
     return "/images/image_thumb.png"
   end

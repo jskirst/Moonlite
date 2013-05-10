@@ -319,7 +319,8 @@ class User < ActiveRecord::Base
     votes.to_a.collect {|v| v.owner_id }
   end
   
-  def reputation_badge
+  def self.reputation_badge(earned_points)
+    earned_points = earned_points.to_i
     if earned_points < 2000
       return nil
     elsif earned_points < 4000

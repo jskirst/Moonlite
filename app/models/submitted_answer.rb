@@ -2,7 +2,7 @@ require 'open-uri'
 class SubmittedAnswer < ActiveRecord::Base
   POINTS_PER_VOTE = 50
 
-  attr_protected :task_id, :total_votes, :locked_at, :reviewed_at
+  attr_protected :task_id, :total_votes, :locked_at, :reviewed_at, :has_comments
   attr_accessible :url, 
     :content, 
     :caption,
