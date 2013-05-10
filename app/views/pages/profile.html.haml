@@ -105,6 +105,48 @@
                 = image_tag enrollment.path.picture
                 %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
                 %span.pts #{enrollment.total_points} points
+        
+        %div.leftbox.creations{ style: "display: none;" }
+          %div.leftboxheader My Creations
+          %div.leftboxfooter
+            %div 
+              %h2 Author
+              %div
+                = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
+                %div
+                  %h3 Challenge name
+                  %h4 
+                    381 Users
+                    %span · 
+                    61 questions
+              %div
+                = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
+                %div
+                  %h3 Challenge name
+                  %h4 
+                    381 Users
+                    %span ·
+                    61 questions
+            %div 
+              %h2 Top Contributor
+              %ul
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+            %div 
+              %h2 Contributor
+              %ul
+                %li
+                  = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
                 
         %div.leftbox
           %div.leftboxheader Similar People
@@ -115,6 +157,8 @@
               - @similar_people.each do |person|
                 = link_to profile_path(person.username) do
                   = image_tag person.picture, size: "50x50", title: person.name, alt: person.name
+        
+        
            
       %div.span11.challenge_details
         - @enrollments.each do |enrollment|
