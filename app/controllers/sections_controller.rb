@@ -140,6 +140,16 @@ class SectionsController < ApplicationController
     else
       @submitted_answer = @completed_task.submitted_answer || SubmittedAnswer.new
     end
+    
+    correct_answers = Answer.where(task_id: @task.id, is_correct: true)
+    unless correct_answers.empty? or @submitted_answer.preview.blank?
+      correct_answers.each do |ca|
+        if ca.match?(@submitted_answer.preview)
+          @correct = true
+          break
+        end
+      end
+    end
   end
   
   def took
@@ -170,9 +180,11 @@ class SectionsController < ApplicationController
     sa.description = params[:description] unless params[:description].blank?
     sa.caption = params[:caption] unless params[:caption].blank?
     sa.site_name = params[:site_name] unless params[:site_name].blank?
-    sa.reviewed_at = nil
     sa.locked_at = nil
-    
+    unless current_user.guest_user?
+      sa.reviewed_at = Time.now();
+    end
+
     unless sa.save
       redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
       return

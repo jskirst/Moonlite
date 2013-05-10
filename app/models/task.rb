@@ -15,8 +15,8 @@ class Task < ActiveRecord::Base
   LONG_EXACT  = 103
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
-  attr_readonly :section_id
   attr_accessor :source, :answer_content, :stored_resource_id, :answer1, :answer2, :answer3, :answer4
+  attr_protected :section_id
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
@@ -51,18 +51,18 @@ class Task < ActiveRecord::Base
   end
   
   after_create do
-    if exact? or multiple_choice?
-      answer_content.each do |a|
-        answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
-      end
+    answer_content.each do |a|
+      answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
     end
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   
   def update_answers(params)
     errors = []
-    params.each do |key,value| 
-      if key.include?("answer_")
+    params.each do |key,value|
+      if key == "answer_" and not value.blank?
+        answers.create!(content: value, is_correct: true)
+      elsif key.include?("answer_")
         answer = answers.find(key.gsub("answer_",""))
         if value.blank?
           answer.destroy
@@ -91,6 +91,13 @@ class Task < ActiveRecord::Base
   def long_exact?() creative_response? and answer_sub_type == LONG_EXACT end
     
   def caption_allowed?() image? or youtube? or task? end
+    
+  def language
+    return "html" if template.blank? or template.downcase.include?("<html")
+    return "ruby" if template.include?("#ruby")
+    return "php" if template.include?("//php")
+    return "html"
+  end
   
   private
   
