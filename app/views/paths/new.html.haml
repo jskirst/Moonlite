@@ -4,50 +4,39 @@
     %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create a Challenge
     
   %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
-    = form_for(@path) do |f|
-      = render "shared/error_messages", object: f.object
+    = form_for(@path, url: start_path_path) do |f|
       %div{ style: "text-align: center; margin: 10px auto;" }
-        
-        %div.action_group
+        %div.action_group.challenge_naming
           %h3 Give your Challenge a name
           %div.control-group
             %div.controls
               = f.text_field :name, autofocus: "autofocus", style: "padding: 20px; width: 500px; font-size: 28px; line-height: 36px; text-align: center;", placeholder: "Something awesome..."
-          %div.tips
-            %h5
-              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              Stick to the Goldilocks rule for names: "Mathematics" is too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
+          - if @exact_path
+            %h4 Uh oh! Someone has already made that Challenge.
+            %h5 Don't worry, you can still contribute to the #{@exact_path.name} Challenge.
+            %div
+            = link_to "Become a contributor", join_path_path(@exact_path), class: "button button-xlarge button-info"
+            .or_divider OR
+              
+          - elsif not @similar_paths.empty?
+            %h4 Hmmm. Looks like there are Challenges with similar names.
+            %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+            %h5 Consider becoming a contributor to an existing Challenge instead of creating a new one.
+            - @similar_paths.each do |path|
+              %ul
+                %li
+                  = link_to path.name, join_path_path(path), title: "Become a contributor to the #{path.name} Challenge"
+          - unless @exact_path or not @similar_paths.empty?
+            %div.tips
+              %h5
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Stick to the Goldilocks rule for names: "Mathematics" is too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
         
-        %div.action_group
-          %h3 Upload an image to represent your Challenge
-          %div.field.clearfix
-            %div.form_field
-              = render "stored_resources/new_image"
-          %div.tips
-            %h5 
-              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              Try to choose an image of medium resolution that's roughly a square, and has a color background.
-        
-        %div.action_group 
-          %h3 Choose a Challenge template
-          %div.field.clearfix
-            %div.form_field
-              %label.checkbox
-                = f.radio_button(:template_type, "difficulty", style: "margin-top: -2px;" )
-                Organize Sections by difficulty level
-              %label.checkbox
-                = f.radio_button(:template_type, "subtopic", style: "margin-top: -2px;" )
-                Organize Sections by subtopic name
-              %label.checkbox
-                = f.radio_button(:template_type, "blank", style: "margin-top: -2px;" ) 
-                Blank template
-          %div.tips
-            %h5 
-              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              You can always add, remove or rename any Section before you publish your Challenge.
     
     %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
-      %button.button.button-xlarge.button-actionable{ onclick: "$('#new_path').submit();" } Create My Challenge
+      %button.button.button-xlarge.button-actionable{ onclick: "$('#new_path').submit();" } Check name availability
+      
+      
   
 :javascript
   $(function(){
@@ -60,3 +49,5 @@
       }
     });
   });
+        
+        

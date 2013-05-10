@@ -3,7 +3,7 @@ class PathsController < ApplicationController
   include NewsfeedHelper
   
   before_filter :authenticate, except: [:show, :newsfeed, :drilldown, :marketing]
-  before_filter :load_resource, except: [:index, :new, :create, :drilldown, :marketing]
+  before_filter :load_resource, except: [:index, :new, :create, :drilldown, :marketing, :start]
   before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
@@ -11,7 +11,25 @@ class PathsController < ApplicationController
   
   def new
     @path = Path.new
+    @exact_path = nil
+    @similar_paths = []
   end
+  
+  def start
+    @path = Path.new
+    name = params[:path][:name]
+    @exact_path = Path.find_by_name(name)    
+    unless params[:skip]
+      @similar_paths = Path.where("name ILIKE ?", "%#{name}%")
+    end
+    if @exact_path or not @similar_paths.empty?
+      render "new"
+    else
+      @path.name = name
+      render "start"
+    end
+  end
+    
 
   def create
     @path = current_user.company.paths.new(params[:path])
@@ -43,6 +61,13 @@ class PathsController < ApplicationController
     else
       @categories = current_user.company.categories
       render 'new'
+    end
+  end
+  
+  def join
+    if current_user.earned_points > 800
+      @path.collaborations.create!(user_id: current_user.id, granting_user_id: @path.user_id)
+      redirect_to edit_path_path(@path)
     end
   end
 
