@@ -22,8 +22,10 @@ Metabright::Application.routes.draw do
       get :enroll
 			get :continue
 			get :newsfeed
+			get :join
 		end
 	end
+	post '/paths/start' => 'paths#start', as: 'start_path'
 	
 	get '/labs' => 'ideas#ideas', as: 'ideas'
 	get '/labs/bugs' => 'ideas#bugs', as: 'bugs'

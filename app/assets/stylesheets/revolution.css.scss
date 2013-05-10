@@ -494,14 +494,33 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 .ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
 
 /* Challenge creator/Revolution */
-h3 { font-size: 28px; }
-.action_group { margin-bottom: 40px; }
-.action_group h3 { margin: 0 0 15px 0; }
-.tips { width: 400px; margin: 5px auto; }
-.tips h5 { display: inline-block; width: 370px; }
-.tips img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; }
+
 .template_image { width: 60px; height: 60px; }
-.action_group .image_preview { width: 200px; height: 200px; max-width: 200px; }
+
+.action_group{
+  h3{ margin: 0 0 15px 0; font-size: 28px;}
+  
+  .tips{ 
+    width: 400px; 
+    margin: 5px auto; 
+    
+    h5 { display: inline-block; width: 370px; }
+    img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; }
+  }
+  
+  .image_preview { 
+    width: 200px; 
+    height: 200px; 
+    max-width: 200px; 
+  }
+}
+
+.challenge_naming{
+  h4{ color: rgb(204, 0, 0); font-weight: bold; }
+  h5{ font-size: 15px; margin: 10px 0; display: inline-block; }
+  ul{ list-style: none; font-size: 15px; }
+  img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; } 
+}
 
 /* New Image/Revolution */
 .image_preview { height: 70px; max-width: 150px; } 

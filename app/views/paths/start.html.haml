@@ -1,0 +1,60 @@
+%div.single_pane{ style: "padding: 8px; "}
+  %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+    = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
+    %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create a Challenge
+    
+  %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
+    = form_for(@path) do |f|
+      = render "shared/error_messages", object: f.object
+      %div{ style: "text-align: center; margin: 10px auto;" }
+        %div.action_group
+          %h3 Give your Challenge a name
+          %h4= @path.name
+          %div.control-group
+            %div.controls              
+              = f.hidden_field :name              
+          %div.tips
+            %h5
+              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+              Stick to the Goldilocks rule for names: "Mathematics" is too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
+        %div.action_group
+          %h3 Upload an image to represent your Challenge
+          %div.field.clearfix
+            %div.form_field
+              = render "stored_resources/new_image"
+          %div.tips
+            %h5 
+              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+              Try to choose an image of medium resolution that's roughly a square, and has a color background.        
+        %div.action_group 
+          %h3 Choose a Challenge template
+          %div.field.clearfix
+            %div.form_field
+              %label.checkbox
+                = f.radio_button(:template_type, "difficulty", style: "margin-top: -2px;" )
+                Organize Sections by difficulty level
+              %label.checkbox
+                = f.radio_button(:template_type, "subtopic", style: "margin-top: -2px;" )
+                Organize Sections by subtopic name
+              %label.checkbox
+                = f.radio_button(:template_type, "blank", style: "margin-top: -2px;" ) 
+                Blank template
+          %div.tips
+            %h5 
+              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+              You can always add, remove or rename any Section before you publish your Challenge.
+    
+    %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
+      %button.button.button-xlarge.button-actionable{ onclick: "$('#new_path').submit();" } Create My Challenge
+  
+:javascript
+  $(function(){
+    $("#new_path").submit(function(){
+      if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
+        alert("You must provide an image and a name before you can create a Challenge.");
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });
