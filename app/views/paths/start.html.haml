@@ -8,15 +8,11 @@
       = render "shared/error_messages", object: f.object
       %div{ style: "text-align: center; margin: 10px auto;" }
         %div.action_group
-          %h3 Give your Challenge a name
-          %h4= @path.name
+          %h2= @path.name
+          %h4 Your Challenge name is available!
           %div.control-group
             %div.controls              
-              = f.hidden_field :name              
-          %div.tips
-            %h5
-              %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              Stick to the Goldilocks rule for names: "Mathematics" is too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
+              = f.hidden_field :name                      
         %div.action_group
           %h3 Upload an image to represent your Challenge
           %div.field.clearfix

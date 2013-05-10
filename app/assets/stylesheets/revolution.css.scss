@@ -498,7 +498,11 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 .template_image { width: 60px; height: 60px; }
 
 .action_group{
-  h3{ margin: 0 0 15px 0; font-size: 28px;}
+  margin-bottom: 30px;
+  &:last-child {margin-bottom: 10px;}
+  h2 { font-size: 40px; }
+  h3 { margin: 0 0 15px 0; font-size: 28px;}
+  h4 { color: rgb(0, 129, 0); font-weight: bold;}
   
   .tips{ 
     width: 400px; 
@@ -519,7 +523,17 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
   h4{ color: rgb(204, 0, 0); font-weight: bold; }
   h5{ font-size: 15px; margin: 10px 0; display: inline-block; }
   ul{ list-style: none; font-size: 15px; }
-  img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; } 
+  img { position:relative; bottom:2px; display: inline-block; height: 18px; width: 18px; }
+  
+  .button { width: 252px; } 
+  
+  .or_divider{
+    background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/divider.png); 
+    background-repeat:no-repeat; 
+    background-position: center 10px; 
+    width:292px; 
+    margin:10px auto -10px;
+  }
 }
 
 /* New Image/Revolution */

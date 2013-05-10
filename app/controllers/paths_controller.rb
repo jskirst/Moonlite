@@ -66,8 +66,8 @@ class PathsController < ApplicationController
   
   def join
     if current_user.earned_points > 800
-    Collaboration.create!(user_id: current_user.id, granting_user_id: @path.user_id)
-    redirect_to edit_path_path(@path)
+      @path.collaborations.create!(user_id: current_user.id, granting_user_id: @path.user_id)
+      redirect_to edit_path_path(@path)
     end
   end
 
