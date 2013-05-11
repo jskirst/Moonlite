@@ -2,27 +2,25 @@
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
   .quizcontainer { width: 600px; margin-top: 50px;}  
 :javascript
-  $(function(){
-    $(".professional_mb_form form").submit(function(){
-      var country = $("#user_country").val();
-      var subregion = $("#user_subregion").val();
-      var city = $("#user_city").val();
+   $(".professional_mb_form form").submit(function(){
+    var country = $("#user_country").val();
+    var subregion = $("#user_subregion").val();
+    var city = $("#user_city").val();
 
-      var error = ""
-      if(city == ""){ error = "Please enter a city." }
-      if(subregion == ""){ error = "Please select a state or province." }
-      if(country == ""){ error = "Please select a country." }
-      
-      
+    var error = ""
+    if(city == ""){ error = "Please enter a city." }
+    if(subregion == ""){ error = "Please select a state or province." }
+    if(country == ""){ error = "Please select a country." }
+    
+    
 
-      if(error != ""){
-        $(this).find(".errors").show().text(error);
-        return false;
-      } else {
-        $(this).find(".errors").hide();
-      }
-    });
-  })
+    if(error != ""){
+      $(this).find(".errors").show().text(error);
+      return false;
+    } else {
+      $(this).find(".errors").hide();
+    }
+  });
   
 %div.quizcontainer
   %div.quizspace
