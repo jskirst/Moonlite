@@ -24,3 +24,12 @@ $.MB.submit_or_close = (exit_button) ->
     $.MB.next_headline($(exit_button).parents('.headlines'))
   else
     $('#update_name').submit()
+    
+$.MB.show_loading_icon = ->
+  $("#page_loading").show()
+  setTimeout("$('#page_loading').hide();", 6000)
+  #if $.data(document.body, 'reload') == true
+    #$("#page_loading").show()
+    #setTimeout("$('#page_loading').hide();", 6000)
+  #else
+    #log("reset load;")

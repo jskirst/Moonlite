@@ -78,6 +78,15 @@
         var url = "/sections/subregion_options?parent_region="+country_code;
         $('select#user_state').load(url).removeAttr("disabled");
       });
+      
+      $("a[href*='/']").click(function(){
+        setTimeout("$('#page_loading').show();", 250);
+        $(this).on("ajax:success", function(){
+          $("#page_loading").hide();
+        });
+        //$.data(document.body, 'reload', true);
+        //return false;
+      });
 
     - if Rails.env == "production"
       :javascript
