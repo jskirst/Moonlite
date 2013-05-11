@@ -77,7 +77,7 @@ class PathsController < ApplicationController
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id) and return
     end
-    @sections = @path.sections.includes({ :tasks => :answers }).all(order: "id ASC")
+    @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).all(order: "id ASC")
   end
   
   def update
@@ -227,16 +227,16 @@ class PathsController < ApplicationController
     social_tags(@path.name, @path.picture, @path.description)
     @display_launchpad = @completed
     @display_type = params[:type] || 2
-    
-    @enrollments = @path.enrollments.includes(:user)
-      .where("users.locked_at is ? and total_points > ?", nil, 0)
-      .order("total_points DESC").limit(10)
-      .eager_load.to_a
+      
     @leaderboard = User.joins(:enrollments)
       .select("users.id, enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at, users.image_url")
       .where("enrollments.path_id = ? and users.locked_at is ? and total_points > ?", @path.id, nil, 0)
       .order("enrollments.total_points DESC")
-      .limit(1000)
+      .limit(200)
+      .eager_load
+      .to_a
+      
+    @enrollments = @leaderboard.shuffle.select{ |l| !l.image_url.blank? }.first(8)
     
     @url_for_newsfeed = generate_newsfeed_url
     render "show"

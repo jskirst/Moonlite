@@ -30,6 +30,7 @@ class Enrollment < ActiveRecord::Base
   end
   
   def level() Enrollment.points_to_level(self.total_points) end
+  def self.level(total_points) Enrollment.points_to_level(total_points.to_i) end
   def self.points_to_level(points)
     POINT_LEVELS.each do |l, p|
       return l - 1 if points < p

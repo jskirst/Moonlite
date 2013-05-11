@@ -121,7 +121,7 @@ module SessionsHelper
   end
   
   def can_edit_path(path)
-    return true if path.user == current_user
+    return true if path.user_id == current_user.id
     return true if path.collaborations.find_by_user_id(current_user.id)
     return false
   end
@@ -152,10 +152,9 @@ module SessionsHelper
   
   def determine_enabled_features
     unless ["raw"].include?(params[:action])
-      unless current_user.nil?
-        role = current_user.user_role
+      if current_user
         @is_consumer = true
-        @enable_administration = role.enable_administration
+        @enable_administration = current_user.enable_administration
       end
     end
   end

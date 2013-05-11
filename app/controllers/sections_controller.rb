@@ -212,13 +212,14 @@ class SectionsController < ApplicationController
   def complete
     task_id = params[:task_id]
     points = params[:points_remaining].to_i
+    answers = Answer.where(task_id: task_id).to_a
     if params[:answer]
-      supplied_answer = Answer.find(params[:answer])
+      supplied_answer = answers.select{ |a| a.id.to_s == params[:answer] }.first
       correct = supplied_answer.is_correct?
-      correct_answer = correct ? supplied_answer : Answer.where(task_id: task_id, is_correct: true).first
+      correct_answer = correct ? supplied_answer : answers.select{ |a| a.is_correct == true }.first
     else
       supplied_answer = params[:answer_exact]
-      correct_answer = Answer.where(task_id: task_id, is_correct: true).first
+      correct_answer = answers.first
       correct = correct_answer.match?(supplied_answer)
     end
     
@@ -249,6 +250,7 @@ class SectionsController < ApplicationController
         completed_task.points_awarded = 0
         session[:ssf] = 0
       end
+      @enrollment = current_user.enrollments.find_by_path_id(@path.id) if current_user
       completed_task.enrollment_id = @enrollment.id
       completed_task.save!
       Answer.increment_counter(:answer_count, supplied_answer.id) if supplied_answer.is_a? Answer

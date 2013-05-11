@@ -97,9 +97,7 @@ class User < ActiveRecord::Base
   end
   
   def self.find_with_omniauth(auth)
-    user_auth = UserAuth.find_by_provider_and_uid(auth["provider"], auth["uid"])
-    return user_auth.user if user_auth
-    return nil
+    return User.joins(:user_auths, :user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").where("user_auths.provider = ? and user_auths.uid = ?", auth["provider"], auth["uid"]).first
   end
   
   def merge_existing_with_omniauth(auth)
@@ -195,13 +193,13 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password) encrypted_password == encrypt(submitted_password) end
   
   def self.authenticate(email, submitted_password)
-    user = find_by_email(email)
+    user = User.where(email: email).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first
     return nil if user.nil?
     return user if user.has_password?(submitted_password)
   end
   
   def self.authenticate_with_salt(id, cookie_salt)
-    user = find_by_id(id)
+    user = User.where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first
     (user && user.salt == cookie_salt) ? user : nil
   end
   

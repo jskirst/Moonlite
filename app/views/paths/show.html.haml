@@ -37,7 +37,7 @@
           - if @enrollments.size < 4
             = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
           - @enrollments.shuffle.each do |e|
-            = render "shared/mosaic", { pic: e.user.picture, link: profile_path(e.user.username), title: e.user.name, subtitle: "Level #{e.level}, #{e.total_points} points" }
+            = render "shared/mosaic", { pic: User.picture(e.image_url), link: profile_path(e.username), title: e.name, subtitle: "Level #{Enrollment.level(e.total_points)}, #{e.total_points} points" }
       - if @enrollments.size > 4
         .right_scroll{ onclick: "slide('right');" }
           = image_tag ICON_CAROUSEL_RIGHT, alt: "Right"

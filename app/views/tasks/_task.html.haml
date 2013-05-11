@@ -13,7 +13,7 @@
       %pre{ style:"word-break:normal;" }= task.question
     - if task.stored_resources.first
       = image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 40px; max-width: 500px;"
-    - answers = task.answers.eager_load
+    - answers = task.answers
     - unless answers.empty?
       %h5{ style: "margin: 5px 0 5px 15px;"} Answer(s)
       %ol{ style: "padding-left:20px;" }
