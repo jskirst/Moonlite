@@ -16,7 +16,8 @@
       %span
         = link_to truncate(post["path_name"], length: 40), challenge_path(post["path_permalink"]), class:"challengename"
       %div.votingandpointsarea
-        %img.circle_check{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle-check.png", title: "Verified correct answer", alt: "Verified correct output"}
+        - if false
+          %img.circle_check{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle-check.png", title: "Verified correct answer", alt: "Verified correct output"}
         - if current_user
           %span.vote_points= post["points_awarded"]
           %span.vote_points{ style:"margin-right:1px;"} pts
