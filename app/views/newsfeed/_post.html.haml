@@ -38,16 +38,15 @@
         - else
           %span.vote_points= post["points_awarded"]
           %span.vote_points{ style:"margin-right:5px;" } pts
-    
-    %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
-      %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
-      %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
-        %li
-          %div
-            %div.sidenub
-          %div{ style: "padding: 3px 0px;"}
-            %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
-              - if current_user
+    - if current_user
+      %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
+        %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
+        %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
+          %li
+            %div
+              %div.sidenub
+            %div{ style: "padding: 3px 0px;"}
+              %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
                 %li.CR_dropdown_option{ style: ("display:none;" if current_user.id == post["user_id"])} 
                   = link_to "Answer this question", take_section_path(post["section_id"], task_id: post["task_id"])
                 %li.CR_dropdown_option
