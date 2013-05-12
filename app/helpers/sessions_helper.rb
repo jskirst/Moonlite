@@ -154,7 +154,7 @@ module SessionsHelper
     unless ["raw"].include?(params[:action])
       if current_user
         @is_consumer = true
-        @enable_administration = current_user.enable_administration
+        @enable_administration = current_user.enable_administration == "t"
       end
     end
   end
