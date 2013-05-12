@@ -87,7 +87,7 @@
       });
       
       $("form").submit(function(){
-        $('#page_loading').fadeIn();
+        $('#page_loading').fadeIn(1000);
         $(this).on("ajax:success", function(){
           $("#page_loading").hide();
         });
