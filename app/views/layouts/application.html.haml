@@ -80,16 +80,27 @@
       });
       
       $("a[href*='/']").click(function(){
+        if($(this).hasClass("button")){
+          $(this).addClass("disabled").attr("disabled", "disabled");
+        }
+        
         $('#page_loading').fadeIn();
+        setTimeout("$('#page_loading').hide();", 5000);
+        
         $(this).on("ajax:success", function(){
           $("#page_loading").hide();
         });
+        
+        return true;
       });
       
       $("form").submit(function(){
+        $(this).find("input[type=submit]").addClass("disabled").attr("disabled", "disabled");
         $('#page_loading').fadeIn(1000);
+        setTimeout("$('#page_loading').hide();", 5000);
         $(this).on("ajax:success", function(){
           $("#page_loading").hide();
+          $(this).find("input[type=submit]").removeClass("disabled").removeAttr("disabled");
         });
         return true;
       });
