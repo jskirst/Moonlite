@@ -15,8 +15,8 @@ class Task < ActiveRecord::Base
   LONG_EXACT  = 103
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
-  attr_accessor :source, :answer_content, :stored_resource_id, :answer1, :answer2, :answer3, :answer4
-  attr_protected :section_id
+  attr_accessor :source, :answer_content, :stored_resource_id
+  attr_protected :section_id, :archived_at
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
@@ -27,7 +27,8 @@ class Task < ActiveRecord::Base
     :position,
     :reviewed_at,
     :resource,
-    :resource_title
+    :resource_title,
+    :quoted_text
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
@@ -60,8 +61,10 @@ class Task < ActiveRecord::Base
   def update_answers(params)
     errors = []
     params.each do |key,value|
-      if key == "answer_" and not value.blank?
-        answers.create!(content: value, is_correct: true)
+      if key.include?("answer_new_") and not value.blank?
+        a = answers.new(content: value)
+        a.is_correct =  multiple_choice? ? false : true
+        a.save!
       elsif key.include?("answer_")
         answer = answers.find(key.gsub("answer_",""))
         if value.blank?

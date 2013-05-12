@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510192233) do
+ActiveRecord::Schema.define(:version => 20130512202953) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -329,6 +329,8 @@ ActiveRecord::Schema.define(:version => 20130510192233) do
     t.datetime "locked_at"
     t.text     "template"
     t.text     "resource_title"
+    t.datetime "archived_at"
+    t.text     "quoted_text"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

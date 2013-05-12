@@ -1,3 +1,4 @@
+- @code = "alkdjsf;lkajsdf"
 - @enrollment ||= @path.enrollments.new
 - @section ||= @path.next_section
 - @task ||= @section.next_task
@@ -30,7 +31,10 @@
       = render "sections/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
       %div.questionspace
-        %pre.CRquestion= @task.question      
+        %pre.CRquestion= @task.question
+      - if @task.quoted_text
+        %pre{ style: "margin: 10px 0 20px 0;" }
+          = @task.quoted_text
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id

@@ -32,26 +32,19 @@ class TasksController < ApplicationController
   end
   
   def edit
-    @stored_resource = @task.stored_resources.first
-    @answers = @task.answers
-    if @task.multiple_choice?
-      (4 - @answers.size).times { @task.answers.new(is_correct: false) }
-    elsif (@task.exact? or @task.creative?) and @answers.empty?
-      @task.answers.new(is_correct: true)
+    task = @task
+    answers = task.answers.order("is_correct DESC").to_a
+    if task.multiple_choice?
+      (4 - answers.size).times { answers << task.answers.new(is_correct: false) }
+    elsif (task.exact? or task.creative?) and answers.empty?
+      answers << task.answers.new(is_correct: true)
     end
-    respond_to {|f| f.html { render :partial => "edit_task_form" } }
+    respond_to {|f| f.html { render :partial => "form", locals: { task: task, answers: answers } } }
   end
     
   def update
-    errors = []
-    unless @task.question == params[:task][:question]
-      @task.question = params[:task][:question]
-      errors = @task.errors.full_messages unless @task.save
-    end
-    @task.update_attribute(:template, params[:task][:template])
-    @task.update_attribute(:position, params[:task][:position])
-    @task.update_attribute(:resource, params[:task][:resource])
-    @task.update_attribute(:resource_title, params[:task][:resource_title])
+    @task.update_attributes(params[:task])
+    errors = @task.errors.full_messages
     errors += @task.update_answers(params[:task])
     
     if errors.empty?
@@ -135,10 +128,10 @@ class TasksController < ApplicationController
     def gather_answers(task)
       answers = []
       answers << { content: task[:exact1], is_correct: true } unless task[:exact1].blank?
-      answers << { content: task[:answer1], is_correct: true } unless task[:answer1].blank?
-      answers << { content: task[:answer2], is_correct: false } unless task[:answer2].blank?
-      answers << { content: task[:answer3], is_correct: false } unless task[:answer3].blank?
-      answers << { content: task[:answer4], is_correct: false } unless task[:answer4].blank?
+      answers << { content: task[:answer_new_1], is_correct: true } unless task[:answer_new_1].blank?
+      answers << { content: task[:answer_new_2], is_correct: false } unless task[:answer_new_2].blank?
+      answers << { content: task[:answer_new_3], is_correct: false } unless task[:answer_new_3].blank?
+      answers << { content: task[:answer_new_4], is_correct: false } unless task[:answer_new_4].blank?
       return answers
     end
 end

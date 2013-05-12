@@ -32,8 +32,11 @@
       }
     );
   });
-
-= render "tasks/new_task_form", { display: display_new_task_form, section: section }
+- task = section.tasks.new
+- answers = []
+- 4.times { answers << task.answers.new }
+- answers.first.is_correct = true
+= render "tasks/form", { task: task, answers: answers }
 %table.task_list.table{ style: "margin: 0 0 0 10px;" }
   - tasks.each do |t|
     - next if t.id.nil?

@@ -11,6 +11,10 @@
     %h5{ style: "margin: 5px 0 5px 15px;"} Question
     %blockquote{ style: "margin-top:0px; width:77%;" }
       %pre{ style:"word-break:normal;" }= task.question
+    - if task.quoted_text
+      %h5{ style: "margin: 5px 0 5px 15px;"} Quoted Text
+      %blockquote{ style: "margin-top:0px; width:77%;" }
+        %pre{ style:"word-break:normal;" }= task.quoted_text
     - if task.stored_resources.first
       = image_tag task.stored_resources.first.obj.url, style: "height: 200px; margin: 10px 0px 10px 40px; max-width: 500px;"
     - answers = task.answers
