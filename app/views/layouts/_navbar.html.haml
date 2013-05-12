@@ -89,7 +89,7 @@
                       %div.nub{ style: "left: 62px;"}
                     %div{ style: "padding: 3px 0px;"}
                       %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
-                        - false #if @enable_administration
+                        - if false #if @enable_administration
                           %li= link_to "Admin", admin_overview_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "Edit Profile", edit_user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li.invite_facebook_friends= link_to "Invite Friends", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
