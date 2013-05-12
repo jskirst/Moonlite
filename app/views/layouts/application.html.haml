@@ -85,6 +85,14 @@
           $("#page_loading").hide();
         });
       });
+      
+      $("form").submit(function(){
+        $('#page_loading').fadeIn();
+        $(this).on("ajax:success", function(){
+          $("#page_loading").hide();
+        });
+        return true;
+      });
 
     - if Rails.env == "production"
       :javascript
