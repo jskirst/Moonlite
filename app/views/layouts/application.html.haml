@@ -84,7 +84,7 @@
           $(this).addClass("disabled").attr("disabled", "disabled");
         }
         
-        $('#page_loading').fadeIn();
+        $('#page_loading').fadeIn(1000);
         setTimeout("$('#page_loading').hide();", 5000);
         
         $(this).on("ajax:success", function(){
