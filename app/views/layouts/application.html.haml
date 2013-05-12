@@ -80,7 +80,7 @@
       });
       
       $("a[href*='/']").click(function(){
-        setTimeout("$('#page_loading').show();", 10);
+        $('#page_loading').fadeIn();
         $(this).on("ajax:success", function(){
           $("#page_loading").hide();
         });

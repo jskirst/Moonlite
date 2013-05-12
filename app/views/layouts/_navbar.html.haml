@@ -4,7 +4,7 @@
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
         = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-      - if current_user && show_nav_bar
+      - if current_user and show_nav_bar
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
           %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
             = link_to root_url do
@@ -22,8 +22,9 @@
             = link_to profile_path(current_user.username) do
               = image_tag NAVBAR_PROFILE, alt: "Profile"  
               %span Profile
-        %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
-          = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
+      %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
+        = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
+      - if current_user and show_nav_bar
         %ul.nav.pull-right{ style: "float:right; margin-right: 8%; " }
           - if current_user
             %li.navuser

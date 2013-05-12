@@ -1,23 +1,3 @@
-task :refresh_staging => :environment do
-  starting_time = Time.now
-  puts "Reseting staging database..."
-  `heroku pg:reset DATABASE --app fierce-stone-6508 --confirm fierce-stone-6508`
-  puts "Creating backup..."
-  `heroku pgbackups:capture --app moonlite --expire`
-  puts "Getting backup url..."
-  url = `heroku pgbackups:url --app moonlite`
-  url = url.gsub("\r","").gsub("\n","")
-  puts "Restoring backup url to staging..."
-  cmd = 'heroku pgbackups:restore DATABASE "'+url+'" --app fierce-stone-6508 --confirm fierce-stone-6508'
-  puts cmd
-  system(cmd)
-  puts "Migrating database..."
-  `heroku run rake db:migrate --remote staging`
-  puts "Completed run."
-  ending_time = Time.now
-  puts "Total run time: #{ending_time - starting_time} seconds."
-end
-
 task :send_alerts => :environment do
   puts "VOTE ALERTS"
   votes = Vote.where("created_at > ?", 10.minutes.ago)
@@ -81,22 +61,68 @@ task :send_newsletter => :environment do
   end    
 end
 
-task :test_notifications => :environment do
-  desc "Resetting notifications..."
-  UserEvent.all.each do |u|
-    u.read_at = nil
-    u.save
+task :order_by_easy => :environment do
+  tasks = 0
+  ineligible_tasks = 0
+  eligible_tasks = 0
+  updated_tasks = 0
+  
+  Task.all.each do |t|
+    tasks += 1
+    unless t.position.to_i > 100
+      eligible_tasks += 1
+      correct_count = t.completed_tasks.where(status_id: Answer::CORRECT).count
+      total = t.completed_tasks.count
+  
+      total = 1 if total == 0
+      correct_ratio = ((correct_count.to_f / total.to_f).to_f * 100).ceil
+      unless correct_ratio == t.position
+        updated_tasks += 1
+        t.position = correct_ratio
+        t.save
+      end
+    else
+      ineligible_tasks += 1
+    end
   end
+  
+  puts "Total Tasks: #{tasks}"
+  puts "Ineligible Tasks: #{ineligible_tasks}"
+  puts "Eligible Tasks: #{eligible_tasks}"
+  puts "Updated Tasks: #{updated_tasks}"
 end
 
-task :order_by_easy => :environment do
-  Task.all.each do |t|
-    correct_count = t.completed_tasks.where(status_id: Answer::CORRECT).count
-    total = t.completed_tasks.count
+task :update_streak_and_rank => :environment do
+  enrollments = 0
+  updated_streaks = 0
+  updated_ranks = 0
+  Enrollment.all.each do |e|
+    enrollments += 1
+    streak = 0
+    longest_streak = 0
+    e.completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::MULTIPLE).order("completed_tasks.id ASC").each do |ct|
+      unless ct.correct?
+        streak = 0
+      else
+        streak += 1
+        longest_streak = streak if streak > longest_streak
+      end
+    end
     
-    total = 1 if total == 0
-    correct_ratio = ((correct_count.to_f / total.to_f).to_f * 10).ceil
-    t.position = correct_ratio
-    t.save
+    unless e.longest_streak == longest_streak
+      updated_streaks += 1
+      e.longest_streak = longest_streak
+    end
+    
+    unless e.highest_rank > e.rank or e.highest_rank == e.rank
+      updated_ranks += 1
+      e.highest_rank = e.rank 
+    end
+    
+    e.save
   end
+  
+  puts "Total Enrollments: #{enrollments}"
+  puts "Updated Streaks: #{updated_streaks}"
+  puts "Updated Ranks: #{updated_ranks}"
 end
