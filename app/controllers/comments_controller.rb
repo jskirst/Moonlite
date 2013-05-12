@@ -6,6 +6,7 @@ class CommentsController < ApplicationController
     if comment.save
       owner = comment.owner
       if owner.is_a? SubmittedAnswer
+        owner.update_attribute(:has_comments, true) if owner.has_comments == false
         submission_user = comment.owner.user
         link = submission_details_path(owner.path.permalink, owner)
         alerted_users = []
