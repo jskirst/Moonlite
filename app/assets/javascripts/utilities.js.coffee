@@ -28,8 +28,3 @@ $.MB.submit_or_close = (exit_button) ->
 $.MB.show_loading_icon = ->
   $("#page_loading").show()
   setTimeout("$('#page_loading').hide();", 6000)
-  #if $.data(document.body, 'reload') == true
-    #$("#page_loading").show()
-    #setTimeout("$('#page_loading').hide();", 6000)
-  #else
-    #log("reset load;")

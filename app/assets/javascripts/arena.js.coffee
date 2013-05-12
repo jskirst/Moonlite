@@ -42,6 +42,9 @@ $.MB.Arena.init = (options = {}) ->
     $(".answer_content").unbind()
     $.MB.Arena.initialized = false
   
+  $("#challenge_form").on "ajax:error", (xhr, data) ->
+    location.reload()
+  
   $("#challenge_form").on "ajax:success", (xhr, data) ->
     if data.type == "multiple"
       $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
