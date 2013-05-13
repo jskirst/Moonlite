@@ -61,6 +61,7 @@ class Task < ActiveRecord::Base
   end
   
   def has_answers
+    return true unless answer_content
     if multiple_choice? and answer_content.size < 2
       errors[:base] << "You must have at least two answers."
     elsif exact? and answer_content.size < 1
