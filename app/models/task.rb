@@ -15,7 +15,7 @@ class Task < ActiveRecord::Base
   LONG_EXACT  = 103
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
-  attr_accessor :source, :answer_content, :stored_resource_id
+  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4
   attr_protected :section_id, :archived_at
   attr_accessible :question,
     :answer_type, 
@@ -61,6 +61,7 @@ class Task < ActiveRecord::Base
   end
   
   def has_answers
+    return true unless answer_content
     if multiple_choice? and answer_content.size < 2
       errors[:base] << "You must have at least two answers."
     elsif exact? and answer_content.size < 1
@@ -71,10 +72,12 @@ class Task < ActiveRecord::Base
   def update_answers(params)
     errors = []
     params.each do |key,value|
-      if key.include?("answer_new_") and not value.blank?
-        a = answers.new(content: value)
-        a.is_correct =  multiple_choice? ? false : true
-        a.save!
+      if key.include?("answer_new_")
+        unless value.blank?
+          a = answers.new(content: value)
+          a.is_correct =  multiple_choice? ? false : true
+          a.save!
+        end
       elsif key.include?("answer_")
         answer = answers.find(key.gsub("answer_",""))
         if value.blank?

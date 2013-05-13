@@ -10,13 +10,13 @@
         = f.text_area(:question, rows: 2, placeholder:"Question...")
         %span.help-block What are the possible answers?
         %label Correct answer
-        = f.text_field(:answer1, placeholder: "Required", style:"margin-left:17px;")
+        = f.text_field(:answer_new_1, placeholder: "Required", style:"margin-left:17px;")
         %label Wrong answer
-        = f.text_field(:answer2, placeholder: "Required")
+        = f.text_field(:answer_new_2, placeholder: "Required")
         %label Wrong answer
-        = f.text_field(:answer3, placeholder: "Optional")
+        = f.text_field(:answer_new_3, placeholder: "Optional")
         %label Wrong answer
-        = f.text_field(:answer4, placeholder: "Optional")
+        = f.text_field(:answer_new_4, placeholder: "Optional")
         %span.error_message
         %a.next.button.button-actionable{ style:"float:right;" } Next
       .tips
