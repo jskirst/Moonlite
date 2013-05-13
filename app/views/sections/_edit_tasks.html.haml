@@ -17,21 +17,22 @@
       });
       bind_edit_task(this);
     });
+    $('.archive_button').on('ajax:success', function(){ $(this).parents("td.task:first").remove(); });
+    
     // $(".correct_answer").change(function(){
       // $(this).unbind();
       // bind_answer_suggestion(this);
     // });
     $('.task_list td').hover(
       function(){
-        $(this).find('.edit_task_buttons').show();
         $(this).css("background-color", "whitesmoke");
       },
       function(){
-        $(this).find('.edit_task_buttons').hide();
         $(this).css("background-color", "white");
       }
     );
   });
+  
 - task = section.tasks.new
 - answers = []
 - 4.times { answers << task.answers.new }

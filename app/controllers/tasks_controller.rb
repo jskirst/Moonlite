@@ -27,7 +27,7 @@ class TasksController < ApplicationController
         render partial: "task", locals: { task: @task }
       end
     else
-      respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages } } }
+      respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages.join(". ") } } }
     end
   end
   
@@ -63,6 +63,11 @@ class TasksController < ApplicationController
     else
       respond_to { |f| f.json { render :json => { :errors => "Question could not be deleted." } } }
     end
+  end
+  
+  def archive
+    @task.update_attribute(:archived_at, Time.now())
+    render json: { status: :success }
   end
   
   def vote

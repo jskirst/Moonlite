@@ -46,9 +46,11 @@ class Task < ActiveRecord::Base
   validates_presence_of :creator_id
   validates :answer_type, inclusion: { in: [0, 1, 2, 3] }
   validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
+  validate :has_answers
   
   before_save do
     self.template = nil if template.blank?
+    self.quoted_text = nil if quoted_text.blank?
   end
   
   after_create do
@@ -56,6 +58,14 @@ class Task < ActiveRecord::Base
       answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
     end
     creator.award_points(self, CREATOR_AWARD_POINTS)
+  end
+  
+  def has_answers
+    if multiple_choice? and answer_content.size < 2
+      errors[:base] << "You must have at least two answers."
+    elsif exact? and answer_content.size < 1
+      errors[:base] << "You must have at least one answer."
+    end
   end
   
   def update_answers(params)

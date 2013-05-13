@@ -9,6 +9,7 @@
   %div.task_form{ style: "margin-top:10px;" }
     %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
     %h4#form_title= (task.new_record? ? "Add" : "Update") + " Question"
+    %p.errors
     %div.control-group
       %label.control-label Question
       %div.controls
@@ -28,7 +29,7 @@
             .controls
               = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
         
-        - if task.new_record? or task.multiple_choice?
+        - if task.new_record? or task.multiple_choice? or task.exact?
           .multiple_choice.control-group
             %label.control-label Quoted Text (optional)
             .controls{ style: "margin-top: 6px;" }
@@ -103,28 +104,33 @@
     }
   }
   
-  $(function(){
-    $("#task_answer_sub_type").change(function(){
-      display_sub_type_message();
-    });
-  
-    $("select[name='task[answer_type]']").change(function(){
-      $(".creative").hide();
-      $(".multiple_choice").hide();
-      $(".checkin").hide();
-      $(".exact").hide();
-      $(".template").hide();
-      $(this).parents("div.control-group").siblings(".sub_type").hide();
-      var type = $(this).val();
-      if(type == 0){
-        $(".creative").show();
-        display_sub_type_message();
-      } else if(type == 1) {
-        $(".exact").show();
-      } else if(type == 2) {
-        $(".multiple_choice").show();
-      } else if(type == 3) {
-        $(".checkin").show();
-      }
-    });
+  $("#task_answer_sub_type").change(function(){
+    display_sub_type_message();
   });
+
+  $("select[name='task[answer_type]']").change(function(){
+    $(".creative").hide();
+    $(".multiple_choice").hide();
+    $(".checkin").hide();
+    $(".exact").hide();
+    $(".template").hide();
+    $(this).parents("div.control-group").siblings(".sub_type").hide();
+    var type = $(this).val();
+    if(type == 0){
+      $(".creative").show();
+      display_sub_type_message();
+    } else if(type == 1) {
+      $(".exact").show();
+    } else if(type == 2) {
+      $(".multiple_choice").show();
+    } else if(type == 3) {
+      $(".checkin").show();
+    }
+  });
+  
+  $(".question_creator").on("ajax:success", function(xhr, data){
+    console.log(data);
+    if(data.errors){
+      $(this).find("p.errors").text(data.errors)
+    }
+  })

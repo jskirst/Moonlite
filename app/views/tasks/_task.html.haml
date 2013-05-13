@@ -1,12 +1,13 @@
 %div.question_display
-  %div.edit_task_buttons{ style: "float:right; margin-top:5px; display:none;" }
-    = link_to "Delete", task,
-      method: :delete, 
-      remote: true,
-      confirm: "Are you sure you want to delete this question?", 
-      "data-type" => "json",
-      class: "button button-standard delete_button"
-    = link_to "Edit", edit_task_path(task.id), remote: true, class: "button button-standard edit_button"
+  %div.edit_task_buttons{ style: "float:right; margin-top:5px; " }
+    .btn-group
+      = link_to "Edit", edit_task_path(task.id), remote: true, class: "btn edit_button"
+      %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
+        %span.caret
+      %ul.dropdown-menu{ style: "min-width: 100px;" }
+        %li= link_to "Delete", task, method: :delete, remote: true, confirm: "Are you sure you want to delete this question?", "data-type" => "json", class: "delete_button"
+        %li= link_to "Archive", archive_task_path(task), method: :put, remote: true, confirm: "Are you sure you want to archive this question?", "data-type" => "json", class: "archive_button"
+    
   %div{ style: "padding:15px;" }
     %h5{ style: "margin: 5px 0 5px 15px;"} Question
     %blockquote{ style: "margin-top:0px; width:77%;" }
