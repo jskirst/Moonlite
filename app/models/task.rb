@@ -72,10 +72,12 @@ class Task < ActiveRecord::Base
   def update_answers(params)
     errors = []
     params.each do |key,value|
-      if key.include?("answer_new_") and not value.blank?
-        a = answers.new(content: value)
-        a.is_correct =  multiple_choice? ? false : true
-        a.save!
+      if key.include?("answer_new_")
+        unless value.blank?
+          a = answers.new(content: value)
+          a.is_correct =  multiple_choice? ? false : true
+          a.save!
+        end
       elsif key.include?("answer_")
         answer = answers.find(key.gsub("answer_",""))
         if value.blank?
