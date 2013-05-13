@@ -70,12 +70,11 @@ class UsersController < ApplicationController
   end
   
   def follow
-    current_user.follow!(@user)
-    render json: { status: :success } 
-  end
-  
-  def unfollow
-    current_user.unfollow!(@user)
+    if current_user.following?(@user)
+      current_user.unfollow!(@user)
+    else
+      current_user.follow!(@user)
+    end
     render json: { status: :success } 
   end
   

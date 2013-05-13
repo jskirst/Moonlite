@@ -135,6 +135,8 @@
             %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
             = link_to "Hot", challenge_path(@path.permalink, order: "hot"), class: "btn leftbtn"
             = link_to "Newest", challenge_path(@path.permalink, order: "newest"), class: "btn midbtn"
+            - if current_user
+              = link_to "Following", challenge_path(@path.permalink, order: "following"), class: "btn midbtn"
             = link_to "Top", challenge_path(@path.permalink, order: "top"), class: "btn rightbtn"
         :javascript
           $.ajax({ type: "GET", url: "#{@url_for_newsfeed}", success: function(data){ $(".empty_post").replaceWith(data); } });

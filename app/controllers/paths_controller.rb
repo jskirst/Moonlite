@@ -275,7 +275,7 @@ class PathsController < ApplicationController
         feed.posts = feed.posts.order("total_votes DESC")
       elsif params[:order] == "following"
         user_ids = current_user.subscriptions.collect(&:followed_id)
-        feed.posts = feed.posts.where("users.id in (?)", user_ids)
+        feed.posts = feed.posts.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
       else
         feed.posts = feed.posts.order("hotness DESC")
       end

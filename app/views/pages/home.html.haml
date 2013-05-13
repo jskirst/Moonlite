@@ -41,8 +41,13 @@
                 = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
     %div.span11
       %div.newsfeed
-        %div
-          %div.leftboxheader Stream
+        %div.box_header
+          %div{ style: "display:inline;" }
+            %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
+            = link_to "Hot", root_url(order: "hot"), class: "btn leftbtn"
+            = link_to "Newest", root_url(order: "newest"), class: "btn midbtn"
+            = link_to "Following", root_url(order: "following"), class: "btn midbtn"
+            = link_to "Top", root_url(order: "top"), class: "btn rightbtn"
         :javascript
-          $.ajax({ type: "GET", url: "#{newsfeed_path}", success: function(data){ $(".empty_post").replaceWith(data); } });
+          $.ajax({ type: "GET", url: "#{newsfeed_path(order: params[:order])}", success: function(data){ $(".empty_post").replaceWith(data); } });
         %div.post.empty_post{ style: "height: 300px;"}

@@ -7,6 +7,7 @@ class PagesController < ApplicationController
   
   def home
     @title = "Home"
+    @url_for_newsfeed 
     if current_user and not current_user.completed_tasks.empty?
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
@@ -23,7 +24,9 @@ class PagesController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new(params, current_user, newsfeed_url)
+    feed = Feed.new(params, current_user, newsfeed_url(order: params[:order]))
+    feed.page = params[:page].to_i
+    offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
     feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
@@ -32,9 +35,18 @@ class PagesController < ApplicationController
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
-      .order("completed_tasks.created_at DESC")
-      .limit(15)
-      .offset(feed.page * 15)
+    if params[:order] == "hot"
+      feed.posts = feed.posts.order("hotness DESC")
+    elsif params[:order] == "top"
+      feed.posts = feed.posts.order("total_votes DESC")
+    elsif params[:order] == "following"
+      user_ids = current_user.subscriptions.collect(&:followed_id)
+      feed.posts = feed.posts.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
+    else
+      feed.posts = feed.posts.order("completed_tasks.created_at DESC")
+    end
+    feed.posts = feed.posts.limit(15).offset(offset).eager_load
+    
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
   
