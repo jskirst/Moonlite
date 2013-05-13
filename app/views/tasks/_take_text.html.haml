@@ -46,7 +46,7 @@
 
 %div.CRbuttonspace
   - if @session_id.nil?
-    = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
+    = link_to "Back", challenge_path(@section.path.permalink, c: true), class: "button button-standard", style: "float: left;"
   - else
     = link_to "Skip for now", finish_section_path(@section, @session_id), class: "button button-standard", style: "float: left;"
   - if @completed_task.correct?
