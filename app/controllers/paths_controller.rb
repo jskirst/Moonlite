@@ -273,11 +273,14 @@ class PathsController < ApplicationController
         feed.posts = feed.posts.order("completed_tasks.created_at DESC")
       elsif params[:order] == "top"
         feed.posts = feed.posts.order("total_votes DESC")
+      elsif params[:order] == "following"
+        user_ids = current_user.subscriptions.collect(&:followed_id)
+        feed.posts = feed.posts.where("users.id in (?)", user_ids)
       else
         feed.posts = feed.posts.order("hotness DESC")
       end
     end
-    feed.posts = feed.posts.offset(offset).limit(15)
+    feed.posts = feed.posts.offset(offset).limit(15).eager_load
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
