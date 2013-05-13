@@ -375,9 +375,8 @@ class User < ActiveRecord::Base
     user = user.id unless user.is_a? Integer
     following?(user).destroy
   end
-  def follower_count
-    subscribers.count
-  end
+  def follower_count() subscribers.count end
+  def following_count() subscriptions.count end
   
   def self.grant_anon_username() USERNAME_ADJS.shuffle.first.capitalize + USERNAME_NOUNS.shuffle.first.capitalize + rand(500).to_s end
   
