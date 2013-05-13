@@ -143,6 +143,9 @@ Metabright::Application.routes.draw do
 	match '/send_reset' => 'sessions#send_reset'
 	match '/finish_reset' => 'sessions#finish_reset'
 	match '/robots.txt' => 'pages#robots'
+	
+	get '/users/:username/follow' => 'users#follow', as: "follow_user"
+	get '/users/:username/unfollow' => 'users#unfollow', as: "unfollow_user"
 
   match '/emailtest' => 'pages#email_test', as: 'email'
 	match '/send_reset' => 'users#send_reset'

@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   
   before_filter :authenticate, except: [:notifications]
   before_filter :load_resource, except: [:retract, :notifications, :professional]
-  before_filter :authorize_resource, except: [:retract, :notifications, :professional]
+  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow]
   
   def show
     redirect_to profile_path(@user.username)
@@ -66,22 +66,23 @@ class UsersController < ApplicationController
     @submitted_answer = CompletedTask.find(params[:submission_id])
     raise "Access Denied" unless @submitted_answer.user == current_user
     @submitted_answer.destroy
-    render json: { status: "success" }
+    render json: { status: :success }
   end
   
   def follow
-    existing_subscription = current_user.subscriptions.find_by_followed_id(params[:followed_id])
-    if existing_subscription
-      existing_subscription.destroy!
-    else
-      current_user.subscriptions.create!(followed_id: params[:followed_id])
-    end
-    render json: { status: "success" } 
+    current_user.follow!(@user)
+    render json: { status: :success } 
+  end
+  
+  def unfollow
+    current_user.unfollow!(@user)
+    render json: { status: :success } 
   end
   
   private
     def load_resource
-      @user = User.find_by_username(params[:id])
+      @user = User.find_by_username(params[:username]) if params[:username]
+      @user = User.find_by_username(params[:id]) unless @user
       @user = User.find_by_id(params[:id]) unless @user
       redirect_to root_path and return if @user.nil?
     end

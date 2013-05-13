@@ -363,6 +363,19 @@ class User < ActiveRecord::Base
     return new_combined_username
   end
   
+  def following?(user)
+    user = user.id unless user.is_a? Integer
+    subscriptions.find_by_followed_id(user)
+  end
+  def follow!(user) 
+    user = user.id unless user.is_a? Integer
+    subscriptions.create!(followed_id: user)
+  end
+  def unfollow!(user) 
+    user = user.id unless user.is_a? Integer
+    following?(user).destroy
+  end
+  
   def self.grant_anon_username() USERNAME_ADJS.shuffle.first.capitalize + USERNAME_NOUNS.shuffle.first.capitalize + rand(500).to_s end
   
   private  
