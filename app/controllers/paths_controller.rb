@@ -295,11 +295,29 @@ class PathsController < ApplicationController
   end
   
   def leaderboard
-    @statistics = @path.enrollments.limit(200).order("total_points DESC").collect do |e|
-      total_tasks =  e.completed_tasks.count.to_f
-      average_score = (e.completed_tasks.inject(0) { |sum, ct| sum += ct.points_awarded.to_i }.to_f / total_tasks).round(4)
-      average_correct = (e.completed_tasks.where(status_id: Answer::CORRECT).count.to_f / total_tasks).round(4)
-      [e.rank, e.total_points, total_tasks, average_score, average_correct].join(",")
+    tasks               = @path.completed_tasks.joins(:task).select("completed_tasks.*, tasks.answer_type").where("tasks.answer_type = ?", Task::MULTIPLE)
+    total_tasks         = tasks.count
+    total_correct       = tasks.where(status_id: Answer::CORRECT).count
+    total_incorrect     = tasks.where(status_id: Answer::INCORRECT).count
+    average_score       = tasks.where(status_id: Answer::CORRECT).average(:points_awarded).to_f.round(4)
+    crs                 = @path.completed_tasks.joins(:task, :submitted_answer).where("tasks.answer_type = ? and status_id = ?", Task::CREATIVE, Answer::CORRECT)
+    total_crs           = crs.count
+    total_votes         = crs.sum(:total_votes)
+    total_drafts        = @path.completed_tasks.joins(:task).where("tasks.answer_type = ? and status_id = ?", Task::CREATIVE, Answer::INCOMPLETE).count
+    @overall_statistics = [total_tasks, total_correct, total_incorrect, average_score, total_crs, total_votes, total_drafts].join(",")
+    
+    @statistics         = @path.enrollments.limit(1000).order("total_points DESC").collect do |e|
+      completed_tasks   = e.completed_tasks.joins(:task).select("completed_tasks.*, tasks.answer_type").where("answer_type = ?", Task::MULTIPLE)
+      total_tasks       = completed_tasks.count
+      total_correct     = completed_tasks.where(status_id: Answer::CORRECT).count
+      total_incorrect   = completed_tasks.where(status_id: Answer::INCORRECT).count
+      average_points    = completed_tasks.where(status_id: Answer::CORRECT).average(:points_awarded).to_f.round(4)
+      
+      completed_tasks   = e.completed_tasks.joins(:task, :submitted_answer).select("completed_tasks.*, tasks.answer_type, submitted_answers.total_votes").where("answer_type = ?", Task::CREATIVE)
+      total_crs         = completed_tasks.where(status_id: Answer::CORRECT).count
+      total_votes       = completed_tasks.sum(:total_votes)
+      total_drafts      = completed_tasks.where(status_id: Answer::INCOMPLETE).count
+      [e.rank, e.total_points, total_tasks, total_correct, total_incorrect, average_points, total_crs, total_votes, total_drafts].join(",")
     end
     render "leaderboard", layout: false
   end
