@@ -293,6 +293,16 @@ class PathsController < ApplicationController
       redirect_to root_path
     end
   end
+  
+  def leaderboard
+    @statistics = @path.enrollments.limit(200).order("total_points DESC").collect do |e|
+      total_tasks =  e.completed_tasks.count.to_f
+      average_score = (e.completed_tasks.inject(0) { |sum, ct| sum += ct.points_awarded.to_i }.to_f / total_tasks).round(4)
+      average_correct = (e.completed_tasks.where(status_id: Answer::CORRECT).count.to_f / total_tasks).round(4)
+      [e.rank, e.total_points, total_tasks, average_score, average_correct].join(",")
+    end
+    render "leaderboard", layout: false
+  end
 
   private
     def load_resource

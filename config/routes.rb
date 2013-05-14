@@ -23,6 +23,7 @@ Metabright::Application.routes.draw do
 			get :continue
 			get :newsfeed
 			get :join
+			get :leaderboard
 		end
 	end
 	post '/paths/start' => 'paths#start', as: 'start_path'

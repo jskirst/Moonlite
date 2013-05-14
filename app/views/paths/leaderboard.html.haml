@@ -1,0 +1,8 @@
+%html
+  %head
+    :css
+      p { margin: 0; }
+  %body
+    %p rank, total_points, total_tasks, average_score, average_correct
+    - @statistics.each do |s|
+      %p= s
