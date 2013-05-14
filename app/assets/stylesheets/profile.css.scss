@@ -2,8 +2,25 @@
 #profile .span3 { margin-left:12px; }  
 #profile .leftrailicon { height:58px; width:58px; margin-right:8px; }
 #updatespace{ min-height:162px; }
-#topprofilecontent { width:737px; }
-#topprofilecontent h1{ font-size:40px; line-height:26px; display: inline-block; }
+#topprofilecontent { 
+  width:737px; 
+  
+  h1{ font-size:40px; line-height:26px; display: inline-block; }
+  
+  .button { width: 76px; }
+  .social_stats { 
+    margin-top: 8px;
+    
+    .stat { 
+      display: inline-block;
+      &:first-child {float:left;} 
+      &:last-child {float:right;} 
+      
+      .hi { font-size: 22px; color: #404040; }
+      .lo { font-size: 9px; text-transform: uppercase; color:gray;}
+    }
+  }
+}
 .rep_badge { vertical-align: baseline; height: 25px; margin-left: 8px; }
 #bottomboxcontent { margin-top: 97px; }
 #profilemeat { padding:10px 0; border-radius: 5px; border-top-right-radius:0; border-top-left-radius:0; position: relative; background-clip: padding-box; color: #333; background-color: white; min-height:200px; }

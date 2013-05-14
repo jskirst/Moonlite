@@ -47,9 +47,20 @@
       = image_tag @user.picture, class: "bigheaderimage", alt: "#{@user.name}"
       .rightofbigheaderimage
         #topprofilecontent{}
-          %div{ style: "width: 119px; float:right;" }
+          %div{ style: "float:right; text-align:center; " }
             - if @user == current_user
               = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
+            - elsif current_user
+              #following_box
+                = link_to "Following", follow_user_path(@user.username), id: "unfollow_button", class: "button button-info", remote: true, style: ("display:none" unless current_user.following?(@user))
+                = link_to "Follow", follow_user_path(@user.username), id: "follow_button", class: "button button-actionable", remote: true, style: ("display:none" if current_user.following?(@user))         
+            .social_stats
+              .stat
+                #following_count.hi= @user.following_count
+                .lo Following                
+              .stat
+                #follower_count.hi= @user.follower_count
+                .lo Followers
           .span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1= @user.name
             - if badge = User.reputation_badge(@user.earned_points)
@@ -235,4 +246,28 @@
     } else {
       $('.hidden_personas').show();
     }
+  });
+  
+  $("#unfollow_button").on("ajax:success", function() {
+    $(this).hide(); $("#follow_button").show();
+    $("#follower_count").text(parseInt($("#follower_count").text())-1);
+    $("#follow_button").removeClass("disabled").removeAttr("disabled");
+  });
+  
+  $("#follow_button").on("ajax:success", function() {
+    $(this).hide(); $("#unfollow_button").show().addClass("button-info").text("Following");
+    $("#follower_count").text(parseInt($("#follower_count").text())+1);
+    $("#unfollow_button").removeClass("disabled").removeAttr("disabled");
+  }); 
+    
+  $("#following_box").on("mouseenter", function() {
+    var $unfollow_button = $(this).find("#unfollow_button");
+    $unfollow_button.addClass("button-actionable");
+    $unfollow_button.removeClass("button-info");
+    $unfollow_button.text("Unfollow");
+  }).on("mouseleave", function() {
+    var $unfollow_button = $(this).find("#unfollow_button");
+    $unfollow_button.removeClass("button-actionable");
+    $unfollow_button.addClass("button-info");
+    $unfollow_button.text("Following");
   });
