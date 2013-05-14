@@ -70,12 +70,18 @@ class UsersController < ApplicationController
   end
   
   def follow
+    existing_event = @user.user_events.find_by_content("#{current_user} is now following you!")
     if current_user.following?(@user)
       current_user.unfollow!(@user)
+      existing_event.destroy if existing_event
     else
       current_user.follow!(@user)
+      unless existing_event
+        UserEvent.log_event(@user, "#{current_user} is now following you!", current_user, profile_path(current_user.username), current_user.picture)
+      end
     end
-    render json: { status: :success } 
+    render json: { status: :success }
+
   end
   
   private
