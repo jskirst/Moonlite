@@ -62,11 +62,14 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
-  # def content_sub_alert()
-    # @user
-    # @follower
-#     
-  # end
+  def content_sub_alert(subscription)
+    @followed_user = subscription.followed
+    @follower_user = subscription.follower
+    
+    @action_url = profile_url(@follower.username)
+    mail(to: @followed_user.email, subject: "#{@follower_user.name} is now following you!")
+    @user.log_email
+  end
   
   def intro_drop_off(email)
     @user = User.find_by_email(email)
