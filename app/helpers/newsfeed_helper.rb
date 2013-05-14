@@ -28,7 +28,7 @@ module NewsfeedHelper
     def url
       return false if @url.nil?
       if posts.size == MAX_POSTS
-        @url + "?page=#{@page+1}"
+        @url + (@url.include?("?") ? "&" : "?") + "page=#{@page+1}"
       end
     end
   end

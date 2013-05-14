@@ -277,7 +277,7 @@ class PathsController < ApplicationController
         user_ids = current_user.subscriptions.collect(&:followed_id)
         feed.posts = feed.posts.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
       else
-        feed.posts = feed.posts.order("hotness DESC")
+        feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
       end
     end
     feed.posts = feed.posts.offset(offset).limit(15).eager_load
