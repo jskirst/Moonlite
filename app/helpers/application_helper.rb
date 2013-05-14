@@ -128,8 +128,7 @@ module ApplicationHelper
         submitted_answers.content as submitted_answer_content, submitted_answers.caption as submitted_answer_caption,
         submitted_answers.has_comments as has_comments,
       tasks.id as task_id, tasks.section_id, tasks.question as question, tasks.answer_type as answer_type, tasks.answer_sub_type as answer_sub_type, 
-      users.id as user_id, users.username, users.name, users.image_url as user_image_url, users.earned_points,
-      ((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness
+      users.id as user_id, users.username, users.name, users.image_url as user_image_url, users.earned_points
     ]
   end
 end

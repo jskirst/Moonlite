@@ -9,25 +9,33 @@ class GroupsController < ApplicationController
     @title = "#{@group.name} Group"
     @users = @group.users.order "earned_points desc"
     @membership = @group.membership(current_user)
-    @url_for_newsfeed = newsfeed_group_path(@group)
+    @url_for_newsfeed = newsfeed_group_path(@group, order: params[:order])
     @suggested_paths = Path.suggested_paths(current_user)
     session[:redirect_back_to] = root_url unless current_user
     render "show"
   end
   
-  def newsfeed
-    offset = 0    
+  def newsfeed    
     feed = Feed.new(params, current_user)
-    feed.url = newsfeed_group_path(@group.id, order: "hot")
-    feed.page = 0
-    feed.posts = CompletedTask.joins("INNER JOIN group_users on group_users.user_id = completed_tasks.user_id")
-      .joins(:submitted_answer)
+    feed.url = newsfeed_group_path(@group.id, order: params[:order])
+    feed.page = params[:page].to_i
+    offset = params[:page].to_i * 15
+    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+      .joins("INNER JOIN group_users on group_users.user_id = completed_tasks.user_id")
+      .select(newsfeed_fields)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
       .where("group_users.group_id = ?", @group.id)
-    feed.posts = feed.posts.order("total_votes DESC")
-    feed.posts = feed.posts.where("completed_tasks.status_id = ?", Answer::CORRECT).offset(offset).limit(15)
-    feed.posts = feed.posts.eager_load
+      .where("completed_tasks.status_id = ?", Answer::CORRECT)
+    if params[:order] == "newest"
+      feed.posts = feed.posts.order("created_at DESC")
+    elsif params[:order] == "top"
+      #raise "top"
+      feed.posts = feed.posts.order("points_awarded DESC")
+    else
+      feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
+    end
+    feed.posts = feed.posts.offset(offset).limit(15).eager_load
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end

@@ -46,7 +46,7 @@
   .top
     = link_to group_path(@group), class: "home" do
       = image_tag @group.picture, alt: "#{@group.name}"
-    - if @membership
+    - if current_user and @membership
       - if @membership.is_admin?
         %div{ style: "float: right; margin-right: 12px;"}
           = link_to "Edit Group", edit_group_path(@group), style: "margin-right: 10px;"
@@ -58,8 +58,11 @@
     %div{ style: "height: 68px; "}
       %h1= @group.name
       %h4{ style: "font-size: 18px; line-height: 36px;"}
-        #{@users.count} Members <span>·</span> #{@group.city}, #{@group.country} <span>·</span> 
-        = link_to "#{@group.website}", "http://#{@group.website}", target: "_blank"
+        #{@users.count} Members <span>
+        - unless @group.city.blank? or @group.country.blank?
+          ·</span> #{@group.city}, #{@group.country} <span>·</span> 
+        - unless @group.website.blank?
+          = link_to "#{@group.website}", "http://#{@group.website}", target: "_blank"
     .carousel
       - if @users.size > 4
         .left_scroll{ onclick: "slide('left');" }
@@ -69,7 +72,7 @@
           - if @users.size < 4
             = render "shared/mosaic", { custom_class: "addthis_button_facebook", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
           - @users.shuffle.each do |user|
-            = render "shared/mosaic", { pic: user.picture, link: profile_path(user.username), title: user.name, subtitle: "Member since #{time_ago_in_words(@membership.created_at)} ago" }
+            = render "shared/mosaic", { pic: user.picture, link: profile_path(user.username), title: user.name, subtitle: "Member since #{time_ago_in_words(user.created_at)} ago" }
       - if @users.size > 4
         .right_scroll{ onclick: "slide('right');" }
           = image_tag ICON_CAROUSEL_RIGHT, alt: "Right"
