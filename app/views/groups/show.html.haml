@@ -49,8 +49,7 @@
     - if current_user and @membership
       - if @membership.is_admin?
         %div{ style: "float: right; margin-right: 12px;"}
-          = link_to "Edit Group", edit_group_path(@group), style: "margin-right: 10px;"
-          = link_to "Dashboard", dashboard_group_path(@group), class: "button button-actionable"
+          = link_to "Dashboard", dashboard_group_path(@group), class: "button button-actionable button-small"
       - else
         %span.label.label-success{ style: "float: right; margin-right: 12px; padding: 4px 6px;" } Member
     - elsif current_user

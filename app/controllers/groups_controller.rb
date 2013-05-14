@@ -52,7 +52,7 @@ class GroupsController < ApplicationController
     completed_tasks = CompletedTask.joins("INNER JOIN group_users on group_users.user_id = completed_tasks.user_id").where("group_users.group_id = ?", @group.id)
     @stats = {
       users:              @group.users,
-      visits:             Visit.joins("INNER JOIN group_users on group_users.user_id = visits.user_id").where("group_users.group_id = ?", @group_id),
+      visits:             GroupUser.where("group_users.group_id = ? and group_users.created_at > ?", @group, 7.days.ago),
       arena_answers:      completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::MULTIPLE).where("status_id >= ?",0),
       creative_answers:   completed_tasks.joins(:task).where("tasks.answer_type = ?", Task::CREATIVE).where("status_id >= ?",0)
     }
