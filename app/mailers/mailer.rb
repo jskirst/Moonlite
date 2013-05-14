@@ -62,6 +62,12 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
+  # def content_sub_alert()
+    # @user
+    # @follower
+#     
+  # end
+  
   def intro_drop_off(email)
     @user = User.find_by_email(email)
     return false unless @user.can_email?()

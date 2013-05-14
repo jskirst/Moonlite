@@ -10,6 +10,17 @@ task :send_alerts => :environment do
     end
   end
   
+  puts "FOLLOW ALERTS"
+  subs = Subscription.where("created_at > ?", 10.minutes.ago)
+  subs.each do |sub|
+    begin
+      Mailer.content_vote_alert(sub).deliver
+      puts "Sub alert sent"
+    rescue
+      puts "Sub alert rejected."
+    end
+  end
+  
   puts "COMMENT ALERTS"
   comments = Comment.where("created_at > ?", 10.minutes.ago)
   comments.each do |comment|

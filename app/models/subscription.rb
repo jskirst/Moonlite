@@ -6,4 +6,5 @@ class Subscription < ActiveRecord::Base
   
   validates_presence_of :followed_id
   validates_presence_of :follower_id
+  
 end
