@@ -1,3 +1,8 @@
+.box_header {background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: normal; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
+.box_header a, .box_header button{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
+.newsfeed>.box_header{padding:6px 12px;}
+.box_header>div>.btn{text-transform:none;}
+
 #challenge { 
   #new_user {
     background-clip: padding-box;
@@ -33,7 +38,7 @@
     a:hover { text-decoration: none; }    
     h1 { font-size: 30px; line-height: 28px; }
     h2 { font-size: 18px; }
-    #launch_button { float: right; margin-right: 20px; }
+    #launch_button { float: right; margin-right: 13px; }
     .home img { float: left; height:159px; width:159px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px; margin-right: 12px; border-radius:4px;}
     .carousel {
       .inner { position:relative; top:6px; margin-left:12px; float:left; width:672px; overflow: hidden; }   
@@ -44,9 +49,4 @@
       .right_scroll img { margin-left:6px; }
     }
   }
-  
-  .box_header {background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: normal; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
-  .box_header a, .box_header button{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
-  .newsfeed>.box_header{padding:6px 12px;}
-  .box_header>div>.btn{text-transform:none;}
 }
