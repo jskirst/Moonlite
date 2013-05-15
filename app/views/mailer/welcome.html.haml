@@ -1,15 +1,9 @@
-%span{ style: "font-size:22px;"} Hooray! You have a new follower!
+%span{ style: "font-size:24px;"} Welcome to <a href="http://www.metabright.com" style="text-decoration:none; color:inherit;">MetaBright</a>, #{@user.name.split.first}!
 %br/
 %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
-%p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
-%p{ style: "font-size:12px;"} Following user is now following you. 
-%table{ cellpadding: "0"; style: ""}
-  %tbody
-    %tr{ valign: "top"}
-      %td{ style: ""}
-        %a{ href:"#" target:"_blank"}
-          %img{ style: ""}
-  
-%p{ style: "font-size:12px;"} When someone follows you, it means they think you're pretty awesome, and they enjoy seeing your MetaBright responses. 
-%p{ style: "font-size:12px;"} Thanks,
-%p{ style: "font-size:12px;"} The MetaBright Team
+%p{ style: "font-size:12px;"} Thanks for signing up for <a href="http://www.metabright.com">MetaBright</a>. Remember to always choose the same option to log in to MetaBright as you did to sign up. Otherwise, you might accidentally create two separate accounts.
+%p{ style: "font-size:12px;"} If you have any questions about MetaBright, you can reach out to our support team at #{mail_to "team@metabright.com"}.
+%p{ style: "font-size:12px;"} 
+  Thanks,
+  %br
+  The MetaBright Team
