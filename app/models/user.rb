@@ -380,6 +380,21 @@ class User < ActiveRecord::Base
   
   def self.grant_anon_username() USERNAME_ADJS.shuffle.first.capitalize + USERNAME_NOUNS.shuffle.first.capitalize + rand(500).to_s end
   
+  def to_json
+    all_enrollments = enrollments.where("total_points > ?", 0)
+      .joins(:path)
+      .select("enrollments.id, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
+    
+    results = { id: self.id, username: self.username, email: self.email }
+    results[:challenges] = all_enrollments.collect do |e|
+       { name: e.challenge_name, 
+         picture: e.challenge_picture, 
+         score: e.total_points,
+         answers: e.completed_tasks.count }
+    end
+    return results
+  end
+  
   private  
   def check_image_url() self.image_url = nil if self.image_url && self.image_url.length < 9 end
   

@@ -77,6 +77,11 @@ class GroupsController < ApplicationController
     redirect_to @group
   end
   
+  def sandbox
+    @email = @group.users.first.email
+    @group = @group.permalink
+    @endpoint = users_url(group: @group, email: @email)
+  end
   
   private
   def load_resource

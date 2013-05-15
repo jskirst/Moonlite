@@ -1,12 +1,27 @@
 class UsersController < ApplicationController
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:notifications]
-  before_filter :load_resource, except: [:retract, :notifications, :professional]
-  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow]
+  before_filter :authenticate, except: [:notifications, :index]
+  before_filter :load_resource, except: [:retract, :notifications, :professional, :index]
+  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow, :index]
   
   def show
     redirect_to profile_path(@user.username)
+  end
+  
+  def index
+    permalink = params[:group]
+    email = params[:email]
+    
+    group = Group.find_by_permalink(permalink)
+    if group and @user = group.users.find_by_email(email)
+      respond_to do |format|
+        format.html { render text: @user.to_json }
+        format.json { render json: @user.to_json }
+      end
+    else
+      render json: { success: false, message: "Either the group or user supplied do not exist." }, status: 401
+    end
   end
   
   def notifications
@@ -81,7 +96,6 @@ class UsersController < ApplicationController
       end
     end
     render json: { status: :success }
-
   end
   
   private

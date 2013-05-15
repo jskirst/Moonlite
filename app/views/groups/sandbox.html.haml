@@ -1,0 +1,29 @@
+%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
+  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+  %span{ style: "font-size: 50px;position: relative;top:13px;" } API Sandbox
+  = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 20px 0 0;"
+  = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 20px 0 0;"
+  
+  #api_result.pre{ style: "padding: 15px;" }
+  
+  :javascript
+  
+    var endpoint = "#{root_url}/users";
+    var email = "#{@email}";
+    var group = "#{@group}";
+    $.ajax({
+      url: endpoint, 
+      data: { email: email, group: group},
+      success: function(data, status, xhr){
+        console.log(data);
+        var user = data;
+        var challenges = user.challenges;
+        for(var i in challenges){
+          c = challenges[i];
+          $c = $("<div id='"+c.name+"'></div>").appendTo("#api_result");
+          $c.append("<h1><img src='"+c.picture+"' width='50' height='50'>"+c.name+"</h1>")
+          $c.append("<div>"+c.score+" total points</div>");
+        }
+      },
+      dataType: "json"
+    });
