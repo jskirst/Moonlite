@@ -1,7 +1,28 @@
-%h2 Hooray! You've got a new follower on MetaBright!
-%p #{@voting_user.name} is now following you!
-%p Check out their profile and follow them back.
-%p 
-  Thanks,
-  %br
-  The MetaBright Team
+%span{ style: "font-size:22px;"} Hooray! You have a new follower!
+%br/
+%hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
+%p{ style: "font-size:12px;"} Hi @followed_user.name.split.first,
+%p{ style: "font-size:12px;"} @follower_user.name is now following you. When someone follows you, it means they think you're pretty awesome, and they enjoy seeing your MetaBright responses. 
+%table{ cellpadding: "0", style: ""}
+  %tbody
+    %tr{ valign: "top"}
+      %td{ style: ""}
+        %a{ href:"#", target:"_blank"}
+          %img{ style: "border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; height: 70px; width: 70px;", src:"http://www.placekitten.com/200/200"}
+      %td{ style: "padding: 0 0 10px 5px; font-size: 12px;"}
+        %a{ href:"#", style:"text-decoration: none;  text-transform: uppercase;"}
+          %span @follower_user.name
+        %br/
+        %table{ cellpadding: "0", cellspacing: "0", style: "margin-top: 5px; "}
+          %tbody
+            %tr
+              %td{ style: "border:1px solid rgb(114, 40, 40);"}
+                %table{ cellpadding: "0", cellspacing: "0"}
+                  %tbody
+                    %tr
+                      %td{ style: "padding:3px 12px; background-color: rgb(194, 28, 27); border-top: 1px solid rgb(201, 80, 80);"}
+                        %a{ href: "#", style: "color:#fff;font-size:12px;font-weight:bold;text-decoration:none", target: "_blank"} View Profile
+  
+
+%p{ style: "font-size:12px; margin-bottom: 0;"} Thanks,
+%p{ style: "font-size:12px; margin-top: 0;"} The MetaBright Team
