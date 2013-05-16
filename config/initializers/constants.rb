@@ -57,28 +57,6 @@ Path.all.each do |path|
   PATH_AVERAGES[path.id] = stats
 end
 
-Enrollment.where("total_points = ?", 0).each { |e| e.get_metascore; puts e.metascore.to_s }
-
-scores = []
-Enrollment.where("metapercentile = ?", 0).each do |e|
-  scores << Score.new(e.metascore, e.id)
-end
-scores.sort!
-scores_count = scores.size
-
-# iterate through scores and calculate percentile
-scores.each_with_index do |s, i|
-
-  # L/N(100) = P
-  # L = number of scores beneath this score (score array index)
-  # N = total number of scores
-  # P = percentile
-  e = Enrollment.find(s.enrollment)
-  percentile = (i.to_f/scores_count.to_f*100).ceil
-  e.update_attribute(:metapercentile, percentile)
-  puts "#{e.id}: #{e.metascore} , #{e.metapercentile}"
-end
-
 
 level = 1
 (1..1000000).each do |i|
