@@ -137,3 +137,16 @@ task :update_streak_and_rank => :environment do
   puts "Updated Streaks: #{updated_streaks}"
   puts "Updated Ranks: #{updated_ranks}"
 end
+
+task :test_send_follow_alert => :environment do
+  puts "SUBSCRIPTION ALERTS"
+  subscriptions = Subscription.where("created_at > ?", 10.minutes.ago)
+  subscriptions.each do |subscription|
+    begin
+      Mailer.content_sub_alert(subscription).deliver
+      puts "Subscription alert sent"
+    rescue
+      puts "Subscription alert rejected."
+    end
+  end
+end
