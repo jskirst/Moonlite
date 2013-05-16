@@ -171,6 +171,22 @@
 	}
 }
 
-.hover_card {
-  width: 400px; margin:auto; 
+#hover_card {
+  top: 80% !important;
+  padding: 10px; 
+  
+  .header {
+    &>div { display: inline-block; }
+      
+    .stats {
+      h1 { font-size: 28px; }  
+      p { font-size: 14px; margin: 10px 0 5px 0; color: rgb(80, 80, 80); }
+    }
+    .picture {
+      vertical-align: top;
+      float: right;
+      
+      img{ height: 140px; width: 140px; border-radius: 6px;  }
+    }    
+  }
 }
