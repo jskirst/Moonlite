@@ -33,6 +33,70 @@ level = 1
   end
 end
 
+# Score class
+class Score
+  attr_accessor :value, :percentile, :enrollment
+  def initialize(score, enrollment)
+    self.value = score.to_f
+    self.enrollment = enrollment
+  end
+  def <=>(foo)
+    self.value <=> foo.value
+  end
+end
+
+PATH_AVERAGES = {}
+Path.all.each do |path|
+  cts = path.completed_tasks.where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
+  enrollments = path.enrollments.where(total_points: 0).count
+  stats = {
+    tasks_attempted: (cts.count / (enrollments == 0 ? 1 : enrollments)),
+    percent_correct: (cts.where("status_id = ?", Answer::CORRECT).count.to_f / cts.count),
+    correct_points: (cts.where("status_id = ?", Answer::CORRECT).average(:points_awarded).to_f)
+  }
+  PATH_AVERAGES[path.id] = stats
+end
+
+Enrollment.where("total_points = ?", 0).each { |e| e.get_metascore; puts e.metascore.to_s }
+
+scores = []
+Enrollment.where("metapercentile = ?", 0).each do |e|
+  scores << Score.new(e.metascore, e.id)
+end
+scores.sort!
+scores_count = scores.size
+
+# iterate through scores and calculate percentile
+scores.each_with_index do |s, i|
+
+  # L/N(100) = P
+  # L = number of scores beneath this score (score array index)
+  # N = total number of scores
+  # P = percentile
+  e = Enrollment.find(s.enrollment)
+  percentile = (i.to_f/scores_count.to_f*100).ceil
+  e.update_attribute(:metapercentile, percentile)
+  puts "#{e.id}: #{e.metascore} , #{e.metapercentile}"
+end
+
+
+level = 1
+(1..1000000).each do |i|
+  if i < 200
+    current_level = 1
+  else
+    current_level = current_level.to_f
+    current_level = (i.to_f**0.57) / Math.log(i)
+    current_level = current_level - (current_level % 1)
+    current_level = (current_level - 3).to_i
+  end
+  
+  if current_level > level
+    POINT_LEVELS << [current_level, i]
+    level = current_level
+  end
+end
+
 # URLS
 
 METABRIGHT_LOGO = "https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png"

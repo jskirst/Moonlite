@@ -2,12 +2,14 @@ class Enrollment < ActiveRecord::Base
   CONTRIBUTION_THRESHOLD = 500
   
   attr_readonly :path_id
-  attr_protected :total_points, :contribution_unlocked_at, :highest_rank, :longest_streak
+  attr_protected :total_points, :contribution_unlocked_at, :highest_rank, :longest_streak, :metascore, :metapercentile
   attr_accessible :path_id, :total_points, :contribution_unlocked
   
   belongs_to  :user
   belongs_to  :path
   has_many    :completed_tasks
+  has_many    :submitted_answers, through: :completed_tasks
+  has_many    :votes, through: :submitted_answers
   
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true
@@ -80,6 +82,55 @@ class Enrollment < ActiveRecord::Base
     completed_tasks.joins(:submitted_answer)
       .joins("INNER JOIN votes on votes.owner_id = submitted_answers.id and votes.owner_type = 'SubmittedAnswer'")
       .count
+  end
+  
+  PERCENT_CORRECT_MULTIPLIER  = 50
+  TASKS_TAKEN_PENALTY = 0.5
+  TASKS_TAKEN_MULTIPLIER = 2.5
+  
+  # MS = (core_tasks_percent_correct - population_average_core_tasks_percent_correct) * PCM
+  # MS = MS + 
+  # - if user_average_correct_points > population_average_correct_points
+  #     user_average_correct_points - population_average_correct_points
+  #   - else
+  #       0
+  # MS = MS + 
+  #   - if core_tasks_taken_count < population_average_core_tasks_taken_count
+  #       (core_tasks_taken_count - population_average_core_tasks_taken_count) * TTP
+  #   - else 
+  #       core_tasks_taken_count / population_average_core_tasks_taken_count
+  # MS = MS + completed_cr_count
+  # MS = MS +
+  #   - if total_votes > 0
+  #       2
+  #   - else
+  #       0
+  # MS = MS + (core_tasks_taken_count / population_average_core_tasks_taken_count) * TTM
+  
+  def get_metascore
+    path_stats = PATH_AVERAGES[path_id]
+    cts = completed_tasks.joins(:task).where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
+    total_cts = cts.count
+    return 0 if total_cts == 0
+    
+    correct_answers = cts.where("status_id = ?", Answer::CORRECT).count.to_f
+    correct_percent = correct_answers / total_cts
+    ms = (correct_percent - path_stats[:percent_correct]) * PERCENT_CORRECT_MULTIPLIER
+    
+    average_correct_points = cts.where("status_id = ?", Answer::CORRECT).average(:points_awarded) || 0
+    if average_correct_points > path_stats[:correct_points]
+      ms += average_correct_points - path_stats[:correct_points]
+    end
+    if cts.count < path_stats[:tasks_attempted]
+      ms += (cts.count - path_stats[:tasks_attempted]) * TASKS_TAKEN_PENALTY
+    else
+      ms += cts.count / path_stats[:tasks_attempted]
+    end
+    ms += 2 if votes.count > 0
+    
+    ms += (total_cts / path_stats[:tasks_attempted]) * TASKS_TAKEN_MULTIPLIER
+    self.metascore = ms * 10
+    self.save
   end
   
   private
