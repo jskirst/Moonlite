@@ -173,20 +173,49 @@
 
 #hover_card {
   top: 80% !important;
-  padding: 10px; 
+  width: 40%;
   
   .header {
+    height: 220px; 
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding: 10px;
+    background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/binding_dark.png');
+    text-align: center;
+        
     &>div { display: inline-block; }
-      
+     
+    .close{
+      color: white;
+      opacity: 0.5;      
+    }  
     .stats {
       h1 { font-size: 28px; }  
       p { font-size: 14px; margin: 10px 0 5px 0; color: rgb(80, 80, 80); }
     }
     .picture {
       vertical-align: top;
-      float: right;
+      margin: 12px;
       
-      img{ height: 140px; width: 140px; border-radius: 6px;  }
+      img{ height: 120px; width: 120px; border-radius: 6px;  }
     }    
+  }
+  
+  .body {
+    padding: 20px;
+    
+    li { 
+      list-style: none; 
+      margin-bottom: 10px;
+      
+      img {height:40px; width: 40px; border-radius: 3px; display: inline-block; vertical-align: top; }
+      div { 
+        display: inline-block;  
+        
+        h4 { font-size: 16px; }
+        span { font-size: 14px; }
+      }
+      
+    }
+    
   }
 }
