@@ -171,6 +171,71 @@
 	}
 }
 
-.hover_card {
-  width: 400px; margin:auto; 
+#hover_card {
+  width: 35%;
+  
+  .header {
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    padding: 10px;
+    background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/binding_dark.png');
+    text-align: center;
+    border-radius: 3px 3px 0 0;
+    
+    .close{
+      color: white;
+      opacity: 0.5;
+      top: -5px;
+      position: relative;      
+    }  
+    .stats {
+      h1 { font-size: 28px; color: white; }  
+      p { font-size: 14px; margin: 5px 0; color: rgb(80, 80, 80); color: rgb(194, 194, 194); }
+      
+      .social_stats{
+        #modal_following_box { 
+          display: inline-block;
+          vertical-align: top;  
+          
+          .button-actionable { border: 1px solid rgb(88, 79, 79); }
+          .button-info { border: 1px solid rgb(80, 83, 92); }
+          
+        }
+        .stat { 
+          margin: 0 15px;
+          float: none; 
+          
+          .hi { color: rgb(194, 194, 194); }
+          .lo{ color: rgb(145, 145, 145); }
+        }
+      }      
+    }
+    .picture {
+      vertical-align: top;
+      margin: 12px;
+      
+      img{ height: 120px; width: 120px; border-radius: 6px;  }
+    }        
+  }
+  
+  .body {
+    
+    li { 
+      list-style: none; 
+      padding: 12px 20px; 
+      border-bottom: 1px solid rgba(0,0,0,.2);
+      
+      img {height:45px; width: 45px; border-radius: 3px; display: inline-block; vertical-align: top; }
+      div { 
+        display: inline-block;  
+        
+        h4 { font-size: 16px; margin-bottom: 4px; font-weight: bold;  }
+        span { font-size: 14px; }
+      }      
+    }    
+  }
+  .footer{
+    margin: 6px 0;
+    
+    a {text-decoration: none; }    
+  }
 }

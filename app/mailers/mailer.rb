@@ -66,9 +66,10 @@ class Mailer < ActionMailer::Base
     @followed_user = subscription.followed
     @follower_user = subscription.follower
     
-    @action_url = profile_url(@follower.username)
+    @action_url = profile_url(@follower_user.username)
+    @follow_url = follow_user_path(@follower_user.name)
     mail(to: @followed_user.email, subject: "#{@follower_user.name} is now following you!")
-    @user.log_email
+    @followed_user.log_email
   end
   
   def intro_drop_off(email)
