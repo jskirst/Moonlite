@@ -58,10 +58,14 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    if @task.destroy
-      respond_to { |f| f.json { render :json => { :success => "Question deleted." } } }
+    if @task.creator == current_user
+      if @task.destroy
+        respond_to { |f| f.json { render :json => { :success => "Question deleted." } } }
+      else
+        respond_to { |f| f.json { render :json => { :errors => "Question could not be deleted." } } }
+      end
     else
-      respond_to { |f| f.json { render :json => { :errors => "Question could not be deleted." } } }
+      raise "Access Denied"
     end
   end
   
