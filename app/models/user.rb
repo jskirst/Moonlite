@@ -383,7 +383,7 @@ class User < ActiveRecord::Base
   def to_json
     all_enrollments = enrollments.where("total_points > ?", 0)
       .joins(:path)
-      .select("enrollments.id, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
+      .select("enrollments.id, enrollments.metascore, enrollments.metapercentile, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
     
     results = { id: self.id, username: self.username, email: self.email, name: self.name, picture: self.image_url }
     results[:challenges] = all_enrollments.collect do |e|

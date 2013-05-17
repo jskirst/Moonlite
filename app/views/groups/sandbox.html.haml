@@ -4,6 +4,10 @@
   = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 20px 0 0;"
   = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 20px 0 0;"
   
+  :css
+    #api_result h1 { font-size: 22px; }
+    #api_result img { width: 40px; height: 40px; margin: 10px; }
+  
   #api_result.pre{ style: "padding: 15px;" }
   
   :javascript
@@ -11,6 +15,7 @@
     var endpoint = "#{root_url}/users";
     var email = "#{@email}";
     var group = "#{@group}";
+    
     $.ajax({
       url: endpoint, 
       data: { email: email, group: group},
@@ -21,8 +26,8 @@
         for(var i in challenges){
           c = challenges[i];
           $c = $("<div id='"+c.name+"'></div>").appendTo("#api_result");
-          $c.append("<h1><img src='"+c.picture+"' width='50' height='50'>"+c.name+"</h1>")
-          $c.append("<div>"+c.score+" total points</div>");
+          $c.append("<h1><img src='"+c.picture+"'>"+c.name+"</h1>")
+          $c.append("<div>"+c.points+" Points, "+c.metascore+" Metascore, better than "+c.percentile+"% of users </div>");
         }
       },
       dataType: "json"
