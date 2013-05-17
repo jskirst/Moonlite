@@ -63,42 +63,42 @@
                 .lo Followers
           .span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1= @user.name
-            <a href="#hover_card" role="button" class="btn" data-toggle="modal">Launch hovercard</a>
-            #hover_card.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
-              .header
-                %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
-                .picture
-                  = link_to profile_path(@user.username) do
-                    = image_tag @user.picture, alt: "#{@user.name}"
-                .stats
-                  = link_to profile_path(@user.username) do
-                    %h1= @user.name                    
-                  - if badge = User.reputation_badge(@user.earned_points)
-                    = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
-                  %p= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
-                  .social_stats
-                    .stat
-                      #modal_following_count.hi= @user.following_count
-                      .lo Following  
-                    - unless @user == current_user 
-                      #modal_following_box
-                        = link_to "Following", follow_user_path(@user.username), id: "modal_unfollow_button", class: "button button-info", remote: true, style: ("display:none" unless current_user.following?(@user))
-                        = link_to "Follow", follow_user_path(@user.username), id: "modal_follow_button", class: "button button-actionable", remote: true, style: ("display:none" if current_user.following?(@user))   
-                    .stat
-                      #modal_follower_count.hi= @user.follower_count
-                      .lo Followers
-                
-              .body
-                - @enrollments.each do |enrollment|
-                  %li
-                    = image_tag enrollment.path.picture
-                    %div
-                      %h4 #{truncate(enrollment.path.name, length: 19)}, Level #{enrollment.level}
-                      %span.pts #{enrollment.total_points} points
-                      %span ·
-                      %span Rank: #{enrollment.rank} of **Total path enrollment**
-              .footer
-                = link_to "View full profile.", profile_path(@user.username)
+            - if false
+              <a href="#hover_card" role="button" class="btn" data-toggle="modal">Launch hovercard</a>
+              #hover_card.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+                .header
+                  %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+                  .picture
+                    = link_to profile_path(@user.username) do
+                      = image_tag @user.picture, alt: "#{@user.name}"
+                  .stats
+                    = link_to profile_path(@user.username) do
+                      %h1= @user.name                    
+                    - if badge = User.reputation_badge(@user.earned_points)
+                      = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
+                    %p= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
+                    .social_stats
+                      .stat
+                        #modal_following_count.hi= @user.following_count
+                        .lo Following  
+                      - unless @user == current_user 
+                        #modal_following_box
+                          = link_to "Following", follow_user_path(@user.username), id: "modal_unfollow_button", class: "button button-info", remote: true, style: ("display:none" unless current_user.following?(@user))
+                          = link_to "Follow", follow_user_path(@user.username), id: "modal_follow_button", class: "button button-actionable", remote: true, style: ("display:none" if current_user.following?(@user))   
+                      .stat
+                        #modal_follower_count.hi= @user.follower_count
+                        .lo Followers                  
+                .body
+                  - @enrollments.each do |enrollment|
+                    %li
+                      = image_tag enrollment.path.picture
+                      %div
+                        %h4 #{truncate(enrollment.path.name, length: 19)}, Level #{enrollment.level}
+                        %span.pts #{enrollment.total_points} points
+                        %span ·
+                        %span Rank: #{enrollment.rank} of **Total path enrollment**
+                .footer
+                  = link_to "View full profile.", profile_path(@user.username)
             - if badge = User.reputation_badge(@user.earned_points)
               = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
             - unless @user.description.blank?
