@@ -107,7 +107,7 @@ class Enrollment < ActiveRecord::Base
   #       0
   # MS = MS + (core_tasks_taken_count / population_average_core_tasks_taken_count) * TTM
   
-  def get_metascore
+  def calculate_metascore
     path_stats = PATH_AVERAGES[path_id]
     cts = completed_tasks.joins(:task).where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
     total_cts = cts.count
@@ -129,7 +129,7 @@ class Enrollment < ActiveRecord::Base
     ms += 2 if votes.count > 0
     
     ms += (total_cts / path_stats[:tasks_attempted]) * TASKS_TAKEN_MULTIPLIER
-    self.metascore = ms * 10
+    self.metascore = (ms * 10) + 1000
     self.save
   end
   

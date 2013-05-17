@@ -306,7 +306,7 @@ class PathsController < ApplicationController
     total_drafts        = @path.completed_tasks.joins(:task).where("tasks.answer_type = ? and status_id = ?", Task::CREATIVE, Answer::INCOMPLETE).count
     @overall_statistics = [total_tasks, total_correct, total_incorrect, average_score, total_crs, total_votes, total_drafts].join(",")
     
-    @statistics         = @path.enrollments.limit(1000).order("total_points DESC").collect do |e|
+    @statistics         = @path.enrollments.limit(500).order("total_points DESC").collect do |e|
       completed_tasks   = e.completed_tasks.joins(:task).select("completed_tasks.*, tasks.answer_type").where("answer_type = ?", Task::MULTIPLE)
       total_tasks       = completed_tasks.count
       total_correct     = completed_tasks.where(status_id: Answer::CORRECT).count
@@ -317,7 +317,7 @@ class PathsController < ApplicationController
       total_crs         = completed_tasks.where(status_id: Answer::CORRECT).count
       total_votes       = completed_tasks.sum(:total_votes)
       total_drafts      = completed_tasks.where(status_id: Answer::INCOMPLETE).count
-      [e.rank, e.total_points, total_tasks, total_correct, total_incorrect, average_points, total_crs, total_votes, total_drafts].join(",")
+      [e.rank, e.total_points, e.metascore, e.metapercentile, total_tasks, total_correct, total_incorrect, average_points, total_crs, total_votes, total_drafts].join(",")
     end
     render "leaderboard", layout: false
   end

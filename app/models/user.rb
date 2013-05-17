@@ -385,11 +385,13 @@ class User < ActiveRecord::Base
       .joins(:path)
       .select("enrollments.id, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
     
-    results = { id: self.id, username: self.username, email: self.email }
+    results = { id: self.id, username: self.username, email: self.email, name: self.name, picture: self.image_url }
     results[:challenges] = all_enrollments.collect do |e|
        { name: e.challenge_name, 
          picture: e.challenge_picture, 
-         score: e.total_points,
+         points: e.total_points,
+         metascore: e.metascore,
+         percentile: e.metapercentile,
          answers: e.completed_tasks.count }
     end
     return results

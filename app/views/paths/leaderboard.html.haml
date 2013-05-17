@@ -5,6 +5,6 @@
   %body
     %p [total_tasks, total_correct, total_incorrect, average_score, total_crs, total_votes, total_drafts]
     %p= @overall_statistics
-    %p [e.rank, e.total_points, total_tasks, total_correct, total_incorrect, average_points, total_crs, total_votes, total_drafts]
+    %p [e.rank, e.total_points, e.metascore, e.metapercentile, total_tasks, total_correct, total_incorrect, average_points, total_crs, total_votes, total_drafts]
     - @statistics.each do |s|
       %p= s
