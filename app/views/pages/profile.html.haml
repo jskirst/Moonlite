@@ -68,18 +68,24 @@
               .header
                 %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
                 .picture
-                  %img{ src: "http://www.placekitten.com/300/300"}
+                  = link_to profile_path(@user.username) do
+                    = image_tag @user.picture, alt: "#{@user.name}"
                 .stats
-                  %h1 Nathaniel Sokoll-Ward
+                  = link_to profile_path(@user.username) do
+                    %h1= @user.name                    
                   - if badge = User.reputation_badge(@user.earned_points)
                     = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
                   %p= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
                   .social_stats
                     .stat
-                      #following_count.hi= @user.following_count
-                      .lo Following                
+                      #modal_following_count.hi= @user.following_count
+                      .lo Following  
+                    - unless @user == current_user 
+                      #modal_following_box
+                        = link_to "Following", follow_user_path(@user.username), id: "modal_unfollow_button", class: "button button-info", remote: true, style: ("display:none" unless current_user.following?(@user))
+                        = link_to "Follow", follow_user_path(@user.username), id: "modal_follow_button", class: "button button-actionable", remote: true, style: ("display:none" if current_user.following?(@user))   
                     .stat
-                      #follower_count.hi= @user.follower_count
+                      #modal_follower_count.hi= @user.follower_count
                       .lo Followers
                 
               .body
@@ -87,11 +93,12 @@
                   %li
                     = image_tag enrollment.path.picture
                     %div
-                      %h4= truncate(enrollment.path.name, length: 19)
+                      %h4 #{truncate(enrollment.path.name, length: 19)}, Level #{enrollment.level}
                       %span.pts #{enrollment.total_points} points
+                      %span ·
                       %span Rank: #{enrollment.rank} of **Total path enrollment**
               .footer
-                %p This is a footer
+                = link_to "View full profile.", profile_path(@user.username)
             - if badge = User.reputation_badge(@user.earned_points)
               = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
             - unless @user.description.blank?
@@ -302,5 +309,29 @@
     $unfollow_button.addClass("button-info");
     $unfollow_button.text("Following");
   });
+  
+  $("#modal_following_box").on("mouseenter", function() {
+    var $modal_unfollow_button = $(this).find("#modal_unfollow_button");
+    $modal_unfollow_button.addClass("button-actionable");
+    $modal_unfollow_button.removeClass("button-info");
+    $modal_unfollow_button.text("Unfollow");
+  }).on("mouseleave", function() {
+    var $modal_unfollow_button = $(this).find("#modal_unfollow_button");
+    $modal_unfollow_button.removeClass("button-actionable");
+    $modal_unfollow_button.addClass("button-info");
+    $modal_unfollow_button.text("Following");
+  });
+  
+  $("#modal_unfollow_button").on("ajax:success", function() {
+    $(this).hide(); $("#modal_follow_button").show();
+    $("#modal_follower_count").text(parseInt($("#modal_follower_count").text())-1);
+    $("#modal_follow_button").removeClass("disabled").removeAttr("disabled");
+  });
+  
+  $("#modal_follow_button").on("ajax:success", function() {
+    $(this).hide(); $("#modal_unfollow_button").show().addClass("button-info").text("Following");
+    $("#modal_follower_count").text(parseInt($("#modal_follower_count").text())+1);
+    $("#modal_unfollow_button").removeClass("disabled").removeAttr("disabled");
+  }); 
   
   $('#TestHoverCard').modal(options)
