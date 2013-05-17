@@ -128,7 +128,7 @@ task :metascore => :environment do
     PATH_AVERAGES[path.id] = stats
   end
   
-  Enrollment.where("total_points = ?", 0).each { |e| e.get_metascore; puts e.metascore.to_s }
+  Enrollment.where(metascore: 0).each { |e| e.get_metascore; puts e.metascore.to_s }
 
   scores = []
   Enrollment.where("metapercentile = ?", 0).each do |e|
