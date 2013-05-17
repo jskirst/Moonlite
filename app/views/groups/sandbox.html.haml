@@ -1,34 +1,67 @@
 %div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
   %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
-  %span{ style: "font-size: 50px;position: relative;top:13px;" } API Sandbox
-  = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 20px 0 0;"
-  = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 20px 0 0;"
+  %span{ style: "font-size: 50px;position: relative;top:13px;" } Group API
+  = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
+  = link_to "Group API", sandbox_group_path(@group), class: "button button-standard button-small", style: "float: right; margin: 80px 10px 0 0;"
+  = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 10px 0 0;"
+  %hr{style:"margin:0;"}
   
   :css
+    .documentation { padding: 10px 20px; }
+    .documentation pre { font-family: Menlo, monospace; font-size: 14px; padding: 10px; margin: 20px 10px; }
     #api_result h1 { font-size: 22px; }
     #api_result img { width: 40px; height: 40px; margin: 10px; }
+    h3 { font-size: 22px; margin-bottom: 10px; }
+
+  .documentation
+    %h3 Requesting User Data
+    %p 
+      The user request api is currently in beta, and allows you to pull basic user information as well as information on all the user's current public enrollments.
+      The API url is "http://www.metabright.com/groups/users" and must be supplied two arguments: the group name and the email of the user you would like to request.
+    %p The request will return a single JSON object with the following fields:
+    %ul
+      %li email
+      %li name
+      %li username
+      %li 
+        <Array> challenges:
+        %ul
+          %li name
+          %li picture
+          %li metascore
+          %li percentile
+          
+    %h3 Code Sample
+    %p Below is a function that calls the API using a supplied email and group name. A slightly modified version of this code has been executed and displayed below.
+    %pre{ style: ""}= render "demo.js"
+    
+    %h3 Sample API Call    
+    #api_result{ style: "padding: 15px;" }
   
-  #api_result.pre{ style: "padding: 15px;" }
+  
   
   :javascript
-  
-    var endpoint = "#{root_url}/users";
-    var email = "#{@email}";
-    var group = "#{@group}";
+    function getMetaBrightUser(email, group){
+      var endpoint = "/groups/users";
+      $.ajax({
+        url: endpoint, 
+        data: { email: email, group: group},
+        success: function(data, status, xhr){
+          console.log(data);
+          var user = data;
+          $("<h5></h5>").text(user.name + " / " + user.username + " / " + user.email).appendTo("#api_result");
+          var challenges = user.challenges;
+          for(var i in challenges){
+            c = challenges[i];
+            $c = $("<div></div>").attr("id", c.name).appendTo("#api_result");
+            $c.append("<h1><img src='"+c.picture+"'>"+c.name+"</h1>")
+            $c.append("<div>"+c.points+" Points, "+c.metascore+" Metascore, better than "+c.percentile+"% of users </div>");
+          }
+        },
+        dataType: "json"
+      });
+    }
     
-    $.ajax({
-      url: endpoint, 
-      data: { email: email, group: group},
-      success: function(data, status, xhr){
-        console.log(data);
-        var user = data;
-        var challenges = user.challenges;
-        for(var i in challenges){
-          c = challenges[i];
-          $c = $("<div id='"+c.name+"'></div>").appendTo("#api_result");
-          $c.append("<h1><img src='"+c.picture+"'>"+c.name+"</h1>")
-          $c.append("<div>"+c.points+" Points, "+c.metascore+" Metascore, better than "+c.percentile+"% of users </div>");
-        }
-      },
-      dataType: "json"
-    });
+    var email = "jskirst@gmail.com";
+    var group = "ihub";
+    getMetaBrightUser(email, group);

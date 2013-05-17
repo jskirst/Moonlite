@@ -43,6 +43,7 @@ Metabright::Application.routes.draw do
 	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
 	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
 
+  get '/groups/users' => "users#index"
   resources :groups do
     member do
       get :join

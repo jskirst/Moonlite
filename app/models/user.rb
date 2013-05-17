@@ -384,6 +384,7 @@ class User < ActiveRecord::Base
     all_enrollments = enrollments.where("total_points > ?", 0)
       .joins(:path)
       .select("enrollments.id, enrollments.metascore, enrollments.metapercentile, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
+      .where("paths.approved_at is not ? and published_at is not ?", nil, nil)
     
     results = { id: self.id, username: self.username, email: self.email, name: self.name, picture: self.image_url }
     results[:challenges] = all_enrollments.collect do |e|

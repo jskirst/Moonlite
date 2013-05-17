@@ -1,0 +1,13 @@
+function getMetaBrightUser(email, group){
+  var endpoint = "/groups/users";
+  $.ajax({
+    url: endpoint, 
+    data: { email: email, group: group},
+    success: function(data, status, xhr){
+      var user = data;
+      var challenges = user.challenges;
+      console.log(challenges);
+    },
+    dataType: "json"
+  });
+}
