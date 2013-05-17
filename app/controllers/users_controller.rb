@@ -95,7 +95,12 @@ class UsersController < ApplicationController
         UserEvent.log_event(@user, "#{current_user} is now following you!", current_user, profile_path(current_user.username), current_user.picture)
       end
     end
-    render json: { status: :success }
+    
+    if request.xhr?
+      render json: { status: :success }
+    else
+      redirect_to profile_path(@user.username)
+    end
   end
   
   private
