@@ -1,11 +1,11 @@
 = form_for(task, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator"}) do |f|
   = f.hidden_field :section_id
   %div.floatr
-    = f.submit "Save", id: "save_question_button", class: "button button-info"
+    = f.submit "Save", id: "save_question_button", class: "button button-info button-small"
     - if task.new_record?
-      %span#close_question_button.button.button-standard{ onclick: "clear_form();" } Clear
+      %span#close_question_button.button.button-standard.button-small{ onclick: "clear_form();" } Clear
     - else
-      %span.button.button-standard{ onclick: "$(this).parents('td').find('div.question_display').show(); $(this).parents('.question_creator').remove();" } Close
+      %span.button.button-standard.button-small{ onclick: "$(this).parents('td').find('div.question_display').show(); $(this).parents('.question_creator').remove();" } Close
   %div.task_form{ style: "margin-top:10px;" }
     %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
     %h4#form_title= (task.new_record? ? "Add" : "Update") + " Question"
@@ -37,13 +37,13 @@
                 %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('#task_quoted_text').show();" } Add quoted text
               = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
         
-        - if task.creative?
+        - if task.creative? or task.new_record?
           .creative.template_toggle
             .control-group
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
                 %a.show_template{ onclick: "$(this).hide(); $(this).siblings('#task_template').show();" } Add template for question
-                = text_area_tag "task[template]", nil, class: "big_text_area", style: ("display: none;" if task.template.blank?)
+                = text_area_tag "task[template]", task.template, class: "big_text_area", style: (task.quoted_text.blank? ? "display: none;" : "")
         
         - if task.new_record? or task.creative? or task.exact?
           .creative.exact.hide
