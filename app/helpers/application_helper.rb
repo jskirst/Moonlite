@@ -32,6 +32,7 @@ module ApplicationHelper
   
   def idea_comment_details(idea)
     { 
+      owner_has_comments: "t",
       owner: idea, 
       owner_type: "Idea", 
       owner_id: idea.id, 
