@@ -89,7 +89,7 @@
                         #modal_follower_count.hi= @user.follower_count
                         .lo Followers                  
                 .body
-                  - @enrollments.each do |enrollment|
+                  - @enrollments.first(3).each do |enrollment|
                     %li
                       = image_tag enrollment.path.picture
                       %div

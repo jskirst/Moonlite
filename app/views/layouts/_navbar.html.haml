@@ -98,6 +98,9 @@
                         %li= link_to "Sign out", signout_path, style: "color: inherit; text-shadow: none;"
       - if current_user.nil? && show_sign_in
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
+          - unless current_user           
+            %li 
+              = link_to "Employer? Let us turbocharge your hiring.", "/employers", class: "employers_link"
           %li
             %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in
       - elsif current_user and params[:controller] == "sections" and params[:action] != "new"
