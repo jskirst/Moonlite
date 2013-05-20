@@ -139,6 +139,8 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #content { padding-top: 42px; min-height: 450px;}
 .navitem span { color: white;text-shadow: 0 -1px 1px rgba(0,0,0,.75); margin-left: 7px;font-size: 14px;top: 3px;position: relative; }
 .navbar a { color: #BFBFBF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25); }
+.navbar .nav.pull-right li .employers_link { color: rgb(244, 252, 255); margin: 4px 15px 0 0; font-size: 14px; }
+.navbar .nav.pull-right li .employers_link:hover { text-decoration: underline; }
 .navbar .nav > li > a { padding: 6px 13px; text-decoration: none;}
 .navbar .nav.pull-right a:hover { color:white; }
 .navbar .nav.pull-right .leftboxfooter a {text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);}

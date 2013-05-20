@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   include PreviewHelper
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :internship, :mark_help_read, :robots, :url]
+  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :employers, :internship, :mark_help_read, :robots, :url]
   before_filter :authorize_resource, only: [:create]
   
   def home
@@ -149,25 +149,32 @@ class PagesController < ApplicationController
     render "internship"
   end
   
-  def employer
+  def employers
     @title = "Employers"
     @show_footer = true
     @hide_background = true
-    render "employer"
+    render "employers"
   end
   
-  def employer1
+  def employers1
     @title = "Employers"
     @show_footer = true
     @hide_background = true
-    render "employer1"
+    render "employers1"
   end
   
-  def employer2
+  def employers2
     @title = "Employers"
     @show_footer = true
     @hide_background = true
-    render "employer2"
+    render "employers2"
+  end
+  
+  def employers_form
+    @title = "Employers"
+    @show_footer = true
+    @hide_background = true
+    render "employers_form"
   end
   
   def challenges
