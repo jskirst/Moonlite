@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   include PreviewHelper
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :employers, :internship, :mark_help_read, :robots, :url]
+  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :employers, :talentminer, :evaluator, :product_form, :internship, :mark_help_read, :robots, :url]
   before_filter :authorize_resource, only: [:create]
   
   def home
@@ -171,7 +171,7 @@ class PagesController < ApplicationController
   end
   
   def product_form
-    @title = "Employers"
+    @title = "Checkout"
     @show_footer = true
     @hide_background = true
     render "product_form"
