@@ -1,10 +1,10 @@
-%p #{@commenting_user.name} just replied to your comment on the question:
+%p{ style: "font-size:12px;"} #{@commenting_user.name} just replied to your comment on the question:
 %p.quote{ style: "font-size:12px; font-style: italic;" }= @submission.task.question
-%p #{@commenting_user.name} said: "#{@comment.content}"
-%p To see the whole thread, follow the link below:
-%p
+%p{ style: "font-size:12px;"} #{@commenting_user.name} said: "#{@comment.content}"
+%p{ style: "font-size:12px;"} To see the whole thread, follow the link below:
+%p{ style: "font-size:12px;"}
   %a{ href: @action_url }= @action_url
-%p 
+%p{ style: "font-size:12px;"} 
   Thanks,
   %br
-  The MetaBright Team
+  Team MetaBright
