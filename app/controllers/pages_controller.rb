@@ -2,7 +2,7 @@ class PagesController < ApplicationController
   include PreviewHelper
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :employers, :talentminer, :evaluator, :product_form, :internship, :mark_help_read, :robots, :url]
+  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :employers, :talentminer, :evaluator, :product_form, :product_confirmation, :internship, :mark_help_read, :robots, :url]
   before_filter :authorize_resource, only: [:create]
   
   def home
@@ -175,6 +175,13 @@ class PagesController < ApplicationController
     @show_footer = true
     @hide_background = true
     render "product_form"
+  end
+  
+  def product_confirmation
+    @title = "Checkout confirmation"
+    @show_footer = true
+    @hide_background = true
+    render "product_confirmation"
   end
   
   def challenges

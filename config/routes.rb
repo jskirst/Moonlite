@@ -113,6 +113,7 @@ Metabright::Application.routes.draw do
   match '/talentminer' => 'pages#talentminer'
   match '/evaluator' => 'pages#evaluator'
   match '/product_form' => 'pages#product_form'
+  match '/product_confirmation' => 'pages#product_confirmation'
   match '/connect' => 'pages#connect'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
