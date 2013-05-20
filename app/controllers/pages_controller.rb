@@ -150,31 +150,31 @@ class PagesController < ApplicationController
   end
   
   def employers
-    @title = "Employers"
+    @title = "Hiring solutions for employers"
     @show_footer = true
     @hide_background = true
     render "employers"
   end
   
-  def employers1
-    @title = "Employers"
+  def talentminer
+    @title = "Talent Miner"
     @show_footer = true
     @hide_background = true
-    render "employers1"
+    render "talentminer"
   end
   
-  def employers2
-    @title = "Employers"
+  def evaluator
+    @title = "Evaluator"
     @show_footer = true
     @hide_background = true
-    render "employers2"
+    render "evaluator"
   end
   
-  def employers_form
+  def product_form
     @title = "Employers"
     @show_footer = true
     @hide_background = true
-    render "employers_form"
+    render "product_form"
   end
   
   def challenges

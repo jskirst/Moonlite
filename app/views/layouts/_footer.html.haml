@@ -1,9 +1,11 @@
 %div.footer
   %span.copyright © 2013 MetaBright, Inc. /
   %span.footerlinks
+    = link_to "Employers", employers_path
+    \/
     %a{href: "http://metabright.blogspot.com/", target: "_blank"} Blog
     \/
-    =link_to "Feedback", ideas_path 
+    = link_to "Feedback", ideas_path 
     \/
     = link_to "Terms of Service", tos_path
     \/

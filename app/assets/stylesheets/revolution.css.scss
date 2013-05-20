@@ -827,27 +827,33 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
   } 
 }
 
-#employer1{
-  .aboutheader{
+#employer1{ 
+  .aboutheader {
    padding: 15px 0 0 15px;
    
-   img{ height: 140px; }
-   span{ font-size: 64px; bottom: 52px; } 
+   img { height: 140px; }
+   span { font-size: 64px; bottom: 52px; } 
   }
-  .body{ 
+  .body { 
     
     padding: 26px 16px; 
   
-    h2{ 
+    h2 { 
       text-transform: uppercase;
       border-bottom: 1px solid rgba(0,0,0,0.1);
       margin-bottom: 10px;
     }    
-    p, ol{
+    h4 { 
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      font-size: 16px; 
+      margin-bottom: 12px; 
+      padding-bottom: 8px; 
+    }    
+    p, ol {
       font-size: 15px;
       margin-bottom: 20px; 
     }    
-    h3{
+    h3 {
      font-size: 22px;  
     }
     .pricing_table {
