@@ -14,7 +14,7 @@ task :send_alerts => :environment do
   subs = Subscription.where("created_at > ?", 10.minutes.ago)
   subs.each do |sub|
     begin
-      Mailer.content_vote_alert(sub).deliver
+      Mailer.content_sub_alert(sub).deliver
       puts "Sub alert sent"
     rescue
       puts "Sub alert rejected."
