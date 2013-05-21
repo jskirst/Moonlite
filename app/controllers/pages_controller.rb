@@ -2,8 +2,7 @@ class PagesController < ApplicationController
   include PreviewHelper
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:home, :profile, :about, :challenges, :tos, :employers, :talentminer, :evaluator, :product_form, :internship, :mark_help_read, :robots, :url]
-  before_filter :authorize_resource, only: [:create]
+  before_filter :authenticate, only: [:create]
   
   def home
     @title = "Home"
@@ -175,6 +174,12 @@ class PagesController < ApplicationController
     @show_footer = true
     @hide_background = true
     render "product_form"
+  end
+  
+  def opportunity
+    opp = Opportunity.new(params[:opportunity])
+    Mailer.opportunity(opp).deliver
+    redirect_to root_url
   end
   
   def challenges

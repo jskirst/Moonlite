@@ -10,7 +10,7 @@
     .body
       %div
         %h4 Submit this form and someone from our team will get in touch to learn about your business and to get you set up. If it turns out MetaBright isn't for you, you're under no obligation to complete the transaction.
-      %form.form-horizontal
+      = form_for(Opportunity.new, url: opportunity_path, html: { class: "form-horizontal" }) do |f|
         .control-group
           %label.control-label Product: 
           .controls{ style: "margin-top: 4px; "}
@@ -19,17 +19,19 @@
         .control-group
           %label.control-label{ for: "inputName"} Your Name
           .controls
-            %input{ type: "text", id: "inputName", placeholder: "Your name..."}
+            = f.text_field :name, placeholder: "Your name..."
         .control-group
           %label.control-label{ for: "inputCompanyName"} Company Name
           .controls
-            %input{ type: "text", id: "inputCompanyName", placeholder: "Company name..."}
+            = f.text_field :company, placeholder: "Company name..."
         .control-group
           %label.control-label{ for: "inputEmail"} Email
           .controls
-            %input{ type: "text", id: "inputEmail", placeholder: "Email..."}
+            = f.text_field :email, placeholder: "Email..."
         .control-group
           %label.control-label{ for: "inputPhone"} Phone
           .controls
-            %input{ type: "text", id: "inputPhone", placeholder: "Phone..."}
-        = link_to "Submit", "#", class: "button button-actionable", style: "float: right;"
+            = f.text_field :phone, placeholder: "Phone..."
+        .control-group
+          .controls
+            = f.submit "Submit", class: "button button-actionable"
