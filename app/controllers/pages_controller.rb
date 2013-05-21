@@ -179,7 +179,14 @@ class PagesController < ApplicationController
   def opportunity
     opp = Opportunity.new(params[:opportunity])
     Mailer.opportunity(opp).deliver
-    redirect_to root_url
+    redirect_to product_confirmation_path
+  end
+  
+  def product_confirmation
+    @title = "Checkout confirmation"
+    @show_footer = true
+    @hide_background = true
+    render "product_confirmation"
   end
   
   def challenges

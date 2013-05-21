@@ -1,9 +1,9 @@
-%p #{@voting_user.name} just voted for your response to:
+%p{ style: "font-size:12px;"} #{@voting_user.name} just voted for your response to:
 %p.quote{ style: "font-size:12px; font-style: italic;" }= @submission.task.question
-%p To see your post, follow the link below:
-%p
+%p{ style: "font-size:12px;"} To see your post, follow the link below:
+%p{ style: "font-size:12px;"}
   %a{ href: @action_url }= @action_url
-%p 
+%p{ style: "font-size:12px;"} 
   Thanks,
   %br
-  The MetaBright Team
+  Team MetaBright

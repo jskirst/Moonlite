@@ -114,6 +114,7 @@ Metabright::Application.routes.draw do
   match '/evaluator' => 'pages#evaluator'
   match '/product_form' => 'pages#product_form'
   post  '/opportunity' => 'pages#opportunity'
+  match '/product_confirmation' => 'pages#product_confirmation'
   match '/connect' => 'pages#connect'
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
