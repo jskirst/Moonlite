@@ -170,6 +170,7 @@ class PagesController < ApplicationController
   end
   
   def product_form
+    @opportunity = Opportunity.new(product: params[:p])
     @title = "Checkout"
     @show_footer = true
     @hide_background = true

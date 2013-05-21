@@ -100,7 +100,6 @@ class Mailer < ActionMailer::Base
   
   def opportunity(opp)
     @opp = opp
-    admins = User.joins(:user_role).where("user_roles.enable_administration = ? and is_fake_user = ? and is_test_user = ?", true, false, false)
-    mail(to: admins.first.email, subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}", cc: admins.collect(&:email))
+    mail(to: "team@metabright.com", subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}")
   end
 end
