@@ -1,0 +1,74 @@
+!!!
+%html
+  %head
+    %meta{ content: "text/html; charset=UTF-8", "http-equiv" => "Content-Type" }
+    - s = {}
+    - s[:action_button] = "float:right; margin-bottom: 0px;margin-top: 0px;vertical-align: middle;display: inline-block;text-shadow: 0 1px 0px black;color: white;padding: 7px 20px 5px 20px;cursor: pointer;font-size: 15px;border: 1px solid #DDD;border-radius: 3px;background-image: -moz-linear-gradient(top, #ee5f5b, #971D1C);background-image: -ms-linear-gradient(top, #ee5f5b, #971D1C);background-image: -o-linear-gradient(top, #ee5f5b, #971D1C);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#971D1C));background-image: -webkit-linear-gradient(top, #ee5f5b, #971D1C);background-image: linear-gradient(top, #ee5f5b, #971D1C);"
+    - s[:challenge_image] = "vertical-align:top; width:75px; height:75px; display:inline-block; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;"
+    - s[:challenge_box] = "text-decoration:none; color:#404040; "
+  %body
+    %table{ cellpadding: "0", cellspacing: "0", style: "border: 1px solid rgba(0, 0, 0, .1); width: 620px; color:#404040;" }
+      %tbody
+        %tr
+          %td{ style: "background:#F9F9F9; padding:6px 0 3px 6px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
+            = link_to root_url do
+              = image_tag METABRIGHT_LOGO, style: "width:145px", alt: "MetaBright.com"
+        %tr
+          %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
+            %h3{ style: "font-size:15px; font-weight:bold; margin:0;" } Hey #{@user.name.split.first},
+            %p{ style: "font-size:15px; margin: 0;" } Here's what's happening on MetaBright...
+        %tr
+          %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
+            %h3{ style: "font-size: 20px; margin:0;"} Updates
+            %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
+              %div
+                %h4{ style: "font-size:15px; font-weight:normal;"} This week, we're rolling out updates that make you look <em>good</em>.
+                %ul{ style: "font-size:15px;"}
+                  %li{ style: "margin-bottom:7px;"}
+                    %strong Totally revamped profile:
+                    Highlighting your awesomeness in every Challenge you're enrolled in.
+                    = link_to "Check out your profile.", profile_url(@user.username) 
+                  %li{ style: "margin-bottom:7px;"}
+                    %strong Executable code in Creative Responses:
+                    See the output of your code in HTML, jQuery, and CSS, with Ruby and Python on the way.
+                    = link_to "See it in action.", "http://www.metabright.com/challenges/jquery"
+                  %li{ style: "margin-bottom:7px;"}
+                    %strong Prove that you completed Tasks:
+                    Visually demonstrate the impressiveness of your accomplishments.
+                  %li{ style: "margin-bottom:7px;"}
+                    %strong Edit and improve your existing answers:
+                    Since you're always improving, your Creative Responses and Tasks can too.
+        %tr
+          %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
+            %h3{ style: "font-size: 20px; margin:0;"} Challenges
+            %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
+              = link_to "http://www.metabright.com/challenges/css", style: s[:challenge_box] do
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", height: 75, width:75, style: s[:challenge_image], title: "CSS" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} CSS
+                    %p{ style: "margin:3px 0 4px 0;"} 61 questions
+                    %p{ style: "margin:0;"} Styling the Interwebz to your heart's content. This Challenge is for CSS jockeys of all levels. Try to work your way up to the Master section! 
+              = link_to "http://www.metabright.com/challenges/html", style: s[:challenge_box] do
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", height: 75, width:75, style: s[:challenge_image], title: "HTML" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} HTML
+                    %p{ style: "margin:3px 0 4px 0;"} 24 questions
+                    %p{ style: "margin:0;"} Practically the entire universe is built in HTML. Your domination of this Challenge means that you're essentially a diety.
+              = link_to "http://www.metabright.com/challenges/rubyrailstesting", style: s[:challenge_box] do
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/110/original.png?1359677420", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} Ruby / Rails Testing
+                    %p{ style: "margin:3px 0 4px 0;"} 6 questions
+                    %p{ style: "margin:0;"} You can run your code - but do you know how to test it? 
+        %tr
+          %td{ style: "padding:3px 12px 6px;"}
+            %span{style:"font-size:10px; color:gray;"}
+              You are receiving this message because #{@user.email} is a member of MetaBright. To adjust your email settings or to unsubscribe, 
+            %span{style:"font-size:10px;"}= link_to "click here.", @settings_url
+            %span{style:"font-size:10px; color:gray;"} MetaBright, Inc. 212 Valencia Street, Suite D, San Francisco, CA 94123

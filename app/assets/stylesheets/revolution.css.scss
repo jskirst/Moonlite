@@ -852,7 +852,18 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
     p, ol {
       font-size: 15px;
       margin-bottom: 20px; 
-    }    
+    }   
+    ul {
+      font-size: 15px;
+      list-style: none;      
+      li {
+        margin-bottom: 10px;        
+        &:last-child { margin-bottom: 0; }
+        span {
+          font-weight: bold;
+        } 
+      }
+    } 
     h3 {
      font-size: 22px;  
     }
