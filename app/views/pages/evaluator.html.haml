@@ -8,7 +8,7 @@
   .aboutbox
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
-      %span Turbocharge your hiring
+      %span MetaBright Evaluator
     .body
       %div
         %h2
@@ -33,54 +33,46 @@
             .price
               .price_figure
                 %span.price_number $10
-                %span.price_tenure
+                %span.price_tenure per user, per month
             %ul.features
               %li 10 skill assessments
-              %li Default Challenges
-              %li Full admin panel
               %li Standard URL
-              %li 24/7 Email support
+              %li --
             .price_footer
               = link_to "Select", product_form_path(p: Opportunity::EVAL_BASIC), class: "action_button"
-          %li.price_block
-            %h3 Intermediate
-            .price
-              .price_figure
-                %span.price_number $49
-                %span.price_tenure
-            %ul.features
-              %li 100 skill assessments
-              %li Default Challenges
-              %li Full admin panel
-              %li Standard URL
-              %li 24/7 Email support
-            .price_footer
-              = link_to "Select", product_form_path(p: Opportunity::EVAL_PRO), class: "action_button"
           %li.price_block
             %h3 Professional
             .price
               .price_figure
-                %span.price_number $199
-                %span.price_tenure
+                %span.price_number $49
+                %span.price_tenure per user, per month
             %ul.features
-              %li 500 skill assessments
-              %li Customizable Challenges
-              %li Full admin panel
-              %li Customized URL
-              %li 24/7 Email support
+              %li 100 skill assessments
+              %li Standard URL
+              %li Email support
             .price_footer
-              = link_to "Select", product_form_path(p: Opportunity::EVAL_ENT), class: "action_button"
+              = link_to "Select", product_form_path(p: Opportunity::EVAL_PRO), class: "action_button"
           %li.price_block
             %h3 Enterprise
             .price
               .price_figure
+                %span.price_number $199
+                %span.price_tenure per user, per month
+            %ul.features
+              %li 500 skill assessments
+              %li Customized URL
+              %li Email and phone support
+            .price_footer
+              = link_to "Select", product_form_path(p: Opportunity::EVAL_ENT), class: "action_button"
+          %li.price_block
+            %h3 Ultimate
+            .price
+              .price_figure
                 %span.price_number $299
-                %span.price_tenure
+                %span.price_tenure per user, per month
             %ul.features
               %li 1,000 skill assessments
-              %li Customizable Challenges
-              %li Full admin panel
               %li Customized URL
-              %li 24/7 Email support
+              %li Email and phone support
             .price_footer
               = link_to "Select", product_form_path(p: Opportunity::EVAL_ULTRA), class: "action_button"

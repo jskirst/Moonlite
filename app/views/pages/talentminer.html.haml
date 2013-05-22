@@ -8,7 +8,7 @@
   .aboutbox
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
-      %span Turbocharge your hiring
+      %span MetaBright Talent Miner
     .body
       %div
         %h2
@@ -39,50 +39,46 @@
             .price
               .price_figure
                 %span.price_number $10
-                %span.price_tenure per month, per user
+                %span.price_tenure per user, per month
             %ul.features
               %li Contact 5 Users
-              %li Limited admin panel
               %li Filter by 1 Challenge
-              %li 24/7 Email support
+              %li --
             .price_footer
               = link_to "Select", product_form_path(p: Opportunity::MINER_BASIC), class: "action_button"
-          %li.price_block
-            %h3 Intermediate
-            .price
-              .price_figure
-                %span.price_number $19
-                %span.price_tenure per month, per user
-            %ul.features
-              %li Contact 20 Users
-              %li Full admin panel
-              %li Filter by 2 Challenges
-              %li 24/7 Email support
-            .price_footer
-              = link_to "Select", product_form_path(p: Opportunity::MINER_PRO), class: "action_button"
           %li.price_block
             %h3 Professional
             .price
               .price_figure
-                %span.price_number $39
-                %span.price_tenure per month, per user
+                %span.price_number $19
+                %span.price_tenure per user, per month
             %ul.features
-              %li Contact 50 Users
-              %li Full admin panel
-              %li Filter by 3+ Challenges
-              %li 24/7 Email support
+              %li Contact 20 Users
+              %li Filter by 2 Challenges
+              %li Email support
             .price_footer
-              = link_to "Select", product_form_path(p: Opportunity::MINER_ENT), class: "action_button"
+              = link_to "Select", product_form_path(p: Opportunity::MINER_PRO), class: "action_button"
           %li.price_block
             %h3 Enterprise
             .price
               .price_figure
+                %span.price_number $39
+                %span.price_tenure per user, per month
+            %ul.features
+              %li Contact 50 Users
+              %li Filter by 3+ Challenges
+              %li Email and phone support
+            .price_footer
+              = link_to "Select", product_form_path(p: Opportunity::MINER_ENT), class: "action_button"
+          %li.price_block
+            %h3 Ultimate
+            .price
+              .price_figure
                 %span.price_number $69
-                %span.price_tenure per month, per user
+                %span.price_tenure per user, per month
             %ul.features
               %li Contact 100 Users
-              %li Full admin panel
               %li Filter by 3+ Challenges
-              %li 24/7 Email support
+              %li Email and phone support
             .price_footer
               = link_to "Select", product_form_path(p: Opportunity::MINER_ULTRA), class: "action_button"
