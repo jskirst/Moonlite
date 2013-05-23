@@ -29,24 +29,27 @@ $success_color: #62c462;
     a.next { margin-top: 5px; float: right; }
     .step1 fieldset { display: inline-block; margin-right:15px; width:58.1%; }
     .step2 {
+      .btn-group { opacity: .7; margin: 6px 0 15px;  }
+      .tip { margin-top: 6px; display: inline-block; }
+    }
+    .step3 {
       h4 { margin-top: 12px; font-size: 14px; }
       code.question { max-height: 60px; overflow-y: auto; }
       .correct_answer { font-weight: bold; font-size: 14px; }
     }
-    .step3 {
+    .step4 {
       h4 { margin-top:12px; font-size:16px; }
     }
     .tips {
-      display:inline-block; 
-      margin-left:20px; 
-      vertical-align:top; 
-      width:199px; 
-      border-left: 1px solid #E7E7E7; 
-      position:relative; 
-      top:0px; 
-      padding-left:10px;
+      display: inline-block;
+      margin-left: 20px;
+      vertical-align: top;
+      width: 200px;
+      border-left: 1px solid #E7E7E7;
+      position: relative;
+      top: 48px;
+      padding-left: 10px;
       
-      img { height:25px; width:25px; }
       ul { font-size:13px; }
     }
   }

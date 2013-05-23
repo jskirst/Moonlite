@@ -128,7 +128,7 @@
       $(".active_tab").find(".editor_view").show();
     });
     
-    $(".editor_view").each(function(){
+    $(".editor_view").each(function(){  
       var $editor = $(this);
       $editor.find(".step1 a.next").click(function(){
         $editor.parents(".headlines").find(".exit").hide();
@@ -152,14 +152,27 @@
             }
           }
         }
+        
         $editor.find(".step2 code.question").text($editor.find("textarea[name='task[question]']").val());
         $editor.find(".step1").hide();
         $editor.find(".step2").show();
-      });
+      });      
       
       $editor.find(".step2 a.back").click(function(){
         $editor.find(".step2").hide();
         $editor.find(".step1").show();
+        $editor.parents(".headlines").find(".exit").show();
+      });
+       
+      $editor.find(".step2 a.next").click(function(){
+        $editor.find(".step2").hide();
+        $editor.find(".step3").show();
+        $editor.parents(".headlines").find(".exit").hide(); 
+      });
+      
+      $editor.find(".step3 a.back").click(function(){
+        $editor.find(".step3").hide();
+        $editor.find(".step2").show();
         $editor.parents(".headlines").find(".exit").show();
       });
       
