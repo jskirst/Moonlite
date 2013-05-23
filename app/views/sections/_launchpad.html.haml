@@ -143,13 +143,7 @@
         if($editor.find("textarea").val() == ""){
           return log_error("You must provide a question.");
         }
-        if($editor.find("input[name*=answer_type]").val() == 0){
-          if($editor.find("input[name*=answer_sub_type]:checked").size() == 0){
-            return log_error("You must provide an answer type.");
-          } else {
-            $editor.find(".step2 span.task_subtype").text(task_subtypes[$editor.find("input[name*=answer_sub_type]:checked").val()]);
-          }
-        } else if ($editor.find("input[name*=answer_type]").val() == 2){
+        if ($editor.find("input[name*=answer_type]").val() == 2){
           if($editor.find("input[name*=answer1]").val() == ""){
             return log_error("You must provide a correct answer.");
           } else {

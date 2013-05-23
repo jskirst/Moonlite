@@ -9,6 +9,7 @@ class Path < ActiveRecord::Base
     :image_url,  
     :tags,
     :permalink,
+    :template,
     :template_type
   
   has_one :stored_resource, as: :owner

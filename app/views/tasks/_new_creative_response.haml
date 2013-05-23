@@ -7,21 +7,11 @@
       %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
         %legend Create a CR
         %span.help-block What's your question?
-        = f.text_area(:question, rows: 2, class: "rows2", placeholder:"Question...", style:"width:100%;")
+        = f.text_area(:question, rows: 4, class: "rows4", placeholder:"Question...", style:"width:100%;")
         %div.control-group{style:"width:350px;"}
           %div.controls
             = render "stored_resources/new_image"
-        
-        -# The methods have to be changed for these options
-        %span.help-block{style: "margin-top:20px;"} Does this question require coding?
-        -# If the user selects yes, then go to step2. Otherwise, go to step3
-        %label.radio
-          = f.radio_button(:answer_sub_type, Task::TEXT, class: "answer_sub_type")
-          Yes
-        %label.radio
-          = f.radio_button(:answer_sub_type, Task::IMAGE, class: "answer_sub_type") 
-          No  
-                  
+                          
         %span.error_message
         %a.next.button.button-actionable{ style:"float:right;" } Next
       .tips
@@ -40,7 +30,7 @@
       %fieldset{style: "display: inline-block; width:98%;"}
         %legend Create a CR
         %span.help-block What code template should people use to respond to your question?
-        -# The editor should render with the appropriate language prefix (as it does in take_text)
+        %textarea{ name: "content", id: "answer_input", data: { template: @path.template.to_s } }= @path.template
         %div{ id: "editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 175px; position: relative; padding-top:0;"}
         %span.help-block{ style: "margin-top: 15px; "} If there is only one correct output for this code, place it here:
         -# This method is soooo wrong

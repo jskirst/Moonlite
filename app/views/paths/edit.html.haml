@@ -2,7 +2,7 @@
   %div.modal-header
     %a.close
     %h3 Challenge Settings
-  %div.modal-body
+  %div.modal-body{ style: "max-height: none; "}
     = form_for(@path, html: { class: "form-horizontal" }) do |f|
       = render "shared/error_messages", object: f.object
       %div.control-group
@@ -10,17 +10,20 @@
         %div.controls= f.text_field :name
       %div.control-group
         %label.control-label Description
-        %div.controls= f.text_area :description, style: "width: 300px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
+        %div.controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
+      %div.control-group
+        %label.control-label Default code template
+        %div.controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
       %div.control-group{ style: "margin-bottom: 5px;" }
         %label.control-label Image
-        %div.controls= render "stored_resources/new_image"
+        %div.controls= render "stored_resources/new_image"      
       %div.control-group
         %div.controls= image_tag(@path.path_pic, class: "original_image_preview", style: "height: 75px; max-width: 150px;")
       - if false
         %div.control-group{ style: "margin-bottom: 5px;" }
           %label.control-label Collaborators
           %div.controls= link_to "View and add collaborators", collaborator_path_path(@path), style: "line-height:18px;"
-      %hr
+      %hr{ style: "margin: 10px 0; "}
       %div{ style: "float:right;" }
         %span.button.button-standard{ onclick: "$('#settings_modal').modal('hide');" } Close
         = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
