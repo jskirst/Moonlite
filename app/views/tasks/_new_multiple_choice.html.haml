@@ -8,8 +8,8 @@
         %legend Create an Arena question
         %span.help-block What's your question?
         = f.text_area(:question, rows: 4, placeholder:"Question...")
-        %span.help-block Add a code snippet to your question. (Optional) 
-        = f.text_area(:quoted_text, rows: 4, placeholder:"Code snippet...")
+        %span.help-block Add a snippet to your question. (Optional) 
+        = f.text_area(:quoted_text, rows: 4, placeholder:"Snippet...")
         %a.next.button.button-actionable{ style:"float:right; margin: 15px 0 -15px 0;" } Next
       .tips
         %h4 
@@ -24,21 +24,21 @@
       %fieldset
         %legend Create an Arena question
         %span.help-block What kind of question is this?
-        .btn-group{"data-toggle" => "buttons-radio"}
-          %buttton.btn.btn-primary{ type: "button", style: "opacity: .6;"} Multiple Choice
-          %buttton.btn.btn-primary{ type: "button", style: "opacity: .6;"} Exact Match
+        .btn-group{ "data-toggle" => "buttons-radio" }
+          %buttton.btn.btn-primary.core_question_type{ type: "button", style: "opacity: .6;", data: { type: "multiple" } } Multiple Choice
+          %buttton.btn.btn-primary.core_question_type{ type: "button", style: "opacity: .6;", data: { type: "exact" } } Exact Match
           
         -# Display this help-block when "Multiple Choice" is selected
         %span.help-block What are the possible answers?
         %div{ style: "width: 380px; margin: 3px 0 12px 0; "}
           %label Correct answer
-          = f.text_field(:answer_new_1, placeholder: "Required", style:"margin-left:17px;")
+          = f.text_field(:answer_new_1, placeholder: "Required", style: "margin-left:17px;", class: "correct_answer")
           %label Wrong answer
-          = f.text_field(:answer_new_2, placeholder: "Required")
+          = f.text_field(:answer_new_2, placeholder: "Required", class: "wrong_answer")
           %label Wrong answer
-          = f.text_field(:answer_new_3, placeholder: "Optional")
+          = f.text_field(:answer_new_3, placeholder: "Optional", class: "wrong_answer")
           %label Wrong answer
-          = f.text_field(:answer_new_4, placeholder: "Optional")
+          = f.text_field(:answer_new_4, placeholder: "Optional", class: "wrong_answer")
           %span.error_message         
         
         %div.hide    
@@ -62,13 +62,13 @@
     %div.step3.hide
       %fieldset{ style: "width: 98%; "}
         %legend Create an Arena question
-        %h4 Your question:
+        %h4 Question:
         %div{style:"margin-left:12px;"}
           %code.content.question
-        %h4 Correct answer:
+        %h4 Correct Answer:
         %div{style:"margin-left:12px;"}
-          %span.correct_answer
-        %h4 Here's where this Arena question will appear:
+          %code.content.correct_answer
+        %h4 Here's where this question will appear:
         %div{style:"margin-left:12px;"}
           %span{style:" font-size:14px;"} Challenge:
           %span{style:"font-weight:bold;font-size:14px;"} #{section.path.name}

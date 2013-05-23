@@ -98,6 +98,14 @@
       return false;
     }
     
+    $(".core_question_type").click(function(){
+      if($(this).data("type") == "exact"){
+        $(".wrong_answer").attr("disabled", "disabled");
+      } else {
+        $(".wrong_answer").removeAttr("disabled");
+      }
+    })
+    
     var display_type = #{@display_type || 0};
     var open_tab;
     var task_subtypes = #{Task::SUBTYPES.to_json};
@@ -147,13 +155,10 @@
           } else {
             if($editor.find("input[name*=answer2]").val() == ""){
               return log_error("You must provide at least one incorrect answer.");
-            } else {
-              $editor.find(".step2 span.correct_answer").text($editor.find("input[name*=answer1]").val());
             }
           }
         }
         
-        $editor.find(".step2 code.question").text($editor.find("textarea[name='task[question]']").val());
         $editor.find(".step1").hide();
         $editor.find(".step2").show();
       });      
@@ -165,6 +170,8 @@
       });
        
       $editor.find(".step2 a.next").click(function(){
+        $editor.find(".step3 code.question").text($editor.find("textarea[name='task[question]']").val());
+        $editor.find(".step3 code.correct_answer").text($editor.find("input.correct_answer").val());
         $editor.find(".step2").hide();
         $editor.find(".step3").show();
         $editor.parents(".headlines").find(".exit").hide(); 
