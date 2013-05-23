@@ -207,6 +207,23 @@
       });
     });
     
+    
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/github");    
+    editor.getSession().setUseSoftTabs(true);
+    editor.getSession().setTabSize(2);
+    var $textarea = $('textarea[name="content"]').hide();
+    var $submit = $("#submit_button");
+    editor.getSession().setValue($textarea.val());
+    editor.getSession().on('change', function(){
+      $textarea.val(editor.getSession().getValue());
+      if($textarea.data("template") != $textarea.val()){
+        $submit.removeClass("disabled").removeAttr("disabled");
+      } else {
+        $submit.addClass("disabled").attr("disabled", "disabled");
+      }
+    });
+    
     $('#points-tt1').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
     $('#points-tt2').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
     $('#points-tt3').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
