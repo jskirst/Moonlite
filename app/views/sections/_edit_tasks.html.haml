@@ -38,8 +38,8 @@
 - 4.times { answers << task.answers.new }
 - answers.first.is_correct = true
 = render "tasks/form", { task: task, answers: answers }
-%table.task_list.table{ style: "margin: 0 0 0 10px;" }
+%table.task_list.table{ style: "margin: 0 0 0 10px;", id: "section_questions_#{section.id}" }
   - tasks.each do |t|
     - next if t.id.nil?
     %tr
-      %td.task= render "tasks/task", { :task => t }
+      %td.task= render "tasks/task", { task: t, move: false }

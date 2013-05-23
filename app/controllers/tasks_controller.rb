@@ -33,6 +33,7 @@ class TasksController < ApplicationController
   
   def edit
     task = @task
+    @sections = @task.path.sections.order("position ASC")
     answers = task.answers.order("is_correct DESC").to_a
     if task.multiple_choice?
       (4 - answers.size).times { answers << task.answers.new(is_correct: false) }
@@ -43,13 +44,28 @@ class TasksController < ApplicationController
   end
     
   def update
+    sid = params[:task].delete(:section_id).to_i
+    
     @task.update_attributes(params[:task])
     errors = @task.errors.full_messages
     errors += @task.update_answers(params[:task])
     
+    if sid != @task.section_id
+      sids = @task.path.sections.pluck(:id)
+      if sids.include?(sid)
+        @task.section_id = sid
+        @task.save!
+        move = sid
+      else
+        raise "Access Denied: Invalid section (#{sid}) - (#{sids})" 
+      end
+    else
+      move = false
+    end
+    
     if errors.empty?
       respond_to do |f|
-        f.html { render :partial => "task", :locals => {:task => @task} }
+        f.html { render :partial => "task", :locals => { task: @task, move: move } }
         f.json { render :json => @task }
       end
     else

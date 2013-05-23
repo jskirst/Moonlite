@@ -68,7 +68,12 @@
                 = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, confirm: "Are you sure you want to remove this attachment?"
               - else
                 = link_to "Add Image", add_stored_resource_task_path(task)
-        
+          
+          .control-group
+            %label.control-label Section
+            .controls
+              = f.select :section_id, @sections.collect { |s| [s.name, s.id] }
+                
         %h4 Source        
         .control-group
           %label.control-label URL

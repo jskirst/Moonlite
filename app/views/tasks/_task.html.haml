@@ -1,4 +1,4 @@
-%div.question_display
+%div.question_display{ id: move ? "must_move" : "" }
   %div.edit_task_buttons{ style: "float:right; margin-top:5px; " }
     - if task.creator == current_user
       .btn-group
@@ -34,3 +34,11 @@
   %div{ style: "position: relative; bottom: 0px; margin-left: 45px; font-size: 11px;"}
     - unless task.resource.blank?
       = link_to "Source: "+task.resource_title, task.resource, target: "_blank"
+  
+  - if move
+    :javascript
+      $(function(){ 
+        alert("Moving!");
+        console.log($("#must_move"));
+        $("#must_move:first").removeAttr("id").parents("td.task").parent().remove().appendTo("#section_questions_"+#{move})
+      });

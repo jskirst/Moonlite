@@ -9,8 +9,8 @@ class Opportunity
   MINER_ULTRA = 7
   
   PRODUCTS = {
-    EVAL_BASIC => "Evaluator - Basic", EVAL_PRO => "Evaluator - Basic", EVAL_ENT => "Evaluator - Basic", EVAL_ULTRA => "Evaluator - Basic",
-    MINER_BASIC => "Talent Miner - Basic", MINER_PRO => "Talent Miner - Basic", MINER_ENT => "Talent Miner - Basic", MINER_ULTRA => "Talent Miner - Basic", 
+    EVAL_BASIC => "Evaluator - Basic", EVAL_PRO => "Evaluator - Professional", EVAL_ENT => "Evaluator - Enterprise", EVAL_ULTRA => "Evaluator - Ultimate",
+    MINER_BASIC => "Talent Miner - Basic", MINER_PRO => "Talent Miner - Professional", MINER_ENT => "Talent Miner - Enterprise", MINER_ULTRA => "Talent Miner - Ultimate", 
   }
   
   include ActiveModel::Validations
