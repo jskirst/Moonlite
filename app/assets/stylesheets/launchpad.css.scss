@@ -18,6 +18,8 @@ $success_color: #62c462;
   h1>div { position:relative; bottom:8px; display:inline;}
   
   .editor_view {
+    margin-top:-15px;
+    
     .radio { padding-left:35px; height:100%; }
     .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
     textarea { width: 100%; }
@@ -29,24 +31,27 @@ $success_color: #62c462;
     a.next { margin-top: 5px; float: right; }
     .step1 fieldset { display: inline-block; margin-right:15px; width:58.1%; }
     .step2 {
+      .btn-group { opacity: .7; margin: 6px 0 15px;  }
+      .tip { margin-top: 6px; display: inline-block; }
+    }
+    .step3 {
       h4 { margin-top: 12px; font-size: 14px; }
       code.question { max-height: 60px; overflow-y: auto; }
       .correct_answer { font-weight: bold; font-size: 14px; }
     }
-    .step3 {
+    .step4 {
       h4 { margin-top:12px; font-size:16px; }
     }
     .tips {
-      display:inline-block; 
-      margin-left:20px; 
-      vertical-align:top; 
-      width:199px; 
-      border-left: 1px solid #E7E7E7; 
-      position:relative; 
-      top:0px; 
-      padding-left:10px;
+      display: inline-block;
+      margin-left: 20px;
+      vertical-align: top;
+      width: 200px;
+      border-left: 1px solid #E7E7E7;
+      position: relative;
+      top: 48px;
+      padding-left: 10px;
       
-      img { height:25px; width:25px; }
       ul { font-size:13px; }
     }
   }
@@ -73,7 +78,7 @@ $success_color: #62c462;
       width: 21%; 
       vertical-align: top;
       overflow: auto; 
-      height:460px;
+      height:470px;
       
       h3 { font-size: 16px; margin: 0 0 10px 0; font-weight: bold; line-height: 30px; }
       ul { margin: 0; }

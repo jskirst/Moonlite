@@ -8,7 +8,7 @@
   .aboutbox
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
-      %span Turbocharge your hiring
+      %span MetaBright Talent Miner
     .body
       %div
         %h2
@@ -31,6 +31,40 @@
           %li Browse scores and work samples of each.
           %li Select which people you want to contact.
           %li Enjoy interviewing your pre-screened candidates.
+        %h3 FAQ
+        #faq_accordion.accordion
+          .accordion-group
+            .accordion-heading
+              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"}
+                How are people evaluated at MetaBright?
+            #collapseTwo.accordion-body.collapse.in
+              .accordion-inner
+                We evaluate people with things called <strong>Challenges</strong> -- fancy quizzes that analyze people's raw knowledge, their creative ability, and what they’ve accomplished. 
+                We distill all this information down into one easy to understand percentile ranking that indicates how capable they actually are.
+          .accordion-group
+            .accordion-heading
+              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseThree"}
+                What does it meant to contact a user?
+            #collapseThree.accordion-body.collapse
+              .accordion-inner
+                Your Talent Miner account allows you to scan MetaBright for users whose skills match the needs of your company. 
+                When you find someone who’s a good fit, you can contact them via Talent Miner to indicate that you’re interested in speaking further. 
+                The MetaBright user will then receive an invitation to connect with you. 
+          .accordion-group
+            .accordion-heading
+              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"}
+                What if I contact someone and they never get back to me?
+            #collapseFour.accordion-body.collapse
+              .accordion-inner
+                Don’t worry -- if you contact someone and they don’t respond within 7 days, we’ll credit your account.
+          .accordion-group
+            .accordion-heading
+              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"}
+                Why does MetaBright look so playful?
+            #collapseSix.accordion-body.collapse
+              .accordion-inner
+                We’ve found that people are more likely to stay engaged with the site when it feels like they're playing a game as opposed to taking a test. 
+                This means we can evaluate people with a higher degree of confidence and we can deliver more examples of their abilities! 
         %h3 
           Talent Miner Pricing
         %ul.pricing_table
@@ -39,50 +73,46 @@
             .price
               .price_figure
                 %span.price_number $10
-                %span.price_tenure per month, per user
+                %span.price_tenure per user, per month
             %ul.features
-              %li Contact 5 Users
-              %li Limited admin panel
-              %li Filter by 1 Challenge
-              %li 24/7 Email support
+              %li Contact 5 users
+              %li Filter by 1 skill
+              %li --
             .price_footer
               = link_to "Select", product_form_path(p: Opportunity::MINER_BASIC), class: "action_button"
-          %li.price_block
-            %h3 Intermediate
-            .price
-              .price_figure
-                %span.price_number $19
-                %span.price_tenure per month, per user
-            %ul.features
-              %li Contact 20 Users
-              %li Full admin panel
-              %li Filter by 2 Challenges
-              %li 24/7 Email support
-            .price_footer
-              = link_to "Select", product_form_path(p: Opportunity::MINER_PRO), class: "action_button"
           %li.price_block
             %h3 Professional
             .price
               .price_figure
-                %span.price_number $39
-                %span.price_tenure per month, per user
+                %span.price_number $19
+                %span.price_tenure per user, per month
             %ul.features
-              %li Contact 50 Users
-              %li Full admin panel
-              %li Filter by 3+ Challenges
-              %li 24/7 Email support
+              %li Contact 20 users
+              %li Filter by 2 skills
+              %li Email support
             .price_footer
-              = link_to "Select", product_form_path(p: Opportunity::MINER_ENT), class: "action_button"
+              = link_to "Select", product_form_path(p: Opportunity::MINER_PRO), class: "action_button"
           %li.price_block
             %h3 Enterprise
             .price
               .price_figure
-                %span.price_number $69
-                %span.price_tenure per month, per user
+                %span.price_number $39
+                %span.price_tenure per user, per month
             %ul.features
-              %li Contact 100 Users
-              %li Full admin panel
-              %li Filter by 3+ Challenges
-              %li 24/7 Email support
+              %li Contact 50 users
+              %li Filter by 3+ skills
+              %li Email and phone support
+            .price_footer
+              = link_to "Select", product_form_path(p: Opportunity::MINER_ENT), class: "action_button"
+          %li.price_block
+            %h3 Ultimate
+            .price
+              .price_figure
+                %span.price_number $69
+                %span.price_tenure per user, per month
+            %ul.features
+              %li Contact 100 users
+              %li Filter by 3+ skills
+              %li Email and phone support
             .price_footer
               = link_to "Select", product_form_path(p: Opportunity::MINER_ULTRA), class: "action_button"
