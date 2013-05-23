@@ -18,6 +18,8 @@ $success_color: #62c462;
   h1>div { position:relative; bottom:8px; display:inline;}
   
   .editor_view {
+    margin-top:-15px;
+    
     .radio { padding-left:35px; height:100%; }
     .error_message { float: left; color: #ee5f5b; font-size: 13px; display: none; width: 250px; }
     textarea { width: 100%; }
@@ -76,7 +78,7 @@ $success_color: #62c462;
       width: 21%; 
       vertical-align: top;
       overflow: auto; 
-      height:460px;
+      height:470px;
       
       h3 { font-size: 16px; margin: 0 0 10px 0; font-weight: bold; line-height: 30px; }
       ul { margin: 0; }

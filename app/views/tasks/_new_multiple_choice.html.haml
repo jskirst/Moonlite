@@ -10,7 +10,7 @@
         = f.text_area(:question, rows: 4, placeholder:"Question...")
         %span.help-block Add a code snippet to your question. (Optional) 
         = f.text_area(:quoted_text, rows: 4, placeholder:"Code snippet...")
-        %a.next.button.button-actionable{ style:"float:right;" } Next
+        %a.next.button.button-actionable{ style:"float:right; margin: 15px 0 -15px 0;" } Next
       .tips
         %h4 
           %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style:"height:25px; width:25px;", alt: "Tip"}
@@ -30,32 +30,35 @@
           
         -# Display this help-block when "Multiple Choice" is selected
         %span.help-block What are the possible answers?
-        %label Correct answer
-        = f.text_field(:answer_new_1, placeholder: "Required", style:"margin-left:17px;")
-        %label Wrong answer
-        = f.text_field(:answer_new_2, placeholder: "Required")
-        %label Wrong answer
-        = f.text_field(:answer_new_3, placeholder: "Optional")
-        %label Wrong answer
-        = f.text_field(:answer_new_4, placeholder: "Optional")
-        %span.error_message          
-
+        %div{ style: "width: 380px; margin: 3px 0 12px 0; "}
+          %label Correct answer
+          = f.text_field(:answer_new_1, placeholder: "Required", style:"margin-left:17px;")
+          %label Wrong answer
+          = f.text_field(:answer_new_2, placeholder: "Required")
+          %label Wrong answer
+          = f.text_field(:answer_new_3, placeholder: "Optional")
+          %label Wrong answer
+          = f.text_field(:answer_new_4, placeholder: "Optional")
+          %span.error_message         
+        
+        %div.hide    
         -# Display this help-block when "Exact Match" is selected. NOTE: The method for the text field is wrong.
-        %span.help-block What is the correct answer?        
-        %div.tip{ style: "margin-bottom: 5px; "}
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
-          %p Answers are case insensitive and spaces are ignored.
-        = f.text_field(:answer_new_1, placeholder: "Correct answer...", style: "margin-bottom: 20px; ")
+          %span.help-block What is the correct answer?        
+          %div.tip{ style: "margin-bottom: 5px; "}
+            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
+            %p Answers are case insensitive and spaces are ignored.
+          = f.text_field(:answer_new_1, placeholder: "Correct answer...", style: "margin-bottom: 10px; ")
           
-        %div  
+        %span.help-block{ style: "margin-bottom: 3px;"} What source proves the answer to this question?
+        %label Source URL
+        = f.text_field :resource
+        %label{ style: "margin-left: 17px;"} Title
+        = f.text_field :resource_title
+             
+        %div{ style: "margin-top: 10px; margin-bottom: -10px;"}
           %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;" } Back
           %a.next.button.button-actionable{ style:"float:right;" } Next
           
-          
-          
-          
-
-    
     %div.step3.hide
       %fieldset{ style: "width: 98%; "}
         %legend Create an Arena question
