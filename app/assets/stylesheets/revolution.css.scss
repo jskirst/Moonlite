@@ -973,11 +973,12 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
   .metric {
     display: inline-block; 
     font-size: 16px;  
-    width: 182px; 
+    width: 135px; 
+    vertical-align: top;
     
     .score {
-      font-size: 50px; 
-      line-height: 50px;
+      font-size: 41px; 
+      line-height: 45px;
     } 
   } 
  
