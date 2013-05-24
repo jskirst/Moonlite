@@ -83,6 +83,7 @@ class PathsController < ApplicationController
   def update
     @path.name = params[:path][:name] if params[:path][:name]
     @path.description = params[:path][:description] if params[:path][:name]
+    @path.template = params[:path][:template] if params[:path][:template]
     
     if @enable_administration
       unless params[:path][:persona].blank?

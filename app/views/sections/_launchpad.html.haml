@@ -109,6 +109,7 @@
     var display_type = #{@display_type || 0};
     var open_tab;
     var task_subtypes = #{Task::SUBTYPES.to_json};
+    var template = #{@path.template.to_json};
     
     if(display_type == 0){ open_tab = "#questions_tab_link"; } 
     if(display_type == 2){ open_tab = "#arena_tab_link"; } 
@@ -136,20 +137,15 @@
       $(".active_tab").find(".editor_view").show();
     });
     
-    $(".editor_view").each(function(){  
+    $(".editor_view").each(function(){      
       var $editor = $(this);
       $editor.find(".step1 a.next").click(function(){
         $editor.parents(".headlines").find(".exit").hide();
         if($editor.find("textarea").val() == ""){
           return log_error("You must provide a question.");
         }
-        if($editor.find("input[name*=answer_type]").val() == 0){
-          if($editor.find("input[name*=answer_sub_type]:checked").size() == 0){
-            return log_error("You must provide an answer type.");
-          } else {
-            $editor.find(".step2 span.task_subtype").text(task_subtypes[$editor.find("input[name*=answer_sub_type]:checked").val()]);
-          }
-        } else if ($editor.find("input[name*=answer_type]").val() == 2){
+        
+        if ($editor.find("input[name*=answer_type]").val() == 2){
           if($editor.find("input[name*=answer1]").val() == ""){
             return log_error("You must provide a correct answer.");
           } else {
@@ -158,9 +154,20 @@
             }
           }
         }
-        
-        $editor.find(".step1").hide();
-        $editor.find(".step2").show();
+        if ($editor.find("input[name*=answer_type]").val() == 0){
+          if (template) {
+            $editor.find(".step1").hide();        
+            $editor.find(".step2").show();
+            }
+          else {
+            $editor.find(".step1").hide();        
+            $editor.find(".step3").show();
+          }
+        }
+        else {
+          $editor.find(".step1").hide();        
+          $editor.find(".step2").show();
+        }
       });      
       
       $editor.find(".step2 a.back").click(function(){
@@ -178,9 +185,23 @@
       });
       
       $editor.find(".step3 a.back").click(function(){
-        $editor.find(".step3").hide();
-        $editor.find(".step2").show();
-        $editor.parents(".headlines").find(".exit").show();
+        if ($editor.find("input[name*=answer_type]").val() == 0){
+          if (template) {
+            $editor.find(".step3").hide();        
+            $editor.find(".step2").show();
+            $editor.parents(".headlines").find(".exit").show();
+            }
+          else {
+            $editor.find(".step3").hide();        
+            $editor.find(".step1").show();
+            $editor.parents(".headlines").find(".exit").show();
+          }
+        }
+        else { 
+          $editor.find(".step3").hide();
+          $editor.find(".step2").show();
+          $editor.parents(".headlines").find(".exit").show();
+        }
       });
       
       $editor.find(".step3 a.restart").click(function(){
