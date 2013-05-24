@@ -11,20 +11,25 @@
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
       %hr
       %div{ style: "text-align: center;"}
-        .metric{ style: "float: left;"}
-          .score 6,121
-          %div
-            Total points earned
-        .metric{ style: "float: right;" }
-          .score 62%
-          %div
-            Your percentile ranking        
-        .metric
+        .metric{ style: "float: left;" }
           .score 1,204
           %div
-            Your #{@path.name} MetaScore
+            Your #{truncate(@path.name, length: 25, separator: ' ')} MetaScore
+        .metric{ style: "margin: 0 8px;"}
+          .score 62%
+          %div
+            Your percentile ranking 
+        .metric{ style: "border-left: 1px solid rgba(0,0,0,0.1); padding: 0 8px;" }
+          .score 6,121
+          %div
+            Total points earned       
+        .metric{ style: "float: right;"}
+          .score 8
+          %div
+            Your #{truncate(@path.name, length: 25, separator: ' ')} level
       %div{ style: "margin-top: 25px;"}
         %div{ style: "text-align: center; "}
+          %p Remember, you'll always have opportunities to improve your scores.
           %a{"data-target" => "#metrics_faq", "data-toggle" => "collapse", :type => "button", style: "text-align: center; "}
             Learn more about these metrics...
         #metrics_faq.collapse
@@ -40,7 +45,7 @@
             It differs in a couple different ways:
             %ul
               %li Your MetaScore can fluctuate up and down, whereas your point total can only go up. 
-              %li Your point total is always publicly visible. Your MetaScore (and percentile) is private to you unless you choose otherwise.
+              %li Your point total and level are always publicly visible. Your MetaScore (and percentile) is private to you unless you choose otherwise.
               %li The accuracy of your MetaScore improves over time to approximate your actual ability in a Challenge. Your point total could be independent of actual ability.        
           %p
             %span How is my percentile calculated?
@@ -62,7 +67,7 @@
             If you think your scores aren't indicative of your abilities, you likely just haven't taken enough questions yet. 
             If your percentile has flat-lined, then it's best to spend some time getting better at the Challenge topic and then come back to MetaBright later to re-evaluate your skills.
           
-      %div{ style: "margin: 20px 0 0 0;"}
+      %div{ style: "margin: 15px 0 0 0;"}
         = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
         = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
 
