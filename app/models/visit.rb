@@ -38,10 +38,12 @@ class Visit < ActiveRecord::Base
       .to_a
   end
   
-  def self.test_profile_views_email(user, deliver = false)
+  def self.send_visit_alerts(user, deliver = false)
     views = Visit.profile_views(user, Time.now - 24.hours)
-    m = Mailer.visit_alert(user, views)
-    m.deliver if deliver
-    return m
+    if views.size > 0
+      m = Mailer.visit_alert(user, views)
+      m.deliver if deliver
+      return m
+    end
   end
 end
