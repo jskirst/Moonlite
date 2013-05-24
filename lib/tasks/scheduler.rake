@@ -55,6 +55,12 @@ task :send_alerts => :environment do
   end
 end
 
+task :visit_alerts => :environment do
+  User.all.each do |user|
+    Visit.send_visit_alerts(user, true)
+  end
+end
+
 task :send_newsletter => :environment do
   raise "Fatal: No newsletter specified" unless ENV["NEWSLETTER_PATH"]
   if ENV["NEWSLETTER_TEST"]
