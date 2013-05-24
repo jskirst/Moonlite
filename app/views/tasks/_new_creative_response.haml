@@ -2,6 +2,7 @@
   = form_for(section.tasks.new, remote: true) do |f|
     %div.step1
       = f.hidden_field(:answer_type, value: Task::CREATIVE)
+      = f.hidden_field(:answer_sub_type, value: Task::TEXT)
       = f.hidden_field(:section_id, value: section.id)
       = f.hidden_field(:source, value: "launchpad")
       %fieldset{style: "display: inline-block; margin-right:28px; width:56%;"}
@@ -44,9 +45,6 @@
         %h4 Your question:
         %div{style:"margin-left:12px;"}
           %code.content.question
-        %h4 Question type:
-        %div{style:"margin-left:12px;"}
-          %span.task_subtype{style:"font-weight:bold;font-size:14px;"} 
         %h4 Here's where this question will appear:
         %div{style:"margin-left:12px;"}
           %span{style:" font-size:14px;"} Challenge:

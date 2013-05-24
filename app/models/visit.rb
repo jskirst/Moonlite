@@ -21,4 +21,27 @@ class Visit < ActiveRecord::Base
     return next_page.created_at - created_at if next_page
     return updated_at - created_at
   end
+  
+  def self.profile_views(user, time_period)
+    if Rails.env == "development"
+      base_url = "http://localhost:3000/"
+    else
+      base_url = "http://www.metabright.com/"
+    end
+    url = base_url+"#{user.username}"
+    Visit.where("visits.created_at > ?", time_period)
+      .where("user_id != ?", user.id)
+      .where("request_url = ?", url)
+      .select(:user_id)
+      .includes(:user)
+      .uniq
+      .to_a
+  end
+  
+  def self.test_profile_views_email(user, deliver = false)
+    views = Visit.profile_views(user, Time.now - 24.hours)
+    m = Mailer.visit_alert(user, views)
+    m.deliver if deliver
+    return m
+  end
 end
