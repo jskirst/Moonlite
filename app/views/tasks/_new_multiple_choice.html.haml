@@ -25,20 +25,20 @@
         %legend Create an Arena question
         %span.help-block What kind of question is this?
         .btn-group{ "data-toggle" => "buttons-radio" }
-          %buttton.btn.btn-primary.core_question_type{ type: "button", style: "opacity: .6;", data: { type: "multiple" } } Multiple Choice
-          %buttton.btn.btn-primary.core_question_type{ type: "button", style: "opacity: .6;", data: { type: "exact" } } Exact Match
+          %buttton.btn.btn-primary.core_question_type.active{ type: "button", style: "opacity: .8;", data: { type: "multiple" } } Multiple Choice
+          %buttton.btn.btn-primary.core_question_type{ type: "button", style: "opacity: .8;", data: { type: "exact" } } Exact Match
           
         -# Display this help-block when "Multiple Choice" is selected
         %span.help-block What are the possible answers?
         %div{ style: "width: 380px; margin: 3px 0 12px 0; "}
           %label Correct answer
-          = f.text_field(:answer_new_1, placeholder: "Required", style: "margin-left:17px;", class: "correct_answer")
+          = f.text_field(:answer_new_1, placeholder: "Correct answer...", style: "margin-left:17px;", class: "correct_answer")
           %label Wrong answer
-          = f.text_field(:answer_new_2, placeholder: "Required", class: "wrong_answer")
+          = f.text_field(:answer_new_2, placeholder: "Wrong answer...", class: "wrong_answer")
           %label Wrong answer
-          = f.text_field(:answer_new_3, placeholder: "Optional", class: "wrong_answer")
+          = f.text_field(:answer_new_3, placeholder: "Wrong answer...", class: "wrong_answer")
           %label Wrong answer
-          = f.text_field(:answer_new_4, placeholder: "Optional", class: "wrong_answer")
+          = f.text_field(:answer_new_4, placeholder: "Wrong answer...", class: "wrong_answer")
           %span.error_message         
         
         %div.hide    
