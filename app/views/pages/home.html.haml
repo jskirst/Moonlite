@@ -47,7 +47,7 @@
             = link_to "Hot", root_url(order: "hot"), class: "btn leftbtn"
             = link_to "Newest", root_url(order: "newest"), class: "btn midbtn"
             = link_to "Following", root_url(order: "following"), class: "btn midbtn"
-            = link_to "Top", root_url(order: "top"), class: "btn rightbtn"
+            = link_to "Hall of Fame", root_url(order: "halloffame"), class: "btn rightbtn"
         :javascript
           $.ajax({ type: "GET", url: "#{newsfeed_path(order: params[:order])}", success: function(data){ $(".empty_post").replaceWith(data); } });
         %div.post.empty_post{ style: "height: 300px;"}

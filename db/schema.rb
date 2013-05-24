@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523215223) do
+ActiveRecord::Schema.define(:version => 20130524220951) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(:version => 20130523215223) do
     t.text     "preview"
     t.text     "preview_errors"
     t.boolean  "has_comments",   :default => false
+    t.datetime "promoted_at"
   end
 
   add_index "submitted_answers", ["task_id"], :name => "index_submitted_answers_on_task_id"
