@@ -78,8 +78,12 @@ class Mailer < ActionMailer::Base
   def visit_alert(user, visits)
     @user = user
     @visits = visits
-    people = visits.size > 1 ? "#{visits.size} people" : "One person"
-    mail(to: @user.email, subject: "#{people} viewed your profile on MetaBright!", message: "Blank")
+    @people = visits.size > 1 ? "#{visits.size} people" : "One person"
+    mail(to: @user.email, subject: "#{@people} viewed your profile on MetaBright!", message: "Blank")
+  end
+  
+  def hof_induction
+    
   end
   
   def intro_drop_off(email)

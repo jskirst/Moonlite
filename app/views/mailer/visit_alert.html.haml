@@ -1,0 +1,34 @@
+%span{ style: "font-size:22px;"} Who's been checking out your MetaBright profile...
+%br/
+%hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
+%p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
+%p{ style: "font-size:12px;"} #{@people} recently viewed your MetaBright profile:
+- anons = 0
+- @visits.each do |visit|
+  - visitor = visit.user
+  - anons += 1 and next if visitor.nil?
+  %table{ cellpadding: "0", style: "margin-top: 14px; display: inline-block; width: 294px; "}
+    %tbody
+      %tr{ valign: "top"}
+        %td{ style: ""}
+          %a{ href: profile_url(visitor.username), target:"_blank"}
+            %img{ style: "border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; height: 70px; width: 70px;", src: visitor.picture}
+        %td{ style: "padding: 0 0 10px 5px; font-size: 12px;"}
+          %a{ href: profile_url(visitor.username), target:"_blank", style:"text-decoration: none;  text-transform: uppercase; font-weight: bold;"}
+            %span #{visitor.name}
+          %br
+          - paths = visitor.enrollments.to_a.collect{ |e| e.path.name}
+          - paths = paths.first(3).join(", ")
+          %span= paths
+- if anons > 0
+  %p ...and #{anons} other 
+    %span 
+      - if anons > 2
+        person.
+      - else
+        people.
+      
+%p{ style: "font-size:12px;"} 
+  Thanks,
+  %br
+  Team MetaBright
