@@ -31,7 +31,7 @@
       %fieldset{style: "display: inline-block; width:98%; margin-bottom: -20px;"}
         %legend Create a CR
         %span.help-block Users will answer the question with this template. You can edit or remove it if necessary.
-        %textarea{ name: "content", id: "answer_input", data: { template: @path.template.to_s } }= @path.template
+        = f.text_area :template, value: @path.template
         %div{ id: "editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 175px; position: relative; padding-top:0;"}
         %span.help-block{ style: "margin-top: 15px; "} If the responses to your question can be evaluated and there's only one correct answer, place that answer here:
         = text_field_tag("task[exact1]", nil, placeholder: "Correct output...")
