@@ -204,17 +204,17 @@
         }
       });
       
-      $editor.find(".step3 a.restart").click(function(){
-        $editor.find(".step3").hide();
+      $editor.find(".step4 a.restart").click(function(){
+        $editor.find(".step4").hide();
         $editor.find(".step1").find("input[type=text],textarea").val("");
         $editor.find(".step1").show();
         $editor.parents(".headlines").find(".exit").show();
       });
       
-      $editor.find(".step3 a.finish").click(function(){
+      $editor.find(".step4 a.finish").click(function(){
         $(".headlines").hide();
         $(".launchpadcontent").show();
-        $editor.find(".step3").hide();
+        $editor.find(".step4").hide();
         $editor.find(".step1").find("input[type=text],textarea").val("");
         $editor.find(".step1").show();
         $editor.hide();
@@ -222,9 +222,9 @@
       });
       
       $editor.find("form").on("ajax:success", function(event, data){
-        $editor.find(".step2").hide();
-        $editor.find(".step3").find("a.take").attr("href", data.question_link);
-        $editor.find(".step3").show();
+        $editor.find(".step3").hide();
+        $editor.find(".step4").find("a.take").attr("href", data.question_link);
+        $editor.find(".step4").show();
       });
     });
     
@@ -233,6 +233,8 @@
     editor.setTheme("ace/theme/github");    
     editor.getSession().setUseSoftTabs(true);
     editor.getSession().setTabSize(2);
+    var $textarea = $('textarea[name="content"]').hide();
+    editor.getSession().setValue($textarea.val());
     
     $('#points-tt1').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
     $('#points-tt2').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})

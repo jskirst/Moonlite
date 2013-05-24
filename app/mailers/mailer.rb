@@ -75,6 +75,13 @@ class Mailer < ActionMailer::Base
     @followed_user.log_email
   end
   
+  def visit_alert(user, visits)
+    @user = user
+    @visits = visits
+    people = visits.size > 1 ? "#{visits.size} people" : "One person"
+    mail(to: @user.email, subject: "#{people} viewed your profile on MetaBright!", message: "Blank")
+  end
+  
   def intro_drop_off(email)
     @user = User.find_by_email(email)
     return false unless @user.can_email?()
