@@ -127,7 +127,7 @@ module ApplicationHelper
       paths.id as path_id, paths.name as path_name, paths.permalink as path_permalink, 
       submitted_answers.id as submitted_answer_id, submitted_answers.total_votes as total_votes, 
         submitted_answers.content as submitted_answer_content, submitted_answers.caption as submitted_answer_caption,
-        submitted_answers.has_comments as has_comments,
+        submitted_answers.has_comments as has_comments, submitted_answers.promoted_at as promoted_at,
       tasks.id as task_id, tasks.section_id, tasks.question as question, tasks.answer_type as answer_type, tasks.answer_sub_type as answer_sub_type, 
       users.id as user_id, users.username, users.name, users.image_url as user_image_url, users.earned_points
     ]

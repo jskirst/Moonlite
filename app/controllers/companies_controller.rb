@@ -61,6 +61,8 @@ class CompaniesController < ApplicationController
       submission = SubmittedAnswer.find(params[:id])
       if params[:mark] == "locked"
         toggle(:locked_at, submission)
+      elsif params[:mark] == "promoted"
+        toggle(:promoted_at, submission)
       else
         toggle(:reviewed_at, submission)
       end

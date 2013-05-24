@@ -53,6 +53,12 @@
                   = link_to "View all responses", task_drilldown_path(post["task_id"])
                 %li.CR_dropdown_option
                   = link_to "View all details", submission_drilldown_path(post["submitted_answer_id"])
+                - if @enable_administration
+                  %li.CR_dropdown_option
+                    - if post["promoted_at"].nil?
+                      = link_to "Add to Hall of Fame", admin_update_submission_path(post["submitted_answer_id"], mark: "promoted"), method: :put
+                    - else
+                      = link_to "In the Hall of Fame", "#"
     
     %div#cr_pop.CRarea
       - if post["answer_type"] == Task::CREATIVE.to_s
