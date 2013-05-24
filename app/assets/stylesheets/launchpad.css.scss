@@ -17,6 +17,10 @@ $success_color: #62c462;
   h1>img { border-radius:4px; height:36px; width:36px; }
   h1>div { position:relative; bottom:8px; display:inline;}
   
+  .task_view {
+    tr { padding: 10px 0; }
+  }
+  
   .editor_view {
     margin-top:-15px;
     

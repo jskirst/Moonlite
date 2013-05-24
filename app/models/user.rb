@@ -388,7 +388,7 @@ class User < ActiveRecord::Base
     
     results = { id: self.id, username: self.username, email: self.email, name: self.name, picture: self.image_url }
     results[:challenges] = all_enrollments.collect do |e|
-       { name: e.challenge_name, 
+       { name: e.challenge_name,
          picture: e.challenge_picture, 
          points: e.total_points,
          metascore: e.metascore,

@@ -121,19 +121,56 @@ class Enrollment < ActiveRecord::Base
     if average_correct_points > path_stats[:correct_points]
       ms += average_correct_points - path_stats[:correct_points]
     end
-    if cts.count < path_stats[:tasks_attempted]
-      ms += (cts.count - path_stats[:tasks_attempted]) * TASKS_TAKEN_PENALTY
+    if total_cts < path_stats[:tasks_attempted]
+      ms += (total_cts - path_stats[:tasks_attempted]) * TASKS_TAKEN_PENALTY
     else
-      ms += cts.count / path_stats[:tasks_attempted]
+      ms += total_cts / path_stats[:tasks_attempted]
     end
     ms += 2 if votes.count > 0
     
     ms += (total_cts / path_stats[:tasks_attempted]) * TASKS_TAKEN_MULTIPLIER
     self.metascore = (ms * 10) + 1000
-    self.save
+    save!
+  end
+  
+  def self.scores(path)
+    where(path_id: path.id).where("total_points > ?", 0).collect{ |e| Score.new(e.metascore, e.id) }.sort!
+  end
+  
+  # L/N(100) = P
+  # L = number of scores beneath this score (score array index)
+  # N = total number of scores
+  # P = percentile
+  def calculate_metapercentile(all_scores = nil)
+    if all_scores.nil?
+      all_scores = Enrollment.scores(path)
+    end
+    count = all_scores.size
+    index = all_scores.find_index { |s| s.enrollment == self.id }
+    self.metapercentile = (index.to_f/count.to_f*100).ceil
+    save!
+  end
+  
+  def test_fire
+    t0 = Time.now
+    calculate_metascore
+    calculate_metapercentile
+    t1 = Time.now
+    return [self.id, metascore, metapercentile, (t1 - t0)].join(", ")
   end
   
   private
+  
+  class Score
+    attr_accessor :value, :percentile, :enrollment
+    def initialize(score, enrollment)
+      self.value = score.to_f
+      self.enrollment = enrollment
+    end
+    def <=>(foo)
+      self.value <=> foo.value
+    end
+  end
   
   def check_for_events(points)
     if crossed_threshold?(CONTRIBUTION_THRESHOLD, points) && !contribution_unlocked?

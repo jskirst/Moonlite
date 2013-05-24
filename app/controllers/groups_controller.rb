@@ -92,7 +92,7 @@ class GroupsController < ApplicationController
   end
   
   def authorize_resource
-    unless @group.admin?(current_user)
+    unless @group.admin?(current_user) || @enable_administration
       raise "Access Denied"
     end
   end
