@@ -3,10 +3,12 @@
 %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
 %p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
 %p{ style: "font-size:12px;"} #{@people} recently viewed your MetaBright profile:
-- anons = 0
+- other_visits = 0
 - @visits.each do |visit|
   - visitor = visit.user
-  - anons += 1 and next if visitor.nil?
+  - if visitor.nil?
+    - other_visits = other_visits + 1
+    - next
   %table{ cellpadding: "0", style: "margin-top: 14px; display: inline-block; width: 294px; "}
     %tbody
       %tr{ valign: "top"}
@@ -20,13 +22,14 @@
           - paths = visitor.enrollments.to_a.collect{ |e| e.path.name}
           - paths = paths.first(3).join(", ")
           %span= paths
-- if anons > 0
-  %p ...and #{anons} other 
-    %span 
-      - if anons > 2
-        person.
-      - else
-        people.
+- if other_visits > 0
+  %p
+    = other_visits + " other "
+    - if other_visits == 1
+      person 
+    - else
+      people 
+    also visited your profile.
       
 %p{ style: "font-size:12px;"} 
   Thanks,
