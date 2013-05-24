@@ -8,19 +8,19 @@
       .header
         Nice work!
         .subheader
-          You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
+          You just earned <strong>#{@total_session_points} points</strong> in this section!
       %hr
       %div{ style: "text-align: center;"}
         .metric{ style: "float: left;"}
-          .score 6,121
+          .score= @total_challenge_points
           %div
             Total points earned
         .metric{ style: "float: right;" }
-          .score 62%
+          .score= "#{@metapercentile}%"
           %div
             Your percentile ranking        
         .metric
-          .score 1,204
+          .score= @metascore
           %div
             Your #{@path.name} MetaScore
       %div{ style: "margin-top: 25px;"}
