@@ -1,14 +1,67 @@
 :css
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
   .quizcontainer { width: 650px; margin-top: 50px;}
-%div.quizcontainer
+%div.quizcontainer.finish_page
   %div.quizspace
     %div
-      = image_tag GIANT_STONEY, style: "width:76px; height:94px; margin:0; display: inline-block; vertical-align: top;", alt: "Stoney"
-      %div{ style: "display: inline-block; margin-left: 8px; font-size:65px; line-height:74px; margin-top:-6px;"}
+      = image_tag GIANT_STONEY, alt: "Stoney"
+      .header
         Nice work!
-        %div{ style: "font-size: 24px; margin-left: 0; line-height: 21px; " }
+        .subheader
           You just earned <strong>#{@section.points_earned(current_user)} points</strong> in this section!
+      %hr
+      %div{ style: "text-align: center;"}
+        .metric{ style: "float: left;"}
+          .score 6,121
+          %div
+            Total points earned
+        .metric{ style: "float: right;" }
+          .score 62%
+          %div
+            Your percentile ranking        
+        .metric
+          .score 1,204
+          %div
+            Your #{@path.name} MetaScore
+      %div{ style: "margin-top: 25px;"}
+        %div{ style: "text-align: center; "}
+          %a{"data-target" => "#metrics_faq", "data-toggle" => "collapse", :type => "button", style: "text-align: center; "}
+            Learn more about these metrics...
+        #metrics_faq.collapse
+          %p
+            %span What's a MetaScore?
+            %br
+            Your MetaScore is a measurement of how good you are at a specific Challenge. 
+            It's based on how well you perform in all areas of a Challenge. 
+            We take into account a bunch of variables such as question difficulty, response time, and breadth of questions taken.
+          %p
+            %span How does my MetaScore differ from my point total?
+            %br
+            It differs in a couple different ways:
+            %ul
+              %li Your MetaScore can fluctuate up and down, whereas your point total can only go up. 
+              %li Your point total is always publicly visible. Your MetaScore (and percentile) is private to you unless you choose otherwise.
+              %li The accuracy of your MetaScore improves over time to approximate your actual ability in a Challenge. Your point total could be independent of actual ability.        
+          %p
+            %span How is my percentile calculated?
+            %br
+            Your percentile is based on how your MetaScore compares with other people who have taken the same Challenge.    
+          %p 
+            %span But I've barely done anything yet!
+            %br
+            If you're just starting out your percentile ranking may not be that accurate yet. 
+            The more you do in a Challenge, the truer your percentile ranking should be.
+          %p
+            %span Who can see my MetaScore and percentile?
+            %br
+            By default, your MetaScore and percentile are only visible to you. 
+            If you choose to use MetaBright to surface jobs or internships for you, your MetaScore and percentile will be anonymously visible (ie. your name or other identifying information won't be used).
+          %p
+            %span How can I improve my MetaScore and percentile?
+            %br          
+            If you think your scores aren't indicative of your abilities, you likely just haven't taken enough questions yet. 
+            If your percentile has flat-lined, then it's best to spend some time getting better at the Challenge topic and then come back to MetaBright later to re-evaluate your skills.
+          
       %div{ style: "margin: 20px 0 0 0;"}
         = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
         = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
