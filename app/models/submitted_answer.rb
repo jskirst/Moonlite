@@ -70,4 +70,15 @@ class SubmittedAnswer < ActiveRecord::Base
     end
     return false
   end
+  
+  def send_induction_alert(deliver = false)
+    raise "Not inducted: "+self.to_yaml if promoted_at.nil?
+    puts "Sending Alert for: #{self.id}"
+    m = Mailer.induction_alert(self)
+    m.deliver if deliver
+  end
+  
+  def self.send_all_induction_alerts(time, deliver = false)
+    where("promoted_at > ?",time).each { |sa| sa.send_induction_alert(deliver) }
+  end
 end

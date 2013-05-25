@@ -21,7 +21,7 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
-  def content_comment_alert(comment)
+  def comment_alert(comment)
     @submission = comment.owner
     @user = @submission.user
     @commenting_user = comment.user
@@ -47,7 +47,7 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
-  def content_vote_alert(vote)
+  def vote_alert(vote)
     if vote.is_a? String
       vote = SubmittedAnswer.find(vote).votes.first
     end
@@ -62,7 +62,7 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
-  def content_sub_alert(subscription)
+  def subscription_alert(subscription)
     @followed_user = subscription.followed
     @user = @followed_user
     @follower_user = subscription.follower
@@ -85,15 +85,15 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
-  def hof_induction
-    @user = 
-    @path = 
+  def induction_alert(submitted_answer)
+    @user = submitted_answer.alert
+    @path = submitted_answer.path
     
     # This should go to the permalink for the HOF answer
-    @hof_answer = 
+    @answer_link = submitted_answer.task.question
     
     # This should go to the Challenge page with HOF filter applied to the stream
-    @hof_link = 
+    @challenge_link = challenge_url(@path, order: "halloffame")
   end
   
   def intro_drop_off(email)

@@ -66,6 +66,7 @@ class User < ActiveRecord::Base
   before_create do
     self.signup_token = SecureRandom::hex(16)
     self.login_at = Time.now
+    grant_username if username.blank?
   end
   
   after_create do

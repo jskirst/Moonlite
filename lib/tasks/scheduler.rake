@@ -55,10 +55,14 @@ task :send_alerts => :environment do
   end
 end
 
-task :visit_alerts => :environment do
-  User.all.each do |user|
-    Visit.send_visit_alerts(user, true)
-  end
+task :daily_alerts => :environment do
+  time = Time.now - 24.hours
+  puts "Sending daily alerts. Time Marker: #{time}"
+  puts "VISIT ALERTS"
+  Visit.send_all_visit_alerts(time)
+  puts "INDUCTION ALERTS"
+  SubmittedAnswer.send_all_induction_alerts(time)
+  puts "Daily alerts finished."
 end
 
 task :send_newsletter => :environment do

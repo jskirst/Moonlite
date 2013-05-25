@@ -41,7 +41,7 @@ group :development do
 end
 
 group :test do
-	gem 'webrat'
+	gem 'capybara'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'simplecov', :require => false

@@ -5,9 +5,9 @@
 %p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
 %p{ style: "font-size:12px;"} 
   Great news! 
-  = link_to "Your response", @hof_answer
+  = link_to "Your response", @answer_link
   in the #{@path.name} Challenge has been added to the 
-  = link_to "Hall of Fame!", @hof_link
+  = link_to "Hall of Fame!", @challenge_link
   The Hall of Fame is reserved for responses that demonstrate extreme ingenuity and remarkable cleverness. 
   Congratulations on your awesome work! 
 %p{ style: "font-size:12px;"} 

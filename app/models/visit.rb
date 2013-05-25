@@ -22,28 +22,35 @@ class Visit < ActiveRecord::Base
     return updated_at - created_at
   end
   
-  def self.profile_views(user, time_period)
+  def self.profile_views(user, time)
+    raise "Time required" unless time
     if Rails.env == "development"
       base_url = "http://localhost:3000/"
     else
       base_url = "http://www.metabright.com/"
     end
     url = base_url+"#{user.username}"
-    Visit.where("visits.created_at > ?", time_period)
+    user_visits = Visit.select(:user_id)
+      .where("visits.created_at > ?", time)
       .where("user_id != ?", user.id)
+      .where("user_id is not ?", nil)
       .where("request_url = ?", url)
-      .select(:user_id)
-      .includes(:user)
       .uniq
       .to_a
   end
   
-  def self.send_visit_alerts(user, deliver = false)
-    views = Visit.profile_views(user, Time.now - 24.hours)
+  def self.send_visit_alerts(user, time, deliver = false)
+    views = Visit.profile_views(user, time)
     if views.size > 0
       m = Mailer.visit_alert(user, views)
       m.deliver if deliver
       return m
+    end
+  end
+  
+  def self.send_all_visit_alerts(time, deliver = false)
+    User.all.each do |user|
+      Visit.send_visit_alerts(user, time, deliver)
     end
   end
 end
