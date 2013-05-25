@@ -1,0 +1,16 @@
+%span{:style => "font-size:22px;"} Congratulations!
+%br/
+%span{:style => "font-size:14px; font-style:italic;"} Your answer is now in the #{@path.name} Hall of Fame!
+%hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
+%p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
+%p{ style: "font-size:12px;"} 
+  Great news! 
+  = link_to "Your response", @hof_answer
+  in the #{@path.name} Challenge has been added to the 
+  = link_to "Hall of Fame!", @hof_link
+  The Hall of Fame is reserved for responses that demonstrate extreme ingenuity and remarkable cleverness. 
+  Congratulations on your awesome work! 
+%p{ style: "font-size:12px;"} 
+  Thanks,
+  %br
+  Team MetaBright

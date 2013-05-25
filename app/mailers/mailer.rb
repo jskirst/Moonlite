@@ -86,7 +86,14 @@ class Mailer < ActionMailer::Base
   end
   
   def hof_induction
-
+    @user = 
+    @path = 
+    
+    # This should go to the permalink for the HOF answer
+    @hof_answer = 
+    
+    # This should go to the Challenge page with HOF filter applied to the stream
+    @hof_link = 
   end
   
   def intro_drop_off(email)
