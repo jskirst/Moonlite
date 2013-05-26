@@ -85,15 +85,15 @@ class Mailer < ActionMailer::Base
     @user.log_email
   end
   
-  def induction_alert(submitted_answer)
-    @user = submitted_answer.alert
-    @path = submitted_answer.path
+  def induction_alert(sa)
+    @user = sa.user
+    @path = sa.task.section.path
     
     # This should go to the permalink for the HOF answer
-    @answer_link = submitted_answer.task.question
+    @answer_link = submission_drilldown_url(sa)
     
     # This should go to the Challenge page with HOF filter applied to the stream
-    @challenge_link = challenge_url(@path, order: "halloffame")
+    @challenge_link = challenge_url(@path.permalink, order: "halloffame")
   end
   
   def intro_drop_off(email)

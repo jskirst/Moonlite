@@ -21,6 +21,7 @@ FactoryGirl.define do
 
   factory :path do
     name Faker::Lorem.sentence(1)
+    permalink
     description Faker::Lorem.sentence(12)
     association :user
   end
@@ -64,6 +65,10 @@ FactoryGirl.define do
   end
   
   sequence :username do |n|
+    "username#{n}"
+  end
+  
+  sequence :permalink do |n|
     "username#{n}"
   end
 end

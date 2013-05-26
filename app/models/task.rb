@@ -54,9 +54,12 @@ class Task < ActiveRecord::Base
   end
   
   after_create do
-    answer_content.each do |a|
-      answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+    unless answer_content.nil?
+      answer_content.each do |a|
+        answers.create!(content: a[:content], is_correct: a[:is_correct]) unless a[:content].blank?
+      end
     end
+    creator.enroll!(path) unless creator.enrolled?(path)
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   

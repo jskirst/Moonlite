@@ -5,8 +5,12 @@ describe SubmittedAnswer do
   before :each do
     @user = FactoryGirl.create(:user)
     @task = FactoryGirl.create(:task)
+    raise "NO PATH" if @task.path.nil?
+    @user.enroll!(@task.path)
     content = Faker::Lorem.sentence(12)
-    @sa = SubmittedAnswer(task_id: @task.id, content: content)
+    @sa = SubmittedAnswer.new(content: content)
+    @sa.task_id = @task.id
+    @sa.save!
     ct = @user.completed_tasks.create!(task_id: @task.id, status_id: 1, submitted_answer_id: @sa.id)
   end
   
@@ -14,6 +18,21 @@ describe SubmittedAnswer do
     it "should result in 0 emails" do
       SubmittedAnswer.send_all_induction_alerts(1.hour.ago, true)
       last_email.should be_nil
+    end
+  end
+  
+  describe "inducted submitted answer" do
+    before :each do
+      @sa.update_attribute(:promoted_at, Time.now)
+    end
+    
+    it "should result in 1 induction" do
+      inductions = SubmittedAnswer.inductions(1.hour.ago)
+      inductions.size.should == 1
+    end
+    
+    it "should result in 1 email" do
+      SubmittedAnswer.send_all_induction_alerts(1.hour.ago, true).size.should == 1
     end
   end
   # 

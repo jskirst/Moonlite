@@ -71,6 +71,10 @@ class SubmittedAnswer < ActiveRecord::Base
     return false
   end
   
+  def self.inductions(time)
+    where("promoted_at > ?",time)
+  end
+  
   def send_induction_alert(deliver = false)
     raise "Not inducted: "+self.to_yaml if promoted_at.nil?
     puts "Sending Alert for: #{self.id}"
@@ -79,6 +83,6 @@ class SubmittedAnswer < ActiveRecord::Base
   end
   
   def self.send_all_induction_alerts(time, deliver = false)
-    where("promoted_at > ?",time).each { |sa| sa.send_induction_alert(deliver) }
+    inductions(1.hour.ago).each { |i| i.send_induction_alert(deliver) }
   end
 end
