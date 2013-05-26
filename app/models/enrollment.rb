@@ -108,27 +108,26 @@ class Enrollment < ActiveRecord::Base
   # MS = MS + (core_tasks_taken_count / population_average_core_tasks_taken_count) * TTM
   
   def calculate_metascore
-    path_stats = PATH_AVERAGES[path_id]
     cts = completed_tasks.joins(:task).where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
     total_cts = cts.count
     return 0 if total_cts == 0
     
     correct_answers = cts.where("status_id = ?", Answer::CORRECT).count.to_f
     correct_percent = correct_answers / total_cts
-    ms = (correct_percent - path_stats[:percent_correct]) * PERCENT_CORRECT_MULTIPLIER
+    ms = (correct_percent - path.percent_correct) * PERCENT_CORRECT_MULTIPLIER
     
     average_correct_points = cts.where("status_id = ?", Answer::CORRECT).average(:points_awarded) || 0
-    if average_correct_points > path_stats[:correct_points]
-      ms += average_correct_points - path_stats[:correct_points]
+    if average_correct_points > path.correct_points
+      ms += average_correct_points - path.correct_points
     end
-    if total_cts < path_stats[:tasks_attempted]
-      ms += (total_cts - path_stats[:tasks_attempted]) * TASKS_TAKEN_PENALTY
+    if total_cts < path.tasks_attempted
+      ms += (total_cts - path.tasks_attempted) * TASKS_TAKEN_PENALTY
     else
-      ms += total_cts / path_stats[:tasks_attempted]
+      ms += total_cts / path.tasks_attempted
     end
     ms += 2 if votes.count > 0
     
-    ms += (total_cts / path_stats[:tasks_attempted]) * TASKS_TAKEN_MULTIPLIER
+    ms += (total_cts / path.tasks_attempted) * TASKS_TAKEN_MULTIPLIER
     self.metascore = (ms * 10) + 1000
     save!
   end
