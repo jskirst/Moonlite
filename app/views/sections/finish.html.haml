@@ -12,15 +12,15 @@
       %hr
       %div{ style: "text-align: center;"}
         .metric{ style: "float: left;" }
-          .score= @total_challenge_points
+          .score= @enrollment.metascore
           %div
             Your #{truncate(@path.name, length: 25, separator: ' ')} MetaScore
         .metric{ style: "margin: 0 8px;"}
-          .score= "#{@metapercentile}%"
+          .score= "#{@enrollment.metapercentile}%"
           %div
             Your percentile ranking 
         .metric{ style: "border-left: 1px solid rgba(0,0,0,0.1); padding: 0 8px;" }
-          .score= @total_challenge_points
+          .score= @enrollment.total_points
           %div
             Total points earned       
         .metric{ style: "float: right;"}
