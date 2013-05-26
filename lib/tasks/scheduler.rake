@@ -59,9 +59,9 @@ task :daily_alerts => :environment do
   time = Time.now - 24.hours
   puts "Sending daily alerts. Time Marker: #{time}"
   puts "VISIT ALERTS"
-  Visit.send_all_visit_alerts(time)
+  Visit.send_all_visit_alerts(time, true)
   puts "INDUCTION ALERTS"
-  SubmittedAnswer.send_all_induction_alerts(time)
+  SubmittedAnswer.send_all_induction_alerts(time, true)
   puts "Daily alerts finished."
 end
 
