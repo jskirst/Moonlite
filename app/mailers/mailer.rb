@@ -87,13 +87,14 @@ class Mailer < ActionMailer::Base
   
   def induction_alert(sa)
     @user = sa.user
+    return false unless @user.can_email?(:interaction)
+    
     @path = sa.task.section.path
-    
-    # This should go to the permalink for the HOF answer
     @answer_link = submission_drilldown_url(sa)
-    
-    # This should go to the Challenge page with HOF filter applied to the stream
     @challenge_link = challenge_url(@path.permalink, order: "halloffame")
+    
+    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
+    @user.log_email
   end
   
   def intro_drop_off(email)

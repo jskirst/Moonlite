@@ -77,7 +77,6 @@ class SubmittedAnswer < ActiveRecord::Base
   
   def send_induction_alert(deliver = false)
     raise "Not inducted: "+self.to_yaml if promoted_at.nil?
-    puts "Sending Alert for: #{self.id}"
     m = Mailer.induction_alert(self)
     m.deliver if deliver
   end
