@@ -24,7 +24,7 @@ class TasksController < ApplicationController
       if @task.source == "launchpad"
         render json: { status: "success", question_link: take_section_url(@section, task_id: @task.id) }
       else
-        render partial: "task", locals: { task: @task }
+        render partial: "task", locals: { task: @task, move: false }
       end
     else
       respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages.join(". ") } } }
