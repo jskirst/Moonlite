@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
   has_many    :visits
   has_many    :group_users
   has_many    :groups, through: :group_users
+  has_many    :sent_emails
 
   
   validates :name, length: { within: 3..100 }
@@ -289,9 +290,17 @@ class User < ActiveRecord::Base
       return false
     end
     
-    if (last_email_sent_at && last_email_sent_at.to_date.today?) && (emails_today && emails_today >= MAX_DAILY_EMAILS)
-      puts "Emailed too much today"
-      return false
+    if (last_email_sent_at && last_email_sent_at.to_date.today?)
+      if emails_today && emails_today >= MAX_DAILY_EMAILS
+        puts "Emailed too much today"
+        return false
+      else
+        puts "Can send email."
+        return true
+      end
+    else
+      self.emails_today = 0
+      save!
     end
     
     settings = notification_settings
@@ -302,7 +311,7 @@ class User < ActiveRecord::Base
     return true
   end
   
-  def log_email
+  def log_email(m)
     if last_email_sent_at && last_email_sent_at.to_date.today?
       self.emails_today += 1
     else
@@ -311,6 +320,9 @@ class User < ActiveRecord::Base
     
     self.last_email_sent_at = DateTime.now
     self.save!
+    
+    SentEmail.create!(user_id: self.id, content: m.subject)
+    
     return self
   end
   
@@ -397,6 +409,10 @@ class User < ActiveRecord::Base
          answers: e.completed_tasks.count }
     end
     return results
+  end
+  
+  def send_test_alert(email_type = :interaction)
+    Mailer.test_alert(self, email_type).deliver
   end
   
   private  

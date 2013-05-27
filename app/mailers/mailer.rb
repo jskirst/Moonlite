@@ -4,21 +4,21 @@ class Mailer < ActionMailer::Base
   
   def welcome(email)
     @user = User.find_by_email(email)
-    mail(to: @user.email, from: "Jonathan Kirst <jskirst@metabright.com>", subject: "Welcome to MetaBright!")
-    @user.log_email
+    m = mail(to: @user.email, from: "Jonathan Kirst <jskirst@metabright.com>", subject: "Welcome to MetaBright!")
+    @user.log_email(m)
   end
   
   def study_guide(email)
     @user = User.find_by_email(email)
-    mail(to: @user.email, subject: "Your personalized MetaBright study guide!")
-    @user.log_email
+    m = mail(to: @user.email, subject: "Your personalized MetaBright study guide!")
+    @user.log_email(m)
   end
   
   def password_reset(user)
     @user = user
     @url = finish_reset_url(t: @user.signup_token)
-    mail(to: @user.email, subject: "Password reset for MetaBright")
-    @user.log_email
+    m = mail(to: @user.email, subject: "Password reset for MetaBright")
+    @user.log_email(m)
   end
   
   def comment_alert(comment)
@@ -29,8 +29,8 @@ class Mailer < ActionMailer::Base
     return false unless @user.can_email?(:interaction)
     
     @action_url = submission_details_url(@submission.path.permalink, @submission)
-    mail(to: @user.email, subject: "#{@commenting_user.name} just commented on your MetaBright submission")
-    @user.log_email
+    m = mail(to: @user.email, subject: "#{@commenting_user.name} just commented on your MetaBright submission")
+    @user.log_email(m)
   end
   
   def comment_reply_alert(comment, commenting_user, user)
@@ -43,8 +43,8 @@ class Mailer < ActionMailer::Base
     return false unless @user.can_email?(:interaction)
     
     @action_url = submission_details_url(@submission.path.permalink, @submission)
-    mail(to: @user.email, subject: "#{@commenting_user.name} just replied to your comment on MetaBright")
-    @user.log_email
+    m = mail(to: @user.email, subject: "#{@commenting_user.name} just replied to your comment on MetaBright")
+    @user.log_email(m)
   end
   
   def vote_alert(vote)
@@ -58,8 +58,8 @@ class Mailer < ActionMailer::Base
     return false unless @user.can_email?(:interaction)
     
     @action_url = submission_details_url(@submission.path.permalink, @submission)
-    mail(to: @user.email, subject: "#{@voting_user.name} just voted for your MetaBright submission!")
-    @user.log_email
+    m = mail(to: @user.email, subject: "#{@voting_user.name} just voted for your MetaBright submission!")
+    @user.log_email(m)
   end
   
   def subscription_alert(subscription)
@@ -71,8 +71,8 @@ class Mailer < ActionMailer::Base
     
     @action_url = profile_url(@follower_user.username)
     @follow_url = follow_user_url(@follower_user.username)
-    mail(to: @followed_user.email, subject: "#{@follower_user.name} is now following you!")
-    @followed_user.log_email
+    m = mail(to: @followed_user.email, subject: "#{@follower_user.name} is now following you!")
+    @followed_user.log_email(m)
   end
   
   def visit_alert(user, visits)
@@ -81,8 +81,8 @@ class Mailer < ActionMailer::Base
     
     @visits = visits
     @people = visits.size > 1 ? "#{visits.size} people" : "One person"
-    mail(to: @user.email, subject: "#{@people} viewed your profile on MetaBright!", message: "Blank")
-    @user.log_email
+    m = mail(to: @user.email, subject: "#{@people} viewed your profile on MetaBright!", message: "Blank")
+    @user.log_email(m)
   end
   
   def induction_alert(sa)
@@ -93,15 +93,16 @@ class Mailer < ActionMailer::Base
     @answer_link = submission_drilldown_url(sa)
     @challenge_link = challenge_url(@path.permalink, order: "halloffame")
     
-    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
-    @user.log_email
+    m = mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
+    @user.log_email(m)
   end
   
   def intro_drop_off(email)
     @user = User.find_by_email(email)
-    return false unless @user.can_email?()
+    return false unless @user.can_email?(:interaction)
     
-    mail(to: @user.email, subject: "Complete your first Challenge!")
+    m = mail(to: @user.email, subject: "Complete your first Challenge!")
+    @user.log_email(m)
   end
   
   def contribution_unlocked(email, path)
@@ -110,8 +111,8 @@ class Mailer < ActionMailer::Base
     
     @challenge_name = path.name
     @challenge_link = challenge_url(path.permalink, c: true) 
-    mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
-    @user.log_email
+    m = mail(to: @user.email, subject: "MetaBright Power Unlocked! Create your own MetaBright questions.")
+    @user.log_email(m)
   end
   
   def new_idea(idea)
@@ -122,6 +123,12 @@ class Mailer < ActionMailer::Base
   
   def opportunity(opp)
     @opp = opp
-    mail(to: "team@metabright.com", subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}")
+    mail(to: "team@metabright.com", subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}", message: "Body")
+  end
+  
+  def test_alert(user, email_type)
+    return false unless user.can_email?(email_type)
+    m = mail(to: user.email, subject: "Test alert", message: "Test")
+    user.log_email(m)
   end
 end
