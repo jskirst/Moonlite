@@ -3,36 +3,62 @@
     <link href="https://s3-us-west-1.amazonaws.com/moonlite/static/bootstrap.min.css" media="screen" rel="stylesheet" type="text/css">
     <link href="https://s3-us-west-1.amazonaws.com/moonlite/static/revolution.css" media="screen" rel="stylesheet" type="text/css">
     <style>
-       html, body, p, h1, h2, h3 { font-size: 25px; font-family: Arial; line-height: 30px;}
+      html, body, p, h1, h2, h3 { font-size: 25px; font-family: Arial; line-height: 30px;}
+      .fill {
+        border: 0;
+        background-image: -moz-linear-gradient(top, #406B9B, #263042);
+        background-image: -ms-linear-gradient(top, #406B9B, #263042);
+        background-image: -o-linear-gradient(top, #406B9B, #263042);
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#406B9B), to(#263042));
+        background-image: -webkit-linear-gradient(top, #406B9B, #263042);
+        background-image: linear-gradient(top, #406B9B, #263042);
+      }  
+      .container {
+	  		overflow: hidden;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 110px;
+				-webkit-border-radius: 6px;
+				-moz-border-radius: 6px;
+				border-radius: 6px;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				background: rgba(255, 255, 255, 0.8);
+			}
+			.holder {
+				background-color: white;
+				margin: 12px;
+				-webkit-border-radius: 10px;
+				-moz-border-radius: 10px;
+				border-radius: 10px;
+				border: 1px solid rgba(0, 0, 0, 0.1);
+				overflow: hidden;
+				padding: 12px;
+			}
+			.copy {
+				width:80%; margin: 10px auto 20px auto; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px; padding: 15px;
+			}
     </style>
   </head>
   <body>
     <nav class="topbar" data-dropdown="dropdown" data-scollspy="scrollspy">
       <div class="fill">
-        <div style="position:absolute;">
-          <div class="chunk cloudy"></div>
-          <div class="chunk cloudy"></div>
-          <div class="chunk cloudy"></div>
-          <div class="chunk cloudy"></div>
-          <div class="chunk cloudy"></div>
-          <div class="chunk cloudy"></div>
-        </div>
-        <div style="margin-left: 188px;">
-          <h3 style="top:3px;">
-            <a href="http://localhost:3000/" style="font-size: 26px;"><img alt="Mb+logo+nav+bar" src="https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png" style="position:absolute;">
-            </a>
-          </h3>
+        <div style="margin-left: 8%;">
+          <a href="http://www.metabright.com" style="font-size: 26px;">
+            <img alt="Mb+logo+nav+bar" src="https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png" style="position:absolute;">
+          </a>
         </div>
       </div>
     </nav>
     <div class="body container">
-      <center>
-        <img class="error_image" src="https://s3.amazonaws.com/moonlite-nsdub/static/stonewalled2.png" style="width: 400px; margin-top: 60px;">
-        <div style="width:80%; margin: 10px auto 20px auto; border-radius: 10px; padding: 15px;">
-          <p>Sorry, stoney fell. We're trying to put him back together again.</p>
-          <p>Give us a few, he's heavy.</p>
-        </div>
-      </center>
+    	<div class="holder">
+	      <center>
+	        <img class="error_image" src="https://s3.amazonaws.com/moonlite-nsdub/static/stonewalled2.png" style="width: 400px; margin-top: 60px;">
+	        <div class="copy">
+	          <p>Sorry, Stoney fell.</p>
+	          <p>Bear with us while we put him back together again.</p>
+	        </div>
+	      </center>
+     	</div>
     </div>
   </body>
 </html>
