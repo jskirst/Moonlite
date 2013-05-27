@@ -324,9 +324,6 @@ class SectionsController < ApplicationController
       @enrollment.calculate_metapercentile
       
       @total_session_points = current_user.completed_tasks.where(session_id: @session_id).sum(:points_awarded)
-      @total_challenge_points = @enrollment.total_points
-      @metascore = @enrollment.metascore
-      @metapercentile = @enrollment.metapercentile
       render "finish"
     else
       step = params[:s].to_i

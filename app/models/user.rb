@@ -1,6 +1,6 @@
 require 'open-uri'
 class User < ActiveRecord::Base
-  MAX_DAILY_EMAILS = 8
+  MAX_DAILY_EMAILS = 5
   
   attr_readonly :signup_token, :company_id
   attr_protected :admin, 
