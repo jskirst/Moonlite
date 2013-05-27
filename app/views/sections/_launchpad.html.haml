@@ -228,17 +228,6 @@
       });
     });
     
-    
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/github");    
-    editor.getSession().setUseSoftTabs(true);
-    editor.getSession().setTabSize(2);
-    var $textarea = $('textarea[name="task[template]"]').hide();
-    editor.getSession().setValue($textarea.val());
-    editor.getSession().on('change', function(){
-      $textarea.val(editor.getSession().getValue());
-    });
-    
     $('#points-tt1').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
     $('#points-tt2').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
     $('#points-tt3').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
