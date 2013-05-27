@@ -10,7 +10,7 @@ module PathsHelper
     previous_level = Enrollment.points_to_level(previous_score)
     if current_level > previous_level
       achievements[:level] = current_level
-      if current_level > 1 and previous_level == 1
+      if current_level >= 1500 and previous_level < 1500
         achievements[:contribution] = true
       end
     end 
