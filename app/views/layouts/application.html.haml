@@ -39,6 +39,12 @@
       var mark_help_read_url = '#{mark_help_read_url}';
       
       $("a[href='#'], a[href='']").removeAttr("href");
+      
+      $("body").on("ajax:complete", ".hovercard_link", function(jqXHR, data){
+        $("#hover_card").remove();
+        $("body").append(data.responseText);
+        $("#hover_card").modal({ keyboard: true, show: true, backdrop: true});
+      });
 
       $('.explore_link').click(function(){
         $("#explore_modal").modal({ keyboard: true, show: true, backdrop: true});

@@ -130,3 +130,11 @@ function show_loading_icon(){
     $.log("reset load;");
   }
 }
+
+function bind_hovercard_links(){
+  $("body").on("ajax:success", ".hovercard_link", function(jqXHR, data){
+    console.log("HOVERCARD SUCCESS");
+    $("body").append(data);
+    $("#hover_card").modal({ keyboard: true, show: true, backdrop: true});
+  });
+}

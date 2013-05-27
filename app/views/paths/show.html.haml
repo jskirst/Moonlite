@@ -67,7 +67,7 @@
             %li
               %span.rank= (i+1).to_s
               = image_tag user.picture, alt: "#{user.name}" 
-              = link_to truncate(user.name, length: 22), profile_path(user.username), class: "name"
+              = link_to truncate(user.name, length: 22), hovercard_user_path(user.username), remote: true, class: "name hovercard_link"
               %span.level lvl. #{Enrollment.points_to_level(user.total_points.to_i)}
               %span.points= user.total_points
           - unless current_user.nil? || current_user_in_top

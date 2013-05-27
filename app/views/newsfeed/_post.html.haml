@@ -1,12 +1,12 @@
 %div.post
   - unless feed.context == :profile
     %div.postphotospace
-      = link_to profile_path(post["username"]) do
+      = link_to hovercard_user_path(post["username"]), class: "hovercard_link", remote: true do
         = image_tag User.picture(post["user_image_url"]), class: "photo"
   %div.postspace
     %div.postheader
       %h3
-        = link_to truncate(post["name"], length: 50), profile_path(post["username"]), class:"username"
+        = link_to truncate(post["name"], length: 50), hovercard_user_path(post["username"]), class:"username hovercard_link", remote: true
         - if false #user.groups.size > 0
           - user.groups.each do |group|
             = link_to group_path(group.permalink) do

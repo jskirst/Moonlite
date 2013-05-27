@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:notifications, :index]
+  before_filter :authenticate, except: [:notifications, :index, :hovercard]
   before_filter :load_resource, except: [:retract, :notifications, :professional, :index]
-  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow, :index]
+  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow, :index, :hovercard]
   
   def show
     redirect_to profile_path(@user.username)
@@ -101,6 +101,12 @@ class UsersController < ApplicationController
     else
       redirect_to profile_path(@user.username)
     end
+  end
+  
+  def hovercard
+    @enrollments = @user.enrollments.includes(:path)
+    @user_personas = @user.user_personas.includes(:persona)
+    render partial: "users/hovercard"
   end
   
   private

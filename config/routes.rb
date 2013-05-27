@@ -151,6 +151,7 @@ Metabright::Application.routes.draw do
 	match '/robots.txt' => 'pages#robots'
 	
 	get '/users/:username/follow' => 'users#follow', as: "follow_user"
+	get '/users/:username/hovercard' => 'users#hovercard', as: "hovercard_user"
 
   match '/emailtest' => 'pages#email_test', as: 'email'
 	match '/send_reset' => 'users#send_reset'
