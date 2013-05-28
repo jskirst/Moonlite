@@ -72,6 +72,7 @@ GEM
       execjs
     coffee-script-source (1.6.2)
     daemons (1.1.9)
+    dalli (2.6.4)
     debug_inspector (0.0.2)
     diff-lcs (1.2.3)
     erubis (2.7.0)
@@ -123,6 +124,7 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcachier (0.0.2)
     meta_request (0.2.3)
       rack-contrib
       railties
@@ -269,12 +271,14 @@ DEPENDENCIES
   capybara
   carmen-rails!
   coffee-rails
+  dalli
   factory_girl_rails
   faker
   fb_graph
   haml
   heroku
   jquery-rails
+  memcachier
   meta_request
   nokogiri
   omniauth
