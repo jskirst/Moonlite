@@ -18,6 +18,7 @@ gem 'carmen-rails', git: 'https://github.com/jim/carmen-rails.git'
 gem 'fb_graph'
 gem 'turbolinks'
 gem 'dalli'
+gem 'awesome_print'
 
 group :assets do
   gem 'sass-rails'

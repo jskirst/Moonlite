@@ -1,11 +1,12 @@
+- user = User.cached_find_by_id(comment.user_id)
 %li
   %div{ style: "float:left;" }
     :javascript
       $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); });
-    = link_to (image_tag comment.user.picture, class: "commentphoto"), profile_path(comment.user.username)
+    = link_to (image_tag user.picture, class: "commentphoto"), profile_path(user.username)
   %div{ style: "overflow:hidden; margin: 0 0 0 43px;" }
     %pre.unstyled.text_content{ style: "font-size: 13px; color: black; margin-left: 0;" }= comment.content
     %p{ style: "margin-left: 0;" } 
-      #{link_to comment.user.name, profile_path(comment.user.username)} about #{time_ago_in_words(comment.created_at)} ago.
-      #{link_to "Remove.", comment, class: 'comment_delete', :method => :delete, remote: true if comment.user == current_user}
+      #{link_to user.name, profile_path(user.username)} about #{time_ago_in_words(comment.created_at)} ago.
+      #{link_to "Remove.", comment, class: 'comment_delete', :method => :delete, remote: true if user.id == current_user.id}
       

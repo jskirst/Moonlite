@@ -41,6 +41,7 @@ GEM
       rake
     arel (3.0.2)
     attr_required (0.0.5)
+    awesome_print (1.1.0)
     aws-sdk (1.8.5)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
@@ -265,6 +266,7 @@ PLATFORMS
 
 DEPENDENCIES
   annotate
+  awesome_print
   aws-sdk
   better_errors
   binding_of_caller

@@ -4,7 +4,7 @@ class UserEvent < ActiveRecord::Base
   attr_accessible :actioner_id, :content, :link, :image_link
   
   scope :unread, where(read_at: nil)
-  belongs_to :user
+  belongs_to :user, touch: true
   belongs_to :actioner, class_name: "User"
 
   validates_presence_of :link

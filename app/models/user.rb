@@ -48,7 +48,6 @@ class User < ActiveRecord::Base
   has_many    :group_users
   has_many    :groups, through: :group_users
   has_many    :sent_emails
-
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
@@ -75,6 +74,11 @@ class User < ActiveRecord::Base
     if group_id
       GroupUser.create!(user_id: self.id, group_id: self.group_id)
     end
+  end
+  
+  after_commit do
+    Rails.cache.delete([self.class.name, username])
+    Rails.cache.delete([self.class.name, id])
   end
   
   def to_s() self.name end
@@ -201,7 +205,7 @@ class User < ActiveRecord::Base
   end
   
   def self.authenticate_with_salt(id, cookie_salt)
-    user = User.where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first
+    user = User.cached_find_by_id(id)
     (user && user.salt == cookie_salt) ? user : nil
   end
   
@@ -413,6 +417,20 @@ class User < ActiveRecord::Base
   
   def send_test_alert(email_type = :interaction)
     Mailer.test_alert(self, email_type).deliver
+  end
+  
+  # Cached methods
+  
+  def self.cached_find_by_id(id)
+    Rails.cache.fetch([self.class.name, id]) { where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first }
+  end
+  
+  def self.cached_find_by_username(id)
+    Rails.cache.fetch([self.class.name, username]) { find_by_username(username) }
+  end
+  
+  def cached_user_events
+    Rails.cache.fetch([self, "user_events"]) { user_events.order("id DESC").to_a }
   end
   
   private  

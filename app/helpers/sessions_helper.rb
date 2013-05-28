@@ -107,7 +107,7 @@ module SessionsHelper
   
   def notifications
     return [] unless current_user
-    current_user.user_events.includes(:actioner).order("created_at DESC")
+    current_user.cached_user_events
   end
   
   def sign_out
