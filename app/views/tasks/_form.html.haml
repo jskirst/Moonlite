@@ -94,9 +94,11 @@
             .control-group
               %label.control-label Topic
               .controls
-                = f.select :topic_id, @topics.collect{ |t| [t.id, t.name] }
+                - topics = ["Select Topic", nil]
+                - @topics.each{ |t| topics << [t.name, t.id] }
+                = f.select :topic_id, topics
           .control-group
-            %label.control-label Topic
+            %label.control-label Other Topic
             .controls
               = f.text_field :topic_name
         
