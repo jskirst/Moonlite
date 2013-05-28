@@ -17,6 +17,8 @@ gem 'nokogiri'
 gem 'carmen-rails', git: 'https://github.com/jim/carmen-rails.git'
 gem 'fb_graph'
 gem 'turbolinks'
+gem 'dalli'
+gem 'awesome_print'
 
 group :assets do
   gem 'sass-rails'
@@ -24,8 +26,9 @@ group :assets do
   gem 'uglifier'
 end
 
-group :production do
+group :production, :staging do
   gem 'unicorn'
+  gem 'memcachier'
 end
 
 group :development do

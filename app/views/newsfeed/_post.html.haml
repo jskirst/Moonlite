@@ -38,9 +38,10 @@
         - else
           %span.vote_points= post["points_awarded"]
           %span.vote_points{ style:"margin-right:5px;" } pts
-    - if current_user
-      %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
-        %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
+    
+    %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
+      %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
+      - if current_user
         %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
           %li
             %div

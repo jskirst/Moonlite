@@ -41,6 +41,9 @@ class Path < ActiveRecord::Base
   
   after_create { user.enroll!(self) }
   before_validation :grant_permalink
+  after_commit do
+    Rails.cache.delete([self.class.name, permalink])
+  end
   
   def published?() published_at.nil? ? false : true end
   def public?() public_at.nil? ? false : true end
@@ -151,5 +154,11 @@ class Path < ActiveRecord::Base
       .order("enrollments_count DESC")
     return paths.limit(limit) if limit
     return paths
+  end
+  
+  # Cached methods
+  
+  def self.cached_find(permalink)
+    Rails.cache.fetch([name, permalink]) { find_by_permalink(permalink) }
   end
 end

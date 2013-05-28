@@ -325,6 +325,9 @@ class SectionsController < ApplicationController
       
       @total_session_points = current_user.completed_tasks.where(session_id: @session_id).sum(:points_awarded)
       render "finish"
+    elsif params[:s].blank?
+      @sample = true
+      render "finish"
     else
       step = params[:s].to_i
       current_user.update_attributes(seen_opportunities: true)

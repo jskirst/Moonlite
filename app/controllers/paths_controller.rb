@@ -325,9 +325,13 @@ class PathsController < ApplicationController
 
   private
     def load_resource
-      @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
-      @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
-      @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
+      @path = Path.cached_find(params[:permalink] || params[:id])
+      unless @path
+        raise "Could not find path in cache" if Rails.env == "development"
+        @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
+        @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
+        @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
+      end
       redirect_to root_path unless @path
     end
     

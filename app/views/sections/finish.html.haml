@@ -66,8 +66,12 @@
             %br          
             If you think your scores aren't indicative of your abilities, you likely just haven't taken enough questions yet. 
             If your percentile has flat-lined, then it's best to spend some time getting better at the Challenge topic and then come back to MetaBright later to re-evaluate your skills.
-          
-      %div{ style: "margin: 15px 0 0 0;"}
-        = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
-        = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
+      
+      - if @sample
+        %div{ style: "margin: 15px 0 0 0; text-align: center;" }
+          = link_to "Continue", finish_section_path(@section, @session_id, s: 0), class: "button button-actionable"
+      - else
+        %div{ style: "margin: 15px 0 0 0;"}
+          = link_to "Start next round", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right;"
+          = link_to "Continue later", challenge_path(@section.path.permalink, c: true, p: @section.points_earned(current_user)), class: "button button-standard", style: "float: left;"
 

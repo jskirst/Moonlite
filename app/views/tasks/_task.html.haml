@@ -38,7 +38,5 @@
   - if move
     :javascript
       $(function(){ 
-        alert("Moving!");
-        console.log($("#must_move"));
         $("#must_move:first").removeAttr("id").parents("td.task").parent().remove().appendTo("#section_questions_"+#{move})
       });

@@ -104,7 +104,7 @@ class UsersController < ApplicationController
   end
   
   def hovercard
-    @enrollments = @user.enrollments.includes(:path)
+    @enrollments = @user.enrollments.order("total_points DESC").includes(:path)
     @user_personas = @user.user_personas.includes(:persona)
     render partial: "users/hovercard"
   end
