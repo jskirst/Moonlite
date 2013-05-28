@@ -33,8 +33,9 @@
       %div.questionspace
         %pre.CRquestion= @task.question
       - if @task.quoted_text
-        %pre{ style: "margin: 10px 0 20px 0;" }
+        %pre{ style: "margin: 10px 0 0 0; border: none; border-radius: none; background-color: rgb(249, 249, 249); " }
           = @task.quoted_text
+        %hr{ style: "margin: 12px auto; width: 35%; border: 0; border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff;" }
       %div.responsespace
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id
