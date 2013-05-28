@@ -25,7 +25,7 @@ group :assets do
   gem 'uglifier'
 end
 
-group :production do
+group :production, :staging do
   gem 'unicorn'
   gem 'memcachier'
 end
