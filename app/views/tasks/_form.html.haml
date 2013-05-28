@@ -84,6 +84,22 @@
           .controls
             = f.text_field :resource_title
         
+        - if @enable_administration
+          %h4 Admin        
+          .control-group
+            %label.control-label Position
+            .controls
+              = f.text_field :position                
+          - unless @topics.empty?
+            .control-group
+              %label.control-label Topic
+              .controls
+                = f.select :topic_id, @topics.collect{ |t| [t.id, t.name] }
+          .control-group
+            %label.control-label Topic
+            .controls
+              = f.text_field :topic_name
+        
         .creative.hide
           %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
           %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.

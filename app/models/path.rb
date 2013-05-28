@@ -28,6 +28,7 @@ class Path < ActiveRecord::Base
   has_many :collaborating_users, through: :collaborations, source: :user
   has_many :path_personas
   has_many :personas, through: :path_personas
+  has_many :topics
   
   validates :name, length: { within: 2..140 }
   validates :description, length: { maximum: 2500 }
@@ -159,6 +160,6 @@ class Path < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find(permalink)
-    Rails.cache.fetch([name, permalink]) { find_by_permalink(permalink) }
+    Rails.cache.fetch([self.class.name, permalink]) { find_by_permalink(permalink) }
   end
 end

@@ -319,6 +319,7 @@ class SectionsController < ApplicationController
   
   def finish
     @session_id = params[:session_id]
+    
     if params[:s].blank? and current_user.seen_opportunities
       @enrollment.calculate_metascore
       @enrollment.calculate_metapercentile
@@ -327,6 +328,7 @@ class SectionsController < ApplicationController
       render "finish"
     elsif params[:s].blank?
       @sample = true
+      @total_session_points = current_user.completed_tasks.where(session_id: @session_id).sum(:points_awarded)
       render "finish"
     else
       step = params[:s].to_i

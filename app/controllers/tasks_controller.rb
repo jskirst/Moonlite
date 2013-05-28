@@ -33,7 +33,9 @@ class TasksController < ApplicationController
   
   def edit
     task = @task
-    @sections = @task.path.sections.order("position ASC")
+    @path = @task.path
+    @sections = @path.sections.order("position ASC")
+    @topics = @path.topics
     answers = task.answers.order("is_correct DESC").to_a
     if task.multiple_choice?
       (4 - answers.size).times { answers << task.answers.new(is_correct: false) }

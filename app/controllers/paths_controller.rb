@@ -77,6 +77,7 @@ class PathsController < ApplicationController
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id) and return
     end
+    @topics = @path.topics
     @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).all(order: "id ASC")
   end
   

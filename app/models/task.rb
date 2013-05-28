@@ -15,7 +15,7 @@ class Task < ActiveRecord::Base
   LONG_EXACT  = 103
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
-  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4
+  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name
   attr_protected :section_id, :archived_at
   attr_accessible :question,
     :answer_type, 
@@ -28,10 +28,12 @@ class Task < ActiveRecord::Base
     :reviewed_at,
     :resource,
     :resource_title,
-    :quoted_text
+    :quoted_text,
+    :topic_id, :topic_name
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
+  belongs_to :topic
   has_one :path, through: :section
   has_many :completed_tasks
   has_many :answers
@@ -40,6 +42,7 @@ class Task < ActiveRecord::Base
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
   has_many :task_issues
+  has_many :topics
   
   validates :question, length: { within: 1..1000 }
   validates_presence_of :section_id
@@ -51,6 +54,12 @@ class Task < ActiveRecord::Base
   before_save do
     self.template = nil if template.blank?
     self.quoted_text = nil if quoted_text.blank?
+    
+    unless topic_name.blank?
+      t = Topic.where("topics.name ILIKE ?", "%#{topic_name}%").first
+      t = Topic.create!(name: topic_name, path_id: path.id) unless t
+      self.topic_id = t.id
+    end
   end
   
   after_create do
