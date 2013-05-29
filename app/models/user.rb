@@ -424,10 +424,11 @@ class User < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find_by_id(id)
+    return nil unless id
     Rails.cache.fetch([self.to_s, id]) { where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first }
   end
   
-  def self.cached_find_by_username(id)
+  def self.cached_find_by_username(username)
     Rails.cache.fetch([self.to_s, username]) { find_by_username(username) }
   end
   

@@ -209,6 +209,7 @@ class SectionsController < ApplicationController
   end
   
   def complete
+    create_or_sign_in unless current_user
     task_id = params[:task_id]
     points = params[:points_remaining].to_i
     answers = Answer.cached_find_by_task_id(task_id)
