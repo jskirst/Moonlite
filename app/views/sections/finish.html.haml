@@ -5,7 +5,10 @@
 %div.quizcontainer.finish_page
   %div.quizspace
     %div
-      = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 116px; width: 85px;"
+      - if @correct_topics.blank? and @incorrect_topics.blank?
+        = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 85px; width: 65px;"
+      - else
+        = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 116px; width: 85px;"
       .header
         Nice work!
         .subheader
@@ -20,7 +23,7 @@
       %hr
       %div{ style: "text-align: center;"}
         - if @sample
-          %div{ style: "background-color: whitesmoke; display: inline-block; width: 293px; margin-right: 10px; border: 1px solid rgba(0,0,0,.1);"}
+          %div{ style: "background-color: whitesmoke; display: inline-block; width: 293px; margin: -5px 10px 0 0; padding: 5px 0; border: 1px solid rgba(0,0,0,.1);"}
             %h4 
             .metric
               .score= "?"

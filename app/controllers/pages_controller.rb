@@ -231,6 +231,10 @@ class PagesController < ApplicationController
     render json: { data: preview.to_json }
   end
   
+  def bad
+    raise "This is not valid."
+  end
+  
   private
   
   def authorize_resource

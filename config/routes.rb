@@ -1,6 +1,7 @@
 Metabright::Application.routes.draw do
 
 	resources :sessions
+	get '/assets/' => "pages#bad"
 	get '/visit/:external_id' => 'sessions#visit', as: 'visit'
 	get '/share' => 'sessions#share', as: 'share'
 	
@@ -155,7 +156,6 @@ Metabright::Application.routes.draw do
 
   match '/emailtest' => 'pages#email_test', as: 'email'
 	match '/send_reset' => 'users#send_reset'
-	
 	match '/challenges/:permalink' => 'paths#show', as: 'challenge'
 	match '/:username' => 'pages#profile', as: 'profile'
 end

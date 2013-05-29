@@ -209,7 +209,11 @@ class SectionsController < ApplicationController
   end
   
   def complete
-    create_or_sign_in unless current_user
+    unless current_user
+      create_or_sign_in
+      @enrollment = current_user.enroll!(@path)
+    end
+    
     task_id = params[:task_id]
     points = params[:points_remaining].to_i
     answers = Answer.cached_find_by_task_id(task_id)
@@ -332,7 +336,7 @@ class SectionsController < ApplicationController
       @total_session_points = completed_tasks.sum(:points_awarded)
       render "finish"
     elsif params[:s].blank?
-      @sample = @enrollment.completed_tasks.size < 9
+      @sample = @enrollment.total_points < 600
       @total_session_points = current_user.completed_tasks.where(session_id: @session_id).sum(:points_awarded)
       render "finish"
     else

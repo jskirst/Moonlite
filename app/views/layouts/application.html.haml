@@ -4,7 +4,7 @@
     = render "layouts/head"
   %body
     - if current_user
-      - if @path && @current_section
+      - if @path and @current_section
         = render "modals/launchpad"
       - if show_nav_bar
         = render "modals/explore"
