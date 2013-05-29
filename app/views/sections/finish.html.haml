@@ -7,11 +7,16 @@
 %div.quizcontainer.finish_page
   %div.quizspace
     %div
-      = image_tag GIANT_STONEY, alt: "Stoney"
+      = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 116px; width: 85px;"
       .header
         Nice work!
         .subheader
           You just earned <strong>#{@total_session_points} points</strong> in this section!
+        .session_details
+          %span Strengths:
+          #{@correct_topics} ·
+          %span Weaknesses
+          #{@incorrect_topics}
       %hr
       %div{ style: "text-align: center;"}
         - if sample
@@ -39,7 +44,7 @@
           .score= @enrollment.total_points
           %div
             Total points earned       
-        .metric{ style: "float: right;"}
+        .metric
           .score= @enrollment.level
           %div
             Your #{truncate(@path.name, length: 25, separator: ' ')} level
@@ -48,8 +53,6 @@
           - if sample
             %p{ style: "font-size: 15px; "} Complete <strong>one more section</strong> to discover your percentile and MetaScore.
           - else
-            %p= @correct_topics
-            %p= @incorrect_topics
             %p Remember, you'll always have opportunities to improve your scores.
           %a{"data-target" => "#metrics_faq", "data-toggle" => "collapse", :type => "button", style: "text-align: center; "}
             Learn more about these metrics...
