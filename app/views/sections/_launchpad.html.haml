@@ -91,154 +91,154 @@
                       %div.points{style:"margin-right:4px;"}= t.points_awarded.to_i.to_s + " points"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
-
-  :javascript
-    function log_error(error){
-      $(".editor_view:visible").find("span.error_message").text(error).show().delay(3000).fadeOut("slow");
-      return false;
-    }
-    
-    $(".core_question_type").click(function(){
-      if($(this).data("type") == "exact"){
-        $(".wrong_answer").attr("disabled", "disabled");
-      } else {
-        $(".wrong_answer").removeAttr("disabled");
+  - if @enrollment.contribution_unlocked?
+    :javascript
+      function log_error(error){
+        $(".editor_view:visible").find("span.error_message").text(error).show().delay(3000).fadeOut("slow");
+        return false;
       }
-    })
-    
-    var display_type = #{@display_type || 0};
-    var open_tab;
-    var task_subtypes = #{Task::SUBTYPES.to_json};
-    var template = #{@path.template.to_json};
-    
-    if(display_type == 0){ open_tab = "#questions_tab_link"; } 
-    if(display_type == 2){ open_tab = "#arena_tab_link"; } 
-    if(display_type == 3){ open_tab = "#achievement_tab_link"; }
-    
-    $(".tab_content").hide();
-    $("ul.nav-tabs li.active").removeClass("active");
-    $(open_tab).parent().addClass("active");
-    $("#"+$(open_tab).attr("data-tab")).show().addClass("active_tab");
-    
-    $(".nav-tabs li a").click(function(){
+  
+      $(".core_question_type").click(function(){
+        if($(this).data("type") == "exact"){
+          $(".wrong_answer").attr("disabled", "disabled");
+        } else {
+          $(".wrong_answer").removeAttr("disabled");
+        }
+      })
+  
+      var display_type = #{@display_type || 0};
+      var open_tab;
+      var task_subtypes = #{Task::SUBTYPES.to_json};
+      var template = #{@path.template.to_json};
+  
+      if(display_type == 0){ open_tab = "#questions_tab_link"; } 
+      if(display_type == 2){ open_tab = "#arena_tab_link"; } 
+      if(display_type == 3){ open_tab = "#achievement_tab_link"; }
+  
       $(".tab_content").hide();
       $("ul.nav-tabs li.active").removeClass("active");
-      $(this).parent().addClass("active");
-      $(".active_tab").removeClass("active_tab");
-      var $open_tab = $("#"+$(this).attr("data-tab"));
-      $open_tab.addClass("active_tab");
-      $open_tab.find(".task_view").show();
-      $open_tab.find(".editor_view").hide();
-      $open_tab.show();
-    });
-    
-    $("#editor_link").click(function(){
-      $(".active_tab").find(".task_view").hide();
-      $(".active_tab").find(".editor_view").show();
-    });
-    
-    $(".editor_view").each(function(){      
-      var $editor = $(this);
-      $editor.find(".step1 a.next").click(function(){
-        $editor.parents(".headlines").find(".exit").hide();
-        if($editor.find("textarea").val() == ""){
-          return log_error("You must provide a question.");
-        }
-        
-        if ($editor.find("input[name*=answer_type]").val() == 2){
-          if($editor.find("input[name*=answer1]").val() == ""){
-            return log_error("You must provide a correct answer.");
-          } else {
-            if($editor.find("input[name*=answer2]").val() == ""){
-              return log_error("You must provide at least one incorrect answer.");
+      $(open_tab).parent().addClass("active");
+      $("#"+$(open_tab).attr("data-tab")).show().addClass("active_tab");
+  
+      $(".nav-tabs li a").click(function(){
+        $(".tab_content").hide();
+        $("ul.nav-tabs li.active").removeClass("active");
+        $(this).parent().addClass("active");
+        $(".active_tab").removeClass("active_tab");
+        var $open_tab = $("#"+$(this).attr("data-tab"));
+        $open_tab.addClass("active_tab");
+        $open_tab.find(".task_view").show();
+        $open_tab.find(".editor_view").hide();
+        $open_tab.show();
+      });
+  
+      $("#editor_link").click(function(){
+        $(".active_tab").find(".task_view").hide();
+        $(".active_tab").find(".editor_view").show();
+      });
+  
+      $(".editor_view").each(function(){      
+        var $editor = $(this);
+        $editor.find(".step1 a.next").click(function(){
+          $editor.parents(".headlines").find(".exit").hide();
+          if($editor.find("textarea").val() == ""){
+            return log_error("You must provide a question.");
+          }
+      
+          if ($editor.find("input[name*=answer_type]").val() == 2){
+            if($editor.find("input[name*=answer1]").val() == ""){
+              return log_error("You must provide a correct answer.");
+            } else {
+              if($editor.find("input[name*=answer2]").val() == ""){
+                return log_error("You must provide at least one incorrect answer.");
+              }
             }
           }
-        }
-        if ($editor.find("input[name*=answer_type]").val() == 0){
-          if (template) {
-            $editor.find(".step1").hide();        
-            $editor.find(".step2").show();
+          if ($editor.find("input[name*=answer_type]").val() == 0){
+            if (template) {
+              $editor.find(".step1").hide();        
+              $editor.find(".step2").show();
+              }
+            else {
+              $editor.find(".step1").hide();        
+              $editor.find(".step3").show();
             }
+          }
           else {
             $editor.find(".step1").hide();        
-            $editor.find(".step3").show();
-          }
-        }
-        else {
-          $editor.find(".step1").hide();        
-          $editor.find(".step2").show();
-        }
-      });      
-      
-      $editor.find(".step2 a.back").click(function(){
-        $editor.find(".step2").hide();
-        $editor.find(".step1").show();
-        $editor.parents(".headlines").find(".exit").show();
-      });
-       
-      $editor.find(".step2 a.next").click(function(){
-        $editor.find(".step3 code.question").text($editor.find("textarea[name='task[question]']").val());
-        $editor.find(".step3 code.correct_answer").text($editor.find("input.correct_answer").val());
-        $editor.find(".step2").hide();
-        $editor.find(".step3").show();
-        $editor.parents(".headlines").find(".exit").hide(); 
-      });
-      
-      $editor.find(".step3 a.back").click(function(){
-        if ($editor.find("input[name*=answer_type]").val() == 0){
-          if (template) {
-            $editor.find(".step3").hide();        
             $editor.find(".step2").show();
-            $editor.parents(".headlines").find(".exit").show();
-            }
-          else {
-            $editor.find(".step3").hide();        
-            $editor.find(".step1").show();
-            $editor.parents(".headlines").find(".exit").show();
           }
-        }
-        else { 
-          $editor.find(".step3").hide();
-          $editor.find(".step2").show();
+        });      
+    
+        $editor.find(".step2 a.back").click(function(){
+          $editor.find(".step2").hide();
+          $editor.find(".step1").show();
           $editor.parents(".headlines").find(".exit").show();
-        }
-      });
-      
-      $editor.find(".step4 a.restart").click(function(){
-        $editor.find(".step4").hide();
-        $editor.find(".step1").find("input[type=text],textarea[]").val("");
-        $editor.find(".step1").show();
-        $editor.parents(".headlines").find(".exit").show();
-      });
-      
-      $editor.find(".step4 a.finish").click(function(){
-        $(".headlines").hide();
-        $(".launchpadcontent").show();
-        $editor.find(".step4").hide();
-        $editor.find(".step1").find("input[type=text],textarea").val("");
-        $editor.find(".step1").show();
-        $editor.hide();
-        $editor.siblings(".task_view").show();
-      });
-      
-      $editor.find("form").on("ajax:success", function(event, data){
-        $editor.find(".step3").hide();
-        $editor.find(".step4").find("a.take").attr("href", data.question_link);
-        $editor.find(".step4").show();
-      });
-    });
+        });
+     
+        $editor.find(".step2 a.next").click(function(){
+          $editor.find(".step3 code.question").text($editor.find("textarea[name='task[question]']").val());
+          $editor.find(".step3 code.correct_answer").text($editor.find("input.correct_answer").val());
+          $editor.find(".step2").hide();
+          $editor.find(".step3").show();
+          $editor.parents(".headlines").find(".exit").hide(); 
+        });
     
+        $editor.find(".step3 a.back").click(function(){
+          if ($editor.find("input[name*=answer_type]").val() == 0){
+            if (template) {
+              $editor.find(".step3").hide();        
+              $editor.find(".step2").show();
+              $editor.parents(".headlines").find(".exit").show();
+              }
+            else {
+              $editor.find(".step3").hide();        
+              $editor.find(".step1").show();
+              $editor.parents(".headlines").find(".exit").show();
+            }
+          }
+          else { 
+            $editor.find(".step3").hide();
+            $editor.find(".step2").show();
+            $editor.parents(".headlines").find(".exit").show();
+          }
+        });
     
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/github");    
-    editor.getSession().setUseSoftTabs(true);
-    editor.getSession().setTabSize(2);
-    var $textarea = $('textarea[name="task[template]"]').hide();
-    editor.getSession().setValue($textarea.val());
-    editor.getSession().on('change', function(){
-      $textarea.val(editor.getSession().getValue());
-    });
+        $editor.find(".step4 a.restart").click(function(){
+          $editor.find(".step4").hide();
+          $editor.find(".step1").find("input[type=text],textarea[]").val("");
+          $editor.find(".step1").show();
+          $editor.parents(".headlines").find(".exit").show();
+        });
     
-    $('#points-tt1').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
-    $('#points-tt2').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
-    $('#points-tt3').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
+        $editor.find(".step4 a.finish").click(function(){
+          $(".headlines").hide();
+          $(".launchpadcontent").show();
+          $editor.find(".step4").hide();
+          $editor.find(".step1").find("input[type=text],textarea").val("");
+          $editor.find(".step1").show();
+          $editor.hide();
+          $editor.siblings(".task_view").show();
+        });
+    
+        $editor.find("form").on("ajax:success", function(event, data){
+          $editor.find(".step3").hide();
+          $editor.find(".step4").find("a.take").attr("href", data.question_link);
+          $editor.find(".step4").show();
+        });
+      });
+  
+  
+      var editor = ace.edit("editor");
+      editor.setTheme("ace/theme/github");    
+      editor.getSession().setUseSoftTabs(true);
+      editor.getSession().setTabSize(2);
+      var $textarea = $('textarea[name="task[template]"]').hide();
+      editor.getSession().setValue($textarea.val());
+      editor.getSession().on('change', function(){
+        $textarea.val(editor.getSession().getValue());
+      });
+  
+      $('#points-tt1').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
+      $('#points-tt2').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
+      $('#points-tt3').tooltip({trigger: 'click', title:'Questions and Tasks can be reported for spam, misplacement, and egregiously poor quality.'})
