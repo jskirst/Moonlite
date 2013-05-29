@@ -195,6 +195,19 @@ class PathsController < ApplicationController
       redirect_to root_path and return
     end
     
+    if params[:submission]      
+      @feed = Feed.new(params, current_user)
+      @feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+        .where("submitted_answers.id = ?", params[:submission])
+        .select(newsfeed_fields)
+        .where("completed_tasks.status_id = ?", Answer::CORRECT)
+        .where("submitted_answers.locked_at is ?", nil)
+        .where("submitted_answers.reviewed_at is not ?", nil)
+        .where("path_id = ?", @path.id)
+      @title = "Cool Answer"
+      render "submission" and return
+    end
+    
     @title = "#{@path.name} Quiz" 
     @tasks = @path.tasks
     @responses = []

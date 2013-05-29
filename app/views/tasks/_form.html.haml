@@ -1,3 +1,7 @@
+- rand_id = rand(1000)
+- template_id = "template_#{rand_id}"
+
+
 = form_for(task, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator"}) do |f|
   = f.hidden_field :section_id
   %div.floatr
@@ -34,7 +38,7 @@
             %label.control-label Quoted Text (optional)
             .controls{ style: "margin-top: 6px;" }
               - unless task.quoted_text
-                %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('#task_quoted_text').show();" } Add quoted text
+                %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
               = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
         
         - if task.creative? or task.new_record?
@@ -42,8 +46,9 @@
             .control-group
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
-                %a.show_template{ onclick: "$(this).hide(); $(this).siblings('#task_template').show();", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
-                = text_area_tag "task[template]", task.template, class: "big_text_area", style: (task.template.blank? ? "display: none;" : "")
+                %a.show_template{ onclick: "$(this).hide(); $(this).siblings('div').show();", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
+                = hidden_field_tag "task[template]", task.template, class: "hidden_text_area"
+                %div{ id: template_id, class: "ace_editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 175px; position: relative; padding-top:0; #{task.template.blank? ? "display: none;" :  ""}"} 
         
         - if task.new_record? or task.creative? or task.exact?
           .creative.exact.hide
@@ -156,4 +161,14 @@
     if(data.errors){
       $(this).find("p.errors").text(data.errors)
     }
-  })
+  });
+  
+  var editor = ace.edit("#{template_id}");
+  editor.setTheme("ace/theme/github");    
+  editor.getSession().setUseSoftTabs(true);
+  editor.getSession().setTabSize(2);
+  var $textarea = $("##{template_id}").siblings(".hidden_text_area");
+  editor.getSession().setValue($textarea.val());
+  editor.getSession().on('change', function(){
+    $textarea.val(editor.getSession().getValue());
+  });
