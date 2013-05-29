@@ -32,7 +32,7 @@
       %blockquote{ style: "margin-top:0px; width:77%;" }
         %pre{ style:"word-break:normal;" }= task.template
   %div{ style: "position: relative; bottom: 0px; margin-left: 45px; font-size: 11px;"}
-    - unless task.topic_id.nil?
+    - unless task.topic_id.to_i == 0
       %span Topic: #{task.topic.name}
     - unless task.resource.blank?
       = link_to "Source: "+task.resource_title, task.resource, target: "_blank"

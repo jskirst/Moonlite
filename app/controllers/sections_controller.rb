@@ -28,7 +28,7 @@ class SectionsController < ApplicationController
       end
       @section = @path.sections.build(params[:section])
       if @section.save
-        redirect_to edit_path_path(@path)
+        redirect_to edit_path_path(@path.permalink)
       else
         @form_title = @title
         @path_id = @path.id
@@ -382,7 +382,7 @@ class SectionsController < ApplicationController
       @section = Section.cached_find(params[:id])
       @path = Path.cached_find_by_id(@section.path_id)
     elsif params[:path_id] || params[:section][:path_id]
-      @path = Path.cached_find_by_path_id(params[:path_id] || params[:section][:path_id])
+      @path = Path.cached_find_by_id(params[:path_id] || params[:section][:path_id])
       @section = @path.sections.new
     else
       raise "FATAL: attempt to access unknown path."
