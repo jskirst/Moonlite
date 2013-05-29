@@ -47,7 +47,7 @@
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
                 %a.show_template{ onclick: "$(this).hide(); $(this).siblings('div').show();", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
-                = hidden_field_tag "task[template]", task.template, class: "hidden_text_area"
+                = text_area_tag "task[template]", task.template, class: "hidden_text_area", style: "display: none;"
                 %div{ id: template_id, class: "ace_editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 175px; position: relative; padding-top:0; #{task.template.blank? ? "display: none;" :  ""}"} 
         
         - if task.new_record? or task.creative? or task.exact?
