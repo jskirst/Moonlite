@@ -2,8 +2,6 @@
   .body.container { border: 0px; background-color: transparent; box-shadow: none; }
   .quizcontainer { width: 650px; margin-top: 50px;}
   
-- if @enrollment.completed_tasks.size < 9
-  - sample = true
 %div.quizcontainer.finish_page
   %div.quizspace
     %div
@@ -21,7 +19,7 @@
             #{@incorrect_topics}
       %hr
       %div{ style: "text-align: center;"}
-        - if sample
+        - if @sample
           %div{ style: "background-color: whitesmoke; display: inline-block; width: 293px; margin-right: 10px; border: 1px solid rgba(0,0,0,.1);"}
             %h4 
             .metric
@@ -52,7 +50,7 @@
             Your #{truncate(@path.name, length: 25, separator: ' ')} level
       %div{ style: "margin-top: 25px;"}
         %div{ style: "text-align: center; "}
-          - if sample
+          - if @sample
             %p{ style: "font-size: 15px; "} Complete <strong>one more section</strong> to discover your percentile and MetaScore.
           - else
             %p Remember, you'll always have opportunities to improve your scores.
@@ -93,7 +91,7 @@
             If you think your scores aren't indicative of your abilities, you likely just haven't taken enough questions yet. 
             If your percentile has flat-lined, then it's best to spend some time getting better at the Challenge topic and then come back to MetaBright later to re-evaluate your skills.
       
-      - if @sample
+      - if not current_user.seen_opportunities
         %div{ style: "margin: 5px 0 0 0; text-align: center;" }
           = link_to "Continue", finish_section_path(@section, @session_id, s: 0), class: "button button-actionable"
       - else
