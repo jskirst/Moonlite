@@ -1,8 +1,8 @@
 %title= title
 
 = csrf_meta_tag
-= javascript_include_tag "application"
 = stylesheet_link_tag "application"
+= javascript_include_tag "application"
 - if @path && !@path.new_record?
   %link{ rel: "canonical", href: challenge_url(@path.permalink) }
 %meta{ property: "og:title", content: "#{social_title}" } 
