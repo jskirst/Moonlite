@@ -35,4 +35,10 @@ class Persona < ActiveRecord::Base
     return nil unless up
     return up.level
   end
+  
+  # Cached methods
+  
+  def self.cached_personas
+    Rails.cache.fetch([self.to_s, "all"]){ Persona.all.to_a }
+  end
 end

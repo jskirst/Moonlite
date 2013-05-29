@@ -10,7 +10,7 @@
           %td{ style: "width:75px;" }= image_tag c.picture, size: "75x75"
           %td
             %p= c.name
-            %p= link_to "Remove", undo_collaboration_path_path(@path, user_id: c.id), method: "put", confirm: "Are you certain you want to stop collaborating with this user?"
+            %p= link_to "Remove", undo_collaboration_path_path(@path.permalink, user_id: c.id), method: "put", confirm: "Are you certain you want to stop collaborating with this user?"
   %hr
   %p You can add new collaborations below entering their email address.
   = form_tag({controller: :paths, action: :collaborator}, method: :put, style: "margin-top: 30px;")
@@ -18,5 +18,5 @@
     %label Email
     %div.input= text_field_tag "collaborator[email]", nil, autofocus: "autofocus"
   %div.actions{ style: "margin-top: 50px;" }
-    = link_to "Back", edit_path_path(@path), class: "button button-standard", style: "margin-right:10px;"
+    = link_to "Back", edit_path_path(@path.permalink), class: "button button-standard", style: "margin-right:10px;"
     = submit_tag "Add Collaborator", class: "button button-actionable"

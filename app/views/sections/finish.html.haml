@@ -13,10 +13,12 @@
         .subheader
           You just earned <strong>#{@total_session_points} points</strong> in this section!
         .session_details
-          %span Strengths:
-          #{@correct_topics} ·
-          %span Weaknesses
-          #{@incorrect_topics}
+          - unless @correct_topics.blank?
+            %span Strengths:
+            #{@correct_topics} ·
+          - unless @incorrect_topics.blank?
+            %span Weaknesses
+            #{@incorrect_topics}
       %hr
       %div{ style: "text-align: center;"}
         - if sample

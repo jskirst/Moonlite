@@ -1,6 +1,6 @@
 %div#explore_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1" }
   %div.explorecontainer
-    - @persona = Persona.first unless @persona
-    - @paths = @persona.public_paths.order("public_at DESC") unless @paths
+    - @persona = Persona.cached_personas.first unless @persona
+    - @paths = Path.cached_find_by_persona_id(@persona.id) unless @paths
     = render "personas/show"
       

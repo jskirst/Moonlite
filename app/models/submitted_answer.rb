@@ -46,6 +46,10 @@ class SubmittedAnswer < ActiveRecord::Base
     end
   end
   
+  after_commit do
+    Rails.cache.delete([self.class.name, id])
+  end
+  
   def reviewed?() not reviewed_at.nil? end
     
   def add_vote(voting_user)
@@ -83,5 +87,11 @@ class SubmittedAnswer < ActiveRecord::Base
   
   def self.send_all_induction_alerts(time, deliver = false)
     inductions(1.hour.ago).each { |i| i.send_induction_alert(deliver) }
+  end
+  
+  # Cached methods
+  
+  def self.cached_find(id)
+    Rails.cache.fetch([self.to_s, id]){ find(id) }
   end
 end

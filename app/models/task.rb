@@ -72,6 +72,10 @@ class Task < ActiveRecord::Base
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   
+  after_commit do
+    Rails.cache.delete([self.class.name, self.id])
+  end
+  
   def has_answers
     return true unless answer_content
     if multiple_choice? and answer_content.size < 2
@@ -125,6 +129,12 @@ class Task < ActiveRecord::Base
     return "ruby" if template.include?("#ruby")
     return "php" if template.include?("//php")
     return "html"
+  end
+  
+  # Cached methods
+  
+  def self.cached_find(id)
+    Rails.cache.fetch([self.to_s, id]){ where(id: id).joins(:section).select("tasks.*, sections.path_id as path_id").first }
   end
   
   private

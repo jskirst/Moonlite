@@ -137,7 +137,7 @@ class TasksController < ApplicationController
     
   def raw
     begin
-      render text: SubmittedAnswer.find(params[:id]).content.gsub("<body>", "<body><script>alert=null;</script>").gsub("<body>", "<body><script>alert=null;</script>")
+      render text: SubmittedAnswer.cached_find(params[:id]).content.gsub("<body>", "<body><script>alert=null;</script>").gsub("<body>", "<body><script>alert=null;</script>")
     rescue
       render text: "<html><body></body></html>"
     end
@@ -145,7 +145,7 @@ class TasksController < ApplicationController
   
   private
     def load_resource
-      @task = Task.find(params[:id])
+      @task = Task.cached_find(params[:id])
     end
   
     def authorize_resource

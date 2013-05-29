@@ -224,14 +224,16 @@ class User < ActiveRecord::Base
   def award_points(obj, points)
     if points.to_i > 0
       if obj.is_a? CompletedTask
-        enrollment = enrollments.find_by_path_id(obj.section.path_id)
+        task_id = obj.task_id
       elsif obj.is_a? Vote
-        enrollment = enrollments.find_by_path_id(obj.owner.task.section.path_id)
+        task_id = obj.owner.task_id
       elsif obj.is_a? Task
-        enrollment = enrollments.find_by_path_id(obj.section.path_id)
+        task_id = obj.id
       else
         raise "unknown object"
       end
+      task = Task.cached_find(task_id)
+      enrollment = enrollments.find_by_path_id(task.path_id)
       raise "Enrollment nil" unless enrollment
       log_transaction(obj, points)
       self.update_attribute('earned_points', self.earned_points + points)
@@ -422,11 +424,11 @@ class User < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find_by_id(id)
-    Rails.cache.fetch([self.class.name, id]) { where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first }
+    Rails.cache.fetch([self.to_s, id]) { where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first }
   end
   
   def self.cached_find_by_username(id)
-    Rails.cache.fetch([self.class.name, username]) { find_by_username(username) }
+    Rails.cache.fetch([self.to_s, username]) { find_by_username(username) }
   end
   
   def cached_user_events

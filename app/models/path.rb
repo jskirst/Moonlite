@@ -44,6 +44,10 @@ class Path < ActiveRecord::Base
   before_validation :grant_permalink
   after_commit do
     Rails.cache.delete([self.class.name, permalink])
+    Rails.cache.delete([self.class.name, id])
+    Persona.all.each do |persona|
+      Rails.cache.delete([self.class.name, "by_persona", persona.id])
+    end
   end
   
   def published?() published_at.nil? ? false : true end
@@ -90,10 +94,10 @@ class Path < ActiveRecord::Base
       personas = user.company.personas.to_a.last(3) if personas.empty?
       enrolled_paths = user.enrolled_paths.to_a.collect &:id
       suggested_paths = personas.to_a.collect do |persona|
-        persona.public_paths.to_a.collect {|path| path unless enrolled_paths.include?(path.id) } 
+        cached_find_by_persona_id(persona.id).collect {|path| path unless enrolled_paths.include?(path.id) } 
       end
     else
-      suggested_paths = Persona.first.public_paths.to_a
+      suggested_paths = Persona.first.cached.to_a
     end
     return suggested_paths.flatten.compact
   end
@@ -160,6 +164,19 @@ class Path < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find(permalink)
-    Rails.cache.fetch([self.class.name, permalink]) { find_by_permalink(permalink) }
+    Rails.cache.fetch([self.to_s, permalink]) { find_by_permalink(permalink) }
+  end
+  
+  def self.cached_find_by_id(id)
+    Rails.cache.fetch([self.to_s, id]) { find(id) }
+  end
+  
+  def self.cached_find_by_persona_id(persona_id)
+    Rails.cache.fetch([self.to_s, "by_persona", persona_id]) do
+      Path.joins(:path_personas)
+        .where("path_personas.persona_id = ?", persona_id)
+        .where("published_at is not ? and approved_at is not ? and public_at is not ?", nil, nil, nil)
+        .to_a
+    end
   end
 end

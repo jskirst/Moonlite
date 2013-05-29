@@ -26,7 +26,7 @@
         %a#launch_button.button.button-actionable{ onclick: "$('#launchpad').removeClass('hide').modal({ keyboard: true, backdrop: 'static', show: true });" } 
           Continue Level #{@enrollment.level} »
       - else
-        = link_to "Start Level 1", continue_path_path(@path), class: "button button-actionable", id: "launch_button"
+        = link_to "Start Level 1", continue_path_path(@path.permalink), class: "button button-actionable", id: "launch_button"
     %h1= @path.name
     %h2
       - if current_user

@@ -123,10 +123,9 @@ class SectionsController < ApplicationController
   
   def take
     @hide_background = true
-    @task = @section.tasks.find(params[:task_id])
+    @task = Task.cached_find(params[:task_id])
     raise "Access Denied: Not a challenge." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
-    @path = @section.path
     @stored_resource = @task.stored_resources.first
     @session_id = params[:session_id]
     @completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
@@ -141,7 +140,7 @@ class SectionsController < ApplicationController
       @submitted_answer = @completed_task.submitted_answer || SubmittedAnswer.new
     end
     
-    correct_answers = Answer.where(task_id: @task.id, is_correct: true)
+    correct_answers = Answer.cached_find_by_task_id(@task.id).select{ |t| t.is_correct }
     unless correct_answers.empty? or @submitted_answer.preview.blank?
       correct_answers.each do |ca|
         if ca.match?(@submitted_answer.preview)
@@ -212,7 +211,7 @@ class SectionsController < ApplicationController
   def complete
     task_id = params[:task_id]
     points = params[:points_remaining].to_i
-    answers = Answer.where(task_id: task_id).to_a
+    answers = Answer.cached_find_by_task_id(task_id)
     if params[:answer]
       supplied_answer = answers.select{ |a| a.id.to_s == params[:answer] }.first
       correct = supplied_answer.is_correct?
@@ -284,7 +283,7 @@ class SectionsController < ApplicationController
         @enrollment.update_attribute(:longest_streak, @streak)
       end
       @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE, session_id: @session_id)
-      @answers = @task.answers.to_a.shuffle
+      @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       page = "continue"
     else
@@ -314,7 +313,11 @@ class SectionsController < ApplicationController
   end
   
   def boss
-    render "pre_boss"
+    if current_user.completed_tasks.where(session_id: params[:session_id]).count == 0
+      redirect_to challenge_path(@path.permalink, c: true)
+    else
+      render "pre_boss"
+    end
   end
   
   def finish
@@ -371,10 +374,10 @@ class SectionsController < ApplicationController
   
   def load_resource
     if params[:id]
-      @section = Section.find(params[:id])
-      @path = @section.path
+      @section = Section.cached_find(params[:id])
+      @path = Path.cached_find_by_id(@section.path_id)
     elsif params[:path_id] || params[:section][:path_id]
-      @path = Path.find(params[:path_id] || params[:section][:path_id])
+      @path = Path.cached_find_by_path_id(params[:path_id] || params[:section][:path_id])
       @section = @path.sections.new
     else
       raise "FATAL: attempt to access unknown path."

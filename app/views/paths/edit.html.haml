@@ -22,7 +22,7 @@
       - if false
         %div.control-group{ style: "margin-bottom: 5px;" }
           %label.control-label Collaborators
-          %div.controls= link_to "View and add collaborators", collaborator_path_path(@path), style: "line-height:18px;"
+          %div.controls= link_to "View and add collaborators", collaborator_path_path(@path.permalink), style: "line-height:18px;"
       %hr{ style: "margin: 10px 0; "}
       %div{ style: "float:right;" }
         %span.button.button-standard{ onclick: "$('#settings_modal').modal('hide');" } Close
@@ -69,7 +69,7 @@
       - elsif @path.published?
         = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
       - else
-        = link_to "Publish", publish_path_path(@path), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
+        = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
       %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
   %div
     = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"

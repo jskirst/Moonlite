@@ -67,7 +67,7 @@ class PathsController < ApplicationController
   def join
     if current_user.earned_points > 800
       @path.collaborations.create!(user_id: current_user.id, granting_user_id: @path.user_id)
-      redirect_to edit_path_path(@path)
+      redirect_to edit_path_path(@path.permalink)
     end
   end
 
@@ -163,7 +163,7 @@ class PathsController < ApplicationController
           flash.now[:error] = @collaborator.errors.full_messages.join(". ")
         end
       end
-      redirect_to collaborator_path_path(@path)
+      redirect_to collaborator_path_path(@path.permalink)
     end
   end
 
@@ -174,7 +174,7 @@ class PathsController < ApplicationController
     else
       flash[:error] = @collaboration.errors.full_messages.join(". ")
     end
-    redirect_to collaborator_path_path(@path)
+    redirect_to collaborator_path_path(@path.permalink)
   end
 
 # Begin Path Journey
@@ -202,7 +202,7 @@ class PathsController < ApplicationController
     if current_user
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
       if current_user.enrollments.size == 1 and @enrollment.total_points == 0
-        redirect_to continue_path_path(@path) and return
+        redirect_to continue_path_path(@path.permalink) and return
       end
       @current_section = current_user.most_recent_section_for_path(@path)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
@@ -256,7 +256,7 @@ class PathsController < ApplicationController
   
   def newsfeed
     feed = Feed.new(params, current_user)
-    feed.url = newsfeed_path_path(@path.id, order: params[:order])
+    feed.url = newsfeed_path_path(@path.permalink, order: params[:order])
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
     offset = feed.page * 15

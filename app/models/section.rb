@@ -14,6 +14,10 @@ class Section < ActiveRecord::Base
     
   before_create { self.position = get_next_position_for_path }
   before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
+  
+  after_commit do
+    Rails.cache.delete([self.class.name, id])
+  end
       
   def next_task(user = nil, exclude_first = false, type = [Task::MULTIPLE, Task::EXACT])
     type = [type] unless type.is_a? Array
@@ -77,6 +81,12 @@ class Section < ActiveRecord::Base
     user_completed_tasks = self.completed_tasks.where("user_id = ? and status_id >= 0 and points_awarded is not ?", user.id, nil)
     return 0 if user_completed_tasks.size == 0
     return user_completed_tasks.collect(&:points_awarded).reduce(0, :+)
+  end
+  
+  # Cached methods
+  
+  def self.cached_find(id)
+    Rails.cache.fetch([self.to_s, id]){ find(id) }
   end
     
   private
