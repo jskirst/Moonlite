@@ -195,8 +195,9 @@ class PathsController < ApplicationController
       redirect_to root_path and return
     end
     
-    if params[:submission]      
+    if params[:submission]        
       @feed = Feed.new(params, current_user)
+      @feed.context = :submission
       @feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
         .where("submitted_answers.id = ?", params[:submission])
         .select(newsfeed_fields)

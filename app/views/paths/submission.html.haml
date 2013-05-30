@@ -1,2 +1,25 @@
+:css
+  .container { background-color: transparent !important;}
+  .post { font-size: 23px; }
+  .post:hover { background-color: transparent; }
+  .post a { text-decoration: none; }
+  .postheader { padding: 12px 0;   }
+  .postheader h3 { margin-top: 5px;}
+  .postheader .username { font-size: 25px; }
+  .postheader h3 img {height: 18px; }
+  .postheader .challengename { font-size: 18px; }
+  .postspace { width: 750px; display: block; }
+  .postphotospace { diplay: none; }
+  .votingandpointsarea { margin-top: -2px;  }
+  .votingandpointsarea .vote_points { font-size: 18px; }
+  .votingandpointsarea .container { display: block; }
+  .votingandpointsarea div { top: 0px; }
+  .posttext code { font-size: 14px; }
+  .CRarea iframe { min-height: 0 !important; height: 350px !important; }
+  .social_toolbar { display: block !important; margin-top: 4px !important; right: -8px; }
+  .social_toolbar a { padding: 0; }
+  .leftstuff { height: 34px; }
+  .leftstuff .button-info { margin: 1px 9px; color: white; }
+  .leftstuff .comment { top: 6px; }
+
 = render "newsfeed/feed", { feed: @feed }
-= link_to "Go back to challenge", challenge_path(@path.permalink)

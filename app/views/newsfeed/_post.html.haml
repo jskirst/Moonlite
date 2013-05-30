@@ -1,10 +1,14 @@
 %div.post
-  - unless feed.context == :profile
+  - unless feed.context == :profile or feed.context == :submission
     %div.postphotospace
       = link_to hovercard_user_path(post["username"]), class: "hovercard_link", remote: true do
         = image_tag User.picture(post["user_image_url"]), class: "photo"
   %div.postspace
     %div.postheader
+      - if feed.context == :submission
+        %div.postphotospace
+          = link_to hovercard_user_path(post["username"]), class: "hovercard_link", remote: true do
+            = image_tag User.picture(post["user_image_url"]), class: "photo"
       %h3
         = link_to truncate(post["name"], length: 50), hovercard_user_path(post["username"]), class:"username hovercard_link", remote: true
         - if false #user.groups.size > 0
@@ -16,29 +20,43 @@
       %span
         = link_to truncate(post["path_name"], length: 40), challenge_path(post["path_permalink"]), class:"challengename"
       %div.votingandpointsarea
-        - if false
-          %img.circle_check{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle-check.png", title: "Verified correct answer", alt: "Verified correct output"}
-        - if current_user
-          %span.vote_points= post["points_awarded"]
-          %span.vote_points{ style:"margin-right:1px;"} pts
-          - if current_user.id == post["user_id"]
-            %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
-              %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px 4px;" }
-                %span.caret{ style: "margin: 6px 0 0 0;" }
-              %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
-                %li{ style: "margin-left: -10px;" }
-                  %div.graynub{ style: "top:-37px; left: 78px; margin:0; "}
-                  %div{ style: "padding: 3px 0px; margin:0;"}
-                    %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
-                      %li{ style: "margin-left:-8px; "}= link_to "Edit Submission", take_section_path(post["section_id"], task_id: post["task_id"]), style: "padding:0; padding-left:8px;"
-                      %li{style: "text-align:center;"}= link_to "Delete Submission", retract_submission_path(post["id"]), remote: true, confirm: "Are you sure you want to delete your submission?", class: "retract_link", style: "padding:0;"
-          - else
-            = link_to vote_task_path(post["task_id"], sa_id: post["submitted_answer_id"]), remote: true, class: ("btn vote_button " + (feed.votes.include?(post["submitted_answer_id"]) ? "btn-info" : "")) do
+        %div
+          - if false
+            %img.circle_check{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle-check.png", title: "Verified correct answer", alt: "Verified correct output"}
+          - if current_user
+            %span.vote_points= post["points_awarded"]
+            %span.vote_points{ style:"margin-right:3px;"} pts
+            - if current_user.id == post["user_id"]
+              %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
+                %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px 4px;" }
+                  %span.caret{ style: "margin: 6px 0 0 0;" }
+                %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
+                  %li{ style: "margin-left: -10px;" }
+                    %div.graynub{ style: "top:-37px; left: 78px; margin:0; "}
+                    %div{ style: "padding: 3px 0px; margin:0;"}
+                      %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
+                        %li{ style: "margin-left:-8px; "}= link_to "Edit Submission", take_section_path(post["section_id"], task_id: post["task_id"]), style: "padding:0; padding-left:8px;"
+                        %li{style: "text-align:center;"}= link_to "Delete Submission", retract_submission_path(post["id"]), remote: true, confirm: "Are you sure you want to delete your submission?", class: "retract_link", style: "padding:0;"
+            - else
+              = link_to vote_task_path(post["task_id"], sa_id: post["submitted_answer_id"]), remote: true, class: ("btn vote_button " + (feed.votes.include?(post["submitted_answer_id"]) ? "btn-info" : "")) do
+                %img.up_vote{ src: ICON_UPVOTE_URL, alt: "Up-vote" }
+          - elsif feed.context == :submission
+            %span.vote_points= post["points_awarded"]
+            %span.vote_points{ style:"margin-right:1px;"} pts
+            %a.login_link.btn.vote_button
               %img.up_vote{ src: ICON_UPVOTE_URL, alt: "Up-vote" }
-        - else
-          %span.vote_points= post["points_awarded"]
-          %span.vote_points{ style:"margin-right:5px;" } pts
-    
+          - else
+            %span.vote_points= post["points_awarded"]
+            %span.vote_points{ style:"margin-right:5px;" } pts
+        - if feed.context == :submission
+          %div.social_toolbar
+            = link_to "#", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink)) do
+              = image_tag SHARE_FACEBOOK, alt: "Share on Facebook"
+            = link_to "#", onclick: sharing_popup_javascript(:twitter, submission_drilldown_path(post["submitted_answer_id"]), title) do
+              = image_tag SHARE_TWITTER, alt: "Share on Twitter"
+            = link_to "#", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), title) do
+              = image_tag SHARE_GOOGLE, alt: "Share on Google+"
+      
     %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
       %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
       - if current_user
