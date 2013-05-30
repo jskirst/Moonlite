@@ -130,5 +130,5 @@
     
     - unless post["submitted_answer_caption"].blank?
       %div.post_caption= post["submitted_answer_caption"]
-    = render "comments/comments", social_details(post)
+    = render "comments/comments", social_details(post).merge(feed: feed)
     
