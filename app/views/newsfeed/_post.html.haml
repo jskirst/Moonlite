@@ -61,25 +61,18 @@
       
     %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
       %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
-      - if current_user
+      - if @enable_administration
         %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
           %li
             %div
               %div.sidenub
             %div{ style: "padding: 3px 0px;"}
               %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
-                %li.CR_dropdown_option{ style: ("display:none;" if current_user.id == post["user_id"])} 
-                  = link_to "Answer this question", take_section_path(post["section_id"], task_id: post["task_id"])
                 %li.CR_dropdown_option
-                  = link_to "View all responses", task_drilldown_path(post["task_id"])
-                %li.CR_dropdown_option
-                  = link_to "View all details", submission_drilldown_path(post["submitted_answer_id"])
-                - if @enable_administration
-                  %li.CR_dropdown_option
-                    - if post["promoted_at"].nil?
-                      = link_to "Add to Hall of Fame", admin_update_submission_path(post["submitted_answer_id"], mark: "promoted"), method: :put
-                    - else
-                      = link_to "In the Hall of Fame", "#"
+                  - if post["promoted_at"].nil?
+                    = link_to "Add to Hall of Fame", admin_update_submission_path(post["submitted_answer_id"], mark: "promoted"), method: :put
+                  - else
+                    = link_to "In the Hall of Fame", "#"
     
     %div#cr_pop.CRarea
       - if post["answer_type"] == Task::CREATIVE.to_s
@@ -89,7 +82,11 @@
               %div.sliderbar1
                 %span.reload{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('iframe').attr('src', $(this).parents('.CRarea').find('iframe').attr('src'));" } Reload
                 |
-                %span.view_raw{ style: "color: #404040; padding-right: 5px;cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.preview').hide(); $(this).parents('.CRarea').find('.raw').show();" } View Raw
+                %span.view_raw{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.preview').hide(); $(this).parents('.CRarea').find('.raw').show();" } View Raw
+                - unless feed.context == :submission
+                  |                
+                  %span
+                    = link_to "View Full", submission_drilldown_path(post["submitted_answer_id"]), style: "color: #404040;"
               %iframe{ src: raw_path(post["submitted_answer_id"]), style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
             .raw.hide
               %div.sliderbar2
