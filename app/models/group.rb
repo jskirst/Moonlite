@@ -33,6 +33,16 @@ class Group < ActiveRecord::Base
     return false if m.nil?
     return m.is_admin?
   end
+  
+  # Cached methods
+  
+  def self.cached_find_by_user_id(user_id)
+    Rails.cache.fetch([self.to_s, "user", user_id]) do
+      Group.joins("JOIN group_users on group_users.group_id=groups.id")
+        .where("group_users.user_id = ?", user_id)
+        .to_a
+    end
+  end
    
   private
   def grant_permalink

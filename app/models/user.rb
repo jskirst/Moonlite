@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
     end
   end
   
-  after_commit do
+  after_save do
     Rails.cache.delete([self.class.name, username])
     Rails.cache.delete([self.class.name, id])
   end
@@ -430,10 +430,6 @@ class User < ActiveRecord::Base
   
   def self.cached_find_by_username(username)
     Rails.cache.fetch([self.to_s, username]) { find_by_username(username) }
-  end
-  
-  def cached_user_events
-    Rails.cache.fetch([self, "user_events"]) { user_events.order("id DESC").to_a }
   end
   
   private  

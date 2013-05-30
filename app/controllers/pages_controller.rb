@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     @url_for_newsfeed 
-    if current_user and not current_user.completed_tasks.empty?
+    if current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
@@ -116,7 +116,7 @@ class PagesController < ApplicationController
   end
   
   def mark_read
-    current_user.user_events.unread.update_all(read_at: Time.now)
+    current_user.user_events.unread.each{ |ue| ue.update_attribute(:read_at, Time.now) }
     render json: { status: "success" }
   end
   

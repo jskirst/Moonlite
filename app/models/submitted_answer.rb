@@ -46,7 +46,7 @@ class SubmittedAnswer < ActiveRecord::Base
     end
   end
   
-  after_commit do
+  after_save do
     Rails.cache.delete([self.class.name, id])
   end
   

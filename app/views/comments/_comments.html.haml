@@ -1,26 +1,27 @@
 - if owner_has_comments == "t"
-  - comments = Comment.where(owner_type: owner_type, owner_id: owner_id).where("locked_at is ?", nil)
+  - comments = Comment.cached_find_by_owner_type_and_owner_id(owner_type, owner_id)
 - else
   - comments = []
 
-%div.postfooter
-  %div.leftstuff
-    %div.displayin.floatl
-      %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{comments.size}  Comments
-    - if feed.context == :submission
-      = link_to "Go back to challenge", challenge_path(@path.permalink), class: "button button-info button-small"
-    - else
-      = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
-  %div.comments{ style: "text-align: left; display: none;" }
-    - if comments.empty?
-      %p.no_comments There are no comments for this yet. 
-    %ul{ style: "list-style: none; margin: 10px 0 20px 0;" }
-      - comments.each do |comment|
-        = render "comments/comment", comment: comment
-    - if current_user
-      = form_for(current_user.comments.new, remote: true) do |f|
-        %div{ style: "width: 100%" }
-          = f.text_area :content, :rows => 2, :style => "width: 90%; height: 55px; "
-        = hidden_field :comment, :owner_type, { :value => owner_type }
-        = hidden_field :comment, :owner_id, { :value => owner_id }
-        = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"
+- Rack::MiniProfiler.step("All Comments") do
+  %div.postfooter
+    %div.leftstuff
+      %div.displayin.floatl
+        %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{comments.size}  Comments
+      - if feed.context == :submission
+        = link_to "Go back to challenge", challenge_path(@path.permalink), class: "button button-info button-small"
+      - else
+        = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
+    %div.comments{ style: "text-align: left; display: none;" }
+      - if comments.empty?
+        %p.no_comments There are no comments for this yet. 
+      %ul{ style: "list-style: none; margin: 10px 0 20px 0;" }
+        - comments.each do |comment|
+          = render "comments/comment", comment: comment
+      - if current_user
+        = form_for(current_user.comments.new, remote: true) do |f|
+          %div{ style: "width: 100%" }
+            = f.text_area :content, :rows => 2, :style => "width: 90%; height: 55px; "
+          = hidden_field :comment, :owner_type, { :value => owner_type }
+          = hidden_field :comment, :owner_id, { :value => owner_id }
+          = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"

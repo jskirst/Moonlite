@@ -39,10 +39,11 @@
                 %ul.dropdown-menu{ role: "button", style: "padding: 0; top:42px; right:-138px; min-width: 312px; min-height: 135px;" }
                   %div
                     %div.nub{ style: "left:150px;" }
-                  - if current_user.groups.size > 0                    
+                  - groups = Group.cached_find_by_user_id(current_user.id)
+                  - if groups.size > 0                    
                     %div.leftboxheader Your Groups
                     %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD; border-radius: 0; "}
-                      - current_user.groups.each do |group|
+                      - groups.each do |group|
                         = link_to group_path(group.permalink), style: "text-decoration: none;" do
                           %div.singlegroupentry{ style: "padding: 6px 12px; "}
                             = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px;", class: "img-circle"
@@ -75,9 +76,9 @@
                     - notifications.each do |event|
                       %li.notification_space
                         %div.notification{ class: "#{event.read_at ? '' : 'notification-unread'}" }
-                          = link_to event.actioner.nil? ? "#" : profile_path(event.actioner.try{ |a| a.username }) do 
-                            = image_tag event.image_link, class: "photo", style: "width:35px; height: 35px;", alt: "Notification"
-                          = link_to event.link do
+                          %a{ href: (event.username.nil? ? "#" : profile_path(event.username)) }
+                            %img.photo{ src: event.image_link, style: "width:35px; height: 35px;", alt: "Notification" }
+                          %a{ href: event.link }
                             %p.notification_body= event.content
                             %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li

@@ -102,12 +102,12 @@ module SessionsHelper
   
   def unread_notification_count
     return 0 unless current_user
-    current_user.user_events.unread.count
+    notifications.select{ |n| n.read_at.nil? }.size
   end
   
   def notifications
     return [] unless current_user
-    current_user.cached_user_events
+    UserEvent.cached_find_by_user_id(current_user.id)
   end
   
   def sign_out

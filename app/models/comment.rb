@@ -9,4 +9,16 @@ class Comment < ActiveRecord::Base
   validates :owner_id, presence: true
   validates :owner_type, presence: true
   validates :content, presence: true
+  
+  # Cached method
+  
+  after_save do
+    Rails.cache.delete([self.class.to_s, owner_type, owner_id])
+  end
+  
+  def self.cached_find_by_owner_type_and_owner_id(ot, oid)
+    Rails.cache.fetch([self.class.to_s, ot, oid]) do
+      Comment.where(owner_type: ot, owner_id: oid).where("locked_at is ?", nil).to_a
+    end
+  end
 end

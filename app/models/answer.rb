@@ -11,7 +11,7 @@ class Answer < ActiveRecord::Base
   
   validates :content, length: { :within => 1..255 }
   
-  after_commit do
+  after_save do
     Rails.cache.delete([self.class.name, id])
     Rails.cache.delete([self.class.name, "task_answers", task_id])
   end

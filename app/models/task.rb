@@ -72,7 +72,7 @@ class Task < ActiveRecord::Base
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   
-  after_commit do
+  after_save do
     Rails.cache.delete([self.class.name, self.id])
   end
   

@@ -42,7 +42,7 @@ class Path < ActiveRecord::Base
   
   after_create { user.enroll!(self) }
   before_validation :grant_permalink
-  after_commit do
+  after_save do
     Rails.cache.delete([self.class.name, permalink])
     Rails.cache.delete([self.class.name, id])
     Persona.all.each do |persona|

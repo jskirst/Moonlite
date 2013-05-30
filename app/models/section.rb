@@ -15,7 +15,7 @@ class Section < ActiveRecord::Base
   before_create { self.position = get_next_position_for_path }
   before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
   
-  after_commit do
+  after_save do
     Rails.cache.delete([self.class.name, id])
   end
       
