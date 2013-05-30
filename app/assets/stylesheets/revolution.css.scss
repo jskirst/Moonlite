@@ -36,7 +36,7 @@ pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:
 .newsfeed { border: 1px solid rgba(0, 0, 0, .1); border-radius: 6px; background-clip:padding-box; background-color:white; min-height: 550px; }
 .CRarea { overflow-y:auto; background-color: transparent; background-image: -moz-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: -ms-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: -o-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, .06)), to(transparent));background-image: -webkit-linear-gradient(top,rgba(0, 0, 0, .06),transparent);background-image: linear-gradient(top,rgba(0, 0, 0, .06),transparent); border-top: 1px solid rgba(0, 0, 0, .2); border-bottom: 1px solid rgba(0, 0, 0, .1); margin:12px -12px -7px -12px; }
 .CRarea img { max-width: 100%; max-height: 350px; border-color:#ccc; border-style:solid; border-width: 0px; display:block; margin-left:auto; margin-right:auto; }
-.sliderbar1, .sliderbar2 { width: 150px; margin-left:65%; border-right: 1px solid rgba(0,0,0,.2); border-left: 1px solid rgba(0,0,0,.2); border-bottom: 1px solid rgba(0,0,0,.2); border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; display: none; text-align: center; opacity: 0.8; padding: 3px; background-color: white; position: absolute; float: right; z-index: 2; font-size: 15px; }
+.sliderbar1, .sliderbar2 { right: 10%; border-right: 1px solid rgba(0,0,0,.2); border-left: 1px solid rgba(0,0,0,.2); border-bottom: 1px solid rgba(0,0,0,.2); border-bottom-right-radius: 4px; border-bottom-left-radius: 4px; display: none; text-align: center; opacity: 0.8; padding: 3px 7px; background-color: white; position: absolute; float: right; z-index: 2; font-size: 13px; }
 .sliderbar1:hover, .sliderbar2:hover { opacity: 1; }
 .sliderbar1 span:hover, .sliderbar2 span:hover { text-decoration: underline; }
 .obfuscation{ height:250px; background-color:whitesmoke; background-image:none; text-align: center; }
@@ -384,10 +384,10 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .notification_body { margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 230px; float: right; text-shadow:none; line-height:17px;}
 .notification_time { margin: 7px 2px 0 0; font-size: 11px; float: right; text-shadow:none; cursor:default; color: #BBB; line-height: 5px;}
 .nub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
-.sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:27px; left: -11px;}
+.sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:11px; left: -11px;}
 .graynub{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_post_gear_dropdown.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; }
 .CR_dropdown_option{width: 95%; padding: 3px;}
-.leveltext .dropdown-menu{top:-20px !important;}
+.leveltext .dropdown-menu{top:0px !important;}
 .dropdown-menu .CR_dropdown_option a{padding: 0px 9px 0px 3px;}
 
 .button { margin-bottom: 0px; margin-top: 0px; vertical-align: middle; display: inline-block; text-shadow: 0 1px 0px black; color: white;  padding: 7px 20px 5px 20px; cursor: pointer; font-size: 15px; border:1px solid #DDD; border-radius: 3px; }
