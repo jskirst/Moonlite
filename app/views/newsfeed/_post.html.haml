@@ -92,6 +92,13 @@
               %div.sliderbar2
                 %span.view_preview{ style: "color: #404040; padding-right: 5px; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.raw').hide(); $(this).parents('.CRarea').find('.preview').show();"} View Preview
               %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
+          - elsif post["submitted_answer_content"]
+            .preview
+              %div.sliderbar1
+                - unless feed.context == :submission
+                  %span
+                    = link_to "View Full", submission_drilldown_path(post["submitted_answer_id"]), style: "color: #404040;"
+              %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
           - else
             %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
 
