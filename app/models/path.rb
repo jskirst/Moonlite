@@ -168,7 +168,7 @@ class Path < ActiveRecord::Base
   end
   
   def self.cached_find_by_id(id)
-    Rails.cache.fetch([self.to_s, id]) { find(id) }
+    Rails.cache.fetch([self.to_s, id]) { find_by_id(id) }
   end
   
   def self.cached_find_by_persona_id(persona_id)

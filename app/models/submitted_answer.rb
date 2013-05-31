@@ -92,6 +92,6 @@ class SubmittedAnswer < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find(id)
-    Rails.cache.fetch([self.to_s, id]){ find(id) }
+    Rails.cache.fetch([self.to_s, id]){ find_by_id(id) }
   end
 end
