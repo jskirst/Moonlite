@@ -76,10 +76,8 @@ class User < ActiveRecord::Base
     end
   end
   
-  after_save do
-    Rails.cache.delete([self.class.name, username])
-    Rails.cache.delete([self.class.name, id])
-  end
+  after_save :flush_cache
+  before_destroy :flush_cache
   
   def to_s() self.name end
     
@@ -430,6 +428,11 @@ class User < ActiveRecord::Base
   
   def self.cached_find_by_username(username)
     Rails.cache.fetch([self.to_s, username]) { find_by_username(username) }
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, username])
+    Rails.cache.delete([self.class.name, id])
   end
   
   private  

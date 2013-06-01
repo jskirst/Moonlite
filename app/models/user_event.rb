@@ -12,9 +12,8 @@ class UserEvent < ActiveRecord::Base
   
   before_create { self.image_link ||= DEFAULT_IMAGE_LINK }
   
-  after_save do
-    Rails.cache.delete([self.class.name, "user", user_id])
-  end
+  after_save :flush_cache
+  before_destroy :flush_cache
   
   def self.log_event(reciever, content, actioner = nil, link = nil, image_link = nil)
     return false if actioner == reciever
@@ -36,6 +35,8 @@ class UserEvent < ActiveRecord::Base
     end
   end
   
+  # Cached methods
+  
   def self.cached_find_by_user_id(user_id)
     Rails.cache.fetch([self.to_s, "user", user_id]) do
       UserEvent.where("user_events.user_id = ?", user_id)
@@ -45,5 +46,9 @@ class UserEvent < ActiveRecord::Base
         .limit(15)
         .to_a
     end
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, "user", user_id])
   end
 end

@@ -15,9 +15,8 @@ class Section < ActiveRecord::Base
   before_create { self.position = get_next_position_for_path }
   before_save { self.points_to_unlock = 0 if self.points_to_unlock.nil? }
   
-  after_save do
-    Rails.cache.delete([self.class.name, id])
-  end
+  after_save :flush_cache
+  before_destroy :flush_cache
       
   def next_task(user = nil, exclude_first = false, type = [Task::MULTIPLE, Task::EXACT])
     type = [type] unless type.is_a? Array
@@ -87,6 +86,10 @@ class Section < ActiveRecord::Base
   
   def self.cached_find(id)
     Rails.cache.fetch([self.to_s, id]){ find_by_id(id) }
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, id])
   end
     
   private
