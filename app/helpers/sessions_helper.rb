@@ -178,18 +178,20 @@ module SessionsHelper
   private
     def log_visit
       begin
-        unless request.xhr? || params[:action] == "raw"
-          if current_user
-            visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
-            @visit = Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url, referral_url: request.env["HTTP_REFERER"])
-          else
-            if cookies[:visitor_id].to_i > 0
-              visitor_id = cookies[:visitor_id]  
+        unless params[:action] == "raw"
+          if not request.xhr? or params[:action] == "hovercard"
+            if current_user
+              visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
+              @visit = Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url, referral_url: request.env["HTTP_REFERER"])
             else
-              visitor_id = rand(1000000000)
-              cookies.permanent[:visitor_id] = visitor_id
+              if cookies[:visitor_id].to_i > 0
+                visitor_id = cookies[:visitor_id]  
+              else
+                visitor_id = rand(1000000000)
+                cookies.permanent[:visitor_id] = visitor_id
+              end
+              @visit = Visit.create!(visitor_id: visitor_id, request_url: request.url, referral_url: request.env["HTTP_REFERER"])
             end
-            @visit = Visit.create!(visitor_id: visitor_id, request_url: request.url, referral_url: request.env["HTTP_REFERER"])
           end
         end
       rescue

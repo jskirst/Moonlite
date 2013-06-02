@@ -30,21 +30,24 @@ class Visit < ActiveRecord::Base
       base_url = "http://www.metabright.com/"
     end
     url = base_url+"#{user.username}"
-    user_visits = Visit.select(:user_id)
+    user_visits = Visit.select("user_id, visitor_id")
       .where("visits.created_at > ?", time)
-      .where("user_id != ?", user.id)
-      .where("user_id is not ?", nil)
-      .where("request_url = ?", url)
-      .uniq
+      .where("user_id is ? or user_id != ?", nil, user.id)
+      .where("request_url ILIKE ?", "#{url}%")
+      .group("user_id, visitor_id")
       .to_a
   end
   
   def self.send_visit_alerts(user, time, deliver = false)
     views = Visit.profile_views(user, time)
     if views.size > 0
-      m = Mailer.visit_alert(user, views)
-      m.deliver if deliver
-      return m
+      if views.select{ |v| !v.user_id.nil? }.size > 0 or views.size >= 3
+        m = Mailer.visit_alert(user, views)
+        m.deliver if deliver
+        return m
+      else
+        puts "Did not mail - not enough visits or 0 user visits"
+      end
     end
   end
   

@@ -23,23 +23,26 @@ describe Visit do
       last_email.should be_nil
     end
   end
-  
-  describe "1 anonymous visit" do
-    before :each do
-      @visit = Visit.create!(visitor_id: rand(1000), request_url: @user_url)
-    end
-    it "should result in 0 profile views" do
-      Visit.profile_views(@user, 1.hour.ago).size.should == 0
-    end
-    it "should result in 0 emails" do
-      Visit.send_all_visit_alerts(1.hour.ago, true)
-      last_email.should be_nil
-    end
-  end
     
   describe "1 visit" do
     before :each do
       @visit = Visit.create!(user_id: @visitor1.id, request_url: @user_url)
+    end
+    it "should result in 1 profile views" do
+      Visit.profile_views(@user, 1.hour.ago).size.should == 1
+    end
+    it "should result in 1 email" do
+      Visit.send_all_visit_alerts(1.hour.ago, true)
+      emails.size.should == 1
+      last_email_to.should == @user.email
+      last_email.subject.should == "One person viewed your profile on MetaBright!"
+    end
+  end
+  
+  describe "1 visit via hovercard" do
+    before :each do
+      user_hovercard_url = "http://www.metabright.com/"+@user.username+"/hovercard"
+      @visit = Visit.create!(user_id: @visitor1.id, request_url: user_hovercard_url)
     end
     it "should result in 1 profile views" do
       Visit.profile_views(@user, 1.hour.ago).size.should == 1
@@ -99,6 +102,52 @@ describe Visit do
       
       last_email_to.should == @visitor1.email
       emails.first.subject.should == "One person viewed your profile on MetaBright!"
+    end
+  end
+  
+  describe "anonymous visits" do
+    describe "1 at a time" do
+      before :each do
+        @visit = Visit.create!(visitor_id: 1, request_url: @user_url)
+      end
+      it "should result in 1 profile views" do
+        Visit.profile_views(@user, 1.hour.ago).size.should == 1
+      end
+      it "should result in 0 emails" do
+        Visit.send_all_visit_alerts(1.hour.ago, true)
+        last_email.should be_nil
+      end
+    end
+    
+    describe "2 at a time" do
+      before :each do
+        @visit = Visit.create!(visitor_id: 1, request_url: @user_url)
+        @visit = Visit.create!(visitor_id: 2, request_url: @user_url)
+      end
+      it "should result in 2 profile views" do
+        Visit.profile_views(@user, 1.hour.ago).size.should == 2
+      end
+      it "should result in 0 emails" do
+        Visit.send_all_visit_alerts(1.hour.ago, true)
+        last_email.should be_nil
+      end
+    end
+    
+    describe "3 at a time" do
+      before :each do
+        visitor_id = 1
+        @visit = Visit.create!(visitor_id: 1, request_url: @user_url)
+        @visit = Visit.create!(visitor_id: 2, request_url: @user_url)
+        @visit = Visit.create!(visitor_id: 3, request_url: @user_url)
+      end
+      it "should result in 3 profile views" do
+        Visit.profile_views(@user, 1.hour.ago).size.should == 3
+      end
+      it "should result in 1 emails" do
+        Visit.send_all_visit_alerts(1.hour.ago, true)
+        emails.size.should == 1
+        emails.first.subject.should == "3 people viewed your profile on MetaBright!"
+      end
     end
   end
 end
