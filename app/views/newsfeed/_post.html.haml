@@ -50,10 +50,8 @@
             %span.vote_points{ style:"margin-right:5px;" } pts
         - if feed.context == :submission
           %div.social_toolbar
-            - u = root_url
-            - a = u + "#{submission_drilldown_path(post["submitted_answer_id"])}"
-            = link_to "http://www.reddit.com/submit", onclick: "window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false", target: "_blank" do
-              = image_tag SHARE_REDDIT, alt:"Share on Reddit", border:"0", style: "margin-right: 4px; "
+            - u=root_url
+            - a=u+"#{submission_drilldown_path(post["submitted_answer_id"])}"
             = link_to "#", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink)) do
               = image_tag SHARE_FACEBOOK, alt: "Share on Facebook"
             = link_to "#", onclick: sharing_popup_javascript(:twitter, "#{a.to_s}", title) do
@@ -63,47 +61,36 @@
       
     %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post["answer_type"] == Task::CHECKIN}" }
       %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post["question"]}
-      - if @enable_administration
-        %ul.dropdown-menu{ role: "menu", style: "left:99.5%; top:-70%; min-width:152px;"}
-          %li
-            %div
-              %div.sidenub
-            %div{ style: "padding: 3px 0px;"}
-              %ul.profile_dropdown{ style: "list-style: none; margin: 0 2px 0 4px;"}
-                %li.CR_dropdown_option
-                  - if post["promoted_at"].nil?
-                    = link_to "Add to Hall of Fame", admin_update_submission_path(post["submitted_answer_id"], mark: "promoted"), method: :put
-                  - else
-                    = link_to "In the Hall of Fame", "#"
     
     %div#cr_pop.CRarea
       - if post["answer_type"] == Task::CREATIVE.to_s
-        - if post["answer_sub_type"] == Task::TEXT.to_s
+        .preview
+          %div.sliderbar1
+            - unless feed.context == :submission 
+              %span
+                = link_to "View Full", submission_drilldown_path(post["submitted_answer_id"]), style: "color: #404040;"
+            - if post["submitted_answer_content"] && post["submitted_answer_content"].downcase.include?("<html>")
+              - unless feed.context == :submission 
+                |  
+              %span.view_raw{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.preview').hide(); $(this).parents('.CRarea').find('.raw').show();" } View Raw
+              | 
+              %span.reload{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('iframe').attr('src', $(this).parents('.CRarea').find('iframe').attr('src'));" } Reload
+            - if @enable_administration
+              |
+              %span
+                - if post["promoted_at"].nil?
+                  = link_to "Add to Hall of Fame", admin_update_submission_path(post["submitted_answer_id"], mark: "promoted"), method: :put, style: "color: #404040;"
+                - else
+                  = link_to "In the Hall of Fame", "#"
           - if post["submitted_answer_content"] && post["submitted_answer_content"].downcase.include?("<html>")
-            .preview
-              %div.sliderbar1
-                %span.reload{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('iframe').attr('src', $(this).parents('.CRarea').find('iframe').attr('src'));" } Reload
-                |
-                %span.view_raw{ style: "color: #404040; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.preview').hide(); $(this).parents('.CRarea').find('.raw').show();" } View Raw
-                - unless feed.context == :submission
-                  |                
-                  %span
-                    = link_to "View Full", submission_drilldown_path(post["submitted_answer_id"]), style: "color: #404040;"
-              %iframe{ src: raw_path(post["submitted_answer_id"]), style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
-            .raw.hide
-              %div.sliderbar2
-                %span.view_preview{ style: "color: #404040; padding-right: 5px; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.raw').hide(); $(this).parents('.CRarea').find('.preview').show();"} View Preview
-              %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
-          - elsif post["submitted_answer_content"]
-            .preview
-              - unless feed.context == :submission
-                %div.sliderbar1                
-                  %span
-                    = link_to "View Full", submission_drilldown_path(post["submitted_answer_id"]), style: "color: #404040;"
-              %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
+            %iframe{ src: raw_path(post["submitted_answer_id"]), style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
           - else
             %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
-
+        - if post["answer_sub_type"] == Task::TEXT.to_s
+          .raw.hide
+            %div.sliderbar2
+              %span.view_preview{ style: "color: #404040; padding-right: 5px; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.raw').hide(); $(this).parents('.CRarea').find('.preview').show();"} View Preview
+            %code.content{ style: "word-break:normal;" }= post["submitted_answer_content"]
         - elsif post["answer_sub_type"] == Task::IMAGE.to_s
           = image_tag(sanitize(post["image_url"]))
       

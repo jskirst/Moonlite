@@ -25,6 +25,9 @@ class Persona < ActiveRecord::Base
       end
     end
   end
+  
+  after_save :flush_cache
+  before_destroy :flush_cache
     
   def picture() self.image_url.blank? ? "/images/default_achievement_pic.jpg" : self.image_url end
   def image() picture end
@@ -40,5 +43,9 @@ class Persona < ActiveRecord::Base
   
   def self.cached_personas
     Rails.cache.fetch([self.to_s, "all"]){ Persona.all.to_a }
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.to_s, "all"])
   end
 end

@@ -11,10 +11,8 @@ class Answer < ActiveRecord::Base
   
   validates :content, length: { :within => 1..255 }
   
-  after_save do
-    Rails.cache.delete([self.class.name, id])
-    Rails.cache.delete([self.class.name, "task_answers", task_id])
-  end
+  after_save :flush_cache
+  before_destroy :flush_cache
   
   def match?(supplied_answer)
     supplied_answer.downcase.gsub(/\s/,'') == content.downcase.gsub(/\s/,'')
@@ -29,10 +27,15 @@ class Answer < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find(id)
-    Rails.cache.fetch([self.to_s, id]){ find(id) }
+    Rails.cache.fetch([self.to_s, id]){ find_by_id(id) }
   end
   
   def self.cached_find_by_task_id(task_id)
     Rails.cache.fetch([self.to_s, "task_answers", task_id]){ where("answers.task_id = ?", task_id).to_a }
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, id])
+    Rails.cache.delete([self.class.name, "task_answers", task_id])
   end
 end

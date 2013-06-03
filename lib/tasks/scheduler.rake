@@ -176,3 +176,92 @@ task :test_send_follow_alert => :environment do
     end
   end
 end
+
+task :cache_warmup => :environment do
+  ap Rails.cache.stats
+  
+  Rails.cache.clear
+
+  start = Time.now
+  
+  puts "Loading answers..."
+  #Answers
+  a = Answer.last.id
+  (1..a).each do |i|
+    Answer.cached_find(i)
+  end
+  Task.all.each do |t|
+    Answer.cached_find_by_task_id(t.id)
+  end
+  
+  puts "Loading comments..."
+  #Comments
+  SubmittedAnswer.all.each do |sa|
+    Comment.cached_find_by_owner_type_and_owner_id("SubmittedAnswer", sa.id)
+  end
+  
+  puts "Loading groups..."
+  #Group
+  User.all.each do |u|
+    Group.cached_find_by_user_id(u.id)
+  end
+  
+  puts "Loading paths..."
+  #Path
+  permalinks = Path.all.collect(&:permalink)
+  permalinks.each do |permalink|
+    Path.cached_find(permalink)
+  end
+  p = Path.all.last.id
+  (1..a).each do |i|
+    Path.cached_find_by_id(i)
+  end
+  Persona.all.each do |persona|
+    Path.cached_find_by_persona_id(persona.id)
+  end
+  
+  puts "Loading personas..."
+  #Persona
+  Persona.cached_personas
+  
+  puts "Loading sections..."
+  #Section
+  s = Section.all.last.id
+  (1..s).each do |i|
+    Section.cached_find(i)
+  end
+  
+  puts "Loading submitted answers..."
+  #Submitted Answer
+  s = SubmittedAnswer.all.last.id
+  (1..s).each do |i|
+    SubmittedAnswer.cached_find(i)
+  end
+  
+  puts "Loading tasks..."
+  #Task
+  t = Task.all.last.id
+  (1..t).each do |i|
+    Task.cached_find(i)
+  end
+  
+  puts "Loading users..."
+  #User
+  usernames = User.all.collect(&:username)
+  usernames.each do |username|
+    User.cached_find_by_username(username)
+  end
+  u = User.all.last.id
+  (1..u).each do |i|
+    User.cached_find_by_id(i)
+  end
+  
+  puts "Loading user events..."
+  #UserEvent
+  UserEvent.all.each do |u|
+    UserEvent.cached_find_by_user_id(u.id)
+  end
+  
+  ap Rails.cache.stats
+  puts "Finished. Running time: #{Time.now - start}"
+end

@@ -72,9 +72,8 @@ class Task < ActiveRecord::Base
     creator.award_points(self, CREATOR_AWARD_POINTS)
   end
   
-  after_save do
-    Rails.cache.delete([self.class.name, self.id])
-  end
+  after_save :flush_cache
+  before_destroy :flush_cache
   
   def has_answers
     return true unless answer_content
@@ -135,6 +134,10 @@ class Task < ActiveRecord::Base
   
   def self.cached_find(id)
     Rails.cache.fetch([self.to_s, id]){ where(id: id).joins(:section).select("tasks.*, sections.path_id as path_id").first }
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, self.id])
   end
   
   private

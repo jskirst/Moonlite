@@ -46,9 +46,8 @@ class SubmittedAnswer < ActiveRecord::Base
     end
   end
   
-  after_save do
-    Rails.cache.delete([self.class.name, id])
-  end
+  after_save :flush_cache
+  before_destroy :flush_cache
   
   def reviewed?() not reviewed_at.nil? end
     
@@ -92,6 +91,10 @@ class SubmittedAnswer < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find(id)
-    Rails.cache.fetch([self.to_s, id]){ find(id) }
+    Rails.cache.fetch([self.to_s, id]){ find_by_id(id) }
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, id])
   end
 end
