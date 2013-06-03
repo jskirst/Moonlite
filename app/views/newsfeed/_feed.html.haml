@@ -44,6 +44,14 @@
         this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
       });
     });
+  
+  - if feed.context == :submission
+    :javascript
+      $(function(){
+        $(".comments").each(function(){
+          open_comments(this)
+        });
+      })
 
   - feed.posts.each do |post|
     = render "newsfeed/post", { post: post.attributes, feed: feed }

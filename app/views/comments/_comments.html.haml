@@ -24,11 +24,3 @@
         = hidden_field :comment, :owner_type, { :value => owner_type }
         = hidden_field :comment, :owner_id, { :value => owner_id }
         = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"
-
-- if (feed.context == :submission)
-  :javascript
-    $(document).ready(function(){
-      $(".comment"){
-        open_comments(this);
-      })
-    });
