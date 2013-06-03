@@ -3,8 +3,6 @@
   %head
     = render "layouts/head"
   %body
-    - if @require_ace_editor
-      %script{ src: "http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace.js", type: "text/javascript", charset: "utf-8" }
     - if current_user
       - if @path and @current_section
         = render "modals/launchpad"
