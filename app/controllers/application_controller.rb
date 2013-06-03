@@ -11,9 +11,15 @@ class ApplicationController < ActionController::Base
   def assign_resource(obj, resource_id)
     sr = StoredResource.find(resource_id)
     raise "FATAL: STEALING RESOURCE" if sr.owner_id
+      
     sr.owner_id = obj.id
     sr.owner_type = obj.class.to_s
     sr.save
+    
+    if obj.is_a? Path
+      obj.update_attribute(:image_url, sr.obj.url)
+    end
+    
     return sr
   end
 end

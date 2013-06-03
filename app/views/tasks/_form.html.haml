@@ -1,7 +1,6 @@
 - rand_id = rand(1000)
 - template_id = "template_#{rand_id}"
 
-
 = form_for(task, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator"}) do |f|
   = f.hidden_field :section_id
   %div.floatr
@@ -42,7 +41,7 @@
               = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
         
         - if task.creative? or task.new_record?
-          .creative.template_toggle
+          .creative.template_toggle{ style: (task.new_record? ? "display: none;" : "") }
             .control-group
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
@@ -99,7 +98,7 @@
             .control-group
               %label.control-label Topic
               .controls
-                - topics = ["Select Topic", nil]
+                - topics = [["Select Topic", nil]]
                 - @topics.each{ |t| topics << [t.name, t.id] }
                 = f.select :topic_id, topics
           .control-group
@@ -118,6 +117,17 @@
               = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px;"
             .controls{ style: "width: 450px;" }
               %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
+- if task.new_record? or task.creative?
+  :javascript
+    var editor = ace.edit("#{template_id}");
+    editor.setTheme("ace/theme/github");    
+    editor.getSession().setUseSoftTabs(true);
+    editor.getSession().setTabSize(2);
+    var $textarea = $("##{template_id}").siblings(".hidden_text_area");
+    editor.getSession().setValue($textarea.val());
+    editor.getSession().on('change', function(){
+      $textarea.val(editor.getSession().getValue());
+    });
 
 :javascript
   function display_sub_type_message(){
@@ -157,18 +167,7 @@
   });
   
   $(".question_creator").on("ajax:success", function(xhr, data){
-    console.log(data);
     if(data.errors){
       $(this).find("p.errors").text(data.errors)
     }
-  });
-  
-  var editor = ace.edit("#{template_id}");
-  editor.setTheme("ace/theme/github");    
-  editor.getSession().setUseSoftTabs(true);
-  editor.getSession().setTabSize(2);
-  var $textarea = $("##{template_id}").siblings(".hidden_text_area");
-  editor.getSession().setValue($textarea.val());
-  editor.getSession().on('change', function(){
-    $textarea.val(editor.getSession().getValue());
   });

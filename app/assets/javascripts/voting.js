@@ -7,7 +7,7 @@ function animate_point_change($target, addition, limit){
 }
 
 function init_voting(){
-  $(".vote_button").on("click",
+  $(".vote_button").unbind("click").on("click",
     function(event){
       var $vote_points = $(this).siblings("span.vote_points:first");
       var points = parseInt($vote_points.text());

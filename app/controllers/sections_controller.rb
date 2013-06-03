@@ -257,7 +257,6 @@ class SectionsController < ApplicationController
       @enrollment = current_user.enrollments.find_by_path_id(@path.id) if current_user
       completed_task.enrollment_id = @enrollment.id
       completed_task.save!
-      Answer.increment_counter(:answer_count, supplied_answer.id) if supplied_answer.is_a? Answer
     end
     
     if supplied_answer.is_a? String
@@ -293,11 +292,7 @@ class SectionsController < ApplicationController
       page = "continue"
     else
       if @task = @section.next_task(current_user, false, Task::CREATIVE)
-        #if current_user.completed_tasks.where("submitted_answer_id is not ?", nil).count > 0
-          #redirect_to take_bonus_section_path(@section, @task.id, @session_id)
-        #else
-          redirect_to boss_section_path(@section, @task.id, @session_id)
-        #end
+        redirect_to boss_section_path(@section, @task.id, @session_id)
         return
       else
         if @question_count == 0

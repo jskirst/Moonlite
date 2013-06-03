@@ -20,10 +20,8 @@ class Enrollment < ActiveRecord::Base
     points = points.to_i
     self.total_points = self.total_points + points
     check_for_events(points)
-    if rank < highest_rank
-      self.highest_rank = rank
-    end
-    save
+    calculate_highest_rank
+    save!
   end
   def remove_earned_points(points)
     points = points.to_i
@@ -148,6 +146,16 @@ class Enrollment < ActiveRecord::Base
     index = all_scores.find_index { |s| s.enrollment == self.id }
     self.metapercentile = (index.to_f/count.to_f*100).ceil
     save!
+  end
+  
+  def calculate_highest_rank
+    current_highest_rank = highest_rank == 0 ? 10000000 : highest_rank
+    if rank > 0 and rank < current_highest_rank
+      self.highest_rank = rank
+      return self.highest_rank
+    else
+      return false
+    end
   end
   
   def test_fire

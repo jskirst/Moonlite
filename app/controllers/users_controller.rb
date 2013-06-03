@@ -104,9 +104,13 @@ class UsersController < ApplicationController
   end
   
   def hovercard
-    @enrollments = @user.enrollments.order("total_points DESC").includes(:path)
-    @user_personas = @user.user_personas.includes(:persona)
-    render partial: "users/hovercard"
+    if request.xhr?
+      @enrollments = @user.enrollments.order("total_points DESC").includes(:path)
+      @user_personas = @user.user_personas.includes(:persona)
+      render partial: "users/hovercard"
+    else
+      redirect_to profile_url(@user.username)
+    end
   end
   
   private

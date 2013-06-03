@@ -85,7 +85,7 @@
         $('select#user_state').load(url).removeAttr("disabled");
       });
       
-      $("a[href*='/']").click(function(){
+      $("a[href*='/'], .loadable").click(function(){
         if($(this).hasClass("button")){
           $(this).addClass("disabled").attr("disabled", "disabled");
         }

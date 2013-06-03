@@ -31,7 +31,16 @@
     
       $(".reload").click(function(){ $(this).parent().find("iframe").attr("src", $(this).parent().find("iframe").attr("src")); });
     
-      $('iframe').load(function() {
+      $('iframe').each(function(){
+        var content = $(this).data("content");
+        var id = $(this).attr("id");
+        var frame = document.getElementById(id)
+        var doc = frame.contentDocument || frame.contentWindow.document;
+        doc.write(content);
+        doc.close();
+        var height = doc.body.offsetHeight + 50 + 'px';
+        $(this).css("height", height);
+      }).load(function() {
         this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
       });
     });
