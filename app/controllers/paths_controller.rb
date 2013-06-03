@@ -79,6 +79,7 @@ class PathsController < ApplicationController
     end
     @topics = @path.topics
     @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).all(order: "id ASC")
+    @require_ace_editor = true
   end
   
   def update
@@ -255,6 +256,9 @@ class PathsController < ApplicationController
     @enrollments = @leaderboard.shuffle.select{ |l| !l.image_url.blank? }.first(8)
     
     @url_for_newsfeed = generate_newsfeed_url
+    if @enrollment and @enrollment.contribution_unlocked?
+      @require_ace_editor = true
+    end
     render "show"
   end
   
