@@ -30,6 +30,7 @@
           });
         })
       #fb-root
+      
     :javascript
       $.MB.env = '#{Rails.env}';
       var iph_off = #{!params[:iph].nil?};
@@ -110,6 +111,8 @@
         });
         return true;
       });
+    
+    %script{ src: "http://rawgithub.com/ajaxorg/ace-builds/master/src-noconflict/ace.js", type: "text/javascript", charset: "utf-8" }
 
     - if Rails.env == "production"
       :javascript

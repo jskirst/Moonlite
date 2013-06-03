@@ -108,6 +108,8 @@ GEM
       rubyzip
     heroku-api (0.3.11)
       excon (~> 0.22.1)
+    heroku-deflater (0.5.1)
+      rack (>= 1.4.5)
     hike (1.2.2)
     httpauth (0.2.0)
     httpclient (2.3.3)
@@ -282,6 +284,7 @@ DEPENDENCIES
   fb_graph
   haml
   heroku
+  heroku-deflater
   jquery-rails
   memcachier
   meta_request

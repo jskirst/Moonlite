@@ -29,6 +29,7 @@ end
 group :production do
   gem 'unicorn'
   gem 'memcachier'
+  gem 'heroku-deflater'
 end
 
 group :development do

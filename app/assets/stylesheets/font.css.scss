@@ -1,21 +1,19 @@
 @font-face {
     font-family: 'MuliRegular';
-    src: url('font/Muli-Regular-webfont.eot');
-    src: url('font/Muli-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-         url('font/Muli-Regular-webfont.woff') format('woff'),
-         url('font/Muli-Regular-webfont.ttf') format('truetype'),
-         url('font/Muli-Regular-webfont.svg#MuliRegular') format('svg');
+    src: url('https://moonlite.s3.amazonaws.com/static/Muli-Regular-webfont.eot');
+    src: url('https://moonlite.s3.amazonaws.com/static/Muli-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://moonlite.s3.amazonaws.com/static/Muli-Regular-webfont.woff') format('woff'),
+         url('https://moonlite.s3.amazonaws.com/static/Muli-Regular-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'MuliItalic';
-    src: url('font/Muli-Italic-webfont.eot');
-    src: url('font/Muli-Italic-webfont.eot?#iefix') format('embedded-opentype'),
-         url('font/Muli-Italic-webfont.woff') format('woff'),
-         url('font/Muli-Italic-webfont.ttf') format('truetype'),
-         url('font/Muli-Italic-webfont.svg#MuliItalic') format('svg');
+    src: url('https://moonlite.s3.amazonaws.com/static/Muli-Italic-webfont.eot');
+    src: url('https://moonlite.s3.amazonaws.com/static/Muli-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         url('https://moonlite.s3.amazonaws.com/static/Muli-Italic-webfont.woff') format('woff'),
+         url('https://moonlite.s3.amazonaws.com/static/Muli-Italic-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
