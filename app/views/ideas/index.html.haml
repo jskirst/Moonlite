@@ -54,7 +54,7 @@
             %h6{ style: "margin: 0px;" } Submitted by #{link_to idea.creator.name, profile_path(idea.creator.username)}
             %p{ style: "padding: 5px 0; margin: 0;" }
               %pre= idea.description
-          = render "comments/comments", idea_comment_details(idea)  
+          = render "comments/comments", idea_comment_details(idea).merge(context: :idea)  
 
 :javascript
   $(function(){ 

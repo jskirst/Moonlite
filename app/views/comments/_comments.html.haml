@@ -7,7 +7,7 @@
   %div.leftstuff
     %div.displayin.floatl
       %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{comments.size}  Comments
-    - if feed.context == :submission
+    - if context == :submission
       = link_to "Go back to challenge", challenge_path(@path.permalink), class: "button button-info button-small"
     - else
       = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
