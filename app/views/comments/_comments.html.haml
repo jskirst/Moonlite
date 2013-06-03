@@ -7,7 +7,7 @@
   %div.postfooter
     %div.leftstuff
       %div.displayin.floatl
-        %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{comments.size}  Comments
+        %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{comments.size}  Comments        
       - if feed.context == :submission
         = link_to "Go back to challenge", challenge_path(@path.permalink), class: "button button-info button-small"
       - else
@@ -25,3 +25,11 @@
           = hidden_field :comment, :owner_type, { :value => owner_type }
           = hidden_field :comment, :owner_id, { :value => owner_id }
           = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"
+
+- if (feed.context == :submission)
+  :javascript
+    $(document).ready(function(){
+      $(".comment"){
+        open_comments(this);
+      })
+    });
