@@ -14,10 +14,11 @@
             %a.explore_link
               = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
               %span Explore
-          %li.navitem{ title: "Create", style: "height: 100%;" }
-            = link_to create_path do
-              = image_tag NAVBAR_CREATE, style: "", alt: "Create"
-              %span Create
+          - if current_user.earned_points > 1500 
+            %li.navitem{ title: "Create", style: "height: 100%;" }
+              = link_to create_path do
+                = image_tag NAVBAR_CREATE, style: "", alt: "Create"
+                %span Create
           %li.navitem{ title: "Profile", style: "height: 100%;" }
             = link_to profile_path(current_user.username) do
               = image_tag NAVBAR_PROFILE, alt: "Profile"  
