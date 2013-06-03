@@ -14,7 +14,7 @@
       %tr{ valign: "top"}
         %td{ style: ""}
           %a{ href: profile_url(visitor.username), target:"_blank"}
-            %img{ style: "border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; height: 70px; width: 70px;", src: visitor.picture}
+            %img{ style: "border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; height: 70px; max-height: 70px; width: 70px;", src: visitor.picture}
         %td{ style: "padding: 0 0 10px 5px; font-size: 12px;"}
           %a{ href: profile_url(visitor.username), target:"_blank", style:"text-decoration: none;  text-transform: uppercase; font-weight: bold;"}
             %span #{visitor.name}
