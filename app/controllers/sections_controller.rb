@@ -228,37 +228,35 @@ class SectionsController < ApplicationController
       correct = correct_answer.match?(supplied_answer)
     end
     
-    if current_user
-      session_id = params[:session_id]
-      completed_task = current_user.completed_tasks.find_by_task_id(task_id)
-      if completed_task.nil?
-        completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE, session_id: session_id)
-      elsif completed_task.status_id != Answer::INCOMPLETE
-        raise "Already answered"
-      elsif completed_task.created_at <= 60.seconds.ago and points > 0
-        raise "Out of time"
-      end
-      
-      if supplied_answer.is_a? String
-        completed_task.answer = supplied_answer
-      else
-        completed_task.answer_id = supplied_answer.id
-      end
-      
-      if correct
-        completed_task.status_id = Answer::CORRECT
-        completed_task.points_awarded = points
-        completed_task.award_points = true
-        session[:ssf] = session[:ssf].to_i + 1
-      else
-        completed_task.status_id = Answer::INCORRECT
-        completed_task.points_awarded = 0
-        session[:ssf] = 0
-      end
-      @enrollment = current_user.enrollments.find_by_path_id(@path.id) if current_user
-      completed_task.enrollment_id = @enrollment.id
-      completed_task.save!
+    session_id = params[:session_id]
+    completed_task = current_user.completed_tasks.find_by_task_id(task_id)
+    if completed_task.nil?
+      completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE, session_id: session_id)
+    elsif completed_task.status_id != Answer::INCOMPLETE
+      raise "Already answered"
+    elsif completed_task.created_at <= 60.seconds.ago and points > 0
+      raise "Out of time"
     end
+    
+    if supplied_answer.is_a? String
+      completed_task.answer = supplied_answer
+    else
+      completed_task.answer_id = supplied_answer.id
+    end
+    
+    if correct
+      completed_task.status_id = Answer::CORRECT
+      completed_task.points_awarded = points
+      completed_task.award_points = true
+      session[:ssf] = session[:ssf].to_i + 1
+    else
+      completed_task.status_id = Answer::INCORRECT
+      completed_task.points_awarded = 0
+      session[:ssf] = 0
+    end
+    @enrollment = current_user.enrollments.find_by_path_id(@path.id) unless @enrollment
+    completed_task.enrollment_id = @enrollment.id
+    completed_task.save!
     
     if supplied_answer.is_a? String
       render json: { correct_answer: correct_answer.content, supplied_answer: supplied_answer, type: "exact", correct: correct }
