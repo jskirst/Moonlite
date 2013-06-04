@@ -206,7 +206,7 @@ class PathsController < ApplicationController
         .where("submitted_answers.locked_at is ?", nil)
         .where("submitted_answers.reviewed_at is not ?", nil)
         .where("path_id = ?", @path.id)
-      @title = :question.to_s
+      @title = @feed.posts.first.question
       render "submission" and return
     end
     
