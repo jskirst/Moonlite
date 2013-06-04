@@ -82,7 +82,7 @@
                   %span= @user.location
             .shareprofile
               %p Share profile:
-              = render "shared/sharing", { custom_style: "display: inline; margin-right: 10px; float: right;", title: "#{@user.name}'s awesome profile on MetaBright.com", url: profile_url(@user.username) }
+              = render "shared/sharing", { custom_style: "display: inline; float: right;", title: "#{@user.name}'s awesome profile on MetaBright.com", url: profile_url(@user.username) }
   
   - unless @user_personas.size == 0 || @enrollments.size == 0            
     .span12{ style: "margin-left: 0px;" }
