@@ -149,6 +149,7 @@ class SectionsController < ApplicationController
         end
       end
     end
+    @require_ace_editor = true
   end
   
   def took

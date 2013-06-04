@@ -38,8 +38,14 @@
         var doc = frame.contentDocument || frame.contentWindow.document;
         doc.write(content);
         doc.close();
-        var height = doc.body.offsetHeight + 50 + 'px';
-        $(this).css("height", height);
+        
+        //$.MB.trigger_event(doc, "page:load");
+        //$.MB.trigger_event(doc, "page:change");
+        
+        if(doc.body){
+          var height = doc.body.offsetHeight + 50 + 'px';
+          $(this).css("height", height);
+        }
       }).load(function() {
         this.style.height = this.contentWindow.document.body.offsetHeight + 'px';
       });

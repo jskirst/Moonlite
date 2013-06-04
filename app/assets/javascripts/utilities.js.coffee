@@ -28,3 +28,8 @@ $.MB.submit_or_close = (exit_button) ->
 $.MB.show_loading_icon = ->
   $("#page_loading").show()
   setTimeout("$('#page_loading').hide();", 6000)
+  
+$.MB.trigger_event = (doc, name) ->
+  event = doc.createEvent 'Events'
+  event.initEvent name, true, true
+  doc.dispatchEvent event
