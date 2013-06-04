@@ -156,6 +156,7 @@ module SessionsHelper
         @is_consumer = true
         @enable_administration = current_user.enable_administration == "t"
       end
+      @custom_style = Company.find(1).custom_style
     end
   end
   
