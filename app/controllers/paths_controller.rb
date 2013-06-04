@@ -206,7 +206,7 @@ class PathsController < ApplicationController
         .where("submitted_answers.locked_at is ?", nil)
         .where("submitted_answers.reviewed_at is not ?", nil)
         .where("path_id = ?", @path.id)
-      @title = "Cool Answer"
+      @title = :question.to_s
       render "submission" and return
     end
     
