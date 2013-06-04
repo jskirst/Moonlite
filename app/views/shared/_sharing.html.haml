@@ -1,7 +1,7 @@
 - title ||= "Challenge yourself on MetaBright!"
 - url ||= request.url
 %div.social_toolbar{ style: custom_style }
-  = link_to "http://www.reddit.com/submit", onclick: "window.location = 'http://www.reddit.com/submit?url=' + encodeURIComponent(window.location); return false", target: "_blank" do             
+  = link_to "http://www.reddit.com/submit", onclick: "window.location = 'http://www.reddit.com/submit?url=#{url}'; return false", target: "_blank" do             
     = image_tag SHARE_REDDIT, alt:"Share on Reddit", border:"0", style: "margin-right: 4px; "
   %a{ onclick: sharing_popup_javascript(:facebook, url) }
     %img{ src: SHARE_FACEBOOK, alt: "Share on Facebook" }
