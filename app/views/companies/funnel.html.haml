@@ -19,6 +19,8 @@
         %li Total Registered Unprofessional: #{@total_registered_unprofressional}
         
   %h4{ style: "margin: 30px 0 0 0;" } Top 10 Dropoff Pages
+  %h5 Total Visits: #{@total_visits}
+  %h5 Total Null Last Visits: #{@null_last_visits}
   %ol{ style: "font-size: 16px; margin-top: 10px;" }
     - @last_visits_with_count.each do |url, count|
       %li #{url}: #{count}

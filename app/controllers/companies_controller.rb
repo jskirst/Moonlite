@@ -123,10 +123,12 @@ class CompaniesController < ApplicationController
     @total_registered_unprofressional = all_registered.where("wants_full_time is ? and wants_part_time is ? and wants_internship is ?", nil, nil, nil).count
     
     visits = all_new.select("users.name, users.id, MAX(visits.id) as visit_id")
-      .joins("JOIN visits on visits.user_id = users.id")
+      .joins("LEFT JOIN visits on visits.user_id = users.id")
       .group("users.id")
       .order("users.id")
       .collect(&:visit_id)
+    @total_visits = visits.size
+    @null_last_visits = visits.count{ |v| v.nil? }
     visits = Visit.where("id in (?)", visits).pluck(:request_url).collect{ |v| v.gsub(/[0-9]{10}/,'').gsub(/[0-9]{2,3}/,'') }
     @last_visits_with_count = Hash.new(0)
     visits.each{|y| @last_visits_with_count[y] += 1 }
