@@ -175,20 +175,21 @@
       %div.span11.challenge_details
         - @enrollments.each do |enrollment|
           - path = enrollment.path
-          %div.challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
-            %div.arenabucket
+          .challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
+            .arenabucket
               %h2
                 = link_to challenge_path(enrollment.path.permalink) do
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I know...
-              %div.profilecontent
-                %div.myrank
-                  %span= enrollment.level
-                  %p Level
-                  %div.progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
-                    %div.bar{ style: "width: #{enrollment.level_percent}%;" }
-                %table.table.overview
-                  %tbody
+              .profilecontent
+                %div{ style: "height: 105px; "}
+                  .myrank
+                    %span= enrollment.level
+                    %p Level
+                    .progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
+                      .bar{ style: "width: #{enrollment.level_percent}%;" }
+                  %table.table.overview
+                    %tbody
                     %tr
                       %td
                         %h3= enrollment.completed_tasks.joins(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::MULTIPLE).count
@@ -205,7 +206,19 @@
                       %td
                         %h3= enrollment.comments_received
                         %p Comments Received
-  
+                .my_strengths
+                  %h3 My strengths
+                  %ul
+                    %li
+                      Fundamentals
+                    %li
+                      Attributes
+                    %li
+                      Disney World or Disney Land
+                    %li
+                      Tags
+                    %li
+                      Multimedia
             %hr
             %div.crbucket
               %h2
