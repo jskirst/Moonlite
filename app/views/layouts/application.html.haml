@@ -3,7 +3,7 @@
   %head
     = render "layouts/head"
   %body
-    - if @custom_style
+    - if false and @custom_style
       :css
         #{@custom_style.styles}
     - if current_user
