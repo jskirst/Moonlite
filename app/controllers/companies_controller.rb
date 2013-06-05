@@ -130,7 +130,7 @@ class CompaniesController < ApplicationController
     visits = Visit.where("id in (?)", visits).pluck(:request_url).collect{ |v| v.gsub(/[0-9]{10}/,'').gsub(/[0-9]{2,3}/,'') }
     @last_visits_with_count = Hash.new(0)
     visits.each{|y| @last_visits_with_count[y] += 1 }
-    @last_visits_with_count = @last_visits_with_count.sort_by{ |k,v| v }.reverse
+    @last_visits_with_count = @last_visits_with_count.sort_by{ |k,v| v }.reverse.first(100)
     
     # profile_views_with_scores = all_new.select("DISTINCT on (users.id) ('http://#{domain}/' || lower(users.username)) as yeah, users.name, users.earned_points, users.id, visits.request_url ").joins("LEFT JOIN visits on visits.user_id = users.id and visits.request_url = ('http://#{domain}/' || lower(users.username))")
     # yes_profile_scores = []
