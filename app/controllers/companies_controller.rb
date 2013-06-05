@@ -138,8 +138,9 @@ class CompaniesController < ApplicationController
       render "companies/funnel/funnel"
     elsif mode == "signups"
       #.select("users.earned_points, users.email, date_part('days', now() - users.created_at) as created")
+      days = (params[:days] || 120).to_i
       @users = User.select("users.earned_points, users.email, DATE(users.created_at) as created")
-        .where("users.created_at > ?", 120.days.ago)
+        .where("users.created_at > ?", days.days.ago)
         .joins(:visits)
         .group("visits.user_id, users.earned_points, users.email, created")
         .having("count(visits.id) >= 2")
