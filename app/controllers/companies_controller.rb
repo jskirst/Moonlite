@@ -139,7 +139,12 @@ class CompaniesController < ApplicationController
     elsif mode == "signups"
       #.select("users.earned_points, users.email, date_part('days', now() - users.created_at) as created")
       days = (params[:days] || 120).to_i
-      @users = User.select("users.earned_points, users.email, DATE(users.created_at) as created")
+      if params[:week]
+        date_select = "users.earned_points, users.email, date_part('weeks', users.created_at) as created"
+      else
+        date_select = "users.earned_points, users.email, DATE(users.created_at) as created"
+      end
+      @users = User.select(date_select)
         .where("users.created_at > ?", days.days.ago)
         .joins(:visits)
         .group("visits.user_id, users.earned_points, users.email, created")
