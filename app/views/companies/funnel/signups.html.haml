@@ -1,0 +1,55 @@
+%div.single_pane
+  = render "header"
+  .links{ style: "float: right;" }
+    = link_to "Funnel", admin_funnel_path(mode: "funnel")
+    |
+    = link_to "Time Series", admin_funnel_path(mode: "signups")
+  %h1{ style: "border-bottom: 1px solid #DDD" } Funnel
+  %script{ src: "http://code.highcharts.com/highcharts.js" }
+  :javascript
+    $(function () {
+      dates = #{@dates.to_json};
+      $('#container_all').highcharts({
+        chart: { type: 'line', marginRight: 130, marginBottom: 25 },
+        title: { text: 'All Signup Data', x: -20 },
+        xAxis: { categories: dates },
+        yAxis: { title: { text: 'Percent Signup' }, plotLines: [{ value: 0, width: 1, color: '#808080' }] },
+        legend: { layout: 'vertical', align: 'right', verticalAlign: 'top', x: -10, y: 100, borderWidth: 0 },
+        series: [{ name: 'Total Users/10', data: #{@signups_by_date.values.collect{|vals| vals[:users]/10 }.to_json} }, 
+          { name: 'Percent Signup', data: #{@signups_by_date.values.collect{|vals| vals[:perc_registered] }.to_json} }, 
+          { name: 'Avg. Points/100', data: #{@signups_by_date.values.collect{|vals| vals[:avg_points]/100 }.to_json} }
+        ]
+      });
+      
+      $('#container_users').highcharts({
+        chart: { type: 'line', marginRight: 130, marginBottom: 25 },
+        title: { text: 'New Users', x: -20 },
+        xAxis: { categories: dates },
+        yAxis: { title: { text: 'Total Users' }, plotLines: [{ value: 0, width: 1, color: '#808080' }] },
+        legend: { layout: 'vertical', align: 'right', verticalAlign: 'top', x: -10, y: 100, borderWidth: 0 },
+        series: [{ name: 'Total Users', data: #{@signups_by_date.values.collect{|vals| vals[:users] }.to_json} }]
+      });
+      
+      $('#container_signups').highcharts({
+        chart: { type: 'line', marginRight: 130, marginBottom: 25 },
+        title: { text: 'Percent Signups', x: -20 },
+        xAxis: { categories: dates },
+        yAxis: { title: { text: 'Percent Signup' }, plotLines: [{ value: 0, width: 1, color: '#808080' }] },
+        legend: { layout: 'vertical', align: 'right', verticalAlign: 'top', x: -10, y: 100, borderWidth: 0 },
+        series: [{ name: 'Percent Signup', data: #{@signups_by_date.values.collect{|vals| vals[:perc_registered] }.to_json} }]
+      });
+      
+      $('#container_points').highcharts({
+        chart: { type: 'line', marginRight: 130, marginBottom: 25 },
+        title: { text: 'Avg Points', x: -20 },
+        xAxis: { categories: dates },
+        yAxis: { title: { text: 'Points' }, plotLines: [{ value: 0, width: 1, color: '#808080' }] },
+        legend: { layout: 'vertical', align: 'right', verticalAlign: 'top', x: -10, y: 100, borderWidth: 0 },
+        series: [{ name: 'Avg. Points', data: #{@signups_by_date.values.collect{|vals| vals[:avg_points] }.to_json} }]
+      });
+    });
+  
+  #container_all{ style: "min-width: 400px; height: 400px; margin: 0 auto" }
+  #container_users{ style: "min-width: 400px; height: 400px; margin: 0 auto" }
+  #container_signups{ style: "min-width: 400px; height: 400px; margin: 0 auto" }
+  #container_points{ style: "min-width: 400px; height: 400px; margin: 0 auto" }

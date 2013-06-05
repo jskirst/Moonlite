@@ -107,33 +107,65 @@ class CompaniesController < ApplicationController
   end
   
   def funnel
-    domain = Rails.env == "development" ? "localhost:3000" : "www.metabright.com"
-    @number_of_days = (params[:days] || 7).to_i
-    time = @number_of_days.days.ago
-    #@total_visits = Visit.select("DISTINCT visitor_id").where("created_at > ?", time).where("user_id is ?", nil).count
-    all_new = User.where("users.created_at > ?", time)
-    @total_new = all_new.count
-    all_engaged = all_new.where("earned_points >= 300")
-    @total_engaged = all_engaged.count
-    all_seen_opportunities = all_engaged.where(seen_opportunities: true)
-    @total_seen_opportunities = all_seen_opportunities.count
-    @total_unregistered = all_seen_opportunities.where("email like ?", '%@metabright.com%').count
-    all_registered = all_seen_opportunities.where("email not like ?", '%@metabright.com%')
-    @total_registered_professional = all_registered.where("wants_full_time = ? or wants_part_time = ? or wants_internship = ?", true, true, true).count
-    @total_registered_unprofressional = all_registered.where("wants_full_time is ? and wants_part_time is ? and wants_internship is ?", nil, nil, nil).count
+    mode = params[:mode]
+    if mode.blank? or mode == "funnel"
+      domain = Rails.env == "development" ? "localhost:3000" : "www.metabright.com"
+      @number_of_days = (params[:days] || 7).to_i
+      time = @number_of_days.days.ago
+      #@total_visits = Visit.select("DISTINCT visitor_id").where("created_at > ?", time).where("user_id is ?", nil).count
+      all_new = User.where("users.created_at > ?", time)
+      @total_new = all_new.count
+      all_engaged = all_new.where("earned_points >= 300")
+      @total_engaged = all_engaged.count
+      all_seen_opportunities = all_engaged.where(seen_opportunities: true)
+      @total_seen_opportunities = all_seen_opportunities.count
+      @total_unregistered = all_seen_opportunities.where("email like ?", '%@metabright.com%').count
+      all_registered = all_seen_opportunities.where("email not like ?", '%@metabright.com%')
+      @total_registered_professional = all_registered.where("wants_full_time = ? or wants_part_time = ? or wants_internship = ?", true, true, true).count
+      @total_registered_unprofressional = all_registered.where("wants_full_time is ? and wants_part_time is ? and wants_internship is ?", nil, nil, nil).count
     
-    visits = all_new.select("users.name, users.id, MAX(visits.id) as visit_id")
-      .joins("LEFT JOIN visits on visits.user_id = users.id")
-      .group("users.id")
-      .order("users.id")
-      .collect(&:visit_id)
-    @total_visits = visits.size
-    @null_last_visits = visits.count{ |v| v.nil? }
-    visits = Visit.where("id in (?)", visits).pluck(:request_url).collect{ |v| v.gsub(/[0-9]{10}/,'').gsub(/[0-9]{2,3}/,'') }
-    @last_visits_with_count = Hash.new(0)
-    visits.each{|y| @last_visits_with_count[y] += 1 }
-    @last_visits_with_count = @last_visits_with_count.sort_by{ |k,v| v }.reverse.first(100)
-    
+      visits = all_new.select("users.name, users.id, users.earned_points, MAX(visits.id) as visit_id")
+        .joins("LEFT JOIN visits on visits.user_id = users.id")
+        .group("users.id")
+        .order("users.id")
+        .collect(&:visit_id)
+      @total_visits = visits.size
+      @null_last_visits = visits.count{ |v| v.nil? }
+      visits = Visit.where("id in (?)", visits).pluck(:request_url).collect{ |v| v.gsub(/[0-9]{10}/,'').gsub(/[0-9]{2,3}/,'') }
+      @last_visits_with_count = Hash.new(0)
+      visits.each{|y| @last_visits_with_count[y] += 1 }
+      @last_visits_with_count = @last_visits_with_count.sort_by{ |k,v| v }.reverse.first(100)
+      render "companies/funnel/funnel"
+    elsif mode == "signups"
+      #.select("users.earned_points, users.email, date_part('days', now() - users.created_at) as created")
+      @users = User.select("users.earned_points, users.email, DATE(users.created_at) as created")
+        .where("users.created_at > ?", 120.days.ago)
+        .joins(:visits)
+        .group("visits.user_id, users.earned_points, users.email, created")
+        .having("count(visits.id) >= 2")
+        .to_a
+      @signups = @users.chunk{ |u| u.created }.collect do |date, users| 
+        [
+          date, 
+          users.length.to_i, 
+          users.count{|u| !u.email.include?("@metabright.com")}.to_i,
+          users.inject(0){|sum, u| sum += u.earned_points }.to_i
+        ]
+      end
+      @signups_by_date = {}
+      @signups.each do |s|
+        @signups_by_date[s[0]] = {
+          users: s[1], #total users
+          guests: s[1] - s[2], #users that didn't signup
+          registered: s[2], #users that signed up
+          perc_registered: (s[2].to_f / s[1]) * 100, #percent signup
+          total_points: s[3], #total points
+          avg_points: (s[3].to_f / s[1]), #average total points / 1000
+        }
+      end
+      @dates = @signups_by_date.keys
+      render "companies/funnel/signups"
+    end
     # profile_views_with_scores = all_new.select("DISTINCT on (users.id) ('http://#{domain}/' || lower(users.username)) as yeah, users.name, users.earned_points, users.id, visits.request_url ").joins("LEFT JOIN visits on visits.user_id = users.id and visits.request_url = ('http://#{domain}/' || lower(users.username))")
     # yes_profile_scores = []
     # no_profile_scores = []

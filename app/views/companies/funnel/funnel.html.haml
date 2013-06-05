@@ -1,5 +1,9 @@
 %div.single_pane
   = render "header"
+  .links{ style: "float: right;" }
+    = link_to "Funnel", admin_funnel_path(mode: "funnel")
+    |
+    = link_to "Time Series", admin_funnel_path(mode: "signups")
   %h1{ style: "border-bottom: 1px solid #DDD" } Funnel
   %div{ style: "float:right;" }
     - 10.downto(1) do |i|
