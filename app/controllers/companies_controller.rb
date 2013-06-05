@@ -107,10 +107,11 @@ class CompaniesController < ApplicationController
   end
   
   def funnel
+    domain = Rails.env == "development" ? "localhost:3000" : "www.metabright.com"
     @number_of_days = (params[:days] || 7).to_i
     time = @number_of_days.days.ago
     #@total_visits = Visit.select("DISTINCT visitor_id").where("created_at > ?", time).where("user_id is ?", nil).count
-    all_new = User.where("created_at > ?", time)
+    all_new = User.where("users.created_at > ?", time)
     @total_new = all_new.count
     all_engaged = all_new.where("earned_points >= 300")
     @total_engaged = all_engaged.count
@@ -120,6 +121,22 @@ class CompaniesController < ApplicationController
     all_registered = all_seen_opportunities.where("email not like ?", '%@metabright.com%')
     @total_registered_professional = all_registered.where("wants_full_time = ? or wants_part_time = ? or wants_internship = ?", true, true, true).count
     @total_registered_unprofressional = all_registered.where("wants_full_time is ? and wants_part_time is ? and wants_internship is ?", nil, nil, nil).count
+    
+    visits = all_new.select("users.name, users.id, MAX(visits.id) as visit_id")
+      .joins("JOIN visits on visits.user_id = users.id")
+      .group("users.id")
+      .order("users.id")
+      .collect(&:visit_id)
+    visits = Visit.where("id in (?)", visits).pluck(:request_url)
+    @last_visits_with_count = Hash.new(0)
+    visits.each{|y| @last_visits_with_count[y] += 1 }
+    @last_visits_with_count.sort
+    
+    # profile_views_with_scores = all_new.select("DISTINCT on (users.id) ('http://#{domain}/' || lower(users.username)) as yeah, users.name, users.earned_points, users.id, visits.request_url ").joins("LEFT JOIN visits on visits.user_id = users.id and visits.request_url = ('http://#{domain}/' || lower(users.username))")
+    # yes_profile_scores = []
+    # no_profile_scores = []
+    # profile_views_with_scores.each{ |v| v.request_url.blank? ? (no_profile_scores << v) : (yes_profile_scores << v) }
+    # raise yes_profile_scores.to_yaml
   end
   
   private

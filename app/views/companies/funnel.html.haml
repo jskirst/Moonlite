@@ -5,8 +5,9 @@
     - 10.downto(1) do |i|
       = link_to i, admin_funnel_path(days: i)
       %span | 
-  %h4{ style: "margin-top: 10px;" } Last #{@number_of_days} days
-  %ol{ style: "font-size: 16px; margin-top: 20px;" }
+  
+  %h4{ style: "margin: 20px 0 0 0;" } Last #{@number_of_days} days
+  %ol{ style: "font-size: 16px; margin-top: 10px;" }
     -#%li Total Visits: #{@total_visits}
     %li Total New Users: #{@total_new}
     %li Total Engaged: #{@total_engaged}
@@ -16,3 +17,8 @@
         %li Total Unregistered: #{@total_unregistered}
         %li Total Registered Professional: #{@total_registered_professional}
         %li Total Registered Unprofessional: #{@total_registered_unprofressional}
+        
+  %h4{ style: "margin: 30px 0 0 0;" } Top 10 Dropoff Pages
+  %ol{ style: "font-size: 16px; margin-top: 10px;" }
+    - @last_visits_with_count.each do |url, count|
+      %li #{url}: #{count}
