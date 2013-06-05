@@ -140,6 +140,7 @@ Metabright::Application.routes.draw do
   get '/admin/comments' => 'companies#comments'
   put '/admin/comments/:id' => 'companies#comments', as: 'admin_update_comment'
   get '/admin/styles' => 'companies#styles'
+  put '/admin/styles' => 'companies#styles'
   
   match '/locallink' => 'sessions#locallink'
   match '/auth/failure' => 'sessions#auth_failure'
