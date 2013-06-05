@@ -144,7 +144,9 @@ class CompaniesController < ApplicationController
         .joins(:visits)
         .group("visits.user_id, users.earned_points, users.email, created")
         .having("count(visits.id) >= 2")
+        .order("created DESC")
         .to_a
+      @users.reverse!
       @signups = @users.chunk{ |u| u.created }.collect do |date, users| 
         [
           date, 
