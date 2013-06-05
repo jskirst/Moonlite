@@ -127,7 +127,7 @@ class CompaniesController < ApplicationController
       .group("users.id")
       .order("users.id")
       .collect(&:visit_id)
-    visits = Visit.where("id in (?)", visits).pluck(:request_url)
+    visits = Visit.where("id in (?)", visits).pluck(:request_url).collect{ |v| v.gsub(/[0-9]{10}/,'').gsub(/[0-9]{2,3}/,'') }
     @last_visits_with_count = Hash.new(0)
     visits.each{|y| @last_visits_with_count[y] += 1 }
     @last_visits_with_count.sort
