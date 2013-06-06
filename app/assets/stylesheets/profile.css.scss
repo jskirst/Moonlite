@@ -80,11 +80,6 @@
 .profileheader .progress {width: 200px;display: inline-block;margin: 13px 10px 0 10px; float: right;}
 .profileprog {background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
 .profileheader h5 { display: inline-table; float: right; margin-top:14px; font-size:18px; }
-.profilecontent { padding-bottom:8px;}
-.profilecontent .table { margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; }
-.profilecontent .table td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width: 70px; border-top:none; }
-.profilecontent .table p { color: gray; margin:5px 0 0 0;}
-.profilecontent .table h3 { font-size: 45px; }
 .arenabucket { padding: 13px 12px 27px 28px;}
 .myrank { display:inline-block; text-align: center;position: relative; top: 23px;}
 .myrank span { font-size:79px; }
@@ -106,8 +101,51 @@
 #profile .post:hover { background-color: transparent; }
 #profile .postspace { }
 #profile .postphotospace img { height:50px; width:50px; }
-.profilecontent a { text-decoration: none; cursor: pointer; }
-.profilecontent .leftstuff .floatr p { margin-right:9px; }
+
+
+
+
+.profilecontent {
+  a { text-decoration: none; cursor: pointer; }
+  
+  .table {
+    margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; 
+    
+    td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width: 70px; border-top:none; }
+    h3 { font-size: 45px; }
+    p { color: gray; margin:5px 0 0 0;}
+  }
+  .leftstuff {
+    .floatr {
+      p { margin-right:9px; }
+    }
+  }
+  
+  .my_strengths {
+    margin: 25px 0 -10px 0;
+    padding-right: 15px;
+    
+    h3 { font-size: 20px; line-height: 28px; border-bottom: 1px solid gray; }
+    ul{ 
+      margin: 10px 0 0 0;
+      
+      li { 
+        color: #fff;
+        background-color: rgb(45, 105, 45);
+        border: 1px solid rgb(45, 105, 45);
+        margin: 0 20px 10px 0;
+        padding: 0px 6px;
+        display: inline-block;
+        line-height: 24px;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+        border-radius: 6px;
+      }
+    }    
+  }
+}
+
+
 
 .creations {
 	.leftboxfooter {
