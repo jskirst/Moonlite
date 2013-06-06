@@ -10,10 +10,10 @@ class UsersController < ApplicationController
   end
   
   def index
-    permalink = params[:group]
+    token = params[:token]
     email = params[:email]
     
-    group = Group.find_by_permalink(permalink)
+    group = Group.find_by_token(token)
     if group and @user = group.users.find_by_email(email)
       respond_to do |format|
         format.html { render text: @user.to_json }

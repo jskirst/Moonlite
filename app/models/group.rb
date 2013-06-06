@@ -15,7 +15,7 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :description
    
-  before_save do 
+  before_create do 
     grant_permalink
     grant_token
   end

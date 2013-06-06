@@ -78,9 +78,6 @@ class GroupsController < ApplicationController
   end
   
   def sandbox
-    @email = @group.users.first.email
-    @group = @group.permalink
-    @endpoint = users_url(group: @group, email: @email)
   end
   
   private

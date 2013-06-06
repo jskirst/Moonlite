@@ -17,7 +17,11 @@
     %h3 Requesting User Data
     %p 
       The user request api is currently in beta, and allows you to pull basic user information as well as information on all the user's current public enrollments.
-      The API url is "http://www.metabright.com/groups/users" and must be supplied two arguments: the group name and the email of the user you would like to request.
+      The API url is "http://www.metabright.com/groups/users" and must be supplied two arguments: the Group API Token and the email of the user you would like to request.
+      The user must be a member of your group to request this information.
+    
+    %h5{ style: "margin: 15px 15px;" } #{@group.name}'s API Token: #{@group.token}
+    
     %p The request will return a single JSON object with the following fields:
     %ul
       %li email
@@ -33,7 +37,7 @@
           
     %h3 Code Sample
     %p Below is a function that calls the API using a supplied email and group name. A slightly modified version of this code has been executed and displayed below.
-    %pre{ style: ""}= render "demo.js"
+    %pre#code_sample= render "demo.js", { user: current_user, group: @group }
     
     %h3 Sample API Call    
     #api_result{ style: "padding: 15px;" }
@@ -41,11 +45,11 @@
   
   
   :javascript
-    function getMetaBrightUser(email, group){
+    function getMetaBrightUser(email, token){
       var endpoint = "/groups/users";
       $.ajax({
         url: endpoint, 
-        data: { email: email, group: group},
+        data: { email: email, token: token},
         success: function(data, status, xhr){
           console.log(data);
           var user = data;
@@ -63,5 +67,6 @@
     }
     
     var email = "#{current_user.email}";
-    var group = "ihub";
-    getMetaBrightUser(email, group);
+    var token = "#{@group.token}";
+    
+    getMetaBrightUser(email, token);
