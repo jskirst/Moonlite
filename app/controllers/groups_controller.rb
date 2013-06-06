@@ -78,6 +78,7 @@ class GroupsController < ApplicationController
   end
   
   def sandbox
+    @email = params[:email] || current_user.email
   end
   
   private

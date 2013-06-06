@@ -37,10 +37,21 @@
           
     %h3 Code Sample
     %p Below is a function that calls the API using a supplied email and group name. A slightly modified version of this code has been executed and displayed below.
-    %pre#code_sample= render "demo.js", { user: current_user, group: @group }
+    %pre#code_sample= render "demo.js", { email: @email, group: @group }
     
-    %h3 Sample API Call    
-    #api_result{ style: "padding: 15px;" }
+    %div
+      .btn.dropdown.pull-right
+        %span{ data: { toggle: "dropdown" } }
+          Choose another user
+          %span.caret
+        %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dropdownMenu" }
+          - @group.users.each do |user|
+            %li
+              %a{ tabindex: "-1", href: sandbox_group_url(@group, email: user.email) }= user.name
+
+      %h3 Sample API Call
+      
+      #api_result{ style: "padding: 15px;" }
   
   
   
@@ -53,7 +64,9 @@
         success: function(data, status, xhr){
           console.log(data);
           var user = data;
-          $("<h5></h5>").text(user.name + " / " + user.username + " / " + user.email).appendTo("#api_result");
+          $("<h5>Name: "+user.name+"</h5>").appendTo("#api_result");
+          $("<h5>Username: "+user.username+"</h5>").appendTo("#api_result");
+          $("<h5>Email: "+user.email+"</h5>").appendTo("#api_result");
           var challenges = user.challenges;
           for(var i in challenges){
             c = challenges[i];
@@ -66,7 +79,7 @@
       });
     }
     
-    var email = "#{current_user.email}";
+    var email = "#{@email}";
     var token = "#{@group.token}";
     
     getMetaBrightUser(email, token);
