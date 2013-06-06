@@ -181,6 +181,22 @@ class CompaniesController < ApplicationController
     # raise yes_profile_scores.to_yaml
   end
   
+  def visits
+    if params[:visitor]
+      @visits = Visit.where("visitor_id = ?", params[:visitor])
+    elsif params[:user]
+      @visits = Visit.where("user_id = ?", params[:user])
+    else
+      conditions = params[:search].nil? ? nil : ["request_url = ?", params[:search]]
+      @visits = Visit.where(conditions)
+    end
+    @visits = @visits.select("visits.*, users.username")
+      .joins("LEFT JOIN users on visits.user_id=users.id")
+      .order("visits.id DESC")
+      .paginate(page: params[:page])
+  end
+    
+  
   private
   def toggle(attr, obj)
     obj.update_attribute(attr, obj.read_attribute(attr).nil? ? Time.now : nil)

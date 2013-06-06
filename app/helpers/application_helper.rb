@@ -63,6 +63,7 @@ module ApplicationHelper
     [
       ["overview", "Overview", admin_overview_path],
       ["funnel", "Funnel", admin_funnel_path],
+      ["visits", "Visits", admin_visits_path],
       ["roles", "User Roles", user_roles_path],
       ["styles", "Custom Styles", admin_styles_path],
       ["personas", "Personas", personas_path],

@@ -1,0 +1,24 @@
+.single_pane
+  = render "header"
+  = will_paginate @visits, style: "float:left; margin-bottom:0; margin-top: 0;"
+  = render "search", link: admin_visits_path, placeholder: "URL..."
+  %table.table
+    %thead
+      %tr
+        %th User
+        %th URL
+        %th Referrer
+        %th Date
+        %th Time Ago
+    %tbody
+      - @visits.to_a.each do |visit|
+        %tr
+          %td
+            - if visit.username
+              = link_to truncate(visit.username, length: 20), admin_visits_path(user: visit.user_id)
+            - else
+              = link_to visit.visitor_id, admin_visits_path(visitor: visit.visitor_id)
+          %td{ title: visit.request_url }= truncate(visit.request_url, length: 70)
+          %td{ title: visit.referral_url }= truncate(visit.referral_url, length: 40)
+          %td= visit.created_at
+          %td= time_ago_in_words(visit.created_at)

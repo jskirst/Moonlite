@@ -56,13 +56,12 @@ class Path < ActiveRecord::Base
   def promoted?() promoted_at.nil? ? false : true end
   
   def path_pic
-    #return stored_resource.obj.url if stored_resource
     return self.image_url if self.image_url
-    return "/images/image_thumb.png"
+    return ICON_DEFAULT_PATH
   end
   def image() path_pic end
   def picture() path_pic end
-  def default_pic?() path_pic == "/images/image_thumb.png" end
+  def default_pic?() path_pic == ICON_DEFAULT_PATH end
   
   def self.with_name_like(name, user)
     return Path.where("locked_at is ? and published_at is ? and name ILIKE ?", nil, true, "%#{name}%")
