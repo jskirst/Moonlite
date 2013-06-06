@@ -4,4 +4,4 @@
   %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
   %span{ style: "font-size: 50px;position: relative;top:13px;" } Customize your Profile
   %hr{style:"margin:0;"}
-  = render "custom_styles/form", { custom_style: @user_custom_style, link: style_user_path(current_user.username), back: edit_user_path(current_user.permalink) }
+  = render "custom_styles/form", { custom_style: @user_custom_style, link: style_user_path(current_user.username), back: edit_user_path(current_user.username) }

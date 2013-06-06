@@ -179,7 +179,7 @@ module SessionsHelper
   private
     def log_visit
       begin
-        unless params[:action] == "raw"
+        unless params[:action] == "raw" or request.env["HTTP_USER_AGENT"].match(/\(.*https?:\/\/.*\)/)
           if not request.xhr? or params[:action] == "hovercard"
             if current_user
               visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
