@@ -15,8 +15,9 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :description
    
-  before_create do 
+  before_save do 
     grant_permalink
+    grant_token
   end
    
   def picture
@@ -56,6 +57,13 @@ class Group < ActiveRecord::Base
       end
       self.permalink = new_combined_permalink
     end
+  end
+  
+  def grant_token
+    if token.blank?
+      self.token = SecureRandom::hex(8)
+    end
+    return self.token
   end
 end
  
