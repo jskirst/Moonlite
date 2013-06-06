@@ -3,9 +3,7 @@
   %head
     = render "layouts/head"
   %body
-    - if false and @custom_style
-      :css
-        #{@custom_style.styles}
+    = render "layouts/custom_styles"
     - if current_user
       - if @path and @current_section
         = render "modals/launchpad"

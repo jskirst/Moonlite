@@ -51,6 +51,7 @@ class PagesController < ApplicationController
   
   def profile
     @user = User.find_by_username(params[:username])
+    @user_custom_style = @user.custom_style
     if @user.nil? || @user.locked? 
       redirect_to root_path
       return

@@ -1,0 +1,12 @@
+- if @custom_style and (@custom_style.on? or (@custom_style.preview? and @enable_administration))
+  :css
+    #{@custom_style.styles}
+- if @user_custom_style and (@user_custom_style.on? or (@user_custom_style.preview? and @user_custom_style.owner == current_user))
+  :css
+    #{@user_custom_style.styles}
+- if @group_custom_style
+  :css
+    #{@group_custom_style.styles}
+- if @path_custom_style and (@path_custom_style.on? or (@path_custom_style.preview? and @path_custom_style.owner == c))
+  :css
+    #{@path_custom_style.styles}

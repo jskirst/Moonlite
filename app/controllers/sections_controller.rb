@@ -381,6 +381,9 @@ class SectionsController < ApplicationController
     else
       raise "FATAL: attempt to access unknown path."
     end
+    unless request.xhr?
+      @path_custom_style = @path.custom_style
+    end
     @enrollment = current_user.enrollments.find_by_path_id(@path.id) if current_user
   end
   

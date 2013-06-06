@@ -9,8 +9,9 @@ class Group < ActiveRecord::Base
     :country,
     :permalink
   
-  has_many :group_users
-  has_many :users, through: :group_users
+  has_one   :custom_style, as: :owner
+  has_many  :group_users
+  has_many  :users, through: :group_users
    
   validates_presence_of :name
   validates_presence_of :description

@@ -13,6 +13,7 @@ class Path < ActiveRecord::Base
     :template_type
   
   has_one :stored_resource, as: :owner
+  has_one :custom_style, as: :owner
   belongs_to :user
   belongs_to :company
   belongs_to :category

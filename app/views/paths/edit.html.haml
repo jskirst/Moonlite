@@ -19,6 +19,10 @@
         %div.controls= render "stored_resources/new_image"      
       %div.control-group
         %div.controls= image_tag(@path.path_pic, class: "original_image_preview", style: "height: 75px; max-width: 150px;")
+      - if current_user.id == @path.user_id
+        %div.control-group{ style: "margin-bottom: 10px;" }
+          %label.control-label Custom CSS
+          %div.controls{ style: "margin-top: 6px;" }= link_to "Customize Path Styles", style_path_path(@path.permalink), style: "line-height:18px; padding-top: 5px;"
       - if false
         %div.control-group{ style: "margin-bottom: 5px;" }
           %label.control-label Collaborators

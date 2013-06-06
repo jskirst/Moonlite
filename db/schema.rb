@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130606111850) do
+ActiveRecord::Schema.define(:version => 20130606152341) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -93,11 +93,12 @@ ActiveRecord::Schema.define(:version => 20130606111850) do
   add_index "completed_tasks", ["user_id", "task_id"], :name => "index_completed_tasks_on_user_id_and_task_id"
 
   create_table "custom_styles", :force => true do |t|
-    t.integer  "company_id"
+    t.integer  "owner_id"
     t.text     "styles"
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
     t.integer  "mode",       :default => 0
+    t.string   "owner_type"
   end
 
   create_table "enrollments", :force => true do |t|

@@ -19,12 +19,12 @@ class Company < ActiveRecord::Base
   has_many :user_roles
   has_many :personas
   has_one :user_role
-  has_one :custom_style
+  has_one :custom_style, as: :owner
   
   validates :name, presence: true, length: { maximum: 100 }
   
   after_create do
-    CustomStyle.create!(company_id: self.id)
+    CustomStyle.create!(owner_id: self.id)
   end
   
   def email_from

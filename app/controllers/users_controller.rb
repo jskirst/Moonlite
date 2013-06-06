@@ -45,6 +45,21 @@ class UsersController < ApplicationController
     end
   end
   
+  def style
+    @user_custom_style = current_user.custom_style
+    unless @user_custom_style
+      @user_custom_style = CustomStyle.new
+      @user_custom_style.owner_id = current_user.id
+      @user_custom_style.owner_type = "User"
+      @user_custom_style.save!
+    end
+    
+    unless request.get?
+      @user_custom_style.update_attributes(params[:custom_style])
+      flash[:success] = "Your styles have been saved."
+    end
+  end
+  
   def edit
     @title = "Edit Profile"
   end

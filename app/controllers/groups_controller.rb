@@ -67,6 +67,21 @@ class GroupsController < ApplicationController
     end
   end
   
+  def style
+    @group_custom_style = @group.custom_style
+    unless @group_custom_style
+      @group_custom_style = CustomStyle.new
+      @group_custom_style.owner_id = @group.id
+      @group_custom_style.owner_type = "Group"
+      @group_custom_style.save!
+    end
+    
+    unless request.get?
+      @group_custom_style.update_attributes(params[:custom_style])
+      flash[:success] = "Your styles have been saved."
+    end
+  end
+  
   def join
     @group.group_users.create! user: current_user
     redirect_to @group
@@ -86,6 +101,7 @@ class GroupsController < ApplicationController
     @group = Group.find_by_permalink(params[:permalink]) if params[:permalink]
     @group = Group.find_by_permalink(params[:id]) if params[:id] && @group.nil?
     @group = Group.find_by_id(params[:id]) if params[:id] && @group.nil?
+    @group_custom_style = @group.custom_style
     redirect_to root_path unless @group
   end
   

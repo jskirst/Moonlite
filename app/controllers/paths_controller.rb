@@ -4,7 +4,7 @@ class PathsController < ApplicationController
   
   before_filter :authenticate, except: [:show, :newsfeed, :drilldown, :marketing]
   before_filter :load_resource, except: [:index, :new, :create, :drilldown, :marketing, :start]
-  before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators]
+  before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators, :style]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
 # Begin Path Creation
@@ -111,6 +111,21 @@ class PathsController < ApplicationController
       redirect_to admin_paths_path
     else
       redirect_to edit_path_path(@path.permalink)
+    end
+  end
+  
+  def style
+    @path_custom_style = @path.custom_style
+    unless @path_custom_style
+      @path_custom_style = CustomStyle.new
+      @path_custom_style.owner_id = @path.id
+      @path_custom_style.owner_type = "Path"
+      @path_custom_style.save!
+    end
+    
+    unless request.get?
+      @path_custom_style.update_attributes(params[:custom_style])
+      flash[:success] = "Your styles have been saved."
     end
   end
   
@@ -346,11 +361,11 @@ class PathsController < ApplicationController
     def load_resource
       @path = Path.cached_find(params[:permalink] || params[:id])
       unless @path
-        raise "Could not find path in cache" if Rails.env == "development"
         @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
         @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
         @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       end
+      @path_custom_style = @path.custom_style
       redirect_to root_path unless @path
     end
     

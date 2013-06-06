@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   belongs_to  :company
   belongs_to  :user_role
   has_one     :notification_settings
+  has_one     :custom_style, as: :owner
   has_many    :user_auths, dependent: :destroy
   has_many    :paths
   has_many    :enrollments, dependent: :destroy

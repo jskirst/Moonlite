@@ -1,0 +1,17 @@
+#styles_editor{ style: "padding: 20px;" }
+  = form_for(custom_style, url: link) do |f|
+    %p
+      Edit the styles below. Note that you must save before these styles will take effect. 
+      Set the status to "Preview" if you want to see how the styles will look. Only you will be able to see them.
+    .control-group
+      %label.control-label Status
+      .controls
+        %select{ name: "custom_style[mode]" }
+          %option{ value: CustomStyle::OFF, selected: ('selected' if custom_style.off?) } Off
+          %option{ value: CustomStyle::PREVIEW, selected: ('selected' if custom_style.preview?) } Preview
+          %option{ value: CustomStyle::ON, selected: ('selected' if custom_style.on?) } On
+    %div.field.clearfix
+      = f.text_area :styles, rows: "15", placeholder: "Add CSS styles here...", style: "margin:10px 0; width: 860px; min-height: 200px;"
+    %div.actions
+      = link_to "Back", back, class: "button button-standard"
+      = f.submit "Save", class: "button button-actionable", style: "margin-left: 10px;"

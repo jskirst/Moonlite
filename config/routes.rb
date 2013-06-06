@@ -8,13 +8,20 @@ Metabright::Application.routes.draw do
 	# Custom Challenge Routing
 	get '/heroku' => 'paths#marketing'
 	
-	resources :users
+	resources :users do
+	  member do
+	    get :style
+	    put :style
+	  end
+	end
 	match '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
 	match '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
   match '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
   	
   resources :paths do
 		member do
+		  get :style
+		  put :style
       get :publish
       get :unpublish
       get :collaborator
@@ -47,6 +54,8 @@ Metabright::Application.routes.draw do
   get '/groups/users' => "users#index"
   resources :groups do
     member do
+      get :style
+      put :style
       get :join
       delete :leave         
       get :newsfeed
