@@ -8,6 +8,8 @@
         %th User
         %th URL
         %th Referrer
+        %th User Agent
+        %th IP Address
         %th Date
         %th Time Ago
     %tbody
@@ -20,5 +22,7 @@
               = link_to visit.visitor_id, admin_visits_path(visitor: visit.visitor_id)
           %td{ title: visit.request_url }= truncate(visit.request_url, length: 70)
           %td{ title: visit.referral_url }= truncate(visit.referral_url, length: 40)
-          %td= visit.created_at
+          %td{ title: visit.user_agent }= truncate(visit.user_agent, length: 20)
+          %td{ title: visit.remote_ip }= truncate(visit.remote_ip, length: 20)
+          %td{ title: visit.created_at }= truncate(visit.created_at.to_s, length: 13, omission: "")
           %td= time_ago_in_words(visit.created_at)

@@ -1,0 +1,8 @@
+%div
+  = image_tag contribution[:image_url], class: "bigger_img"
+  %div
+    %h3= contribution[:name]
+    %h4 
+      #{contribution[:users]} Users
+      %span · 
+      #{contribution[:count]} Questions

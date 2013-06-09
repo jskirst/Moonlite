@@ -117,48 +117,33 @@
                 %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
                 %span.pts #{enrollment.total_points} points
         
-        - if false
-          %div.leftbox.creations
-            %div.leftboxheader My Creations
-            %div.leftboxfooter
-              %div 
-                %h2 Author
-                %div
-                  = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
-                  %div
-                    %h3 Challenge name
-                    %h4 
-                      381 Users
-                      %span · 
-                      61 questions
-                %div
-                  = image_tag "http://www.placekitten.com/90/90", class: "bigger_img"
-                  %div
-                    %h3 Challenge name
-                    %h4 
-                      381 Users
-                      %span ·
-                      61 questions
-              %div 
-                %h2 Top Contributor
-                %ul
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
-              %div 
-                %h2 Contributor
-                %ul
-                  %li
-                    = image_tag "http://www.placekitten.com/90/90", class: "smaller_img"
+        %div.leftbox.creations
+          %div.leftboxheader My Contributions
+          %div.leftboxfooter
+            %div 
+              %h2 Author
+              - authorships = @contributions.select{ |c| c[:primary] }
+              - if authorships.empty?
+                %p No authorships.
+              - else
+                - authorships.each do |c| 
+                  = render "users/contribution", contribution: c 
+            %div 
+              %h2 Top Contributor
+              - top_contributions = @contributions.select{ |c| !c[:primary] and c[:count] > 10 }                
+              - if top_contributions.empty?
+                %p No top contributions.
+              - else
+                - top_contributions.each do |c| 
+                  = render "users/contribution", contribution: c
+            %div 
+              %h2 Contributor
+              - contributions = @contributions.select{ |c| c[:primary] and c[:count] <= 10 }                
+              - if contributions.empty?
+                %p No contributions.
+              - else
+                - contributions.each do |c| 
+                  = render "users/contribution", contribution: c
                 
         %div.leftbox
           %div.leftboxheader Similar People
@@ -175,6 +160,7 @@
       %div.span11.challenge_details
         - @enrollments.each do |enrollment|
           - path = enrollment.path
+          - enrollment_details = @enrollment_details[enrollment.path_id]
           .challengecontent{ style: ("display: none;" unless enrollment == @enrollments.first), id: "enrollment_#{enrollment.id}" }
             .arenabucket
               %h2
@@ -192,7 +178,7 @@
                     %tbody
                     %tr
                       %td
-                        %h3= enrollment.completed_tasks.joins(:task).where("status_id = ? and tasks.answer_type = ?", Answer::CORRECT, Task::MULTIPLE).count
+                        %h3= enrollment_details[:core].size
                         %p Questions Correct
                       %td
                         %h3= enrollment.longest_streak
@@ -201,24 +187,19 @@
                         %h3= enrollment.highest_rank
                         %p Highest Rank
                       %td
-                        %h3= enrollment.votes_received
+                        %h3= enrollment_details[:votes]
                         %p Votes Received
                       %td
-                        %h3= enrollment.comments_received
+                        %h3= enrollment_details[:comments]
                         %p Comments Received
                 .my_strengths
-                  %h3 My strengths
-                  %ul
-                    %li
-                      Fundamentals
-                    %li
-                      Attributes
-                    %li
-                      Disney World or Disney Land
-                    %li
-                      Tags
-                    %li
-                      Multimedia
+                  %h3 Strengths
+                  - unless enrollment_details[:topics].empty?
+                    %ul
+                      - enrollment_details[:topics].each do |topic|
+                        %li= topic
+                  - else
+                    %p No strengths discovered yet. Answer more questions to unlock new strengths.
             %hr
             %div.crbucket
               %h2
@@ -227,9 +208,9 @@
                 What I can do...
               - if @user == current_user
                 = link_to "Add new CR", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
-              %h4 #{@creative_feeds_by_path[enrollment.path_id].posts.size} Creative Responses
+              %h4 #{enrollment_details[:creative].posts.size} Creative Responses
               %div.profilecontent
-                = render "newsfeed/feed", feed: @creative_feeds_by_path[enrollment.path_id]
+                = render "newsfeed/feed", feed: enrollment_details[:creative]
   
             %hr
             %div.taskbucket
@@ -239,9 +220,9 @@
                 What I have done...
               - if @user == current_user
                 = link_to "Add new Task", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
-              %h4 #{@task_feeds_by_path[enrollment.path_id].posts.size} Tasks Completed
+              %h4 #{enrollment_details[:tasks].posts} Tasks Completed
               %div.profilecontent
-                = render "newsfeed/feed", feed: @task_feeds_by_path[enrollment.path_id]
+                = render "newsfeed/feed", feed: enrollment_details[:tasks]
                 
     
 

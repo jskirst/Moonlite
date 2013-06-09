@@ -11,7 +11,17 @@ class Comment < ActiveRecord::Base
   validates :content, presence: true
   
   after_save :flush_cache
+  after_create do
+    if owner.columns_hash[:total_comments]
+      owner.update_attributes(:total_comments, (owner.total_comments + 1))
+    end
+  end
   before_destroy :flush_cache
+  before_destroy do
+    if owner.columns_hash[:total_comments]
+      owner.update_attributes(:total_comments, (owner.total_comments - 1))
+    end
+  end
   
   # Cached method
   
