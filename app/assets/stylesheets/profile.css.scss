@@ -160,10 +160,14 @@
       margin-bottom: 6px; 
       font-weight: bold; 
      }
+     
+     div {
+       padding: 4px 10px 0 0;
+       margin-bottom: 5px; 
+     }
 		
-		.contribution {
-			padding: 4px 10px 0 0;
-			margin-bottom: 5px; 
+		.contribution {			
+		  padding: 0;
 			&:last-child{ margin-bottom: 0; }
 			
 			.bigger_img { height: 50px; width: 50px; vertical-align: top; }
