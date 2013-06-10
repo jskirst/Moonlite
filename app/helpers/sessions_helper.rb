@@ -183,7 +183,7 @@ module SessionsHelper
           if not request.xhr? or params[:action] == "hovercard"
             if current_user
               visitor_id = cookies[:visitor_id].to_i > 0 ? cookies[:visitor_id].to_i : nil
-              @visit = Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url, referral_url: request.env["HTTP_REFERER"])
+              @visit = Visit.create!(user_id: current_user.id, visitor_id: visitor_id, request_url: request.url, referral_url: request.env["HTTP_REFERER"], user_agent: request.env["HTTP_USER_AGENT"], remote_ip: request.remote_ip )
             else
               if cookies[:visitor_id].to_i > 0
                 visitor_id = cookies[:visitor_id]  

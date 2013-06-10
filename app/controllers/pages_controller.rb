@@ -66,22 +66,67 @@ class PagesController < ApplicationController
     
     if @current_user_persona
       @enrollments = @current_user_persona.enrollments.includes(:path).sort{ |a, b| b.total_points <=> a.total_points }
-      completed_tasks = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+      completed_tasks = CompletedTask.joins(:submitted_answer, :user, :task => [{ :section => :path }])
+        .joins("LEFT JOIN topics on tasks.topic_id = topics.id")
         .select(newsfeed_fields)
+        .select("topics.name as topic")
         .where("completed_tasks.status_id = ?", Answer::CORRECT)
         .where("submitted_answers.locked_at is ?", nil)
         .where("submitted_answers.reviewed_at is not ?", nil)
         .where("users.id = ?", @user.id)
         .order("completed_tasks.points_awarded DESC")
-        .eager_load
-
-      @creative_feeds_by_path = {}
-      @task_feeds_by_path = {}
+        .to_a
+        
+      @enrollment_details = {}
       @enrollments.each do |e|
-        @creative_feeds_by_path[e.path_id] = Feed.new(params, current_user, nil, 
-          completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CREATIVE.to_s })
-        @task_feeds_by_path[e.path_id] = Feed.new(params, current_user, nil, 
-          completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CHECKIN.to_s })
+        core = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and (ct.answer_type == Task::MULTIPLE.to_s or ct.answer_type == Task::EXACT.to_s) }
+        debugger
+        creative = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CREATIVE.to_s }
+        tasks = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CHECKIN.to_s }
+        votes = 0
+        comments = 0
+        (creative+tasks).each do |ct|
+          comments += ct.total_comments.to_i if ct.total_comments != "0"
+          votes += ct.total_votes.to_i if ct.total_votes != "0"
+        end
+        
+        @enrollment_details[e.path_id] = {
+          core: core,
+          topics: core.collect{|t| t.topic if ct.status_id == Answer::CORRECT },
+          votes: votes,
+          comments: comments,
+          creative: Feed.new(params, current_user, nil, creative),
+          tasks: Feed.new(params, current_user, nil, tasks)
+        }
+      end
+      
+      @tasks = Task.joins(:section => :path)
+        .where("tasks.creator_id = ?", @user.id)
+        .select("tasks.*, paths.id as path_id, paths.image_url, paths.name, paths.user_id, paths.approved_at as path_approved")
+        .to_a
+      @contributions = {}
+      unless @tasks.empty?
+        @tasks.each do |t|
+          if @contributions[t.path_id]
+            @contributions[t.path_id][:count] += 1
+          else
+            @contributions[t.path_id] = {
+              user_id: t.user_id,
+              count: 0,
+              name: t.name,
+              image_url: t.image_url,
+              primary: false,
+              users: 0,
+              approved: t.path_approved
+            }
+          end
+        end
+        @contributions.delete_if{ |key, values| values[:approved].nil? }
+        @contributions.each do |key, c|
+          @contributions[key][:users] = Enrollment.where("path_id = ?", key).count
+          @contributions[key][:primary] = c[:user_id] == @user.id.to_s or Collaboration.find_by_user_id(@user.id)
+        end
+        @contributions = @contributions.values
       end
       
       @similar_people = User.joins(:user_role)
