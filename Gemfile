@@ -43,6 +43,7 @@ group :development do
   gem 'meta_request'
   gem 'sql-logging'
   gem 'rack-mini-profiler'
+  gem 'debugger'
 end
 
 group :test do

@@ -75,11 +75,12 @@ class PagesController < ApplicationController
         .where("submitted_answers.reviewed_at is not ?", nil)
         .where("users.id = ?", @user.id)
         .order("completed_tasks.points_awarded DESC")
-        .eager_load
+        .to_a
         
       @enrollment_details = {}
       @enrollments.each do |e|
         core = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and (ct.answer_type == Task::MULTIPLE.to_s or ct.answer_type == Task::EXACT.to_s) }
+        debugger
         creative = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CREATIVE.to_s }
         tasks = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and ct.answer_type == Task::CHECKIN.to_s }
         votes = 0

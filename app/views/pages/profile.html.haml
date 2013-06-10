@@ -220,7 +220,7 @@
                 What I have done...
               - if @user == current_user
                 = link_to "Add new Task", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
-              %h4 #{enrollment_details[:tasks].posts} Tasks Completed
+              %h4 #{enrollment_details[:tasks].posts.size} Tasks Completed
               %div.profilecontent
                 = render "newsfeed/feed", feed: enrollment_details[:tasks]
                 
