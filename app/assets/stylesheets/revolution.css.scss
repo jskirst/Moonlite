@@ -953,6 +953,47 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
   
 }
 
+/* Evaluator */
+
+.create_evaluation {
+ 
+ h3 {
+  margin-bottom: 0;  
+ }
+ 
+ .tips {
+   margin: 0 auto 20px;
+ }
+ .challenge_chooser {
+   display: inline-block;
+   width: 250px; 
+   margin:0 20px; 
+   vertical-align: top;
+   border: 1px solid rgb(172, 172, 172);
+   padding: 10px;
+   text-align: left;
+   
+   .challenges {
+     max-height: 100px;
+     overflow-y: auto;
+     
+     input[type="radio"] { margin:0; }
+       
+     .radio {
+       min-height: 0;
+       padding: 0; 
+     }
+   }
+   h5 {
+     font-size: 16px; 
+     border-bottom: 1px solid rgba(0,0,0,.1);
+     display: inline-block;
+     margin-bottom: 12px; 
+   } 
+ }
+  
+}
+
 .finish_page {
   img {width:85px; height:116px; margin:0; display: inline-block; vertical-align: top;}
   
