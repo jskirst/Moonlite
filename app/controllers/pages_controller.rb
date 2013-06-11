@@ -215,6 +215,13 @@ class PagesController < ApplicationController
     render "evaluator"
   end
   
+  def create_evaluation
+    @title = "Create a new Evaluation"
+    @show_footer = true
+    @hide_background = true
+    render "create_evaluation"
+  end
+  
   def product_form
     @opportunity = Opportunity.new(product: params[:p])
     @title = "Checkout"
