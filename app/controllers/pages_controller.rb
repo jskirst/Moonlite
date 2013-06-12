@@ -66,17 +66,18 @@ class PagesController < ApplicationController
     
     if @current_user_persona
       @enrollments = @current_user_persona.enrollments.includes(:path).sort{ |a, b| b.total_points <=> a.total_points }
-      completed_tasks = CompletedTask.joins(:submitted_answer, :user, :task => [{ :section => :path }])
+      completed_tasks = CompletedTask.joins(:user, :task => [{ :section => :path }])
         .joins("LEFT JOIN topics on tasks.topic_id = topics.id")
+        .joins("LEFT JOIN submitted_answers on submitted_answers.id=completed_tasks.submitted_answer_id")
         .select(newsfeed_fields)
-        .select("topics.name as topic")
+        .select("topics.name as topic_name")
         .where("completed_tasks.status_id = ?", Answer::CORRECT)
         .where("submitted_answers.locked_at is ?", nil)
-        .where("submitted_answers.reviewed_at is not ?", nil)
+        .where("(submitted_answers.id is ? or submitted_answers.reviewed_at is not ?)", nil, nil)
         .where("users.id = ?", @user.id)
         .order("completed_tasks.points_awarded DESC")
         .to_a
-        
+      
       @enrollment_details = {}
       @enrollments.each do |e|
         core = completed_tasks.select{ |ct| ct.path_id == e.path_id.to_s and (ct.answer_type == Task::MULTIPLE.to_s or ct.answer_type == Task::EXACT.to_s) }
@@ -91,7 +92,7 @@ class PagesController < ApplicationController
         
         @enrollment_details[e.path_id] = {
           core: core,
-          topics: core.collect{|t| t.topic if ct.status_id == Answer::CORRECT },
+          topics: core.collect{|ct| ct.topic_name if ct.status_id == Answer::CORRECT }.compact.uniq,
           votes: votes,
           comments: comments,
           creative: Feed.new(params, current_user, nil, creative),

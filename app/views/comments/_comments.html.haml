@@ -1,4 +1,4 @@
-- if owner_has_comments == "t"
+- if owner_has_comments == "t" or owner_has_comments == true
   - comments = Comment.cached_find_by_owner_type_and_owner_id(owner_type, owner_id)
 - else
   - comments = []

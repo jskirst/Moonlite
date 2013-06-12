@@ -12,26 +12,28 @@ class Comment < ActiveRecord::Base
   
   after_save :flush_cache
   after_create do
-    if owner.columns_hash[:total_comments]
-      owner.update_attributes(:total_comments, (owner.total_comments + 1))
+    if owner.is_a? SubmittedAnswer
+      owner.total_comments = owner.total_comments.to_i + 1
+      owner.save!
     end
   end
   before_destroy :flush_cache
   before_destroy do
-    if owner.columns_hash[:total_comments]
-      owner.update_attributes(:total_comments, (owner.total_comments - 1))
+    if owner.is_a? SubmittedAnswer
+      owner.total_comments = owner.total_comments.to_i - 1
+      owner.save!
     end
   end
   
   # Cached method
   
   def self.cached_find_by_owner_type_and_owner_id(ot, oid)
-    Rails.cache.fetch([self.class.to_s, ot, oid]) do
+    Rails.cache.fetch([self.to_s, ot, oid]) do
       Comment.where(owner_type: ot, owner_id: oid).where("locked_at is ?", nil).to_a
     end
   end
   
   def flush_cache
-    Rails.cache.delete([self.class.to_s, owner_type, owner_id])
+    Rails.cache.delete([self.class.name, owner_type, owner_id])
   end
 end

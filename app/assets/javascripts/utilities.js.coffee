@@ -1,10 +1,9 @@
 $.MB ||= {}
 
 $.MB.log = (str) ->
-  if $.MB.env == "development"
-    if console
-      if console.log
-        console.log(str)
+  if console
+    if console.log
+      console.log(str)
 
 $.MB.next_headline = ($headline) ->
   $headline.fadeOut 700, ->
