@@ -1,0 +1,70 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ background: rgba(36, 72, 109, 0.8); }
+
+#employer.aboutcontainer
+  %div.aboutbox.create_evaluation{ style: "padding: 8px; "}
+    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+      = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
+      %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create an Evaluation
+      
+    %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
+      - if not current_user
+        %span You must register before you can create an Evaluation.
+      - else
+        %div{ style: "text-align: center; margin: 10px auto;" }
+          %div.action_group
+            %h3 What are the job details?
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Your company name and the position title will be displayed to candidates when they take your evaluation.
+            %div.control-group
+              %div.controls    
+                %input{autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center;", placeholder: "Company Name"}   
+                %input{autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 20px;", placeholder: "Position Title"}             
+          %div.action_group
+            %h3 What skills do you want evaluated?
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Choose up to three Challenges total. Each Challenge takes less than 10 minutes to complete.
+            .challenge_chooser
+              %h5 
+                Your custom Challenges
+              .challenges
+                - if custom_challenges=custom_challenges
+                  %label.radio
+                  %input#optionsRadios1{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option1"}
+                  Custom Challenge
+                - else
+                  %button.button-small.button-actionable.button Create Challenge
+            .challenge_chooser
+              %h5 
+                MetaBright Challenges
+              .challenges
+                %label.radio
+                %input#optionsRadios1{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option1"}
+                Ruby on Rails
+                %label.radio
+                %input#optionsRadios2{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option2"}
+                PHP
+                %label.radio
+                %input#optionsRadios3{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option3"}
+                jQuery
+              
+            
+      %div.row{ style: "margin: 40px auto 30px;" }
+        %button.button.button-xlarge.button-actionable{ onclick: "$('#new_path').submit();" } Create Evaluation
+    
+:javascript
+  $(function(){
+    $("#new_path").submit(function(){
+      if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
+        alert("You must provide an image and a name before you can create a Challenge.");
+        return false;
+      } else {
+        return true;
+      }
+    });
+  }); 
