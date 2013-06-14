@@ -8,7 +8,7 @@
     %div{ style: "padding-bottom: 10px;  border-bottom: 1px solid #DDD;" }
       %h1{ style: "vertical-align: middle; font-size:50px;" } Community Manager
       %h3{ style: "vertical-align: middle; font-size: 30px;"} Google, Inc.
-    %div{ style: "text-align: center; margin: 20px 20px 30px; border: 4px solid rgb(103, 146, 116); border-radius: 4px; background-color: #d3f1dc;"}
+    %div{ style: "text-align: center; margin: 20px 20px 30px; border: 4px solid #729959; border-radius: 4px; background-color: rgba(150, 201, 117, 0.27);"}
       %div{ style: "border-bottom: 1px solid rgba(0,0,0,.1); padding: 14px; "}
         %div{ style: "display: inline-block; text-align: left; width:11%; "}
           = image_tag GIANT_STONEY, style: "height: 100px;"
@@ -16,43 +16,46 @@
           %h3{ style: "font-size: 24px;" } Welcome to MetaBright!
           %p{ style: "font-size: 15px; line-height: 20px; margin-top: 8px;"} Google, Inc. is using MetaBright to measure their job candidates' skills. MetaBright gives you the chance to prove and showcase what you know!
     %h2{ style: "font-size: 30px; border-bottom: 1px solid #DDD;"} Apply to this job
-    %div{ style: "margin: 20px; border-radius: 4px; border: 4px solid rgb(137, 142, 155); padding: 12px; background-color: rgba(231, 243, 250, 0.09);" }
+    %div{ style: "margin: 20px; border-radius: 4px; border: 4px solid rgba(126, 78, 54, 0.78); padding: 12px; background-color: rgba(212, 152, 123, 0.14);" }
       %div{ style: ""}
-        %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_1_purple.png", style: "height: 45px; display: inline-block;" }
-        %div{ style: "display: inline-block; vertical-align: top; margin-left: 10px; padding-top: 2px; width: 92%;"}
+        %div.img-circle{ style: "height: 45px; width: 45px; line-height: 45px; display: inline-block; background-color:rgba(109, 44, 13, 0.64); color: #FFEDEA;" }
+          %span{ style: "display: block; float: left; font-size: 18px; text-align: center; width: 100%;"} 1
+        %div{ style: "display: inline-block; vertical-align: top; margin-left: 10px; padding-top: 2px; width: 92%;"} 
           %h4{ style: "font-size: 24px; margin-bottom: 4px; "} Create an Account
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
           %p{ style: "display: inline-block; margin-bottom: 0; "} You need to register so Google, Inc. can verify your identity.
           .signup
-            = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 10px; margin-bottom: 0;", class: "button button-info" do
+            = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 10px; margin-bottom: 0;", class: "button btn" do
               = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-              %span.landingbuttontext Sign up with Google »
-            .divider OR
-            = link_to "/auth/facebook", style: "display: inline-block; margin-left: 10px;", class: "button button-info" do
-              = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-              %span.landingbuttontext Sign up with Facebook »
+              %span.landingbuttontext Google sign up »
+            = link_to "/auth/linkedin", style: "display: inline-block; margin: 0 18px;", class: "button btn" do
+              = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
+              %span.landingbuttontext LinkedIn sign up »
+            = link_to "/auth/github", style: "display: inline-block; margin-left: 10px;", class: "button btn" do
+              = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
+              %span.landingbuttontext GitHub sign up »
               
         %div{ style: "margin-top: 40px; "}
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_2_purple.png", style: "height: 45px; display: inline-block;" }
+          %div.img-circle{ style: "height: 45px; width: 45px; line-height: 45px; display: inline-block; background-color:rgba(109, 44, 13, 0.64); color: #FFEDEA;" }
+            %span{ style: "display: block; float: left; font-size: 18px; text-align: center; width: 100%;"} 2
           %div{ style: "display: inline-block; vertical-align: top; margin-left: 10px; padding-top: 2px; width: 92%;"}
             %h4{ style: "font-size: 24px; margin-bottom: 4px; "} Take Tests
             = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
             %p{ style: "display: inline-block; margin-bottom: 0; "} Each test should take you about 10 minutes.
-            %div{style: "background-color: rgba(219, 231, 238, 0.59); padding: 19px; margin-top: 20px;"}
-              %div{ style: "background-color: white; text-align: center; padding: 10px; display: inline-block; width: 180px; box-shadow: 0 0 10px 1px rgb(216, 216, 216);"}
+            %div{style: "padding: 19px; margin-top: 20px;"}
+              %div{ style: "background-color: white; text-align: center; padding: 10px; display: inline-block; width: 180px; box-shadow: 0 0 10px 1px #DFC8C8;"}
                 %img{ src: "http://www.placekitten.com/150/150", style: "height: 120px; margin-top:25px; "}
                 %h5{ style: "border-bottom: 1px solid rgba(0,0,0,.1); margin: 15px; font-weight: bold; font-size: 16px;"} Challenge Name
                 %button.button.button-small.button-actionable{ style: "margin-bottom: 10px; "} Begin Now
               
             
         %div{ style: "margin-top: 40px; "}
-          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Random+numbers/round_3_purple.png", style: "height: 45px; display: inline-block;" }
+          %div.img-circle{ style: "height: 45px; width: 45px; line-height: 45px; display: inline-block; background-color:rgba(109, 44, 13, 0.64); color: #FFEDEA;" }
+            %span{ style: "display: block; float: left; font-size: 18px; text-align: center; width: 100%;"} 3
           %div{ style: "display: inline-block; vertical-align: top; margin-left: 10px; padding-top: 2px; width: 92%;"}
-            %h4{ style: "font-size: 24px; margin-bottom: 4px; "} Submit Application
-            = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-            %p{ style: "display: inline-block; margin-bottom: 0; "} Make sure you complete all tests before submitting.
+            %h4{ style: "font-size: 24px; margin-top: 10px; "} Submit Application
             %div{ style: "text-align: center; margin-top: 12px; "}
-              %button.button.button-large.button-actionable{ style: "margin: 10px;"} Submit
+              %button.button.button-large.button-actionable{ style: "margin: 10px; float: left;"} Submit
           
     
 :javascript

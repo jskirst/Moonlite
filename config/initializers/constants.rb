@@ -86,6 +86,8 @@ ICON_BADGE_9      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_
 
 ICON_LOGIN_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png"
 ICON_LOGIN_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png"
+ICON_LOGIN_LINKEDIN = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+linkedin.png"
+ICON_LOGIN_GITHUB = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+github.png"
 
 SHARE_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
 SHARE_TWITTER = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"

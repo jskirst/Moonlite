@@ -216,6 +216,7 @@ class PagesController < ApplicationController
   end
   
   def create_evaluation
+    raise "ACCESS DENIED" unless @enable_administration
     @title = "Create a new Evaluation"
     @show_footer = true
     @hide_background = true
@@ -223,6 +224,7 @@ class PagesController < ApplicationController
   end
   
   def take_evaluation
+    raise "ACCESS DENIED" unless @enable_administration
     @show_footer = true
     @hide_background = true
     render "take_evaluation"

@@ -995,19 +995,12 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 
 .take_evaluation {
   .signup{
-    text-align: center;
+    text-align: left;
     margin-top: 20px; 
   
-    .button { width:210px; padding-top:7px; padding-bottom:7px; }
+    .button { width:185px; padding: 7px 12px 7px 7px; text-shadow: none; font-size: 13px;}
     .button img { height:30px; }
-    .divider {
-      background-image: url($divider);
-      background-repeat: no-repeat;
-      background-position: center 10px;
-      width: 160px;
-      display: inline-block;
-      margin: 15px auto;
-    }
+    .landingbuttontext { font-weight: regular; color: #636363;}
   }
 }
 
