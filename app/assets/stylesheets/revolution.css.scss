@@ -989,9 +989,26 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
      border-bottom: 1px solid rgba(0,0,0,.1);
      display: inline-block;
      margin-bottom: 12px; 
-   } 
- }
+    } 
+  } 
+}
+
+.take_evaluation {
+  .signup{
+    text-align: center;
+    margin-top: 20px; 
   
+    .button { width:210px; padding-top:7px; padding-bottom:7px; }
+    .button img { height:30px; }
+    .divider {
+      background-image: url($divider);
+      background-repeat: no-repeat;
+      background-position: center 10px;
+      width: 160px;
+      display: inline-block;
+      margin: 15px auto;
+    }
+  }
 }
 
 .finish_page {

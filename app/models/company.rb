@@ -24,7 +24,10 @@ class Company < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 100 }
   
   after_create do
-    CustomStyle.create!(owner_id: self.id)
+    cs = CustomStyle.new
+    cs.owner_id = self.id
+    cs.owner_type = "Company"
+    cs.save!
   end
   
   def email_from
