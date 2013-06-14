@@ -109,6 +109,10 @@ Metabright::Application.routes.draw do
 	resources :user_roles
 	
 	root :to => 'pages#home'
+	get '/search' => "search#new"
+	post '/search/results' => "search#results"
+	post '/search/checkout' => "search#checkout"
+	
 	match '/newsfeed' => 'pages#newsfeed'
   match '/intro' => 'pages#intro'
   match '/start' => 'pages#start'

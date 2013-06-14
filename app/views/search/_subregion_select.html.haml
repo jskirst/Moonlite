@@ -1,0 +1,8 @@
+- parent_region = params[:parent_region]
+- country = Carmen::Country.coded(parent_region.to_s)
+- if country.nil?
+  = select_tag "search[state]", "<option>Please select a country</option>"
+- elsif country.subregions?
+  = select_tag "search[state]", country.subregions.all.select{|sr| states.include?(sr) }
+- else
+  = text_field(:user, :state)
