@@ -796,7 +796,25 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 
 /* Employer pages */
 
-#employer{
+$employer_blue: rgba(36, 72, 109, 0.8);
+$employer_orange: rgba(126, 78, 54, 0.78);
+$employer_green: #729959;
+$employer_orange_light: rgba(212, 152, 123, 0.14);
+$employer_green_light: rgba(150, 201, 117, 0.27);
+
+.green{
+  border: 4px solid $employer_green;
+  border-radius: 4px;
+  background-color: $employer_green_light;
+}
+
+.orange{
+  border: 4px solid $employer_orange;
+  border-radius: 4px;
+  background-color: $employer_orange_light;
+}
+
+#employer_landing{
   .aboutheader{
    padding: 15px 0 0 15px;
    
@@ -827,7 +845,8 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
   } 
 }
 
-#employer1{ 
+#employer_product{ 
+  .aboutcontainer { width: 950px; }
   .aboutheader {
    padding: 15px 0 0 15px;
    
@@ -955,6 +974,8 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
 
 /* Evaluator */
 
+
+
 .create_evaluation {
  
  h3 {
@@ -1050,6 +1071,55 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; }
     ul { margin-top: -10px; } 
   }
 }
+
+#evaluations_overview{
+  .evaluations {
+    padding: 10px;
+    margin: 10px;
+  }
+}
+
+#evaluation_manager{
+  .body{
+    table{
+      th{
+        text-align: center;
+        
+        img{
+          display: block;
+          margin:0 auto;
+          border-radius: 3px;
+          height: 40px;
+          width: 40px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

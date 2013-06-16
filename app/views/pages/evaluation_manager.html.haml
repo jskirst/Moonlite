@@ -1,0 +1,31 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8);}
+
+
+#evaluation_manager.aboutcontainer
+  %div.aboutbox{ style: "background-color: white; border-radius: 4px; padding:8px;" }
+    = image_tag STONEY_SMALL_URL, style:"display:inline; height:115px;", alt: "Stoney"
+    %span{ style: "font-size: 50px;position: relative;top:13px;" } Evaluation Manager
+    = link_to "Go back to overview", "#", class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
+    %hr{style:"margin:0 0 20px 0;"}
+    .body{ style: "padding: 0 12px;"}
+      .btn-group
+        %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          = "Evaluation name"
+          %span.caret
+      %table.table
+        %thead
+          %tr
+            %th Name
+            %th Email
+            %th 
+              = image_tag "http://www.placekitten.com/50/50"
+              Challenge 1
+            %th 
+              = image_tag "http://www.placekitten.com/50/50"
+              Challenge 1       
+            %th 
+              = image_tag "http://www.placekitten.com/50/50"
+              Challenge 1
+            %th Date Submitted

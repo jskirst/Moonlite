@@ -230,6 +230,20 @@ class PagesController < ApplicationController
     render "take_evaluation"
   end
   
+  def evaluations_overview
+    raise "ACCESS DENIED" unless @enable_administration
+    @show_footer = true
+    @hide_background = true
+    render "evaluations_overview"
+  end
+  
+  def evaluation_manager
+    raise "ACCESS DENIED" unless @enable_administration
+    @show_footer = true
+    @hide_background = true
+    render "evaluation_manager"
+  end
+  
   def product_form
     @opportunity = Opportunity.new(product: params[:p])
     @title = "Checkout"
