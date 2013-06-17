@@ -78,6 +78,11 @@ class User < ActiveRecord::Base
   end
   
   after_save :flush_cache
+  before_destroy do
+    if Rails.env != "development" and user_role.enable_administration
+      raise "Cannot delete an admin account."
+    end
+  end
   before_destroy :flush_cache
   
   def to_s() self.name end
@@ -112,22 +117,24 @@ class User < ActiveRecord::Base
   def self.create_with_omniauth(auth, user = nil)
     user_from_auth = User.find_with_omniauth(auth)
     return user_from_auth if user_from_auth
-    
     user_details = { 
         name: auth["info"]["name"], 
         email: auth["info"]["email"],
     }
-    
+
     begin
       info = auth[:extra][:raw_info]
       if auth[:provider] == "facebook"
+        
         user_details[:image_url] = auth["info"]["image"].gsub("type=small", "type=large").gsub("type=square", "type=large")
         user_details[:description] = info[:bio]
         user_details[:link] = info[:link]
         user_details[:location] = info[:location][:name] if info[:location]
         user_details[:company_name] = info[:work][-1][:employer][:name] if info[:work][-1]
         user_details[:education] = info[:education][-1][:school][:name] if info[:education][-1]
+      
       elsif auth[:provider] == "google_oauth2"
+        
         user_details[:image_url] = auth["info"]["image"]
         url = URI.parse("https://www.googleapis.com/plus/v1/people/me?access_token=#{auth[:credentials][:token]}")
         info = JSON.parse(open(url).read)
@@ -141,11 +148,32 @@ class User < ActiveRecord::Base
         if info["placesLived"]
           info["placesLived"].each { |place| user_details[:location] = place["value"] if place["primary"] == true }
         end
+      
+      elsif auth[:provider] == "linkedin_oauth2"
+      
+        user_details[:description] = auth[:info][:description]
+        user_details[:link] = info[:publicProfileUrl]
+        user_details[:location] = auth[:info][:location][:name] if info[:location]
+        user_details[:image_url] = info[:pictureUrl] 
+      
+      elsif auth[:provider] == "github"
+      
+        user_details[:description] = info[:bio]
+        user_details[:link] = auth[:info][:urls].first if auth[:info][:urls]
+        user_details[:location] = info[:location]
+        user_details[:image_url] = auth[:info][:image]
+        user_details[:company_name] = info[:company]
+      
       else
         raise "Cannot recognize provider."
       end
+      
     rescue
-      logger.debug $!.to_s
+      if Rails.env == "development"
+        raise $!.to_s
+      else
+        logger.debug $!.to_s
+      end
     end
     
     user = User.find_by_email(auth["info"]["email"]) unless user

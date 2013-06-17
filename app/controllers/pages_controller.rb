@@ -3,6 +3,7 @@ class PagesController < ApplicationController
   include NewsfeedHelper
   
   before_filter :authenticate, only: [:create]
+  before_filter :admin_only, only: [:create_evaluation, :take_evaluation, :evaluations_overview, :evaluation_manager]
   
   def home
     @title = "Home"
@@ -216,7 +217,6 @@ class PagesController < ApplicationController
   end
   
   def create_evaluation
-    raise "ACCESS DENIED" unless @enable_administration
     @title = "Create a new Evaluation"
     @show_footer = true
     @hide_background = true
@@ -224,21 +224,18 @@ class PagesController < ApplicationController
   end
   
   def take_evaluation
-    raise "ACCESS DENIED" unless @enable_administration
     @show_footer = true
     @hide_background = true
     render "take_evaluation"
   end
   
   def evaluations_overview
-    raise "ACCESS DENIED" unless @enable_administration
     @show_footer = true
     @hide_background = true
     render "evaluations_overview"
   end
   
   def evaluation_manager
-    raise "ACCESS DENIED" unless @enable_administration
     @show_footer = true
     @hide_background = true
     render "evaluation_manager"
@@ -311,6 +308,12 @@ class PagesController < ApplicationController
   end
   
   private
+  
+  def admin_only
+    unless Rails.env == "development" or @enable_administration
+      raise "Access Denied: In development"
+    end
+  end
   
   def authorize_resource
     return true
