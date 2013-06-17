@@ -1015,7 +1015,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
          label { 
            display: block; padding: 5px 5px 5px 35px; text-indent: -25px;
            
-           &:hover { background: #777; color: #fff; }
+           &:hover { background: $employer_green_light}
            
            input {margin: 0 5px 3px 0;}
          }
