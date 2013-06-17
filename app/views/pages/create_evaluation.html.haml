@@ -1,9 +1,8 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ background: rgba(36, 72, 109, 0.8); }
 
 #employer.aboutcontainer
-  %div.aboutbox.create_evaluation{ style: "padding: 8px; "}
+  #create_evaluation.aboutbox{ style: "padding: 8px; "}
     %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
       %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create an Evaluation
@@ -22,13 +21,48 @@
             %div.control-group
               %div.controls    
                 %input{autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center;", placeholder: "Company Name"}   
-                %input{autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 20px;", placeholder: "Position Title"}             
+                %input{autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 20px;", placeholder: "Position Title"}
+                %div{style: "margin-top:10px;"} Upload job description (optional)
           %div.action_group
             %h3 What skills do you want evaluated?
             %div.tips
               %h5 
                 %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
                 Choose up to three Challenges total. Each Challenge takes less than 10 minutes to complete.
+            .challenge_chooser
+              %h5 
+                MetaBright Challenges
+              .challenges
+                %form{:action => "#", :method => "get"}
+                  %ul.checklist
+                    %li
+                      %label{:for => "o1"}
+                        %input#o1{:name => "o1", :type => "checkbox"}/
+                        jQuery
+                    %li
+                      %label{:for => "o2"}
+                        %input#o2{:name => "o2", :type => "checkbox"}/
+                        Ruby on Rails
+                    %li
+                      %label{:for => "o3"}
+                        %input#o3{:name => "o3", :type => "checkbox"}/
+                        HTML
+                    %li
+                      %label{:for => "o4"}
+                        %input#o4{:name => "o4", :type => "checkbox"}/
+                        PHP
+                    %li
+                      %label{:for => "o5"}
+                        %input#o5{:name => "o5", :type => "checkbox"}/
+                        Javascript
+                    %li
+                      %label{:for => "o6"}
+                        %input#o5{:name => "o6", :type => "checkbox"}/
+                        Javascript
+                    %li
+                      %label{:for => "o6"}
+                        %input#o5{:name => "o6", :type => "checkbox"}/
+                        Javascript
             .challenge_chooser
               %h5 
                 Your custom Challenges
@@ -39,19 +73,7 @@
                   Custom Challenge
                 - else
                   %button.button-small.button-actionable.button Create Challenge
-            .challenge_chooser
-              %h5 
-                MetaBright Challenges
-              .challenges
-                %label.radio
-                %input#optionsRadios1{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option1"}
-                Ruby on Rails
-                %label.radio
-                %input#optionsRadios2{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option2"}
-                PHP
-                %label.radio
-                %input#optionsRadios3{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option3"}
-                jQuery
+            
               
             
       %div.row{ style: "margin: 40px auto 30px;" }
