@@ -32,4 +32,6 @@ Metabright::Application.configure do
 	config.action_mailer.default_url_options = { host: "localhost:3000" }
 	
 	SqlLogging::Statistics.top_sql_queries = 50
+	
+	config.font_assets.origin = 'http://localhost:3000'
 end
