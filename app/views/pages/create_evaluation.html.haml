@@ -63,16 +63,28 @@
                       %label{:for => "o6"}
                         %input#o5{:name => "o6", :type => "checkbox"}/
                         Javascript
-            .challenge_chooser
               %h5 
                 Your custom Challenges
               .challenges
                 - if custom_challenges=custom_challenges
-                  %label.radio
-                  %input#optionsRadios1{:checked => "", :name => "optionsRadios", :type => "radio", :value => "option1"}
-                  Custom Challenge
+                  %form{:action => "#", :method => "get"}
+                    %ul.checklist
+                      %li
+                        %label{:for => "o1"}
+                          %input#o1{:name => "o1", :type => "checkbox"}/
+                          jQuery
+                      %li
+                        %label{:for => "o2"}
+                          %input#o2{:name => "o2", :type => "checkbox"}/
+                          Ruby on Rails
+                      %li
+                        %label{:for => "o3"}
+                          %input#o3{:name => "o3", :type => "checkbox"}/
+                          HTML
                 - else
-                  %button.button-small.button-actionable.button Create Challenge
+                  %p 
+                    You don't have any custom Challenges. 
+                    = link_to "Create one now.", "#"
             
               
             

@@ -128,6 +128,7 @@ Metabright::Application.routes.draw do
   match '/evaluator' => 'pages#evaluator'
   match '/create_evaluation' => 'pages#create_evaluation'
   match '/take_evaluation' => 'pages#take_evaluation'
+  match '/take_evaluation_confirmation' => 'pages#take_evaluation_confirmation'
   match '/evaluations_overview' => 'pages#evaluations_overview'
   match '/evaluation_manager' => 'pages#evaluation_manager'
   match '/product_form' => 'pages#product_form'
