@@ -229,6 +229,13 @@ class PagesController < ApplicationController
     render "take_evaluation"
   end
   
+  def take_evaluation_confirmation
+    @show_footer = true
+    @hide_background = true
+    @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
+    render "take_evaluation_confirmation"
+  end
+  
   def evaluations_overview
     @show_footer = true
     @hide_background = true
