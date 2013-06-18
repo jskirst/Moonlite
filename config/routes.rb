@@ -86,6 +86,15 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
+	resources :evaluations do
+	  member do
+	    get :take
+	    get :take_confirmation
+	    get :overview
+	    get :manager
+	  end
+	end
+	
 	match '/sections/:id/continue' => "sections#continue", as: 'start_section'
 	match '/sections/:id/continue/:session_id' => "sections#continue", as: 'continue_section'
 	match '/sections/:id/take/:task_id' => "sections#take", as: 'take_section'
@@ -126,11 +135,6 @@ Metabright::Application.routes.draw do
   match '/employers' => 'pages#employers'
   match '/talentminer' => 'pages#talentminer'
   match '/evaluator' => 'pages#evaluator'
-  match '/create_evaluation' => 'pages#create_evaluation'
-  match '/take_evaluation' => 'pages#take_evaluation'
-  match '/take_evaluation_confirmation' => 'pages#take_evaluation_confirmation'
-  match '/evaluations_overview' => 'pages#evaluations_overview'
-  match '/evaluation_manager' => 'pages#evaluation_manager'
   match '/product_form' => 'pages#product_form'
   post  '/opportunity' => 'pages#opportunity'
   match '/product_confirmation' => 'pages#product_confirmation'
@@ -138,6 +142,13 @@ Metabright::Application.routes.draw do
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
   match '/preview' => 'pages#preview'
+  
+  match '/evaluator/new' => 'evaluations#new'
+  match '/evaluator/created' => 'evaluations#create_confirmation'
+  match '/evaluator/take' => 'evaluations#take'
+  match '/evaluator/submitted' => 'evaluations#take_confirmation'
+  match '/evaluator/overview' => 'evaluations#overview'
+  match '/evaluator/manager' => 'evaluations#manager'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put

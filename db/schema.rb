@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609161829) do
+ActiveRecord::Schema.define(:version => 20130618153301) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -113,11 +113,31 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
     t.integer  "longest_streak",           :default => 0
     t.integer  "metascore",                :default => 0
     t.integer  "metapercentile",           :default => 0
+    t.integer  "evaluation_id"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "evaluation_paths", :force => true do |t|
+    t.integer  "evaluation_id"
+    t.integer  "path_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "evaluations", :force => true do |t|
+    t.string   "title"
+    t.string   "company"
+    t.string   "link"
+    t.string   "permalink"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "evaluations", ["permalink"], :name => "index_evaluations_on_permalink", :unique => true
 
   create_table "group_users", :force => true do |t|
     t.integer  "group_id"
@@ -455,6 +475,53 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["username"], :name => "index_users_on_username"
+
+  create_table "vanity_conversions", :force => true do |t|
+    t.integer "vanity_experiment_id"
+    t.integer "alternative"
+    t.integer "conversions"
+  end
+
+  add_index "vanity_conversions", ["vanity_experiment_id", "alternative"], :name => "by_experiment_id_and_alternative"
+
+  create_table "vanity_experiments", :force => true do |t|
+    t.string   "experiment_id"
+    t.integer  "outcome"
+    t.datetime "created_at"
+    t.datetime "completed_at"
+  end
+
+  add_index "vanity_experiments", ["experiment_id"], :name => "index_vanity_experiments_on_experiment_id"
+
+  create_table "vanity_metric_values", :force => true do |t|
+    t.integer "vanity_metric_id"
+    t.integer "index"
+    t.integer "value"
+    t.string  "date"
+  end
+
+  add_index "vanity_metric_values", ["vanity_metric_id"], :name => "index_vanity_metric_values_on_vanity_metric_id"
+
+  create_table "vanity_metrics", :force => true do |t|
+    t.string   "metric_id"
+    t.datetime "updated_at"
+  end
+
+  add_index "vanity_metrics", ["metric_id"], :name => "index_vanity_metrics_on_metric_id"
+
+  create_table "vanity_participants", :force => true do |t|
+    t.string  "experiment_id"
+    t.string  "identity"
+    t.integer "shown"
+    t.integer "seen"
+    t.integer "converted"
+  end
+
+  add_index "vanity_participants", ["experiment_id", "converted"], :name => "by_experiment_id_and_converted"
+  add_index "vanity_participants", ["experiment_id", "identity"], :name => "by_experiment_id_and_identity"
+  add_index "vanity_participants", ["experiment_id", "seen"], :name => "by_experiment_id_and_seen"
+  add_index "vanity_participants", ["experiment_id", "shown"], :name => "by_experiment_id_and_shown"
+  add_index "vanity_participants", ["experiment_id"], :name => "index_vanity_participants_on_experiment_id"
 
   create_table "visits", :force => true do |t|
     t.integer  "user_id"

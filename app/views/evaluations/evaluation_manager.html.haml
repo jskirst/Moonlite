@@ -12,7 +12,8 @@
     .body{ style: "padding: 0 12px;"}
       .btn-group
         %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-          = "Evaluation name"
+          - @evaluations.each do |e|
+            = e.title
           %span.caret
       %table.table
         %thead

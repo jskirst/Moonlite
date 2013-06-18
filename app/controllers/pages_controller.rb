@@ -3,7 +3,6 @@ class PagesController < ApplicationController
   include NewsfeedHelper
   
   before_filter :authenticate, only: [:create]
-  before_filter :admin_only, only: [:create_evaluation, :take_evaluation, :evaluations_overview, :evaluation_manager]
   
   def home
     @title = "Home"
@@ -214,38 +213,6 @@ class PagesController < ApplicationController
     @show_footer = true
     @hide_background = true
     render "evaluator"
-  end
-  
-  def create_evaluation
-    @title = "Create a new Evaluation"
-    @show_footer = true
-    @hide_background = true
-    render "create_evaluation"
-  end
-  
-  def take_evaluation
-    @show_footer = true
-    @hide_background = true
-    render "take_evaluation"
-  end
-  
-  def take_evaluation_confirmation
-    @show_footer = true
-    @hide_background = true
-    @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
-    render "take_evaluation_confirmation"
-  end
-  
-  def evaluations_overview
-    @show_footer = true
-    @hide_background = true
-    render "evaluations_overview"
-  end
-  
-  def evaluation_manager
-    @show_footer = true
-    @hide_background = true
-    render "evaluation_manager"
   end
   
   def product_form
