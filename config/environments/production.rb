@@ -59,4 +59,6 @@ Metabright::Application.configure do
 	config.action_mailer.default_url_options = { host: "metabright.com" }
 	
 	config.assets.digest = true
+	
+	config.font_assets.origin = 'http://www.metabright.com'
 end
