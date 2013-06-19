@@ -4,3 +4,4 @@ class AddPlanTypeAndIsPrivateToGroups < ActiveRecord::Migration
     add_column :groups, :is_private, :boolean, default: true
   end
 end
+

@@ -9,9 +9,10 @@
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       %h3 Your Evaluation has been created!
       .evaluation_info
-        %h4= @evaluation.company
-        %h4= @evaluation.title
-        %h4= @evaluation.paths.all.collect(&:name).join(",")
-        %h4= take_group_evaluation_url(@group, @evaluation.permalink)
-      %p Share your Evaluation URL with your candidates or post it in your job description. We'll email you when candidates take your Evaluation.
-      = link_to "Continue to Evaluation Overview", group_evaluations_path(@group)
+        %span URL:
+        %input{ value: take_group_evaluation_url(@group, @evaluation.permalink), readonly:""}
+        %div
+          = image_tag LIGHT_BULB_URL, style: "height: 20px; display: inline; vertical-align: top;"
+          %p Copy and paste this link into your job description, your career page, or anywhere else your candidates frequent.
+      %p{ style: "margin-top: 18px; font-size: 16px;"}
+        = link_to "Continue to Evaluation Overview", group_evaluations_path(@group)

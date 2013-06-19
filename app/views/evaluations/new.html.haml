@@ -25,7 +25,7 @@
               %div.control-group
                 %div.controls    
                   = f.text_field :company, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center;", placeholder: "Company Name"
-                  = f.text_field :title, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 20px;", placeholder: "Position Title"
+                  = f.text_field :title, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 5px;", placeholder: "Position Title"
                   - if false
                     %div{style: "margin-top:10px;"} Upload job description (optional)
             %div.action_group
@@ -44,23 +44,16 @@
                         %label
                           = check_box_tag "evaluation[selected_paths][#{p.id}]"
                           = p.name
-                %h5 
+                %h5{ style: "margin-top: 20px;"} 
                   Your custom Challenges
                 .challenges
                   - if custom_challenges=custom_challenges
-                    %ul.checklist
+                    / The variable below needs to change to be @custom_paths or something like that
+                    - @paths.each do |p|
                       %li
-                        %label{:for => "o1"}
-                          %input#o1{:name => "o1", :type => "checkbox"}/
-                          jQuery
-                      %li
-                        %label{:for => "o2"}
-                          %input#o2{:name => "o2", :type => "checkbox"}/
-                          Ruby on Rails
-                      %li
-                        %label{:for => "o3"}
-                          %input#o3{:name => "o3", :type => "checkbox"}/
-                          HTML
+                        %label
+                          = check_box_tag "evaluation[selected_paths][#{p.id}]"
+                          = p.name
                   - else
                     %p 
                       You don't have any custom Challenges. 
