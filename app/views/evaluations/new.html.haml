@@ -8,7 +8,10 @@
       %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create an Evaluation
       
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
-      = form_for(@evaluation) do |f|
+      - unless @evaluation.errors.empty?
+        .alert.alert-error
+          %p= @evaluation.errors.full_messages.join(". ")
+      = form_for(@evaluation, url: group_evaluations_path) do |f|
         - if not current_user
           %span You must register before you can create an Evaluation.
         - else
@@ -23,7 +26,8 @@
                 %div.controls    
                   = f.text_field :company, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center;", placeholder: "Company Name"
                   = f.text_field :title, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 20px;", placeholder: "Position Title"
-                  %div{style: "margin-top:10px;"} Upload job description (optional)
+                  - if false
+                    %div{style: "margin-top:10px;"} Upload job description (optional)
             %div.action_group
               %h3 What skills do you want evaluated?
               %div.tips

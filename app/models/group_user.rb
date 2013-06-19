@@ -1,7 +1,7 @@
 class GroupUser < ActiveRecord::Base
-  attr_accessor :is_admin
   attr_protected :is_admin
   attr_readonly :group_id, :user_id
+  attr_accessible :group_id, :user_id
   
   after_save :flush_cache
   before_destroy :flush_cache

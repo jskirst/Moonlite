@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130618153301) do
+ActiveRecord::Schema.define(:version => 20130619133954) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -127,12 +127,22 @@ ActiveRecord::Schema.define(:version => 20130618153301) do
     t.datetime "updated_at",    :null => false
   end
 
+  create_table "evaluation_users", :force => true do |t|
+    t.integer  "evaluation_id"
+    t.integer  "user_id"
+    t.datetime "submitted_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
   create_table "evaluations", :force => true do |t|
     t.string   "title"
     t.string   "company"
     t.string   "link"
     t.string   "permalink"
     t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "closed_at"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -156,9 +166,11 @@ ActiveRecord::Schema.define(:version => 20130618153301) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "token"
+    t.integer  "plan_type",   :default => 0
+    t.boolean  "is_private",  :default => true
   end
 
   create_table "ideas", :force => true do |t|
