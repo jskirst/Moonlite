@@ -86,12 +86,13 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
-	resources :evaluations do
+	resources :evaluations, path:"e" do
 	  member do
 	    get :take
 	    get :take_confirmation
 	    get :overview
 	    get :manager
+	    get :create_confirmation
 	  end
 	end
 	
@@ -142,13 +143,13 @@ Metabright::Application.routes.draw do
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
   match '/preview' => 'pages#preview'
-  
-  match '/evaluator/new' => 'evaluations#new'
-  match '/evaluator/created' => 'evaluations#create_confirmation'
-  match '/evaluator/take' => 'evaluations#take'
-  match '/evaluator/submitted' => 'evaluations#take_confirmation'
-  match '/evaluator/overview' => 'evaluations#overview'
-  match '/evaluator/manager' => 'evaluations#manager'
+ 
+  # match '/evaluator/new' => 'evaluations#new'
+  # match '/evaluator/created' => 'evaluations#create_confirmation'
+  # match '/evaluator/take' => 'evaluations#take'
+  # match '/evaluator/submitted' => 'evaluations#take_confirmation'
+  # match '/evaluator/overview' => 'evaluations#overview'
+  # match '/evaluator/manager' => 'evaluations#manager'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put

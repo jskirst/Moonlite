@@ -35,34 +35,11 @@
                   MetaBright Challenges
                 .challenges
                   %ul.checklist
-                    %li
-                      %label{:for => "o1"}
-                        %input#o1{:name => "o1", :type => "checkbox"}/
-                        jQuery
-                    %li
-                      %label{:for => "o2"}
-                        %input#o2{:name => "o2", :type => "checkbox"}/
-                        Ruby on Rails
-                    %li
-                      %label{:for => "o3"}
-                        %input#o3{:name => "o3", :type => "checkbox"}/
-                        HTML
-                    %li
-                      %label{:for => "o4"}
-                        %input#o4{:name => "o4", :type => "checkbox"}/
-                        PHP
-                    %li
-                      %label{:for => "o5"}
-                        %input#o5{:name => "o5", :type => "checkbox"}/
-                        Javascript
-                    %li
-                      %label{:for => "o6"}
-                        %input#o5{:name => "o6", :type => "checkbox"}/
-                        Javascript
-                    %li
-                      %label{:for => "o6"}
-                        %input#o5{:name => "o6", :type => "checkbox"}/
-                        Javascript
+                    - @paths.each do |p|
+                      %li
+                        %label
+                          = check_box_tag "evaluation[selected_paths][#{p.id}]"
+                          = p.name
                 %h5 
                   Your custom Challenges
                 .challenges

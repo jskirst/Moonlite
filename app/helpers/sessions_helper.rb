@@ -46,6 +46,9 @@ module SessionsHelper
         Mailer.welcome(current_user.email).deliver
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end
+      if cookie[:evaluation]
+        redirect_to take_evaluation_path(cookie[:evaluation])
+      end
       return true
     end
   end

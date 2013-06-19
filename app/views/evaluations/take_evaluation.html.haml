@@ -6,15 +6,15 @@
 #employer.aboutcontainer
   #take_evaluation.aboutbox
     .header
-      %h1 Community Manager
-      %h3 Google, Inc.
+      %h1= @evaluation.title
+      %h3= @evaluation.company
     .welcome
       .holder
         .image_box
           = image_tag GIANT_STONEY
         .text_box
           %h3 Welcome to MetaBright!
-          %p Google, Inc. is using MetaBright to measure their job candidates' skills. MetaBright gives you the chance to prove and showcase what you know!
+          %p #{@evaluation.company} is using MetaBright to measure their job candidates' skills. MetaBright gives you the chance to prove and showcase what you know!
     %h2 Apply to this job
     .application_steps
       .step{ style: "margin-top: 0; "}
@@ -23,7 +23,7 @@
         .instructions
           %h4 Create an Account
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-          %p You need to register so Google, Inc. can verify your identity.
+          %p Registering allows #{@evaluation.company} to verify your identity.
           .signup
             = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 10px; margin-bottom: 0;", class: "button btn" do
               = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
@@ -34,22 +34,33 @@
             = link_to "/auth/github", style: "display: inline-block; margin-left: 10px;", class: "button btn" do
               = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
               %span.landingbuttontext GitHub sign up »
-              
         .step
           .img-circle
             %span 2
+          .instructions
+            %h4 Choose your Location
+            = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+            %p Your location helps #{@evaluation.company} know if you're eligible for the position.
+        .step
+          .img-circle
+            %span 3
           .instructions
             %h4 Take Tests
             = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
             %p Each test should take you about 10 minutes.
             .challenge_holder
-              .challenge_card
-                %img{ src: "http://www.placekitten.com/150/150" }
-                %h5 Challenge Name
-                %button.button.button-small.button-actionable Begin Now
+              - @evaluation.paths.each do |p|
+              - @enrollment = current_user.enrolled?(p)
+                .challenge_card
+                  = image_tag p.picture
+                  %h5= p.name
+                  - if @enrollment.total_points > 0
+                    %div Completed
+                  - else
+                    = link_to "Begin Now", continue_path_path(p.permalink), class: "button button-small button-actionable"
         .step
           .img-circle
-            %span 3
+            %span 4
           .instructions
             %h4{ style: "margin-top: 10px;"} Submit Application
             %div{ style: "text-align: center; margin-top: 12px; "}

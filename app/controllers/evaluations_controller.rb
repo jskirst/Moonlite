@@ -4,28 +4,33 @@ class EvaluationsController < ApplicationController
 
   def new
     @evaluation = Evaluation.new
+    @paths = Persona.first.paths
     @title = "Create a new Evaluation"
     @show_footer = true
     @hide_background = true
-    render "create_evaluation"
   end
   
   def create
-    @evaluation = current_user.evaluations.new(params[:evaluations])
+    @evaluation = current_user.evaluations.new(params[:evaluation])
     if @evaluation.save
-      render "create_evaluation_confirmation"
+      redirect_to create_confirmation_evaluation_path(@evaluation)
     else
-      render "create_evaluation"
+      render "new"
     end
   end
   
   def create_confirmation
+    @evaluation = current_user.evaluations.find(params[:id])
     @show_footer = true
     @hide_background = true
     render "create_evaluation_confirmation"
   end
   
   def take
+    @evaluation = current_user.evaluations.find_by_permalink(params[:id])
+    if not current_user
+      cookies[:evaluation] = @evaluation.permalink
+    end
     @show_footer = true
     @hide_background = true
     render "take_evaluation"
