@@ -65,12 +65,12 @@ Metabright::Application.routes.draw do
     
     resources :evaluations, path: "e" do
       member do
-        get :take
         get :take_confirmation
         get :create_confirmation
       end
     end
   end
+  get "/e/:permalink" => "evaluations#take", as: "take_group_evaluation"
 	
 	resources :tasks do
     member do

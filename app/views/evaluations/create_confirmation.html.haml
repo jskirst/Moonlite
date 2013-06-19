@@ -12,6 +12,6 @@
         %h4= @evaluation.company
         %h4= @evaluation.title
         %h4= @evaluation.paths.all.collect(&:name).join(",")
-        %h4= take_group_evaluation_url(@group, @evaluation.permalink)
+        %h4= take_group_evaluation_url(@evaluation.permalink)
       %p Share your Evaluation URL with your candidates or post it in your job description. We'll email you when candidates take your Evaluation.
       = link_to "Continue to Evaluation Overview", group_evaluations_path(@group)

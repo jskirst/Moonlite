@@ -1,6 +1,6 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
-  before_filter :load_group
+  before_filter :load_group, except: [:take]
   before_filter :authorize_group, except: [:take, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
 
@@ -12,6 +12,13 @@ class EvaluationsController < ApplicationController
   
   def show
     @evaluation = @group.evaluations.find(params[:id])
+    @paths = @evaluation.paths
+    @evaluations = @evaluation.evaluation_users.joins(:user).select("evaluation_users.*, users.*")
+    @paths.each do |p|
+      e = "e#{p.id}"
+      @evaluations = @evaluations.joins("LEFT JOIN enrollments #{e} on #{e}.user_id=evaluation_users.user_id and #{e}.path_id=#{p.id}")
+      @evaluations = @evaluations.select("#{e}.metapercentile as #{e}_metapercentile, #{e}.metascore as #{e}_metascore")
+    end
   end
   
   def new
