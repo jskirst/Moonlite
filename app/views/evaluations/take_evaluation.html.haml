@@ -64,7 +64,7 @@
           .instructions
             %h4{ style: "margin-top: 10px;"} Submit Application
             %div{ style: "text-align: center; margin-top: 12px; "}
-              %button.button.button-large.button-actionable{ style: "margin: 10px; float: left;"} Submit
+              = link_to "Submit", take_confirmation_evaluation_path(@evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
           
     
 :javascript

@@ -21,6 +21,9 @@
                 %th Candidates
                 %th Last Submission         
                 %th Settings
+            %tbody
+              - @evaluations.to_a.each do |e|
+                %td= e.title
         - else
           %p 
             You don't have any open evaluations. 

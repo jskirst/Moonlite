@@ -37,6 +37,7 @@ class EvaluationsController < ApplicationController
   end
 
   def take_confirmation
+    @evaluation = current_user.evaluations.find(params[:id])
     @show_footer = true
     @hide_background = true
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
@@ -44,6 +45,7 @@ class EvaluationsController < ApplicationController
   end
 
   def overview
+    @evaluations = current_user.evaluations.all
     @show_footer = true
     @hide_background = true
     render "evaluations_overview"

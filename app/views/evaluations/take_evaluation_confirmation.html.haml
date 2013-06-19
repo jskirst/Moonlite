@@ -9,11 +9,11 @@
       .image_box
         = image_tag GIANT_STONEY, style: "height: 100px;"
       .text_box{ style: "margin: 12px 0 0 8px;"}
-        %h1 Community Manager
-        %h3 Google, Inc.
+        %h1= @evaluation.title
+        %h3= @evaluation.company
     .body
       %h4
-        Your application has been successfully submitted. If you're a good fit for the position, Google, Inc. will reach out to you.
+        Your application has been successfully submitted. If you're a good fit for the position, #{@evaluation.company} will reach out to you.
       %hr
       %h3 Try out other Challenges...
       %p Prove your skills by taking Challenges at the stuff you're good at. If you want, MetaBright can let you know when an employer thinks your skills match with what they're looking for. It's like job hunting without the hunting part.
