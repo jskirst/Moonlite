@@ -215,54 +215,16 @@ class SectionsController < ApplicationController
       @enrollment = current_user.enroll!(@path)
     end
     
-    task_id = params[:task_id]
-    points = params[:points_remaining].to_i
-    answers = Answer.cached_find_by_task_id(task_id)
-    if params[:answer]
-      supplied_answer = answers.select{ |a| a.id.to_s == params[:answer] }.first
-      correct = supplied_answer.is_correct?
-      correct_answer = correct ? supplied_answer : answers.select{ |a| a.is_correct == true }.first
-    else
-      supplied_answer = params[:answer_exact]
-      correct_answer = answers.first
-      correct = correct_answer.match?(supplied_answer)
-    end
+    # TODO: Completed task does not specify that it must be from this enrollment.
+    completed_task = CompletedTask.find_or_create(current_user.id, params[:task_id], @enrollment.id, params[:session_id])
+    completed_task.complete_core_task!(params[:answer], params[:points_remaining])
+    session[:ssf] = completed_task.correct? ? (session[:ssf].to_i + 1) : 0
     
-    session_id = params[:session_id]
-    completed_task = current_user.completed_tasks.find_by_task_id(task_id)
-    if completed_task.nil?
-      completed_task = current_user.completed_tasks.create!(task_id: task_id, status_id: Answer::INCOMPLETE, session_id: session_id)
-    elsif completed_task.status_id != Answer::INCOMPLETE
-      raise "Already answered"
-    elsif completed_task.created_at <= 60.seconds.ago and points > 0
-      raise "Out of time"
-    end
-    
-    if supplied_answer.is_a? String
-      completed_task.answer = supplied_answer
-    else
-      completed_task.answer_id = supplied_answer.id
-    end
-    
-    if correct
-      completed_task.status_id = Answer::CORRECT
-      completed_task.points_awarded = points
-      completed_task.award_points = true
-      session[:ssf] = session[:ssf].to_i + 1
-    else
-      completed_task.status_id = Answer::INCORRECT
-      completed_task.points_awarded = 0
-      session[:ssf] = 0
-    end
-    @enrollment = current_user.enrollments.find_by_path_id(@path.id) unless @enrollment
-    completed_task.enrollment_id = @enrollment.id
-    completed_task.save!
-    
-    if supplied_answer.is_a? String
-      render json: { correct_answer: correct_answer.content, supplied_answer: supplied_answer, type: "exact", correct: correct }
-    else
-      render json: { correct_answer: correct_answer.id, supplied_answer: supplied_answer.id, type: "multiple", correct: correct }
-    end
+    render json: { 
+      correct_answer: completed_task.correct_answer, 
+      answer: completed_task.answer, 
+      correct: completed_task.correct? 
+    }
   end
     
   def continue

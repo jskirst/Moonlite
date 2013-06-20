@@ -36,7 +36,7 @@
         %pre{ style: "margin: 10px 0 0 0; border: none; border-radius: none; background-color: rgb(249, 249, 249); " }
           = @task.quoted_text
         %hr{ style: "margin: 12px auto; width: 35%; border: 0; border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff;" }
-      %div.responsespace
+      %div.responsespace{ data: { type: @task.answer_type } }
         = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :task_id, @task.id
           = hidden_field_tag :points_remaining, 100
@@ -45,13 +45,13 @@
           - if @task.multiple_choice?
             %ol{ style: "list-style-position: inside; margin-left: 0px;" }
               - @answers.each do |a|
-                %li.answer_content{ id: "answer_#{a.id}" }
-                  = radio_button_tag :answer, a.id, false, style: "display: none;"
+                %li.answer_content{ data: { answer: a.content } }
+                  = radio_button_tag :answer, a.content, false, style: "display: none;"
                   %span= a.content
           - elsif @task.exact?
             .control-group
               .controls
-                = text_field_tag "answer_exact", nil, placeholder: "Enter exact answer here...", class: "answer_feedback"
+                = text_field_tag "answer", nil, placeholder: "Enter exact answer here...", class: "answer_feedback"
                 %span.match_status_text
                 %p.match_status_exp
             .control-group

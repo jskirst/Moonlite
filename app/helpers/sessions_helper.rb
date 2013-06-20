@@ -158,8 +158,14 @@ module SessionsHelper
       if current_user
         @is_consumer = true
         @enable_administration = current_user.enable_administration == "t"
+        unless request.xhr?
+          if @enable_administration
+            @custom_style = Company.find(1).custom_style
+          else
+            @custom_style = nil
+          end
+        end
       end
-      @custom_style = Company.find(1).custom_style
     end
   end
   

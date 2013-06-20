@@ -4,7 +4,7 @@ class CompletedTask < ActiveRecord::Base
   attr_readonly :task_id
   attr_protected :updated_at, :answer_id, :points_awarded, :enrollment_id, :award_points
   attr_accessible :status_id, :task_id, :session_id, :submitted_answer_id
-  attr_accessor :award_points
+  attr_accessor :award_points, :correct_answer
   
   belongs_to :user
   belongs_to :task
@@ -18,6 +18,10 @@ class CompletedTask < ActiveRecord::Base
   validates :task_id, presence: true
   validates_uniqueness_of :task_id, scope: :user_id
   validates :status_id, presence: true
+  
+  before_validation do
+    self.status_id = Answer::INCOMPLETE if status_id.nil?
+  end
   
   after_save do
     if correct? && award_points
@@ -35,4 +39,43 @@ class CompletedTask < ActiveRecord::Base
   def incomplete?() status_id == Answer::INCOMPLETE end
   def correct?() status_id == Answer::CORRECT end
   def incorrect?() status_id == Answer::INCORRECT end
+    
+  def self.find_or_create(user_id, task_id, enrollment_id, session_id)
+    ct = find_by_user_id_and_task_id(user_id, task_id)
+    unless ct
+      ct = create!(user_id: user_id, task_id: task_id, enrollment_id: enrollment_id, session_id: session_id)
+    end
+    return ct
+  end
+    
+  def complete_core_task!(supplied_answer, points)
+    if status_id != Answer::INCOMPLETE
+      raise "Already answered"
+    elsif created_at <= 60.seconds.ago and points.to_i > 0
+      raise "Out of time"
+    end
+    
+    self.answer = supplied_answer
+    matched_answer = nil
+    answers = Answer.cached_find_by_task_id(task_id)
+    answers.each do |a|
+      if a.is_correct
+        self.correct_answer = a.content
+      end
+      
+      if a.match?(answer)
+        matched_answer = a
+      end
+    end
+    
+    if matched_answer and matched_answer.is_correct?
+      self.status_id = Answer::CORRECT
+      self.points_awarded = points
+      self.award_points = true
+    else
+      self.status_id = Answer::INCORRECT
+      self.points_awarded = 0
+    end
+    save!
+  end
 end

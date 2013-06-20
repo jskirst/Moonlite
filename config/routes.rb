@@ -67,6 +67,7 @@ Metabright::Application.routes.draw do
       member do
         get :take_confirmation
         get :create_confirmation
+        get :continue
       end
     end
   end

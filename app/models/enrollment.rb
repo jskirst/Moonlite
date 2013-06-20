@@ -7,6 +7,7 @@ class Enrollment < ActiveRecord::Base
   
   belongs_to  :user
   belongs_to  :path
+  belongs_to  :evaluation
   has_many    :completed_tasks
   has_many    :submitted_answers, through: :completed_tasks
   has_many    :votes, through: :submitted_answers
