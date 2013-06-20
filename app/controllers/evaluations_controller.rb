@@ -53,11 +53,6 @@ class EvaluationsController < ApplicationController
   
   def continue
     @evaluation = Evaluation.find(params[:evaluation_id])
-    # if @evaluation.nil?
-    #   @evalation_enrollment = current_user.evaluation_enrollments.create!(evaluation_id: params[:evaluation_id])
-    #   @evaluation = @evalation_enrollment.evaluation
-    # end
-    
     @path = @evaluation.paths.find_by_id(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
@@ -79,6 +74,7 @@ class EvaluationsController < ApplicationController
       raise "At the end"
     end
     
+    @next_link = continue_evaluation_path(@evaluation, @path)
     if request.xhr?
       render file: "tasks/continue", layout: false
     else

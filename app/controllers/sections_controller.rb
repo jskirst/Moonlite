@@ -208,24 +208,6 @@ class SectionsController < ApplicationController
       end
     end
   end
-  
-  def complete
-    unless current_user
-      create_or_sign_in
-      @enrollment = current_user.enroll!(@path)
-    end
-    
-    # TODO: Completed task does not specify that it must be from this enrollment.
-    completed_task = CompletedTask.find_or_create(current_user.id, params[:task_id], @enrollment.id, params[:session_id])
-    completed_task.complete_core_task!(params[:answer], params[:points_remaining])
-    session[:ssf] = completed_task.correct? ? (session[:ssf].to_i + 1) : 0
-    
-    render json: { 
-      correct_answer: completed_task.correct_answer, 
-      answer: completed_task.answer, 
-      correct: completed_task.correct? 
-    }
-  end
     
   def continue
     create_or_sign_in unless current_user
