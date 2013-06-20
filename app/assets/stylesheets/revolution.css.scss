@@ -1182,6 +1182,43 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   }
 }
 
+#organization_portal {
+  .header{
+    
+  }
+  .body{
+    text-align: center;
+    margin: 10px 0 0 0;
+    padding: 20px;
+    
+    a {text-decoration: none; color: #333333;}
+    
+    .option {
+      width: 49%;
+      height: 200px;
+      vertical-align: middle;
+      display: inline-block;
+      text-align: center;
+      opacity: .8;
+      
+      &:hover { opacity: 1; }
+      
+      div { margin-top: 15%; }
+      img { height: 60px; margin-bottom: 10px;}
+    }
+    .signup{
+      text-align: center;
+      margin-top: -12px; 
+      
+      h3 {margin-bottom: 15px;}
+      
+      .button { width:185px; padding: 7px 3px 7px 1px; text-shadow: none; font-size: 13px;}
+      .button img { height:30px; }
+      .landingbuttontext { font-weight: regular; color: #636363;}
+    }
+  }
+}
+
 .finish_page {
   img {width:85px; height:116px; margin:0; display: inline-block; vertical-align: top;}
   
