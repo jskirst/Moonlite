@@ -19,8 +19,8 @@ class CompletedTask < ActiveRecord::Base
   validates_uniqueness_of :task_id, scope: :user_id
   validates :status_id, presence: true
   
-  before_validation do
-    self.status_id = Answer::INCOMPLETE if status_id.nil?
+  before_create do
+    self.status_id = Answer::INCOMPLETE
   end
   
   after_save do
@@ -40,10 +40,24 @@ class CompletedTask < ActiveRecord::Base
   def correct?() status_id == Answer::CORRECT end
   def incorrect?() status_id == Answer::INCORRECT end
     
-  def self.find_or_create(user_id, task_id, enrollment_id, session_id)
+  def self.find_or_create(user_id, task_id, session_id = nil)
+    enrollment_record = Path.joins("INNER JOIN sections on sections.path_id=paths.id")
+      .joins("INNER JOIN tasks on tasks.section_id=sections.id and tasks.id=#{task_id.to_s}")
+      .joins("LEFT JOIN enrollments on enrollments.path_id=paths.id")
+      .where("enrollments.user_id = ?", user_id)
+      .select("paths.id as path_id, enrollments.id as enrollment_id")
+      .first
+    unless enrollement_id = enrollment_record.enrollment_id
+      enrollment = Enrollment.new
+      enrollment.user_id = user_id
+      enrollment.path_id = enrollment_record.path_id
+      enrollment.save!
+      enrollement_id = enrollment.id
+    end
+    
     ct = find_by_user_id_and_task_id(user_id, task_id)
     unless ct
-      ct = create!(user_id: user_id, task_id: task_id, enrollment_id: enrollment_id, session_id: session_id)
+      ct = create!(user_id: user_id, task_id: task_id, enrollment_id: enrollement_id, session_id: session_id)
     end
     return ct
   end

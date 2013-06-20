@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
-  before_filter :authenticate, except: [:raw]
+  before_filter :authenticate, except: [:raw, :complete]
   before_filter :load_resource, except: [:create, :raw]
-  before_filter :authorize_resource, except: [:vote, :report, :create, :raw]
+  before_filter :authorize_resource, except: [:vote, :report, :create, :raw, :complete]
   
   respond_to :json, :html
   
@@ -85,6 +85,22 @@ class TasksController < ApplicationController
     else
       raise "Access Denied"
     end
+  end
+  
+  def complete
+    create_or_sign_in unless current_user
+    
+    completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
+    
+    # TODO: Completed task does not specify that it must be from this enrollment
+    completed_task.complete_core_task!(params[:answer], params[:points_remaining])
+    session[:ssf] = completed_task.correct? ? (session[:ssf].to_i + 1) : 0
+    
+    render json: { 
+      correct_answer: completed_task.correct_answer, 
+      answer: completed_task.answer, 
+      correct: completed_task.correct? 
+    }
   end
   
   def archive
