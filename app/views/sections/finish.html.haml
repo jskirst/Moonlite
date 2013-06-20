@@ -16,10 +16,7 @@
         .session_details
           - unless @correct_topics.blank?
             %span Strengths:
-            #{@correct_topics} ·
-          - unless @incorrect_topics.blank?
-            %span Weaknesses
-            #{@incorrect_topics}
+            #{@correct_topics}
       %hr
       %div{ style: "text-align: center;"}
         - if @sample

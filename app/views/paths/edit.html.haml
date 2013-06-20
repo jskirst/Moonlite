@@ -8,12 +8,15 @@
       %div.control-group
         %label.control-label Challenge Name
         %div.controls= f.text_field :name
-      %div.control-group
-        %label.control-label Description
-        %div.controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
-      %div.control-group
-        %label.control-label Default code template
-        %div.controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
+      - unless @group
+        %div.control-group
+          %label.control-label Description
+          %div.controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
+      - unless @group
+        %div.control-group
+          %label.control-label Default code template
+          %div.controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
+      / For Group users we can auto-apply an image here when the challenge creation begins, or we can make adding an image optional, at which point we can have an image render to the end-user if the user supplied image is blank
       %div.control-group{ style: "margin-bottom: 5px;" }
         %label.control-label Image
         %div.controls= render "stored_resources/new_image"      
@@ -66,7 +69,8 @@
         = image_tag(@path.path_pic, class: "bigheaderimage")
     %div.span4{ style: "margin-left: 5px;" }
       %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
-      %p#challenge_desc_pop.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
+      - unless @group
+        %p#challenge_desc_pop.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description." : @path.description
     %div.floatr{ style: "margin-top:10px;"}
       - if @path.published? && @path.approved?
         = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
@@ -76,33 +80,35 @@
         = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
       %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
   %div
-    = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
-    %h2{ style: "font-size: 20px; color: darkgray;" } SECTIONS
+    - unless @group
+      = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
+      %h2{ style: "font-size: 20px; color: darkgray;" } SECTIONS
     %hr{ style: "margin: 5px 0 0 0;" }
-    %table.table
-      - @sections.to_a.each_with_index do |s, i|
-        %tr
-          %td.section{ style: "border-bottom: 1px solid #EEE; border-top: 0px;" }
-            %section
-              %div.row{ style: "min-height: 75px;" }
-                %div.floatr
-                  %ul.nav.nav-pills
-                    %li.active
-                      %a.edit_section_overview_pill{ onclick: "close_section_container(this);", style:"cursor:pointer;" } Overview
-                    %li
-                      %a#questions_pop.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
-                    %li
-                      %a#section_settings_pop.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
-                %div.span8
-                  %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
-                  %div
-                    %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                      %span#question_counter #{s.core_tasks.size} Core Questions
-                    %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                      %span#question_counter #{s.challenge_tasks.size} Challenge Questions
-                    %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                      %span#question_counter #{s.achievement_tasks.size} Achievements
-                    - unless s.published_at
-                      %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
-              %div.section_questions_container.row{ style: "display:none; margin-top: 20px;" }
-                = render "sections/edit_tasks", { section: s, tasks: s.tasks, display_new_task_form: true }
+    - unless @group
+      %table.table
+        - @sections.to_a.each_with_index do |s, i|
+          %tr
+            %td.section{ style: "border-bottom: 1px solid #EEE; border-top: 0px;" }
+              %section
+                .row{ style: "min-height: 75px;" }
+                  .floatr
+                    %ul.nav.nav-pills
+                      %li.active
+                        %a.edit_section_overview_pill{ onclick: "close_section_container(this);", style:"cursor:pointer;" } Overview
+                      %li
+                        %a#questions_pop.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
+                      %li
+                        %a#section_settings_pop.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
+                  %div.span8
+                    %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
+                    %div
+                      %span.label{ style: "font-size: 12px; vertical-align:middle;" }
+                        %span#question_counter #{s.core_tasks.size} Core Questions
+                      %span.label{ style: "font-size: 12px; vertical-align:middle;" }
+                        %span#question_counter #{s.challenge_tasks.size} Challenge Questions
+                      %span.label{ style: "font-size: 12px; vertical-align:middle;" }
+                        %span#question_counter #{s.achievement_tasks.size} Achievements
+                      - unless s.published_at
+                        %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
+                %div.section_questions_container.row{ style: "display:none; margin-top: 20px;" }
+                  = render "sections/edit_tasks", { section: s, tasks: s.tasks, display_new_task_form: true }

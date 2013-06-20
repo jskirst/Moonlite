@@ -74,6 +74,7 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
+    @group = true
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id) and return
     end
