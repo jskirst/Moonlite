@@ -49,7 +49,9 @@ class User < ActiveRecord::Base
   has_many    :group_users
   has_many    :groups, through: :group_users
   has_many    :sent_emails
-  has_many    :evaluations
+  has_many    :authored_evaluations, class_name: "Evaluation"
+  has_many    :evaluation_enrollments, class_name: "EvaluationUser"
+  has_many    :evaluations, through: :evaluation_enrollments
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }

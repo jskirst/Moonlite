@@ -71,6 +71,7 @@ Metabright::Application.routes.draw do
       end
     end
   end
+  get '/e/:evaluation_id/continue/:path_id' => 'evaluations#continue', as: "continue_evaluation"
   get "/e/:permalink" => "evaluations#take", as: "take_group_evaluation"
 	
 	resources :tasks do

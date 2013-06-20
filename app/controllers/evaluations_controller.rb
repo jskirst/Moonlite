@@ -1,7 +1,7 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
-  before_filter :load_group, except: [:take]
-  before_filter :authorize_group, except: [:take, :take_confirmation]
+  before_filter :load_group, except: [:take, :continue]
+  before_filter :authorize_group, except: [:take, :continue, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
 
   def index
@@ -40,12 +40,55 @@ class EvaluationsController < ApplicationController
   end
   
   def create_confirmation
-    @evaluation = current_user.evaluations.find(params[:id])
+    @evaluation = current_user.authored_evaluations.find(params[:id])
   end
   
   def take
-    @evaluation = current_user.evaluations.find_by_permalink(params[:id])
-    cookies[:evaluation] = @evaluation.permalink if not current_user
+    @evaluation = Evaluation.find_by_permalink(params[:permalink])
+    @group = @evaluation.group
+    unless current_user
+      cookies[:evaluation] = @evaluation.permalink
+    end
+  end
+  
+  def continue
+    @evaluation = Evaluation.find(params[:evaluation_id])
+    # if @evaluation.nil?
+    #   @evalation_enrollment = current_user.evaluation_enrollments.create!(evaluation_id: params[:evaluation_id])
+    #   @evaluation = @evalation_enrollment.evaluation
+    # end
+    
+    @path = @evaluation.paths.find_by_id(params[:path_id])
+    unless @enrollment = current_user.enrolled?(@path)
+      @enrollment = current_user.enroll!(@path)
+    end
+    
+    @task = @evaluation.next_core_task(current_user, @path)
+    
+    if @task
+      @session_id = params[:session_id] || Time.now().to_i + current_user.id
+      @streak = session[:ssf].to_i
+      if @streak > @enrollment.longest_streak
+        @enrollment.update_attribute(:longest_streak, @streak)
+      end
+      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, enrollment_id: @enrollment.id, session_id: @session_id)
+      @answers = Answer.cached_find_by_task_id(@task.id).shuffle
+      @stored_resource = @task.stored_resources.first
+      session[:ssf] = @streak
+    else
+      raise "At the end"
+    end
+    
+    if request.xhr?
+      render file: "tasks/continue", layout: false
+    else
+      @hide_background = true
+      render "tasks/continue"
+    end
+  end
+  
+  def challenge
+    
   end
 
   def take_confirmation

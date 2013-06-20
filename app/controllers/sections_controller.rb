@@ -265,11 +265,11 @@ class SectionsController < ApplicationController
       end
     end
     session[:ssf] = @streak
-    @hide_background = true
     if request.xhr?
-      render file: "sections/#{page}", layout: false
+      render file: "tasks/#{page}", layout: false
     else
-      render page
+      @hide_background = true
+      render "tasks/#{page}"
     end
   end
   
