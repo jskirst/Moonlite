@@ -131,20 +131,14 @@ class PathsController < ApplicationController
   end
   
   def publish
-    if @path.default_pic?
-      flash[:info] = "You need to set a custom picture for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
-    elsif @path.description.blank?
-      flash[:info] = "You need to create a description for your #{name_for_paths} before you can publish it. You can do that by clicking the Settings button."
+    now = Time.now
+    @path.sections.each { |s| s.update_attribute(:published_at, now) }
+    @path.published_at = now
+    @path.public_at = now
+    if @path.save
+      flash[:success] = "#{@path.name} has been submitted. Once approved by an administrator, it will be accessible by the MetaBright community."
     else
-      now = Time.now
-      @path.sections.each { |s| s.update_attribute(:published_at, now) }
-      @path.published_at = now
-      @path.public_at = now
-      if @path.save
-        flash[:success] = "#{@path.name} has been submitted. Once approved by an administrator, it will be accessible by the MetaBright community."
-      else
-        flash[:error] = "There was an error publishing."
-      end
+      flash[:error] = "There was an error publishing."
     end
     redirect_to edit_path_path(@path.permalink)
   end

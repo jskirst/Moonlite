@@ -16,7 +16,7 @@
           %p #{@evaluation.company} is using MetaBright to measure their job candidates' skills. MetaBright gives you the chance to prove and showcase what you know!
     %h2 Apply to this job
     .application_steps
-      .step{ style: "margin-top: 0; "}
+      .step{ style: "margin-top: 0; ", class: ("opaque" if current_user)}
         .img-circle
           %span 1
         .instructions
@@ -24,6 +24,8 @@
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
           %p Registering allows #{@evaluation.company} to verify your identity.
           - if current_user
+            %h5 Thank you for signing in, #{current_user.name.split.first}!
+          - else
             .signup
               = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 10px; margin-bottom: 0;", class: "button btn" do
                 = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
@@ -34,40 +36,57 @@
               = link_to "/auth/github", style: "display: inline-block; margin-left: 10px;", class: "button btn" do
                 = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
                 %span.landingbuttontext GitHub sign up »
-          - else
-            %h5 Thank you for signing in, #{current_user.name.split.first}!
-        .step
-          .img-circle
-            %span 2
-          .instructions
-            %h4 Choose your Location
-            = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-            %p Your location helps #{@evaluation.company} know if you're eligible for the position.
-        .step
-          .img-circle
-            %span 3
-          .instructions
-            %h4 Take Tests
-            = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-            %p Each test should take you about 10 minutes.
-            .challenge_holder
-              - @evaluation.paths.each do |p|
-              - @enrollment = current_user ? current_user.enrolled?(p) : nil
-                .challenge_card
-                  = image_tag p.picture
-                  %h5= p.name
-                  - if @enrollment and @enrollment.total_points > 1000
-                    %div Completed
-                  - else
-                    = link_to "Begin Now", continue_evaluation_path(@evaluation.id, p.id), class: "button button-small button-actionable"
-        .step
-          .img-circle
-            %span 4
-          .instructions
-            %h4{ style: "margin-top: 10px;"} Submit Application
-            %div{ style: "text-align: center; margin-top: 12px; "}
-              = link_to "Submit", take_confirmation_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
-          
+      .step
+        .img-circle
+          %span 2
+        .instructions
+          %h4 Choose your Location
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Your location helps #{@evaluation.company} know if you're eligible for the position.
+          - if true
+            / current_user.country = nil or current_user.state = nil or current_user.city=nil
+            = form_for current_user do |f|
+              %div
+                %label Country
+                = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
+              %div{ style: "margin: 0 26px;"}
+                %label State/Province
+                = render "shared/subregion_select", { form: f }
+              %div{ style: "margin-right: 0;"}
+                %label City
+                = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
+              = f.submit "Save", class: "button"
+          - else 
+            / Location partial with stuff pre-selected (maybe undone opacity until user resubmits info)
+            
+      .step
+        .img-circle
+          %span 3
+        .instructions
+          %h4 Take Challenges
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Each Challenge should take you about 10 minutes.
+          .challenge_holder
+            - @evaluation.paths.each do |p|
+            - @enrollment = current_user ? current_user.enrolled?(p) : nil
+              .challenge_card
+                = image_tag p.picture
+                %h5= p.name
+                / Why is total points set so high?
+                - if @enrollment and @enrollment.total_points > 1000
+                  %div Completed
+                - else
+                  = link_to "Begin Now", continue_evaluation_path(@evaluation.id, p.id), class: "button button-small button-actionable"
+      .step
+        .img-circle
+          %span 4
+        .instructions
+          %h4 Submit Application
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Once all previous steps are completed, you'll be able to submit your application.
+          %div{ style: "text-align: center; margin-top: 12px; "}
+            = link_to "Submit", take_confirmation_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable disabled", style: "margin: 10px; float: left;", disabled: "disabled"
+        
     
 :javascript
   $(function(){
