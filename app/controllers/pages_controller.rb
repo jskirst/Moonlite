@@ -215,6 +215,13 @@ class PagesController < ApplicationController
     render "evaluator"
   end
   
+  def organization_portal
+    @title = "Organization Portal"
+    @show_footer = true
+    @hide_background = true
+    render "organization_portal"
+  end
+  
   def product_form
     @opportunity = Opportunity.new(product: params[:p])
     @title = "Checkout"

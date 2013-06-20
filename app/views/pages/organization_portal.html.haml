@@ -1,0 +1,44 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+
+#employer.aboutcontainer
+  #organization_portal.aboutbox{ style: "padding: 8px; "}
+    .header{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+      = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
+      %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Organization Portal
+    .body
+      / This if statement should really split if the visitor isn't registered as an employer/organization as opposed to just being registered
+      - if current_user
+        %a{ href:"#"}
+          .option{ style: "border-bottom: 1px solid #DDD; border-right: 1px solid #DDD; margin-right: -4px; margin-bottom: -1px;"}
+            %div
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
+              %h3 Group
+        %a{ href:"#"}
+          .option
+            %div
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
+              %h3 Evaluations
+        %a{ href:"#"}
+          .option
+            %div
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"
+              %h3 Challenges
+        %a{ href:"#"}
+          .option{ style: "border-top: 1px solid #DDD; border-left: 1px solid #DDD; margin-left: -4px;"}
+            %div
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_api.png"
+              %h3 API
+      - else
+        .signup
+          %h3 Sign in to your account
+          = link_to "/auth/google_oauth2", style: "margin-right: 10px; margin-bottom: 0;", class: "button btn" do
+            = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+            %span.landingbuttontext Google sign up »
+          = link_to "/auth/linkedin_oauth2", style: "margin: 0 6px;", class: "button btn" do
+            = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
+            %span.landingbuttontext LinkedIn sign up »
+          = link_to "/auth/github", style: " margin-left: 10px;", class: "button btn" do
+            = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
+            %span.landingbuttontext GitHub sign up »
+        
