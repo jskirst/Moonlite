@@ -1,51 +1,57 @@
-%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  = render "header"
-  %div.notificationpanelbody
-    %table.table.overview
-      %tr
-        %td
-          %h3= when_count(@stats[:users])
-          %p Total Members
-        %td
-          %h3= when_count(@stats[:visits])
-          %p New Members
-        %td
-          %h3= when_count(@stats[:arena_answers])
-          %p Arena Answers
-        %td
-          %h3= when_count(@stats[:creative_answers])
-          %p Creative Answers
-    .btn-group
-      %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        = @path.nil? ? "Filter by Challenge" : "Filtering by #{@path.name}"
-        %span.caret
-      %ul.dropdown-menu{ style: "max-height: 300px; overflow: auto;" }
-        %li= link_to "All Challenges", dashboard_group_path(@group.id)
-        %li.divider
-        - Persona.first.paths.all.each do |path|
-          %li= link_to path.name, dashboard_group_path(@group.id, p:path.id)
-    = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
-    = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
-    %table.table
-      %thead
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 900px; margin-top: 35px;}
+  .container .body { padding: 0; }
+
+#employer.aboutcontainer
+  .aboutbox
+    = render "header"
+    %div.notificationpanelbody
+      %table.table.overview
         %tr
-          %th Name
-          %th Email
-          %th Created
-          %th Questions Answered            
-          %th Points
-          %th Enrollments
-      %tbody
-        - @users.to_a.each do |u|
+          %td
+            %h3= when_count(@stats[:users])
+            %p Total Members
+          %td
+            %h3= when_count(@stats[:visits])
+            %p New Members
+          %td
+            %h3= when_count(@stats[:arena_answers])
+            %p Arena Answers
+          %td
+            %h3= when_count(@stats[:creative_answers])
+            %p Creative Answers
+      .btn-group
+        %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          = @path.nil? ? "Filter by Challenge" : "Filtering by #{@path.name}"
+          %span.caret
+        %ul.dropdown-menu{ style: "max-height: 300px; overflow: auto;" }
+          %li= link_to "All Challenges", dashboard_group_path(@group.id)
+          %li.divider
+          - Persona.first.paths.all.each do |path|
+            %li= link_to path.name, dashboard_group_path(@group.id, p:path.id)
+      = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
+      = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
+      %table.table
+        %thead
           %tr
-            %td= link_to truncate(u.name, length: 20), profile_path(u.username)
-            %td= truncate(u.email, length:25)
-            %td= u.created_at.strftime("%m/%d/%Y")  
-            - if @path
-              %td= @path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
-              %td= u.enrolled?(@path).total_points
-            - else            
-              %td= u.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
-              %td= u.earned_points
-            %td= u.enrollments.size
+            %th Name
+            %th Email
+            %th Created
+            %th Questions Answered            
+            %th Points
+            %th Enrollments
+        %tbody
+          - @users.to_a.each do |u|
+            %tr
+              %td= link_to truncate(u.name, length: 20), profile_path(u.username)
+              %td= truncate(u.email, length:25)
+              %td= u.created_at.strftime("%m/%d/%Y")  
+              - if @path
+                %td= @path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
+                %td= u.enrolled?(@path).total_points
+              - else            
+                %td= u.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
+                %td= u.earned_points
+              %td= u.enrollments.size
             
