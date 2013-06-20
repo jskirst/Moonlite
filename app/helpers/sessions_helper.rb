@@ -47,7 +47,7 @@ module SessionsHelper
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end
       if cookies[:evaluation]
-        redirect_to take_group_evaluation_path(cookies[:evaluation])
+        session[:redirect_back_to] = take_group_evaluation_path(cookies[:evaluation])
       end
       return true
     end

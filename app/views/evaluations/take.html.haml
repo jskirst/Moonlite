@@ -2,7 +2,6 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .aboutcontainer{ width: 900px;}
   
-
 #employer.aboutcontainer
   #take_evaluation.aboutbox
     .header
@@ -53,21 +52,21 @@
             %p Each test should take you about 10 minutes.
             .challenge_holder
               - @evaluation.paths.each do |p|
-              - @enrollment = current_user.enrolled?(p)
+              - @enrollment = current_user ? current_user.enrolled?(p) : nil
                 .challenge_card
                   = image_tag p.picture
                   %h5= p.name
-                  - if @enrollment.total_points > 0
+                  - if @enrollment and @enrollment.total_points > 1000
                     %div Completed
                   - else
-                    = link_to "Begin Now", continue_path_path(p.permalink), class: "button button-small button-actionable"
+                    = link_to "Begin Now", continue_evaluation_path(@evaluation.id, p.id), class: "button button-small button-actionable"
         .step
           .img-circle
             %span 4
           .instructions
             %h4{ style: "margin-top: 10px;"} Submit Application
             %div{ style: "text-align: center; margin-top: 12px; "}
-              = link_to "Submit", take_confirmation_evaluation_path(@evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
+              = link_to "Submit", take_confirmation_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
           
     
 :javascript
