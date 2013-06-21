@@ -67,11 +67,13 @@ Metabright::Application.routes.draw do
       member do
         get :take_confirmation
         get :create_confirmation
-        get :continue
+        get :submit
       end
     end
   end
   get '/e/:evaluation_id/continue/:path_id' => 'evaluations#continue', as: "continue_evaluation"
+  get '/e/:evaluation_id/challenge/:path_id' => 'evaluations#challenge', as: "challenge_evaluation"
+  put '/e/:evaluation_id/answer/:task_id' => 'evaluations#answer', as: "answer_evaluation"
   get "/e/:permalink" => "evaluations#take", as: "take_group_evaluation"
 	
 	resources :tasks do

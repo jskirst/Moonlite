@@ -122,81 +122,25 @@ class SectionsController < ApplicationController
   end
   
   def take
-    @hide_background = true
     @task = Task.cached_find(params[:task_id])
-    raise "Access Denied: Not a challenge." unless @task.creative_response? or @task.task?
     raise "Access Denied: Task is currently locked." if @task.locked_at
-    @stored_resource = @task.stored_resources.first
     @session_id = params[:session_id]
-    @completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
-    unless @completed_task
-      @completed_task = current_user.completed_tasks.new(task_id: @task.id)
-      @completed_task.status_id = Answer::INCOMPLETE
-      @completed_task.enrollment_id = @enrollment.id
-      @completed_task.session_id = @session_id
-      @completed_task.save!
-      @submitted_answer = SubmittedAnswer.new
-    else
-      @submitted_answer = @completed_task.submitted_answer || SubmittedAnswer.new
-    end
     
-    correct_answers = Answer.cached_find_by_task_id(@task.id).select{ |t| t.is_correct }
-    unless correct_answers.empty? or @submitted_answer.preview.blank?
-      correct_answers.each do |ca|
-        if ca.match?(@submitted_answer.preview)
-          @correct = true
-          break
-        end
-      end
-    end
-    @require_ace_editor = true
+    @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
+    @submitted_answer = @completed_task.submitted_answer_id ? @completed_task.submitted_answer || SubmittedAnswer.new
+    
+    @stored_resource = @task.stored_resources.first
+    @hide_background = true
   end
   
   def took
-    @task = @section.tasks.find(params[:task_id])
-    raise "Only CRs can be taken." unless @task.creative_response? or @task.task?
+    @task = Task.cached_find(params[:task_id])
     raise "Access Denied: Task is currently locked." if @task.locked_at
+    @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
     
-    completed_task = @enrollment.completed_tasks.find_by_task_id(@task.id)
-    unless completed_task
-      completed_task = current_user.completed_tasks.new(task_id: @task.id)
-      completed_task.status_id = Answer::INCOMPLETE
-      completed_task.enrollment_id = @enrollment.id
-      completed_task.save!
-    end
-    
-    if completed_task.incomplete? and not (params[:mode] == "preview" or params[:mode] == "draft")
-      completed_task.status_id = Answer::CORRECT
-      completed_task.points_awarded = CompletedTask::CORRECT_POINTS
-      completed_task.award_points = true
-      completed_task.save!
-    end
-    
-    sa = completed_task.submitted_answer ||  @task.submitted_answers.new
-    sa.content = params[:content] unless params[:content].blank?
-    sa.url = params[:url] unless params[:url].blank?
-    sa.image_url = params[:image_url] unless params[:image_url].blank?
-    sa.title = params[:title] unless params[:title].blank?
-    sa.description = params[:description] unless params[:description].blank?
-    sa.caption = params[:caption] unless params[:caption].blank?
-    sa.site_name = params[:site_name] unless params[:site_name].blank?
-    sa.locked_at = nil
-    unless current_user.guest_user?
-      sa.reviewed_at = Time.now();
-    end
+    submitted_answer = completed_task.submitted_answer ||  @task.submitted_answers.new
 
-    unless sa.save
-      redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
-      return
-    else
-      completed_task.submitted_answer_id = sa.id
-      completed_task.save!
-      
-      unless params[:stored_resource_id].blank?
-        sr = assign_resource(sa, params[:stored_resource_id])
-        sa.update_attribute(:image_url, sr.obj.url)
-      end
-    
+    if submitted_answer.submit!(completed_task, current_user, params)
       if params[:mode] == "draft" or params[:mode] == "preview"
         redirect_to take_section_path(@section, task_id: @task.id, m: params[:mode])
       else
@@ -206,6 +150,8 @@ class SectionsController < ApplicationController
           redirect_to challenge_path(@section.path.permalink, c: true, type: @task.answer_type)
         end
       end
+    else
+      redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
     end
   end
     
@@ -247,6 +193,9 @@ class SectionsController < ApplicationController
       end
     end
     session[:ssf] = @streak
+    @start_countdown = true
+    @show_stats = true
+    @next_link = continue_section_path(@task.section_id, @session_id)
     if request.xhr?
       render file: "tasks/#{page}", layout: false
     else

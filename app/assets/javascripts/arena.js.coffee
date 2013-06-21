@@ -47,7 +47,6 @@ $.MB.Arena.init = (options = {}) ->
   
   $("#challenge_form").on "ajax:success", (xhr, data) ->
     task_type = $(".responsespace").data("type")
-    console.log task_type
     if task_type == 1
       if data.correct == true
         $(".match_status_text").css("font-size", "22px").css("color", "rgb(0, 206, 0)").css("margin-left", "12px").css("font-weight", "bold").text("Correct!")
@@ -58,15 +57,10 @@ $.MB.Arena.init = (options = {}) ->
         $(".answer_feedback").css("border-color", "rgba(236, 28, 28, 0.7)").css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)").css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)").css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)")
       $("#submit_exact").remove()
     else if task_type == 2
-      console.log "Is Multiple"
-      console.log data.correct_answer
       $(".answer_content").each ->
-        console.log $(this).data("answer")
         if String($(this).data("answer")) == String(data.correct_answer)
-          console.log "Correct"
           $(this).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
         else if String($(this).data("answer")) == String(data.answer)
-          console.log "Incorrect"
           $(this).css("background-color", "#FF9999").css("color", "white")
         
     $("#nextbutton").show()

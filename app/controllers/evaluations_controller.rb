@@ -1,7 +1,7 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
-  before_filter :load_group, except: [:take, :continue]
-  before_filter :authorize_group, except: [:take, :continue, :take_confirmation]
+  before_filter :load_group, except: [:take, :continue, :challenge, :answer]
+  before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
 
   def index
@@ -69,22 +69,29 @@ class EvaluationsController < ApplicationController
       @completed_task = current_user.completed_tasks.create!(task_id: @task.id, enrollment_id: @enrollment.id, session_id: @session_id)
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
+      
       session[:ssf] = @streak
+      @start_countdown = true
+      @show_stats = true
+      @next_link = continue_evaluation_path(@evaluation, @path)
+      if request.xhr?
+        render file: "tasks/continue", layout: false
+      else
+        @hide_background = true
+        render "tasks/continue"
+      end
     else
-      raise "At the end"
-    end
-    
-    @next_link = continue_evaluation_path(@evaluation, @path)
-    if request.xhr?
-      render file: "tasks/continue", layout: false
-    else
-      @hide_background = true
-      render "tasks/continue"
+      redirect_to challenge_evaluation_path(@evaluation, @path)
     end
   end
   
   def challenge
-    
+    @evaluation = Evaluation.find(params[:evaluation_id])
+    @path = @evaluation.paths.find_by_id(params[:path_id])
+    unless @enrollment = current_user.enrolled?(@path)
+      @enrollment = current_user.enroll!(@path)
+    end
+    @task = @evaluation.next_challenge_task(current_user, @path)    
   end
 
   def take_confirmation

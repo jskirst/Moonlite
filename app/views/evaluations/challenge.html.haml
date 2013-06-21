@@ -1,13 +1,7 @@
 %div.quizcontainer{ style: "margin-top: 70px;"}
-  = render "modals/report_issue"
-  
-  = form_for(@task, url: took_section_path(@section, task_id: @task.id), html: { id: "challenge_form", style: "margin: 0;" }) do |f|
+  = form_for(@task, url: answer_evaluation_path(@evaluation, @task.id), html: { id: "challenge_form", style: "margin: 0;" }) do |f|
     %div.CRquizspace
       %div.quizheader
-        - if params[:m]
-          :javascript
-            $(function(){ $(".draft_saved").fadeOut(8000); });
-          %div.draft_saved{ style: "float: right; font-size: 15px;" } Draft saved...
         = image_tag @path.path_pic, alt: "#{@path.name}"
         %div{ style: "display:inline-block;" }
           %span
@@ -18,7 +12,6 @@
       
       - if @task.text?
         = render "tasks/take_text", f: f
-        = render "tasks/submit_text", f: f
       - else
         - if @task.image?
           = render "tasks/take_image", f: f
@@ -26,4 +19,3 @@
           = render "tasks/take_youtube", f: f
         - elsif @task.task?
           = render "tasks/take_task", f: f
-        = render "tasks/submit", f: f

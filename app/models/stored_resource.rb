@@ -19,4 +19,12 @@ class StoredResource < ActiveRecord::Base
   
   validates :description, length: { maximum: 255 }
   validates :link, length: { maximum: 255 }
+  
+  def self.assign(id, obj)
+    sr = find(id)
+    raise "FATAL: STEALING RESOURCE" if sr.owner_id
+    sr.owner_id = obj.id
+    sr.owner_type = obj.class.to_s
+    sr.save!
+  end
 end

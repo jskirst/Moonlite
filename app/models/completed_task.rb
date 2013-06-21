@@ -41,23 +41,25 @@ class CompletedTask < ActiveRecord::Base
   def incorrect?() status_id == Answer::INCORRECT end
     
   def self.find_or_create(user_id, task_id, session_id = nil)
+    raise "Access Denied: Task is currently locked." if @task.locked_at
     enrollment_record = Path.joins("INNER JOIN sections on sections.path_id=paths.id")
       .joins("INNER JOIN tasks on tasks.section_id=sections.id and tasks.id=#{task_id.to_s}")
-      .joins("LEFT JOIN enrollments on enrollments.path_id=paths.id")
-      .where("enrollments.user_id = ?", user_id)
+      .joins("LEFT JOIN enrollments on enrollments.path_id=paths.id and enrollments.user_id=#{user_id.to_i}")
       .select("paths.id as path_id, enrollments.id as enrollment_id")
       .first
-    unless enrollement_id = enrollment_record.enrollment_id
+    unless enrollment_id = enrollment_record.enrollment_id
       enrollment = Enrollment.new
       enrollment.user_id = user_id
       enrollment.path_id = enrollment_record.path_id
       enrollment.save!
-      enrollement_id = enrollment.id
+      enrollment_id = enrollment.id
     end
     
     ct = find_by_user_id_and_task_id(user_id, task_id)
     unless ct
-      ct = create!(user_id: user_id, task_id: task_id, enrollment_id: enrollement_id, session_id: session_id)
+      ct = new(task_id: task_id, enrollment_id: enrollment_id, session_id: session_id)
+      ct.user_id = user_id
+      ct.save!
     end
     return ct
   end

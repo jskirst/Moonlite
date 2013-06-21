@@ -1,0 +1,11 @@
+%div.CRbuttonspace
+  - if @session_id.nil?
+    = link_to "Back", challenge_path(@section.path.permalink, c: true), class: "button button-standard", style: "float: left;"
+  - else
+    = link_to "Skip for now", finish_section_path(@section, @session_id), class: "button button-standard", style: "float: left;"
+  - if @completed_task.correct?
+    = f.submit "Update", class: "button button-actionable", id: "submit_button", style: "float:right;"
+  - else
+    = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+    = f.submit "Save as Draft", class: "button button-standard", id: "draft_button", style: "float:right; margin-right: 10px;"  
+  = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"

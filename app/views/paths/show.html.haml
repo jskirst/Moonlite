@@ -12,11 +12,12 @@
         - @section ||= @path.next_section
         - @task ||= @section.next_task(nil, true)
         - if @task
-          - @answers = @task.answers
           - @start_countdown = false
+          - @show_stats = true
+          - @answers = @task.answers
           - @next_text = "Let's Go!"
           - @next_link = start_section_path(@section.id)
-          = render file: "sections/continue"
+          = render file: "tasks/continue"
   
   .top
     = link_to challenge_path(@path.permalink), class: "home" do

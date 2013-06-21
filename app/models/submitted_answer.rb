@@ -23,8 +23,52 @@ class SubmittedAnswer < ActiveRecord::Base
  
   validates :content, length: { maximum: 100000 }
   
-  before_save do
-    return true if content.blank?
+  after_save :flush_cache
+  before_destroy :flush_cache
+  
+  def reviewed?() not reviewed_at.nil? end
+  
+  def submit!(completed_task, user, status, args)
+    args.delete_if{ |arg| arg.blank? }
+    
+    self.content = args[:content]
+    self.url = args[:url]
+    self.image_url = args[:image_url]
+    self.title = args[:title]
+    self.description = args[:description]
+    self.caption = args[:caption]
+    self.site_name = args[:site_name]
+    self.locked_at = nil
+    self.reviewed_at = Time.now if not user.guest_user?
+    evaluate_content if content
+    StoredResource.assign(args[:stored_resource_id], self) if args[:stored_resource_id]
+    save!
+    
+    completed_task.submitted_answer_id = self.id
+    correct_answers = Answer.cached_find_by_task_id(@task.id).select{ |t| t.is_correct }
+    if correct_answers.size > 0
+      unless preview.blank?
+        @correct = correct_answers.any?{ |answer| answer.match?(preview) }
+      end
+      if status == :submit
+        if @correct or correct_answer.empty?
+          completed_task.status_id = Answer::CORRECT
+          completed_task.points_awarded = CompletedTask::CORRECT_POINTS
+          completed_task.award_points = true
+        else
+          completed_task.status_id = Answer::INCORRECT
+        end
+      end
+    else
+      completed_task.status_id = Answer::CORRECT
+      completed_task.points_awarded = CompletedTask::CORRECT_POINTS
+      completed_task.award_points = true
+    end
+    completed_task.save!
+  end
+  
+  def evaluate_content
+    return false if content.blank?
     if content.include?("#ruby")
       url = "http://www.evaluatron.com/" 
       default_error = "Syntax Error"
@@ -44,13 +88,12 @@ class SubmittedAnswer < ActiveRecord::Base
         self.preview_errors = default_error
       end
     end
+    return true
   end
   
-  after_save :flush_cache
-  before_destroy :flush_cache
   
-  def reviewed?() not reviewed_at.nil? end
-    
+  # Voting
+  
   def add_vote(voting_user)
     if vote = voting_user.votes.create!(owner_id: self.id)
       self.total_votes += 1
@@ -73,6 +116,8 @@ class SubmittedAnswer < ActiveRecord::Base
     end
     return false
   end
+  
+  # Mail Alert
   
   def self.inductions(time)
     where("promoted_at > ?",time)
