@@ -1,7 +1,7 @@
 %div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'} #{'width: inherit;' unless @show_stats}" }
   = render "modals/report_issue"
   %div.quizspace
-    - if 
+    - if @start_countdown
       :javascript
         $(function(){
           $.MB.Arena.init({start_countdown: #{@start_countdown}});
@@ -16,7 +16,7 @@
         %div.quiz_progress
           Question #{@question_count} / #{@session_total}
     %div{ style: "text-align:center;" }
-      = render "sections/stored_resource", { :stored_resource => @stored_resource }
+      = render "tasks/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
       %div.questionspace
         %pre.CRquestion= @task.question

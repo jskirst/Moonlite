@@ -41,7 +41,6 @@ class CompletedTask < ActiveRecord::Base
   def incorrect?() status_id == Answer::INCORRECT end
     
   def self.find_or_create(user_id, task_id, session_id = nil)
-    raise "Access Denied: Task is currently locked." if @task.locked_at
     enrollment_record = Path.joins("INNER JOIN sections on sections.path_id=paths.id")
       .joins("INNER JOIN tasks on tasks.section_id=sections.id and tasks.id=#{task_id.to_s}")
       .joins("LEFT JOIN enrollments on enrollments.path_id=paths.id and enrollments.user_id=#{user_id.to_i}")

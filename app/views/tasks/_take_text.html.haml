@@ -45,14 +45,6 @@
       = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; display: none; margin: 2px 12px;", placeholder: "Caption will appear immediately below your response..."
 
 :javascript
-  $("#preview_button").click(function(){
-    $("input[name=mode]").val("preview");
-  });
-  
-  $("#draft_button").click(function(){
-    $("input[name=mode]").val("draft");
-  });
-
   $("#challenge_form").submit(function(){
     if($("#answer_input").val() != ""){
       $("#challenge_form").unbind("submit");

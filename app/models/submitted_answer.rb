@@ -28,7 +28,7 @@ class SubmittedAnswer < ActiveRecord::Base
   
   def reviewed?() not reviewed_at.nil? end
   
-  def submit!(completed_task, user, status, args)
+  def submit!(completed_task, user, publish, args)
     args.delete_if{ |arg| arg.blank? }
     
     self.content = args[:content]
@@ -39,30 +39,33 @@ class SubmittedAnswer < ActiveRecord::Base
     self.caption = args[:caption]
     self.site_name = args[:site_name]
     self.locked_at = nil
-    self.reviewed_at = Time.now if not user.guest_user?
+    self.reviewed_at = nil
     evaluate_content if content
     StoredResource.assign(args[:stored_resource_id], self) if args[:stored_resource_id]
+    if publish and not user.guest_user?
+      self.reviewed_at = Time.now
+    end
     save!
     
     completed_task.submitted_answer_id = self.id
-    correct_answers = Answer.cached_find_by_task_id(@task.id).select{ |t| t.is_correct }
+    correct_answers = Answer.cached_find_by_task_id(completed_task.task_id).select{ |t| t.is_correct }
     if correct_answers.size > 0
-      unless preview.blank?
-        @correct = correct_answers.any?{ |answer| answer.match?(preview) }
-      end
-      if status == :submit
-        if @correct or correct_answer.empty?
-          completed_task.status_id = Answer::CORRECT
+      correct = correct_answers.any?{ |answer| answer.match?(preview.to_s) }
+      if correct or correct_answers.empty?
+        completed_task.status_id = Answer::CORRECT
+        if publish and completed_task.points_awarded.to_i == 0
           completed_task.points_awarded = CompletedTask::CORRECT_POINTS
           completed_task.award_points = true
-        else
-          completed_task.status_id = Answer::INCORRECT
         end
+      else
+        completed_task.status_id = Answer::INCORRECT
       end
     else
-      completed_task.status_id = Answer::CORRECT
-      completed_task.points_awarded = CompletedTask::CORRECT_POINTS
-      completed_task.award_points = true
+      if publish and completed_task.points_awarded.to_i == 0
+        completed_task.status_id = Answer::CORRECT
+        completed_task.points_awarded = CompletedTask::CORRECT_POINTS
+        completed_task.award_points = true
+      end
     end
     completed_task.save!
   end

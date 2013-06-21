@@ -191,21 +191,12 @@ class PathsController < ApplicationController
 # Begin Path Journey
   
   def continue
-    enrollment = current_user.enroll!(@path) unless current_user.enrolled?(@path)
-    if params[:eval]
-      enrollment.evaluation_id = Evaluation.find_by_permalink(params[:eval]).id
-      enrollment.save!
-    end
+    current_user.enroll!(@path) unless current_user.enrolled?(@path)
     
     section = @path.next_section_for_user(current_user)
     
     if section.nil? || section.published_at.nil?
-      if enrollment.evaluation_id
-        evaluation = Evaluation.find(enrollment.evaluation_id)
-        redirect_to take_group_evalution_path(evaluation.permalink)
-      else
-        redirect_to challenge_path(@path.permalink)
-      end
+      redirect_to challenge_path(@path.permalink)
     else
       redirect_to start_section_path(section)
     end

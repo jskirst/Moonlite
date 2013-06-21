@@ -127,31 +127,30 @@ class SectionsController < ApplicationController
     @session_id = params[:session_id]
     
     @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
-    @submitted_answer = @completed_task.submitted_answer_id ? @completed_task.submitted_answer || SubmittedAnswer.new
+    @submitted_answer = @completed_task.submitted_answer_id ? @completed_task.submitted_answer : SubmittedAnswer.new
     
     @stored_resource = @task.stored_resources.first
     @hide_background = true
   end
   
   def took
-    @task = Task.cached_find(params[:task_id])
-    raise "Access Denied: Task is currently locked." if @task.locked_at
-    @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
+    #raise params.to_yaml
+    task = Task.cached_find(params[:task_id])
+    raise "Access Denied: Task is currently locked." if task.locked_at
+    completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])
     
-    submitted_answer = completed_task.submitted_answer ||  @task.submitted_answers.new
-
-    if submitted_answer.submit!(completed_task, current_user, params)
-      if params[:mode] == "draft" or params[:mode] == "preview"
-        redirect_to take_section_path(@section, task_id: @task.id, m: params[:mode])
+    publish = !(["draft", "preview"].include?(params[:mode]))
+    submitted_answer = completed_task.submitted_answer ||  task.submitted_answers.new
+    submitted_answer.submit!(completed_task, current_user, publish, params)
+    
+    if publish
+      if completed_task.session_id
+        redirect_to finish_section_path(@section, completed_task.session_id) and return
       else
-        if completed_task.session_id
-          redirect_to finish_section_path(@section, completed_task.session_id) and return
-        else
-          redirect_to challenge_path(@section.path.permalink, c: true, type: @task.answer_type)
-        end
+        redirect_to challenge_path(@section.path.permalink, c: true, type: task.answer_type)
       end
     else
-      redirect_to challenge_path(@section.path.permalink), alert: "You must supply a valid answer."
+      redirect_to take_section_path(@section, task_id: task.id, m: params[:mode])
     end
   end
     
