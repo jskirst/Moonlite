@@ -7,12 +7,14 @@ class TasksController < ApplicationController
   
   def create
     @section = Section.find(params[:task][:section_id])
-    raise "Access Denied" unless can_add_tasks(@section.path)
+    path = @section.path
+    raise "Access Denied" unless can_add_tasks(path)
     
     @task = @section.tasks.new(params[:task])
     @task.creator_id = current_user.id
     @task.answer_content = gather_answers(params[:task])
-
+    @task.approved_at = Time.now() if @task.group_id
+    
     if @task.save
       unless params[:stored_resource_id].blank?
         sr = StoredResource.find(params[:stored_resource_id])

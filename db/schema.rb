@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619133954) do
+ActiveRecord::Schema.define(:version => 20130621125321) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -228,6 +228,7 @@ ActiveRecord::Schema.define(:version => 20130619133954) do
     t.integer  "tasks_attempted"
     t.float    "percent_correct"
     t.float    "correct_points"
+    t.integer  "group_id"
   end
 
   add_index "paths", ["permalink"], :name => "index_paths_on_permalink"

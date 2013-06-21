@@ -17,14 +17,18 @@
             %div.control-group
               %div.controls
                 = f.text_field :name, autofocus: "autofocus", style: "padding: 20px; width: 500px; font-size: 28px; line-height: 36px; text-align: center;", placeholder: "Something awesome..."
-            - if @exact_path
+            
+            - if @group
+              %p Create a challenge.
+            
+            - elsif @exact_path
               %h4 Uh oh! Someone has already made that Challenge.
               %h5 Don't worry, you can still contribute to the #{@exact_path.name} Challenge.
               %div
               = link_to "Become a contributor", join_path_path(@exact_path), class: "button button-xlarge button-info"
               .or_divider OR
               
-            - elsif not @similar_paths.empty?
+            - elsif @similar_paths.any?
               %h4 Hmmm. Looks like there are Challenges with similar names.
               %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
               %h5 Consider becoming a contributor to an existing Challenge instead of creating a new one.
@@ -32,7 +36,7 @@
                 %ul
                   %li
                     = link_to path.name, join_path_path(path), title: "Become a contributor to the #{path.name} Challenge"
-            - unless @exact_path or not @similar_paths.empty?
+            - else
               %div.tips
                 %h5
                   %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }

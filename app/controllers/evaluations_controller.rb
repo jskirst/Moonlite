@@ -22,8 +22,9 @@ class EvaluationsController < ApplicationController
   end
   
   def new
-    @evaluation = @group.evaluations.new
-    @paths = Persona.first.paths
+    @evaluation = @group.evaluations.new(company: @group.name)
+    @group_paths = @group.paths
+    @public_paths = Persona.first.paths
     @title = "Create a new Evaluation"
   end
   
@@ -33,7 +34,8 @@ class EvaluationsController < ApplicationController
     if @evaluation.save
       redirect_to create_confirmation_group_evaluation_path(@group, @evaluation)
     else
-      @paths = Persona.first.paths
+      @group_paths = @group.paths
+      @public_paths = Persona.first.paths
       @title = "Create a new Evaluation"
       render "new"
     end
@@ -59,7 +61,7 @@ class EvaluationsController < ApplicationController
     end
     
     @task = @evaluation.next_core_task(current_user, @path)
-    
+
     if @task
       @session_id = params[:session_id] || Time.now().to_i + current_user.id
       @streak = session[:ssf].to_i
@@ -91,7 +93,11 @@ class EvaluationsController < ApplicationController
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
     end
-    @task = @evaluation.next_challenge_task(current_user, @path)    
+    @task = @evaluation.next_challenge_task(current_user, @path)
+    
+    unless @task
+      redirect_to take_group_evaluation_path(@evaluation.permalink)
+    end   
   end
 
   def take_confirmation

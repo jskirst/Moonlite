@@ -1,7 +1,7 @@
 class Path < ActiveRecord::Base
   attr_accessor :persona, :approved, :promoted, :template_type
   attr_readonly :company_id
-  attr_protected :approved_at, :published_at, :public_at, :promoted_at
+  attr_protected :approved_at, :published_at, :public_at, :promoted_at, :group_id
   attr_accessible :user_id,
     :category_id,
     :name, 
@@ -17,6 +17,7 @@ class Path < ActiveRecord::Base
   belongs_to :user
   belongs_to :company
   belongs_to :category
+  belongs_to :group
   has_many :sections, dependent: :destroy
   has_many :tasks, through: :sections, conditions: ["sections.published_at is not ? and tasks.archived_at is ?", nil, nil]
   has_many :all_tasks, source: :tasks, through: :sections

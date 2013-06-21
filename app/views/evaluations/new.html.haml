@@ -12,52 +12,48 @@
         .alert.alert-error
           %p= @evaluation.errors.full_messages.join(". ")
       = form_for(@evaluation, url: group_evaluations_path) do |f|
-        - if not current_user
-          %span You must register before you can create an Evaluation.
-        - else
-          %div{ style: "text-align: center; margin: 10px auto;" }
-            %div.action_group
-              %h3 What are the job details?
-              %div.tips
-                %h5 
-                  %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-                  Your company name and the position title will be displayed to candidates when they take your evaluation.
-              %div.control-group
-                %div.controls    
-                  = f.text_field :company, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center;", placeholder: "Company Name"
-                  = f.text_field :title, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 5px;", placeholder: "Position Title"
-                  - if false
-                    %div{style: "margin-top:10px;"} Upload job description (optional)
-            %div.action_group
-              %h3 What skills do you want evaluated?
-              %div.tips
-                %h5 
-                  %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-                  Choose up to three Challenges total. Each Challenge takes less than 10 minutes to complete.
-              .challenge_chooser
-                %h5 
-                  MetaBright Challenges
-                .challenges
+        %div{ style: "text-align: center; margin: 10px auto;" }
+          %div.action_group
+            %h3 What are the job details?
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Your company name and the position title will be displayed to candidates when they take your evaluation.
+            %div.control-group
+              %div.controls    
+                = f.text_field :company, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center;", placeholder: "Company Name"
+                = f.text_field :title, autofocus: "autofocus", style: "padding: 5px; width: 400px; font-size: 16px; text-align: center; margin-top: 5px;", placeholder: "Position Title"
+                - if false
+                  %div{style: "margin-top:10px;"} Upload job description (optional)
+          %div.action_group
+            %h3 What skills do you want evaluated?
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Choose up to three Challenges total. Each Challenge takes less than 10 minutes to complete.
+            .challenge_chooser
+              %h5 MetaBright Challenges
+              .challenges
+                %ul.checklist
+                  - @public_paths.each do |p|
+                    %li
+                      %label
+                        = check_box_tag "evaluation[selected_paths][#{p.id}]"
+                        = p.name
+            .challenge_chooser{ style: "margin-top: 15px;" }
+              %h5 Your Challenges
+              .challenges
+                - if @group_paths.any?
                   %ul.checklist
-                    - @paths.each do |p|
+                    - @group_paths.each do |p|
                       %li
                         %label
                           = check_box_tag "evaluation[selected_paths][#{p.id}]"
                           = p.name
-                %h5{ style: "margin-top: 20px;"} 
-                  Your custom Challenges
-                .challenges
-                  - if custom_challenges=custom_challenges
-                    / The variable below needs to change to be @custom_paths or something like that
-                    - @paths.each do |p|
-                      %li
-                        %label
-                          = check_box_tag "evaluation[selected_paths][#{p.id}]"
-                          = p.name
-                  - else
-                    %p 
-                      You don't have any custom Challenges. 
-                      = link_to "Create one now.", "#"
+                - else
+                  %p 
+                    You don't have any custom Challenges. 
+                    = link_to "Create one now.", new_group_path_path
             
               
             

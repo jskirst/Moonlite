@@ -74,27 +74,28 @@
       - elsif @path.published?
         = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
       - else
-        = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", confirm: "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved, but it's often much quicker. Once a Challenge has been published, it can't be unpublished, though you can always make changes.  Are you certain that you want to submit it now? "
+        = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", confirm: (@group ? "Once published, your challenge will be available to be added to your evaluations, though you can return here and edit it at any time." : "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved.")
       %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
   %div
     - unless @group
       = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
       %h2{ style: "font-size: 20px; color: darkgray;" } QUESTIONS
     %hr{ style: "margin: 5px 0 0 0;" }
+    :javascript
+      $(function(){ $(".section_questions_container").show() });
     %table.table
       - @sections.to_a.each_with_index do |s, i|
         %tr
           %td.section{ style: "border-bottom: 1px solid #EEE; border-top: 0px;" }
             %section
-              .row{ style: "min-height: 75px;" }
-                .floatr
-                  %ul.nav.nav-pills
-                    - unless @group
+              .row{ style: (@group ? "" : "min-height: 75px;") }
+                - unless @group
+                  .floatr
+                    %ul.nav.nav-pills
                       %li.active
                         %a.edit_section_overview_pill{ onclick: "close_section_container(this);", style:"cursor:pointer;" } Overview
-                    %li{ class: ("active" if @group)}
-                      %a#questions_pop.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
-                    - unless @group
+                      %li
+                        %a#questions_pop.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
                       %li
                         %a#section_settings_pop.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
                 %div.span8
@@ -102,7 +103,6 @@
                     %h3 Challenge questions
                   - else
                     %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
-                  - unless @group
                     %div
                       %span.label{ style: "font-size: 12px; vertical-align:middle;" }
                         %span#question_counter #{s.core_tasks.size} Core Questions

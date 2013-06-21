@@ -4,6 +4,7 @@ class PathsController < ApplicationController
   
   before_filter :authenticate, except: [:show, :newsfeed, :drilldown, :marketing]
   before_filter :load_resource, except: [:index, :new, :create, :drilldown, :marketing, :start]
+  before_filter :load_group
   before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators, :style]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
@@ -13,6 +14,9 @@ class PathsController < ApplicationController
     @path = Path.new
     @exact_path = nil
     @similar_paths = []
+    if @group
+      render "new_group"
+    end
   end
   
   def start
@@ -36,14 +40,13 @@ class PathsController < ApplicationController
     @path.user_id = current_user.id
     @path.approved_at = nil
     @path.published_at = nil
+    @path.group_id = params[:group_id]
     if @path.save
-      if params[:stored_resource_id]
+      unless params[:stored_resource_id].blank?
         assign_resource(@path, params[:stored_resource_id])
       end
       
-      if @path.template_type == "blank"
-        @path.sections.create!(name: "First Section")
-      elsif @path.template_type == "subtopic"
+      if @path.template_type == "subtopic"
         @path.sections.create!(name: "Topic 1")
         @path.sections.create!(name: "Topic 2")
         @path.sections.create!(name: "Topic 3")
@@ -54,10 +57,14 @@ class PathsController < ApplicationController
         @path.sections.create!(name: "Advanced")
         @path.sections.create!(name: "Expert")
       else
-        raise "Fatal: Unknown template type"
+        @path.sections.create!(name: @path.name)
       end
       
-      redirect_to edit_path_path(@path.permalink)
+      if @path.group_id
+        redirect_to edit_group_path_path(@path.group_id, @path.permalink)
+      else
+        redirect_to edit_path_path(@path.permalink)
+      end
     else
       @categories = current_user.company.categories
       render 'new'
@@ -74,13 +81,11 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
-    @group = true
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id) and return
     end
     @topics = @path.topics
     @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).all(order: "id ASC")
-    @require_ace_editor = true
   end
   
   def update
@@ -135,6 +140,10 @@ class PathsController < ApplicationController
     @path.sections.each { |s| s.update_attribute(:published_at, now) }
     @path.published_at = now
     @path.public_at = now
+    if @path.group_id
+      @path.approved_at = now
+    end
+    
     if @path.save
       flash[:success] = "#{@path.name} has been submitted. Once approved by an administrator, it will be accessible by the MetaBright community."
     else
@@ -354,7 +363,7 @@ class PathsController < ApplicationController
     render "leaderboard", layout: false
   end
 
-  private
+  private    
     def load_resource
       @path = Path.cached_find(params[:permalink] || params[:id])
       unless @path
@@ -362,8 +371,17 @@ class PathsController < ApplicationController
         @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
         @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       end
-      @path_custom_style = @path.custom_style
+      
+      @path_custom_style = @path.custom_style if @path
       redirect_to root_path unless @path
+    end
+    
+    def load_group
+      if params[:group_id]
+        @group = current_user.groups.where(id: params[:group_id]).first
+      elsif @path and @path.group_id
+        @group = current_user.groups.where(id: @path.group_id).first
+      end
     end
     
     def authorize_edit

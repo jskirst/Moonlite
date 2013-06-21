@@ -70,6 +70,8 @@ Metabright::Application.routes.draw do
         get :submit
       end
     end
+    
+    resources :paths, path: "c"
   end
   get '/e/:evaluation_id/continue/:path_id' => 'evaluations#continue', as: "continue_evaluation"
   get '/e/:evaluation_id/challenge/:path_id' => 'evaluations#challenge', as: "challenge_evaluation"
