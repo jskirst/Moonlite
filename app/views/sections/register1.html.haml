@@ -51,7 +51,7 @@
               = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
             %div
               %label State/Province
-              = render "subregion_select", { form: f }
+              = render "shared/subregion_select", { form: f }
             %div{ style: "margin-right: 0;"}
               %label City
               = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"

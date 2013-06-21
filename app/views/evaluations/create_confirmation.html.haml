@@ -10,7 +10,7 @@
       %h3 Your Evaluation has been created!
       .evaluation_info
         %span URL:
-        %input{ value: take_group_evaluation_url(@group, @evaluation.permalink), readonly:""}
+        %input{ value: take_group_evaluation_url(@evaluation.permalink), readonly:""}
         %div
           = image_tag LIGHT_BULB_URL, style: "height: 20px; display: inline; vertical-align: top;"
           %p Copy and paste this link into your job description, your career page, or anywhere else your candidates frequent.
