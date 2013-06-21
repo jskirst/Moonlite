@@ -61,6 +61,7 @@ Metabright::Application.routes.draw do
       get :newsfeed
       get :dashboard
       get :sandbox
+      get :group_challenge_index
     end
     
     resources :evaluations, path: "e" do

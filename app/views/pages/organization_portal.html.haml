@@ -9,22 +9,23 @@
     .body
       / This if statement should really split if the visitor isn't registered as an employer/organization as opposed to just being registered
       - if current_user
-        %a{ href:"#"}
+        = link_to dashboard_group_path(@group) do
           .option{ style: "border-bottom: 1px solid #DDD; border-right: 1px solid #DDD; margin-right: -4px; margin-bottom: -1px;"}
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
-              %h3 Group
-        %a{ href:"#"}
+              %h3 Account
+        = link_to group_evaluations_path(@group) do
           .option
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
               %h3 Evaluations
-        %a{ href:"#"}
+        / No reason to believe that this path will work
+        = link_to challenge_index_path(@group) do
           .option
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"
               %h3 Challenges
-        %a{ href:"#"}
+        = link_to sandbox_group_path(@group) do
           .option{ style: "border-top: 1px solid #DDD; border-left: 1px solid #DDD; margin-left: -4px;"}
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_api.png"

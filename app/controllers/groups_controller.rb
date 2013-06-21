@@ -96,6 +96,9 @@ class GroupsController < ApplicationController
     @email = params[:email] || current_user.email
   end
   
+  def group_challenge_index
+  end
+  
   private
   def load_resource
     @group = Group.find_by_permalink(params[:permalink]) if params[:permalink]
