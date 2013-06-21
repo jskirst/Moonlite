@@ -11,7 +11,7 @@
     %div{ style: "margin-bottom: 40px;" }
       / Pretty sure this to_a isn't working
       - if @group_paths.to_a.empty?
-        %p You haven't created any Challenges yet. #{link_to "Create one now.", "#"}
+        %p You haven't created any Challenges yet. #{link_to "Create one now.", "new_path_path"}
       - else
       %ul
         %ul.inlinedisplay{ style: "height: inherit;" }

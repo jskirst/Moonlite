@@ -219,9 +219,8 @@ class PagesController < ApplicationController
     @title = "Organization Portal"
     @show_footer = true
     @hide_background = true
-    @group = Group.find_by_permalink(params[:permalink]) if params[:permalink]
-    @group = Group.find_by_permalink(params[:id]) if params[:id] && @group.nil?
-    @group = Group.find_by_id(params[:id]) if params[:id] && @group.nil?
+    @owned_groups = current_user.groups
+    @group = @owned_groups.first
     render "organization_portal"
   end
   

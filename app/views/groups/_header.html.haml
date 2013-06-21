@@ -1,10 +1,8 @@
 .header{ style: "border-bottom: 1px solid #DDD;" }
   .title
-    %img{ style:"display:inline; height:90px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
-    %span{ style: "font-size: 40px;position: relative;top:13px;" } #{@group.name} #{params[:action].capitalize}
+    = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
+    %span{ style: "font-size: 40px;position: relative;top:13px;" } #{@group.name} Account
+  
   .btn-group{ style: "text-align: right;" }
     = link_to "Page",  group_path(@group), class: "btn"
-    = link_to "Dashboard",  dashboard_group_path(@group), class: "btn"
     = link_to "Settings",  edit_group_path(@group), class: "btn"
-    = link_to "Evaluations",  group_evaluations_path(@group), class: "btn"
-    = link_to "Developer Sandbox",  sandbox_group_path(@group), class: "btn"

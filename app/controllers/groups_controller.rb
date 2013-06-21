@@ -96,7 +96,8 @@ class GroupsController < ApplicationController
     @email = params[:email] || current_user.email
   end
   
-  def group_challenge_index
+  def paths
+    @paths = @group.paths
   end
   
   private
