@@ -212,7 +212,7 @@ class PathsController < ApplicationController
   end
   
   def show
-    if @path.public_at.nil? && (current_user.nil? || @path.user != current_user)
+    if (@path.public_at.nil? and (current_user.nil? || @path.user != current_user)) or @path.group_id
       redirect_to root_path and return
     end
     

@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   before_filter :authenticate, only: [:create]
   
   def home
+    #raise current_user.employer?.to_s
     @title = "Home"
     @url_for_newsfeed 
     if current_user and not current_user.earned_points == 0

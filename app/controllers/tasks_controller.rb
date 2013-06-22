@@ -13,7 +13,7 @@ class TasksController < ApplicationController
     @task = @section.tasks.new(params[:task])
     @task.creator_id = current_user.id
     @task.answer_content = gather_answers(params[:task])
-    @task.approved_at = Time.now() if @task.group_id
+    @task.approved_at = Time.now() if @path.group_id
     
     if @task.save
       unless params[:stored_resource_id].blank?

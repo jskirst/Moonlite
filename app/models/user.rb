@@ -447,6 +447,10 @@ class User < ActiveRecord::Base
     return results
   end
   
+  def employer?
+    group_users.where(is_admin: true).count > 0
+  end
+  
   def send_test_alert(email_type = :interaction)
     Mailer.test_alert(self, email_type).deliver
   end
