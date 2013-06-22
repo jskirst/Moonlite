@@ -220,6 +220,8 @@ class PagesController < ApplicationController
     @title = "Organization Portal"
     @show_footer = true
     @hide_background = true
+    @owned_groups = current_user.groups
+    @group = @owned_groups.first
     render "organization_portal"
   end
   

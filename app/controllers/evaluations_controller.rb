@@ -112,7 +112,8 @@ class EvaluationsController < ApplicationController
   end
   
   def authorize_group
-    @group_user = @group.group_users.find_by_user_id(current_user.id)
-    raise "Access Denied: Not Group Admin" unless @group_user.is_admin?
+    unless @group.admin?(current_user) || @enable_administration
+      raise "Access Denied"
+    end
   end
 end

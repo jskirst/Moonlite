@@ -1,0 +1,20 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 943px; margin-top: 35px;}
+
+
+#employer.aboutcontainer
+  .aboutbox
+    = link_to "Create New Challenge", new_path_path, class: "button button-actionable", style: "float:right; margin-top: 5px"
+    %h1 #{@group.name} Challenges
+    %hr
+    %div{ style: "margin-bottom: 40px;" }
+      / Pretty sure this to_a isn't working
+      - if @group_paths.to_a.empty?
+        %p You haven't created any Challenges yet. #{link_to "Create one now.", "new_path_path"}
+      - else
+      %ul
+        %ul.inlinedisplay{ style: "height: inherit;" }
+          / Pretty sure this to_a isn't working
+          - @group_paths.to_a.each do |path|
+            = render "shared/mosaic", { pic: path.path_pic, link: edit_group_path_path(path.group_id, path.permalink), title: path.name, subtitle: "#{path.enrollments.size} users" }

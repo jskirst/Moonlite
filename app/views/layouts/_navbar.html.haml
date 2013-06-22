@@ -16,9 +16,13 @@
               %span Explore
           - if current_user.earned_points > 1500 
             %li.navitem{ title: "Create", style: "height: 100%;" }
-              = link_to create_path do
+              = link_to "/organization_portal" do
                 = image_tag NAVBAR_CREATE, style: "", alt: "Create"
                 %span Create
+              / This is commented out so we can have an easy route to the Portal
+              / = link_to create_path do
+              /   = image_tag NAVBAR_CREATE, style: "", alt: "Create"
+              /   %span Create
           %li.navitem{ title: "Profile", style: "height: 100%;" }
             = link_to profile_path(current_user.username) do
               = image_tag NAVBAR_PROFILE, alt: "Profile"  
