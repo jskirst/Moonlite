@@ -42,7 +42,7 @@ class Evaluation < ActiveRecord::Base
     return Task.joins("INNER JOIN sections on sections.id=tasks.section_id and sections.published_at is not NULL")
       .joins("INNER JOIN paths on paths.id=sections.path_id and paths.id = #{path.id}")
       .where("tasks.locked_at is NULL and tasks.reviewed_at is not NULL and answer_type in (?)", answer_types)
-      .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id)
+      .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id)
       .first
   end
 end
