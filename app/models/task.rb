@@ -16,7 +16,7 @@ class Task < ActiveRecord::Base
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
   attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name
-  attr_protected :section_id, :archived_at
+  attr_protected :section_id, :archived_at, :path_id
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
@@ -47,6 +47,7 @@ class Task < ActiveRecord::Base
   validates :question, length: { within: 1..1000 }
   validates_presence_of :section_id
   validates_presence_of :creator_id
+  validates_presence_of :path_id
   validates :answer_type, inclusion: { in: [0, 1, 2, 3] }
   validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
   validate :has_answers

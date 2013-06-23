@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130623123529) do
+ActiveRecord::Schema.define(:version => 20130623195556) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -121,17 +121,17 @@ ActiveRecord::Schema.define(:version => 20130623123529) do
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
 
-  create_table "evaluation_paths", :force => true do |t|
+  create_table "evaluation_enrollments", :force => true do |t|
     t.integer  "evaluation_id"
-    t.integer  "path_id"
+    t.integer  "user_id"
+    t.datetime "submitted_at"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
 
-  create_table "evaluation_users", :force => true do |t|
+  create_table "evaluation_paths", :force => true do |t|
     t.integer  "evaluation_id"
-    t.integer  "user_id"
-    t.datetime "submitted_at"
+    t.integer  "path_id"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
   end
@@ -376,6 +376,7 @@ ActiveRecord::Schema.define(:version => 20130623123529) do
     t.datetime "archived_at"
     t.text     "quoted_text"
     t.integer  "topic_id"
+    t.integer  "path_id"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

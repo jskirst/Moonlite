@@ -14,6 +14,7 @@ class TasksController < ApplicationController
     @task.creator_id = current_user.id
     @task.answer_content = gather_answers(params[:task])
     @task.reviewed_at = Time.now() if path.group_id
+    @task.path_id = path.id
     
     if @task.save
       unless params[:stored_resource_id].blank?
