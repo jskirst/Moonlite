@@ -4,7 +4,7 @@
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
         = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-      - if current_user and show_nav_bar and current_user.employer?
+      - if current_user and show_nav_bar and @group
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25;" }
           %li.navitem{ title: "Evaluations", style: "height: 100%; border-left: 1px solid #56698B;" }
             = link_to group_evaluations_path(@group) do
