@@ -42,7 +42,7 @@
 .navicons img { height:21px; margin-top:3px; }
 .navitem { border-right: 1px solid #020D25; border-left: 1px solid #56698B;}
 .navitem a { opacity:.8}
-.navitem a:hover { opacity: 1; position:relative; bottom:1px; background-color: rgba(255, 255, 255, .1); }
+.navitem a:hover { opacity: 1; position:relative; bottom:1px; }
 .navitem a:active { bottom:0px; background-color: rgba(0,0,0, .1);}
 .navicons li.nav_item:first-child a { border-left: 1px solid #444;}
 
