@@ -61,7 +61,6 @@ Metabright::Application.routes.draw do
       get :newsfeed
       get :dashboard
       get :sandbox
-      get :paths
     end
     
     resources :evaluations, path: "e" do
@@ -135,7 +134,6 @@ Metabright::Application.routes.draw do
   match '/mark_read' => 'pages#mark_read'
   match '/visit/:id' => 'pages#visit'
   match '/mark_help_read' => 'pages#mark_help_read'
-  match '/create' => 'pages#create'
   match '/explore', to: 'personas#explore'
   match '/about' => 'pages#about'
   match '/internship' => 'pages#internship'

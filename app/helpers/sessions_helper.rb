@@ -164,6 +164,11 @@ module SessionsHelper
           else
             @custom_style = nil
           end
+          
+          @group = Group.joins("INNER JOIN group_users on group_users.group_id=groups.id")
+            .where("group_users.user_id = ?", current_user.id)
+            .where("group_users.is_admin = ?", true)
+            .first
         end
       end
     end

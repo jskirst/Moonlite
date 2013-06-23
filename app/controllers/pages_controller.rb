@@ -157,11 +157,6 @@ class PagesController < ApplicationController
     render "start"
   end
   
-  def create
-    @title = "Create" 
-    @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
-  end
-  
   def mark_read
     current_user.user_events.unread.each{ |ue| ue.update_attribute(:read_at, Time.now) }
     render json: { status: "success" }

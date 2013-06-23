@@ -94,6 +94,10 @@ class EvaluationsController < ApplicationController
       @enrollment = current_user.enroll!(@path)
     end
     @task = @evaluation.next_challenge_task(current_user, @path)
+    @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
+    @submitted_answer = @completed_task.submitted_answer_id ? @completed_task.submitted_answer : SubmittedAnswer.new
+    
+    @stored_resource = @task.stored_resources.first
     
     unless @task
       redirect_to take_group_evaluation_path(@evaluation.permalink)

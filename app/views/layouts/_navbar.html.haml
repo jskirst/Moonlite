@@ -11,7 +11,7 @@
               = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
               %span Evaluations
           %li.navitem{ title: "Challenges", style: "height: 100%;" }
-            = link_to paths_group_path(@group) do
+            = link_to group_paths_url(@group) do
               = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
               %span Challenges
           - if current_user.earned_points > 1500 

@@ -5,7 +5,7 @@ class GroupsController < ApplicationController
   before_filter :load_resource
   before_filter :authorize_resource, only: [:edit, :update, :dashboard]
   
-  def show    
+  def show
     @title = "#{@group.name} Group"
     @users = @group.users.order "earned_points desc"
     @membership = @group.membership(current_user)

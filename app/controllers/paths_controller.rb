@@ -8,6 +8,14 @@ class PathsController < ApplicationController
   before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators, :style]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
+  def index
+    if @group
+      @paths = @group.paths
+    else
+      @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
+    end
+  end
+  
 # Begin Path Creation
   
   def new
