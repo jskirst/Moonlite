@@ -3,9 +3,10 @@
 
 #employer.aboutcontainer
   #create_evaluation.aboutbox{ style: "padding: 8px; "}
-    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
-      = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
-      %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" }= form_title
+    .header
+      = image_tag STONEY_SMALL_URL, alt: "Stoney"
+      %h2= form_title
+      %hr
       
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       - unless @evaluation.errors.empty?

@@ -65,8 +65,9 @@ Metabright::Application.routes.draw do
     
     resources :evaluations, path: "e" do
       member do
-        get :create_confirmation
+        get :review
         get :submit
+        get :grade
       end
     end
     
@@ -148,13 +149,6 @@ Metabright::Application.routes.draw do
   match '/tos' => 'pages#tos'
   match '/challenges' => 'pages#challenges'
   match '/preview' => 'pages#preview'
- 
-  # match '/evaluator/new' => 'evaluations#new'
-  # match '/evaluator/created' => 'evaluations#create_confirmation'
-  # match '/evaluator/take' => 'evaluations#take'
-  # match '/evaluator/submitted' => 'evaluations#take_confirmation'
-  # match '/evaluator/overview' => 'evaluations#overview'
-  # match '/evaluator/manager' => 'evaluations#manager'
 	
 	match '/stored_resources' => 'stored_resources#create', via: :post
 	match '/stored_resources' => 'stored_resources#create', via: :put

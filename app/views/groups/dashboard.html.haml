@@ -4,7 +4,7 @@
   .container .body { padding: 0; }
 
 #employer.aboutcontainer
-  .aboutbox
+  .aboutbox{ style: "padding: 0px 10px;" }
     = render "header"
     %div.notificationpanelbody
       %table.table.overview
@@ -33,14 +33,6 @@
       = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
       = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
       %table.table
-        %thead
-          %tr
-            %th Name
-            %th Email
-            %th Created
-            %th Questions Answered            
-            %th Points
-            %th Enrollments
         %tbody
           - @users.to_a.each do |u|
             %tr
@@ -48,10 +40,10 @@
               %td= truncate(u.email, length:25)
               %td= u.created_at.strftime("%m/%d/%Y")  
               - if @path
-                %td= @path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
-                %td= u.enrolled?(@path).total_points
+                %td #{@path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count} answers
+                %td #{u.enrolled?(@path).total_points} points
               - else            
-                %td= u.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
-                %td= u.earned_points
+                %td= #{u.completed_tasks.where("completed_tasks.user_id = ?", u.id).count} answers
+                %td= #{u.earned_points} points
               %td= u.enrollments.size
             
