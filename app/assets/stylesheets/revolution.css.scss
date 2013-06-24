@@ -1213,13 +1213,13 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         }
         
         .challenge_holder{
-          padding: 15px 3px; margin-top: 20px;
+          padding: 15px 3px; margin-top: 20px; text-align: center;
           
           .challenge_card {
             background-color: white; 
             text-align: center; 
             padding: 10px; 
-            margin-right: 35px; 
+            margin-right: 43px; 
             display: inline-block; 
             width: 180px; 
             height: 237px; 
@@ -1227,9 +1227,11 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
             vertical-align: top;
             
             &:nth-child(3){margin-right:0;}
+            &:nth-child(4){margin-top:30px; margin-left: 44px; }
+            &:nth-child(5){margin-top:30px;}
             
             img { height: 120px; width: 120px; margin-top:25px; }
-            h5 { border-bottom: 1px solid rgba(0,0,0,.1); margin: 15px; font-size: 16px; }
+            h5 { border-bottom: 1px solid rgba(0,0,0,.1); margin: 15px 5px; font-size: 16px; }
             button { margin-bottom: 10px; }
             div {font-size: 24px; color: $employer_green; margin-top: 23px;}
           }
