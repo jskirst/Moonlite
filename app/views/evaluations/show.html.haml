@@ -24,6 +24,7 @@
             - @paths.each do |p|
               %th= p.name
             %th Date Submitted
+            %th
         %tbody
           - @evaluations.each do |e|
             %tr
@@ -32,6 +33,7 @@
               - @paths.each do |p|
                 %td= e["e#{p.id}_metapercentile"]
               %td= time_ago_in_words(e.submitted_at)
+              %td= link_to "View Results", grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
           - if @evaluations.empty?
             %tr
               %td{ colspan: 4 } No one has taken this evaluation yet.

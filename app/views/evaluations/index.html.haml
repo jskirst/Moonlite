@@ -1,42 +1,48 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px;}
+  .aboutcontainer{ width: 900px; border-radius: 0px; margin-top: 35px; background-color: rgba(36, 72, 109, 0.8); }
+  .aboutbox{ min-height: 600px; border-radius: 0; }
+  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
+  .aboutbox .header hr { margin: 8px; }
+  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
+  .aboutbox table { width: 100%; }
+  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
+  .aboutbox table td a { font-size: 17px; color: #333; }
 
 
-#evaluations_overview.aboutcontainer
+.aboutcontainer
   .aboutbox
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
-      %span Evaluations Overview
+      %h2 Evaluations
+      %input{ type: "text", placeholder: "Search evaluations..."}
       %hr
     .body
-      .evaluations.green
+      .evaluations
         - if @open_evaluations.empty?
           %p 
             You don't have any open evaluations. 
             = link_to "Create one now.", new_group_evaluation_path(@group)
         - else
-          %table.table
-            %thead
-              %tr
-                %th Title
-                %th URL
-                %th Candidates
-                %th Last Submission
-                %th Settings
+          %table
             %tbody
               - @evaluations.to_a.each do |e|
                 %tr
                   %td= link_to e.title, group_evaluation_path(@group, e)
-                  %td= link_to take_group_evaluation_url(e.permalink), take_group_evaluation_url(e.permalink)
-                  %td= e.evaluation_enrollments.count
+                  %td= link_to take_group_evaluation_url(e.permalink), take_group_evaluation_url(e.permalink), style: "font-size: 12px;"
+                  %td= e.evaluation_enrollments.count.to_s + " users"
                   %td
                     - last_enrollment = e.evaluation_enrollments.order("evaluation_enrollments.submitted_at ASC").last
                     - if last_enrollment and last_enrollment.submitted_at
                       = time_ago_in_words(last_enrollment.submitted_at) + " ago"
-                  %td= link_to "Edit", edit_group_evaluation_path(@group, e)
+                  %td
+                    = link_to edit_group_evaluation_path(@group, e) do
+                      %img{ src: ICON_GEAR, style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
               %tr
-                %td{ colspan: "5" }= link_to "Create a new evaluation", new_group_evaluation_path(@group), style: "font-weight: bold;"
+                %td{ colspan: "5", style: "border-bottom: 0;" }
+                  = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations", style: "height: 27px; margin-top: -5px; padding: 5px;"
+                  = link_to "Create a new evaluation", new_group_evaluation_path(@group)
       - unless @closed_evaluations.empty?
         %h2{ style: "margin-top: 30px; "} Closed Evaluations
         .evaluations.orange

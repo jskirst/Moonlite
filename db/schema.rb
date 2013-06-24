@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130623195556) do
+ActiveRecord::Schema.define(:version => 20130624114404) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20130623195556) do
     t.integer  "enrollment_id"
     t.integer  "session_id"
     t.datetime "deleted_at"
+    t.datetime "graded_at"
   end
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"

@@ -1,7 +1,7 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
   before_filter :load_group, except: [:take, :continue, :challenge, :answer]
-  before_filter :load_evaluation, only: [:edit, :update]
+  before_filter :load_evaluation, only: [:edit, :update, :review, :grade]
   before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
   before_filter :prepare_form, only: [:new, :create, :edit, :update]
@@ -32,7 +32,7 @@ class EvaluationsController < ApplicationController
     @evaluation = @group.evaluations.new(params[:evaluation])
     @evaluation.user_id = current_user.id
     if @evaluation.save
-      redirect_to create_confirmation_group_evaluation_path(@group, @evaluation)
+      redirect_to review_group_evaluation_path(@group, @evaluation)
     else
       @title = "Create a new Evaluation"
       render "new"
@@ -55,8 +55,24 @@ class EvaluationsController < ApplicationController
     end
   end
   
-  def create_confirmation
-    @evaluation = current_user.authored_evaluations.find(params[:id])
+  def review
+  end
+  
+  def grade
+    @user = @evaluation.users.find(params[:u])
+    
+    @tasks_by_path = @evaluation.paths.to_a.collect do |path|
+      {
+        name: path.name,
+        tasks: @user.completed_tasks
+          .joins(:task)
+          .joins("LEFT JOIN submitted_answers on submitted_answers.id=completed_tasks.submitted_answer_id")
+          .select("tasks.*, completed_tasks.status_id, completed_tasks.answer, submitted_answers.*")
+          .where("tasks.path_id = ?", path.id)
+          .order("tasks.answer_type ASC")
+          .to_a
+      }
+    end
   end
   
   def take
