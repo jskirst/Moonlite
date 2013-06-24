@@ -60,14 +60,33 @@ class EvaluationsController < ApplicationController
   
   def grade
     @user = @evaluation.users.find(params[:u])
-    
-    @tasks_by_path = @evaluation.paths.to_a.collect do |path|
-      {
-        name: path.name,
-        completed_tasks: @user.completed_tasks.joins(:task)
+    @tasks_by_path = []
+    @evaluation.paths.each do |path|
+      core_tasks = @user.completed_tasks.joins(:task)
           .where("tasks.path_id = ?", path.id)
-          .order("tasks.answer_type DESC")
-          .to_a
+          .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
+      creative_tasks = @user.completed_tasks.joins(:task)
+          .where("tasks.path_id = ?", path.id)
+          .where("tasks.answer_type in (?)", [Task::CREATIVE]).to_a
+      
+      if core_tasks.size == 0
+        number_correct = 0
+        number_incorrect = 0
+        percent_correct = 0
+      else
+        number_correct = core_tasks.select{ |ct| ct.status_id == Answer::CORRECT }.size
+        number_incorrect = core_tasks.size - number_correct
+        percent_correct = (number_correct.to_f / core_tasks.size) * 100
+      end
+      
+      @tasks_by_path << { 
+        name: path.name, 
+        permalink: path.permalink, 
+        number_correct: number_correct,
+        number_incorrect: number_incorrect,
+        percent_correct: percent_correct,
+        core_tasks: core_tasks,
+        creative_tasks: creative_tasks
       }
     end
   end

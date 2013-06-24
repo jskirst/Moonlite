@@ -90,16 +90,3 @@
           - if evaluation_completed
             %div{ style: "text-align: center; margin-top: 12px; "}
               = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
-        
-    
-:javascript
-  $(function(){
-    $("#new_path").submit(function(){
-      if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
-        alert("You must provide an image and a name before you can create a Challenge.");
-        return false;
-      } else {
-        return true;
-      }
-    });
-  });

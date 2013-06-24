@@ -12,17 +12,23 @@
       %hr
     .body
       .evaluations
-        - @tasks_by_path.each do |path|
-          %h3= path[:name]
-          - path[:completed_tasks].each do |completed_task|
-            .answer
-              - task = completed_task.task
-              %h4= task.question
-              - if task.core?
-                - is_correct = completed_task.correct?
-                %p= is_correct ? "Correct" : "Incorrect"
-                %p= task.correct_answer.content # Correct answer
-                %p= completed_task.answer # User supplied answer
-                %p= completed_task.points_awarded
-              - if task.creative?
-                %pre= completed_task.submitted_answer.try(:content).to_s
+        - path = @tasks_by_path.first
+        %h3= path[:name]
+        - if path[:core_tasks].any?
+          %p Number correct: #{path[:number_correct]}
+          %p Number incorrect: #{path[:number_correct]}
+          %p Percent correct: #{path[:percent_correct].to_i}%
+        - path[:creative_tasks].each do |completed_task|
+          .answer
+            - task = completed_task.task
+            %h4= task.question
+            %pre= completed_task.submitted_answer.try(:content).to_s
+        - path[:core_tasks].each do |completed_task|
+          .answer
+            - task = completed_task.task
+            %h4= task.question
+            - is_correct = completed_task.correct?
+            %p= is_correct ? "Correct" : "Incorrect"
+            %p= task.correct_answer.content # Correct answer
+            %p= completed_task.answer # User supplied answer
+            %p= completed_task.points_awarded
