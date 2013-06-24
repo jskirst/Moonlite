@@ -10,7 +10,7 @@
       %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
         %h1{ style: "font-size: 46px;position: relative;top:5px;" } Evaluation Manager
         %h3{ style: "margin-top: 5px; "}= @evaluation.title
-    %div{ style: "margin-bottom: 8px; text-align: right;"}
+    %div{ style: "margin-bottom: 8px; text-align: right; margin-top: -15px;"}
       = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
       = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small"
     

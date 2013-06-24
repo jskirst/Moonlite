@@ -1,57 +1,57 @@
-%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
-  %span{ style: "font-size: 50px;position: relative;top:13px;" } Group API
-  = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
-  = link_to "Group API", sandbox_group_path(@group), class: "button button-standard button-small", style: "float: right; margin: 80px 10px 0 0;"
-  = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 10px 0 0;"
-  %hr{style:"margin:0;"}
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 900px; margin-top: 35px;}
+  .documentation { padding: 10px 20px; }
+  .documentation pre { font-family: Menlo, monospace; font-size: 14px; padding: 10px; margin: 20px 10px; }
+  #api_result h1 { font-size: 22px; }
+  #api_result img { width: 40px; height: 40px; margin: 10px; }
+  h3 { font-size: 22px; margin-bottom: 10px; }
   
-  :css
-    .documentation { padding: 10px 20px; }
-    .documentation pre { font-family: Menlo, monospace; font-size: 14px; padding: 10px; margin: 20px 10px; }
-    #api_result h1 { font-size: 22px; }
-    #api_result img { width: 40px; height: 40px; margin: 10px; }
-    h3 { font-size: 22px; margin-bottom: 10px; }
+#employer.aboutcontainer
+  .aboutbox
+    %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+    %span{ style: "font-size: 50px;position: relative;top:13px;" } Group API
+    %hr{style:"margin:0;"}
 
-  .documentation
-    %h3 Requesting User Data
-    %p 
-      The user request api is currently in beta, and allows you to pull basic user information as well as information on all the user's current public enrollments.
-      The API url is "http://www.metabright.com/groups/users" and must be supplied two arguments: the Group API Token and the email of the user you would like to request.
-      The user must be a member of your group to request this information.
+    .documentation
+      %h3 Requesting User Data
+      %p 
+        The user request api is currently in beta, and allows you to pull basic user information as well as information on all the user's current public enrollments.
+        The API url is "http://www.metabright.com/groups/users" and must be supplied two arguments: the Group API Token and the email of the user you would like to request.
+        The user must be a member of your group to request this information.
     
-    %h5{ style: "margin: 15px 15px;" } #{@group.name}'s API Token: #{@group.token}
+      %h5{ style: "margin: 15px 15px;" } #{@group.name}'s API Token: #{@group.token}
     
-    %p The request will return a single JSON object with the following fields:
-    %ul
-      %li email
-      %li name
-      %li username
-      %li 
-        <Array> challenges:
-        %ul
-          %li name
-          %li picture
-          %li metascore
-          %li percentile
+      %p The request will return a single JSON object with the following fields:
+      %ul
+        %li email
+        %li name
+        %li username
+        %li 
+          <Array> challenges:
+          %ul
+            %li name
+            %li picture
+            %li metascore
+            %li percentile
           
-    %h3 Code Sample
-    %p Below is a function that calls the API using a supplied email and group name. A slightly modified version of this code has been executed and displayed below.
-    %pre#code_sample= render "demo.js", { email: @email, group: @group }
+      %h3 Code Sample
+      %p Below is a function that calls the API using a supplied email and group name. A slightly modified version of this code has been executed and displayed below.
+      %pre#code_sample= render "demo.js", { email: @email, group: @group }
     
-    %div
-      .btn.dropdown.pull-right
-        %span{ data: { toggle: "dropdown" } }
-          Choose another user
-          %span.caret
-        %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dropdownMenu" }
-          - @group.users.each do |user|
-            %li
-              %a{ tabindex: "-1", href: sandbox_group_url(@group, email: user.email) }= user.name
+      %div
+        .btn.dropdown.pull-right
+          %span{ data: { toggle: "dropdown" } }
+            Choose another user
+            %span.caret
+          %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dropdownMenu" }
+            - @group.users.each do |user|
+              %li
+                %a{ tabindex: "-1", href: sandbox_group_url(@group, email: user.email) }= user.name
 
-      %h3 Sample API Call
+        %h3 Sample API Call
       
-      #api_result{ style: "padding: 15px;" }
+        #api_result{ style: "padding: 15px;" }
   
   
   
