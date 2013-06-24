@@ -53,9 +53,9 @@ class Evaluation < ActiveRecord::Base
   
   def next_task(user, path)
     type = [Task::MULTIPLE, Task::EXACT]
-    if completed_count(user, path, type) < 30
+    if completed_count(user, path, type) < 10
       task = next_task_of_type(user, path, type)
-      return next_task if next_task
+      return task if task
     end
     
     type = [Task::CREATIVE]
@@ -75,5 +75,15 @@ class Evaluation < ActiveRecord::Base
       .where("paths.id = ?", path.id)
       .where("tasks.answer_type in (?)", types)
       .count
+  end
+  
+  def user_status(user, path)
+    if completed_count(user, path, [Task::MULTIPLE, Task::EXACT, Task::CREATIVE]) == 0
+      return :start
+    elsif next_task(user, path)
+      return :continue
+    else
+      return :completed
+    end
   end
 end

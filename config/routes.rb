@@ -65,7 +65,6 @@ Metabright::Application.routes.draw do
     
     resources :evaluations, path: "e" do
       member do
-        get :take_confirmation
         get :create_confirmation
         get :submit
       end
@@ -74,7 +73,7 @@ Metabright::Application.routes.draw do
     resources :paths, path: "c"
   end
   get '/e/:evaluation_id/continue/:path_id' => 'evaluations#continue', as: "continue_evaluation"
-  get '/e/:evaluation_id/challenge/:path_id' => 'evaluations#challenge', as: "challenge_evaluation"
+  get '/e/:evaluation_id/continue/:path_id/:task_id' => 'evaluations#continue', as: "continue_task_evaluation"
   put '/e/:evaluation_id/answer/:task_id' => 'evaluations#answer', as: "answer_evaluation"
   get "/e/:permalink" => "evaluations#take", as: "take_group_evaluation"
 	
@@ -86,6 +85,7 @@ Metabright::Application.routes.draw do
       put :add_stored_resource
       put :archive
       put :complete
+      put :took
     end
   end
   get '/submissions/:id/raw' => "tasks#raw", as: "raw"

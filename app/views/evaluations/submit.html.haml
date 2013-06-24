@@ -58,12 +58,8 @@
                       %h4= truncate(path.name,length: 14, separator: ' ')
                       %h5 +#{path.tasks.count * 100} points
                 %div
-                  - if current_user
-                    = link_to intro_path(c: path.permalink) do
-                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
-                  - else                  
-                    = link_to challenge_url(path.permalink) do
-                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  = link_to challenge_url(path.permalink) do
+                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
       %h4{ style: "text-align: right; margin: 16px 62px 0px 0;"}
         = link_to "View more Challenges...", "#", class: "explore_link"
       

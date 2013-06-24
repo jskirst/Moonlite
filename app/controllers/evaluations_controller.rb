@@ -59,17 +59,35 @@ class EvaluationsController < ApplicationController
     @evaluation = current_user.authored_evaluations.find(params[:id])
   end
   
+  def take
+    @evaluation = Evaluation.find_by_permalink(params[:permalink])
+    if current_user
+      @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)
+      if @evaluation_enrollment.nil?
+        @evaluation.evaluation_enrollments.create!(user_id: current_user.id, evaluation_id: @evaluation.id)
+      elsif @evaluation_enrollment.submitted_at
+        redirect_to submit_group_evaluation_url(@group, @evaluation)
+      end
+    end
+    @group = @evaluation.group
+    unless current_user
+      cookies[:evaluation] = @evaluation.permalink
+    end
+  end
+  
   def continue
     @evaluation = Evaluation.find(params[:evaluation_id])
-    @path = @evaluation.paths.find_by_id(params[:path_id])
+    @path = @evaluation.paths.find(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
     end
     unless @evaluation_enrollment = current_user.enrolled?(@evaluation)
-      current_user.enroll!(@evaluation) unless current_user.enrolled?(@evaluation)
+      current_user.enroll!(@evaluation)
     end
     
-    @task = @evaluation.next_task(current_user, @path)
+    unless params[:task_id] and @task = @path.tasks.find(params[:task_id])
+      @task = @evaluation.next_task(current_user, @path)
+    end
 
     if @task
       @session_id = params[:session_id] || Time.now().to_i + current_user.id
@@ -77,7 +95,7 @@ class EvaluationsController < ApplicationController
       if @streak > @enrollment.longest_streak
         @enrollment.update_attribute(:longest_streak, @streak)
       end
-      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, enrollment_id: @enrollment.id, session_id: @session_id)
+      @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, session_id: @session_id)
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       if @task.core?
@@ -99,9 +117,11 @@ class EvaluationsController < ApplicationController
       redirect_to take_group_evaluation_path(@evaluation.permalink)
     end
   end
-
-  def take_confirmation
-    @evaluation = current_user.evaluations.find(params[:id])
+  
+  def submit
+    @evaluation_enrollment = current_user.evaluation_enrollments.find_by_evaluation_id(params[:id])
+    @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
+    @evaluation = @evaluation_enrollment.evaluation
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
   end
   

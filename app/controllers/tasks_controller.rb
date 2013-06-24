@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_filter :authenticate, except: [:raw, :complete]
   before_filter :load_resource, except: [:create, :raw]
-  before_filter :authorize_resource, except: [:vote, :report, :create, :raw, :complete]
+  before_filter :authorize_resource, except: [:vote, :report, :create, :raw, :complete, :took]
   
   respond_to :json, :html
   
@@ -104,6 +104,22 @@ class TasksController < ApplicationController
       answer: completed_task.answer, 
       correct: completed_task.correct? 
     }
+  end
+  
+  def took
+    task = Task.cached_find(params[:id])
+    raise "Access Denied: Task is currently locked." if task.locked_at
+    completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])
+    
+    publish = !(["draft", "preview"].include?(params[:mode]))
+    submitted_answer = completed_task.submitted_answer ||  task.submitted_answers.new
+    submitted_answer.submit!(completed_task, current_user, publish, params)
+    
+    if publish
+      redirect_to params[:submit_redirect_uri]
+    else
+      redirect_to params[:draft_redirect_uri]
+    end
   end
   
   def archive
