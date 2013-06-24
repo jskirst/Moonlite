@@ -12,10 +12,15 @@
       .evaluations
         - @tasks_by_path.each do |path|
           %h3= path[:name]
-          - path[:tasks].each do |task|
+          - path[:completed_tasks].each do |completed_task|
             .answer
+              - task = completed_task.task
               %h4= task.question
-              %p= task.status_id
-              %p= task.answer
-              - if task.answer_type == Task::CREATIVE
-                %p= task.content.to_s
+              - if task.core?
+                - is_correct = completed_task.correct?
+                %p= is_correct ? "Correct" : "Incorrect"
+                %p= task.correct_answer.content # Correct answer
+                %p= completed_task.answer # User supplied answer
+                %p= completed_task.points_awarded
+              - if task.creative?
+                %pre= completed_task.submitted_answer.try(:content).to_s

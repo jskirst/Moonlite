@@ -64,12 +64,9 @@ class EvaluationsController < ApplicationController
     @tasks_by_path = @evaluation.paths.to_a.collect do |path|
       {
         name: path.name,
-        tasks: @user.completed_tasks
-          .joins(:task)
-          .joins("LEFT JOIN submitted_answers on submitted_answers.id=completed_tasks.submitted_answer_id")
-          .select("tasks.*, completed_tasks.status_id, completed_tasks.answer, submitted_answers.*")
+        completed_tasks: @user.completed_tasks.joins(:task)
           .where("tasks.path_id = ?", path.id)
-          .order("tasks.answer_type ASC")
+          .order("tasks.answer_type DESC")
           .to_a
       }
     end
