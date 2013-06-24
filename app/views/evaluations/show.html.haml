@@ -5,13 +5,16 @@
 
 #evaluation_manager.aboutcontainer
   %div.aboutbox{ style: "background-color: white; border-radius: 4px; padding:8px;" }
-    = image_tag STONEY_SMALL_URL, style:"display:inline; height:115px;", alt: "Stoney"
-    %span{ style: "font-size: 50px;position: relative;top:13px;" } Evaluation Manager
+    %div{ style: "padding: 15px 15px 0 15px;"}
+      = image_tag GIANT_STONEY, style:"display:inline; height:85px;", alt: "Stoney"
+      %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
+        %h1{ style: "font-size: 46px;position: relative;top:5px;" } Evaluation Manager
+        %h3{ style: "margin-top: 5px; "}= @evaluation.title
+    %div{ style: "margin-bottom: 8px; text-align: right;"}
+      = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
+      = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small"
     
-    = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small", style: "float: right; margin: 80px 10px 0 0;"
-    = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
-    
-    %hr{style:"margin:0 0 20px 0;"}
+    %hr{style:"margin:0 0 12px 0;"}
     .body{ style: "padding: 0 12px;"}
       %table.table
         %thead
