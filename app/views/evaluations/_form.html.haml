@@ -1,13 +1,13 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutbox { border-radius: 0 0 10px 10px; }
+  .aboutbox { border-radius: 0; }
   .aboutcontainer { margin-top: 25px; width: 900px; }
 
 #employer.aboutcontainer
   #create_evaluation.aboutbox{ style: "padding: 8px; "}
     %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
-      = image_tag STONEY_SMALL_URL, style: "height: 75px; display: inline; vertical-align: middle; margin-top:-5px;", alt: "Stoney"
-      %h1{ style: "display: inline; vertical-align: middle; font-size:25px; position: relative; bottom: 3px;" }= form_title      
+      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
+      %h1.title= form_title      
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       - unless @evaluation.errors.empty?
         .alert.alert-error

@@ -861,6 +861,13 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 
 #employer {
   background: $employer_blue;
+  border-radius: 0;
+  
+  .aboutbox {
+    border-radius: 0;
+  }
+  .stoney {height: 75px; display: inline; vertical-align: middle; margin-top:-5px;}
+  .title { display: inline; vertical-align: middle; font-size:25px; position: relative; bottom: 3px;}
 }
 
 #employer_landing{
@@ -1222,7 +1229,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
             &:nth-child(3){margin-right:0;}
             
             img { height: 120px; width: 120px; margin-top:25px; }
-            h5 { border-bottom: 1px solid rgba(0,0,0,.1); margin: 15px; font-weight: bold; font-size: 16px; }
+            h5 { border-bottom: 1px solid rgba(0,0,0,.1); margin: 15px; font-size: 16px; }
             button { margin-bottom: 10px; }
             div {font-size: 24px; color: $employer_green; margin-top: 23px;}
           }
@@ -1330,12 +1337,14 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   background: $employer_blue;
   
   .aboutbox{
-    background-color: white; border-radius: 4px; padding:8px;
+    background-color: white; border-radius: 0; padding:8px;
     
     .header { 
-      img{ display:inline; height:115px; }
-      span { font-size: 50px;position: relative;top:13px; }
-      hr { margin:0 0 20px 0; }
+      padding: 15px 15px 0 15px;
+      
+      img{ display:inline; height:61px; }
+      span { font-size: 30px;position: relative;top:8px; }
+      hr { margin:10px 0; }
     }
     .body{
       padding: 0 12px;
@@ -1354,7 +1363,6 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   .body{
     table{
       th{
-        text-align: center;
         
         img{
           display: block;

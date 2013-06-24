@@ -1,6 +1,6 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px; border-radius: 0px; margin-top: 35px; background-color: rgba(36, 72, 109, 0.8); }
+  .aboutcontainer{ width: 900px; border-radius: 0px; margin-top: 25px; background-color: rgba(36, 72, 109, 0.8); }
   .aboutbox{ min-height: 600px; border-radius: 0; }
   .aboutbox .header img { height: 72px; margin-top: -15px; }
   .aboutbox .header h2 { display: inline-block; font-size: 30px; }
@@ -15,8 +15,8 @@
   .aboutbox
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
-      %h2 Evaluations
-      %input{ type: "text", placeholder: "Search evaluations..."}
+      %h2 Evaluations Manager
+      %input{ type: "text", placeholder: "Search Evaluations..."}
       %hr
     .body
       .evaluations
@@ -35,14 +35,13 @@
                   %td
                     - last_enrollment = e.evaluation_enrollments.order("evaluation_enrollments.submitted_at ASC").last
                     - if last_enrollment and last_enrollment.submitted_at
-                      = time_ago_in_words(last_enrollment.submitted_at) + " ago"
-                  %td
+                      = "Last submission " + time_ago_in_words(last_enrollment.submitted_at) + " ago"
+                  %td{ style: "padding: 15px 5px; width: 20px;"}
                     = link_to edit_group_evaluation_path(@group, e) do
-                      %img{ src: ICON_GEAR, style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
+                      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", style: "opacity: .8; height:20px; width:20px;", title:"Settings", alt: "Settings"}
               %tr
                 %td{ colspan: "5", style: "border-bottom: 0;" }
-                  = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations", style: "height: 27px; margin-top: -5px; padding: 5px;"
-                  = link_to "Create a new evaluation", new_group_evaluation_path(@group)
+                  = link_to "+ Create a new Evaluation", new_group_evaluation_path(@group)
       - unless @closed_evaluations.empty?
         %h2{ style: "margin-top: 30px; "} Closed Evaluations
         .evaluations.orange
