@@ -1,12 +1,4 @@
 :css
   .aboutcontainer{ border-radius: 0px; margin-top: 35px; background-color: rgba(36, 72, 109, 0.8); }
-  .aboutbox{ min-height: 600px; border-radius: 0; }
-  .aboutbox .header img { height: 72px; margin-top: -15px; }
-  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
-  .aboutbox .header hr { margin: 8px; }
-  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
-  .aboutbox table { width: 100%; }
-  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
-  .aboutbox table td a { font-size: 17px; color: #333; }
 
 = render "evaluations/form", { form_title: "New Evaluation", form_url: group_evaluations_url(@group), form_method: "post" }
