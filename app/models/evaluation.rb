@@ -12,7 +12,8 @@ class Evaluation < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
   
-  has_many :evaluation_users
+  has_many :evaluation_enrollments
+  has_many :users, through: :evaluation_enrollments
   has_many :evaluation_paths
   has_many :paths, through: :evaluation_paths
   
@@ -30,19 +31,59 @@ class Evaluation < ActiveRecord::Base
     self.permalink = SecureRandom.hex(6)
   end
   
-  after_create do
-    selected_paths.each do |id,checked|
-      evaluation_paths.create!(path_id: id)
+  after_save :update_evaluation_paths
+  
+  def update_evaluation_paths
+    return true if selected_paths.nil? or selected_paths.empty?
+    available_paths = (Persona.first.paths.to_a + group.paths.to_a).collect(&:id)
+    selected_ids = selected_paths.keys.map{ |id| id.to_i }
+    existing_ids = []
+    evaluation_paths.each do |ep|
+      existing_ids << ep.path_id
+      ep.destroy unless selected_ids.include?(ep.path_id)
     end
+    
+    selected_ids.each do |id|
+      raise "Access Denied: Unavailable Path [#{id}]" unless available_paths.include?(id)
+      evaluation_paths.create!(path_id: id) unless existing_ids.include?(id)
+    end 
+    
+    raise "No evaluations selected" unless evaluation_paths.count > 0
   end
   
-  def next_core_task(user, path) next_task(user, path, [Task::EXACT, Task::MULTIPLE]) end
-  def next_challenge_task(user, path) next_task(user, path, [Task::CREATIVE]) end
-  def next_task(user, path, answer_types)
-    return Task.joins("INNER JOIN sections on sections.id=tasks.section_id and sections.published_at is not NULL")
-      .joins("INNER JOIN paths on paths.id=sections.path_id and paths.id = #{path.id}")
+  def next_task(user, path)
+    type = [Task::MULTIPLE, Task::EXACT]
+    if completed_count(user, path, type) < 10
+      task = next_task_of_type(user, path, type)
+      return task if task
+    end
+    
+    type = [Task::CREATIVE]
+    if completed_count(user, path, type) < 5
+      return next_task_of_type(user, path, type)
+    end
+  end
+  def next_task_of_type(user, path, answer_types)
+    return Task.where("tasks.path_id = ?", path.id)
       .where("tasks.locked_at is NULL and tasks.reviewed_at is not NULL and answer_type in (?)", answer_types)
       .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id)
       .first
+  end
+  
+  def completed_count(user, path, types)
+    return user.completed_tasks.joins(:task => :path)
+      .where("paths.id = ?", path.id)
+      .where("tasks.answer_type in (?)", types)
+      .count
+  end
+  
+  def user_status(user, path)
+    if completed_count(user, path, [Task::MULTIPLE, Task::EXACT, Task::CREATIVE]) == 0
+      return :start
+    elsif next_task(user, path)
+      return :continue
+    else
+      return :completed
+    end
   end
 end

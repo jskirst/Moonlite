@@ -29,9 +29,9 @@ class PagesController < ApplicationController
     offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
-    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
-      .where("path_id in (?)", relevant_paths)
+      .where("paths.id in (?)", relevant_paths)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
@@ -67,7 +67,7 @@ class PagesController < ApplicationController
     
     if @current_user_persona
       @enrollments = @current_user_persona.enrollments.includes(:path).sort{ |a, b| b.total_points <=> a.total_points }
-      completed_tasks = CompletedTask.joins(:user, :task => [{ :section => :path }])
+      completed_tasks = CompletedTask.joins(:user, :task => :path)
         .joins("LEFT JOIN topics on tasks.topic_id = topics.id")
         .joins("LEFT JOIN submitted_answers on submitted_answers.id=completed_tasks.submitted_answer_id")
         .select(newsfeed_fields)

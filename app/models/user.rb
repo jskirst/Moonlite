@@ -51,7 +51,7 @@ class User < ActiveRecord::Base
   has_many    :owned_groups, through: :group_users, :conditions => { "group_users.is_admin" => true }
   has_many    :sent_emails
   has_many    :authored_evaluations, class_name: "Evaluation"
-  has_many    :evaluation_enrollments, class_name: "EvaluationUser"
+  has_many    :evaluation_enrollments
   has_many    :evaluations, through: :evaluation_enrollments
   
   validates :name, length: { within: 3..100 }
@@ -240,12 +240,22 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
   
-  def enrolled?(path) enrollments.find_by_path_id(path.id) end
+  def enrolled?(obj)
+    if obj.is_a? Path
+      enrollments.find_by_path_id(obj.id)
+    elsif obj.is_a? Evaluation
+      evaluation_enrollments.find_by_evaluation_id(obj.id)
+    else
+      raise "Unknown enrollment type."
+    end
+  end
   def enroll!(obj)
     if obj.is_a? Path
       enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
     elsif obj.is_a? Persona
       user_personas.create!(persona_id: obj.id) unless user_personas.find_by_persona_id(obj.id)
+    elsif obj.is_a? Evaluation
+      evaluation_enrollments.create!(evaluation_id: obj.id) unless evaluation_enrollments.find_by_evaluation_id(obj.id)
     else
       raise "Invalid object to enroll."
     end

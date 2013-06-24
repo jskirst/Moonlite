@@ -8,7 +8,7 @@
     = image_tag STONEY_SMALL_URL, style:"display:inline; height:115px;", alt: "Stoney"
     %span{ style: "font-size: 50px;position: relative;top:13px;" } Evaluation Manager
     
-    = link_to "Edit", edit_group_evaluations_path(@group, @evaluation), class: "button button-small", style: "float: right; margin: 80px 10px 0 0;"
+    = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small", style: "float: right; margin: 80px 10px 0 0;"
     = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
     
     %hr{style:"margin:0 0 20px 0;"}

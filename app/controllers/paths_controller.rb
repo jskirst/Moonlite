@@ -307,12 +307,12 @@ class PathsController < ApplicationController
     feed.votes = current_user.vote_list if current_user
     feed.page = params[:page].to_i
     offset = feed.page * 15
-    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
-      .where("path_id = ?", @path.id)
+      .where("paths.id = ?", @path.id)
     if params[:submission]
       feed.posts = feed.posts.where("submitted_answers.id = ?", params[:submission])
     else

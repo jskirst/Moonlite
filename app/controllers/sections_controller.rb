@@ -134,7 +134,6 @@ class SectionsController < ApplicationController
   end
   
   def took
-    #raise params.to_yaml
     task = Task.cached_find(params[:task_id])
     raise "Access Denied: Task is currently locked." if task.locked_at
     completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])

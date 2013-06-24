@@ -10,7 +10,6 @@
       %span Evaluations Overview
       %hr
     .body
-      %h2 Open Evaluations
       .evaluations.green
         - if @open_evaluations.empty?
           %p 
@@ -28,11 +27,14 @@
             %tbody
               - @evaluations.to_a.each do |e|
                 %tr
-                  %td= e.title
-                  %td= take_group_evaluation_url(e.permalink)
-                  %td= e.evaluation_users.count
-                  %td= e.evaluation_users.order("evaluation_users.submitted_at ASC").last
-                  %td= link_to "Manage", group_evaluation_path(@group, e)
+                  %td= link_to e.title, group_evaluation_path(@group, e)
+                  %td= link_to take_group_evaluation_url(e.permalink), take_group_evaluation_url(e.permalink)
+                  %td= e.evaluation_enrollments.count
+                  %td
+                    - last_enrollment = e.evaluation_enrollments.order("evaluation_enrollments.submitted_at ASC").last
+                    - if last_enrollment and last_enrollment.submitted_at
+                      = time_ago_in_words(last_enrollment.submitted_at) + " ago"
+                  %td= link_to "Edit", edit_group_evaluation_path(@group, e)
               %tr
                 %td{ colspan: "5" }= link_to "Create a new evaluation", new_group_evaluation_path(@group), style: "font-weight: bold;"
       - unless @closed_evaluations.empty?
