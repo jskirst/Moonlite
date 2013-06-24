@@ -1,12 +1,14 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 1050px;}
+  .aboutcontainer{ width: 900px; margin-top: 25px; border-radius: 0; }
 
 #evaluations_overview.aboutcontainer
   .aboutbox
     .header
-      = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
-      %span Evaluations Overview
+      = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
+      %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
+        %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @evaluation.title  
+        %h3{ style: "font-size:20px; "}= @user.name
       %hr
     .body
       .evaluations
