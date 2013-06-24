@@ -36,16 +36,16 @@
               = link_to "/auth/github", style: "display: inline-block; margin-left: 10px;", class: "button btn" do
                 = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
                 %span.landingbuttontext GitHub sign up »
-      .step
+      .step{ class: ("opaque" if current_user.country && current_user.state && current_user.city) }
         .img-circle
           %span 2
         .instructions
           %h4 Choose your Location
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
           %p Your location helps #{@evaluation.company} know if you're eligible for the position.
-          - if true
-            / current_user.country = nil or current_user.state = nil or current_user.city=nil
+          - if current_user.country.blank? or current_user.state.blank?
             = form_for current_user do |f|
+              = hidden_field_tag "redirect_uri", take_group_evaluation_url(@group, @evaluation)
               %div
                 %label Country
                 = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
@@ -57,7 +57,7 @@
                 = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
               = f.submit "Save", class: "button"
           - else 
-            / Location partial with stuff pre-selected (maybe undone opacity until user resubmits info)
+            %h5 Location saved as #{current_user.city}, #{current_user.country}
             
       .step
         .img-circle

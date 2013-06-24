@@ -252,7 +252,7 @@ class SectionsController < ApplicationController
   end
   
   def subregion_options
-    render partial: 'subregion_select', locals: { form: nil }
+    render partial: 'shared/subregion_select', locals: { form: nil }
   end
   
   private
