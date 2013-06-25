@@ -11,8 +11,8 @@
       %div{ style: "padding: 15px 15px 0 15px;"}
         = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
-          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " } Evaluation Overview
-          %h3{ style: "font-size:20px; "}= @evaluation.title
+          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @evaluation.title
+          %h3{ style: "font-size:20px; "} Evaluation Overview
       %div{ style: "margin-bottom: 8px; text-align: right; margin-top: -15px;"}
         = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
         = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small"
@@ -33,7 +33,7 @@
                 = link_to "#{e.name}", grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
               %td= e.email
               - @paths.each do |p|
-                %td= e["e#{p.id}_metapercentile"]
+                %td= e["e#{p.id}_total_points"]
               %td
                 - if e.submitted_at
                   #{time_ago_in_words(e.submitted_at)} ago

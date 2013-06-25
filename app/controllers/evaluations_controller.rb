@@ -20,13 +20,13 @@ class EvaluationsController < ApplicationController
   def show
     @evaluation = @group.evaluations.find(params[:id])
     @paths = @evaluation.paths
-    @evaluations = @evaluation.evaluation_enrollments.where("evaluation_enrollments.archived_at is ?", nil)
+    @evaluations = @evaluation.evaluation_enrollments.where("evaluation_enrollments.archived_at is ? and submitted_at is not ?", nil, nil)
       .joins(:user)
       .select("evaluation_enrollments.*, users.*")
     @paths.each do |p|
       e = "e#{p.id}"
       @evaluations = @evaluations.joins("LEFT JOIN enrollments #{e} on #{e}.user_id=evaluation_enrollments.user_id and #{e}.path_id=#{p.id}")
-      @evaluations = @evaluations.select("#{e}.metapercentile as #{e}_metapercentile, #{e}.metascore as #{e}_metascore")
+      @evaluations = @evaluations.select("#{e}.metapercentile as #{e}_total_points, #{e}.metapercentile as #{e}_metapercentile, #{e}.metascore as #{e}_metascore")
     end
   end
   
