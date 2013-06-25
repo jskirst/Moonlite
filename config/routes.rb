@@ -61,7 +61,10 @@ Metabright::Application.routes.draw do
       delete :leave      
       get :newsfeed
       get :dashboard
+      get :account
       get :sandbox
+      get :request_invite
+      post :invite
     end
     
     resources :evaluations, path: "e" do
