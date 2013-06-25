@@ -1,11 +1,19 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px; margin-top: 35px;}
+  .aboutcontainer{ width: 900px; margin-top: -30px; border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px;}
+  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
+  .aboutbox .header hr { margin: 8px; }
+  .documentation { padding: 10px 20px; }
   .container .body { padding: 0; }
 
 #employer.aboutcontainer
-  .aboutbox{ style: "padding: 0px 10px;" }
-    = render "header"
+  .aboutbox
+    .header
+      %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+      %h2 #{@group.name} Account Settings
+      
     %div.notificationpanelbody
       %table.table.overview
         %tr

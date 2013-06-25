@@ -19,10 +19,10 @@
               = link_to dashboard_group_path(@group) do
                 = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
                 %span Account
-          %li.navitem{ title: "API", style: "height: 100%;" }
+          %li.navitem{ title: "Developer", style: "height: 100%;" }
             = link_to sandbox_group_path(@group) do
-              = image_tag NAVBAR_API, alt: "API"  
-              %span API
+              = image_tag NAVBAR_API, alt: "Developer"  
+              %span Developer
           %li.navitem{"data-target" => "#more_nav", "data-toggle" => "collapse", :role => "button", title: "Expand", style: "height: 100%;" }
             = link_to "#" do
               = image_tag NAVBAR_VERTICAL_DOTS, alt: "Expand" 

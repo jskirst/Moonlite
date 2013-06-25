@@ -1,7 +1,20 @@
+:javascript
+  $(function(){
+    $("#results_list li:first").addClass("active");
+    $(".evaluation:first").show();
+    $("#results_list li").click(function(){
+      $(".evaluation").hide();
+      $("#"+$(this).data("permalink")).show();
+      $("#results_list li").removeClass("active");
+      $(this).addClass("active");
+    })
+  });
+
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .aboutcontainer{ width: 900px; margin-top: 25px; border-radius: 0; }
-
+  .header { margin: 0 0 20px 0; }
+  
 #evaluations_overview.aboutcontainer
   #grade.aboutbox
     .header
@@ -17,66 +30,68 @@
           = link_to "Unfavorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put, class: "button button-standard button-mini"
         - else
           = link_to "Archive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put, class: "button button-standard button-mini"
-          = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
-      %hr
+          = link_to "Favorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put, class: "button button-standard button-mini"
     .body        
+      - path = @results.first
+      %ul#results_list.nav.nav-tabs
+        - @results.each do |r|
+          %li{ data: { permalink: r[:permalink], name: r[:name] } }
+            %a= r[:name]
       .evaluations
-        - path = @tasks_by_path.first
-        %h3= path[:name]
-        .challenge_stats
-          .myrank
-            %span #
-            %p Percentile Rank
-          %table.table.overview
-            %tbody
-            %tr
-              %td
-                %h3 #{path[:number_correct]}/#{path[:number_correct]+path[:number_incorrect]}
-                %p Multiple Choice
-              %td
-                %h3 #{path[:percent_correct]}%
-                %p Percent correct
-              %td
-                %h3= path[:core_tasks].count
-                %p Creative Response
-              / if there are no tasks, then dont display
-              %td
-                %h3 *#*
-                %p Tasks
-              %td
-                %h3 *icon*
-                %p Favorite
-        %div
-          %a.header_link{ "data-target" => "#cr", "data-toggle" => "collapse", :type => "button"}  Creative Response
-          #cr.collapse.in{ style: "margin-bottom: 20px;"}
-            %ol
-              - path[:creative_tasks].each do |completed_task|
-                %li
-                  .answer
-                    - task = completed_task.task
-                    %p= task.question
-                    %pre= completed_task.submitted_answer.try(:content).to_s
-        - if path[:core_tasks].any?
-          %div
-            %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice
-            #mc.collapse
-              %ol
-                - path[:core_tasks].each do |completed_task|
-                  %li
-                    .answer
-                      - task = completed_task.task
-                      %p= task.question
-                      - if completed_task.correct?
-                        %span.label.label-success Correct, #{completed_task.points_awarded} points
-                      - else
-                        %span.label.label-important Incorrect
-                      %div{ style: "margin-top: 10px;"} 
-                        Correct answer:
-                        %pre= task.correct_answer.content # Correct answer
-                      - if not completed_task.correct?
-                        %div 
-                          User response:
-                          %pre= completed_task.answer # User supplied answer
+        - @results.each do |r|
+          .evaluation.hide{ id: r[:permalink] }
+            %h3= r[:name]
+            .challenge_stats
+              -# .myrank
+              -#   %span #
+              -#   %p Percentile Rank
+              %table.table.overview
+                %tbody
+                %tr
+                  %td
+                    %h3 #{r[:number_correct]}/#{r[:number_correct]+r[:number_incorrect]}
+                    %p Multiple Choice
+                  %td
+                    %h3 #{r[:percent_correct]}%
+                    %p Percent correct
+                  %td
+                    %h3= r[:creative].count
+                    %p Creative Response
+                  - if r[:tasks].any?
+                    %td
+                      %h3 *#*
+                      %p Tasks
+            %div
+              %a.header_link{ "data-target" => "#cr", "data-toggle" => "collapse", :type => "button"}  Creative Response
+              #cr.collapse.in{ style: "margin-bottom: 20px;"}
+                %ol
+                  - r[:creative].each do |completed_task|
+                    %li
+                      .answer
+                        - task = completed_task.task
+                        %p= task.question
+                        %pre= completed_task.submitted_answer.try(:content).to_s
+            - if r[:core].any?
+              %div
+                %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice
+                #mc.collapse
+                  %ol
+                    - r[:core].each do |completed_task|
+                      %li
+                        .answer
+                          - task = completed_task.task
+                          %p= task.question
+                          - if completed_task.correct?
+                            %span.label.label-success Correct, #{completed_task.points_awarded} points
+                          - else
+                            %span.label.label-important Incorrect
+                          %div{ style: "margin-top: 10px;"} 
+                            Correct answer:
+                            %pre= task.correct_answer.content # Correct answer
+                          - if not completed_task.correct?
+                            %div 
+                              User response:
+                              %pre= completed_task.answer # User supplied answer
         
                 
                 
