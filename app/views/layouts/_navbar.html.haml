@@ -1,6 +1,6 @@
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner{ style: "height: 100%;" }
-    %div{ style: "margin-left: 8%; height: 100%;" }
+    %div{ style: "margin-left: 7%; height: 100%;" }
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
         = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
@@ -58,7 +58,7 @@
       %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
         = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
       - if current_user and show_nav_bar
-        %ul.nav.pull-right{ style: "float:right; margin-right: 8%; " }
+        %ul.nav.pull-right{ style: "float:right; margin-right: 7%; " }
           - if current_user
             %li.navuser
               %div.dropdown.pull-right

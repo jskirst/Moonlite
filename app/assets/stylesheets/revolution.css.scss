@@ -1335,6 +1335,22 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   }
 }
 
+
+#evaluations_index {
+  .evaluations {
+    .challenge_img {
+      margin-right: 5px;
+    }
+    .gear {
+      opacity: .7; 
+      height:20px; 
+      width:20px;
+      
+      &:hover { opacity:1; }
+    }
+  }
+}
+
 #evaluations_overview{
   background: $employer_blue;
   
