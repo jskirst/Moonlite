@@ -1361,6 +1361,45 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   }
 }
 
+#grade {
+  .header{
+    
+  }
+  .body{
+    .evaluations{
+      .challenge_stats {
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        
+        .myrank{
+          margin-right: 20px;
+          top: 36px;
+        }
+        table {
+          display: inline-block;
+          width: auto;
+          vertical-align: top;
+        }
+      }
+      .header_link {
+        font-size: 18px;
+        
+        p {
+          font-size: 13px;
+        }
+      }
+      .collapse {
+        ol {
+          li {
+            margin-bottom: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
 #evaluation_manager{
   .body{
     table{
