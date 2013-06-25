@@ -2,6 +2,7 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .aboutcontainer{ width: 900px; border-radius: 0px; margin-top: 25px; background-color: rgba(36, 72, 109, 0.8); }
   .aboutbox{ min-height: 600px; border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px;}
   .aboutbox .header img { height: 72px; margin-top: -15px; }
   .aboutbox .header h2 { display: inline-block; font-size: 30px; }
   .aboutbox .header hr { margin: 8px; }
@@ -17,7 +18,6 @@
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
       %h2 Evaluations Manager
       %input{ type: "text", placeholder: "Search Evaluations..."}
-      %hr
     .body
       .evaluations
         - if @open_evaluations.empty?
@@ -27,10 +27,10 @@
         - else
           %table
             %tbody
-              - @evaluations.to_a.each do |e|
+              - @evaluations.to_a.reverse.each do |e|
                 %tr
                   %td= link_to e.title, group_evaluation_path(@group, e)
-                  %td= link_to take_group_evaluation_url(e.permalink), take_group_evaluation_url(e.permalink), style: "font-size: 12px;"
+                  %td= take_group_evaluation_url(e.permalink)
                   %td= e.evaluation_enrollments.count.to_s + " users"
                   %td
                     - last_enrollment = e.evaluation_enrollments.order("evaluation_enrollments.submitted_at ASC").last
