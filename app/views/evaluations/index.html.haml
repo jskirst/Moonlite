@@ -11,44 +11,41 @@
   .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
   .aboutbox table td a { font-size: 17px; color: #333; }
 
+:javascript
+  function compare_and_search(){
+    var new_value = $("#evaluation_search").val();
+    if(new_value != original_value){
+      original_value = new_value;
+      console.log("Running search");
+      $.ajax('#{group_evaluations_url(@group)}',
+        { 
+          type: "GET", 
+          data: { q: new_value }, 
+          success: function(data, responseText){ 
+            $(".evaluations").html(data);
+          } 
+        }
+      );
+    }
+  }
+  
+  $(function(){
+    original_value = $("#evaluation_search").val();
+    setInterval("compare_and_search();", 300);
+  });
 
 .aboutcontainer
   .aboutbox
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
       %h2 Evaluations Manager
-      %input{ type: "text", placeholder: "Search Evaluations..."}
+      %input{ type: "text", placeholder: "Search Evaluations...", id: "evaluation_search" }
     .body
       .evaluations
-        - if @open_evaluations.empty?
+        - if @evaluations.empty?
           %p 
             You don't have any open evaluations. 
             = link_to "Create one now.", new_group_evaluation_path(@group)
         - else
-          %table
-            %tbody
-              - @evaluations.to_a.reverse.each do |e|
-                %tr
-                  %td{ style: "width: 25%; overflow: hidden" }= link_to e.title, group_evaluation_path(@group, e)
-                  %td{ style: "width: 25%; overflow: hidden" }
-                    - e.paths.each do |path|
-                      %img{ src: path.picture, style: "width: 25px; height: 25px;" }
-                  %td{ style: "width: 25%; overflow: hidden" }= take_group_evaluation_url(e.permalink)
-                  %td{ style: "width: 10%; overflow: hidden" }= e.evaluation_enrollments.count.to_s + " users"
-                  %td{ style: "padding: 15px 5px; width: 20px;"}
-                    = link_to edit_group_evaluation_path(@group, e) do
-                      %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", style: "opacity: .8; height:20px; width:20px;", title:"Settings", alt: "Settings"}
-              %tr
-                %td{ colspan: "5", style: "border-bottom: 0;" }
-                  = link_to "+ Create a new Evaluation", new_group_evaluation_path(@group)
-      - unless @closed_evaluations.empty?
-        %h2{ style: "margin-top: 30px; "} Closed Evaluations
-        .evaluations.orange
-          %table.table
-            %thead
-              %tr
-                %th Title
-                %th URL
-                %th Candidates
-                %th Last Submission         
-                %th Settings
+          = render "table"
+              

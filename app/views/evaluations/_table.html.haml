@@ -1,0 +1,20 @@
+%table
+  %tbody
+    - @evaluations.to_a.reverse.each do |e|
+      %tr
+        %td{ style: "width: 25%; overflow: hidden" }= link_to e.title, group_evaluation_path(@group, e)
+        %td{ style: "width: 25%; overflow: hidden" }
+          - e.paths.each do |path|
+            %img{ src: path.picture, style: "width: 25px; height: 25px;" }
+        %td{ style: "width: 30%; overflow: hidden" }= take_group_evaluation_url(e.permalink)
+        %td= e.evaluation_enrollments.count.to_s + " users"
+        %td{ style: "padding: 15px 5px; width: 20px;"}
+          = link_to edit_group_evaluation_path(@group, e) do
+            %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", style: "opacity: .8; height:20px; width:20px;", title:"Settings", alt: "Settings"}
+    - if @evaluations.empty?
+      %tr
+        %td{ colspan: "5", style: "border-bottom: 0; font-size; 13px;" }
+          No evaluations with for that Title or Company found.
+    %tr
+      %td{ colspan: "5", style: "border-bottom: 0;" }
+        = link_to "+ Create a new Evaluation", new_group_evaluation_path(@group)

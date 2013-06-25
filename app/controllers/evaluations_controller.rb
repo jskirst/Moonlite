@@ -7,9 +7,14 @@ class EvaluationsController < ApplicationController
   before_filter :prepare_form, only: [:new, :create, :edit, :update]
 
   def index
-    @evaluations = @group.evaluations.all
-    @open_evaluations = @evaluations.select{ |e| e.closed_at.nil? }
-    @closed_evaluations = @evaluations.select{ |e| e.closed_at }
+    @evaluations = @group.evaluations
+    if params[:q]
+      @evaluations = @evaluations.where("company ILIKE ? or title ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%") unless params[:q].blank?
+      if request.xhr?
+        render partial: "evaluations/table"
+        return
+      end
+    end
   end
   
   def show
