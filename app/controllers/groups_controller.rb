@@ -1,9 +1,9 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper  
   
-  before_filter :authenticate, except: [:show, :newsfeed]
+  before_filter :authenticate, except: [:show, :newsfeed, :join]
   before_filter :load_resource
-  before_filter :authorize_resource, only: [:edit, :update, :dashboard]
+  before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   
   def show
     @title = "#{@group.name} Group"
@@ -67,6 +67,16 @@ class GroupsController < ApplicationController
     end
   end
   
+  def account
+    @users = @group.users
+    if params[:q]
+      @users = @group.users.where("name ILIKE ? or email ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+      if request.xhr?
+        render partial: "account_table"
+      end
+    end
+  end
+  
   def style
     @group_custom_style = @group.custom_style
     unless @group_custom_style
@@ -82,9 +92,22 @@ class GroupsController < ApplicationController
     end
   end
   
+  def invite
+    Mailer.invite_to_group(params[:email], @group, join_group_url(@group, token: @group.token)).deliver
+    flash[:success] = "Invite sent to #{params[:email]}"
+    redirect_to account_group_url(@group)
+  end
+  
   def join
-    @group.group_users.create! user: current_user
-    redirect_to @group
+    create_or_sign_in unless current_user
+    unless @group.group_users.find_by_user_id(current_user)
+      group_user = @group.group_users.new
+      group_user.user_id = current_user.id
+      group_user.is_admin = true if params[:token] and @group.token == params[:token]
+      group_user.save!
+      flash[:success] = "Welcome to MetaBright! Please fill in some details about yourself and set your account password before proceeding."
+    end
+    redirect_to edit_user_path(current_user.username) 
   end
   
   def leave

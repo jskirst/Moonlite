@@ -78,7 +78,8 @@ class UsersController < ApplicationController
         if params[:redirect_uri]
           redirect_to params[:redirect_uri]
         else
-          redirect_to profile_path(@user.username)
+          flash[:success] = "User account updated."
+          redirect_to edit_user_path(@user.username)
         end
       end
     else
