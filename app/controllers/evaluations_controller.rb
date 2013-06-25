@@ -68,33 +68,37 @@ class EvaluationsController < ApplicationController
   def grade
     @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(params[:u])
     @user = @evaluation_enrollment.user
-    @tasks_by_path = []
+    @results = []
     @evaluation.paths.each do |path|
-      core_tasks = @user.completed_tasks.joins(:task)
-          .where("tasks.path_id = ?", path.id)
-          .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
-      creative_tasks = @user.completed_tasks.joins(:task)
-          .where("tasks.path_id = ?", path.id)
-          .where("tasks.answer_type in (?)", [Task::CREATIVE]).to_a
+      core = @user.completed_tasks.joins(:task)
+        .where("tasks.path_id = ?", path.id)
+        .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
+      creative = @user.completed_tasks.joins(:task)
+        .where("tasks.path_id = ?", path.id)
+        .where("tasks.answer_type in (?)", [Task::CREATIVE]).to_a
+      tasks = @user.completed_tasks.joins(:task)
+        .where("tasks.path_id = ?", path.id)
+        .where("tasks.answer_type in (?)", [Task::CHECKIN]).to_a
       
-      if core_tasks.size == 0
+      if core.size == 0
         number_correct = 0
         number_incorrect = 0
         percent_correct = 0
       else
-        number_correct = core_tasks.select{ |ct| ct.status_id == Answer::CORRECT }.size
-        number_incorrect = core_tasks.size - number_correct
-        percent_correct = (number_correct.to_f / core_tasks.size) * 100
+        number_correct = core.select{ |ct| ct.status_id == Answer::CORRECT }.size
+        number_incorrect = core.size - number_correct
+        percent_correct = ((number_correct.to_f / core.size) * 100).to_i
       end
       
-      @tasks_by_path << { 
+      @results << { 
         name: path.name, 
         permalink: path.permalink, 
         number_correct: number_correct,
         number_incorrect: number_incorrect,
         percent_correct: percent_correct,
-        core_tasks: core_tasks,
-        creative_tasks: creative_tasks
+        core: core,
+        creative: creative,
+        tasks: tasks
       }
     end
   end
