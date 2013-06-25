@@ -53,13 +53,13 @@ class Evaluation < ActiveRecord::Base
   
   def next_task(user, path)
     type = [Task::MULTIPLE, Task::EXACT]
-    if completed_count(user, path, type) < 10
+    if path.group_id.nil? or completed_count(user, path, type) < 30
       task = next_task_of_type(user, path, type)
       return task if task
     end
     
     type = [Task::CREATIVE]
-    if completed_count(user, path, type) < 5
+    if path.group_id.nil? or completed_count(user, path, type) < 5
       return next_task_of_type(user, path, type)
     end
   end

@@ -7,10 +7,19 @@
     .header
       = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
       %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
-        %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @evaluation.title  
-        %h3{ style: "font-size:20px; "}= @user.name
+        %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
+        %h3{ style: "font-size:20px; "}= @evaluation.title
+      .actions{ style: "float: right;" }
+        = link_to "Back", group_evaluation_url(@group, @evaluation), class: "button button-standard button-mini"
+        - if @evaluation_enrollment.archived_at
+          = link_to "Unarchive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put, class: "button button-standard button-mini"
+        - elsif @evaluation_enrollment.favorited_at
+          = link_to "Unfavorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put, class: "button button-standard button-mini"
+        - else
+          = link_to "Archive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put, class: "button button-standard button-mini"
+          = link_to "Favorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put, class: "button button-standard button-mini"
       %hr
-    .body
+    .body        
       .evaluations
         - path = @tasks_by_path.first
         %h3= path[:name]

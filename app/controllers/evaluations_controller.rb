@@ -1,7 +1,7 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
-  before_filter :load_group, except: [:take, :continue, :challenge, :answer]
-  before_filter :load_evaluation, only: [:edit, :update, :review, :grade]
+  before_filter :load_group, except: [:take, :continue, :challenge, :answer, :save]
+  before_filter :load_evaluation, only: [:edit, :update, :review, :grade, :save]
   before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
   before_filter :prepare_form, only: [:new, :create, :edit, :update]
@@ -20,7 +20,9 @@ class EvaluationsController < ApplicationController
   def show
     @evaluation = @group.evaluations.find(params[:id])
     @paths = @evaluation.paths
-    @evaluations = @evaluation.evaluation_enrollments.joins(:user).select("evaluation_enrollments.*, users.*")
+    @evaluations = @evaluation.evaluation_enrollments.where("evaluation_enrollments.archived_at is ?", nil)
+      .joins(:user)
+      .select("evaluation_enrollments.*, users.*")
     @paths.each do |p|
       e = "e#{p.id}"
       @evaluations = @evaluations.joins("LEFT JOIN enrollments #{e} on #{e}.user_id=evaluation_enrollments.user_id and #{e}.path_id=#{p.id}")
@@ -64,7 +66,8 @@ class EvaluationsController < ApplicationController
   end
   
   def grade
-    @user = @evaluation.users.find(params[:u])
+    @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(params[:u])
+    @user = @evaluation_enrollment.user
     @tasks_by_path = []
     @evaluation.paths.each do |path|
       core_tasks = @user.completed_tasks.joins(:task)
@@ -94,6 +97,24 @@ class EvaluationsController < ApplicationController
         creative_tasks: creative_tasks
       }
     end
+  end
+  
+  def save
+    mode = params[:mode]
+    time = Time.now()
+    ee = @evaluation.evaluation_enrollments.find_by_user_id(params[:user_id])
+    if mode == "favorite"
+      ee.update_attribute(:favorited_at, time)
+    elsif mode == "unfavorite"
+      ee.update_attribute(:favorited_at, nil)
+    elsif mode == "archive"
+      ee.update_attribute(:archived_at, time)
+    elsif mode == "unarchive"
+      ee.update_attribute(:archived_at, nil)
+    else
+      raise "Access Denied: Unknown mode[#{params[:mode]}]"
+    end
+    redirect_to grade_group_evaluation_url(@group, @evaluation, u: params[:user_id])
   end
   
   def take

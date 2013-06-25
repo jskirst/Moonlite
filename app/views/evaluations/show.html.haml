@@ -21,10 +21,10 @@
         %thead
           %tr
             %th Name
-            %th Email
             - @paths.each do |p|
               %th= p.name
-            %th Date Submitted
+            %th Submitted
+            %th
         %tbody
           - @evaluations.each do |e|
             %tr
@@ -36,6 +36,9 @@
               %td
                 - if e.submitted_at
                   #{time_ago_in_words(e.submitted_at)} ago
+              %td
+                - if e.favorited_at
+                  %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_lime.png", style: "width: 15px; height: 15px; margin-top: -3px;" }
           - if @evaluations.empty?
             %tr
               %td{ colspan: 4 } No one has taken this evaluation yet.
