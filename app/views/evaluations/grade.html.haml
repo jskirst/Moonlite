@@ -17,7 +17,7 @@
           = link_to "Unfavorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put, class: "button button-standard button-mini"
         - else
           = link_to "Archive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put, class: "button button-standard button-mini"
-          = link_to "Favorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put, class: "button button-standard button-mini"
+          = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
       %hr
     .body        
       .evaluations
