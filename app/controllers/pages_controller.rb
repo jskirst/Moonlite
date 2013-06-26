@@ -54,11 +54,11 @@ class PagesController < ApplicationController
   
   def profile
     @user = User.find_by_username(params[:username])
-    @user_custom_style = @user.custom_style
     if @user.nil? || @user.locked? 
       redirect_to root_path
       return
     end
+    @user_custom_style = @user.custom_style
     
     @user_personas = @user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }
     if params[:p].blank?
