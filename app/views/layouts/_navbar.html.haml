@@ -2,8 +2,7 @@
   %div.fill.navbar-inner{ style: "height: 100%;" }
     %div{ style: "margin-left: 6%; height: 100%;" }
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
-        - home_page = @group.nil? ? root_url : group_evaluations_url(@group)
-        = link_to home_page do
+        = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       - if current_user and show_nav_bar and @group
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25;" }

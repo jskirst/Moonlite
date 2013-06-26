@@ -55,8 +55,8 @@ class SessionsController < ApplicationController
   
   def create
     if create_or_sign_in
-      if session[:redirect_back_to]
-        redirect_to session[:redirect_back_to]
+      if place_to_go_back_to?
+        redirect_back
       elsif session[:referer]
         path = Path.find_by_id(session[:referer])
         session[:referer] = nil

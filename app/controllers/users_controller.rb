@@ -74,11 +74,12 @@ class UsersController < ApplicationController
       if request.xhr?
         render json: { status: "success" }
       else
-        flash[:success] = "Profile successfully updated."
+        flash[:success] = "User account updated."
         if params[:redirect_uri]
           redirect_to params[:redirect_uri]
+        elsif place_to_go_back_to?
+          redirect_back
         else
-          flash[:success] = "User account updated."
           redirect_to edit_user_path(@user.username)
         end
       end
@@ -89,6 +90,8 @@ class UsersController < ApplicationController
         flash[:error] = @user.errors.full_messages.join(". ")
         if params[:redirect_uri]
           redirect_to params[:redirect_uri]
+        elsif place_to_go_back_to?
+          redirect_back
         else
           redirect_to profile_path(@user.username)
         end

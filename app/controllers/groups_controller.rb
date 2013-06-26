@@ -11,7 +11,7 @@ class GroupsController < ApplicationController
     @membership = @group.membership(current_user)
     @url_for_newsfeed = newsfeed_group_path(@group, order: params[:order])
     @suggested_paths = Path.suggested_paths(current_user)
-    session[:redirect_back_to] = root_url unless current_user
+    set_return_back_to(root_url) unless current_user
     render "show"
   end
   
@@ -105,9 +105,9 @@ class GroupsController < ApplicationController
       group_user.user_id = current_user.id
       group_user.is_admin = true if params[:token] and @group.token == params[:token]
       group_user.save!
-      flash[:success] = "Welcome to MetaBright! Please fill in some details about yourself and set your account password before proceeding."
     end
-    redirect_to edit_user_path(current_user.username) 
+    set_return_back_to(join_group_url(@group))
+    render "pages/portal"
   end
   
   def leave
