@@ -8,14 +8,14 @@
 #evaluation_manager.aboutcontainer
   %div.aboutbox{ style: "background-color: white; padding:8px;" }
     .header
+      %div{ style: "float: right; margin: 10px 10px 0 0;" }
+        = link_to "Back", group_evaluations_path(@group), class: "button button-standard button-small"
+        = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
       %div{ style: "padding: 15px 15px 0 15px;"}
         = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
           %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @evaluation.title
           %h3{ style: "font-size:20px; "} Evaluation Overview
-      %div{ style: "margin-bottom: 8px; text-align: right; margin-top: -15px;"}
-        = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
-        = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small"
 
     .body{ style: "padding: 0 12px;"}
       %table.table
@@ -25,6 +25,7 @@
             - @paths.each do |p|
               %th= p.name
             %th Submitted
+            %th{ style: "text-align: right;" }
             %th
         %tbody
           - @evaluations.each do |e|
