@@ -19,12 +19,12 @@
     .body{ style: "padding: 0 12px;"}
       %table.table
         %thead
-          %tr
+          %tr{ style: "border-bottom: 1px solid rgba(0, 0, 0, .1);"}
             %th Name
             %th Email
             - @paths.each do |p|
-              %th
-                = p.name
+              %th{ title: p.name }
+                = truncate(p.name, length: 10, separator: ' ')
                 
                 / If custom challenge and <10 ppl have enrolled, then...
                 / %div.hint.hint--left{ data: {hint: "Percentile info not yet available. At least 10 people must complete this Challenge."} }
@@ -51,4 +51,4 @@
                   %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_lime.png", style: "width: 15px; height: 15px; margin-top: -3px;" }
           - if @evaluations.empty?
             %tr
-              %td{ colspan: 4 } No one has taken this evaluation yet.
+              %td{ colspan: 4, style: "border-top: none;" } No one has taken this evaluation yet.

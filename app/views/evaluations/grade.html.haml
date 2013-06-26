@@ -78,7 +78,7 @@
                         %pre= completed_task.submitted_answer.try(:content).to_s
             - if r[:core].any?
               %div
-                %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice
+                %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice (click to expand)
                 #mc.collapse
                   %ol
                     - r[:core].each do |completed_task|
