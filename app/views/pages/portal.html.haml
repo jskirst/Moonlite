@@ -5,7 +5,7 @@
   #organization_portal.aboutbox{ style: "padding: 8px;"}
     .header{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 72px; display: inline; vertical-align: middle", alt: "Stoney"
-      %h1{ style: "display: inline; vertical-align: middle; font-size:25px;" } Organization Portal
+      %h1{ style: "display: inline; vertical-align: middle; font-size:25px;" }= @group.name
     .body
       - if current_user.guest_user?
         :javascript

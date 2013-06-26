@@ -387,8 +387,10 @@ class PathsController < ApplicationController
     def load_group
       if params[:group_id]
         @group = current_user.groups.where(id: params[:group_id]).first
+        raise "Access Denied: Not a group member." unless @group
       elsif @path and @path.group_id
         @group = current_user.groups.where(id: @path.group_id).first
+        raise "Access Denied: Not a group member." unless @group
       end
     end
     

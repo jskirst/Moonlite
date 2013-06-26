@@ -42,11 +42,6 @@ class Path < ActiveRecord::Base
     end
   end
   
-  def after_intialize
-    self.group_id ||= nil
-    rescue ActiveRecord::MissingAttributeError 
-  end
-  
   after_create { user.enroll!(self) }
   before_validation :grant_permalink
   after_save do
