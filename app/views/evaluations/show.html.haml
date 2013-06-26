@@ -25,7 +25,13 @@
             - @paths.each do |p|
               %th
                 = p.name
-                %img.hint--top{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;", "data-hint" =>"These are the percentile rankings for your candidates"}
+                
+                / If custom challenge and <10 ppl have enrolled, then...
+                / %div.hint.hint--left{ data: {hint: "Percentile info not yet available. At least 10 people must complete this Challenge."} }
+                /   %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;"}
+                
+                %div.hint.hint--left{ data: {hint: "These are the percentile rankings for your candidates."} }
+                  %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;"}
                   
             %th Submitted
             %th{ style: "text-align: right;" }
