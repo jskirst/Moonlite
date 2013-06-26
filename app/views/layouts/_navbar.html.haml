@@ -2,9 +2,47 @@
   %div.fill.navbar-inner{ style: "height: 100%;" }
     %div{ style: "margin-left: 8%; height: 100%;" }
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
-        = link_to root_url do
+        - home_page = @group.nil? ? root_url : group_evaluations_url(@group)
+        = link_to home_page do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-      - if current_user and show_nav_bar
+      - if current_user and show_nav_bar and @group
+        %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25;" }
+          %li.navitem{ title: "Evaluations", style: "height: 100%; border-left: 1px solid #56698B;" }
+            = link_to group_evaluations_path(@group) do
+              = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
+              %span Evaluations
+          %li.navitem{ title: "Challenges", style: "height: 100%;" }
+            = link_to group_paths_url(@group) do
+              = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
+              %span Challenges
+          - if @group.is_private?
+            %li.navitem{ title: "Account", style: "height: 100%;" }
+              = link_to account_group_path(@group) do
+                = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
+                %span Account
+          - else
+            %li.navitem{ title: "Dashboard", style: "height: 100%;" }
+              = link_to dashboard_group_path(@group) do
+                = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
+                %span Dashboard
+          %li.navitem{ title: "Developer", style: "height: 100%;" }
+            = link_to sandbox_group_path(@group) do
+              = image_tag NAVBAR_API, alt: "Developer"  
+              %span Developer
+          %li.navitem{"data-target" => "#more_nav", "data-toggle" => "collapse", :role => "button", title: "Expand", style: "height: 100%;" }
+            = link_to "#" do
+              = image_tag NAVBAR_VERTICAL_DOTS, alt: "Expand" 
+          #more_nav.collapse
+            %div{ style: "width: 201px; height: 100%"}
+              %li.navitem{ title: "Explore", style: "float: left; height: 100%" }
+                %a.explore_link{ style: "display: block;" }
+                  = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
+                  %span Explore
+              %li.navitem{ title: "Profile", style: "float: left; height: 100%;" }
+                = link_to profile_path(current_user.username), style: "display: block;" do
+                  = image_tag NAVBAR_PROFILE, alt: "Profile"  
+                  %span Profile
+      - elsif current_user and show_nav_bar
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
           %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
             = link_to root_url do
@@ -101,7 +139,7 @@
       - if current_user.nil? && show_sign_in
         %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
           - unless current_user           
-            %li 
+            %li{ style: "margin-top: 4px;"} 
               = link_to "Employer? We can turbocharge your recruiting.", "/employers", class: "employers_link"
           %li
             %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in

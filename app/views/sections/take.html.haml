@@ -11,17 +11,19 @@
         = image_tag @path.path_pic, alt: "#{@path.name}"
         %div{ style: "display:inline-block;" }
           %span
-            %strong #{@path.name}:
-            = @section.name
+            %strong #{@path.name}
       
       %div{ style: "text-align:center;" }
-        = render "stored_resource", { stored_resource: @stored_resource }
+        = render "tasks/stored_resource", { stored_resource: @stored_resource }
       
       - if @task.text?
         = render "tasks/take_text", f: f
-      - elsif @task.image?
-        = render "tasks/take_image", f: f
-      - elsif @task.youtube?
-        = render "tasks/take_youtube", f: f
-      - elsif @task.task?
-        = render "tasks/take_task", f: f
+        = render "tasks/submit_text", f: f
+      - else
+        - if @task.image?
+          = render "tasks/take_image", f: f
+        - elsif @task.youtube?
+          = render "tasks/take_youtube", f: f
+        - elsif @task.task?
+          = render "tasks/take_task", f: f
+        = render "tasks/submit", f: f

@@ -38,7 +38,7 @@
           = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
         %div
           %label State/Province
-          = render "sections/subregion_select", { form: f }
+          = render "shared/subregion_select", { form: f }
         %div{ style: "margin-right: 0;"}
           %label City
           = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
@@ -47,4 +47,4 @@
       %div.control-group
         %div.controls
         = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
-        = link_to "Cancel", profile_path(@user.username), class: "button button-standard", style: "float: right;"
+        = link_to "Back", profile_path(@user.username), class: "button button-standard", style: "float: right;"

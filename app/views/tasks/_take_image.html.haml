@@ -23,13 +23,7 @@
       %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
         %span.text Add caption
       = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; width: 97%; display: none; margin: 0;", placeholder: "Caption will appear immediately below your response..."
-
-%div.CRbuttonspace
-  = link_to "Back", challenge_path(@section.path.permalink, completed: true), class: "button button-standard", style: "float: left;"
-  %a.arena_report_link{ style: "position:relative; top:8px; margin-left:10px; text-decoration:none;"} Report this question
-  = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
-  = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
-      
+     
 :javascript  
   $("input[name=stored_resource_id]").change(function(){
     $("input[name=image_url]").val($("#image_preview").attr("src"));

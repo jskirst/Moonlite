@@ -1,34 +1,21 @@
-- @code = "alkdjsf;lkajsdf"
-- @enrollment ||= @path.enrollments.new
-- @section ||= @path.next_section
-- @task ||= @section.next_task
-- @answers ||= @task.answers
-- @question_count ||= 0
-- @streak ||= 0
-- @start_countdown = true if @start_countdown.nil?
-- @show_stats = true if @show_stats.nil?
-- @next_text ||= "Next"
-- @next_link ||= continue_section_path(@section.id, @session_id)
-
 %div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'} #{'width: inherit;' unless @show_stats}" }
   = render "modals/report_issue"
   %div.quizspace
-    - if 
-      :javascript
-        $(function(){
-          $.MB.Arena.init({start_countdown: #{@start_countdown}});
-          $(".quizcontainer").fadeIn();
-        });
+    :javascript
+      $(function(){
+        $.MB.Arena.init({start_countdown: #{@start_countdown}});
+        $(".quizcontainer").fadeIn();
+      });
      
     %div.quizheader
       = image_tag @path.path_pic, style: "width: 50px; height: 50px;", alt: "#{@path.name}"
       %div{ style: "display:inline-block;" }
-        %span.name <strong>#{@path.name}:</strong> #{@section.name}</span>
-      - if current_user
+        %span.name <strong>#{@path.name}:</strong>
+      - if current_user and @question_count and @session_total
         %div.quiz_progress
           Question #{@question_count} / #{@session_total}
     %div{ style: "text-align:center;" }
-      = render "sections/stored_resource", { :stored_resource => @stored_resource }
+      = render "tasks/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
       %div.questionspace
         %pre.CRquestion= @task.question
@@ -36,29 +23,28 @@
         %pre{ style: "margin: 10px 0 0 0; border: none; border-radius: none; background-color: rgb(249, 249, 249); " }
           = @task.quoted_text
         %hr{ style: "margin: 12px auto; width: 35%; border: 0; border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff;" }
-      %div.responsespace
-        = form_tag(complete_section_path(@section.id), :remote => true, :method => "put", :id => "challenge_form") do
-          = hidden_field_tag :task_id, @task.id
+      %div.responsespace{ data: { type: @task.answer_type } }
+        = form_tag(complete_task_path(@task.id), :remote => true, :method => "put", :id => "challenge_form") do
           = hidden_field_tag :points_remaining, 100
-          = hidden_field_tag :streak, @streak
+          = hidden_field_tag :streak, @streak.to_i
           
           - if @task.multiple_choice?
             %ol{ style: "list-style-position: inside; margin-left: 0px;" }
               - @answers.each do |a|
-                %li.answer_content{ id: "answer_#{a.id}" }
-                  = radio_button_tag :answer, a.id, false, style: "display: none;"
+                %li.answer_content{ data: { answer: a.content } }
+                  = radio_button_tag :answer, a.content, false, style: "display: none;"
                   %span= a.content
           - elsif @task.exact?
             .control-group
               .controls
-                = text_field_tag "answer_exact", nil, placeholder: "Enter exact answer here...", class: "answer_feedback"
+                = text_field_tag "answer", nil, placeholder: "Enter exact answer here...", class: "answer_feedback"
                 %span.match_status_text
                 %p.match_status_exp
             .control-group
               .controls
                 = submit_tag "Submit", id: "submit_exact", class: "button button-info"
             
-        = link_to @next_text, @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
+        = link_to (@next_text || "Next"), @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
     
     - if @show_stats
       %div{ style: "display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 261px; margin-left: 28px;" }
@@ -69,7 +55,8 @@
         %div.pointsandstreakspace
           %div.pointspace.counterbox
             %span.counter{style: "display:block"}
-              - earned_points_digits = @enrollment.total_points.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
+              - total_points = @enrollment ? @enrollment.total_points.to_s : "0"
+              - earned_points_digits = total_points.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
               - earned_points_digits.each do |d|
                 %span.digit
                   %span{ title: "#{d}" }= d
@@ -77,7 +64,7 @@
             %span Points
           %div.streakspace.counterbox
             %span.counter
-              - streak = @streak.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
+              - streak = @streak.to_i.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
               - streak.each do |s|
                 %span.digit
                   %span{ title: s }= s

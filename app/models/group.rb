@@ -1,4 +1,9 @@
 class Group < ActiveRecord::Base
+  PUBLIC = 0
+  TRIAL = 100
+  BASIC = 101
+  PLAN_TYPES = { PUBLIC => "Public", TRIAL => "Trial", BASIC => "Basic" }
+  
   attr_protected :token
   attr_accessible :name,
     :description, 
@@ -7,10 +12,14 @@ class Group < ActiveRecord::Base
     :city,
     :state,
     :country,
-    :permalink
+    :permalink,
+    :plan_type
+    :is_private
   
   has_one   :custom_style, as: :owner
   has_many  :group_users
+  has_many  :paths
+  has_many  :evaluations
   has_many  :users, through: :group_users
    
   validates_presence_of :name
@@ -36,6 +45,8 @@ class Group < ActiveRecord::Base
     return m.is_admin?
   end
   
+  def private?() is_private == true end
+  
   # Cached methods
   
   def self.cached_find_by_user_id(user_id)
@@ -47,6 +58,7 @@ class Group < ActiveRecord::Base
   end
    
   private
+  
   def grant_permalink
     if self.permalink.blank?
       new_permalink = self.name.downcase.gsub(/[^a-z0-9]/,'')

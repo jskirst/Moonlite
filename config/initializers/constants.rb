@@ -86,6 +86,8 @@ ICON_BADGE_9      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_
 
 ICON_LOGIN_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png"
 ICON_LOGIN_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png"
+ICON_LOGIN_LINKEDIN = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+linkedin.png"
+ICON_LOGIN_GITHUB = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+github.png"
 
 SHARE_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
 SHARE_TWITTER = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
@@ -95,6 +97,8 @@ SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+reddit+small
 ICON_CAROUSEL_LEFT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"
 ICON_CAROUSEL_RIGHT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"
 
+ICON_NEW_CHALLENGE = "https://s3-us-west-1.amazonaws.com/moonlite/static/Plus_sign.png"
+
 STATIC_DIVIDER = "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png"
 IMAGE_PLACEHOLDER = "https://s3-us-west-1.amazonaws.com/moonlite/static/image_thumb.png"
 YOUTUBE_PLACEHOLDER = "https://s3-us-west-1.amazonaws.com/moonlite/static/youtube_thumb.jpg"
@@ -103,4 +107,9 @@ NAVBAR_HOME = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home
 NAVBAR_EXPLORE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png"
 NAVBAR_PROFILE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
 NAVBAR_CREATE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png"
+NAVBAR_API = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/api.png"
+NAVBAR_ACCOUNT = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/account.png"
+NAVBAR_CHALLENGES = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/challenges.png"
+NAVBAR_EVALUATIONS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/evaluations.png"
+NAVBAR_VERTICAL_DOTS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/vertical_dots.png"
 

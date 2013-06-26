@@ -1,56 +1,57 @@
-%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
-  %span{ style: "font-size: 50px;position: relative;top:13px;" } Group Dashboard
-  = link_to "Edit Group", edit_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
-  = link_to "Group API", sandbox_group_path(@group), class: "button button-standard button-small", style: "float: right; margin: 80px 10px 0 0;"
-  = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 10px 0 0;"
-  %hr{style:"margin:0 0 20px 0;"}
-  %div.notificationpanelbody
-    %table.table.overview
-      %tr
-        %td
-          %h3= when_count(@stats[:users])
-          %p Total Members
-        %td
-          %h3= when_count(@stats[:visits])
-          %p New Members
-        %td
-          %h3= when_count(@stats[:arena_answers])
-          %p Arena Answers
-        %td
-          %h3= when_count(@stats[:creative_answers])
-          %p Creative Answers
-    .btn-group
-      %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
-        = @path.nil? ? "Filter by Challenge" : "Filtering by #{@path.name}"
-        %span.caret
-      %ul.dropdown-menu{ style: "max-height: 300px; overflow: auto;" }
-        %li= link_to "All Challenges", dashboard_group_path(@group.id)
-        %li.divider
-        - Persona.first.paths.all.each do |path|
-          %li= link_to path.name, dashboard_group_path(@group.id, p:path.id)
-    = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
-    = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
-    %table.table
-      %thead
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 900px; margin-top: -30px; border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px;}
+  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
+  .aboutbox .header hr { margin: 8px; }
+  .documentation { padding: 10px 20px; }
+  .container .body { padding: 0; }
+
+#employer.aboutcontainer
+  .aboutbox
+    .header
+      %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
+      %h2 #{@group.name} Account Settings
+      
+    %div.notificationpanelbody
+      %table.table.overview
         %tr
-          %th Name
-          %th Email
-          %th Created
-          %th Questions Answered            
-          %th Points
-          %th Enrollments
-      %tbody
-        - @users.to_a.each do |u|
-          %tr
-            %td= link_to truncate(u.name, length: 20), profile_path(u.username)
-            %td= truncate(u.email, length:25)
-            %td= u.created_at.strftime("%m/%d/%Y")  
-            - if @path
-              %td= @path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
-              %td= u.enrolled?(@path).total_points
-            - else            
-              %td= u.completed_tasks.where("completed_tasks.user_id = ?", u.id).count
-              %td= u.earned_points
-            %td= u.enrollments.size
+          %td
+            %h3= when_count(@stats[:users])
+            %p Total Members
+          %td
+            %h3= when_count(@stats[:visits])
+            %p New Members
+          %td
+            %h3= when_count(@stats[:arena_answers])
+            %p Arena Answers
+          %td
+            %h3= when_count(@stats[:creative_answers])
+            %p Creative Answers
+      .btn-group
+        %a.btn.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+          = @path.nil? ? "Filter by Challenge" : "Filtering by #{@path.name}"
+          %span.caret
+        %ul.dropdown-menu{ style: "max-height: 300px; overflow: auto;" }
+          %li= link_to "All Challenges", dashboard_group_path(@group.id)
+          %li.divider
+          - Persona.first.paths.all.each do |path|
+            %li= link_to path.name, dashboard_group_path(@group.id, p:path.id)
+      = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
+      = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
+      %table.table
+        %tbody
+          - @users.to_a.each do |u|
+            %tr
+              %td= link_to truncate(u.name, length: 20), profile_path(u.username)
+              %td= truncate(u.email, length:25)
+              %td= u.created_at.strftime("%m/%d/%Y")  
+              - if @path
+                %td #{@path.completed_tasks.where("completed_tasks.user_id = ?", u.id).count} answers
+                %td #{u.enrolled?(@path).total_points} points
+              - else            
+                %td= #{u.completed_tasks.where("completed_tasks.user_id = ?", u.id).count} answers
+                %td= #{u.earned_points} points
+              %td= u.enrollments.size
             

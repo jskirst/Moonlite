@@ -46,11 +46,8 @@ $.MB.Arena.init = (options = {}) ->
     location.reload()
   
   $("#challenge_form").on "ajax:success", (xhr, data) ->
-    if data.type == "multiple"
-      $("#answer_"+data.correct_answer).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
-      if not data.correct
-        $("#answer_"+data.supplied_answer).css("background-color", "#FF9999").css("color", "white")
-    else if data.type == "exact"
+    task_type = $(".responsespace").data("type")
+    if task_type == 1
       if data.correct == true
         $(".match_status_text").css("font-size", "22px").css("color", "rgb(0, 206, 0)").css("margin-left", "12px").css("font-weight", "bold").text("Correct!")
         $(".answer_feedback").css("border-color", "rgba(3, 233, 12, 0.8)").css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6)").css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6)").css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(0, 255, 41, 0.6)")
@@ -59,6 +56,13 @@ $.MB.Arena.init = (options = {}) ->
         $(".match_status_exp").css("color", "rgb(185,0,0)").css("font-size", "14px").text("The correct answer is: "+data.correct_answer)
         $(".answer_feedback").css("border-color", "rgba(236, 28, 28, 0.7)").css("-moz-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)").css("-webkit-box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)").css("box-shadow", "inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(238, 39, 2, 0.6)")
       $("#submit_exact").remove()
+    else if task_type == 2
+      $(".answer_content").each ->
+        if String($(this).data("answer")) == String(data.correct_answer)
+          $(this).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
+        else if String($(this).data("answer")) == String(data.answer)
+          $(this).css("background-color", "#FF9999").css("color", "white")
+        
     $("#nextbutton").show()
   
   if options["start_countdown"]

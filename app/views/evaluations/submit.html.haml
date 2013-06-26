@@ -1,0 +1,65 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 900px;}
+  
+
+#employer.aboutcontainer
+  #take_evaluation.aboutbox
+    .header
+      .image_box
+        = image_tag GIANT_STONEY, style: "height: 100px;"
+      .text_box{ style: "margin: 12px 0 0 8px;"}
+        %h1= @evaluation.title
+        %h3= @evaluation.company
+    .body
+      %h4
+        Your application has been successfully submitted. If you're a good fit for the position, #{@evaluation.company} will reach out to you.
+      %hr
+      %h3 Try out other Challenges...
+      %p Prove your skills by taking Challenges at the stuff you're good at. If you want, MetaBright can let you know when an employer thinks your skills match with what they're looking for. It's like job hunting without the hunting part.
+      %table
+        %tr.tiles
+          - (0..3).each do |i|
+            - path = @paths[i]
+            - first_section = path.try { |p| p.next_section }
+            - if path && first_section
+              %td.mosaic-block.bar2
+                - if current_user
+                  = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                - else
+                  = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                %div
+                  - if current_user
+                    = link_to intro_path(c: path.permalink) do
+                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  - else                  
+                    = link_to challenge_url(path.permalink) do
+                      = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+        %tr.tiles
+          - (4..8).each do |i|
+            - path = @paths[i]
+            - first_section = path.try { |p| p.next_section }
+            - if path && first_section
+              %td.mosaic-block.bar2
+                - if current_user
+                  = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                - else
+                  = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
+                    .details
+                      %h4= truncate(path.name,length: 14, separator: ' ')
+                      %h5 +#{path.tasks.count * 100} points
+                %div
+                  = link_to challenge_url(path.permalink) do
+                    = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+      %h4{ style: "text-align: right; margin: 16px 62px 0px 0;"}
+        = link_to "View more Challenges...", "#", class: "explore_link"
+      

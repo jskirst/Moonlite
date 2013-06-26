@@ -19,12 +19,26 @@
             = image_tag ICON_LOGIN_GOOGLE, style: "height:30px;", alt: "Google"
             %span.landingbuttontext Sign in with Google »
         
-        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "} OR
+        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
         
         %div
           = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
             = image_tag ICON_LOGIN_FACEBOOK, style: "height:30px;", alt: "Facebook"
             %span.landingbuttontext Sign in with Facebook »
+        
+        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+        
+        %div
+          = link_to "/auth/linkedin_oauth2", class: "btn danger", style: "width:205px;" do
+            = image_tag ICON_LOGIN_LINKEDIN, style: "height:30px;", alt: "LinkedIn"
+            %span.landingbuttontext Sign in with LinkedIn »
+        
+        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+
+        %div
+          = link_to "/auth/github", class: "btn danger", style: "width:205px;" do
+            = image_tag ICON_LOGIN_GITHUB, style: "height:30px;", alt: "Github"
+            %span.landingbuttontext Sign in with Github »
         
         %div{style:"padding:12px;"}
           - unless current_user

@@ -1,0 +1,52 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .container.body { width: inherit; }
+  .aboutcontainer{ width: 900px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
+  .aboutbox{ min-height: 600px; border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px;}
+  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
+  .aboutbox .header hr { margin: 8px; }
+  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
+  .aboutbox table { width: 100%; }
+  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
+  .aboutbox table td a { font-size: 17px; color: #333; }
+
+:javascript
+  function compare_and_search(){
+    var new_value = $("#evaluation_search").val();
+    if(new_value != original_value){
+      original_value = new_value;
+      console.log("Running search");
+      $.ajax('#{group_evaluations_url(@group)}',
+        { 
+          type: "GET", 
+          data: { q: new_value }, 
+          success: function(data, responseText){ 
+            $(".evaluations").html(data);
+          } 
+        }
+      );
+    }
+  }
+  
+  $(function(){
+    original_value = $("#evaluation_search").val();
+    setInterval("compare_and_search();", 300);
+  });
+
+.aboutcontainer
+  .aboutbox
+    .header
+      = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
+      %h2 Evaluations Manager
+      %input{ type: "text", placeholder: "Search Evaluations...", id: "evaluation_search" }
+    .body
+      .evaluations
+        - if @evaluations.empty?
+          %p 
+            You don't have any open evaluations. 
+            = link_to "Create one now.", new_group_evaluation_path(@group)
+        - else
+          = render "table"
+              

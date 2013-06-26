@@ -77,16 +77,16 @@
             %label.control-label Section
             .controls
               = f.select :section_id, @sections.collect { |s| [s.name, s.id] }
-                
-        %h4 Source        
-        .control-group
-          %label.control-label URL
-          .controls
-            = f.text_field :resource                
-        .control-group 
-          %label.control-label Title
-          .controls
-            = f.text_field :resource_title
+        - unless @group        
+          %h4 Source        
+          .control-group
+            %label.control-label URL
+            .controls
+              = f.text_field :resource                
+          .control-group 
+            %label.control-label Title
+            .controls
+              = f.text_field :resource_title
         
         - if @enable_administration
           %h4 Admin        

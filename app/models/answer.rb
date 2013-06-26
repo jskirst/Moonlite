@@ -15,6 +15,7 @@ class Answer < ActiveRecord::Base
   before_destroy :flush_cache
   
   def match?(supplied_answer)
+    return true if supplied_answer == content
     supplied_answer.downcase.gsub(/\s/,'') == content.downcase.gsub(/\s/,'')
   end
     

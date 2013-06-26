@@ -1,0 +1,38 @@
+%div.quizcontainer{ style: "margin-top: 70px;"}
+  = form_for(@task, url: took_task_url(@task), html: { id: "challenge_form", style: "margin: 0;" }) do |f|
+    = hidden_field_tag "draft_redirect_uri", continue_task_evaluation_url(@evaluation, @path, @task)
+    = hidden_field_tag "submit_redirect_uri", continue_evaluation_url(@evaluation, @path)
+    %div.CRquizspace
+      %div.quizheader
+        = image_tag @path.path_pic, alt: "#{@path.name}"
+        %div{ style: "display:inline-block;" }
+          %span
+            %strong #{@path.name}
+      
+      %div{ style: "text-align:center;" }
+        = render "tasks/stored_resource", { stored_resource: @stored_resource }
+      
+      - if @task.text?
+        = render "tasks/take_text", f: f
+        
+        %div.CRbuttonspace
+          = link_to "Skip Question", continue_evaluation_url(@group, @evaluation), class: "button button-standard", style: "float: left;"
+          
+          = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+          = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
+
+        :javascript
+          $("#preview_button").click(function(){
+            $("input[name=mode]").val("preview");
+          });
+
+          $("#draft_button").click(function(){
+            $("input[name=mode]").val("draft");
+          });
+      - else
+        - if @task.image?
+          = render "tasks/take_image", f: f
+        - elsif @task.youtube?
+          = render "tasks/take_youtube", f: f
+        - elsif @task.task?
+          = render "tasks/take_task", f: f

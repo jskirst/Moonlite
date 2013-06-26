@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130609161829) do
+ActiveRecord::Schema.define(:version => 20130625134640) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -87,6 +87,8 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
     t.boolean  "is_restricted",       :default => false
     t.integer  "enrollment_id"
     t.integer  "session_id"
+    t.datetime "deleted_at"
+    t.datetime "graded_at"
   end
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"
@@ -113,11 +115,44 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
     t.integer  "longest_streak",           :default => 0
     t.integer  "metascore",                :default => 0
     t.integer  "metapercentile",           :default => 0
+    t.integer  "evaluation_id"
   end
 
   add_index "enrollments", ["path_id"], :name => "index_enrollments_on_path_id"
   add_index "enrollments", ["user_id", "path_id"], :name => "index_enrollments_on_user_id_and_path_id"
   add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
+
+  create_table "evaluation_enrollments", :force => true do |t|
+    t.integer  "evaluation_id"
+    t.integer  "user_id"
+    t.datetime "submitted_at"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.datetime "archived_at"
+    t.datetime "favorited_at"
+  end
+
+  create_table "evaluation_paths", :force => true do |t|
+    t.integer  "evaluation_id"
+    t.integer  "path_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "evaluations", :force => true do |t|
+    t.string   "title"
+    t.string   "company"
+    t.string   "link"
+    t.string   "permalink"
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.datetime "closed_at"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+    t.datetime "published_at"
+  end
+
+  add_index "evaluations", ["permalink"], :name => "index_evaluations_on_permalink", :unique => true
 
   create_table "group_users", :force => true do |t|
     t.integer  "group_id"
@@ -136,9 +171,11 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.string   "token"
+    t.integer  "plan_type",   :default => 0
+    t.boolean  "is_private",  :default => true
   end
 
   create_table "ideas", :force => true do |t|
@@ -196,6 +233,7 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
     t.integer  "tasks_attempted"
     t.float    "percent_correct"
     t.float    "correct_points"
+    t.integer  "group_id"
   end
 
   add_index "paths", ["permalink"], :name => "index_paths_on_permalink"
@@ -342,6 +380,7 @@ ActiveRecord::Schema.define(:version => 20130609161829) do
     t.datetime "archived_at"
     t.text     "quoted_text"
     t.integer  "topic_id"
+    t.integer  "path_id"
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

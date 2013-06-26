@@ -17,7 +17,7 @@
     = render "layouts/navbar"
     %div.container.body{ style: ("background-color: transparent; padding: 0px;" if hide_background) }
       - flash.each do |key, value|
-        = content_tag(:div, value, class: "alert alert-#{key}", style: ("margin:60px 0 -50px;" if hide_background))
+        = content_tag(:div, value, class: "alert alert-#{key}", style: "position: fixed; top: 50px; font-size: 17px; padding: 15px; text-align: center; left: 50%; width: 500px; margin-left: -250px;")
       = yield
     - if show_footer
       = render "layouts/footer"
@@ -40,6 +40,10 @@
       var mark_help_read_url = '#{mark_help_read_url}';
       
       $("a[href='#'], a[href='']").removeAttr("href");
+      
+      $(function(){
+        $(".alert").fadeOut(10000);
+      })
       
       $("body").on("ajax:complete", ".hovercard_link", function(jqXHR, data){
         $("#hover_card").remove();

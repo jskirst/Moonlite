@@ -131,4 +131,10 @@ class Mailer < ActionMailer::Base
     m = mail(to: user.email, subject: "Test alert", message: "Test")
     user.log_email(m)
   end
+  
+  def invite_to_group(email, group, url)
+    @group = group
+    @url = url
+    m = mail(to: email, subject: "You've been invited to join the #{group.name} account on MetaBright")
+  end
 end

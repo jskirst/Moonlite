@@ -48,7 +48,11 @@ class User < ActiveRecord::Base
   has_many    :visits
   has_many    :group_users
   has_many    :groups, through: :group_users
+  has_many    :owned_groups, through: :group_users, :conditions => { "group_users.is_admin" => true }
   has_many    :sent_emails
+  has_many    :authored_evaluations, class_name: "Evaluation"
+  has_many    :evaluation_enrollments
+  has_many    :evaluations, through: :evaluation_enrollments
   
   validates :name, length: { within: 3..100 }
   validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters allowed" }
@@ -78,6 +82,11 @@ class User < ActiveRecord::Base
   end
   
   after_save :flush_cache
+  before_destroy do
+    if Rails.env != "development" and user_role.enable_administration
+      raise "Cannot delete an admin account."
+    end
+  end
   before_destroy :flush_cache
   
   def to_s() self.name end
@@ -112,22 +121,24 @@ class User < ActiveRecord::Base
   def self.create_with_omniauth(auth, user = nil)
     user_from_auth = User.find_with_omniauth(auth)
     return user_from_auth if user_from_auth
-    
     user_details = { 
         name: auth["info"]["name"], 
         email: auth["info"]["email"],
     }
-    
+
     begin
       info = auth[:extra][:raw_info]
       if auth[:provider] == "facebook"
+        
         user_details[:image_url] = auth["info"]["image"].gsub("type=small", "type=large").gsub("type=square", "type=large")
         user_details[:description] = info[:bio]
         user_details[:link] = info[:link]
         user_details[:location] = info[:location][:name] if info[:location]
         user_details[:company_name] = info[:work][-1][:employer][:name] if info[:work][-1]
         user_details[:education] = info[:education][-1][:school][:name] if info[:education][-1]
+      
       elsif auth[:provider] == "google_oauth2"
+        
         user_details[:image_url] = auth["info"]["image"]
         url = URI.parse("https://www.googleapis.com/plus/v1/people/me?access_token=#{auth[:credentials][:token]}")
         info = JSON.parse(open(url).read)
@@ -141,11 +152,32 @@ class User < ActiveRecord::Base
         if info["placesLived"]
           info["placesLived"].each { |place| user_details[:location] = place["value"] if place["primary"] == true }
         end
+      
+      elsif auth[:provider] == "linkedin_oauth2"
+      
+        user_details[:description] = auth[:info][:description]
+        user_details[:link] = info[:publicProfileUrl]
+        user_details[:location] = auth[:info][:location][:name] if info[:location]
+        user_details[:image_url] = info[:pictureUrl] 
+      
+      elsif auth[:provider] == "github"
+      
+        user_details[:description] = info[:bio]
+        user_details[:link] = auth[:info][:urls].first if auth[:info][:urls]
+        user_details[:location] = info[:location]
+        user_details[:image_url] = auth[:info][:image]
+        user_details[:company_name] = info[:company]
+      
       else
         raise "Cannot recognize provider."
       end
+      
     rescue
-      logger.debug $!.to_s
+      if Rails.env == "development"
+        raise $!.to_s
+      else
+        logger.debug $!.to_s
+      end
     end
     
     user = User.find_by_email(auth["info"]["email"]) unless user
@@ -208,12 +240,22 @@ class User < ActiveRecord::Base
     (user && user.salt == cookie_salt) ? user : nil
   end
   
-  def enrolled?(path) enrollments.find_by_path_id(path.id) end
+  def enrolled?(obj)
+    if obj.is_a? Path
+      enrollments.find_by_path_id(obj.id)
+    elsif obj.is_a? Evaluation
+      evaluation_enrollments.find_by_evaluation_id(obj.id)
+    else
+      raise "Unknown enrollment type."
+    end
+  end
   def enroll!(obj)
     if obj.is_a? Path
       enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
     elsif obj.is_a? Persona
       user_personas.create!(persona_id: obj.id) unless user_personas.find_by_persona_id(obj.id)
+    elsif obj.is_a? Evaluation
+      evaluation_enrollments.create!(evaluation_id: obj.id) unless evaluation_enrollments.find_by_evaluation_id(obj.id)
     else
       raise "Invalid object to enroll."
     end
@@ -414,6 +456,10 @@ class User < ActiveRecord::Base
          answers: e.completed_tasks.count }
     end
     return results
+  end
+  
+  def employer?
+    group_users.where(is_admin: true).count > 0
   end
   
   def send_test_alert(email_type = :interaction)

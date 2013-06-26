@@ -1,0 +1,31 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 900px; margin-top: 35px;}
+
+
+#employer.aboutcontainer
+  .aboutbox{ style: "padding: 8px;"}
+    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+      = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
+      %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create a Challenge
+    
+    %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
+      = form_for(@path, url: group_paths_path) do |f|
+        = render "shared/error_messages", object: f.object
+        %div{ style: "text-align: center; margin: 10px auto;" }
+          %div.action_group
+            %h3 Give your Challenge a name
+            = f.text_field :name, autofocus: "autofocus", style: "padding: 20px; width: 500px; font-size: 28px; line-height: 36px; text-align: center;"
+            %h5 Examples: Hadoop Test, Salesforce Administration, Marketing Principles
+          %div.action_group
+            %h3 Add an image (optional)
+            %div.field.clearfix
+              %div.form_field
+                = render "stored_resources/new_image"
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Try to choose an image of medium resolution that's roughly a square, and has a color background.
+    
+      %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
+        %button.button.button-xlarge.button-actionable{ onclick: "$('#new_path').submit();" } Create My Challenge

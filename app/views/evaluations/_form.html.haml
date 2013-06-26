@@ -1,0 +1,64 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutbox { border-radius: 0; }
+  .aboutcontainer { margin-top: 25px; width: 900px; }
+
+#employer.aboutcontainer
+  #create_evaluation.aboutbox{ style: "padding: 8px; "}
+    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
+      %h1.title= form_title      
+    %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
+      - unless @evaluation.errors.empty?
+        .alert.alert-error
+          %p= @evaluation.errors.full_messages.join(". ")
+      = form_for(@evaluation, url: form_url) do |f|
+        %div{ style: "text-align: center; margin: 10px auto;" }
+          %div.action_group
+            %h3 What are the job details?
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Your company name and the position title will be displayed to candidates when they take your evaluation.
+            %div.control-group
+              %div.controls    
+                = f.text_field :company, autofocus: "autofocus", style: "padding: 4px; width: 300px; font-size: 15px; text-align: center;", placeholder: "Company Name"
+                = f.text_field :title, autofocus: "autofocus", style: "padding: 4px; width: 300px; font-size: 15px; text-align: center;", placeholder: "Position Title"
+                - if false
+                  %div{style: "margin-top:10px;"} Upload job description (optional)
+          %div.action_group
+            %h3 What skills do you want evaluated?
+            %div.tips
+              %h5 
+                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                Choose up to three skills total. Each skill takes less than 10 minutes to complete.
+            .challenge_chooser
+              %h5 MetaBright Skills
+              .challenges
+                %ul.checklist
+                  - @public_paths.each do |p|
+                    %li
+                      %label
+                        = check_box_tag "evaluation[selected_paths][#{p.id}]", 1, @evaluation_path_ids.include?(p.id)
+                        = p.name
+            .challenge_chooser
+              %h5 Your Custom Skills
+              .challenges
+                - if @group_paths.any?
+                  %ul.checklist
+                    - @group_paths.each do |p|
+                      %li
+                        %label
+                          = check_box_tag "evaluation[selected_paths][#{p.id}]", 1, @evaluation_path_ids.include?(p.id)
+                          = p.name
+                    %p{ style: "margin-left: 10px;"}
+                      = link_to "Create new custom skill.", new_group_path_path
+                - else
+                  %p 
+                    You don't have any custom skills. 
+                    = link_to "Create one now.", new_group_path_path
+            
+              
+            
+        %div.row{ style: "margin: 40px auto 30px;" }
+          = f.submit @evaluation.new_record? ? "Create Evaluation" : "Save Evaluation", class: "button button-xlarge button-actionable"

@@ -75,14 +75,23 @@ class UsersController < ApplicationController
         render json: { status: "success" }
       else
         flash[:success] = "Profile successfully updated."
-        redirect_to profile_path(@user.username)
+        if params[:redirect_uri]
+          redirect_to params[:redirect_uri]
+        else
+          flash[:success] = "User account updated."
+          redirect_to edit_user_path(@user.username)
+        end
       end
     else
       if request.xhr?
         render json: { status: "error" }
       else
         flash[:error] = @user.errors.full_messages.join(". ")
-        redirect_to profile_path(@user.username)
+        if params[:redirect_uri]
+          redirect_to params[:redirect_uri]
+        else
+          redirect_to profile_path(@user.username)
+        end
       end
     end
   end
@@ -126,6 +135,10 @@ class UsersController < ApplicationController
     else
       redirect_to profile_url(@user.username)
     end
+  end
+  
+  def subregion
+    render partial: 'shared/subregion', locals: { form: nil }
   end
   
   private

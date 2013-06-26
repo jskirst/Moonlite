@@ -46,6 +46,9 @@ module SessionsHelper
         Mailer.welcome(current_user.email).deliver
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end
+      if cookies[:evaluation]
+        session[:redirect_back_to] = take_group_evaluation_path(cookies[:evaluation])
+      end
       return true
     end
   end
@@ -155,8 +158,19 @@ module SessionsHelper
       if current_user
         @is_consumer = true
         @enable_administration = current_user.enable_administration == "t"
+        unless request.xhr?
+          if @enable_administration
+            @custom_style = Company.find(1).custom_style
+          else
+            @custom_style = nil
+          end
+          
+          @group = Group.joins("INNER JOIN group_users on group_users.group_id=groups.id")
+            .where("group_users.user_id = ?", current_user.id)
+            .where("group_users.is_admin = ?", true)
+            .first
+        end
       end
-      @custom_style = Company.find(1).custom_style
     end
   end
   

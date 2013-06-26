@@ -1,0 +1,71 @@
+:javascript
+  $(function(){
+    $("select[name='search[country]']").change(function(){
+      var option = this.options[this.selectedIndex]
+      var subregions = $(option).data("subregions");
+      var sr_select = $("select[name='search[state]']");
+      $(sr_select).empty();
+      if(subregions.length > 1){
+        $("<option selected='selected' value='ALL'>All "+option.text+"</option>").appendTo(sr_select);
+      }
+      $(subregions).each(function(){
+        $("<option value='"+this[1]+"'>"+this[0]+"</option>").appendTo(sr_select);
+      });
+    });
+  
+    $("#search_form").on("ajax:success", function(jqXHR, data){
+      console.log(data);
+      $("#search").hide();
+      $("#results").empty().append(data).show();
+    });
+  });
+
+:css
+  .form-horizontal li.controls { margin-left: 155px; }
+
+#search
+  .single_pane
+    = form_for(@search, url: search_results_path, html: { class: "form-horizontal", id: "search_form" }, remote: true) do |f|
+      .control-group
+        %label.control-label Country
+        .controls
+          %select{ name: "search[country]"}
+            %option{ value: nil, data: { subregions: [[]] } } Select a Country
+            %option{ value: "ALL", data: { subregions: [["-", "-"]] } } All Countries
+            - @countries.each do |country|
+              %option{ value: country[:code], data: { subregions: country[:subregions] } }= country[:name]
+      .control-group
+        %label.control-label State/Province
+        .controls
+          %select{ name: "search[state]"}
+      .control-group
+        %label.control-label Looking For
+        .controls
+          %label.checkbox
+            = f.check_box :any_opp
+            Any Position
+        .controls
+          %label.checkbox
+            = f.check_box :full_time
+            Full Time Position
+        .controls
+          %label.checkbox
+            = f.check_box :part_time
+            Part Time Position
+        .controls
+          %label.checkbox
+            = f.check_box :internship
+            Internship
+      .control-group
+        %label.control-label Skills
+        %ul{ style: "list-style: none;" }
+          - @paths.each do |p|
+            %li.controls
+              %label.checkbox
+                = check_box_tag "search[paths][#{p.id}]"
+                = p.name
+      .control-group
+        .controls
+          = f.submit "Search", class: "button button-actionable"
+#results.hide
+    

@@ -7,3 +7,5 @@ test_output.txt
 .project
 .sass-cache/
 Moonlite.tmproj
+lib/.DS_Store
+.DS_Store

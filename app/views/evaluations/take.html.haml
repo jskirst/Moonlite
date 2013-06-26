@@ -1,0 +1,92 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutcontainer{ width: 900px;}
+  
+#employer.aboutcontainer
+  #take_evaluation.aboutbox
+    .header
+      %h1= @evaluation.title
+      %h3= @evaluation.company
+    .welcome
+      .holder
+        .image_box
+          = image_tag GIANT_STONEY
+        .text_box
+          %h3 Welcome to MetaBright!
+          %p #{@evaluation.company} is using MetaBright to measure their job candidates' skills. MetaBright gives you the chance to prove and showcase what you know!
+    %h2 Apply to this job
+    .application_steps
+      .step{ style: "margin-top: 0; "}
+        .img-circle
+          %span 1
+        .instructions
+          %h4 Create an Account
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Registering allows #{@evaluation.company} to verify your identity.
+          - if current_user
+            %h5 Thank you for signing in, #{current_user.name.split.first}!
+          - else
+            .signup
+              = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 10px; margin-bottom: 0;", class: "button btn" do
+                = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+                %span.landingbuttontext Google sign up »
+              = link_to "/auth/linkedin_oauth2", style: "display: inline-block; margin: 0 18px;", class: "button btn" do
+                = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
+                %span.landingbuttontext LinkedIn sign up »
+              = link_to "/auth/github", style: "display: inline-block; margin-left: 10px;", class: "button btn" do
+                = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
+                %span.landingbuttontext GitHub sign up »
+      .step
+        .img-circle
+          %span 2
+        .instructions
+          %h4 Choose your Location
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Your location helps #{@evaluation.company} know if you're eligible for the position.
+          - if current_user.country.blank? or current_user.state.blank?
+            = form_for current_user do |f|
+              = hidden_field_tag "redirect_uri", take_group_evaluation_url(@group, @evaluation)
+              %div
+                %label Country
+                = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
+              %div{ style: "margin: 0 26px;"}
+                %label State/Province
+                = render "shared/subregion_select", { form: f }
+              %div{ style: "margin-right: 0;"}
+                %label City
+                = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
+              = f.submit "Save", class: "button"
+          - else 
+            %h5 Location saved as #{current_user.city}, #{current_user.country}
+            
+      .step
+        .img-circle
+          %span 3
+        .instructions
+          %h4 Take Challenges
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Each Challenge should take you about 10 minutes.
+          .challenge_holder
+            - evaluation_completed = true
+            - @evaluation.paths.each do |p|
+            - @enrollment = current_user ? current_user.enrolled?(p) : nil
+              .challenge_card
+                = image_tag p.picture
+                %h5= truncate(p.name, length: 22, separator: ' ')
+                - if current_user
+                  - status = @evaluation.user_status(current_user, p)
+                  - if status == :start or status == :continue
+                    - evaluation_completed = false
+                    = link_to status.to_s.humanize, continue_evaluation_path(@evaluation.id, p.id), class: "button button-small button-actionable"
+                  - else
+                    %div Completed
+      .step
+        .img-circle
+          %span 4
+        .instructions
+          %h4 Submit Application
+          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+          %p Once all previous steps are completed, you'll be able to submit your application.
+          - if evaluation_completed
+            %div{ style: "text-align: center; margin-top: 12px; "}
+              = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"

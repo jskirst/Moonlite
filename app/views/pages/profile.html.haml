@@ -86,7 +86,7 @@
   
   - unless @user_personas.size == 0 || @enrollments.size == 0            
     .span12{ style: "margin-left: 0px;" }
-      .profileheader
+      .profileheader{ style: "background-color: white;" }
         #persona_list_link{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
           =image_tag @current_user_persona.persona.picture, style: "vertical-align: middle;"
           %h3{ style: "vertical-align: middle; padding-top: 5px;" }= @current_user_persona.persona.name

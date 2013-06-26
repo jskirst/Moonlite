@@ -1,0 +1,46 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutbox{ border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px; }
+  .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: 25px; border-radius: 0;  }
+
+
+#evaluation_manager.aboutcontainer
+  %div.aboutbox{ style: "background-color: white; padding:8px;" }
+    .header
+      %div{ style: "float: right; margin: 10px 10px 0 0;" }
+        = link_to "Back", group_evaluations_path(@group), class: "button button-standard button-small"
+        = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
+      %div{ style: "padding: 15px 15px 0 15px;"}
+        = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
+        %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
+          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @evaluation.title
+          %h3{ style: "font-size:20px; "} Evaluation Overview
+
+    .body{ style: "padding: 0 12px;"}
+      %table.table
+        %thead
+          %tr
+            %th Name
+            - @paths.each do |p|
+              %th= p.name
+            %th Submitted
+            %th{ style: "text-align: right;" }
+            %th
+        %tbody
+          - @evaluations.each do |e|
+            %tr
+              %td
+                = link_to "#{e.name}", grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
+              %td= e.email
+              - @paths.each do |p|
+                %td= e["e#{p.id}_total_points"]
+              %td
+                - if e.submitted_at
+                  #{time_ago_in_words(e.submitted_at)} ago
+              %td
+                - if e.favorited_at
+                  %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_lime.png", style: "width: 15px; height: 15px; margin-top: -3px;" }
+          - if @evaluations.empty?
+            %tr
+              %td{ colspan: 4 } No one has taken this evaluation yet.

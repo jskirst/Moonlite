@@ -14,6 +14,7 @@ Metabright::Application.routes.draw do
 	    put :style
 	  end
 	end
+	match '/users/subregion' => 'users#subregion', as: "subregion_users"
 	match '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
 	match '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
   match '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
@@ -57,12 +58,30 @@ Metabright::Application.routes.draw do
       get :style
       put :style
       get :join
-      delete :leave         
+      delete :leave      
       get :newsfeed
       get :dashboard
+      get :account
       get :sandbox
+      get :request_invite
+      post :invite
     end
+    
+    resources :evaluations, path: "e" do
+      member do
+        get :review
+        get :submit
+        get :grade
+        put :save
+      end
+    end
+    
+    resources :paths, path: "c"
   end
+  get '/e/:evaluation_id/continue/:path_id' => 'evaluations#continue', as: "continue_evaluation"
+  get '/e/:evaluation_id/continue/:path_id/:task_id' => 'evaluations#continue', as: "continue_task_evaluation"
+  put '/e/:evaluation_id/answer/:task_id' => 'evaluations#answer', as: "answer_evaluation"
+  get "/e/:permalink" => "evaluations#take", as: "take_group_evaluation"
 	
 	resources :tasks do
     member do
@@ -71,6 +90,8 @@ Metabright::Application.routes.draw do
       get :add_stored_resource
       put :add_stored_resource
       put :archive
+      put :complete
+      put :took
     end
   end
   get '/submissions/:id/raw' => "tasks#raw", as: "raw"
@@ -109,19 +130,23 @@ Metabright::Application.routes.draw do
 	resources :user_roles
 	
 	root :to => 'pages#home'
+	get '/search' => "search#new"
+	post '/search/results' => "search#results"
+	post '/search/checkout' => "search#checkout"
+	
 	match '/newsfeed' => 'pages#newsfeed'
   match '/intro' => 'pages#intro'
   match '/start' => 'pages#start'
   match '/mark_read' => 'pages#mark_read'
   match '/visit/:id' => 'pages#visit'
   match '/mark_help_read' => 'pages#mark_help_read'
-  match '/create' => 'pages#create'
   match '/explore', to: 'personas#explore'
   match '/about' => 'pages#about'
   match '/internship' => 'pages#internship'
   match '/employers' => 'pages#employers'
   match '/talentminer' => 'pages#talentminer'
   match '/evaluator' => 'pages#evaluator'
+  match '/organization_portal' => 'pages#organization_portal'
   match '/product_form' => 'pages#product_form'
   post  '/opportunity' => 'pages#opportunity'
   match '/product_confirmation' => 'pages#product_confirmation'

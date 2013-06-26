@@ -5,6 +5,7 @@ class PagesController < ApplicationController
   before_filter :authenticate, only: [:create]
   
   def home
+    #raise current_user.employer?.to_s
     @title = "Home"
     @url_for_newsfeed 
     if current_user and not current_user.earned_points == 0
@@ -28,9 +29,9 @@ class PagesController < ApplicationController
     offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
-    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
-      .where("path_id in (?)", relevant_paths)
+      .where("paths.id in (?)", relevant_paths)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
@@ -66,7 +67,7 @@ class PagesController < ApplicationController
     
     if @current_user_persona
       @enrollments = @current_user_persona.enrollments.includes(:path).sort{ |a, b| b.total_points <=> a.total_points }
-      completed_tasks = CompletedTask.joins(:user, :task => [{ :section => :path }])
+      completed_tasks = CompletedTask.joins(:user, :task => :path)
         .joins("LEFT JOIN topics on tasks.topic_id = topics.id")
         .joins("LEFT JOIN submitted_answers on submitted_answers.id=completed_tasks.submitted_answer_id")
         .select(newsfeed_fields)
@@ -156,11 +157,6 @@ class PagesController < ApplicationController
     render "start"
   end
   
-  def create
-    @title = "Create" 
-    @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
-  end
-  
   def mark_read
     current_user.user_events.unread.each{ |ue| ue.update_attribute(:read_at, Time.now) }
     render json: { status: "success" }
@@ -213,6 +209,15 @@ class PagesController < ApplicationController
     @show_footer = true
     @hide_background = true
     render "evaluator"
+  end
+  
+  def organization_portal
+    @title = "Organization Portal"
+    @show_footer = true
+    @hide_background = true
+    @owned_groups = current_user.groups
+    @group = @owned_groups.first
+    render "organization_portal"
   end
   
   def product_form
@@ -282,6 +287,12 @@ class PagesController < ApplicationController
   end
   
   private
+  
+  def admin_only
+    unless Rails.env == "development" or @enable_administration
+      raise "Access Denied: In development"
+    end
+  end
   
   def authorize_resource
     return true
