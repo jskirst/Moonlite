@@ -22,16 +22,20 @@
       %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
         %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
         %h3{ style: "font-size:20px; "}= @evaluation.title
-      .actions{ style: "float: right;" }
-        = link_to "Back", group_evaluation_url(@group, @evaluation), class: "button button-standard button-mini"
+      .actions
+        = link_to group_evaluation_url(@group, @evaluation), title: "Back" do
+          = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
         - if @evaluation_enrollment.archived_at
-          = link_to "Unarchive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put, class: "button button-standard button-mini"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), title: "Un-Archive", method: :put do 
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
         - elsif @evaluation_enrollment.favorited_at
-          = link_to "Unfavorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put, class: "button button-standard button-mini"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), title: "Un-Favorite", method: :put do
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
         - else
-          = link_to "Archive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put, class: "button button-standard button-mini"
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
-            = image_tag "www.google.com"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), title: "Archive", method: :put do
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), title: "Favorite", method: :put do
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0"
     .body        
       - path = @results.first
       %ul#results_list.nav.nav-tabs
