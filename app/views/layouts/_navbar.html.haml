@@ -1,6 +1,6 @@
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner{ style: "height: 100%;" }
-    %div{ style: "margin-left: 7%; height: 100%;" }
+    %div{ style: "margin-left: 6%; height: 100%;" }
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
         - home_page = @group.nil? ? root_url : group_evaluations_url(@group)
         = link_to home_page do
@@ -64,7 +64,7 @@
       %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
         = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
       - if current_user and show_nav_bar
-        %ul.nav.pull-right{ style: "float:right; margin-right: 7%; " }
+        %ul.nav.pull-right{ style: "float:right; margin-right: 6%; " }
           - if current_user
             %li.navuser
               %div.dropdown.pull-right

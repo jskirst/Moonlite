@@ -16,16 +16,18 @@
       %div{ style: "margin-bottom: 8px; text-align: right; margin-top: -15px;"}
         = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
         = link_to "Back", group_evaluations_path(@group), class: "button button-info button-small"
-
     .body{ style: "padding: 0 12px;"}
       %table.table
         %thead
           %tr
             %th Name
+            %th Email
             - @paths.each do |p|
-              %th= p.name
+              %th
+                = p.name
+                %img.hint--top{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;", "data-hint" =>"These are the percentile rankings for your candidates"}
+                  
             %th Submitted
-            %th
         %tbody
           - @evaluations.each do |e|
             %tr
@@ -33,7 +35,7 @@
                 = link_to "#{e.name}", grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
               %td= e.email
               - @paths.each do |p|
-                %td= e["e#{p.id}_total_points"]
+                %td #{e["e#{p.id}_total_points"]}%
               %td
                 - if e.submitted_at
                   #{time_ago_in_words(e.submitted_at)} ago

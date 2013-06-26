@@ -7,7 +7,7 @@
   %tbody
     - @users.to_a.each do |u|
       %tr
-        %td= link_to truncate(u.name, length: 20), profile_path(u.username)
+        %td= link_to truncate(u.name, length: 30), profile_path(u.username)
         %td= truncate(u.email, length:25)
         %td{ style: "text-align: right;" } Joined #{u.created_at.strftime("%m/%d/%Y")}
     - if @users.empty?

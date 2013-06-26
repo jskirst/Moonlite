@@ -30,7 +30,8 @@
           = link_to "Unfavorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put, class: "button button-standard button-mini"
         - else
           = link_to "Archive", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put, class: "button button-standard button-mini"
-          = link_to "Favorite", save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put, class: "button button-standard button-mini"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
+            = image_tag "www.google.com"
     .body        
       - path = @results.first
       %ul#results_list.nav.nav-tabs
