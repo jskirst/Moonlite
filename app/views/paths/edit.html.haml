@@ -61,10 +61,11 @@
 
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px; margin-top: 35px;}
+  .aboutcontainer{ width: 1000px; margin-top: -25px;}
+  .aboutbox { padding: 15px 30px; }
     
 #employer.aboutcontainer
-  .aboutbox{ style: "padding: 12px; "}
+  .aboutbox
     %div.row{ style: "vertical-align: top; margin: 0 0 20px 0;"}
       %div.span3{ style: "width: 160px; margin-left: 0; "}
         %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }
@@ -75,8 +76,10 @@
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
         %p#challenge_desc_pop.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
       %div.floatr{ style: "margin-top:10px;"}
-        - if @path.published? && @path.approved?
-          = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
+        - if @path.group_id
+          = link_to "Back", paths_url, class: "button button-standard"
+        - elsif @path.published? && @path.approved?
+          = link_to "View", @path.echallenge_path(@path.permalink), class: "button button-actionable"
         - elsif @path.published?
           = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
         - else

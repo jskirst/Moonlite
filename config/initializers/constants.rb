@@ -97,6 +97,8 @@ SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+reddit+small
 ICON_CAROUSEL_LEFT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"
 ICON_CAROUSEL_RIGHT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"
 
+ICON_NEW_CHALLENGE = "https://s3-us-west-1.amazonaws.com/moonlite/static/Plus_sign.png"
+
 STATIC_DIVIDER = "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png"
 IMAGE_PLACEHOLDER = "https://s3-us-west-1.amazonaws.com/moonlite/static/image_thumb.png"
 YOUTUBE_PLACEHOLDER = "https://s3-us-west-1.amazonaws.com/moonlite/static/youtube_thumb.jpg"

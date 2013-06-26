@@ -1,7 +1,7 @@
 - custom_class = "" unless custom_class
 %li
-  %div.mosaic-block.bar2
-    = link_to link || "#", class: "mosaic-overlay #{custom_class}", title: "#{title}" do
+  %div{ class: "mosaic-block bar2 #{custom_class}", onclick: ("Turbolinks.visit('#{link}');" if link) }
+    = link_to "#", class: "mosaic-overlay", title: "#{title}" do
       %div.details
         %h4= truncate(title, length: 25)
         %h5= truncate(subtitle, length: 30)

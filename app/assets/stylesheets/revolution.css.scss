@@ -111,7 +111,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .inlinedisplay li { display:inline; }
 .bar2 .mosaic-overlay { bottom:-20px; height:40px; background-color: rgba(0, 0, 0, .8); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; filter:alpha(opacity=80); }
 .bar2 .mosaic-overlay:hover { background-color: rgba(0,0,0,1); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; filter:alpha(opacity=100); text-decoration: none; }
-.mosaic-block {display:inline-block;  position:relative;overflow:hidden;width:200px;height:80px;margin-right:10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;}
+.mosaic-block {cursor: pointer; display:inline-block;  position:relative;overflow:hidden;width:200px;height:80px;margin-right:10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;}
 .mosaic-backdrop {display:none;position:absolute;top:0;height:100%;width:100%;background:#111; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;}
 .clip_pic{height:200px;width:200px;margin-top:-45px;}
 .mosaic-overlay {display:none;z-index:5;position:absolute;width:100%; height:100%; background:#111;}
@@ -453,7 +453,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliRegular', 'Helvetica', 'Ar
 /* Create and Administer/Revolution */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
 .pills a { line-height: 23px; cursor: pointer }
-ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px;}
+ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cursor: pointer; }
 .overview td { text-align: center; border: 1px solid #DDD; width: 80px; }
 
 /* Footer/Revolution */
@@ -704,7 +704,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px;}
     .mosaic-block, .aboutbody .mosaic-block { width:126px; height:126px; margin-right:35px;}
     .bigexploreimagespace { display:inline-block; vertical-align: top; }
     .bigexploreimagespace img { width:120px; margin-right:10px }
-    .mosaic-block.bar2 { margin-bottom: 12px; }
+    .mosaic-block.bar2 { margin-bottom: 12px; cursor: pointer; }
   }
   
   .explorenewuserfooter { margin:15px; }
