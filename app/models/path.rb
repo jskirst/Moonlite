@@ -43,6 +43,7 @@ class Path < ActiveRecord::Base
   end
   
   def after_intialize
+    self.group_id ||= nil
     rescue ActiveRecord::MissingAttributeError 
   end
   

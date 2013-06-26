@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   
   def show
+    raise "Access Denied: Group is private" if @group.is_private?
     @title = "#{@group.name} Group"
     @users = @group.users.order "earned_points desc"
     @membership = @group.membership(current_user)
