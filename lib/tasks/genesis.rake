@@ -119,15 +119,16 @@ namespace :db do
             points: 10,
             answer_type: 2,
             creator_id: moonlite_admin.id,
-            reviewed_at: now
+            reviewed_at: now,
+            path_id: path.id
           )
         end
         6.times do
-          section.tasks.create!(question: "Let's say you're making a footer for a website. How would you force the footer to always appear at the bottom of the page?", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin.id, reviewed_at: now)
+          section.tasks.create!(path_id: path.id, question: "Let's say you're making a footer for a website. How would you force the footer to always appear at the bottom of the page?", answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT, creator_id: moonlite_admin.id, reviewed_at: now)
         end
-        section.tasks.create!(question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
-        section.tasks.create!(question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
-        section.tasks.create!(question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
+        section.tasks.create!(path_id: path.id, question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
+        section.tasks.create!(path_id: path.id, question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
+        section.tasks.create!(path_id: path.id, question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
       end
     end
     User.all.each do |u|

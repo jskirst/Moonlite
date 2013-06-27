@@ -8,7 +8,9 @@ class PagesController < ApplicationController
     #raise current_user.employer?.to_s
     @title = "Home"
     @url_for_newsfeed 
-    if current_user and not current_user.earned_points == 0
+    if @group
+      render "portal"
+    elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas

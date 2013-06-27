@@ -46,12 +46,12 @@ class User < ActiveRecord::Base
   has_many    :followed_users, through: :subscriptions, source: :followed
   has_many    :created_tasks, class_name: "Task", foreign_key: :creator_id
   has_many    :visits
-  has_many    :group_users
+  has_many    :group_users, dependent: :destroy
   has_many    :groups, through: :group_users
   has_many    :owned_groups, through: :group_users, :conditions => { "group_users.is_admin" => true }
   has_many    :sent_emails
   has_many    :authored_evaluations, class_name: "Evaluation"
-  has_many    :evaluation_enrollments
+  has_many    :evaluation_enrollments, dependent: :destroy
   has_many    :evaluations, through: :evaluation_enrollments
   
   validates :name, length: { within: 3..100 }
@@ -85,6 +85,8 @@ class User < ActiveRecord::Base
   before_destroy do
     if Rails.env != "development" and user_role.enable_administration
       raise "Cannot delete an admin account."
+    else
+      return true
     end
   end
   before_destroy :flush_cache

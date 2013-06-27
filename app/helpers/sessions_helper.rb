@@ -47,7 +47,7 @@ module SessionsHelper
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end
       if cookies[:evaluation]
-        session[:redirect_back_to] = take_group_evaluation_path(cookies[:evaluation])
+        set_return_back_to(take_group_evaluation_path(cookies[:evaluation]))
       end
       return true
     end
@@ -145,10 +145,15 @@ module SessionsHelper
     redirect_to root_path
   end
   
-  def redirect_back_or_to(default)
-    redirect_to(session[:return_to] || default)
-    clear_return_to
+  def place_to_go_back_to?
+    !session[:return_back_to].blank?
   end
+  def redirect_back
+    redirect_to session[:return_back_to]
+    clear_return_back_to
+  end
+  def set_return_back_to(red) session[:return_back_to] = red end
+  def clear_return_back_to() session[:return_back_to] = nil end
   
   def name_for_paths() "Challenge" end
   def name_for_personas() "Persona" end
@@ -220,9 +225,5 @@ module SessionsHelper
     
     def remember_token
       cookies.signed[:remember_token] || [nil,nil]
-    end
-    
-    def clear_return_to
-      session[:return_to] = nil
     end
 end
