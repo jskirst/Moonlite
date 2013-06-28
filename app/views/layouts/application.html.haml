@@ -38,6 +38,7 @@
       var all_help = #{get_all_help.to_json};
       var mark_read_url = '#{mark_read_url}';
       var mark_help_read_url = '#{mark_help_read_url}';
+      var disabled_button = false;
       
       $("a[href='#'], a[href='']").removeAttr("href");
       
@@ -91,6 +92,7 @@
       });
       
       $("a[href*='/'], .loadable").click(function(){
+        disabled_button = this;
         if($(this).hasClass("button")){
           $(this).addClass("disabled").attr("disabled", "disabled");
         }
@@ -102,6 +104,9 @@
       }
       
       function stopSpinner(){
+        if(disabled_button != false){
+          $(this).removeClass("disabled").removeAttr("disabled");
+        }
         $('#page_loading').hide();
       }
       
