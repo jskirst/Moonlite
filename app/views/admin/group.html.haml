@@ -1,0 +1,42 @@
+%div.single_pane
+  :css 
+    table, th, td { padding: 5px; border: 1px solid #DDD; text-align: left; }
+  = link_to "Back", admin_groups_path, class: "button button-standard", style: "float: right;"
+  %h1{ style: "border-bottom: 1px solid #DDD; margin-bottom: 20px; padding: 10px 0;" }= @group.name
+
+  %h2 Users
+  %table.table
+    %tbody
+      - @group.users.each do |user|
+        %tr
+          %td= user.name
+          %td= link_to "possess", possess_user_url(user.username)
+  
+  %h2 Evaluations
+  %table.table
+    %theader
+      %tr
+        %th Company
+        %th Title
+        %th Challenges
+        %th Users
+    %tbody
+      - @group.evaluations.each do |evaluation|
+        %tr
+          %td= evaluation.company
+          %td= evaluation.title
+          %td= evaluation.paths.count
+          %td= evaluation.users.count
+
+  %h2 Challenges
+  %table.table
+    %thead
+      %tr
+        %th Name
+        %th Tasks
+    %tbody
+      - @group.paths.each do |path|
+        %tr
+          %td= path.name
+          %td= path.tasks.count
+      

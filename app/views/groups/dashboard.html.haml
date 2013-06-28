@@ -39,7 +39,7 @@
           - Persona.first.paths.all.each do |path|
             %li= link_to path.name, dashboard_group_path(@group.id, p:path.id)
       = will_paginate @users, style: "float:left; margin-bottom:0; margin-top: 0;"
-      = render "companies/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
+      = render "admin/search", link: dashboard_group_path(@group.id), placeholder: "Name or email..."
       %table.table
         %tbody
           - @users.to_a.each do |u|

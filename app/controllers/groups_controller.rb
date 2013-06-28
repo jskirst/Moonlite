@@ -68,9 +68,9 @@ class GroupsController < ApplicationController
   end
   
   def account
-    @users = @group.users
+    @users = @group.users.where("group_users.hidden = ?", false)
     if params[:q]
-      @users = @group.users.where("name ILIKE ? or email ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
+      @users = @users.where("name ILIKE ? or email ILIKE ?", "%#{params[:q]}%", "%#{params[:q]}%")
       if request.xhr?
         render partial: "account_table"
       end

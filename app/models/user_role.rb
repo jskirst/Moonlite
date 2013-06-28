@@ -17,9 +17,9 @@ class UserRole < ActiveRecord::Base
   
   def signup_link
     if Rails.env.production?
-      return "http://www.metabright.com/companies/#{self.signup_token}/join"
+      return "http://www.metabright.com/admin/#{self.signup_token}/join"
     else
-      return "http://localhost:3000/companies/#{self.signup_token}/join"
+      return "http://localhost:3000/admin/#{self.signup_token}/join"
     end
   end
   

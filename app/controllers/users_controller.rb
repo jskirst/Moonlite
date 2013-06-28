@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   
   before_filter :authenticate, except: [:notifications, :index, :hovercard]
   before_filter :load_resource, except: [:retract, :notifications, :professional, :index]
-  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow, :index, :hovercard]
+  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow, :index, :hovercard, :possess]
   
   def show
     redirect_to profile_path(@user.username)
@@ -142,6 +142,12 @@ class UsersController < ApplicationController
   
   def subregion
     render partial: 'shared/subregion', locals: { form: nil }
+  end
+  
+  def possess
+    raise "Access Denied: Cannot possess" unless @enable_administration
+    sign_in(@user)
+    redirect_to root_url
   end
   
   private

@@ -12,6 +12,7 @@ Metabright::Application.routes.draw do
 	  member do
 	    get :style
 	    put :style
+	    get :possess
 	  end
 	end
 	match '/users/subregion' => 'users#subregion', as: "subregion_users"
@@ -159,23 +160,25 @@ Metabright::Application.routes.draw do
 	match '/stored_resources' => 'stored_resources#create', via: :put
 	match '/stored_resources/:id' => 'stored_resources#destroy', via: :delete, as: 'delete_stored_resource'
 	
-  get '/admin/overview' => 'companies#overview'
-  get '/admin/settings' => 'companies#settings'
-  get '/admin/users' => 'companies#users'
-  get '/admin/funnel' => 'companies#funnel'
-  get '/admin/visits' => 'companies#visits'
-  put '/admin/users/:id/' => 'companies#users', as: 'admin_update_user'
-  get '/admin/user/:id/' => 'companies#user', as: 'admin_user_details'
-  get '/admin/paths' => 'companies#paths'
-  get '/admin/path/:id' => 'companies#path', as: 'admin_edit_path'
-  get '/admin/submissions' => 'companies#submissions'
-  put '/admin/submissions/:id' => 'companies#submissions', as: 'admin_update_submission'
-  get '/admin/tasks' => 'companies#tasks'
-  put '/admin/tasks/:id' => 'companies#tasks', as: 'admin_update_task'
-  get '/admin/comments' => 'companies#comments'
-  put '/admin/comments/:id' => 'companies#comments', as: 'admin_update_comment'
-  get '/admin/styles' => 'companies#styles'
-  put '/admin/styles' => 'companies#styles'
+  get '/admin/overview' => 'admin#overview'
+  get '/admin/settings' => 'admin#settings'
+  get '/admin/users' => 'admin#users'
+  get '/admin/funnel' => 'admin#funnel'
+  get '/admin/visits' => 'admin#visits'
+  put '/admin/users/:id/' => 'admin#users', as: 'admin_update_user'
+  get '/admin/user/:id/' => 'admin#user', as: 'admin_user_details'
+  get '/admin/paths' => 'admin#paths'
+  get '/admin/path/:id' => 'admin#path', as: 'admin_edit_path'
+  get '/admin/submissions' => 'admin#submissions'
+  put '/admin/submissions/:id' => 'admin#submissions', as: 'admin_update_submission'
+  get '/admin/tasks' => 'admin#tasks'
+  put '/admin/tasks/:id' => 'admin#tasks', as: 'admin_update_task'
+  get '/admin/comments' => 'admin#comments'
+  put '/admin/comments/:id' => 'admin#comments', as: 'admin_update_comment'
+  get '/admin/styles' => 'admin#styles'
+  put '/admin/styles' => 'admin#styles'
+  get '/admin/groups' => 'admin#groups'
+  get '/admin/groups/:group_id' => 'admin#group', as: "admin_group"
   
   match '/locallink' => 'sessions#locallink'
   match '/auth/failure' => 'sessions#auth_failure'

@@ -71,7 +71,8 @@ module ApplicationHelper
       ["users", "Users", admin_users_path],
       ["submissions", "Submissions", admin_submissions_path],
       ["tasks", "Tasks", admin_tasks_path],
-      ["comments", "Comments", admin_comments_path]
+      ["comments", "Comments", admin_comments_path],
+      ["groups", "Groups", admin_groups_path]
     ]
   end
   

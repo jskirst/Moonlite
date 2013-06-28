@@ -8,7 +8,8 @@ class PagesController < ApplicationController
     #raise current_user.employer?.to_s
     @title = "Home"
     @url_for_newsfeed 
-    if @group
+    if @groups
+      @group = params[:g] ? @groups.select{ |g| g.id.to_s == params[:g].to_s }.first : @groups.first
       render "portal"
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
