@@ -94,15 +94,20 @@
         if($(this).hasClass("button")){
           $(this).addClass("disabled").attr("disabled", "disabled");
         }
-        
-        $('#page_loading').fadeIn(1000);
-        setTimeout("$('#page_loading').hide();", 5000);
-        
-        $(this).on("ajax:success", function(){
-          $("#page_loading").hide();
-        });
-        
         return true;
+      });
+      
+      function startSpinner(){
+        $('#page_loading').fadeIn(500);
+      }
+      
+      function stopSpinner(){
+        $('#page_loading').hide();
+      }
+      
+      $(function(){
+        document.addEventListener("page:fetch", startSpinner);
+        document.addEventListener("page:receive", stopSpinner);
       });
       
       $("form").submit(function(){
