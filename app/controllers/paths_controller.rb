@@ -121,7 +121,7 @@ class PathsController < ApplicationController
       sr.save
     end
     
-    if @enable_administration
+    if params[:path][:approved] and @enable_administration
       redirect_to admin_paths_path
     else
       redirect_to edit_path_path(@path.permalink)
