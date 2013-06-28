@@ -61,6 +61,8 @@ class PagesController < ApplicationController
     end
     @user_custom_style = @user.custom_style
     
+    @groups = @user.groups.where(is_private: false)
+    
     @user_personas = @user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }
     if params[:p].blank?
       @current_user_persona = @user_personas.first
