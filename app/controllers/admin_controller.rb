@@ -196,6 +196,10 @@ class AdminController < ApplicationController
       .paginate(page: params[:page])
   end
   
+  def visit
+    @visit = Visit.find(params[:visit_id])
+  end
+  
   def groups
     conditions = params[:search].nil? ? [] : ["name ILIKE ?", "%#{params[:search]}%"]
     @groups = Group.paginate(page: params[:page], conditions: conditions)

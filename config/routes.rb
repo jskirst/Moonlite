@@ -165,6 +165,7 @@ Metabright::Application.routes.draw do
   get '/admin/users' => 'admin#users'
   get '/admin/funnel' => 'admin#funnel'
   get '/admin/visits' => 'admin#visits'
+  get '/admin/visit/:visit_id' => 'admin#visit', as: "admin_visit"
   put '/admin/users/:id/' => 'admin#users', as: 'admin_update_user'
   get '/admin/user/:id/' => 'admin#user', as: 'admin_user_details'
   get '/admin/paths' => 'admin#paths'
