@@ -15,7 +15,8 @@
         %th E
         %th V
         %th C
-        %th Status
+        %th
+        %th
     %tbody
       - @users.to_a.each do |u|
         %tr
@@ -29,6 +30,7 @@
           %td= u.enrollments.size
           %td= u.votes.size
           %td= u.comments.size
+          %td= link_to "possess", possess_user_url(u.username)
           - if u.locked?
             %td= link_to "locked", admin_update_user_path(u), class: "mark_locked locked", remote: true, method: "put"
           - else

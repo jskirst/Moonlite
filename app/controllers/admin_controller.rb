@@ -1,4 +1,4 @@
-class CompaniesController < ApplicationController
+class AdminController < ApplicationController
   before_filter :authenticate
   before_filter { raise "ACCESS DENIED" unless @enable_administration }
   
@@ -135,7 +135,7 @@ class CompaniesController < ApplicationController
       @last_visits_with_count = Hash.new(0)
       visits.each{|y| @last_visits_with_count[y] += 1 }
       @last_visits_with_count = @last_visits_with_count.sort_by{ |k,v| v }.reverse.first(100)
-      render "companies/funnel/funnel"
+      render "admin/funnel/funnel"
     elsif mode == "signups"
       #.select("users.earned_points, users.email, date_part('days', now() - users.created_at) as created")
       days = (params[:days] || 120).to_i
@@ -172,7 +172,7 @@ class CompaniesController < ApplicationController
         }
       end
       @dates = @signups_by_date.keys
-      render "companies/funnel/signups"
+      render "admin/funnel/signups"
     end
     # profile_views_with_scores = all_new.select("DISTINCT on (users.id) ('http://#{domain}/' || lower(users.username)) as yeah, users.name, users.earned_points, users.id, visits.request_url ").joins("LEFT JOIN visits on visits.user_id = users.id and visits.request_url = ('http://#{domain}/' || lower(users.username))")
     # yes_profile_scores = []
@@ -195,7 +195,15 @@ class CompaniesController < ApplicationController
       .order("visits.id DESC")
       .paginate(page: params[:page])
   end
-    
+  
+  def groups
+    conditions = params[:search].nil? ? [] : ["name ILIKE ?", "%#{params[:search]}%"]
+    @groups = Group.paginate(page: params[:page], conditions: conditions)
+  end
+  
+  def group
+    @group = Group.find_by_id(params[:group_id])
+  end
   
   private
   def toggle(attr, obj)
