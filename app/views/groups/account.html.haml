@@ -3,7 +3,6 @@
     var new_value = $("#account_search").val();
     if(new_value != original_value){
       original_value = new_value;
-      console.log("Running search");
       $.ajax('#{account_group_url(@group)}',
         { 
           type: "GET", 

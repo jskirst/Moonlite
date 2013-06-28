@@ -14,7 +14,6 @@
     });
   
     $("#search_form").on("ajax:success", function(jqXHR, data){
-      console.log(data);
       $("#search").hide();
       $("#results").empty().append(data).show();
     });

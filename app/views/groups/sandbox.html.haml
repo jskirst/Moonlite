@@ -68,7 +68,6 @@
         url: endpoint, 
         data: { email: email, token: token},
         success: function(data, status, xhr){
-          console.log(data);
           var user = data;
           $("<h5>Name: "+user.name+"</h5>").appendTo("#api_result");
           $("<h5>Username: "+user.username+"</h5>").appendTo("#api_result");

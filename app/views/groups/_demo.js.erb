@@ -3,9 +3,7 @@ function getMetaBrightUser(email, token){
   $.ajax({
     url: endpoint, 
     data: { email: email, token: token},
-    success: function(data, status, xhr){
-      console.log(data);
-    },
+    success: function(data, status, xhr){ /* Implementation */ },
     dataType: "json"
   });
 }
