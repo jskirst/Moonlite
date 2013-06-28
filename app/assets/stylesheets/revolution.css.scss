@@ -362,7 +362,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .CRquestionspace { display:inline-block; padding-top:9px; text-align: center; width: 100%; }
 .cr_question_header { font:bold 15px 'MuliRegular', 'Helvetica', 'Arial', sans-serif;}
 .CRquestion { font-size:15px; padding: 0; margin: 15px 5px 0 10px; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliRegular', 'Helvetica', 'Arial', sans-serif;} 
-.CRresponsespace { width: calc(100% - 10px); margin-top: 20px; display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:5px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', 'Helvetica', 'Arial', sans-serif;}
+.CRresponsespace { width: 97%; width: calc(100% - 10px); margin-top: 20px; display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:5px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliRegular', 'Helvetica', 'Arial', sans-serif;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .CRbuttonspace { margin-top:12px; }
 .input input{ background-color: #F9F9F9;}
