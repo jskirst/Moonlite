@@ -68,7 +68,7 @@
             %li.navuser
               %div.dropdown.pull-right
                 - if current_user.guest_user?
-                  %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; margin-right: 17px; text-shadow:none; color:white;" } Sign up
+                  %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:2px; margin-right: 17px; text-shadow:none; color:white;" } Sign up
                 - else
                   %a.dropdown-toggle{ "data-toggle" => "dropdown"}
                     = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
