@@ -86,7 +86,7 @@
           = image_tag(@path.path_pic, class: "bigheaderimage")
       %div.span4{ style: "margin-left: 5px;" }
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
-        %p#challenge_desc_pop.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
+        %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
       %div.floatr{ style: "margin-top:10px;"}
         - if @path.group_id
           = link_to "Back", paths_url, class: "button button-standard"
@@ -116,9 +116,9 @@
                         %li.active
                           %a.edit_section_overview_pill{ onclick: "close_section_container(this);", style:"cursor:pointer;" } Overview
                         %li
-                          %a#questions_pop.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
+                          %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
                         %li
-                          %a#section_settings_pop.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
+                          %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
                   %div.span6{ style: "margin-left: 12px;"}
                     - if @group
                       %h3 Challenge questions
