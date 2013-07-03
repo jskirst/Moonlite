@@ -22,6 +22,10 @@
             %td Creator Account Removed
           %td
             %pre.unstyled= t.question
+            %pre.unstyled= t.quoted_text
+            %ul{ style: "list-style: none;" }
+              - t.answers.each do |t|
+                %li{ style: "padding: 5px; #{'background-color: green; color: white; border-radius: 3px;' if t.is_correct}"}= t.content
           %td= Task::TYPES[t.answer_type]
           %td= link_to "approve", admin_update_task_path(t), class: "mark_reviewed", remote: true, method: "put"
   = link_to "Refresh", admin_tasks_path, class: "button button-standard"
