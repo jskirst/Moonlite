@@ -79,7 +79,7 @@ class TasksController < ApplicationController
   end
   
   def destroy
-    if @task.creator == current_user
+    if @enable_administration || @task.creator == current_user
       if @task.destroy
         respond_to { |f| f.json { render :json => { :success => "Question deleted." } } }
       else
@@ -184,7 +184,7 @@ class TasksController < ApplicationController
     end
   
     def authorize_resource
-      raise "Access Denied" unless can_edit_path(@task.path)
+      raise "Access Denied" unless @enable_administration or can_edit_path(@task.path)
     end
     
     def gather_answers(task)
