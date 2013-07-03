@@ -5,12 +5,13 @@
   %table.table
     %thead
       %tr
-        %th{ style: "width: 5%" } id
-        %th{ style: "width: 15%" } Path
+        %th{ style: "width: 4%" } id
+        %th{ style: "width: 10%" } Path
         %th{ style: "width: 10%" } User
         %th{ style: "width: 50%" } Question
         %th{ style: "width: 10%" } Type
-        %th{ style: "width: 10%" } Approve
+        %th{ style: "width: 8%" } Approve
+        %th{ style: "width: 8%" } Deny
     %tbody
       - @tasks.to_a.each do |t|
         %tr
@@ -28,4 +29,10 @@
                 %li{ style: "padding: 5px; #{'background-color: green; color: white; border-radius: 3px;' if t.is_correct}"}= t.content
           %td= Task::TYPES[t.answer_type]
           %td= link_to "approve", admin_update_task_path(t), class: "mark_reviewed", remote: true, method: "put"
+          %td
+            .dropdown
+              %a{ data: { toggle: "dropdown" } } Deny
+              %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+                - TaskIssue::ISSUE_TYPES_SHORT.each do |id, name|
+                  %li= link_to name, admin_update_task_path(t, deny: id), class: "mark_reviewed", remote: true, method: "put"
   = link_to "Refresh", admin_tasks_path, class: "button button-standard"

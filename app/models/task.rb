@@ -1,6 +1,6 @@
 class Task < ActiveRecord::Base
   CREATOR_AWARD_POINTS = 20
-  CREATOR_PENALTY_POINTS = 40
+  CREATOR_PENALTY_POINTS = 20
   
   CREATIVE  = 0
   EXACT     = 1
