@@ -2,11 +2,36 @@ class GroupsController < ApplicationController
   include NewsfeedHelper  
   
   before_filter :authenticate, except: [:show, :newsfeed, :join]
-  before_filter :load_resource
+  before_filter :load_resource, except: [:new, :create]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   
+  def new
+    raise "Access Denied: Cannot create groups" unless @enable_administration
+  end
+  
+  def create
+    @group = Group.new
+    @group.name = params[:group][:name]
+    @group.description = params[:group][:description]
+    if @group.save
+      if params[:become_admin]
+        gu = @group.group_users.create!(user_id: current_user.id)
+        gu.update_attribute(:is_admin, true)
+        redirect_to account_group_url(@group)
+      else
+        redirect_to admin_groups_url
+      end
+    else
+      flash[:error] = @group.errors.full_messages.join(". ")
+      render "new"
+    end
+  end
+  
   def show
-    raise "Access Denied: Group is private" if @group.is_private?
+    if @group.is_private?
+      redirect_to account_group_url(@group) and return
+    end
+    
     @title = "#{@group.name} Group"
     @users = @group.users.order "earned_points desc"
     @membership = @group.membership(current_user)

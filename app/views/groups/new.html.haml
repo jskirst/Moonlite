@@ -1,0 +1,20 @@
+.single_pane
+  = link_to "Back", admin_groups_path, class: "button button-standard", style: "float: right;"
+  %h1{ style: "border-bottom: 1px solid #DDD; margin-bottom: 20px; padding: 10px 0;" } New Group
+  = form_for(@group || Group.new, html: { class: "form-horizontal" }) do |f|
+    %div.control-group
+      %label.control-label Name
+      %div.controls
+        = f.text_field :name
+    %div.control-group
+      %label.control-label Description
+      %div.controls
+        = f.text_area :description, style: "height: 100px; width: 400px;"
+    %div.control-group
+      %label.control-label Approved
+      %div.controls
+        = check_box_tag "become_admin"
+    %div.control-group
+      %div.controls
+        = f.submit "Create", class: "button button-actionable"
+  

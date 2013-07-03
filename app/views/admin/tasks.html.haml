@@ -16,7 +16,10 @@
         %tr
           %td= t.id
           %td= t.path.name
-          %td= link_to t.creator.name, profile_path(t.creator.username)
+          - if t.creator
+            %td= link_to t.creator.name, profile_path(t.creator.username)
+          - else
+            %td Creator Account Removed
           %td
             %pre.unstyled= t.question
           %td= Task::TYPES[t.answer_type]
