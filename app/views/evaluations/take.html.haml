@@ -43,8 +43,13 @@
           %h4 Choose your Location
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
           %p Your location helps #{@evaluation.company} know if you're eligible for the position.
-          - if current_user.country.blank? or current_user.state.blank?
-            = form_for current_user do |f|
+          - if current_user.nil? or current_user.country.blank? or current_user.state.blank?
+            - @user = current_user || User.new
+            - if current_user.nil?
+              :javascript
+                $(function(){ $("#update_location input, select").attr("disabled", "disabled").addClass("disabled"); });
+                
+            = form_for @user, html: { id: "update_location" } do |f|
               = hidden_field_tag "redirect_uri", take_group_evaluation_url(@group, @evaluation)
               %div
                 %label Country
@@ -56,7 +61,7 @@
                 %label City
                 = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
               = f.submit "Save", class: "button"
-          - else 
+          - else
             %h5 Location saved as #{current_user.city}, #{current_user.country}
             
       .step
