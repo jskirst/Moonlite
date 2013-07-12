@@ -122,6 +122,7 @@ class EvaluationsController < ApplicationController
   end
   
   def take
+    @show_nav_bar = false
     @evaluation = Evaluation.find_by_permalink(params[:permalink])
     if current_user
       @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)
@@ -138,6 +139,7 @@ class EvaluationsController < ApplicationController
   end
   
   def continue
+    @show_nav_bar = false
     @evaluation = Evaluation.find(params[:evaluation_id])
     @path = @evaluation.paths.find(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)

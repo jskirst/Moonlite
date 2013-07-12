@@ -28,19 +28,6 @@
             = link_to sandbox_group_path(@group) do
               = image_tag NAVBAR_API, alt: "Developer"  
               %span Developer
-          %li.navitem{"data-target" => "#more_nav", "data-toggle" => "collapse", :role => "button", title: "Expand", style: "height: 100%;" }
-            = link_to "#" do
-              = image_tag NAVBAR_VERTICAL_DOTS, alt: "Expand" 
-          #more_nav.collapse
-            %div{ style: "width: 201px; height: 100%"}
-              %li.navitem{ title: "Explore", style: "float: left; height: 100%" }
-                %a.explore_link{ style: "display: block;" }
-                  = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
-                  %span Explore
-              %li.navitem{ title: "Profile", style: "float: left; height: 100%;" }
-                = link_to profile_path(current_user.username), style: "display: block;" do
-                  = image_tag NAVBAR_PROFILE, alt: "Profile"  
-                  %span Profile
       - elsif current_user and show_nav_bar
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
           %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
@@ -82,7 +69,7 @@
                     %div.leftboxheader Your Groups
                     %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD; border-radius: 0; "}
                       - groups.each do |group|
-                        = link_to group_path(group.permalink), style: "text-decoration: none;" do
+                        = link_to group_path(group.permalink), style: "text-decoration: none; padding: 0;" do
                           %div.singlegroupentry{ style: "padding: 6px 12px; "}
                             = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px;", class: "img-circle"
                             %div{ style: "margin-left: 5px; display: inline-block; color: gray; vertical-align: middle; "}
@@ -91,7 +78,7 @@
                   %div.leftboxheader Your Challenges
                   %div.leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:auto;"}
                     - current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").each do |e|
-                      = link_to challenge_path(e.path.permalink) do
+                      = link_to challenge_path(e.path.permalink), style:"padding:0;" do
                         %div.singleprogressentry
                           = image_tag e.path.image, style: "width: 50px; height: 50px;", alt: "#{e.path.name}"            
                           %div.challengeprogress
@@ -114,16 +101,15 @@
                     - notifications.each do |event|
                       %li.notification_space
                         %div.notification{ class: "#{event.read_at ? '' : 'notification-unread'}" }
-                          %a{ href: (event.username.nil? ? "#" : profile_path(event.username)) }
-                            %img.photo{ src: event.image_link, style: "width:35px; height: 35px;", alt: "Notification" }
                           %a{ href: event.link }
+                            %img.photo{ src: event.image_link, style: "width:35px; height: 35px;", alt: "Notification" }
                             %p.notification_body= event.content
                             %p.notification_time #{time_ago_in_words(event.created_at)} ago
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:10px;" }
                   %img{ src: ICON_GEAR, style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
-                %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-39px; min-width: 25px; min-height: 50px;" }
+                %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-40px; min-width: 25px; min-height: 50px;" }
                   %li
                     %div
                       %div.nub{ style: "left: 62px;"}
@@ -131,6 +117,10 @@
                       %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
                         - if @enable_administration
                           %li= link_to "Admin", admin_overview_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
+                        - if @group
+                          %li.explore_link= link_to "Explore", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
+                        - if @group
+                          %li= link_to "View Profile", user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "Edit Profile", edit_user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li.invite_facebook_friends= link_to "Invite Friends", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "MetaBright Labs", ideas_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"

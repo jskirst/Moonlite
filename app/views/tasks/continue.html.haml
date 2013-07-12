@@ -1,4 +1,4 @@
-%div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 0px;'} #{'width: inherit;' unless @show_stats}" }
+%div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 110px;'} #{'width: inherit;' unless @show_stats}" }
   = render "modals/report_issue"
   %div.quizspace
     :javascript
@@ -20,7 +20,7 @@
       %div.questionspace
         %pre.CRquestion= @task.question
       - if @task.quoted_text
-        %pre{ style: "margin: 10px 0 0 0; border: none; border-radius: none; background-color: rgb(249, 249, 249); " }
+        %pre.snippet
           = @task.quoted_text
         %hr{ style: "margin: 12px auto; width: 35%; border: 0; border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff;" }
       %div.responsespace{ data: { type: @task.answer_type } }
