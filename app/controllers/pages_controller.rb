@@ -158,7 +158,7 @@ class PagesController < ApplicationController
     @show_nav_bar = false
     @show_footer = false
     @hide_background = true
-    @personas = current_company.personas.all
+    @personas = Persona.all
     render "start"
   end
   
@@ -250,7 +250,7 @@ class PagesController < ApplicationController
     @title = "Challenges"
     @show_footer = true
     @hide_background = true
-    @personas = current_company.personas
+    @personas = Persona.all
     render "challenges"
   end
   

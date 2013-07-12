@@ -2,8 +2,8 @@ class CompletedTask < ActiveRecord::Base
   CORRECT_POINTS = 100
   
   attr_readonly :task_id
-  attr_protected :updated_at, :answer_id, :points_awarded, :enrollment_id, :award_points
-  attr_accessible :status_id, :task_id, :session_id, :submitted_answer_id
+  attr_protected :updated_at, :answer_id, :points_awarded, :award_points
+  attr_accessible :status_id, :task_id, :session_id, :submitted_answer_id, :enrollment_id
   attr_accessor :award_points, :correct_answer
   
   belongs_to :user
@@ -16,6 +16,7 @@ class CompletedTask < ActiveRecord::Base
   
   validates :user_id, presence: true
   validates :task_id, presence: true
+  validates :enrollment_id, presence: true
   validates_uniqueness_of :task_id, scope: :user_id
   validates :status_id, presence: true
   

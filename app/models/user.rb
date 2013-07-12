@@ -2,14 +2,14 @@ require 'open-uri'
 class User < ActiveRecord::Base
   MAX_DAILY_EMAILS = 5
   
-  attr_readonly :signup_token, :company_id
+  attr_readonly :signup_token
   attr_protected :admin, 
     :login_at, :logout_at, :locked_at,
     :is_fake_user, :is_test_user, :user_role_id,
     :earned_points, :spent_points,
     :last_email_sent_at,:emails_today
   attr_accessor :password, :password_confirmation, :guest_user, :group_id
-  attr_accessible :name, :email, :image_url, :username,
+  attr_accessible :name, :email, :image_url, :username, :company_id,
     :password,:password_confirmation, 
     :description, :title, :company_name, :education, :link, :location,
     :viewed_help, :guest_user,
@@ -101,7 +101,8 @@ class User < ActiveRecord::Base
   def self.create_with_nothing(details)
     details = {} if details.nil?
     group = Group.find(details["group_id"]) unless details["group_id"].blank?
-    user = Company.first.users.new
+    user = User.new
+    user.company_id = 1
     user.name = details["name"] || grant_anon_username
     user.email = details["email"] || "#{user.name}@metabright.com"
     user.grant_username

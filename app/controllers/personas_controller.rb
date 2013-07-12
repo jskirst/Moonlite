@@ -5,7 +5,7 @@ class PersonasController < ApplicationController
   
   def index
     @mode = "personas"
-    @personas = current_company.personas
+    @personas = Persona.all
   end
   
   def show
@@ -38,7 +38,7 @@ class PersonasController < ApplicationController
   end
   
   def create
-    @persona = current_user.company.personas.new(params[:persona])
+    @persona = Persona.new(params[:persona])
     @persona.criteria = params[:persona][:paths].collect { |id, state| id }
     if @persona.save
       redirect_to personas_path, notice: "Achievement created."

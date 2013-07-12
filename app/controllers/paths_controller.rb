@@ -44,7 +44,7 @@ class PathsController < ApplicationController
     
 
   def create
-    @path = current_user.company.paths.new(params[:path])
+    @path = current_user.paths.new(params[:path])
     @path.user_id = current_user.id
     @path.approved_at = nil
     @path.published_at = nil
@@ -74,7 +74,6 @@ class PathsController < ApplicationController
         redirect_to edit_path_path(@path.permalink)
       end
     else
-      @categories = current_user.company.categories
       render 'new'
     end
   end
@@ -266,7 +265,7 @@ class PathsController < ApplicationController
       end
     else
       @display_sign_in = true
-      session[:referer] = @path.id 
+      set_return_back_to = challenge_url(@path.permalink)
     end
     
     @similar_paths = @path.similar_paths

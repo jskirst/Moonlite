@@ -18,14 +18,18 @@ class Section < ActiveRecord::Base
   after_save :flush_cache
   before_destroy :flush_cache
       
-  def next_task(user = nil, exclude_first = false, type = [Task::MULTIPLE, Task::EXACT])
+  def next_task(user = nil, exclude_first = false, type = [Task::MULTIPLE, Task::EXACT], sub_types = [])
     type = [type] unless type.is_a? Array
+    sub_types = [sub_types] unless sub_types.is_a? Array
     
     if user.nil?
       next_tasks = tasks.where("locked_at is ? and answer_type in (?)", nil, type)
     else
       next_tasks = tasks.where("locked_at is ? and answer_type in (?)", nil, type)
         .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id)", user.id)
+      unless sub_types.empty?
+        next_tasks = next_tasks.where("answer_sub_type in (?)", sub_types)
+      end
     end
     
     unless exclude_first

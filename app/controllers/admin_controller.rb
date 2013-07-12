@@ -43,7 +43,7 @@ class AdminController < ApplicationController
   
   def paths
     conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
-    @paths = current_company.all_paths.paginate(page: params[:page], conditions: conditions).order("id DESC")
+    @paths = Paths.paginate(page: params[:page], conditions: conditions).order("id DESC")
   end
   
   def path
@@ -102,7 +102,7 @@ class AdminController < ApplicationController
   end
     
   def styles
-    @custom_style = current_company.custom_style
+    @custom_style = Company.find(1).custom_style
     unless request.get?
       if @custom_style.update_attributes(params[:custom_style])
         flash.now[:notice] = "Custom style updated."

@@ -173,12 +173,12 @@ class SectionsController < ApplicationController
       if @streak > @enrollment.longest_streak
         @enrollment.update_attribute(:longest_streak, @streak)
       end
-      @completed_task = current_user.completed_tasks.create!(task_id: @task.id, status_id: Answer::INCOMPLETE, session_id: @session_id)
+      @completed_task = current_user.completed_tasks.create!(enrollment_id: @enrollment.id, task_id: @task.id, status_id: Answer::INCOMPLETE, session_id: @session_id)
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       page = "continue"
     else
-      if @task = @section.next_task(current_user, false, Task::CREATIVE)
+      if @task = @section.next_task(current_user, false, Task::CREATIVE, Task::TEXT)
         redirect_to boss_section_path(@section, @task.id, @session_id)
         return
       else

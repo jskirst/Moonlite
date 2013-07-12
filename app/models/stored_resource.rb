@@ -21,6 +21,7 @@ class StoredResource < ActiveRecord::Base
   validates :link, length: { maximum: 255 }
   
   def self.assign(id, obj)
+    return false if id.blank?
     sr = find(id)
     raise "FATAL: STEALING RESOURCE" if sr.owner_id
     sr.owner_id = obj.id
