@@ -8,7 +8,7 @@ class TasksController < ApplicationController
   def create
     @section = Section.find(params[:task][:section_id])
     path = @section.path
-    raise "Access Denied" unless can_add_tasks(path)
+    raise "Access Denied" unless path.can_add_tasks?(current_user)
     
     @task = @section.tasks.new(params[:task])
     @task.creator_id = current_user.id

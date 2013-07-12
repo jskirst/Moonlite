@@ -162,6 +162,14 @@ class Path < ActiveRecord::Base
     return paths
   end
   
+  def can_add_tasks?(user)
+    if self.group_id and (not user.group_users.where(group_id: self.group_id, is_admin: true))
+      return false
+    else
+      return true
+    end
+  end
+  
   # Cached methods
   
   def self.cached_find(permalink)
