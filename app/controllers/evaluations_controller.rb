@@ -138,6 +138,7 @@ class EvaluationsController < ApplicationController
   end
   
   def continue
+    @show_nav_bar = false
     @evaluation = Evaluation.find(params[:evaluation_id])
     @path = @evaluation.paths.find(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)
