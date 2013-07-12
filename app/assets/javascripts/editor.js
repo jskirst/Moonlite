@@ -53,6 +53,8 @@ function clear_form(){
   $(".answers").find("input").val("");
   $(".image_preview").attr("src","").hide();
   $(".image_input_field").val("");
+  $(".image_input_field").val("");
+  $("textarea[name*=quoted_text]").val("");
 }
 
 function bind_delete_task(obj){

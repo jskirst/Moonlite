@@ -109,8 +109,6 @@ class PathsController < ApplicationController
       @path.approved_at = params[:path][:approved].to_i == 1 ? Time.now : nil
     end
     
-    @path.save
-    
     unless params[:stored_resource_id].blank?
       @path.stored_resource.destroy if @path.stored_resource
       sr = StoredResource.find(params[:stored_resource_id])
@@ -118,7 +116,11 @@ class PathsController < ApplicationController
       sr.owner_id = @path.id
       sr.owner_type = @path.class.to_s
       sr.save
+      @path.image_url = sr.obj.url
+      @path.save
     end
+    
+    @path.save
     
     if params[:path][:approved] and @enable_administration
       redirect_to admin_paths_path

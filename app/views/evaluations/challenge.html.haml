@@ -15,20 +15,6 @@
       - if @task.text?
         = render "tasks/take_text", f: f
         
-        %div.CRbuttonspace
-          = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "button button-standard", style: "float: left;"
-          
-          = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
-          = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
-
-        :javascript
-          $("#preview_button").click(function(){
-            $("input[name=mode]").val("preview");
-          });
-
-          $("#draft_button").click(function(){
-            $("input[name=mode]").val("draft");
-          });
       - else
         - if @task.image?
           = render "tasks/take_image", f: f
@@ -36,3 +22,18 @@
           = render "tasks/take_youtube", f: f
         - elsif @task.task?
           = render "tasks/take_task", f: f
+      
+      %div.CRbuttonspace
+        = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "button button-standard", style: "float: left;"
+
+        = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+        = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
+
+      :javascript
+        $("#preview_button").click(function(){
+          $("input[name=mode]").val("preview");
+        });
+
+        $("#draft_button").click(function(){
+          $("input[name=mode]").val("draft");
+        });

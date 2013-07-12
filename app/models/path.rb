@@ -42,6 +42,11 @@ class Path < ActiveRecord::Base
     end
   end
   
+  after_initialize do
+    self.percent_correct ||= 50
+    self.correct_points ||= 50
+    self.tasks_attempted ||= 5
+  end
   after_create { user.enroll!(self) }
   before_validation :grant_permalink
   after_save do

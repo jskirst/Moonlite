@@ -68,7 +68,7 @@
         - if task.new_record? or task.creative? or task.exact?
           .creative.exact.hide
             .control-group
-              %label.control-label Exact answer (case insensitive)
+              %label.control-label Exact answer (optional)
               .controls
                 = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
         

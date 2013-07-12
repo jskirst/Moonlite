@@ -163,9 +163,9 @@
             else {
               $editor.find(".step1").hide();        
               $editor.find(".step3").show();
+              $editor.find(".step3 code.question").text($editor.find("textarea[name='task[question]']").val());
             }
-          }
-          else {
+          } else {
             $editor.find(".step1").hide();        
             $editor.find(".step2").show();
           }

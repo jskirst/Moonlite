@@ -60,6 +60,12 @@ class Evaluation < ActiveRecord::Base
     
     type = [Task::CREATIVE]
     if path.group_id or completed_count(user, path, type) < 5
+      task = next_task_of_type(user, path, type)
+      return task if task
+    end
+    
+    if path.group_id
+      type = [Task::CHECKIN]
       return next_task_of_type(user, path, type)
     end
   end

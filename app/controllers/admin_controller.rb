@@ -43,7 +43,7 @@ class AdminController < ApplicationController
   
   def paths
     conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
-    @paths = Paths.paginate(page: params[:page], conditions: conditions).order("id DESC")
+    @paths = Path.paginate(page: params[:page], conditions: conditions).order("id DESC")
   end
   
   def path
