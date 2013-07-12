@@ -23,9 +23,10 @@
       %div.control-group
         %label.control-label Description (Optional)
         %div.controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
-      %div.control-group
-        %label.control-label Default code template (Optional)
-        %div.controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
+      - if @enable_administration
+        %div.control-group
+          %label.control-label Default code template (Optional)
+          %div.controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
       / For Group users we can auto-apply an image here when the challenge creation begins, or we can make adding an image optional, at which point we can have an image render to the end-user if the user supplied image is blank
       %div.control-group{ style: "margin-bottom: 5px;" }
         %label.control-label Image (Optional)

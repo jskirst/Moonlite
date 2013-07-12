@@ -39,9 +39,25 @@
               - unless task.quoted_text
                 %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
               = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
-        
+              
+        - if task.task? or task.new_record?
+          .checkin.hide
+            .control-group
+              %label.control-label
+                = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px; margin-top: -11px; margin-right: -12px;"
+              .controls{ style: "width: 400px;" }
+                %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
+                
         - if task.creative? or task.new_record?
           .creative.template_toggle{ style: (task.new_record? ? "display: none;" : "") }
+            .creative.checkin.hide
+              .control-group
+                %label.control-label
+                  = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px; margin-top: -11px; margin-right: -12px;"
+                .controls{ style: "width: 400px;" }
+                  %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
+                  %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.
+                  %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
             .control-group
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
@@ -77,7 +93,7 @@
             %label.control-label Section
             .controls
               = f.select :section_id, @sections.collect { |s| [s.name, s.id] }
-        - unless @group        
+        - unless @group
           %h4 Source        
           .control-group
             %label.control-label URL
@@ -104,19 +120,7 @@
           .control-group
             %label.control-label Other Topic
             .controls
-              = f.text_field :topic_name
-        
-        .creative.hide
-          %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
-          %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.
-          %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
-        
-        .checkin.hide
-          .control-group
-            %label.control-label
-              = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px;"
-            .controls{ style: "width: 450px;" }
-              %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
+              = f.text_field :topic_name        
 - if task.new_record? or task.creative?
   :javascript
     var editor = ace.edit("#{template_id}");
