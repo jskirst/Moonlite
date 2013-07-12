@@ -11,10 +11,6 @@
         %th= link_to "Last Login", admin_users_path(sort: "login_at")
         %th= link_to "Created", admin_users_path(sort: "created_at")
         %th= link_to "P", admin_users_path(sort: "earned_points")
-        %th CT
-        %th E
-        %th V
-        %th C
         %th
         %th
     %tbody
@@ -26,10 +22,6 @@
           %td= link_to u.visits.last.try{ |v| v.request_url.split("/").last(2).join("/").slice(0..20) }, admin_user_details_path(u.id)
           %td= u.created_at.strftime("%m/%d/%Y")
           %td= u.earned_points
-          %td= u.completed_tasks.where("status_id >= ?", 0).count
-          %td= u.enrollments.size
-          %td= u.votes.size
-          %td= u.comments.size
           %td= link_to "possess", possess_user_url(u.username)
           - if u.locked?
             %td= link_to "locked", admin_update_user_path(u), class: "mark_locked locked", remote: true, method: "put"
