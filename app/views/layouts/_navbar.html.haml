@@ -82,7 +82,7 @@
                     %div.leftboxheader Your Groups
                     %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD; border-radius: 0; "}
                       - groups.each do |group|
-                        = link_to group_path(group.permalink), style: "text-decoration: none;" do
+                        = link_to group_path(group.permalink), style: "text-decoration: none; padding: 0;" do
                           %div.singlegroupentry{ style: "padding: 6px 12px; "}
                             = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px;", class: "img-circle"
                             %div{ style: "margin-left: 5px; display: inline-block; color: gray; vertical-align: middle; "}
@@ -91,7 +91,7 @@
                   %div.leftboxheader Your Challenges
                   %div.leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:auto;"}
                     - current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").each do |e|
-                      = link_to challenge_path(e.path.permalink) do
+                      = link_to challenge_path(e.path.permalink), style:"padding:0;" do
                         %div.singleprogressentry
                           = image_tag e.path.image, style: "width: 50px; height: 50px;", alt: "#{e.path.name}"            
                           %div.challengeprogress
