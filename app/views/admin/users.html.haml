@@ -8,9 +8,8 @@
         %th Name
         %th Role
         %th Email
-        %th= link_to "Last Login", admin_users_path(sort: "login_at")
         %th= link_to "Created", admin_users_path(sort: "created_at")
-        %th= link_to "P", admin_users_path(sort: "earned_points")
+        %th= link_to "Points", admin_users_path(sort: "earned_points")
         %th
         %th
     %tbody
@@ -19,9 +18,9 @@
           %td= link_to truncate(u.name, length: 20), profile_path(u.username)
           %td= link_to u.user_role.name, update_users_role_path(u.id)
           %td= truncate(u.email, length:25)
-          %td= link_to u.visits.last.try{ |v| v.request_url.split("/").last(2).join("/").slice(0..20) }, admin_user_details_path(u.id)
           %td= u.created_at.strftime("%m/%d/%Y")
           %td= u.earned_points
+          %td= link_to "details", admin_user_details_path(u.id)
           %td= link_to "possess", possess_user_url(u.username)
           - if u.locked?
             %td= link_to "locked", admin_update_user_path(u), class: "mark_locked locked", remote: true, method: "put"
