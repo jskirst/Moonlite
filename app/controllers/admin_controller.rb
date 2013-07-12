@@ -76,7 +76,11 @@ class AdminController < ApplicationController
       @tasks = Task.paginate(page: params[:page], conditions: conditions)
     else
       task = Task.find(params[:id])
-      toggle(:reviewed_at, task)
+      if params[:deny]
+        issue = current_user.task_issues.new(task_id: task.id, issue_type: params[:deny].to_i)
+        issue.save!
+      end
+      task.update_attribute(:reviewed_at, Time.now())
       render json: { status: "success" }
     end
   end

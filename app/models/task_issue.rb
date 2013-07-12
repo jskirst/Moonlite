@@ -8,6 +8,15 @@ class TaskIssue < ActiveRecord::Base
   WRONG     = 7
   
   ISSUE_TYPES = [SPAM, SPELLING, MISPLACED, REPEAT, QUALITY, COPYRIGHT, WRONG]
+  ISSUE_TYPES_SHORT = {
+    SPAM => "Spam",
+    SPELLING => "Spelling",
+    MISPLACED => "Misplaced",
+    REPEAT => "Repeat",
+    QUALITY => "Quality",
+    COPYRIGHT => "Copyrighted",
+    WRONG => "Incorrect"
+  }
   ISSUE_TYPE_CONTENT = {
     SPAM => "Unwanted commercial content or spam",
     SPELLING => "Spelling or grammatical error",
@@ -28,7 +37,7 @@ class TaskIssue < ActiveRecord::Base
   validates_inclusion_of :issue_type, in: ISSUE_TYPES
   
   after_create do
-    if task.task_issues.where(resolved: false).size >= 2 || user.user_role.enable_administration
+    if user.user_role.enable_administration || task.task_issues.where(resolved: false).size >= 2
       task.update_attribute(:locked_at, Time.now)
       creator = task.creator
       creator.enroll!(task.path)

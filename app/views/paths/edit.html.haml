@@ -92,7 +92,7 @@
         - if @path.group_id
           = link_to "Back", paths_url, class: "button button-standard"
         - elsif @path.published? && @path.approved?
-          = link_to "View", @path.echallenge_path(@path.permalink), class: "button button-actionable"
+          = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
         - elsif @path.published?
           = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
         - else

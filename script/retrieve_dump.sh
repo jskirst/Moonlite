@@ -1,3 +1,0 @@
-#! /bin/bash
-
-curl -o ../../latest_moonlite.dump `heroku pgbackups:url --remote production`

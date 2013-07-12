@@ -52,8 +52,8 @@
       $("#submit_button").attr("disabled","disabled");
       return true;
     } else {
+      $("#submit_button").removeAttr("disabled").removeClass("disabled");
       alert("Please enter an answer before submitting.");
-      $("#submit_button").removeAttr("disabled");
       return false;
     }
   });

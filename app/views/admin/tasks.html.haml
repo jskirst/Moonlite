@@ -5,20 +5,36 @@
   %table.table
     %thead
       %tr
-        %th{ style: "width: 5%" } id
-        %th{ style: "width: 15%" } Path
+        %th{ style: "width: 4%" } id
+        %th{ style: "width: 8%" } Path
         %th{ style: "width: 10%" } User
         %th{ style: "width: 50%" } Question
         %th{ style: "width: 10%" } Type
-        %th{ style: "width: 10%" } Approve
+        %th{ style: "width: 6%" } Approve
+        %th{ style: "width: 6%" } Deny
+        %th{ style: "width: 6%" } Destroy
     %tbody
       - @tasks.to_a.each do |t|
         %tr
           %td= t.id
           %td= t.path.name
-          %td= link_to t.creator.name, profile_path(t.creator.username)
+          - if t.creator
+            %td= link_to t.creator.name, profile_path(t.creator.username)
+          - else
+            %td Creator Account Removed
           %td
             %pre.unstyled= t.question
+            %pre.unstyled= t.quoted_text
+            %ul{ style: "list-style: none;" }
+              - t.answers.each do |t|
+                %li{ style: "padding: 5px; #{'background-color: green; color: white; border-radius: 3px;' if t.is_correct}"}= t.content
           %td= Task::TYPES[t.answer_type]
           %td= link_to "approve", admin_update_task_path(t), class: "mark_reviewed", remote: true, method: "put"
+          %td
+            .dropdown
+              %a{ data: { toggle: "dropdown" } } deny
+              %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
+                - TaskIssue::ISSUE_TYPES_SHORT.each do |id, name|
+                  %li= link_to name, admin_update_task_path(t, deny: id), class: "mark_reviewed", remote: true, method: "put"
+          %td= link_to "destroy", task_url(t), class: "mark_reviewed", remote: true, method: "delete", confirm: "Are you sure?"
   = link_to "Refresh", admin_tasks_path, class: "button button-standard"
