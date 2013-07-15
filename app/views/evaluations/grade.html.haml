@@ -14,6 +14,8 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .aboutcontainer{ width: 900px; margin-top: 25px; border-radius: 0; }
   .header { margin: 0 0 20px 0; }
+  [data-tip]:before { left: 8px; }
+  [data-tip]:after { left: -2px; }
   
 #evaluations_overview.aboutcontainer
   #grade.aboutbox
@@ -23,19 +25,24 @@
         %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
         %h3{ style: "font-size:20px; "}= @evaluation.title
       .actions
-        = link_to group_evaluation_url(@group, @evaluation), title: "Back" do
-          = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
+        = link_to group_evaluation_url(@group, @evaluation) do
+          %div{ "data-tip" => "Back" }
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
         - if @evaluation_enrollment.archived_at
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), title: "Un-Archive", method: :put do 
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put do 
+            %div{ "data-tip" => "Un-Archive" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
         - elsif @evaluation_enrollment.favorited_at
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), title: "Un-Favorite", method: :put do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put do
+            %div{ "data-tip" => "Un-Favorite" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
         - else
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), title: "Archive", method: :put do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), title: "Favorite", method: :put do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put do
+            %div{ "data-tip" => "Archive" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
+          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
+            %div{ "data-tip" => "Favorite" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0"
     .body        
       - path = @results.first
       %ul#results_list.nav.nav-tabs

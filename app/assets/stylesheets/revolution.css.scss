@@ -1377,7 +1377,6 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
             height: 25px; 
             width: 25px; 
             opacity: .7;
-            margin-right: 7px;
             
             &:hover { opacity: .9; }
           }
@@ -1400,7 +1399,12 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 #grade {
   .header{
     .actions {
-      
+      a {
+        div {
+          display: inline-block;
+          margin-right: 8px;
+        }
+      }
     }
   }
   .body{
