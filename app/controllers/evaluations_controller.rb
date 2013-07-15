@@ -1,6 +1,6 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
-  before_filter :load_group, except: [:take, :continue, :challenge, :answer, :save]
+  before_filter :load_group, except: [:take, :continue, :challenge, :answer]
   before_filter :load_evaluation, only: [:edit, :update, :review, :grade, :save]
   before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
