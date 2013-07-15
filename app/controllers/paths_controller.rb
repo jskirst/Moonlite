@@ -234,7 +234,7 @@ class PathsController < ApplicationController
         .where("completed_tasks.status_id = ?", Answer::CORRECT)
         .where("submitted_answers.locked_at is ?", nil)
         .where("submitted_answers.reviewed_at is not ?", nil)
-        .where("path_id = ?", @path.id)
+        .where("sections.path_id = ?", @path.id)
       @title = @feed.posts.first.question
       render "submission" and return
     end
