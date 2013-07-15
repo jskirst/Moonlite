@@ -52,17 +52,20 @@
               -#   %p Percentile Rank
               .big_number_space
                 .big_number
-                  98
+                  - if r[:metascore] == 0
+                    N/A
+                  - else
+                    = r[:metapercentile]
                 .text
                   MetaPercentile Ranking
               %table.table.overview
                 %tbody
                 %tr
                   %td
-                    %h3 #{r[:percent_correct]}%
-                    %p Multiple Choice
+                    %h3 #{r[:performance].percent_correct}%
+                    %p Correct MC
                   %td
-                    %h3 16 sec
+                    %h3 #{r[:performance].avg_time_to_answer.round(2)}s
                     %p Avg. Time per MC
                   %td
                     %h3= r[:creative].count
@@ -76,39 +79,41 @@
                   .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
                     Strengths
                   .body
-                    - strengths = r[:strengths_and_weaknesses].select{ |topic_name, stats| (stats[0].to_f / (stats[0]+stats[1])) > 0.75 }
-                    - if strengths.empty?
+                    - if r[:performance].strengths.empty?
                       %p{ style: "font-size: 12px;" } More data required.
                     - else
                       %ul
-                        - strengths.each do |topic_name, stats|
+                        - r[:performance].strengths.each do |topic_name, stats|
                           %li= topic_name
                 .weaknesses 
                   .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
                     Weaknesses
                   .body
-                    - weaknesses = r[:strengths_and_weaknesses].select{ |topic_name, stats| (stats[1].to_f / (stats[0]+stats[1])) > 0.5 }
-                    - if weaknesses.empty?
+                    - if r[:performance].weaknesses.empty?
                       %p{ style: "font-size: 12px;" } More data required.
                     - else
                       %ul
-                        - weaknesses.each do |topic_name, stats|
+                        - r[:performance].weaknesses.each do |topic_name, stats|
                           %li= topic_name
                 
-            %div
-              %a.header_link{ "data-target" => "#cr", "data-toggle" => "collapse", :type => "button"}  Creative Response
-              #cr.collapse.in{ style: "margin-bottom: 20px;"}
-                %ol
-                  - r[:creative].each do |completed_task|
-                    %li
-                      .answer
-                        - task = completed_task.task
-                        %p= task.question
-                        %pre= completed_task.submitted_answer.try(:content).to_s
+            - if r[:creative].any?
+              %div
+                %a.header_link{ "data-target" => "#cr", "data-toggle" => "collapse", :type => "button"}  Creative Response
+                #cr.collapse.in{ style: "margin-bottom: 20px;"}
+                  %ol
+                    - r[:creative].each do |completed_task|
+                      %li
+                        .answer
+                          - task = completed_task.task
+                          %p= task.question
+                          %pre= completed_task.submitted_answer.try(:content).to_s
             - if r[:core].any?
               %div
-                %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice (click to expand)
-                #mc.collapse
+                - if r[:creative].any?
+                  %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice (click to expand)
+                - else
+                  %a.header_link Multiple Choice
+                #mc{ class: "#{"collapse" if r[:creative].any?}" }
                   %ol
                     - r[:core].each do |completed_task|
                       %li

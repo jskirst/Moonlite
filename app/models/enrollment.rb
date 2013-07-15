@@ -172,21 +172,6 @@ class Enrollment < ActiveRecord::Base
     return [self.id, metascore, metapercentile, (t1 - t0)].join(", ")
   end
   
-  def strengths_and_weaknesses(cts = nil)
-    if cts.nil?
-      cts = completed_tasks.joins(:topic)
-        .select("completed_tasks.status_id, completed_tasks.points_awarded, topics.*")
-        .to_a
-    end
-    saw = {}
-    cts.each do |ct|
-      n = ct.name
-      saw[n] = [0, 0] if saw[n].nil?
-      saw[n] = ct.correct? ? [saw[n][0] + 1, saw[n][1]] : [saw[n][0], saw[n][1] + 1]
-    end
-    return saw.select{ |name, stats| (stats[0] + stats[1]) >= 2 }
-  end
-  
   private
   
   class Score

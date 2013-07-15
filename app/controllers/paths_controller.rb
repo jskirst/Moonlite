@@ -46,9 +46,14 @@ class PathsController < ApplicationController
   def create
     @path = current_user.paths.new(params[:path])
     @path.user_id = current_user.id
-    @path.approved_at = nil
-    @path.published_at = nil
-    @path.group_id = params[:group_id]
+    if params[:group_id]
+      @path.group_id = params[:group_id]
+      now = Time.now
+      @path.published_at = now
+      @path.public_at = now
+      @path.approved_at = now
+    end
+    
     if @path.save
       unless params[:stored_resource_id].blank?
         assign_resource(@path, params[:stored_resource_id])
