@@ -23,8 +23,14 @@ class EvaluationsController < ApplicationController
     @evaluations = @evaluation.evaluation_enrollments.where("submitted_at is not ?", nil)
       .joins(:user)
       .select("evaluation_enrollments.*, users.*")
+    @archive_exists = @evaluation.evaluation_enrollments.where("submitted_at is not ?", nil)
+      .where("evaluation_enrollments.archived_at is not ?", nil)
+      .any?
     unless params[:archived]
       @evaluations = @evaluations.where("evaluation_enrollments.archived_at is ?", nil)
+    end
+    if params[:archived]
+      @showing_archived = true
     end
     @paths.each do |p|
       e = "e#{p.id}"

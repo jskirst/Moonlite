@@ -5,6 +5,7 @@
   .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: 25px; border-radius: 0;  }
   [data-tip]:before { left: 4px; }
   [data-tip]:after { left: -50px; }
+  .no_data [data-tip]:after { width: 180px; height: 56px; top: -73px; white-space: normal;}
 
 
 #evaluation_manager.aboutcontainer
@@ -32,8 +33,13 @@
                 / %div.hint.hint--left{ data: {hint: "Percentile info not yet available. At least 20 people must complete this Challenge."} }
                 /   %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;"}
                 
-                %div{ "data-tip" => "These are the rankings for your candidates", style: "display: inline-block;"}
-                  %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
+                - if 9 == 0
+                  %div{ "data-tip" => "Percentile rankings for this Challenge.", style: "display: inline-block;"}
+                    %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
+                - else
+                  .no_data{ style: "display: inline-block;"}
+                    %div{ "data-tip" => "Not enough data. There needs to be at least 20 participants in a Challenge to calculate percentile rankings."}
+                      %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
                   
             %th Submitted
             %th{ style: "text-align: right;" }
@@ -51,8 +57,14 @@
               %td
                 - if e.favorited_at
                   %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_lime.png", style: "width: 15px; height: 15px; margin-top: -3px;" }
-          - if @evaluations.empty?
+          - if @archive_exists
+            %tr
+              %td{ style: "border: none; "}
+                - if @showing_archived
+                  = link_to "- Hide archived candidates", group_evaluation_url(@group, @evaluation), style: "color: #404040"
+                - else
+                  = link_to "+ Show archived candidates", group_evaluation_url(@group, @evaluation, archived: true), style: "color: #404040"
+          - if @evaluations.empty? and not @archive_exists
             %tr
               %td{ colspan: 4, style: "border-top: none;" } No one has taken this evaluation yet.
-          %tr
-            %td{ colspan: 4, style: "text-align: right; border-top: none;" }= link_to "Show archived evaluations.", group_evaluation_url(@group, @evaluation, archived: true)
+
