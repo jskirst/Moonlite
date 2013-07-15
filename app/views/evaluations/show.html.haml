@@ -50,7 +50,11 @@
                 = link_to "#{e.name}", grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
               %td= e.email
               - @paths.each do |p|
-                %td #{e["e#{p.id}_total_points"]}%
+                %td
+                  - if e["e#{p.id}_metapercentile"] == "0"
+                    N/A
+                  - else
+                    #{e["e#{p.id}_metapercentile"]}%
               %td
                 - if e.submitted_at
                   #{time_ago_in_words(e.submitted_at)} ago

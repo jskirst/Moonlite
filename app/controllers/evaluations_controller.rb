@@ -80,7 +80,8 @@ class EvaluationsController < ApplicationController
     @results = []
     @evaluation.paths.each do |path|
       @enrollment = @user.enrollments.find_by_path_id(path.id)
-      core = @enrollment.completed_tasks.joins(:task).joins(:topic)
+      core = @enrollment.completed_tasks.joins(:task => :topic)
+        .select("topics.*, tasks.*, completed_tasks.*")
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
       creative = @enrollment.completed_tasks.joins(:task)
@@ -90,26 +91,15 @@ class EvaluationsController < ApplicationController
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::CHECKIN]).to_a
       
-      if core.size == 0
-        number_correct = 0
-        number_incorrect = 0
-        percent_correct = 0
-      else
-        number_correct = core.select{ |ct| ct.status_id == Answer::CORRECT }.size
-        number_incorrect = core.size - number_correct
-        percent_correct = ((number_correct.to_f / core.size) * 100).to_i
-      end
-      
       @results << { 
         name: path.name, 
         permalink: path.permalink, 
-        number_correct: number_correct,
-        number_incorrect: number_incorrect,
-        percent_correct: percent_correct,
         core: core,
         creative: creative,
         tasks: tasks,
-        strengths_and_weaknesses: @enrollment.strengths_and_weaknesses
+        performance: PerformanceStatistics.new(core),
+        metascore: @enrollment.metascore,
+        metapercentile: @enrollment.metapercentile
       }
     end
   end

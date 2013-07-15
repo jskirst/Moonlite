@@ -2,6 +2,8 @@
 %html
   %head
     = render "layouts/head"
+    :javascript
+      $('#page_loading').hide();
   %body
     = render "layouts/custom_styles"
     - if current_user
@@ -44,6 +46,7 @@
       
       $(function(){
         $(".alert").fadeOut(10000);
+        $('#page_loading').hide();
       })
       
       $("body").on("ajax:complete", ".hovercard_link", function(jqXHR, data){
