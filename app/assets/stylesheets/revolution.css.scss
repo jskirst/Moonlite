@@ -1406,10 +1406,22 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   .body{
     .evaluations{
       .challenge_stats {
-        text-align: center;
-        margin-top: 20px;
-        margin-bottom: 20px;
+        margin: 20px 0 20px 25px;
         
+        .big_number_space{
+          display: inline-block; 
+          color: rgb(116, 116, 116); 
+          margin-right: 12px; 
+          text-align: center;
+          
+          .big_number {
+            font-size: 95px; 
+            line-height: 95px ;
+          }
+          .text {
+            font-size: 14px;
+          }
+        }
         .myrank{
           margin-right: 20px;
           top: 36px;
@@ -1418,6 +1430,42 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           display: inline-block;
           width: auto;
           vertical-align: top;
+        }
+        .strengths_weaknesses {
+          display: inline-block; margin-left: 20px; vertical-align: top; width: 280px;
+          .header {
+            padding: 0;
+            margin: 0;
+            font-weight: bold;
+          }
+          .strengths {
+            li {
+              background-color: rgba(13, 107, 13, 0.63);
+              border: 1px solid rgba(13, 107, 13, 0.63);
+            }
+          }
+          .weaknesses {
+            li {
+              background-color: rgba(185, 0, 0, 0.62);
+              border: 1px solid rgba(185, 0, 0, 0.62);
+            }
+          }
+          .body {
+            ul{ 
+              margin: 8px 0 0 0;
+
+              li { 
+                color: #fff;
+                margin: 0 10px 10px 0;
+                padding: 0px 6px;
+                display: inline-block;
+                line-height: 24px;
+                -moz-border-radius: 6px;
+                -webkit-border-radius: 6px;
+                border-radius: 6px;
+              }
+            }
+          }
         }
       }
       .header_link {
