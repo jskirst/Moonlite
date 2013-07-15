@@ -90,8 +90,11 @@
           %span 4
         .instructions
           %h4 Submit Application
-          = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-          %p Once all previous steps are completed, you'll be able to submit your application.
           - if evaluation_completed
-            %div{ style: "text-align: center; margin-top: 12px; "}
-              = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
+            - if @evaluation_enrollment.submitted?
+              %p You successfully submitted this application #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago.
+            - else
+              = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+              %p Once all previous steps are completed, you'll be able to submit your application.
+              %div{ style: "text-align: center; margin-top: 12px; "}
+                = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"

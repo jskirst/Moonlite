@@ -20,9 +20,12 @@ class EvaluationsController < ApplicationController
   def show
     @evaluation = @group.evaluations.find(params[:id])
     @paths = @evaluation.paths
-    @evaluations = @evaluation.evaluation_enrollments.where("evaluation_enrollments.archived_at is ? and submitted_at is not ?", nil, nil)
+    @evaluations = @evaluation.evaluation_enrollments.where("submitted_at is not ?", nil)
       .joins(:user)
       .select("evaluation_enrollments.*, users.*")
+    unless params[:archived]
+      @evaluations = @evaluations.where("evaluation_enrollments.archived_at is ?", nil)
+    end
     @paths.each do |p|
       e = "e#{p.id}"
       @evaluations = @evaluations.joins("LEFT JOIN enrollments #{e} on #{e}.user_id=evaluation_enrollments.user_id and #{e}.path_id=#{p.id}")
@@ -70,13 +73,14 @@ class EvaluationsController < ApplicationController
     @user = @evaluation_enrollment.user
     @results = []
     @evaluation.paths.each do |path|
-      core = @user.completed_tasks.joins(:task)
+      @enrollment = @user.enrollments.find_by_path_id(path.id)
+      core = @enrollment.completed_tasks.joins(:task).joins(:topic)
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
-      creative = @user.completed_tasks.joins(:task)
+      creative = @enrollment.completed_tasks.joins(:task)
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::CREATIVE]).to_a
-      tasks = @user.completed_tasks.joins(:task)
+      tasks = @enrollment.completed_tasks.joins(:task)
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::CHECKIN]).to_a
       
@@ -98,7 +102,8 @@ class EvaluationsController < ApplicationController
         percent_correct: percent_correct,
         core: core,
         creative: creative,
-        tasks: tasks
+        tasks: tasks,
+        strengths_and_weaknesses: @enrollment.strengths_and_weaknesses
       }
     end
   end
@@ -128,8 +133,6 @@ class EvaluationsController < ApplicationController
       @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)
       if @evaluation_enrollment.nil?
         @evaluation.evaluation_enrollments.create!(user_id: current_user.id, evaluation_id: @evaluation.id)
-      elsif @evaluation_enrollment.submitted_at
-        redirect_to submit_group_evaluation_url(@group, @evaluation)
       end
     end
     @group = @evaluation.group

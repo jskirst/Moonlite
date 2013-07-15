@@ -56,13 +56,11 @@
                     %div= link_to truncate(t.question, length: 145), take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
-                      - if t.status_id.to_i == Answer::INCOMPLETE
+                      - if t.status_id.to_i == Answer::INCOMPLETE or t.status_id.to_i == Answer::INCORRECT
                         = link_to "Draft", take_section_path(@current_section, task_id: t.id), class: "label label-info"
                       - elsif t.status_id.to_i == Answer::CORRECT
                         = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                         %span.points= t.points_awarded.to_i.to_s + " points"
-                      - else
-                        - raise "Bad status: #{t.status_id.to_s}"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
       
