@@ -107,6 +107,11 @@ class Enrollment < ActiveRecord::Base
   # MS = MS + (core_tasks_taken_count / population_average_core_tasks_taken_count) * TTM
   
   def calculate_metascore
+    unless path.correct_points and path.tasks_attempted and path.percent_correct
+      self.metascore = 0
+      save! and return
+    end
+    
     cts = completed_tasks.joins(:task).where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
     total_cts = cts.count
     return 0 if total_cts == 0
