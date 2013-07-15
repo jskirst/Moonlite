@@ -3,6 +3,8 @@
   .aboutbox{ border-radius: 0; }
   .aboutbox .header { margin-bottom: 10px; }
   .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: 25px; border-radius: 0;  }
+  [data-tip]:before { left: 4px; }
+  [data-tip]:after { left: -50px; }
 
 
 #evaluation_manager.aboutcontainer
@@ -26,12 +28,12 @@
               %th{ title: p.name }
                 = truncate(p.name, length: 10, separator: ' ')
                 
-                / If custom challenge and <10 ppl have enrolled, then...
-                / %div.hint.hint--left{ data: {hint: "Percentile info not yet available. At least 10 people must complete this Challenge."} }
+                / If custom challenge and <20 ppl have enrolled, then...
+                / %div.hint.hint--left{ data: {hint: "Percentile info not yet available. At least 20 people must complete this Challenge."} }
                 /   %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;"}
                 
-                %div.hint.hint--left{ data: {hint: "These are the percentile rankings for your candidates."} }
-                  %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;"}
+                %div{ "data-tip" => "These are the rankings for your candidates", style: "display: inline-block;"}
+                  %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
                   
             %th Submitted
             %th{ style: "text-align: right;" }
