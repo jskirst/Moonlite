@@ -86,18 +86,24 @@
                   .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
                     Strengths
                   .body
-                    %ul
-                      %li Stuff
-                      %li Junk
-                      %li Toys
+                    - strengths = r[:strengths_and_weaknesses].select{ |topic_name, stats| (stats[0].to_f / (stats[0]+stats[1])) > 0.75 }
+                    - if strengths.empty?
+                      %p{ style: "font-size: 12px;" } More data required.
+                    - else
+                      %ul
+                        - strengths.each do |topic_name, stats|
+                          %li= topic_name
                 .weaknesses 
                   .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
                     Weaknesses
                   .body
-                    %ul
-                      %li Ugly stuff
-                      %li Ugly Junk
-                      %li Poo
+                    - weaknesses = r[:strengths_and_weaknesses].select{ |topic_name, stats| (stats[1].to_f / (stats[0]+stats[1])) > 0.5 }
+                    - if weaknesses.empty?
+                      %p{ style: "font-size: 12px;" } More data required.
+                    - else
+                      %ul
+                        - weaknesses.each do |topic_name, stats|
+                          %li= topic_name
                 
             %div
               %a.header_link{ "data-target" => "#cr", "data-toggle" => "collapse", :type => "button"}  Creative Response

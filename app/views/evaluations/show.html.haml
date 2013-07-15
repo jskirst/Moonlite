@@ -54,3 +54,5 @@
           - if @evaluations.empty?
             %tr
               %td{ colspan: 4, style: "border-top: none;" } No one has taken this evaluation yet.
+          %tr
+            %td{ colspan: 4, style: "text-align: right; border-top: none;" }= link_to "Show archived evaluations.", group_evaluation_url(@group, @evaluation, archived: true)
