@@ -45,20 +45,25 @@
       .evaluations
         - @results.each do |r|
           .evaluation.hide{ id: r[:permalink] }
-            %h3= r[:name]
+            %h3 Candidate Summary
             .challenge_stats
               -# .myrank
               -#   %span #
               -#   %p Percentile Rank
+              .big_number_space
+                .big_number
+                  98
+                .text
+                  MetaPercentile Ranking
               %table.table.overview
                 %tbody
                 %tr
                   %td
-                    %h3 #{r[:number_correct]}/#{r[:number_correct]+r[:number_incorrect]}
+                    %h3 #{r[:percent_correct]}%
                     %p Multiple Choice
                   %td
-                    %h3 #{r[:percent_correct]}%
-                    %p Percent correct
+                    %h3 16 sec
+                    %p Avg. Time per MC
                   %td
                     %h3= r[:creative].count
                     %p Creative Response
@@ -66,6 +71,24 @@
                     %td
                       %h3 *#*
                       %p Tasks
+              .strengths_weaknesses{ style: ""}
+                .strengths 
+                  .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
+                    Strengths
+                  .body
+                    %ul
+                      %li Stuff
+                      %li Junk
+                      %li Toys
+                .weaknesses 
+                  .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
+                    Weaknesses
+                  .body
+                    %ul
+                      %li Ugly stuff
+                      %li Ugly Junk
+                      %li Poo
+                
             %div
               %a.header_link{ "data-target" => "#cr", "data-toggle" => "collapse", :type => "button"}  Creative Response
               #cr.collapse.in{ style: "margin-bottom: 20px;"}
