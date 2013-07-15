@@ -20,11 +20,18 @@
 #evaluations_overview.aboutcontainer
   #grade.aboutbox
     .header
-      = image_tag @user.picture, style:"display:inline; height:61px;", alt: "Stoney"
-      %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
-        %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
-        %h3{ style: "font-size:20px; "}= @evaluation.title
+      %div
+        = image_tag @user.picture, style:"display:inline; height:61px;", alt: "Stoney"
+        %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
+          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
+          %h3{ style: "font-size:20px; "}= @evaluation.title
+        %div{ style: "display: inline-block; vertical-align: top; float: right; text-align: right; margin-top: 10px; "}
+          %h3{ style: "font-size:17px; line-height: 25px"}
+            = link_to @user.email, "mailto:#{@user.email}"
+          %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{@user.state}, #{@user.country}
       .actions
+        - if @evaluation_enrollment.submitted_at
+          %span.submitted_at Submitted #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago
         = link_to group_evaluation_url(@group, @evaluation) do
           %div{ "data-tip" => "Back" }
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
