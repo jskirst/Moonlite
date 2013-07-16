@@ -16,6 +16,8 @@
   .header { margin: 0 0 20px 0; }
   [data-tip]:before { left: 7px; }
   [data-tip]:after { left: -17px; }
+  .text [data-tip]:after { width: 276px; height: 127px; top: 23px; left:-20px; white-space: normal;}
+  .text [data-tip]:before { left: 3px; }
   
 #evaluations_overview.aboutcontainer
   #grade.aboutbox
@@ -38,18 +40,18 @@
         - if @evaluation_enrollment.archived_at
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put do 
             %div{ "data-tip" => "Un-Archive" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0;"
         - elsif @evaluation_enrollment.favorited_at
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put do
             %div{ "data-tip" => "Un-Favorite" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0;"
         - else
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put do
             %div{ "data-tip" => "Archive" }
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
             %div{ "data-tip" => "Favorite" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0"
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
     .body        
       - path = @results.first
       %ul#results_list.nav.nav-tabs
@@ -72,18 +74,20 @@
                     = r[:metapercentile]
                 .text
                   MetaPercentile Ranking
+                  .tip-below{ style: "display: inline-block;", "data-tip" => "This is the percentile ranking for your candidate in this Challenge. Our percentile algorithm approximates how talented this person is compared to all other people who have also completed this Challenge. For example, a score of 97 would mean we estimate this person to be more adept that 97% of the other people who have taken this Challenge. "}
+                    %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
               %table.table.overview
                 %tbody
                 %tr
                   %td
                     %h3 #{r[:performance].percent_correct}%
-                    %p Correct MC
+                    %p{ title: "Percent of multiple choice questions answered correctly."} Correct MC
                   %td
-                    %h3 #{r[:performance].avg_time_to_answer.round(2)}s
-                    %p Avg. Time per MC
+                    %h3 #{r[:performance].avg_time_to_answer.round(1)}s
+                    %p{ title: "Average response time per multiple choice question."} Avg. Time per MC
                   %td
                     %h3= r[:creative].count
-                    %p Creative Response
+                    %p{ title: "Number of Creative Responses submitted."} Creative Response
               .strengths_weaknesses{ style: ""}
                 .strengths 
                   .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
