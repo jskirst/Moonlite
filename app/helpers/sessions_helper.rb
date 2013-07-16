@@ -175,6 +175,15 @@ module SessionsHelper
             .where("group_users.is_admin = ?", true)
             .to_a
           @groups = nil if @groups.empty?
+          if @groups
+            group_id = params[:g] || session[:g]
+            if group_id
+              @group = @groups.select{ |g| g.id.to_s == group_id.to_s }.first
+            else
+              @group = @groups.first
+            end
+          end
+          session[:g] = @group.id
         end
       end
     end

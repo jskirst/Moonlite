@@ -27,7 +27,7 @@ class SearchController < ApplicationController
     @countries.compact!
   end
   
-  def results
+  def create
     search = Search.new
     @results = search.submit(params[:search])
     render partial: "search/results"

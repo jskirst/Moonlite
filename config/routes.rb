@@ -78,6 +78,14 @@ Metabright::Application.routes.draw do
     end
     
     resources :paths, path: "c"
+    
+    resource :search, path: "s", controller: "search" do
+      member do
+        get :checkout
+        put :purchase
+        get :purchases
+      end
+    end
   end
   get '/e/:evaluation_id/continue/:path_id' => 'evaluations#continue', as: "continue_evaluation"
   get '/e/:evaluation_id/continue/:path_id/:task_id' => 'evaluations#continue', as: "continue_task_evaluation"
@@ -131,9 +139,6 @@ Metabright::Application.routes.draw do
 	resources :user_roles
 	
 	root :to => 'pages#home'
-	get '/search' => "search#new"
-	post '/search/results' => "search#results"
-	post '/search/checkout' => "search#checkout"
 	
 	match '/newsfeed' => 'pages#newsfeed'
   match '/intro' => 'pages#intro'
@@ -160,26 +165,28 @@ Metabright::Application.routes.draw do
 	match '/stored_resources' => 'stored_resources#create', via: :put
 	match '/stored_resources/:id' => 'stored_resources#destroy', via: :delete, as: 'delete_stored_resource'
 	
-  get '/admin/overview' => 'admin#overview'
-  get '/admin/settings' => 'admin#settings'
-  get '/admin/users' => 'admin#users'
-  get '/admin/funnel' => 'admin#funnel'
-  get '/admin/visits' => 'admin#visits'
-  get '/admin/visit/:visit_id' => 'admin#visit', as: "admin_visit"
-  put '/admin/users/:id/' => 'admin#users', as: 'admin_update_user'
-  get '/admin/user/:id/' => 'admin#user', as: 'admin_user_details'
-  get '/admin/paths' => 'admin#paths'
-  get '/admin/path/:id' => 'admin#path', as: 'admin_edit_path'
-  get '/admin/submissions' => 'admin#submissions'
-  put '/admin/submissions/:id' => 'admin#submissions', as: 'admin_update_submission'
-  get '/admin/tasks' => 'admin#tasks'
-  put '/admin/tasks/:id' => 'admin#tasks', as: 'admin_update_task'
-  get '/admin/comments' => 'admin#comments'
-  put '/admin/comments/:id' => 'admin#comments', as: 'admin_update_comment'
-  get '/admin/styles' => 'admin#styles'
-  put '/admin/styles' => 'admin#styles'
-  get '/admin/groups' => 'admin#groups'
-  get '/admin/groups/:group_id' => 'admin#group', as: "admin_group"
+	scope '/admin' do
+    get '/overview' => 'admin#overview', as: "admin_overview"
+    get '/settings' => 'admin#settings', as: "admin_settings"
+    get '/users' => 'admin#users', as: "admin_users"
+    get '/funnel' => 'admin#funnel', as: "admin_funnel"
+    get '/visits' => 'admin#visits', as: "admin_visits"
+    get '/visit/:visit_id' => 'admin#visit', as: "admin_visit"
+    put '/users/:id/' => 'admin#users', as: 'admin_update_user'
+    get '/user/:id/' => 'admin#user', as: 'admin_user_details'
+    get '/paths' => 'admin#paths', as: "admin_paths"
+    get '/path/:id' => 'admin#path', as: 'admin_edit_path'
+    get '/submissions' => 'admin#submissions', as: "admin_submissions"
+    put '/submissions/:id' => 'admin#submissions', as: 'admin_update_submission'
+    get '/tasks' => 'admin#tasks', as: "admin_tasks"
+    put '/tasks/:id' => 'admin#tasks', as: 'admin_update_task'
+    get '/comments' => 'admin#comments', as: "admin_comments"
+    put '/comments/:id' => 'admin#comments', as: 'admin_update_comment'
+    get '/styles' => 'admin#styles', as: "admin_styles"
+    put '/styles' => 'admin#styles', as: "admin_styles"
+    get '/groups' => 'admin#groups', as: "admin_groups"
+    get '/groups/:group_id' => 'admin#group', as: "admin_group"
+  end 
   
   match '/locallink' => 'sessions#locallink'
   match '/auth/failure' => 'sessions#auth_failure'

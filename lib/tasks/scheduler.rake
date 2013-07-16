@@ -177,6 +177,28 @@ task :test_send_follow_alert => :environment do
   end
 end
 
+task :set_latitude_and_longitude => :environment do
+  require 'geocoder'
+  
+  @locations = User.select("DISTINCT on (city, state, country) city, state, country")
+    .where("state is not ? and country is not ?", nil, nil)
+    .where("users.latitude is ? or users.longitude is ?", nil, nil).group("city, state, country").to_a
+  puts "Found #{@locations.size} locations."
+  
+  @locations.each do |l|
+    puts l.to_yaml
+    computed_location = Geocoder.search([l.city, l.state, l.country].join(", ")).first
+    next if computed_location.nil?
+    lat = computed_location.data["geometry"]["location"]["lat"]
+    lng = computed_location.data["geometry"]["location"]["lng"]
+    puts "#{lat}, #{lng}"
+  
+    @users = User.where("city = ? and state = ? and country = ?", l.city, l.state, l.country)
+    puts "Found #{@users.count} with this location."
+    @users.update_all("latitude = #{lat}, longitude = #{lng}")
+  end
+end
+
 task :cache_warmup => :environment do
   ap Rails.cache.stats
   

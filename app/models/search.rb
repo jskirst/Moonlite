@@ -33,10 +33,13 @@ class Search
   
   def results
     init_users
-    filter_by_paths
-    filter_by_country
-    filter_by_state
-    filter_by_seeking
+    
+    sort_by_paths
+    sort_by_seeking
+    
+    sort_by_country
+    sort_by_state
+    
     construct_results
   end
   
@@ -44,7 +47,7 @@ class Search
     self.users = User.where("locked_at is ?", nil).select("users.id, users.name").group("users.id")
   end
   
-  def filter_by_paths
+  def sort_by_paths
     self.path_ids = []
     orders = []
     paths.each do |id,status|
@@ -66,19 +69,26 @@ class Search
     self.users = users.order(orders.join(","))
   end
   
-  def filter_by_country
+  def sort_by_country
+    self.users = self.users.to_a unless self.users.is_a? Array
     unless country == "ALL"
+      # Return - 1 if b is closer to desired country then a
+      # Return 0 if they are the same distance
+      # Return + 1 if first a is closer than b
+      self.users.sort |a, b|
+        if a.country == self.country and b.country == self.country
+          return 0
       self.users = users.where("country = ?", country)
     end
   end
   
-  def filter_by_state
+  def sort_by_state
     unless country == "ALL" or state == "ALL"
       self.users = users.where("state = ?", state)
     end
   end
   
-  def filter_by_seeking
+  def sort_by_seeking
     all_blank = not(full_time or part_time or internship)
     conditions = []
     conditions << "wants_full_time = ?" if full_time or all_blank

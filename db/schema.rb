@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130628123912) do
+ActiveRecord::Schema.define(:version => 20130716015145) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -93,6 +93,18 @@ ActiveRecord::Schema.define(:version => 20130628123912) do
 
   add_index "completed_tasks", ["submitted_answer_id"], :name => "index_completed_tasks_on_submitted_answer_id"
   add_index "completed_tasks", ["user_id", "task_id"], :name => "index_completed_tasks_on_user_id_and_task_id"
+
+  create_table "contacts", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "owner_id"
+    t.datetime "purchased_at"
+    t.datetime "paid_at"
+    t.datetime "contacted_at"
+    t.datetime "responded_at"
+    t.text     "response"
+    t.integer  "response_status", :default => 0
+    t.decimal  "amount_paid"
+  end
 
   create_table "custom_styles", :force => true do |t|
     t.integer  "owner_id"
@@ -455,20 +467,20 @@ ActiveRecord::Schema.define(:version => 20130628123912) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                                           :null => false
+    t.datetime "updated_at",                                                           :null => false
     t.string   "encrypted_password"
     t.string   "salt"
-    t.boolean  "admin",              :default => false
-    t.integer  "earned_points",      :default => 0
-    t.integer  "spent_points",       :default => 0
+    t.boolean  "admin",                                             :default => false
+    t.integer  "earned_points",                                     :default => 0
+    t.integer  "spent_points",                                      :default => 0
     t.string   "image_url"
     t.string   "signup_token"
     t.integer  "company_id"
     t.integer  "user_role_id"
     t.string   "username"
-    t.boolean  "is_fake_user",       :default => false
-    t.boolean  "is_test_user",       :default => false
+    t.boolean  "is_fake_user",                                      :default => false
+    t.boolean  "is_test_user",                                      :default => false
     t.datetime "login_at"
     t.datetime "logout_at"
     t.string   "description"
@@ -477,11 +489,11 @@ ActiveRecord::Schema.define(:version => 20130628123912) do
     t.string   "title"
     t.string   "location"
     t.string   "link"
-    t.boolean  "is_locked",          :default => false
+    t.boolean  "is_locked",                                         :default => false
     t.string   "large_image_url"
     t.text     "viewed_help"
     t.datetime "locked_at"
-    t.integer  "emails_today",       :default => 0
+    t.integer  "emails_today",                                      :default => 0
     t.datetime "last_email_sent_at"
     t.string   "city"
     t.string   "state"
@@ -491,6 +503,8 @@ ActiveRecord::Schema.define(:version => 20130628123912) do
     t.boolean  "wants_part_time"
     t.boolean  "wants_internship"
     t.boolean  "wants_university"
+    t.decimal  "latitude",           :precision => 10, :scale => 6
+    t.decimal  "longitude",          :precision => 10, :scale => 6
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

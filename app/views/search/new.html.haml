@@ -24,7 +24,7 @@
 
 #search
   .single_pane
-    = form_for(@search, url: search_results_path, html: { class: "form-horizontal", id: "search_form" }, remote: true) do |f|
+    = form_for(@search, url: group_search_url(@group), html: { class: "form-horizontal", id: "search_form" }, remote: true) do |f|
       .control-group
         %label.control-label Country
         .controls

@@ -24,9 +24,9 @@
               = link_to dashboard_group_path(@group) do
                 = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
                 %span Dashboard
-          %li.navitem{ title: "Developer", style: "height: 100%;" }
-            = link_to sandbox_group_path(@group) do
-              = image_tag NAVBAR_API, alt: "Developer"  
+          %li.navitem{ title: "Search", style: "height: 100%;" }
+            = link_to new_group_search_url(@group) do
+              = image_tag NAVBAR_API, alt: "Search"  
               %span Developer
       - elsif current_user and show_nav_bar
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
@@ -64,12 +64,11 @@
                 %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
                   %div
                     %div.nub{ style: "left:150px;" }
-                  - groups = Group.cached_find_by_user_id(current_user.id)
-                  - if groups.size > 0                    
+                  - if @groups.size > 0                    
                     %div.leftboxheader Your Groups
                     %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD; border-radius: 0; "}
-                      - groups.each do |group|
-                        = link_to group_path(group.permalink), style: "text-decoration: none; padding: 0;" do
+                      - @groups.each do |group|
+                        = link_to root_url(g: group.id), style: "text-decoration: none; padding: 0;" do
                           %div.singlegroupentry{ style: "padding: 6px 12px; "}
                             = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px;", class: "img-circle"
                             %div{ style: "margin-left: 5px; display: inline-block; color: gray; vertical-align: middle; "}
@@ -117,10 +116,8 @@
                       %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
                         - if @enable_administration
                           %li= link_to "Admin", admin_overview_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
-                        - if @group
-                          %li.explore_link= link_to "Explore", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
-                        - if @group
-                          %li= link_to "View Profile", user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
+                        %li.explore_link= link_to "Explore", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
+                        %li= link_to "View Profile", user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "Edit Profile", edit_user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li.invite_facebook_friends= link_to "Invite Friends", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "MetaBright Labs", ideas_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
