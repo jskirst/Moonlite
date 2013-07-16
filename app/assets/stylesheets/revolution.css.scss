@@ -1266,7 +1266,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     
     .option {
       width: 49%;
-      height: 200px;
+      height: 150px;
       vertical-align: middle;
       display: inline-block;
       text-align: center;
@@ -1275,7 +1275,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       &:hover { opacity: 1; }
       
       div { margin-top: 15%; }
-      img { height: 60px; margin-bottom: 10px;}
+      img { height: 40px; margin-bottom: 10px;}
+      h3 {font-size: 20px;}
     }
     .signup{
       text-align: center;
