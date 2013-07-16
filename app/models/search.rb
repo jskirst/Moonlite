@@ -36,15 +36,16 @@ class Search
     
     sort_by_paths
     sort_by_seeking
-    
-    sort_by_country
-    sort_by_state
+    sort_by_location
     
     construct_results
   end
   
   def init_users
-    self.users = User.where("locked_at is ?", nil).select("users.id, users.name").group("users.id")
+    self.users = User.where("locked_at is ?", nil)
+      .select("users.id, users.name, users.longitude, users.latitude, users.city, users.state, users.country")
+      .where("users.longitude is not ? and users.latitude is not ?", nil, nil)
+      .group("users.id")
   end
   
   def sort_by_paths
@@ -69,25 +70,6 @@ class Search
     self.users = users.order(orders.join(","))
   end
   
-  def sort_by_country
-    self.users = self.users.to_a unless self.users.is_a? Array
-    unless country == "ALL"
-      # Return - 1 if b is closer to desired country then a
-      # Return 0 if they are the same distance
-      # Return + 1 if first a is closer than b
-      self.users.sort |a, b|
-        if a.country == self.country and b.country == self.country
-          return 0
-      self.users = users.where("country = ?", country)
-    end
-  end
-  
-  def sort_by_state
-    unless country == "ALL" or state == "ALL"
-      self.users = users.where("state = ?", state)
-    end
-  end
-  
   def sort_by_seeking
     all_blank = not(full_time or part_time or internship)
     conditions = []
@@ -100,8 +82,29 @@ class Search
     self.users = users.where(conditions)
   end
   
+  def sort_by_location
+    self.users = self.users.to_a unless self.users.is_a? Array
+    unless self.country == "ALL"
+      location = self.country
+      location = self.state + ", " + location
+      computed_location = Geocoder.search(location).first
+      lat = computed_location.data["geometry"]["location"]["lat"]
+      lng = computed_location.data["geometry"]["location"]["lng"]
+      self.users = self.users.collect do |u|
+        u.attributes.merge(
+          "distance" => Geocoder::Calculations.distance_between([u.latitude, u.longitude], [lat, lng]),
+          "location" => "#{u["state"]}, #{Carmen::Country.coded(u["country"]).name}")
+      end
+      self.users.sort! { |a,b| (a["distance"] || 1000000).to_f <=> (b["distance"] || 10000000).to_f }
+    else
+      self.users.collect do |u|
+        u_hash = u.attributes
+      end
+    end
+  end
+  
   def construct_results
-    self.users = users.to_a.select{ |u| u.avg_metascore.to_i > 0 }
+    self.users = users.select{ |u| u["avg_metascore"].to_i > 0 }
     self.users = users.collect do |u|
       enrollments = path_ids.collect do |path_id|
         {
@@ -111,7 +114,7 @@ class Search
           metapercentile: u["e#{path_id}_metapercentile"]
         }
       end
-      { user_id: u["id"], name: u["name"], enrollments: enrollments, total_metascore: u["avg_metascore"], price: (u["avg_metascore"].to_f / 50).round(2) }
+      { user_id: u["id"], name: u["name"], enrollments: enrollments, total_metascore: u["avg_metascore"], price: (u["avg_metascore"].to_f / 50).round(2), location: u["location"] }
     end
     self.paths = Path.where("paths.id in (?)", path_ids)
     return { paths: paths, users: users.to_a }

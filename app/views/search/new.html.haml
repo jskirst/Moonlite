@@ -14,8 +14,14 @@
     });
   
     $("#search_form").on("ajax:success", function(jqXHR, data){
+      $(this).find(".error").hide();
       $("#search").hide();
       $("#results").empty().append(data).show();
+    });
+    
+    $("#search_form").on("ajax:error", function(jqXHR, data){
+      $(this).find(".error").text("There was an error.").show();
+      $(".button-actionable").removeClass("disabled").removeAttr("disabled")
     });
   });
 
@@ -24,6 +30,7 @@
 
 #search
   .single_pane
+    %p.error.hide
     = form_for(@search, url: group_search_url(@group), html: { class: "form-horizontal", id: "search_form" }, remote: true) do |f|
       .control-group
         %label.control-label Country

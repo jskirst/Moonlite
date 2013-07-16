@@ -23,7 +23,7 @@ gem 'turbolinks'
 gem 'dalli'
 gem 'awesome_print'
 gem 'font_assets'
-gem 'geocoder', require: false
+gem 'geocoder'
 
 group :assets do
   gem 'sass-rails'

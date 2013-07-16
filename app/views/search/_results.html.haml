@@ -15,7 +15,7 @@
       - @results[:users].each do |user|
         %tr
           %td
-            = user[:name]
+            = user[:location]
           - user[:enrollments].each do |e|
             %td
               = Search.rating(e[:metapercentile])
