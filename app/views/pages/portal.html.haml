@@ -1,7 +1,7 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
 
-#employer.aboutcontainer{ style: "margin-top: 35px;" }
+#employer.aboutcontainer{ style: "margin-top: 35px; width: 550px;" }
   #organization_portal.aboutbox{ style: "padding: 8px;"}
     .header{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 72px; display: inline; vertical-align: middle", alt: "Stoney"
@@ -55,22 +55,22 @@
             = f.submit "Submit", class: "submit_button button button-small button-actionable", style: "width: auto; padding: 3px 10px;"
       - else
         = link_to group_evaluations_url(@group) do
-          .option{ style: "border-bottom: 1px solid #DDD; border-right: 1px solid #DDD; margin-right: -4px; margin-bottom: -1px;"}
+          .option{ style: "border-bottom: 1px solid #DDD; border-right: 1px solid #DDD; margin-right: -4px;"}
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
               %h3 Evaluations
         = link_to account_group_url(@group) do
-          .option
+          .option{ style: "border-bottom: 1px solid #DDD;" }
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
               %h3 Account
         = link_to group_paths_url(@group) do
-          .option
+          .option{ style: "border-right: 1px solid #DDD; margin-right: -4px;"}
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"
               %h3 Challenges
         = link_to sandbox_group_url(@group) do
-          .option{ style: "border-top: 1px solid #DDD; border-left: 1px solid #DDD; margin-left: -4px;"}
+          .option
             %div
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_api.png"
               %h3 Search
