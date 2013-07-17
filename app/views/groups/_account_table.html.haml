@@ -1,3 +1,30 @@
+:javascript
+  $(".edit_user_details_link").each(function(){
+    $(this).click(function(){$('#group_admin_modal').modal({show: true, keyboard: true, static: true});});
+  });
+
+%div#group_admin_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
+  %div.modal-header
+    %a.close
+    %h3 Edit User
+  %div.modal-body{ style: "max-height: none; "}
+    = form_for(@users.to_a, html: { class: "form-horizontal" }) do |f|
+      %div.control-group
+        %label.control-label User name
+        %div.controls= f.text_field :name
+      %div.control-group
+        %label.control-label Email address
+        %div.controls= f.text_field :email
+      %h4 When should this person receive emails from MetaBright?
+      %h5 When someone creates an Evaluation.
+      %div.control-group
+        %div.controls
+          / We need some variable here for the notification
+          = f.check_box :name
+      %div{ style: "float:right;" }
+        %span.button.button-standard{ onclick: "$('#group_admin_modal').modal('hide');" } Close
+        = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
+        
 %table.table
   %thead
     %tr
@@ -7,7 +34,7 @@
   %tbody
     - @users.to_a.each do |u|
       %tr
-        %td= link_to truncate(u.name, length: 30), profile_path(u.username)
+        %td.edit_user_details_link{ onclick: "$('#group_admin_modal').modal({keyboard: true, show: true})" }= truncate(u.name, length: 30)
         %td= truncate(u.email, length:25)
         %td{ style: "text-align: right;" } Joined #{u.created_at.strftime("%m/%d/%Y")}
     - if @users.empty?
