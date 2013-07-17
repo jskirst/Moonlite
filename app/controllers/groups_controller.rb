@@ -155,6 +155,7 @@ class GroupsController < ApplicationController
     @group = Group.find_by_permalink(params[:id]) if params[:id] && @group.nil?
     @group = Group.find_by_id(params[:id]) if params[:id] && @group.nil?
     @group_custom_style = @group.custom_style if @group
+    @admin_group = @group
     redirect_to root_path unless @group
   end
   

@@ -27,51 +27,61 @@
 
 :css
   .form-horizontal li.controls { margin-left: 155px; }
-
-#search
-  .single_pane
-    %p.error.hide
-    = form_for(@search, url: group_search_url(@group), html: { class: "form-horizontal", id: "search_form" }, remote: true) do |f|
-      .control-group
-        %label.control-label Country
-        .controls
-          %select{ name: "search[country]"}
-            %option{ value: nil, data: { subregions: [[]] } } Select a Country
-            %option{ value: "ALL", data: { subregions: [["-", "-"]] } } All Countries
-            - @countries.each do |country|
-              %option{ value: country[:code], data: { subregions: country[:subregions] } }= country[:name]
-      .control-group
-        %label.control-label State/Province
-        .controls
-          %select{ name: "search[state]"}
-      .control-group
-        %label.control-label Looking For
-        .controls
-          %label.checkbox
-            = f.check_box :any_opp
-            Any Position
-        .controls
-          %label.checkbox
-            = f.check_box :full_time
-            Full Time Position
-        .controls
-          %label.checkbox
-            = f.check_box :part_time
-            Part Time Position
-        .controls
-          %label.checkbox
-            = f.check_box :internship
-            Internship
-      .control-group
-        %label.control-label Skills
-        %ul{ style: "list-style: none;" }
-          - @paths.each do |p|
-            %li.controls
-              %label.checkbox
-                = check_box_tag "search[paths][#{p.id}]"
-                = p.name
-      .control-group
-        .controls
-          = f.submit "Search", class: "button button-actionable"
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .aboutbox{ border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px; }
+  .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: -35px; border-radius: 0;  }
+  
+#search.aboutcontainer
+  .aboutbox
+    .header
+      %div{ style: "padding: 15px 15px 0 15px;"}
+        = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
+        %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
+          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " } Search
+    .body
+      %p.error.hide
+      = form_for(@search, url: group_search_url(@group), html: { class: "form-horizontal", id: "search_form" }, remote: true) do |f|
+        .control-group
+          %label.control-label Country
+          .controls
+            %select{ name: "search[country]"}
+              %option{ value: nil, data: { subregions: [[]] } } Select a Country
+              %option{ value: "ALL", data: { subregions: [["-", "-"]] } } All Countries
+              - @countries.each do |country|
+                %option{ value: country[:code], data: { subregions: country[:subregions] } }= country[:name]
+        .control-group
+          %label.control-label State/Province
+          .controls
+            %select{ name: "search[state]"}
+        .control-group
+          %label.control-label Looking For
+          .controls
+            %label.checkbox
+              = f.check_box :any_opp
+              Any Position
+          .controls
+            %label.checkbox
+              = f.check_box :full_time
+              Full Time Position
+          .controls
+            %label.checkbox
+              = f.check_box :part_time
+              Part Time Position
+          .controls
+            %label.checkbox
+              = f.check_box :internship
+              Internship
+        .control-group
+          %label.control-label Skills
+          %ul{ style: "list-style: none;" }
+            - @paths.each do |p|
+              %li.controls
+                %label.checkbox
+                  = check_box_tag "search[paths][#{p.id}]"
+                  = p.name
+        .control-group
+          .controls
+            = f.submit "Search", class: "button button-actionable"
 #results.hide
     

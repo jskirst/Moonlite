@@ -4,6 +4,7 @@ class SearchController < ApplicationController
   before_filter { raise "ACCESS DENIED" unless @enable_administration }
   
   def new
+    @group = @admin_group
     @search = Search.new
     @paths = Persona.find_by_name("Hacker").paths
     user_states = User.pluck(:state).uniq.compact

@@ -4,28 +4,28 @@
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
         = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-      - if current_user and show_nav_bar and @group
+      - if current_user and show_nav_bar and @admin_group
         %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25;" }
           %li.navitem{ title: "Evaluations", style: "height: 100%; border-left: 1px solid #56698B;" }
-            = link_to group_evaluations_path(@group) do
+            = link_to group_evaluations_path(@admin_group) do
               = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
               %span Evaluations
           %li.navitem{ title: "Challenges", style: "height: 100%;" }
-            = link_to group_paths_url(@group) do
+            = link_to group_paths_url(@admin_group) do
               = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
               %span Challenges
-          - if @group.is_private?
+          - if @admin_group.is_private?
             %li.navitem{ title: "Account", style: "height: 100%;" }
-              = link_to account_group_path(@group) do
+              = link_to account_group_path(@admin_group) do
                 = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
                 %span Account
           - else
             %li.navitem{ title: "Dashboard", style: "height: 100%;" }
-              = link_to dashboard_group_path(@group) do
+              = link_to dashboard_group_path(@admin_group) do
                 = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
                 %span Dashboard
           %li.navitem{ title: "Search", style: "height: 100%;" }
-            = link_to new_group_search_url(@group) do
+            = link_to new_group_search_url(@admin_group) do
               = image_tag NAVBAR_API, alt: "Search"  
               %span Developer
       - elsif current_user and show_nav_bar
@@ -64,7 +64,7 @@
                 %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
                   %div
                     %div.nub{ style: "left:150px;" }
-                  - if @groups.size > 0                    
+                  - if @groups and @groups.size > 0                    
                     %div.leftboxheader Your Groups
                     %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD; border-radius: 0; "}
                       - @groups.each do |group|
