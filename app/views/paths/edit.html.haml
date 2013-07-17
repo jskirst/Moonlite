@@ -20,9 +20,10 @@
       %div.control-group
         %label.control-label Challenge Name
         %div.controls= f.text_field :name
-      %div.control-group
-        %label.control-label Description (Optional)
-        %div.controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
+      - unless @group
+        %div.control-group
+          %label.control-label Description (Optional)
+          %div.controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
       - if @enable_administration
         %div.control-group
           %label.control-label Default code template (Optional)
@@ -87,10 +88,11 @@
           = image_tag(@path.path_pic, class: "bigheaderimage")
       %div.span4{ style: "margin-left: 5px;" }
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
-        %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
+        - unless @group
+          %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
       %div.floatr{ style: "margin-top:10px;"}
         - if @path.group_id
-          = link_to "Back", paths_url, class: "button button-standard"
+          = link_to "Back to Create Evaluation", new_group_evaluation_path(@group), class: "button button-standard"
         - elsif @path.published? && @path.approved?
           = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
         - elsif @path.published?

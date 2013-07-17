@@ -17,6 +17,15 @@
       %label.control-label Question
       %div.controls
         = f.text_area :question, class: "input-xlarge question_input", placeholder: "Type your question here...", style: "width: 450px; height: 100px;"
+        
+    - if task.new_record? or task.multiple_choice? or task.exact?
+      .multiple_choice.exact.control-group
+        %label.control-label Quoted Text (optional)
+        .controls{ style: "margin-top: 6px;" }
+          - unless task.quoted_text
+            %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
+          = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
+
     %div.row
       %div.answers{ style: "margin-left: 20px;" }
         
@@ -32,13 +41,6 @@
             .controls
               = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
         
-        - if task.new_record? or task.multiple_choice? or task.exact?
-          .multiple_choice.control-group
-            %label.control-label Quoted Text (optional)
-            .controls{ style: "margin-top: 6px;" }
-              - unless task.quoted_text
-                %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
-              = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
               
         - if task.task? or task.new_record?
           .checkin.hide
@@ -46,7 +48,7 @@
               %label.control-label
                 = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px; margin-top: -11px; margin-right: -12px;"
               .controls{ style: "width: 400px;" }
-                %p All tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
+                %p All Tasks require proof of completion in the form of a webpage. If proof of completion for the task you want to create cannot be easily obtained from a website url, consider rephrasing or changing it.
                 
         - if task.creative? or task.new_record?
           .creative.template_toggle{ style: (task.new_record? ? "display: none;" : "") }
@@ -65,12 +67,17 @@
                 = text_area_tag "task[template]", task.template, class: "hidden_text_area", style: "display: none;"
                 %div{ id: template_id, class: "ace_editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 175px; position: relative; padding-top:0; #{task.template.blank? ? "display: none;" :  ""}"} 
         
-        - if task.new_record? or task.creative? or task.exact?
-          .creative.exact.hide
+        - if task.new_record? or task.exact?
+          .exact.hide
             .control-group
-              %label.control-label Exact answer (optional)
+              %label.control-label
+                = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px; margin-top: -11px; margin-right: -12px;"
+              .controls{ style: "width: 400px;" }
+                %p To answer this question, the user will be asked to type an answer to the question. Exact questions work best with numerical or one-word answers. (Responses are case-insensitive.)
+              %label.control-label Exact Answer
               .controls
                 = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
+
         
         - unless answers.empty?
           .multiple_choice
@@ -106,6 +113,11 @@
         
         - if @enable_administration
           %h4 Admin        
+          .creative.hide
+            .control-group
+              %label.control-label Exact answer (optional)
+              .controls
+                = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
           .control-group
             %label.control-label Position
             .controls
