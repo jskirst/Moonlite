@@ -8,7 +8,8 @@ class PagesController < ApplicationController
     #raise current_user.employer?.to_s
     @title = "Home"
     @url_for_newsfeed 
-    if @group
+    if @admin_group
+      @group = @admin_group
       render "portal"
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
@@ -222,27 +223,6 @@ class PagesController < ApplicationController
     @owned_groups = current_user.groups
     @group = @owned_groups.first
     render "organization_portal"
-  end
-  
-  def product_form
-    @opportunity = Opportunity.new(product: params[:p])
-    @title = "Checkout"
-    @show_footer = true
-    @hide_background = true
-    render "product_form"
-  end
-  
-  def opportunity
-    opp = Opportunity.new(params[:opportunity])
-    Mailer.opportunity(opp).deliver
-    redirect_to product_confirmation_path
-  end
-  
-  def product_confirmation
-    @title = "Checkout confirmation"
-    @show_footer = true
-    @hide_background = true
-    render "product_confirmation"
   end
   
   def challenges

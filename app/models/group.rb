@@ -4,6 +4,7 @@ class Group < ActiveRecord::Base
   BASIC = 101
   PLAN_TYPES = { PUBLIC => "Public", TRIAL => "Trial", BASIC => "Basic" }
   
+  attr_accessor :creator_name, :creator_email, :creator_password, :creator
   attr_protected :token
   attr_accessible :name,
     :description, 
@@ -13,8 +14,12 @@ class Group < ActiveRecord::Base
     :state,
     :country,
     :permalink,
-    :plan_type
-    :is_private
+    :plan_type,
+    :is_private,
+    :creator_name, 
+    :creator_email, 
+    :creator_password, 
+    :creator
   
   has_one   :custom_style, as: :owner
   has_many  :group_users
@@ -23,11 +28,29 @@ class Group < ActiveRecord::Base
   has_many  :users, through: :group_users
    
   validates_presence_of :name
-  validates_presence_of :description
    
-  before_create do 
+  before_create do
+    if self.creator_name
+      existing_user = User.find_by_email(self.creator_email)
+      if existing_user
+        self.creator = existing_user
+      else
+        self.creator = User.create_with_nothing({"name" => self.creator_name, "email" => self.creator_email, "password" => self.creator_password})
+      end
+    end
+    if self.creator.nil?
+      raise "No Creator"
+    end
     grant_permalink
     grant_token
+  end
+  
+  after_create do
+    if self.creator
+      gu = group_users.new(user_id: creator.id)
+      gu.is_admin = true
+      gu.save!
+    end
   end
    
   def picture

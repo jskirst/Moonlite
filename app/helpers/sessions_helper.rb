@@ -172,18 +172,21 @@ module SessionsHelper
           
           @groups = Group.joins("INNER JOIN group_users on group_users.group_id=groups.id")
             .where("group_users.user_id = ?", current_user.id)
-            .where("group_users.is_admin = ?", true)
+            .select("group_users.is_admin, groups.*")
             .to_a
-          @groups = nil if @groups.empty?
-          if @groups
+            
+          @admin_groups = @groups.select{ |g| g.is_admin? }
+          @admin_groups = nil if @admin_groups.empty?
+          if @admin_groups
             group_id = params[:g] || session[:g]
             if group_id
-              @group = @groups.select{ |g| g.id.to_s == group_id.to_s }.first
-            else
-              @group = @groups.first
+              @admin_group = @admin_groups.select{ |g| g.id.to_s == group_id.to_s }.first
             end
+            if @admin_group.nil?
+              @admin_group = @admin_groups.first
+            end
+            session[:g] = @admin_group.id
           end
-          session[:g] = @group.id
         end
       end
     end

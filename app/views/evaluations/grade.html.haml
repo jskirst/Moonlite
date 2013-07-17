@@ -39,12 +39,12 @@
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
         - if @evaluation_enrollment.archived_at
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put do 
-            %div{ "data-tip" => "Un-Archive" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0;"
+            %div{ data: { tip: "Remove from Archive" } }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
         - elsif @evaluation_enrollment.favorited_at
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put do
-            %div{ "data-tip" => "Un-Favorite" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0;"
+            %div{ data: { tip:  "Remove from Favorites" } }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
         - else
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put do
             %div{ "data-tip" => "Archive" }
