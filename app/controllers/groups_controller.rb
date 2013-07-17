@@ -1,30 +1,38 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper  
   
-  before_filter :authenticate, except: [:show, :newsfeed, :join]
+  before_filter :authenticate, except: [:new, :create, :show, :newsfeed, :join]
   before_filter :load_resource, except: [:new, :create]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   
   def new
-    raise "Access Denied: Cannot create groups" unless @enable_administration
+    @new_group = Group.new
+    render "groups/signup/form"
   end
   
   def create
-    @group = Group.new
-    @group.name = params[:group][:name]
-    @group.description = params[:group][:description]
-    if @group.save
-      if params[:become_admin]
-        gu = @group.group_users.create!(user_id: current_user.id)
-        gu.update_attribute(:is_admin, true)
-        redirect_to account_group_url(@group)
+    @new_group = Group.new(params[:group])
+    if @new_group.save!
+      raise "New user" if @new_group.creator.nil?
+      if @new_group.creator
+        @creator = @new_group.creator
+        @creator.reload
+        sign_in(@creator)
+        redirect_to account_group_url(@new_group)
       else
         redirect_to admin_groups_url
       end
     else
-      flash[:error] = @group.errors.full_messages.join(". ")
-      render "new"
+      flash[:error] = @new_group.errors.full_messages.join(". ")
+      render "groups/signup/form"
     end
+  end
+  
+  def confirmation
+    @title = "Checkout confirmation"
+    @show_footer = true
+    @hide_background = true
+    render "product_confirmation"
   end
   
   def show

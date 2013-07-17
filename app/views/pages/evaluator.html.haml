@@ -82,7 +82,7 @@
                 %li 10 Challenges
                 %li --
               .price_footer
-                = link_to "Select", product_form_path(p: Opportunity::EVAL_BASIC), class: "action_button"
+                = link_to "Select", new_group_path(p: Opportunity::EVAL_BASIC), class: "action_button"
             %li.price_block
               %h3 Professional
               .price
@@ -93,7 +93,7 @@
                 %li 100 Challenges
                 %li Email support
               .price_footer
-                = link_to "Select", product_form_path(p: Opportunity::EVAL_PRO), class: "action_button"
+                = link_to "Select", new_group_path(p: Opportunity::EVAL_PRO), class: "action_button"
             %li.price_block
               %h3 Enterprise
               .price
@@ -104,7 +104,7 @@
                 %li 500 Challenges
                 %li Email and phone support
               .price_footer
-                = link_to "Select", product_form_path(p: Opportunity::EVAL_ENT), class: "action_button"
+                = link_to "Select", new_group_path(p: Opportunity::EVAL_ENT), class: "action_button"
             %li.price_block
               %h3 Ultimate
               .price
@@ -115,5 +115,5 @@
                 %li 1,000 Challenges
                 %li Email and phone support
               .price_footer
-                = link_to "Select", product_form_path(p: Opportunity::EVAL_ULTRA), class: "action_button"
+                = link_to "Select", new_group_path(p: Opportunity::EVAL_ULTRA), class: "action_button"
         

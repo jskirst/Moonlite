@@ -225,27 +225,6 @@ class PagesController < ApplicationController
     render "organization_portal"
   end
   
-  def product_form
-    @opportunity = Opportunity.new(product: params[:p])
-    @title = "Checkout"
-    @show_footer = true
-    @hide_background = true
-    render "product_form"
-  end
-  
-  def opportunity
-    opp = Opportunity.new(params[:opportunity])
-    Mailer.opportunity(opp).deliver
-    redirect_to product_confirmation_path
-  end
-  
-  def product_confirmation
-    @title = "Checkout confirmation"
-    @show_footer = true
-    @hide_background = true
-    render "product_confirmation"
-  end
-  
   def challenges
     @title = "Challenges"
     @show_footer = true

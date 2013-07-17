@@ -181,7 +181,8 @@ module SessionsHelper
             group_id = params[:g] || session[:g]
             if group_id
               @admin_group = @admin_groups.select{ |g| g.id.to_s == group_id.to_s }.first
-            else
+            end
+            if @admin_group.nil?
               @admin_group = @admin_groups.first
             end
             session[:g] = @admin_group.id
