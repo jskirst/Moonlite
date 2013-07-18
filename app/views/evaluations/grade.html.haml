@@ -17,7 +17,7 @@
   [data-tip]:before { left: 7px; }
   [data-tip]:after { left: -17px; }
   .table_tip [data-tip]:before { left: 34px; top: 35px;}
-  .table_tip [data-tip]:after { left: 8px; top: 45px; }
+  .table_tip [data-tip]:after { left: 8px; top: 45px; width: 165px; height: 52px; white-space: normal; }
 
   
 #evaluations_overview.aboutcontainer
@@ -116,7 +116,7 @@
                         %p{ style: "font-size: 12px;" } More data required.
                       - else
                         %ul
-                          - r[:performance].strengths.each do |topic_name, stats|
+                          - r[:performance].strengths.first(3).each do |topic_name, stats|
                             %li= topic_name
                   .weaknesses 
                     .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
@@ -126,7 +126,7 @@
                         %p{ style: "font-size: 12px;" } More data required.
                       - else
                         %ul
-                          - r[:performance].weaknesses.each do |topic_name, stats|
+                          - r[:performance].weaknesses.first(3).each do |topic_name, stats|
                             %li= topic_name
                 
             - if r[:creative].any?
