@@ -28,15 +28,7 @@
             - @paths.each do |p|
               %th{ title: p.name }
                 = truncate(p.name, length: 10, separator: ' ')
-                
-                / If custom challenge and <20 ppl have enrolled, then...
-                / %div.hint.hint--left{ data: {hint: "Percentile info not yet available. At least 20 people must complete this Challenge."} }
-                /   %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: -2px; margin-bottom: 1px;"}
-                
-                - if 9 == 0
-                  %div{ "data-tip" => "Percentile rankings for this Challenge.", style: "display: inline-block;"}
-                    %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
-                - else
+                - unless p.metascore_available?
                   .no_data{ style: "display: inline-block;"}
                     %div{ "data-tip" => "Not enough data. There needs to be at least 20 participants in a Challenge to calculate percentile rankings."}
                       %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
