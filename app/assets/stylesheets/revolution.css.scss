@@ -1204,7 +1204,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         
         h4 { font-size: 24px; margin-bottom: 4px; }
         h5 { text-align: center; font-size: 15px; margin-top: 12px;}
-        p { display: inline-block; margin-bottom: 0; }
+        p { display: inline-block; margin-bottom: 0; position: relative; top: 1px; }
         form {
           margin-top: 25px;
           
