@@ -85,6 +85,8 @@ class EvaluationsController < ApplicationController
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
       creative = @enrollment.completed_tasks.joins(:task)
+        .joins("LEFT JOIN submitted_answers on submitted_answers.id = completed_tasks.submitted_answer_id")
+        .select("submitted_answers.*, tasks.*, completed_tasks.*")
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::CREATIVE]).to_a
       tasks = @enrollment.completed_tasks.joins(:task)
@@ -92,6 +94,7 @@ class EvaluationsController < ApplicationController
         .where("tasks.answer_type in (?)", [Task::CHECKIN]).to_a
       
       @results << { 
+        metascore_available: path.metascore_available?,
         name: path.name, 
         permalink: path.permalink, 
         core: core,
