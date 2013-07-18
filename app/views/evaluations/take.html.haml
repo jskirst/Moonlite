@@ -1,6 +1,7 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .aboutcontainer{ width: 900px;}
+  p { margin-top: 5px; }
   
 #employer.aboutcontainer
   #take_evaluation.aboutbox
@@ -72,7 +73,7 @@
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
           %p Each Challenge should take you about 10 minutes.
           .challenge_holder
-            - evaluation_completed = true
+            - evaluation_completed = current_user ? true : false
             - @evaluation.paths.each do |p|
             - @enrollment = current_user ? current_user.enrolled?(p) : nil
               .challenge_card
@@ -85,6 +86,8 @@
                     = link_to status.to_s.humanize, continue_evaluation_path(@evaluation.id, p.id), class: "button button-small button-actionable"
                   - else
                     %div Completed
+                - else
+                  = link_to "Signup to Begin", "", class: "button button-small button-actionable disabled"
       .step
         .img-circle
           %span 4
@@ -94,7 +97,8 @@
             - if @evaluation_enrollment.submitted?
               %p You successfully submitted this application #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago.
             - else
-              = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-              %p Once all previous steps are completed, you'll be able to submit your application.
               %div{ style: "text-align: center; margin-top: 12px; "}
                 = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
+          - else
+            = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
+            %p Once all previous steps are completed, you'll be able to submit your application.
