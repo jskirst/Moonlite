@@ -1133,7 +1133,13 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     padding-bottom: 10px;  
     border-bottom: 1px solid #EEE;
     
-    h1 { vertical-align: middle; font-size:50px; height: 59px; width: 826px; line-height: normal; margin-top: -10px;}
+    // We define the height and width of this h1 because we are using textfill on the element
+    h1 { 
+      vertical-align: middle; 
+      
+      &.take_eval { height: 59px; width: 826px; line-height: normal; margin-top: -10px; }
+      &.submit_eval { height: 59px; width: 735px; line-height: normal; margin-top: -10px;}
+      }
     h3 { vertical-align: middle; font-size: 30px; }
     
     .image_box, .text_box { display: inline-block; vertical-align: top; }
