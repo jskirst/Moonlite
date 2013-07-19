@@ -1135,7 +1135,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     
     // We define the height and width of this h1 because we are using textfill on the element
     h1 { 
-      vertical-align: middle; 
+      vertical-align: middle;
+      overflow: hidden; 
       
       &.take_eval { height: 59px; width: 826px; line-height: normal; margin-top: -10px; }
       &.submit_eval { height: 59px; width: 735px; line-height: normal; margin-top: -10px;}
