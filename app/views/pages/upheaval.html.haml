@@ -1,0 +1,88 @@
+:css
+  body { background-image: none; background-color: white;}
+  .span7 {  }
+  h1 { text-align: center; font-size: 4.5em; line-height: 1.25em; padding-bottom: 34px; }
+  h3 {  color: #8a8d99;}
+  .container{ float: none; width: 980px; margin: 0 auto;}
+  .container.body { width: 100% !important; padding: 0 !important; margin-top: 40px; }
+  .arrow_box {
+    position: relative;
+    background: #ffffff;
+    display: inline-block;
+    float: right; 
+    bottom: 143px;
+  }
+  .arrow_box:after, .arrow_box:before {
+    border: solid transparent;
+    content: " ";
+    position: absolute;
+  }
+  
+  .arrow_box:after {
+    border-left-color: #ffffff;
+    border-width: 50px;
+    top: 50%;
+    margin-top: -50px;
+  }
+  .arrow_box:before {
+    border-color: rgba(203, 203, 203, 0);
+    border-left-color: #cbcbcb;
+    border-width: 51px;
+    top: 50%;
+    margin-top: -51px;
+  }
+  .triangle{
+    position: relative;
+    float: right;
+    bottom: 192px;
+    left: 30px;
+    display: inline-block;
+    width: 0px;
+    height: 0px;
+    border-style: solid;
+    border-width: 50px 0 50px 30px;
+    border-color: transparent transparent transparent #ffffff;
+  }
+  .triangle:before{
+    border-color: rgba(203, 203, 203, 0);
+    border-left-color: #cbcbcb;
+    border-width: 51px;
+    top: 50%;
+    margin-top: -51px;
+  }
+  
+#upheaval
+  .row-fluid
+    .container{ style: "padding: 50px 0 70px;"}
+      .span7{ style: "height: 286px; text-align: center; "}
+        %div{ style: "display: inline-block; padding: 13px 0;" }
+          %h1 
+            Prove your skills. 
+            %br
+            Be discovered.
+          %h3{ style: "width: 93%; margin: 0 auto;"} We believe that people should be hired on the basis of what they can actually do.
+          
+        .triangle
+        
+      .span5{ style: "height: 286px; margin-left: 0;" }
+        .row-fluid{ style: "height: 50%; background-color: rgb(243, 162, 154); padding: 0 10px;" }
+          %div{ style: "padding: 24px 20px; color: white;" }
+            %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white;"} I want to be discovered.
+            %p{ style: "font-size: 15px; "} MetaBright is the game that can get you a job. Compete against others as you improve together.
+            %button.button{ style: "float: right; background-color: rgb(145, 145, 145);"} Get Started
+        .row-fluid{ style: "height: 50%; background-color: rgb(141, 217, 221); padding: 0 10px;" }
+          %div{ style: "padding: 24px 20px; color: white;" }
+            %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white; "} I want better candidates.
+            %p{ style: "font-size: 15px; "} The MetaBright Evaluator validates the skills of your job candidates before you interview them.
+            %button.button{ style: "float: right; background-color: rgb(145, 145, 145);"} Learn More
+  .row-fluid{ style: "background-color: #6bceb0; " }
+    .container
+      .span12
+        %div{ style: "margin:10px auto; height: 200px; padding: 10px 0; color: white;" }
+          %h4 Our Happy Users
+  .row-fluid{ style: "background-color: #f6c880;" }
+    .container
+      .span12
+        %div{ style: "margin:10px auto; height: 200px; padding: 10px 0; color: white;" }
+          %h4 Explore Our Challenges
+      
