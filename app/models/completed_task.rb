@@ -31,8 +31,6 @@ class CompletedTask < ActiveRecord::Base
     self.award_points = false
   end
   
-  delegate :content, :url, :title, :description, :caption, :image_url, :site_name, to: :submitted_answer
-  
   def reviewed?
     return true if submitted_answer.nil?
     return submitted_answer.reviewed?

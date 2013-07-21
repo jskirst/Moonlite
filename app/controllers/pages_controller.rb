@@ -246,6 +246,13 @@ class PagesController < ApplicationController
     render "ideas"
   end
   
+  def upheaval
+    @title = "Upheaval"
+    @show_footer = false
+    @show_nav_bar = false
+    render "upheaval"
+  end
+  
   def email_test
     raise "Access Denied" unless Rails.env == "development" or ENV['ENABLE_EMAIL_TEST']
     if params[:email] && params[:test_method] && params[:mailer]

@@ -1133,7 +1133,14 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     padding-bottom: 10px;  
     border-bottom: 1px solid #EEE;
     
-    h1 { vertical-align: middle; font-size:50px; }
+    // We define the height and width of this h1 because we are using textfill on the element
+    h1 { 
+      vertical-align: middle;
+      overflow: hidden; 
+      
+      &.take_eval { height: 59px; width: 826px; line-height: normal; margin-top: -10px; }
+      &.submit_eval { height: 59px; width: 735px; line-height: normal; margin-top: -10px;}
+      }
     h3 { vertical-align: middle; font-size: 30px; }
     
     .image_box, .text_box { display: inline-block; vertical-align: top; }
@@ -1204,7 +1211,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         
         h4 { font-size: 24px; margin-bottom: 4px; }
         h5 { text-align: center; font-size: 15px; margin-top: 12px;}
-        p { display: inline-block; margin-bottom: 0; }
+        p { display: inline-block; margin-bottom: 0; position: relative; top: 1px; }
         form {
           margin-top: 25px;
           
@@ -1497,6 +1504,13 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           li {
             margin-bottom: 30px;
           }
+        }
+        .skipped_cr{
+          padding: 6px 17px;
+          background-color:$employer_orange_light;
+          
+          img { height: 22px; }
+          p {display: inline-block; margin-left: 5px; }
         }
       }
     }

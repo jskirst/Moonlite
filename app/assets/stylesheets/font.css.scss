@@ -18,4 +18,13 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'MuliLight';
+    src: url('font/Muli-Light.eot');
+    src: url('font/Muli-Light.woff') format('woff'),
+         url('font/Muli-Light.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 body { font-family: 'MuliRegular', 'Helvetica', 'Arial'; }

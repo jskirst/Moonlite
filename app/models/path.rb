@@ -170,6 +170,10 @@ class Path < ActiveRecord::Base
     end
   end
   
+  def metascore_available?
+    not self.percent_correct.nil?
+  end
+  
   # Cached methods
   
   def self.cached_find(permalink)

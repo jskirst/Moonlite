@@ -2,14 +2,19 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .aboutcontainer{ width: 900px;}
   
+:javascript
+  $(function(){
+    $('.textfill').textfill({ maxFontPixels: 50 });
+  });
 
 #employer.aboutcontainer
   #take_evaluation.aboutbox
     .header
       .image_box
         = image_tag GIANT_STONEY, style: "height: 100px;"
-      .text_box{ style: "margin: 12px 0 0 8px;"}
-        %h1= @evaluation.title
+      .text_box{ style: "margin: 8px 0 0 8px;"}
+        %h1.textfill.submit_eval
+          %span= @evaluation.title
         %h3= @evaluation.company
     .body
       %h4

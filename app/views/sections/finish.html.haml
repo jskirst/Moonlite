@@ -5,18 +5,11 @@
 %div.quizcontainer.finish_page
   %div.quizspace
     %div
-      - if @correct_topics.blank? and @incorrect_topics.blank?
-        = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 85px; width: 65px;"
-      - else
-        = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 116px; width: 85px;"
+      = image_tag GIANT_STONEY, alt: "Stoney", style: "height: 92px; width: 70px;"
       .header
         Nice work!
         .subheader
           You just earned <strong>#{@total_session_points} points</strong> in this section!
-        .session_details
-          - unless @correct_topics.blank?
-            %span Strengths:
-            #{@correct_topics}
       %hr
       %div{ style: "text-align: center;"}
         - if @enrollment.metascore.to_i <= 0
