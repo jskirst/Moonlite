@@ -3,9 +3,15 @@
 = csrf_meta_tag
 = stylesheet_link_tag "application"
 = javascript_include_tag "application"
+
+- if params[:action] == "checkout"
+  = javascript_include_tag "https://js.stripe.com/v2/"
+  %meta{ name: "stripe:key", content: STRIPE_PUBLIC_KEY }
+ 
 - if @path && !@path.new_record?
   %link{ rel: "canonical", href: challenge_url(@path.permalink) }
+
 %meta{ property: "og:title", content: "#{social_title}" } 
 %meta{ property: "og:description", content: "#{social_description}" } 
 %meta{ property: "og:image", content: "#{social_image}" }
-%script{ src: "assets/javascripts/ace/src-min-noconflict/ace.js", type: "text/javascript", charset: "utf-8" }
+-#%script{ src: "/assets/ace/src-min-noconflict/ace.js", type: "text/javascript", charset: "utf-8" }

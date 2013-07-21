@@ -18,9 +18,9 @@ class GroupsController < ApplicationController
         @creator = @new_group.creator
         @creator.reload
         sign_in(@creator)
-        redirect_to account_group_url(@new_group)
+        redirect_to checkout_group_url(@new_group)
       else
-        redirect_to admin_groups_url
+        
       end
     else
       flash[:error] = @new_group.errors.full_messages.join(". ")
@@ -28,11 +28,23 @@ class GroupsController < ApplicationController
     end
   end
   
-  def confirmation
-    @title = "Checkout confirmation"
+  def checkout
+    @title = "Checkout"
     @show_footer = true
     @hide_background = true
-    render "product_confirmation"
+    form = "groups/signup/checkout"
+    
+    if request.get?
+      render form
+    else
+      if @group.save_with_stripe(params[:group][:stripe_token])
+        flash[:success] = "Your subscription has been successfully enabled. Welcome to MetaBright!"
+        redirect_to root_url
+      else
+        @error = "There was an error validating your credit card information."
+        render form
+      end
+    end
   end
   
   def show

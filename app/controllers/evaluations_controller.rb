@@ -124,6 +124,7 @@ class EvaluationsController < ApplicationController
   
   def take
     @show_nav_bar = false
+    @show_sign_in = false
     @evaluation = Evaluation.find_by_permalink(params[:permalink])
     if current_user
       @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)

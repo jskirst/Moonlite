@@ -98,7 +98,8 @@ class User < ActiveRecord::Base
     
   def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
   
-  def self.create_with_nothing(details= {})
+  def self.create_with_nothing(details = nil)
+    details = {} unless details
     group = Group.find(details["group_id"]) unless details["group_id"].blank?
     user = User.new
     user.company_id = 1

@@ -56,6 +56,8 @@ Metabright::Application.routes.draw do
   get '/groups/users' => "users#index"
   resources :groups do
     member do
+      get :checkout
+      put :checkout
       get :style
       put :style
       get :join
