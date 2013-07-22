@@ -151,8 +151,6 @@ Metabright::Application.routes.draw do
   match '/explore', to: 'personas#explore'
   match '/about' => 'pages#about'
   match '/internship' => 'pages#internship'
-  match '/employers' => 'pages#employers'
-  match '/talentminer' => 'pages#talentminer'
   match '/evaluator' => 'pages#evaluator'
   match '/organization_portal' => 'pages#organization_portal'
   match '/product_form' => 'pages#product_form'
