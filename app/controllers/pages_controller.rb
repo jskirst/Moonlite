@@ -248,8 +248,10 @@ class PagesController < ApplicationController
   
   def upheaval
     @title = "Upheaval"
-    @show_footer = false
+    @show_footer = true
     @show_nav_bar = false
+    @show_sign_in = true
+    @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
     render "upheaval"
   end
   

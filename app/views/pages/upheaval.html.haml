@@ -5,32 +5,6 @@
   h3 {  color: #8a8d99;}
   .container{ float: none; width: 980px; margin: 0 auto;}
   .container.body { width: 100% !important; padding: 0 !important; margin-top: 40px; }
-  .arrow_box {
-    position: relative;
-    background: #ffffff;
-    display: inline-block;
-    float: right; 
-    bottom: 143px;
-  }
-  .arrow_box:after, .arrow_box:before {
-    border: solid transparent;
-    content: " ";
-    position: absolute;
-  }
-  
-  .arrow_box:after {
-    border-left-color: #ffffff;
-    border-width: 50px;
-    top: 50%;
-    margin-top: -50px;
-  }
-  .arrow_box:before {
-    border-color: rgba(203, 203, 203, 0);
-    border-left-color: #cbcbcb;
-    border-width: 51px;
-    top: 50%;
-    margin-top: -51px;
-  }
   .triangle{
     position: relative;
     float: right;
@@ -43,46 +17,189 @@
     border-width: 50px 0 50px 30px;
     border-color: transparent transparent transparent #ffffff;
   }
-  .triangle:before{
-    border-color: rgba(203, 203, 203, 0);
-    border-left-color: #cbcbcb;
-    border-width: 51px;
-    top: 50%;
-    margin-top: -51px;
+  .main_splash .option:hover .button { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
+  .button { background-color: rgb(231, 231, 231); float: right; text-shadow: none; color: #8a8d99;}
+  .button:hover { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48);  }
+  .happy_users .body .picture img { height: 110px; width: 110px;  }
+  .happy_users .testimonial { display: inline-block; width: 33%; margin: 15px 0; text-align: center; vertical-align: top;}
+  p.speech {
+    color: #404040;
+    position: relative;
+    width: 230px;
+    padding: 15px; 
+    text-align: center;
+    background-color: #fff;
+    border: 8px solid #666;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    margin-bottom: 50px;
+  }
+  p.speech.left:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 105px;
+    top: 102px;
+    border: 25px solid;
+    border-color: #666 transparent transparent #666;
+  }
+  p.speech.left:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 114px;
+    top: 102px;
+    border: 15px solid;
+    border-color: #fff transparent transparent #fff;
+  }
+  p.speech.right:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 106px;
+    top: 102px;
+    border: 25px solid;
+    border-color: #666 #666 transparent transparent;
+  }
+  p.speech.right:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 114px;
+    top: 102px;
+    border: 15px solid;
+    border-color: #fff #fff transparent transparent;
+  }
+  p.speech.center:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 81px;
+    top: 102px;
+    border: 48px solid;
+    border-color: #666 transparent transparent transparent;
+  }
+  p.speech.center:after {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    right: 94px;
+    top: 102px;
+    border: 34px solid;
+    border-color: #fff transparent transparent transparent;
   }
   
 #upheaval
-  .row-fluid
+  .row-fluid.main_splash
     .container{ style: "padding: 50px 0 70px;"}
       .span7{ style: "height: 286px; text-align: center; "}
-        %div{ style: "display: inline-block; padding: 13px 0;" }
+        .hero{ style: "display: inline-block; padding: 13px 0;" }
           %h1 
             Prove your skills. 
             %br
             Be discovered.
           %h3{ style: "width: 93%; margin: 0 auto;"} We believe that people should be hired on the basis of what they can actually do.
-          
         .triangle
-        
       .span5{ style: "height: 286px; margin-left: 0;" }
-        .row-fluid{ style: "height: 50%; background-color: rgb(243, 162, 154); padding: 0 10px;" }
-          %div{ style: "padding: 24px 20px; color: white;" }
+        .row-fluid.consumer
+          .option
             %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white;"} I want to be discovered.
             %p{ style: "font-size: 15px; "} MetaBright is the game that can get you a job. Compete against others as you improve together.
-            %button.button{ style: "float: right; background-color: rgb(145, 145, 145);"} Get Started
-        .row-fluid{ style: "height: 50%; background-color: rgb(141, 217, 221); padding: 0 10px;" }
-          %div{ style: "padding: 24px 20px; color: white;" }
+            %button.button{ style: "float: right; background-color: rgb(231, 231, 231);"} Get Started
+        .row-fluid.employer
+          .option
             %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white; "} I want better candidates.
             %p{ style: "font-size: 15px; "} The MetaBright Evaluator validates the skills of your job candidates before you interview them.
-            %button.button{ style: "float: right; background-color: rgb(145, 145, 145);"} Learn More
-  .row-fluid{ style: "background-color: #6bceb0; " }
+            %button.button{ style: "float: right; background-color: rgb(231, 231, 231);"} Learn More
+  .row-fluid.happy_users
     .container
       .span12
-        %div{ style: "margin:10px auto; height: 200px; padding: 10px 0; color: white;" }
-          %h4 Our Happy Users
-  .row-fluid{ style: "background-color: #f6c880;" }
+        %div{ style: "margin:10px auto; padding: 10px 0; color: white;" }
+          .body
+            .testimonial
+              .speech
+                %p.speech.right "MetaBright is the best site in the entire world. Because of MetaBright, I've found a job, gotten married, and won elected office."
+              %div
+                .bio{ style: "display: inline-block; float: right; margin-top: 25px; width: 94px; margin-left: 12px;"}
+                  %p 
+                    Tara R., 
+                    %br 
+                    Founder of 37 Signals
+                .picture{ style: "display: inline-block; float: right"} 
+                  = image_tag "http://ugochukwu.files.wordpress.com/2008/02/profile_tatiana1.jpg?w=540", class: "img-circle"
+            .testimonial
+              .speech
+                %p.speech.center{ style: "margin: 0 auto 50px;"} "MetaBright is the best site in the entire world. Because of MetaBright, I've found a job, gotten married, and won elected office."
+              %div
+                .bio{ style: "display: inline-block; float: right; margin-top: 25px; width: 94px; margin-left: 12px;"}
+                  %p 
+                    Patrick S., 
+                    %br 
+                    Vice President of Halliburton
+                .picture{ style: "display: inline-block; float: right"} 
+                  = image_tag "http://www.inweekly.net/images/articles/articles/full/art_8540_img_hw-profileDr.-R.-Sidney-Stu.jpg", class: "img-circle"
+
+            .testimonial
+              .speech
+                %p.speech.left{ style: "float: right; "} "MetaBright is the best site in the entire world. Because of MetaBright, I've found a job, gotten married, and won elected office."
+                %div
+                  .bio{ style: "display: inline-block; float: right; margin-top: 25px; width: 94px; margin-left: 12px;"}
+                    %p 
+                      Hailey Q., 
+                      %br 
+                      Head Honcho at Facebook
+                  .picture{ style: "display: inline-block; float: right"} 
+                    = image_tag "http://2.gravatar.com/avatar/51ca9752f4300b602ad2dfedf316a0e4?s=200", class: "img-circle"
+          
+  .row-fluid.challenge_showcase{ style: "" }
     .container
-      .span12
-        %div{ style: "margin:10px auto; height: 200px; padding: 10px 0; color: white;" }
-          %h4 Explore Our Challenges
+      .span12{ style: "margin:10px auto; height: 200px; padding: 10px 0; text-align: center; " }
+        .header
+          %h3{ style: "color: inherit;"} Show the world what you know with MetaBright Challenges
+        .body
+          .carousel
+            .left_scroll{ onclick: "landing_slide('left');"}
+              = image_tag ICON_CAROUSEL_LEFT, alt: "Left"
+            .inner
+              %ul
+                - @paths.each do |path|
+                  %li.mosaic-block.bar2
+                    - if current_user
+                      = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                        .details
+                          %h4= truncate(path.name,length: 14, separator: ' ')
+                          %h5 Try this Challenge!
+                    - else
+                      = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
+                        .details
+                          %h4= truncate(path.name,length: 14, separator: ' ')
+                          %h5 Try this Challenge!
+                    %div{ style: "text-align: left;"}
+                      - if current_user
+                        = link_to intro_path(c: path.permalink) do
+                          = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                      - else                  
+                        = link_to challenge_url(path.permalink) do
+                          = image_tag path.picture, class: "mosaic-backdrop", style: "display:inline;", size: "110x110", alt: "#{path.name}"
+                  
+                
+            .right_scroll{ onclick: "landing_slide('right');"}
+              = image_tag ICON_CAROUSEL_RIGHT, alt: "Right"
+              
+              
+              
+              
+              
+              
+              
+              
+              
+          
       

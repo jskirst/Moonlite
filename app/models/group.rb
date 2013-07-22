@@ -52,6 +52,17 @@ class Group < ActiveRecord::Base
       gu.save!
     end
   end
+  
+  def save_with_stripe(stripe_card_token)
+    begin
+      customer = Stripe::Customer.create(description: self.id, plan: "TEST", card: stripe_card_token)
+      self.stripe_token = customer.id
+      save!
+    rescue Stripe::InvalidRequestError => e
+      logger.error "Stripe error while creating customer: #{e.message}"
+      false
+    end
+  end
    
   def picture
     return image_url unless image_url.blank?

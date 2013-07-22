@@ -24,6 +24,7 @@ gem 'dalli'
 gem 'awesome_print'
 gem 'font_assets'
 gem 'geocoder'
+gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 
 group :assets do
   gem 'sass-rails'

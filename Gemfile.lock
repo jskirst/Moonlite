@@ -6,6 +6,14 @@ GIT
       carmen (~> 1.0.0)
       rails
 
+GIT
+  remote: https://github.com/stripe/stripe-ruby
+  revision: fd09e677311d7d78a02af9b6c7f61b3a2c3b752d
+  specs:
+    stripe (1.8.4)
+      multi_json (>= 1.0.4, < 2)
+      rest-client (~> 1.4)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -326,6 +334,7 @@ DEPENDENCIES
   sass-rails
   simplecov
   sql-logging
+  stripe!
   taps
   thin
   turbolinks
