@@ -92,7 +92,7 @@ ICON_LOGIN_GITHUB = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+github.
 SHARE_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
 SHARE_TWITTER = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
 SHARE_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
-SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+reddit+small"
+SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+reddit+small.png"
 
 ICON_CAROUSEL_LEFT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"
 ICON_CAROUSEL_RIGHT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"
