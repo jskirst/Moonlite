@@ -129,6 +129,11 @@ class EvaluationsController < ApplicationController
     @show_nav_bar = false
     @show_sign_in = false
     @evaluation = Evaluation.find_by_permalink(params[:permalink])
+    unless @evaluation
+      clear_return_back_to
+      redirect_to root_url and return
+    end
+    
     if current_user
       @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)
       if @evaluation_enrollment.nil?
