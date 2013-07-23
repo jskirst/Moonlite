@@ -91,7 +91,7 @@
                 %li Talent Search Tool
                 %li Premium Support
               .price_footer
-                = link_to "Select", new_group_path(p: Opportunity::EVAL_BASIC), class: "action_button"
+                = link_to "Select", new_group_path(p: Group::SINGLE_PLAN), class: "action_button"
             %li.price_block
               %h3 2-5 Users
               .price
@@ -103,7 +103,7 @@
                 %li Talent Search Tool
                 %li Premium Support
               .price_footer
-                = link_to "Select", new_group_path(p: Opportunity::EVAL_PRO), class: "action_button"
+                = link_to "Select", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button"
             %li.price_block
               %h3 6-15 Users
               .price
@@ -115,7 +115,7 @@
                 %li Talent Search Tool
                 %li Premium Support
               .price_footer
-                = link_to "Select", new_group_path(p: Opportunity::EVAL_ENT), class: "action_button"
+                = link_to "Select", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button"
             %li.price_block
               %h3 16-50 Users
               .price
@@ -127,5 +127,5 @@
                 %li Talent Search Tool
                 %li Premium Support
               .price_footer
-                = link_to "Select", new_group_path(p: Opportunity::EVAL_ULTRA), class: "action_button"
+                = link_to "Select", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button"
         

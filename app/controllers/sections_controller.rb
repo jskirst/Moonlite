@@ -213,11 +213,12 @@ class SectionsController < ApplicationController
   def finish
     @session_id = params[:session_id]
     if params[:s].blank? and current_user.seen_opportunities
-      @enrollment.calculate_metascore
-      @enrollment.calculate_metapercentile
-      completed_tasks = current_user.completed_tasks.where(session_id: @session_id)
-      @incorrect_topics = completed_tasks.where(status_id: 0).joins(:topic).select("topics.name").to_a.collect(&:name).join(", ")
-      @correct_topics = completed_tasks.where(status_id: 1).joins(:topic).select("topics.name").to_a.collect(&:name).join(", ")
+      completed_tasks = current_user.completed_tasks
+        .where(session_id: @session_id)
+        .joins(:task)
+        .joins("LEFT JOIN topics on topics.id=tasks.topic_id")
+        .select("topics.name, completed_tasks.*")
+      @performance = PerformanceStatistics.new(completed_tasks, @enrollment)
       @total_session_points = completed_tasks.sum(:points_awarded)
       render "finish"
     elsif params[:s].blank?

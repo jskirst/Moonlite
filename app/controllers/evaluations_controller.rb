@@ -80,7 +80,8 @@ class EvaluationsController < ApplicationController
     @results = []
     @evaluation.paths.each do |path|
       @enrollment = @user.enrollments.find_by_path_id(path.id)
-      core = @enrollment.completed_tasks.joins(:task => :topic)
+      core = @enrollment.completed_tasks.joins(:task)
+        .joins("LEFT JOIN topics on topics.id=tasks.topic_id")
         .select("topics.*, tasks.*, completed_tasks.*")
         .where("tasks.path_id = ?", path.id)
         .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a

@@ -152,6 +152,7 @@ Metabright::Application.routes.draw do
   match '/about' => 'pages#about'
   match '/internship' => 'pages#internship'
   match '/evaluator' => 'pages#evaluator'
+  match '/employers' => 'pages#evaluator'
   match '/organization_portal' => 'pages#organization_portal'
   match '/product_form' => 'pages#product_form'
   post  '/opportunity' => 'pages#opportunity'

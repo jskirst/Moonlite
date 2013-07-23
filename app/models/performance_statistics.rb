@@ -6,7 +6,7 @@ class PerformanceStatistics
   attr_accessor :total, :number_correct, :number_incorrect, :percent_correct, 
     :avg_time_to_answer, :strengths, :weaknesses, :completed_tasks
   
-  def initialize(completed_tasks)
+  def initialize(completed_tasks, enrollment = nil)
     self.completed_tasks = completed_tasks
     self.total = self.completed_tasks.size
     if self.total == 0
@@ -20,6 +20,11 @@ class PerformanceStatistics
     end
     calculate_saw
     calculate_avg_time_to_answer
+    enrollment ||= completed_tasks.first.enrollment
+    if enrollment
+      enrollment.calculate_metascore
+      enrollment.calculate_metapercentile
+    end
   end
   
   def calculate_saw
@@ -29,7 +34,7 @@ class PerformanceStatistics
       saw[n] = [0, 0] if saw[n].nil?
       saw[n] = ct.correct? ? [saw[n][0] + 1, saw[n][1]] : [saw[n][0], saw[n][1] + 1]
     end
-    saw = saw.select{ |name, stats| (stats[0] + stats[1]) >= 2 }
+    saw = saw.select{ |name, stats| (stats[0] + stats[1]) >= 1 }
     self.strengths = saw.select{ |topic_name, stats| (stats[0].to_f / (stats[0]+stats[1])) > 0.75 }
     self.weaknesses = saw.select{ |topic_name, stats| (stats[1].to_f / (stats[0]+stats[1])) > 0.5 }
   end
@@ -40,5 +45,22 @@ class PerformanceStatistics
   
   def persisted?
     false
+  end
+  
+  def to_hash
+    {
+      total: self.total,
+      number_correct: self.number_correct, 
+      number_incorrect: self.number_incorrect, 
+      percent_correct: self.percent_correct, 
+      avg_time_to_answer: self.avg_time_to_answer, 
+      strengths: self.strengths, 
+      weaknesses: self.weaknesses, 
+      completed_tasks: completed_tasks
+    }
+  end
+  
+  def to_s
+    to_hash.collect{ |name, value| "#{name}: #{value}" }.join("\n")
   end
 end

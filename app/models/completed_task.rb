@@ -8,6 +8,7 @@ class CompletedTask < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :task
+  belongs_to :enrollment
   has_one :topic, through: :task
   belongs_to :submitted_answer, dependent: :destroy
   belongs_to :chosen_answer, class_name: "Answer"

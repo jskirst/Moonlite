@@ -22,7 +22,14 @@ module SessionsHelper
       auth = request.env["omniauth.auth"]
       if auth
         if user = current_user
-          user.merge_existing_with_omniauth(auth)
+          if User.find_by_email(auth["info"]["email"])
+            sign_out
+            flash[:error] = "You already have an existing account. Please first sign into that account."
+            redirect_to root_url and return
+          else
+            show_welcome_message = true if user.guest_user?
+            user.merge_guest_with_omniauth(auth)
+          end
         elsif user = User.find_with_omniauth(auth)
           sign_in(user)
         elsif user = User.find_by_email(auth["info"]["email"])
@@ -32,6 +39,7 @@ module SessionsHelper
             flash[:error] = "An error occured. Please try another form of authentication."
           end
         else
+          show_welcome_message = true
           user = User.create_with_omniauth(auth)
         end
       else
@@ -42,7 +50,7 @@ module SessionsHelper
       user.reload
       sign_in(user)
       user.set_viewed_help(session[:viewed_help])
-      if (not user.guest_user?) and user.created_at > 30.minutes.ago
+      if show_welcome_message
         Mailer.welcome(current_user.email).deliver
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
       end

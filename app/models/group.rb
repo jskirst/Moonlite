@@ -1,11 +1,19 @@
 class Group < ActiveRecord::Base
-  PUBLIC = 0
-  TRIAL = 100
-  BASIC = 101
-  PLAN_TYPES = { PUBLIC => "Public", TRIAL => "Trial", BASIC => "Basic" }
+  FREE_PLAN = "free"
+  SINGLE_PLAN = "single"
+  TWO_TO_FIVE_PLAN = "two_to_five"
+  SIX_TO_FIFTEEN_PLAN = "six_to_fifteen"
+  SIXTEEN_TO_FIFTY_PLAN = "sixteen_to_fifty"
+  PLAN_TYPES = {
+    FREE_PLAN => { price: "Free", description: "Free trial account" }, 
+    SINGLE_PLAN => { price: "$9.99", description: "Single User" }, 
+    TWO_TO_FIVE_PLAN => { price: "$19.99", description: "2-5 users" }, 
+    SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users" },
+    SIXTEEN_TO_FIFTY_PLAN => { price: "$79.99", description: "16-50 users" }
+  }
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator
-  attr_protected :token
+  attr_protected :token, :plan_type
   attr_accessible :name,
     :description, 
     :image_url,
@@ -14,7 +22,6 @@ class Group < ActiveRecord::Base
     :state,
     :country,
     :permalink,
-    :plan_type,
     :is_private,
     :creator_name, 
     :creator_email, 
@@ -28,6 +35,7 @@ class Group < ActiveRecord::Base
   has_many  :users, through: :group_users
    
   validates_presence_of :name
+  validates :plan_type, inclusion: { in: PLAN_TYPES }
    
   before_create do
     if self.creator_name
@@ -55,7 +63,7 @@ class Group < ActiveRecord::Base
   
   def save_with_stripe(stripe_card_token)
     begin
-      customer = Stripe::Customer.create(description: self.id, plan: "TEST", card: stripe_card_token)
+      customer = Stripe::Customer.create(description: self.id, plan: self.plan_type, card: stripe_card_token)
       self.stripe_token = customer.id
       save!
     rescue Stripe::InvalidRequestError => e

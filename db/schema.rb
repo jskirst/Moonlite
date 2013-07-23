@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130721184003) do
+ActiveRecord::Schema.define(:version => 20130723190632) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(:version => 20130721184003) do
     t.datetime "created_at",                     :null => false
     t.datetime "updated_at",                     :null => false
     t.string   "token"
-    t.integer  "plan_type",    :default => 0
+    t.string   "plan_type",    :default => "0"
     t.boolean  "is_private",   :default => true
     t.string   "stripe_token"
   end

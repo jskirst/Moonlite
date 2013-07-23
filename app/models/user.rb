@@ -117,17 +117,17 @@ class User < ActiveRecord::Base
     return User.joins(:user_auths, :user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").where("user_auths.provider = ? and user_auths.uid = ?", auth["provider"], auth["uid"]).first
   end
   
-  def merge_existing_with_omniauth(auth)
+  def merge_guest_with_omniauth(auth)
     User.create_with_omniauth(auth, self)
   end
   
-  def self.create_with_omniauth(auth, user = nil)
+  def self.create_with_omniauth(auth, existing_user = nil)
     user_from_auth = User.find_with_omniauth(auth)
     return user_from_auth if user_from_auth
     user_details = { 
         name: auth["info"]["name"], 
         email: auth["info"]["email"],
-    }
+    } 
 
     begin
       info = auth[:extra][:raw_info]
@@ -183,7 +183,7 @@ class User < ActiveRecord::Base
       end
     end
     
-    user = User.find_by_email(auth["info"]["email"]) unless user
+    user = User.find_by_email(auth["info"]["email"]) unless existing_user
     if user
       user.update_attributes(user_details)
       user.grant_username(force_rename: true)

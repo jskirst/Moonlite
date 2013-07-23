@@ -7,11 +7,13 @@ class GroupsController < ApplicationController
   
   def new
     @new_group = Group.new
+    @new_group.plan_type = params[:p]
     render "groups/signup/form"
   end
   
   def create
     @new_group = Group.new(params[:group])
+    @new_group.plan_type = params[:group][:plan_type]
     if @new_group.save!
       raise "New user" if @new_group.creator.nil?
       if @new_group.creator

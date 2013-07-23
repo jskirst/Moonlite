@@ -41,6 +41,13 @@
           .score= @enrollment.level
           %div
             Your #{truncate(@path.name, length: 25, separator: ' ')} level
+      - if @performance.strengths.any?
+        .strengths_and_weaknesses{ style: "text-align: center; margin-top: 15px;" }
+          %h4 Strengths
+          %p= @performance.strengths.collect{|name, diff| name}.join(", ")
+          - if @performance.weaknesses.any?
+            %h4 Weaknesses
+            %p= @performance.weaknesses.collect{|name, diff| name}.join(", ")
       %div{ style: "margin-top: 25px;"}
         %div{ style: "text-align: center; "}
           - if @sample
