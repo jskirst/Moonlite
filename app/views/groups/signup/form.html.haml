@@ -11,8 +11,8 @@
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
         %h1{ style: "margin-top:0;" } MetaBright Evaluator
-        %h3 Order checkout (Step 1 of 2)
-    .body
+        %h3 Order Checkout (Step 1 of 2)
+    .body{ style: "padding-bottom: 0;" }
       = form_for(@new_group, html: { class: "form-horizontal" }) do |f|
         %label Product: 
         .product_name= Opportunity::PRODUCTS[params[:product].to_i]

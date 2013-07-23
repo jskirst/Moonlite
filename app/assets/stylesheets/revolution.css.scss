@@ -972,6 +972,11 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         width: 300px;
         margin-bottom: 20px;
       }
+      span {
+        font-size: 20px;
+        position: relative;
+        bottom: 5px;
+      }
     }
     h2 { 
       text-transform: uppercase;
