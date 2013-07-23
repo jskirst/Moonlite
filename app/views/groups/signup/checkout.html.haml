@@ -28,9 +28,16 @@
         = form_for(@group, url: checkout_group_url(@group), remote: true, html: { class: "form-horizontal", id: "new_subscription" }) do |f|
           = f.hidden_field :stripe_token
           %p.payment-errors= @error
-          %label Card Number
+          %label{ style: "display: inline-block;"} Card Number
+          .checkout_tt1
+            %div{ "data-tip" => "We accept Visa, Mastercard, American Express, Discover, and JCB."}
+              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
           %input{ type: "text", size: 20, data: { stripe: "number" }, style: "width: 24ex;" }
-          %label CVC
+          %div
+            %label{ style: "display: inline-block;"} CVC
+            .checkout_tt2
+              %div{ "data-tip" => "Your Card Verification Code (CVC) is a 3-digit number printed on the back of your Visa/Mastercard/Discover. It appears just to the right of the signature box. The American Express verification number is 4-digits and printed on the front of the card. It is immediately to the right of your credit card number."}
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
           %input{ type: "text", size: 4, data: { stripe: "cvc" }, class: "input-small", style: "width: 3em;" }
           %label Expiration (MM/YYYY)
           %input{ type: "text", size: 2, data: { stripe: "exp-month" }, placeholder: "MM", class: "input-small", style: "width: 1.5em;" }
