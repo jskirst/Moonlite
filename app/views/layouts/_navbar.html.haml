@@ -1,6 +1,6 @@
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner{ style: "height: 100%;" }
-    %div{ style: "margin-left: 6%; height: 100%;" }
+    %div{ style: "margin-left: 6%; height: 100%; width: 90%; margin: 0 auto;" }
       %div.brand{ style: "padding-top: 3px; width: 150px;" }
         = link_to root_url do
           - if params[:new_logo]
@@ -126,10 +126,14 @@
                         %li.invite_facebook_friends= link_to "Invite Friends", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "MetaBright Labs", ideas_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "Sign out", signout_path, style: "color: inherit; text-shadow: none;"
-      - if current_user.nil? && show_sign_in
-        %ul.nav.pull-right{ style: "float:right; margin-right: 197px; " }
-          %li
-            %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in
+      - if current_user.nil?
+        %ul.nav.pull-right
+          - if show_employer_link
+            %li{ style: "margin-top: 4px;"} 
+              = link_to "Employer? We can turbocharge your recruiting.", "/employers", class: "employers_link"
+          - if show_sign_in
+            %li
+              %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in
       - elsif current_user and params[:controller] == "sections" and params[:action] != "new"
         %ul.nav.pull-right{ style: "float:right; margin-right: 175px;" }
           %li

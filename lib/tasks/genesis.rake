@@ -93,6 +93,12 @@ namespace :db do
       
       path.path_personas.create!(persona_id: Persona.first.id)
     end
+    
+    User.all.each do |u|
+      Path.all.each do |p|
+        u.enroll!(p)
+      end
+    end
   
     Path.all.each_with_index do |path, i|
       PATH_SECTIONS.each do |s|
@@ -129,11 +135,6 @@ namespace :db do
         section.tasks.create!(path_id: path.id, question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
         section.tasks.create!(path_id: path.id, question: "This is a task2", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
         section.tasks.create!(path_id: path.id, question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
-      end
-    end
-    User.all.each do |u|
-      Path.all.each do |p|
-        u.enroll!(p)
       end
     end
   end

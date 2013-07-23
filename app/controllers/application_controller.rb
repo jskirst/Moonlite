@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   include ApplicationHelper
   include SessionsHelper
+  include NavigationHelper
   
   before_filter :determine_enabled_features
   before_filter :log_visit

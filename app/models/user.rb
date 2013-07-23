@@ -272,13 +272,15 @@ class User < ActiveRecord::Base
       elsif obj.is_a? Vote
         task_id = obj.owner.task_id
       elsif obj.is_a? Task
-        task_id = obj.id
+        task = obj
       else
         raise "unknown object"
       end
-      task = Task.cached_find(task_id)
+      task = Task.cached_find(task_id) unless task
       enrollment = enrollments.find_by_path_id(task.path_id)
-      raise "Enrollment nil" unless enrollment
+      unless enrollment
+        raise "Enrollment nil: "+task.to_yaml
+      end 
       log_transaction(obj, points)
       self.update_attribute('earned_points', self.earned_points + points)
       enrollment.add_earned_points(points)
