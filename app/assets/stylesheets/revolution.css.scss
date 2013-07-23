@@ -1570,10 +1570,14 @@ $landing_green: #73bb6e;
         .triangle{}
       }
       .span5{
-        .consumer, .employer { height: 50%; padding: 0 10px; }
+        .consumer, .employer { height: 50%; padding: 0 10px;}
         .consumer { background-color: $landing_red;  }
         .employer { background-color: $landing_yellow; } 
         .option { padding: 24px 20px; color: white; }
+        a { 
+          color: inherit; 
+          &:hover {text-decoration: none ;} 
+        }
       }
     }
   }
