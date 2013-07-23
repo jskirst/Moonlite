@@ -137,4 +137,19 @@ class Mailer < ActionMailer::Base
     @url = url
     m = mail(to: email, subject: "You've been invited to join the #{group.name} account on MetaBright")
   end
+  
+  def group_signup_confirmation
+    /* Name of group admin
+    /* Number of users allowed in plan (1 user, 2-5 users, etc.)
+    /* Link to group Account management
+  end
+  
+  def evaluation_new_candidate
+    /* Name of group admin
+    /* name of person who completed eval
+    /* Name of Evaluation
+    /* Link to Eval Overview
+    /* Link to Grade page of person who just completed eval
+  end
+  
 end
