@@ -465,7 +465,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
 .feedback_tab a { background-color: transparent;display: block;padding: 6px 10px 2px 42px;text-decoration: none; color:white; cursor:pointer; font-size:15px; }
 
 /* About/Revolution */
-.aboutcontainer{margin-top:85px; margin-bottom:10px; overflow:hidden; width:695px;margin-left:auto;margin-right:auto;border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+.aboutcontainer{margin-top:84px; margin-bottom:10px; overflow:hidden; width:695px;margin-left:auto;margin-right:auto;border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
 .aboutbox{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:20px 20px 5px 20px;}
 .aboutheader span{font-size:50px; position:relative; bottom:42px;}
 .aboutheader img{height:115px; vertical-align:baseline;}
@@ -909,7 +909,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
    padding: 15px 0 0 15px;
    
    img { height: 140px; }
-   span { font-size: 64px; bottom: 52px; } 
+   h1 { font-size: 58px; display: inline-block; margin-top: 46px; vertical-align: top;} 
+   h3 { margin-top: 10px; }
   }
   .body { 
     
@@ -935,6 +936,43 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       h3 { text-align:left; }
     }
     
+    form {
+      width: 315px;
+      margin: 0 auto;
+      
+      .product_name {
+        font-size: 16px;
+        background: $employer_green;
+        display: inline-block;
+        padding: 8px 12px;
+        border-radius: 8px;
+        color: white;
+        margin-bottom: 20px;
+      }
+      .submit {
+        background-color: #e9685b;
+        color: white;
+        float: right;
+        width: inherit;
+        font-weight: normal;
+        box-shadow: none;
+        margin: 0;
+        font-size: 15px;
+        border: none;
+        border-radius: 3px;
+        padding: 7px 20px 5px 20px;
+        &:hover{ box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); }
+      }
+      label {
+        display: block;
+        font-size: 16px; 
+        margin-bottom: 5px;
+      }
+      input {
+        width: 300px;
+        margin-bottom: 20px;
+      }
+    }
     h2 { 
       text-transform: uppercase;
       border-bottom: 1px solid rgba(0,0,0,0.1);

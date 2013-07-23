@@ -1,36 +1,30 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 950px; background: rgba(36, 72, 109, 0.8); margin-top: 0px; }
+  .container.body { padding: 0; background-color: transparent;   }
+  .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;}
+  .aboutbox { border-radius: 0; padding: 20px; }
 
-#employer1.aboutcontainer
+
+#employer_product.aboutcontainer
   .aboutbox
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
-      %span Turbocharge your hiring
+      %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
+        %h1{ style: "margin-top:0;" } MetaBright Evaluator
+        %h3 Order checkout (Step 1 of 2)
     .body
-      %div
-        %h4 Submit this form and someone from our team will get in touch to learn about your business and to get you set up. If it turns out MetaBright isn't for you, you're under no obligation to complete the transaction.
       = form_for(@new_group, html: { class: "form-horizontal" }) do |f|
-        .control-group
-          %label.control-label Product: 
-          .controls{ style: "margin-top: 4px; "}
-            %span{ style: "font-size: 18px; "}= Opportunity::PRODUCTS[params[:product].to_i]
-        .control-group
-          %label.control-label Your Name
-          .controls
-            = f.text_field :creator_name, placeholder: "Your name..."
-        .control-group
-          %label.control-label Company Name
-          .controls
-            = f.text_field :name, placeholder: "Your Company name..."
-        .control-group
-          %label.control-label Email
-          .controls
-            = f.text_field :creator_email, placeholder: "Email..."
-        .control-group
-          %label.control-label Password
-          .controls
-            = f.password_field :creator_password, placeholder: "Password..."
+        %label Product: 
+        .product_name= Opportunity::PRODUCTS[params[:product].to_i]
+        %label Your name:
+        = f.text_field :creator_name, placeholder: "Your name..."
+        %label Company name:
+        = f.text_field :name, placeholder: "Company name..."
+        %label Your email address:
+        = f.text_field :creator_email, placeholder: "Email..."
+        %label Create a password:
+        = f.password_field :creator_password, placeholder: "Password..."
+
         .control-group
           .controls
-            = f.submit "Submit", class: "button button-actionable"
+            = f.submit "Submit", class: "submit"
