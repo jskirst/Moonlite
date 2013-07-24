@@ -1089,6 +1089,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       padding: 5px 20px;
       font-size: 13px;
       text-transform: uppercase;
+      
+      &:active { position: relative; top: 1px; }
     }      
     @media only screen and (min-width : 480px) and (max-width : 768px) {
       .price_block {width: 50%;}
@@ -1667,6 +1669,7 @@ $landing_green: #73bb6e;
         text-shadow: none; 
         color: #8a8d99;
         
+        &:active { position: relative; top: 1px; };
       }
       a { 
         color: inherit; 
