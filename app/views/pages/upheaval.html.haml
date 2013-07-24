@@ -5,23 +5,9 @@
   h3 {  color: #8a8d99;}
   .container{ float: none; width: 980px; margin: 0 auto;}
   .container.body { width: 100% !important; padding: 0 !important; margin-top: 40px; }
-  .triangle{
-    position: relative;
-    float: right;
-    bottom: 192px;
-    left: 30px;
-    display: inline-block;
-    width: 0px;
-    height: 0px;
-    border-style: solid;
-    border-width: 50px 0 50px 30px;
-    border-color: transparent transparent transparent #ffffff;
-  }
   .main_splash .option:hover .button { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
   .button { background-color: rgb(231, 231, 231); float: right; text-shadow: none; color: #8a8d99;}
   .button:hover { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48);  }
-  .happy_users .body .picture img { height: 110px; width: 110px;  }
-  .happy_users .testimonial { display: inline-block; width: 33%; margin: 15px 0; text-align: center; vertical-align: top;}
   p.speech {
     color: #404040;
     position: relative;
@@ -95,31 +81,44 @@
     border: 34px solid;
     border-color: #fff transparent transparent transparent;
   }
+
+  
+:javascript
+  function goto(id, t){
+    $("#holder3").animate({"left": -($(id).position().left)}, 600);  
+  }
+
   
 #upheaval
-  .row-fluid.main_splash
-    .container{ style: "padding: 50px 0 70px;"}
-      .span7{ style: "height: 286px; text-align: center; "}
-        .hero{ style: "display: inline-block; padding: 13px 0;" }
-          %h1 
-            Prove your skills. 
-            %br
-            Be discovered.
-          %h3{ style: "width: 93%; margin: 0 auto;"} We believe that people should be hired on the basis of what they can actually do.
-        .triangle
-      .span5{ style: "height: 286px; margin-left: 0;" }
-        .row-fluid.consumer
-          .option
-            %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white;"} I want to be discovered.
-            %p{ style: "font-size: 15px; "} MetaBright is the game that can get you a job. Compete against others as you improve together.
-            %button.button{ style: "float: right; background-color: rgb(231, 231, 231);"} Get Started
-        .row-fluid.employer
-          .option
-            %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white; "} I want better candidates.
-            %p{ style: "font-size: 15px; "} The MetaBright Evaluator validates the skills of your job candidates before you interview them.
-            %button.button{ style: "float: right; background-color: rgb(231, 231, 231);"}
-              = link_to "Learn More", evaluator_path
-  .row-fluid.happy_users
+  #holder1{ style: "width: 980px; margin: 0 auto;"}
+    #holder2.row-fluid{ style: "overflow: hidden;"}
+      #holder3{ style: "position: relative; left: 0;width: 3000px; height: 100%;"}
+        #main_slide
+          .span7
+            .hero
+              %h1 
+                Prove your skills. 
+                %br
+                Be discovered.
+              %h3 We believe that people should be hired on the basis of what they can actually do.
+            .triangle
+          .span5{ style: "height: 286px; margin-left: 0;" }
+            .row-fluid.consumer
+              .option
+                %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white;"} I want to be discovered.
+                %p{ style: "font-size: 15px; "} MetaBright is the game that can get you a job. Compete against others as you improve together.
+                %button.button{ style: "float: right; background-color: rgb(231, 231, 231);"}
+                  %a{:href => "#", :onclick => "goto('#consumer_slide', this); return false"} Get Started
+            .row-fluid.employer
+              .option
+                %h4{ style: "font-size: 1.6em; margin-bottom: 10px; color: white; "} I want better candidates.
+                %p{ style: "font-size: 15px; "} The MetaBright Evaluator validates the skills of your job candidates before you interview them.
+                %button.button{ style: "float: right; background-color: rgb(231, 231, 231);"}
+                  = link_to "Learn More", evaluator_path
+        #consumer_slide
+          .span12
+            %h1 It's a consumer!!!$$$$!~~~~
+  #happy_users.row-fluid
     .container
       .span12
         %div{ style: "margin:10px auto; padding: 10px 0; color: white;" }
@@ -159,7 +158,7 @@
                   .picture{ style: "display: inline-block; float: right"} 
                     = image_tag "http://2.gravatar.com/avatar/51ca9752f4300b602ad2dfedf316a0e4?s=200", class: "img-circle"
           
-  .row-fluid.challenge_showcase{ style: "" }
+  #challenge_showcase.row-fluid
     .container
       .span12{ style: "margin:10px auto; height: 200px; padding: 10px 0; text-align: center; " }
         .header

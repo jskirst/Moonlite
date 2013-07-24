@@ -1620,28 +1620,69 @@ $landing_yellow: #e3b164;
 $landing_green: #73bb6e;
 
 #upheaval{
-  .main_splash {
-    .container {
-      .span7 {
-        .hero{}
-        .triangle{}
+  
+  #main_slide {
+    width: 980px; 
+    float: left;
+    padding: 50px 0 70px;
+      
+    .span7 {
+      height: 286px; 
+      text-align: center; 
+      
+      .hero{ 
+        display: inline-block; 
+        padding: 13px 0; 
       }
-      .span5{
-        .consumer, .employer { height: 50%; padding: 0 10px;}
-        .consumer { background-color: $landing_red;  }
-        .employer { background-color: $landing_yellow; } 
-        .option { padding: 24px 20px; color: white; }
-        a { 
-          color: inherit; 
-          &:hover {text-decoration: none ;} 
-        }
+      .triangle{
+        position: relative;
+        float: right;
+        bottom: 192px;
+        left: 30px;
+        display: inline-block;
+        width: 0px;
+        height: 0px;
+        border-style: solid;
+        border-width: 50px 0 50px 30px;
+        border-color: transparent transparent transparent #ffffff;
+      }
+      h3 { width: 93%; margin: 0 auto; }
+    }
+    .span5{
+      .consumer, .employer { height: 50%; padding: 0 10px;}
+      .consumer { background-color: $landing_red;  }
+      .employer { background-color: $landing_yellow; } 
+      .option { padding: 24px 20px; color: white; }
+      a { 
+        color: inherit; 
+        &:hover {text-decoration: none ;} 
       }
     }
   }
-  .happy_users {
-    background-color: $landing_green;
+  #consumer_slide {
+    width: 980px; 
+    float: left;
+    padding: 50px 0 70px;
+    
   }
-  .challenge_showcase{
+  #happy_users {
+    background-color: $landing_green;
+    
+    .body {
+      .picture {
+        img { height: 110px; width: 110px; }
+      }
+      .testimonial {
+        display: inline-block; 
+        width: 33%; 
+        margin: 15px 0; 
+        text-align: center; 
+        vertical-align: top;
+      }
+    }
+    
+  }
+  #challenge_showcase{
     margin-bottom: 70px;
     
 	  .body{
