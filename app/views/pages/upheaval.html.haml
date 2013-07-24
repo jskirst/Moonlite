@@ -1,13 +1,9 @@
 :css
   body { background-image: none; background-color: white;}
-  .span7 {  }
   h1 { text-align: center; font-size: 4.5em; line-height: 1.25em; padding-bottom: 34px; }
   h3 {  color: #8a8d99;}
   .container{ float: none; width: 980px; margin: 0 auto;}
   .container.body { width: 100% !important; padding: 0 !important; margin-top: 40px; }
-  .main_splash .option:hover .button { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
-  .button { background-color: rgb(231, 231, 231); float: right; text-shadow: none; color: #8a8d99;}
-  .button:hover { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48);  }
   p.speech {
     color: #404040;
     position: relative;
@@ -117,7 +113,15 @@
                   = link_to "Learn More", evaluator_path
         #consumer_slide
           .span12
-            %h1 It's a consumer!!!$$$$!~~~~
+            %h3 Take Challenges to measure and showcase your skills.
+            %ul
+              - @paths.first(10).each do |path|
+                %li
+                  %div{ "data-tip" => "Take the #{path.name} Challenge!" }
+                    = link_to intro_path(c: path.permalink) do
+                      = image_tag path.picture, style: "display:inline;", alt: "#{path.name}"
+            %a{:href => "#", :style => "float: left;", :onclick => "goto('#main_slide', this); return false"} Back
+            %a.explore_link{ style: "float: right;"} View more Challenges
   #happy_users.row-fluid
     .container
       .span12
@@ -125,38 +129,38 @@
           .body
             .testimonial
               .speech
-                %p.speech.right "MetaBright is the best site in the entire world. Because of MetaBright, I've found a job, gotten married, and won elected office."
+                %p.speech.right "Talk about a time saver. MetaBright is a great talent screener. I never have to wonder if someone has the skills necessary to do the job."
               %div
                 .bio{ style: "display: inline-block; float: right; margin-top: 25px; width: 94px; margin-left: 12px;"}
                   %p 
-                    Tara R., 
+                    Nisa Q.
                     %br 
-                    Founder of 37 Signals
+                    Sales Specialist at LinkedIn
                 .picture{ style: "display: inline-block; float: right"} 
-                  = image_tag "http://ugochukwu.files.wordpress.com/2008/02/profile_tatiana1.jpg?w=540", class: "img-circle"
+                  = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/testimonial+images/nisa.jpg", class: "img-circle"
             .testimonial
               .speech
-                %p.speech.center{ style: "margin: 0 auto 50px;"} "MetaBright is the best site in the entire world. Because of MetaBright, I've found a job, gotten married, and won elected office."
+                %p.speech.center{ style: "margin: 0 auto 50px;"} "Challenges in MetaBright are unbelievably fun. I love competing with others and working my way up the leaderboard."
               %div
                 .bio{ style: "display: inline-block; float: right; margin-top: 25px; width: 94px; margin-left: 12px;"}
                   %p 
-                    Patrick S., 
+                    Calvin J.
                     %br 
-                    Vice President of Halliburton
+                    PM, Self-Driving Cars at Google
                 .picture{ style: "display: inline-block; float: right"} 
-                  = image_tag "http://www.inweekly.net/images/articles/articles/full/art_8540_img_hw-profileDr.-R.-Sidney-Stu.jpg", class: "img-circle"
+                  = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/testimonial+images/calvin.jpg", class: "img-circle"
 
             .testimonial
               .speech
-                %p.speech.left{ style: "float: right; "} "MetaBright is the best site in the entire world. Because of MetaBright, I've found a job, gotten married, and won elected office."
+                %p.speech.left{ style: "float: right; "} "MetaBright's analytical tools are amazing. They accurately summarize people's strengths and weaknesses across a wide variety of skills."
                 %div
                   .bio{ style: "display: inline-block; float: right; margin-top: 25px; width: 94px; margin-left: 12px;"}
                     %p 
-                      Hailey Q., 
+                      Kat P.
                       %br 
-                      Head Honcho at Facebook
+                      Former Analyst at Google
                   .picture{ style: "display: inline-block; float: right"} 
-                    = image_tag "http://2.gravatar.com/avatar/51ca9752f4300b602ad2dfedf316a0e4?s=200", class: "img-circle"
+                    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/testimonial+images/kat.jpg", class: "img-circle"
           
   #challenge_showcase.row-fluid
     .container
@@ -171,16 +175,10 @@
               %ul
                 - @paths.each do |path|
                   %li.mosaic-block.bar2
-                    - if current_user
-                      = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
-                        .details
-                          %h4= truncate(path.name,length: 14, separator: ' ')
-                          %h5 Try this Challenge!
-                    - else
-                      = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
-                        .details
-                          %h4= truncate(path.name,length: 14, separator: ' ')
-                          %h5 Try this Challenge!
+                    = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                      .details
+                        %h4= truncate(path.name,length: 14, separator: ' ')
+                        %h5 Try this Challenge!
                     %div{ style: "text-align: left;"}
                       - if current_user
                         = link_to intro_path(c: path.permalink) do

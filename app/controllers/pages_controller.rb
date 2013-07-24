@@ -252,7 +252,7 @@ class PagesController < ApplicationController
     @show_footer = true
     @show_nav_bar = false
     @show_sign_in = true
-    @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
+    @paths = Path.by_popularity(10).where("promoted_at is not ?", nil).to_a
     render "upheaval"
   end
   
