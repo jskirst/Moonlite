@@ -1652,18 +1652,75 @@ $landing_green: #73bb6e;
       .consumer, .employer { height: 50%; padding: 0 10px;}
       .consumer { background-color: $landing_red;  }
       .employer { background-color: $landing_yellow; } 
-      .option { padding: 24px 20px; color: white; }
+      .option { 
+        padding: 24px 20px; 
+        color: white; 
+      
+        &:hover .button { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
+      }
+      
+      .button { 
+        padding: 0; 
+        height: 30px; 
+        background-color: rgb(231, 231, 231); 
+        float: right; 
+        text-shadow: none; 
+        color: #8a8d99;
+        
+      }
       a { 
         color: inherit; 
+        padding: 5px 20px;
         &:hover {text-decoration: none ;} 
       }
     }
   }
   #consumer_slide {
     width: 980px; 
+    height: 286px;
     float: left;
-    padding: 50px 0 70px;
+    padding: 40px 0 0;
+    text-align: center;
     
+    .span12 {
+      padding: 0 8px;
+    }
+    
+    h3{
+      color: inherit;
+      margin-bottom: 26px;
+    }
+    ul {
+      position: relative;
+      list-style-type: none;
+      margin: 0;
+      
+      [data-tip]:after { 
+        width: 98px; 
+        height: 37px; 
+        left: -8px;
+        top: -54px; 
+        white-space: normal;}
+      
+      li {
+        display: inline-block;
+        float: left;
+        height: 100px;
+        width: 100px;
+        padding: 15px 56px;
+        &:nth-child(1) {padding-left: 0;}
+        &:nth-child(5) {padding-right: 0;}
+        &:nth-child(6) {padding-left: 0;}
+        &:nth-child(10) {padding-right: 0;}
+        
+        img {
+          height: 100px;
+          width: 100px;
+          
+          &:hover { box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); };
+        }
+      }
+    }
   }
   #happy_users {
     background-color: $landing_green;
