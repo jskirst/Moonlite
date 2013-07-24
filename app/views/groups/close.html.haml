@@ -1,0 +1,30 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .container.body { width: inherit; }
+  .aboutcontainer{ width: 900px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
+  .aboutbox{ min-height: 600px; border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px;}
+  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
+  .aboutbox .header hr { margin: 8px; }
+  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
+  .aboutbox table { width: 100%; }
+  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
+  .aboutbox table td a { font-size: 17px; color: #333; }
+
+#evaluations_index.aboutcontainer
+  .aboutbox
+    .header
+      = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
+      %h2 Don't Go!
+    .body{ style: "width: 95%" }
+      %p 
+        Are you sure you want to go? 
+        If so, we'd really appreciate if you'd tell why you're leaving or what about MetaBright didn't work for you.
+      = form_for(@group, url: close_group_url(@group), method: :put) do |f|
+        .control-group
+          .controls
+            = f.text_area :closed_reason, style: "width: 100%; height: 100px;"
+        .control-group
+          .controls
+            = f.submit "Close Account", class: "submit", style: "float: right;"

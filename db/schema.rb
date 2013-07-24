@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723190632) do
+ActiveRecord::Schema.define(:version => 20130724230808) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -184,12 +184,14 @@ ActiveRecord::Schema.define(:version => 20130723190632) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "token"
-    t.string   "plan_type",    :default => "0"
-    t.boolean  "is_private",   :default => true
+    t.string   "plan_type",     :default => "0"
+    t.boolean  "is_private",    :default => true
     t.string   "stripe_token"
+    t.datetime "closed_at"
+    t.text     "closed_reason"
   end
 
   create_table "ideas", :force => true do |t|

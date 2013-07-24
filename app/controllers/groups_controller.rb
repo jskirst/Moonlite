@@ -41,7 +41,7 @@ class GroupsController < ApplicationController
     else
       if @group.save_with_stripe(params[:group][:stripe_token])
         flash[:success] = "Your subscription has been successfully enabled. Welcome to MetaBright!"
-        GroupMailer.signup(@new_group, @creator)
+        GroupMailer.signup(@group)
         redirect_to root_url
       else
         @error = "There was an error validating your credit card information."
@@ -94,7 +94,15 @@ class GroupsController < ApplicationController
   
   def update
     @group.update_attributes(params[:group])
-    redirect_to @group
+    if params[:group][:plan_type]
+      flash[:success] = "Plan type has been updated."
+    end
+    
+    if params[:redirect_uri]
+      redirect_to params[:redirect_uri]
+    else
+      redirect_to @group
+    end
   end
   
   def dashboard
@@ -142,7 +150,7 @@ class GroupsController < ApplicationController
   end
   
   def invite
-    Mailer.invite_to_group(params[:email], @group, join_group_url(@group, token: @group.token)).deliver
+    GroupMailer.invite(params[:email], @group, join_group_url(@group, token: @group.token)).deliver
     flash[:success] = "Invite sent to #{params[:email]}"
     redirect_to account_group_url(@group)
   end
@@ -172,6 +180,20 @@ class GroupsController < ApplicationController
     @paths = @group.paths
   end
   
+  def close
+    if request.get?
+      if @group.closed_at
+        sign_out
+        render "close_confirmation"
+      end
+    else
+      @group.closed_at = Time.now
+      @group.closed_reason = params[:group][:closed_reason]
+      @group.save
+      render "close_confirmation"
+    end
+  end
+  
   private
   def load_resource
     @group = Group.find_by_permalink(params[:permalink]) if params[:permalink]
@@ -183,7 +205,7 @@ class GroupsController < ApplicationController
   end
   
   def authorize_resource
-    unless @group.admin?(current_user) || @enable_administration
+    unless @group.admin?(current_user) and @group.closed_at.nil?
       raise "Access Denied"
     end
   end

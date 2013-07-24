@@ -19,7 +19,7 @@
     = render "layouts/navbar"
     %div.container.body{ style: ("background-color: transparent; padding: 0px;" if hide_background) }
       - flash.each do |key, value|
-        = content_tag(:div, value, class: "alert alert-#{key}", style: "position: fixed; top: 50px; font-size: 17px; padding: 15px; text-align: center; left: 50%; width: 500px; margin-left: -250px;")
+        = content_tag(:div, value, class: "alert alert-#{key}", style: "color: white; position: fixed; top: 50px; font-size: 17px; padding: 15px; text-align: center; left: 50%; width: 500px; margin-left: -250px;")
       = yield
     - if show_footer
       = render "layouts/footer"

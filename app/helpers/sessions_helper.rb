@@ -159,6 +159,7 @@ module SessionsHelper
           end
           
           @groups = Group.joins("INNER JOIN group_users on group_users.group_id=groups.id")
+            .where("groups.closed_at is ?", nil)
             .where("group_users.user_id = ?", current_user.id)
             .select("group_users.is_admin, groups.*")
             .to_a

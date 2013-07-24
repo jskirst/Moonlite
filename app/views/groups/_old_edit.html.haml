@@ -1,20 +1,24 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 943px; margin-top: -35px;}
+  .aboutcontainer{ width: 943px; margin-top: 35px;}
 
 
 #employer.aboutcontainer
   .aboutbox{ style: "padding: 8px; "}
     %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
     %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Group
+    = link_to "Account", dashboard_group_path(@group), class: "button button-info button-small", style: "float: right; margin: 80px 10px 0 0;"
+    = link_to "Group API", sandbox_group_path(@group), class: "button button-standard button-small", style: "float: right; margin: 80px 10px 0 0;"
+    = link_to "View Group", group_path(@group), class: "button button-actionable button-small", style: "float: right; margin: 80px 10px 0 0;"
     %hr{style:"margin:0;"}
     = form_for(@group, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
+      = render 'shared/error_messages', object: f.object
       %div.notificationpanelbody
-        %h4 How your company appears on MetaBright
+        %h4 How your Group appears on MetaBright
         .editprofilemanagementarea 
           %div{ style:"display:inline-block; width: 60%;" }       
             .control-group
-              %label.control-label Company Name
+              %label.control-label Group name
               .controls
                 = f.text_field :name          
             .control-group
