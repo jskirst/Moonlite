@@ -5,11 +5,11 @@ class Group < ActiveRecord::Base
   SIX_TO_FIFTEEN_PLAN = "six_to_fifteen"
   SIXTEEN_TO_FIFTY_PLAN = "sixteen_to_fifty"
   PLAN_TYPES = {
-    FREE_PLAN => { price: "Free", description: "Free trial account" }, 
-    SINGLE_PLAN => { price: "$9.99", description: "Single User" }, 
-    TWO_TO_FIVE_PLAN => { price: "$19.99", description: "2-5 users" }, 
-    SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users" },
-    SIXTEEN_TO_FIFTY_PLAN => { price: "$79.99", description: "16-50 users" }
+    FREE_PLAN => { price: "Free", description: "Free trial account", max_seats: 1 }, 
+    SINGLE_PLAN => { price: "$9.99", description: "Single User", max_seats: 1 }, 
+    TWO_TO_FIVE_PLAN => { price: "$19.99", description: "2-5 users", max_seats: 5 }, 
+    SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users", max_seats: 15 },
+    SIXTEEN_TO_FIFTY_PLAN => { price: "$79.99", description: "16-50 users", max_seats: 50 }
   }
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator
@@ -88,6 +88,8 @@ class Group < ActiveRecord::Base
   end
   
   def private?() is_private == true end
+    
+  def can_add_users?() users.count < PLAN_TYPES[self.plan_type][:max_seats] end
   
   # Cached methods
   

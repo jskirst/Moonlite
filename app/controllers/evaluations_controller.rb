@@ -195,6 +195,7 @@ class EvaluationsController < ApplicationController
     @evaluation_enrollment = current_user.evaluation_enrollments.find_by_evaluation_id(params[:id])
     @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
     @evaluation = @evaluation_enrollment.evaluation
+    GroupMailer.submission(@evaluation_enrollment)
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
   end
   

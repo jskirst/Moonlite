@@ -3,7 +3,7 @@
   .container.body { padding: 0; background-color: transparent;   }
   .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;}
   .aboutbox { border-radius: 0; padding: 20px; }
-  .payment-errors { margin: 20px 0 5px 0; color: red; font-size: 17px; }
+  .errors { margin: 20px 0 5px 0; color: red; font-size: 17px; }
 %script
   $(function(){ $.MB.Checkout.init(); });
 
@@ -27,7 +27,7 @@
       %div
         = form_for(@group, url: checkout_group_url(@group), remote: true, html: { class: "form-horizontal", id: "new_subscription" }) do |f|
           = f.hidden_field :stripe_token
-          %p.payment-errors= @error
+          %p.errors= @error
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1
             %div{ "data-tip" => "We accept Visa, Mastercard, American Express, Discover, and JCB."}
