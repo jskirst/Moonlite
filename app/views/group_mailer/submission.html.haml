@@ -1,0 +1,9 @@
+%p{ style: "font-size:12px;"} Hi #{@evaluation.user.name},
+%p{ style: "font-size:12px;"} 
+  #{@evaluation_enrollment.user.name} just completed the #{@evaluation.company} #{@evaluation.title} Evaluation! You can view all your candidates #{link_to "here", group_evaluations_url(@evaluation_enrollment.group)} or view a detailed report of just #{@evaluation_enrollment.user.name}'s score. 
+%p{ style: "font-size:12px;"} 
+  Thanks,
+  %br
+  Team MetaBright
+  
+  / We need to link the "Manage Notification Settings" to settings that are specific to group admins, and not consumer users of MB

@@ -3,7 +3,21 @@
   .container.body { padding: 0; background-color: transparent;   }
   .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;}
   .aboutbox { border-radius: 0; padding: 20px; }
-
+  .errors { color: red; font-size: 17px; }
+  
+:javascript
+  $(function(){
+    $("#new_group").submit(function(){
+      var valid = true;
+      $($("#new_group input").get().reverse()).each(function(){
+        if($(this).val() == ""){
+          $(".errors").show().text("Please enter "+$(this).data("label")+".")
+          valid = false;
+        }
+      })
+      return valid
+    })
+  });
 
 #employer_product.aboutcontainer
   .aboutbox
@@ -18,14 +32,15 @@
         = f.hidden_field :plan_type
         %label Product:
         .product_name #{plan[:description]} - #{plan[:price]}
+        %p.errors.hide
         %label Your name:
-        = f.text_field :creator_name, placeholder: "Your name..."
+        = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
-        = f.text_field :name, placeholder: "Company name..."
+        = f.text_field :name, placeholder: "Company name...", "data-label" => "your company's name"
         %label Your email address:
-        = f.text_field :creator_email, placeholder: "Email..."
+        = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email"
         %label Create a password:
-        = f.password_field :creator_password, placeholder: "Password..."
+        = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password"
         .control-group
           .controls
             = f.submit "Submit", class: "submit"

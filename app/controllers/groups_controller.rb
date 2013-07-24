@@ -41,6 +41,7 @@ class GroupsController < ApplicationController
     else
       if @group.save_with_stripe(params[:group][:stripe_token])
         flash[:success] = "Your subscription has been successfully enabled. Welcome to MetaBright!"
+        GroupMailer.signup(@new_group, @creator)
         redirect_to root_url
       else
         @error = "There was an error validating your credit card information."
