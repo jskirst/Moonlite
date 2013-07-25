@@ -50,6 +50,14 @@ class GroupsController < ApplicationController
     end
   end
   
+  def order_confirmation
+    @title = "Order Confirmation"
+    @show_footer = true
+    @hide_background = true
+    @show_nav_bar = true
+    render "groups/signup/order_confirmation"
+  end
+  
   def show
     if @group.is_private?
       redirect_to account_group_url(@group) and return
