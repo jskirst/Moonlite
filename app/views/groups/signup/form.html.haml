@@ -26,12 +26,12 @@
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
         %h1{ style: "margin-top:0;" } MetaBright Evaluator
         %h3 Order Checkout (Step 1 of 2)
-    .body{ style: "padding-bottom: 0;" }
+    .body{ style: "padding: 0 16px;" }
       = form_for(@new_group, html: { class: "form-horizontal" }) do |f|
         - plan = Group::PLAN_TYPES[@new_group.plan_type]
         = f.hidden_field :plan_type
         %label Product:
-        .product_name #{plan[:description]} - #{plan[:price]}
+        .product_name Evaluator #{plan[:description]}: #{plan[:price]}
         %p.errors.hide
         %label Your name:
         = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"

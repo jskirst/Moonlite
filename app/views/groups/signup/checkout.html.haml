@@ -26,7 +26,10 @@
     .body{ style: "padding-bottom: 0; padding-top: 6px;" }
       %div
         = form_for(@group, url: checkout_group_url(@group), remote: true, html: { class: "form-horizontal", id: "new_subscription" }) do |f|
+          - plan = Group::PLAN_TYPES[@group.plan_type]
           = f.hidden_field :stripe_token
+          %label Product:
+          .product_name{ style: "margin-bottom: 0;"} Evaluator #{plan[:description]}: #{plan[:price]}
           %p.errors= @error
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1
