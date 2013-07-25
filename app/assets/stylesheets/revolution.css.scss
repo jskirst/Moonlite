@@ -913,7 +913,6 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
    h3 { margin-top: 10px; }
   }
   .body { 
-    
     padding: 26px 16px; 
     
     .pitch_tiles{
@@ -938,7 +937,9 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     
     form {
       width: 315px;
-      margin: 0 auto;
+      margin: 12px auto;
+      padding: 20px 96px;
+      background-color: whitesmoke;
       
       .product_name {
         font-size: 16px;
@@ -948,6 +949,9 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         border-radius: 8px;
         color: white;
         margin-bottom: 20px;
+      }
+      .control-group {
+        margin: 0;
       }
       .submit {
         background-color: #e9685b;
@@ -962,6 +966,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         border-radius: 3px;
         padding: 7px 20px 5px 20px;
         &:hover{ box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); }
+        &:active{ position: relative; top: 1px; }
       }
       .checkout_tt1, .checkout_tt2 {
         display: inline-block;
@@ -1089,6 +1094,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       padding: 5px 20px;
       font-size: 13px;
       text-transform: uppercase;
+      
+      &:active { position: relative; top: 1px; }
     }      
     @media only screen and (min-width : 480px) and (max-width : 768px) {
       .price_block {width: 50%;}
@@ -1667,6 +1674,7 @@ $landing_green: #73bb6e;
         text-shadow: none; 
         color: #8a8d99;
         
+        &:active { position: relative; top: 1px; };
       }
       a { 
         color: inherit; 
