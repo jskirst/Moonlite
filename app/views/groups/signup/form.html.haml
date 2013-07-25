@@ -32,7 +32,7 @@
         = f.hidden_field :plan_type
         %label Product:
         .product_name #{plan[:description]} - #{plan[:price]}
-        %p.errors.hide
+        %p.errors= @errors
         %label Your name:
         = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:

@@ -48,8 +48,8 @@ class Group < ActiveRecord::Base
         self.creator = User.create_with_nothing({"name" => self.creator_name, "email" => self.creator_email, "password" => self.creator_password})
       end
     end
-    if self.creator.nil?
-      raise "No Creator"
+    unless self.creator.valid?
+      return false
     end
     grant_permalink
     grant_token

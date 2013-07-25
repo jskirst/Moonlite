@@ -16,8 +16,9 @@ $.MB.Checkout.stripeResponseHandler = (status, response) ->
   $form = $("#new_subscription")
   
   if response.error
-    $form.find(".payment-errors").text(response.error.message)
+    $form.find(".errors").text(response.error.message)
     $form.find("input[type=submit]").prop('disabled', false).removeClass("disabled")
+    stopSpinner()
   else
     token = response.id
     $form.find("#group_stripe_token").val(token)

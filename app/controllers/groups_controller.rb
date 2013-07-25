@@ -14,7 +14,7 @@ class GroupsController < ApplicationController
   def create
     @new_group = Group.new(params[:group])
     @new_group.plan_type = params[:group][:plan_type]
-    if @new_group.save!
+    if @new_group.save
       raise "New user" if @new_group.creator.nil?
       if @new_group.creator
         @creator = @new_group.creator
@@ -22,10 +22,10 @@ class GroupsController < ApplicationController
         sign_in(@creator)
         redirect_to checkout_group_url(@new_group)
       else
-        
+        redirect_to groups_admin_url
       end
     else
-      flash[:error] = @new_group.errors.full_messages.join(". ")
+      @errors = @new_group.errors.full_messages.join(". ") + @new_group.creator.errors.full_messages.join(". ")
       render "groups/signup/form"
     end
   end
