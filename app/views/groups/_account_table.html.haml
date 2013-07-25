@@ -62,7 +62,7 @@
             .control-group
               %label.control-label Choose a plan you'd like to upgrade to:
               .controls
-                = f.select(:plan_type, Group::PLAN_TYPE_LIST)
+                = f.select(:plan_type, Group::ACTIVE_PLAN_TYPE_LIST)
             = submit_tag "Upgrade", class: "button button-standard button-mini"
       %td{ colspan: "1", style: "border-bottom: 0;text-align: right;" }
         Seats Available: #{@group.seats_available}

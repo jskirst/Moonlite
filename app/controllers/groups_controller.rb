@@ -210,7 +210,7 @@ class GroupsController < ApplicationController
       raise "Access Denied"
     end
     
-    if @group.play_type != FREE_PLAN and @group.stripe_token.nil? and params[:action] != "checkout"
+    if @group.plan_type != Group::FREE_PLAN and @group.stripe_token.nil? and params[:action] != "checkout"
       redirect_to checkout_group_url(@group)
     end
   end

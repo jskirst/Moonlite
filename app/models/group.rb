@@ -5,12 +5,14 @@ class Group < ActiveRecord::Base
   SIX_TO_FIFTEEN_PLAN = "six_to_fifteen"
   SIXTEEN_TO_FIFTY_PLAN = "sixteen_to_fifty"
   PLAN_TYPES = {
-    SINGLE_PLAN => { price: "$9.99", description: "Single User", max_seats: 1 }, 
-    TWO_TO_FIVE_PLAN => { price: "$19.99", description: "2-5 users", max_seats: 5 }, 
-    SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users", max_seats: 15 },
-    SIXTEEN_TO_FIFTY_PLAN => { price: "$79.99", description: "16-50 users", max_seats: 50 }
+    FREE_PLAN => { price: "$0.00", description: "Complimentary", max_seats: 100, active: false },
+    SINGLE_PLAN => { price: "$9.99", description: "Single User", max_seats: 1, active: true }, 
+    TWO_TO_FIVE_PLAN => { price: "$19.99", description: "2-5 users", max_seats: 5, active: true }, 
+    SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users", max_seats: 15, active: true },
+    SIXTEEN_TO_FIFTY_PLAN => { price: "$79.99", description: "16-50 users", max_seats: 50, active: true }
   }
   PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
+  ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator
   attr_protected :token

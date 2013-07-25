@@ -10,7 +10,11 @@ class PagesController < ApplicationController
     @url_for_newsfeed 
     if @admin_group
       @group = @admin_group
-      render "portal"
+      if @group.plan_type != Group::FREE_PLAN and @group.stripe_token.nil?
+        redirect_to checkout_group_url(@group)
+      else
+        render "portal"
+      end
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
