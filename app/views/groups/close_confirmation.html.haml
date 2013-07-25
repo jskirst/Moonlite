@@ -2,21 +2,36 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .container.body { width: inherit; }
   .aboutcontainer{ width: 900px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
-  .aboutbox{ min-height: 600px; border-radius: 0; }
+  .aboutbox{ border-radius: 0; }
   .aboutbox .header { margin-bottom: 10px;}
-  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header img { height: 100px; margin-top: -15px; }
   .aboutbox .header h2 { display: inline-block; font-size: 30px; }
   .aboutbox .header hr { margin: 8px; }
   .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
   .aboutbox table { width: 100%; }
   .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
   .aboutbox table td a { font-size: 17px; color: #333; }
+  .dont_go {background-color: rgb(170,0,0); color: white; padding: 12px 20px; margin-bottom: 15px; }
+  .dont_go ul { margin-top: 10px; }
+
+:javascript
+  $(function(){
+    $('.textfill').textfill({ maxFontPixels: 30 });
+  });
 
 #evaluations_index.aboutcontainer
   .aboutbox
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
-      %h2 You left.
-    .body{ style: "width: 95%" }
+      %h2.textfill
+        %span The #{@group.name} account has been deleted. 
+    .body{ style: "padding: 18px; font-size: 15px; margin: 0 15px 25px; background-color: whitesmoke;" }
       %p 
-        Bummer
+        Your credit card will no longer be billed. The following has been permanently deleted:
+        %ul 
+          %li All your company's members.
+          %li All your company's Evaluations.
+          %li All records of people having completed your company's Evaluations.
+          %li All of your company's custom Challenges.
+      %p We're genuinely sorry it didn't work out. If you left us feedback, thank you. We'll be sure to read what you wrote and do our best to improve. 
+      

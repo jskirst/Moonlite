@@ -185,12 +185,14 @@ class GroupsController < ApplicationController
     if request.get?
       if @group.closed_at
         sign_out
+        @show_nav_bar = false
         render "close_confirmation"
       end
     else
       @group.closed_at = Time.now
       @group.closed_reason = params[:group][:closed_reason]
       @group.save
+      @show_nav_bar = false
       render "close_confirmation"
     end
   end
