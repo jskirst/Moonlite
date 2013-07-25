@@ -3,6 +3,7 @@ class EvaluationEnrollment < ActiveRecord::Base
   
   belongs_to :evaluation
   belongs_to :user
+  has_one :group, through: :evaluation
   
   def submitted?() not self.submitted_at.nil? end
 end

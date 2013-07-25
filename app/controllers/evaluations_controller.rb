@@ -1,7 +1,6 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
-  before_filter :load_group, except: [:take, :continue, :challenge, :answer]
-  before_filter :load_evaluation, only: [:edit, :update, :review, :grade, :save]
+  before_filter :load_group_and_evaluation
   before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation]
   before_filter { @show_footer = true and @hide_background = true }
   before_filter :prepare_form, only: [:new, :create, :edit, :update]
@@ -18,7 +17,6 @@ class EvaluationsController < ApplicationController
   end
   
   def show
-    @evaluation = @group.evaluations.find(params[:id])
     @paths = @evaluation.paths
     @evaluations = @evaluation.evaluation_enrollments.where("submitted_at is not ?", nil)
       .joins(:user)
@@ -129,7 +127,6 @@ class EvaluationsController < ApplicationController
   def take
     @show_nav_bar = false
     @show_sign_in = false
-    @evaluation = Evaluation.find_by_permalink(params[:permalink])
     unless @evaluation
       clear_return_back_to
       redirect_to root_url and return
@@ -149,7 +146,7 @@ class EvaluationsController < ApplicationController
   
   def continue
     @show_nav_bar = false
-    @evaluation = Evaluation.find(params[:evaluation_id])
+    @show_footer = false
     @path = @evaluation.paths.find(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
@@ -192,6 +189,8 @@ class EvaluationsController < ApplicationController
   end
   
   def submit
+    @show_nav_bar = false
+    @show_footer = false
     @evaluation_enrollment = current_user.evaluation_enrollments.find_by_evaluation_id(params[:id])
     @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
     @evaluation = @evaluation_enrollment.evaluation
@@ -201,18 +200,28 @@ class EvaluationsController < ApplicationController
   
   private
   
-  def load_group
-    @group = Group.find(params[:group_id])
+  def load_group_and_evaluation
+    @evaluation = Evaluation.find(params[:id]) if params[:id]
+    @evaluation = Evaluation.find(params[:evaluation_id]) if params[:evaluation_id]
+    @evaluation = Evaluation.find_by_permalink(params[:permalink]) if params[:permalink]
+    @group = Group.find(params[:group_id]) if params[:group_id]
+    
+    if @evaluation and @group
+      raise "Access Denied: Not your evaluation" unless @evaluation.group_id == @group.id
+    elsif @evaluation and not @group
+      @group = @evaluation.group
+    end
+    
+    if @group
+      @group_custom_style = @group.custom_style
+      #raise @group_custom_style.to_yaml
+    end
   end
   
   def authorize_group
     unless @group.admin?(current_user) || @enable_administration
       raise "Access Denied"
     end
-  end
-  
-  def load_evaluation
-    @evaluation = @group.evaluations.find(params[:id])
   end
   
   def prepare_form
