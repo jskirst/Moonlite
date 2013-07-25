@@ -7,49 +7,50 @@
             -#
           - else
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-      - if current_user and show_nav_bar and @admin_group
-        %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25;" }
-          %li.navitem{ title: "Evaluations", style: "height: 100%; border-left: 1px solid #56698B;" }
-            = link_to group_evaluations_path(@admin_group) do
-              = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
-              %span Evaluations
-          %li.navitem{ title: "Challenges", style: "height: 100%;" }
-            = link_to group_paths_url(@admin_group) do
-              = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
-              %span Challenges
-          - if @admin_group.is_private?
-            %li.navitem{ title: "Account", style: "height: 100%;" }
-              = link_to account_group_path(@admin_group) do
-                = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
-                %span Account
-          - else
-            %li.navitem{ title: "Dashboard", style: "height: 100%;" }
-              = link_to dashboard_group_path(@admin_group) do
-                = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
-                %span Dashboard
-          %li.navitem{ title: "Search", style: "height: 100%;" }
-            = link_to new_group_search_url(@admin_group) do
-              = image_tag NAVBAR_API, alt: "Search"  
-              %span Search
-      - elsif current_user and show_nav_bar
-        %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
-          %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
-            = link_to root_url do
-              = image_tag NAVBAR_HOME,  alt: "Home"
-              %span Home
-          %li.navitem{ title: "Explore", style: "height: 100%;" }
-            %a.explore_link
-              = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
-              %span Explore
-          - if current_user.earned_points > 1500
-            %li.navitem{ title: "Create", style: "height: 100%;" }
-              = link_to paths_path do
-                = image_tag NAVBAR_CREATE, style: "", alt: "Create"
-                %span Create
-          %li.navitem{ title: "Profile", style: "height: 100%;" }
-            = link_to profile_path(current_user.username) do
-              = image_tag NAVBAR_PROFILE, alt: "Profile"  
-              %span Profile
+      - if current_user and show_nav_bar
+        - if @admin_group
+          %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25;" }
+            %li.navitem{ title: "Evaluations", style: "height: 100%; border-left: 1px solid #56698B;" }
+              = link_to group_evaluations_path(@admin_group) do
+                = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
+                %span Evaluations
+            %li.navitem{ title: "Challenges", style: "height: 100%;" }
+              = link_to group_paths_url(@admin_group) do
+                = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
+                %span Challenges
+            - if @admin_group.is_private?
+              %li.navitem{ title: "Account", style: "height: 100%;" }
+                = link_to account_group_path(@admin_group) do
+                  = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
+                  %span Account
+            - else
+              %li.navitem{ title: "Dashboard", style: "height: 100%;" }
+                = link_to dashboard_group_path(@admin_group) do
+                  = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
+                  %span Dashboard
+            %li.navitem{ title: "Search", style: "height: 100%;" }
+              = link_to new_group_search_url(@admin_group) do
+                = image_tag NAVBAR_API, alt: "Search"  
+                %span Search
+        - else
+          %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid #020D25; border-right: 1px solid #56698B;" }
+            %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
+              = link_to root_url do
+                = image_tag NAVBAR_HOME,  alt: "Home"
+                %span Home
+            %li.navitem{ title: "Explore", style: "height: 100%;" }
+              %a.explore_link
+                = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
+                %span Explore
+            - if current_user.earned_points > 1500
+              %li.navitem{ title: "Create", style: "height: 100%;" }
+                = link_to paths_path do
+                  = image_tag NAVBAR_CREATE, style: "", alt: "Create"
+                  %span Create
+            %li.navitem{ title: "Profile", style: "height: 100%;" }
+              = link_to profile_path(current_user.username) do
+                = image_tag NAVBAR_PROFILE, alt: "Profile"  
+                %span Profile
       %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
         = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
       - if current_user and show_nav_bar

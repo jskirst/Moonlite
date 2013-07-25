@@ -10,6 +10,7 @@ class PagesController < ApplicationController
     @url_for_newsfeed 
     if @admin_group
       @group = @admin_group
+      @group_custom_style = @group.custom_style
       if @group.plan_type != Group::FREE_PLAN and @group.stripe_token.nil?
         redirect_to checkout_group_url(@group)
       else
