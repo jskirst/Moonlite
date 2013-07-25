@@ -1,3 +1,6 @@
+:css
+  input, select { font-family: 'MuliLight'; }
+
 :javascript
   $(".edit_user_details_link").each(function(){
     $(this).click(function(){$('#group_admin_modal').modal({show: true, keyboard: true, static: true});});
@@ -9,18 +12,19 @@
     %h3 Edit User
   %div.modal-body{ style: "max-height: none; "}
     = form_for(@users.to_a, html: { class: "form-horizontal" }) do |f|
+      = hidden_field_tag :redirect_uri, account_group_url(@group)
       %div.control-group
-        %label.control-label User name
+        %label.control-label Name
         %div.controls= f.text_field :name
       %div.control-group
-        %label.control-label Email address
+        %label.control-label Email
         %div.controls= f.text_field :email
-      %h4 When should this person receive emails from MetaBright?
-      %h5 When someone creates an Evaluation.
       %div.control-group
-        %div.controls
-          / We need some variable here for the notification
-          = f.check_box :name
+        %label.control-label Reset Password
+        %div.controls= f.password_field :password
+      %div.control-group
+        %label.control-label Confirm Password
+        %div.controls= f.password_field :password_confirmation
       %div{ style: "float:right;" }
         %span.button.button-standard{ onclick: "$('#group_admin_modal').modal('hide');" } Close
         = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
@@ -30,20 +34,35 @@
     %tr
       %th Name
       %th Email
-      %th{ style: "text-align: right;" } Joined
+      %th
+      %th= link_to "Edit Account Settings", edit_group_url(@group), class: "submit", style: "float: right;"
   %tbody
     - @users.to_a.each do |u|
       %tr
-        %td.edit_user_details_link{ onclick: "$('#group_admin_modal').modal({keyboard: true, show: true})" }= truncate(u.name, length: 30)
+        %td= truncate(u.name, length: 30)
         %td= truncate(u.email, length:25)
         %td{ style: "text-align: right;" } Joined #{u.created_at.strftime("%m/%d/%Y")}
+        %td.edit_user_details_link{ onclick: "$('#group_admin_modal').modal({keyboard: true, show: true})", style: "text-align: right; cursor: pointer;" }
+          %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", title:"Settings", alt: "Settings"}
     - if @users.empty?
       %tr
-        %td{ colspan: "5", style: "border-bottom: 0; font-size; 13px;" }
+        %td{ colspan: "3", style: "border-bottom: 0; font-size; 13px;" }
           No users with that name or email found.
     %tr
-      %td{ colspan: "5", style: "border-bottom: 0;" }
-        %a{ onclick: "$(this).hide();$('#invite_form').show();" } + Invite more users to this account
-        = form_tag(invite_group_url(@group), id: "invite_form", class: "hide") do
-          = text_field_tag :email, nil, placeholder: "Enter email address...", class: "invite"
-          = submit_tag "Invite", class: "button button-standard button-mini"
+      %td{ colspan: "3", style: "border-bottom: 0;" }
+        - if @group.can_add_users?
+          %a{ onclick: "$(this).hide();$('#invite_form').show();" } + Invite more users to this account.
+          = form_tag(invite_group_url(@group), id: "invite_form", class: "hide") do
+            = text_field_tag :email, nil, placeholder: "Enter email address...", class: "invite"
+            = submit_tag "Invite", class: "button button-standard button-mini"
+        - else
+          %a{ onclick: "$(this).hide();$('#upgrade_group').show();" } Upgrade your account to invite more users.
+          = form_for(@group, html: { class: "hide", id: "upgrade_group" }) do |f|
+            = hidden_field_tag :redirect_uri, account_group_url(@group)
+            .control-group
+              %label.control-label Choose a plan you'd like to upgrade to:
+              .controls
+                = f.select(:plan_type, Group::PLAN_TYPE_LIST)
+            = submit_tag "Upgrade", class: "button button-standard button-mini"
+      %td{ colspan: "1", style: "border-bottom: 0;text-align: right;" }
+        Seats Available: #{@group.seats_available}

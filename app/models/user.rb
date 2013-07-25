@@ -109,7 +109,7 @@ class User < ActiveRecord::Base
     user.password = details["password"] || SecureRandom::hex(16)
     user.password_confirmation = user.password
     user.group_id = group.id if group
-    user.save!    
+    user.save
     return user
   end
   

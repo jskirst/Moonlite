@@ -68,6 +68,8 @@ Metabright::Application.routes.draw do
       get :sandbox
       get :request_invite
       post :invite
+      get :close
+      put :close
     end
     
     resources :evaluations, path: "e" do

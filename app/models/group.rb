@@ -11,9 +11,10 @@ class Group < ActiveRecord::Base
     SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users", max_seats: 15 },
     SIXTEEN_TO_FIFTY_PLAN => { price: "$79.99", description: "16-50 users", max_seats: 50 }
   }
+  PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator
-  attr_protected :token, :plan_type
+  attr_protected :token
   attr_accessible :name,
     :description, 
     :image_url,
@@ -26,7 +27,8 @@ class Group < ActiveRecord::Base
     :creator_name, 
     :creator_email, 
     :creator_password, 
-    :creator
+    :creator,
+    :plan_type
   
   has_one   :custom_style, as: :owner
   has_many  :group_users
@@ -46,8 +48,8 @@ class Group < ActiveRecord::Base
         self.creator = User.create_with_nothing({"name" => self.creator_name, "email" => self.creator_email, "password" => self.creator_password})
       end
     end
-    if self.creator.nil?
-      raise "No Creator"
+    unless self.creator.valid?
+      return false
     end
     grant_permalink
     grant_token
@@ -90,6 +92,7 @@ class Group < ActiveRecord::Base
   def private?() is_private == true end
     
   def can_add_users?() users.count < PLAN_TYPES[self.plan_type][:max_seats] end
+  def seats_available() PLAN_TYPES[self.plan_type][:max_seats] - users.count end
   
   # Cached methods
   
