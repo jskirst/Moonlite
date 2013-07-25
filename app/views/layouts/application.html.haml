@@ -107,9 +107,7 @@
       }
       
       function stopSpinner(){
-        if(disabled_button != false){
-          $(this).removeClass("disabled").removeAttr("disabled");
-        }
+        $('.disabled').removeClass("disabled").removeAttr("disabled");
         $('#page_loading').hide();
       }
       

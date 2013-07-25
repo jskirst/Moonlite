@@ -100,6 +100,7 @@ class UsersController < ApplicationController
   end
   
   def destroy
+    sign_out
     @user.destroy
     redirect_to root_url
   end

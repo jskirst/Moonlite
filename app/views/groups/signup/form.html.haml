@@ -12,7 +12,8 @@
       $($("#new_group input").get().reverse()).each(function(){
         if($(this).val() == ""){
           $(".errors").show().text("Please enter "+$(this).data("label")+".")
-          valid = false;
+          valid = false
+          stopSpinner()
         }
       })
       return valid

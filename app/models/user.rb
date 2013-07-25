@@ -485,6 +485,7 @@ class User < ActiveRecord::Base
   def flush_cache
     Rails.cache.delete([self.class.name, username])
     Rails.cache.delete([self.class.name, id])
+    return true
   end
   
   private  
