@@ -58,6 +58,7 @@ Metabright::Application.routes.draw do
     member do
       get :checkout
       put :checkout
+      get :order_confirmation
       get :style
       put :style
       get :join

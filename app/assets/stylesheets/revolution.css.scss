@@ -1741,6 +1741,18 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         margin: 15px 0; 
         text-align: center; 
         vertical-align: top;
+        
+        .bio {
+          display: inline-block; 
+          float: right; 
+          margin-top: 25px; 
+          width: 99px; 
+          margin-left: 12px;
+        }
+        .picture { 
+          display: inline-block; 
+          float: right;
+        }
       }
     }
     
@@ -1801,7 +1813,41 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   }
 }
 
-
+#order_confirmation { 
+  .aboutheader {
+    padding: 15px 0 0 15px;
+    
+    .text {
+      display: inline-block; 
+      vertical-align: top; 
+      margin-top: 48px;
+      
+      h1 {
+        font-size: 50px;
+        display: inline-block;
+        vertical-align: top;
+      }
+    }
+    img { 
+      height: 140px;
+      vertical-align: baseline;
+    }
+  }
+  .invite_box{
+    text-align: center; margin: 20px 20px 30px; border: 4px solid $employer_green; border-radius: 4px; background-color: $employer_green_light;
+    
+    div {
+      display: inline-block; 
+      padding: 12px 20px;
+      text-align: left;
+      
+      h3 { font-size: 24px; }
+      p { font-size: 15px; line-height: 20px; margin-top: 8px; }
+      textarea { width: 360px; }
+      button { margin-top: 37px; }
+    }
+  }
+}
 
 
 
