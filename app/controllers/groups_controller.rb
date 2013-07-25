@@ -34,6 +34,7 @@ class GroupsController < ApplicationController
     @title = "Checkout"
     @show_footer = true
     @hide_background = true
+    @show_nav_bar = false
     form = "groups/signup/checkout"
     
     if request.get?
@@ -207,6 +208,10 @@ class GroupsController < ApplicationController
   def authorize_resource
     unless @group.admin?(current_user) and @group.closed_at.nil?
       raise "Access Denied"
+    end
+    
+    if @group.play_type != FREE_PLAN and @group.stripe_token.nil? and params[:action] != "checkout"
+      redirect_to checkout_group_url(@group)
     end
   end
 end
