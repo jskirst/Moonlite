@@ -5,7 +5,6 @@ class Group < ActiveRecord::Base
   SIX_TO_FIFTEEN_PLAN = "six_to_fifteen"
   SIXTEEN_TO_FIFTY_PLAN = "sixteen_to_fifty"
   PLAN_TYPES = {
-    FREE_PLAN => { price: "Free", description: "Free trial account", max_seats: 1 }, 
     SINGLE_PLAN => { price: "$9.99", description: "Single User", max_seats: 1 }, 
     TWO_TO_FIVE_PLAN => { price: "$19.99", description: "2-5 users", max_seats: 5 }, 
     SIX_TO_FIFTEEN_PLAN => { price: "$39.99", description: "6-15 users", max_seats: 15 },
@@ -126,4 +125,3 @@ class Group < ActiveRecord::Base
     return self.token
   end
 end
- 

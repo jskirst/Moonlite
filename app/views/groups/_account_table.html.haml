@@ -35,7 +35,7 @@
       %th Name
       %th Email
       %th
-      %th= link_to "Edit Account Settings", edit_group_url(@group), class: "submit", style: "float: right;"
+      %th= link_to "Edit account settings", edit_group_url(@group), style: "float: right;"
   %tbody
     - @users.to_a.each do |u|
       %tr
