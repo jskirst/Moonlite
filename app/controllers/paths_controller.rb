@@ -398,6 +398,7 @@ class PathsController < ApplicationController
         @group = current_user.groups.where(id: @path.group_id).first
         raise "Access Denied: Not a group member." unless @group
       end
+      @group_custom_style = @group.custom_style if @group
     end
     
     def authorize_edit

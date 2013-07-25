@@ -5,6 +5,7 @@ class SearchController < ApplicationController
   
   def new
     @group = @admin_group
+    @group_custom_style = @group.custom_style if @group
     @search = Search.new
     @paths = Persona.find_by_name("Hacker").paths
     user_states = User.pluck(:state).uniq.compact

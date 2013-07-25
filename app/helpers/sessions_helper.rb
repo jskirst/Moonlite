@@ -24,12 +24,10 @@ module SessionsHelper
         if user = current_user
           if User.find_by_email(auth["info"]["email"])
             sign_out
-            flash[:error] = "You already have an existing account. Please first sign into that account."
-            redirect_to root_url and return
           else
             show_welcome_message = true if user.guest_user?
-            user.merge_guest_with_omniauth(auth)
           end
+          user.merge_existing_with_omniauth(auth)
         elsif user = User.find_with_omniauth(auth)
           sign_in(user)
         elsif user = User.find_by_email(auth["info"]["email"])

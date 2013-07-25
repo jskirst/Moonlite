@@ -100,6 +100,7 @@ class UsersController < ApplicationController
   end
   
   def destroy
+    sign_out
     @user.destroy
     redirect_to root_url
   end
@@ -159,6 +160,8 @@ class UsersController < ApplicationController
     end
     
     def authorize_resource
-      raise "Access Denied" unless @user == current_user
+      unless @user == current_user or (@admin_group and @user.groups.find(@admin_group))
+        raise "Access Denied" 
+      end
     end
 end
