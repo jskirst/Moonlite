@@ -1,4 +1,7 @@
 $divider: "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png";
+$landing_red: #dc7563;
+$landing_yellow: #e3b164;
+$landing_green: #73bb6e;
 
 /* General/Revolution - this should always stay at the top */
 pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
@@ -948,7 +951,6 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         padding: 8px 12px;
         border-radius: 8px;
         color: white;
-        margin-bottom: 20px;
       }
       .control-group {
         margin: 0;
@@ -1621,10 +1623,6 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 
 
 /* Upheaval Landing Page */
-
-$landing_red: #dc7563;
-$landing_yellow: #e3b164;
-$landing_green: #73bb6e;
 
 #upheaval{
   
