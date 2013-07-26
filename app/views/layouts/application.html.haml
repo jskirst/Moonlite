@@ -138,3 +138,13 @@
         var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
         })();
     = render "layouts/custom_styles"
+    
+    :css
+      .navbar-inner { background-image: none !important; background-color: #406B9B !important; }
+      /*body { background-image: url(http://d1c739w2xm33i4.cloudfront.net/2.2/top_image.jpg) }*/
+      .navbar .old-brand { display: none; }
+      .new-brand.brand { padding-top: 0px; }
+      .new-brand { display: inline-block !important; }
+      .new-brand img { height: 50px; margin-top: -8px; }
+      .new-brand h1 { font-size: 27px; display: inline-block; color: white; text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.75); text-decoration: none; margin-left: -8px; opacity: 0.85; line-height: 40px; }
+      ul li.navitem { border-right: 1px solid rgba(255,255,255,0.2); }
