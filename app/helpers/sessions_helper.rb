@@ -146,6 +146,10 @@ module SessionsHelper
   
   def determine_enabled_features
     unless ["raw"].include?(params[:action])
+      if Rails.env == "development"
+        @custom_style = Company.find(1).custom_style
+      end
+      
       if current_user
         @is_consumer = true
         @enable_administration = current_user.enable_administration == "t"
