@@ -11,9 +11,13 @@
 #evaluation_manager.aboutcontainer
   %div.aboutbox{ style: "background-color: white; padding:8px;" }
     .header
-      %div{ style: "float: right; margin: 10px 10px 0 0;" }
-        = link_to "Back", group_evaluations_path(@group), class: "button button-standard button-small"
-        = link_to "Edit", edit_group_evaluation_path(@group, @evaluation), class: "button button-actionable button-small"
+      .controls
+        = link_to group_evaluations_path(@group) do
+          %div{ "data-tip" => "Back" }
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
+        = link_to edit_group_evaluation_path(@group, @evaluation) do
+          %div{ "data-tip" => "Edit" }
+            %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Edit Evaluation"}
       %div{ style: "padding: 15px 15px 0 15px;"}
         = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
