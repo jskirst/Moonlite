@@ -22,11 +22,27 @@ $.MB.Arena.start_countdown = ->
     setTimeout($.MB.Arena.count_down_bar, 450)
     setTimeout($.MB.Arena.count_down_points, 450)
   ,3000
+  
+$.MB.Arena.keyboard_shortcuts = ->
+  $(document).keyup (event) ->
+    console.log event
+    if event.which == 49
+      $(".answer_content[data-order=0]").trigger "click"
+    else if event.which == 50
+      $(".answer_content[data-order=1]").trigger "click"
+    else if event.which == 51
+      $(".answer_content[data-order=2]").trigger "click"
+    else if event.which == 52
+      $(".answer_content[data-order=3]").trigger "click"
+    else if event.which == 13
+      $("#nextbutton, #submit_exact").trigger "click"
+      Turbolinks.visit($("#nextbutton").attr("href"))
 
 $.MB.Arena.init = (options = {}) ->
   $.continue_countdown = true
   $.percent_remaining = 100
   $.points_remaining = 100
+  $.MB.Arena.keyboard_shortcuts()
   
   $(".answer_content").unbind();
   $("#challenge_form").unbind();

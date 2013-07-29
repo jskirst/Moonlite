@@ -1,7 +1,7 @@
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner{ style: "height: 100%;" }
     %div{ style: "margin-left: 6%; height: 100%; width: 90%; margin: 0 auto;" }
-      %div.new-brand.brand
+      %div.new-brand.brand{ style: "display: none;" }
         = link_to root_url do
           = image_tag(STONEY_SMALL_URL)
           %h1 MetaBright
@@ -29,10 +29,11 @@
                 = link_to dashboard_group_path(@admin_group) do
                   = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
                   %span Dashboard
-            %li.navitem{ title: "Search", style: "height: 100%;" }
-              = link_to new_group_search_url(@admin_group) do
-                = image_tag NAVBAR_API, alt: "Search"  
-                %span Search
+            - if Rails.env == "development"
+              %li.navitem{ title: "Search", style: "height: 100%;" }
+                = link_to new_group_search_url(@admin_group) do
+                  = image_tag NAVBAR_API, alt: "Search"  
+                  %span Search
         - else
           %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid rgba(255,255,255,0.2); border-right: 1px solid #56698B;" }
             %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
@@ -98,13 +99,13 @@
                                 %div.progress.progress-info
                                   %div.bar{ style: "width: #{e.level_percent}%;"}
             %li
-              - notifications = notifications.to_a
+              - notifications_ary = notifications.to_a
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
                   = image_tag ICON_NOTIFICATIONS, style: "width: 18px; height: 18px;", title: "Notifications", alt: "Notifications"
                   - if unread_notification_count > 0
                     %span.notifications_bubble= unread_notification_count
-                - if notifications.any?
+                - if notifications_ary.any?
                   %ul.dropdown-menu{ role: "button", style: "padding: 0 0 10px 0; top:42px; right:-104px; min-width: 317px; min-height: 135px;" }
                     %div
                       %div.nub
