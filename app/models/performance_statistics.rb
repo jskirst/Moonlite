@@ -4,7 +4,7 @@ class PerformanceStatistics
   extend ActiveModel::Naming
   
   attr_accessor :total, :number_correct, :number_incorrect, :percent_correct, 
-    :avg_time_to_answer, :strengths, :weaknesses, :completed_tasks
+    :avg_time_to_answer, :strengths, :weaknesses, :completed_tasks, :completed_tasks_count
   
   def initialize(completed_tasks, enrollment = nil)
     self.completed_tasks = completed_tasks
@@ -40,7 +40,7 @@ class PerformanceStatistics
   end
   
   def calculate_avg_time_to_answer
-    self.avg_time_to_answer = self.completed_tasks.inject(0){ |sum, ct| sum += ct.updated_at - ct.created_at }
+    self.avg_time_to_answer = self.completed_tasks.inject(0){ |sum, ct| sum += ct.updated_at - ct.created_at } / self.total
   end
   
   def persisted?

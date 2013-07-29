@@ -30,8 +30,8 @@
           
           - if @task.multiple_choice?
             %ol{ style: "list-style-position: inside; margin-left: 0px;" }
-              - @answers.each do |a|
-                %li.answer_content{ data: { answer: a.content } }
+              - @answers.each_with_index do |a, i|
+                %li.answer_content{ data: { answer: a.content, order: i } }
                   = radio_button_tag :answer, a.content, false, style: "display: none;"
                   %span= a.content
           - elsif @task.exact?
@@ -44,7 +44,7 @@
               .controls
                 = submit_tag "Submit", id: "submit_exact", class: "button button-info"
             
-        = link_to (@next_text || "Next"), @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled");'
+        = link_to (@next_text || "Next"), @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled"); return true;'
     
     - if @show_stats
       %div{ style: "display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 261px; margin-left: 28px;" }
