@@ -29,6 +29,14 @@ FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt
 PERSONAS = YAML.load(File.read(File.join(Rails.root, "/lib/tasks/personas.yml")))
 
 PATHS = [
+  ["LEAN Startup Methodology 2","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
+  ["Ruby on Rails 2","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
+  ["Heroku 2","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],
+  ["jQuery 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", 0],
+  ["HTML5 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", 0],
+  ["CSS 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", 0],
+  ["Ruby Without Rails2 ","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", 0],
+  ["RubyGems 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", 0],
   ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
   ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
   ["Heroku","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],

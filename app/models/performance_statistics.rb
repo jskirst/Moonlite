@@ -31,8 +31,10 @@ class PerformanceStatistics
     saw = {}
     self.completed_tasks.each do |ct|
       n = ct.name
-      saw[n] = [0, 0] if saw[n].nil?
-      saw[n] = ct.correct? ? [saw[n][0] + 1, saw[n][1]] : [saw[n][0], saw[n][1] + 1]
+      unless n.blank?
+        saw[n] = [0, 0] if saw[n].nil?
+        saw[n] = ct.correct? ? [saw[n][0] + 1, saw[n][1]] : [saw[n][0], saw[n][1] + 1]
+      end
     end
     saw = saw.select{ |name, stats| (stats[0] + stats[1]) >= 1 }
     self.strengths = saw.select{ |topic_name, stats| (stats[0].to_f / (stats[0]+stats[1])) > 0.75 }
