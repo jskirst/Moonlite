@@ -68,47 +68,47 @@ https://github.com/AdamWhitcroft/CSS.Tooltips
 	color:#fff;
 }
 /* Success tooltip */
-.success {
-	color:#51bd6a;
+/*.success {
+  color:#51bd6a;
 }
 .success[data-tip]:before {
-	border-top-color:#51bd6a;
-	border-right-color:transparent;
-	border-bottom-color:transparent;
-	border-left-color:transparent;
+  border-top-color:#51bd6a;
+  border-right-color:transparent;
+  border-bottom-color:transparent;
+  border-left-color:transparent;
 }
 .success[data-tip]:after {
-	background:#51bd6a;
-	color:#fff;
-}
+  background:#51bd6a;
+  color:#fff;
+}*/
 /* Alert tooltip */
-.alert {
-	color:#f9ca64;
+/*.alert {
+  color:#f9ca64;
 }
 .alert[data-tip]:before {
-	border-top-color:#f9ca64;
-	border-right-color:transparent;
-	border-bottom-color:transparent;
-	border-left-color:transparent;
+  border-top-color:#f9ca64;
+  border-right-color:transparent;
+  border-bottom-color:transparent;
+  border-left-color:transparent;
 }
 .alert[data-tip]:after {
-	background:#f9ca64;
-	color:#574d36;
-}
+  background:#f9ca64;
+  color:#574d36;
+}*/
 /* Error tooltip */
-.error {
-	color:#e1473e;
+/*.error {
+  color:#e1473e;
 }
 .error[data-tip]:before {
-	border-top-color:#e1473e;
-	border-right-color:transparent;
-	border-bottom-color:transparent;
-	border-left-color:transparent;
+  border-top-color:#e1473e;
+  border-right-color:transparent;
+  border-bottom-color:transparent;
+  border-left-color:transparent;
 }
 .error[data-tip]:after {
-	background:#e1473e;
-	color:#fff;
-}
+  background:#e1473e;
+  color:#fff;
+}*/
 /*==================================================*/
 /*  $Gravity                                        */
 /*==================================================*/

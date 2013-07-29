@@ -90,3 +90,25 @@ h5 { font-weight: bold; }
 .floatr { float: right; }
 .floatl { float: left; }
 .displayin { display: inline; }
+
+.alert { 
+  color: white;
+  z-index: 10000;
+  border: 1px solid white;
+  position: fixed;
+  top: 50px;
+  font-size: 17px;
+  padding: 15px;
+  text-align: center;
+  left: 50%;
+  width: 500px;
+  margin-left: -250px;
+  text-shadow: none;
+}
+.alert-success { 
+  background-color: #46885A;
+}
+.alert-error {
+  background-color: #b94a48;
+  border-color: #eed3d7;
+}
