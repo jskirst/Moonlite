@@ -27,7 +27,7 @@ class PagesController < ApplicationController
       @show_footer = true
       @hide_background = true
       @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
-      render "origin"
+      render "upheaval"
     end
   end
   
