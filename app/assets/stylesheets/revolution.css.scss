@@ -1440,11 +1440,18 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       margin-right: 5px;
     }
     .gear {
-      opacity: .7; 
-      height:20px; 
-      width:20px;
+      [data-tip]:before { left: 5px; }
+      [data-tip]:after { left: -8px; }
       
-      &:hover { opacity:1; }
+      div { font-size: 13px ;}
+      
+      img {
+        opacity: .7; 
+        height:20px; 
+        width:20px;
+      
+        &:hover { opacity:1; }
+      }
     }
   }
 }
@@ -1604,6 +1611,34 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 }
 
 #evaluation_manager{
+  .aboutbox {
+    .header {
+      .controls {
+        float: right; 
+        position: relative;
+        top: 97px;
+        
+        a {
+          &:hover { text-decoration: none;}
+          [data-tip]:before { left: 7px; }
+          [data-tip]:after { left: -2px; }
+          
+          div {
+            display: inline-block; 
+            margin-right: 8px;
+          
+            img {
+              height: 25px;
+              width: 25px;
+              opacity: .7;
+        
+              &:hover { opacity: 1; }
+            }
+          }
+        }
+      }
+    }
+  }
   .body{
     table{
       th{

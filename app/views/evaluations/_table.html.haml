@@ -7,10 +7,11 @@
           - e.paths.each do |path|
             %img.challenge_img{ src: path.picture, style: "width: 25px; height: 25px;", title: path.name, alt: path.name }
         %td{ style: "width: 30%; overflow: hidden" }= take_group_evaluation_url(e.permalink)
-        %td= e.evaluation_enrollments.count.to_s + " users"
-        %td{ style: "padding: 15px 5px; width: 20px;"}
+        %td{ style: "text-align: center; "}= e.evaluation_enrollments.count.to_s + " users"
+        %td.gear{ style: "padding: 15px 5px; width: 20px;"}
           = link_to edit_group_evaluation_path(@group, e) do
-            %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", title:"Settings", alt: "Settings"}
+            %div{ "data-tip" => "Edit" }
+              %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Edit"}
     - if @evaluations.empty?
       %tr
         %td{ colspan: "5", style: "border-bottom: 0; font-size; 13px;" }
