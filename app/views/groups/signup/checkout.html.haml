@@ -52,5 +52,6 @@
           %input
           
           .control-group
-            .controls
-              %input{ type: "submit", value: "Checkout", class: "submit_button", style: "width: inherit;" }
+            .back{ "data-tip" => "Back"}
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
+            %input{ type: "submit", value: "Checkout", class: "submit_button"}

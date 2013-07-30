@@ -92,7 +92,7 @@ ICON_LOGIN_GITHUB = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+github.
 SHARE_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+small.png"
 SHARE_TWITTER = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
 SHARE_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
-SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+reddit+small.png"
+SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon%2Breddit%2Bsmall.png"
 
 ICON_CAROUSEL_LEFT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"
 ICON_CAROUSEL_RIGHT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"
@@ -107,7 +107,7 @@ NAVBAR_HOME = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/home
 NAVBAR_EXPLORE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/explore+signpost.png"
 NAVBAR_PROFILE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/profile.png"
 NAVBAR_CREATE = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/create.png"
-NAVBAR_API = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/api.png"
+NAVBAR_SEARCH = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/search.png"
 NAVBAR_ACCOUNT = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/account.png"
 NAVBAR_CHALLENGES = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/challenges.png"
 NAVBAR_EVALUATIONS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/evaluations.png"

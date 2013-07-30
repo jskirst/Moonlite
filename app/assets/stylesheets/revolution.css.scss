@@ -447,7 +447,18 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .notification:hover { background-color: #EEE; }
 .notification_body { margin: 0; text-decoration: none; color: #404040; font-size: 12px; width: 225px; float: right; text-shadow:none; line-height:17px;}
 .notification_time { margin: 7px 2px 0 0; font-size: 11px; float: right; text-shadow:none; cursor:default; color: #BBB; line-height: 5px;}
-.nub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; top:-11px; left: 185px;}
+.outter-nub { border-width: 0 11px 12px 11px;
+position: absolute;
+border-style: solid;
+border-color: transparent transparent rgba(0, 0, 0, 0.2) transparent;
+top: -13px;
+left: 60px; }
+.inner-nub { border-width: 0 10px 10px 10px;
+position: absolute;
+border-style: solid;
+border-color: transparent transparent white transparent;
+top: 3px;
+left: -10px; }
 .sidenub { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_all_gray.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:20px; width:11px; top:11px; left: -11px;}
 .graynub{ background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/notification_arrow_post_gear_dropdown.png); background-repeat: no-repeat; background-size: auto; position:absolute; height:11px; width:20px; }
 .CR_dropdown_option{width: 95%; padding: 3px;}
@@ -968,6 +979,18 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       }
       .control-group {
         margin: 0;
+        
+        .back {
+          float: left;
+          
+          img {
+            height: 32px; 
+            opacity: .7;
+            
+            &:hover { opacity: 1; }
+          }
+        }
+        .submit_button { width: inherit; }
       }
       .checkout_tt1, .checkout_tt2 {
         display: inline-block;
@@ -1677,7 +1700,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     }
   }
   .invite_box{
-    text-align: center; margin: 20px 20px 30px; border: 4px solid $employer_green; border-radius: 4px; background-color: $employer_green_light;
+    text-align: center; margin: 20px 20px; border: 4px solid $employer_green; border-radius: 4px; background-color: $employer_green_light;
     
     div {
       display: inline-block; 
