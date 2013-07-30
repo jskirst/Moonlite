@@ -32,7 +32,7 @@ class Group < ActiveRecord::Base
     :plan_type
   
   has_one   :custom_style, as: :owner
-  has_many  :group_users
+  has_many  :group_users, dependent: :destroy
   has_many  :paths
   has_many  :evaluations
   has_many  :users, through: :group_users
