@@ -5,12 +5,13 @@
         = link_to root_url do
           = image_tag(STONEY_SMALL_URL)
           %h1 MetaBright
-      %div.brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; border-right: 1px solid #020D25;" }
+      %div.brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; " }
         = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       - if current_user and show_nav_bar
         - if @admin_group
           %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
+            %li{ style: "height: 100%; border-right: 1px solid #020D25; "}
             %li.navitem{ title: "Evaluations", style: "height: 100%;" }
               = link_to group_evaluations_path(@admin_group) do
                 = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
@@ -36,6 +37,7 @@
                   %span Search
         - else
           %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
+            %li{ style: "height: 100%; border-right: 1px solid #020D25; "}
             %li.navitem{ title: "Home", style: "height: 100%; " }
               = link_to root_url do
                 = image_tag NAVBAR_HOME,  alt: "Home"
