@@ -11,7 +11,7 @@ function landing_slide(where){
       }else{  
           $('.carousel ul li:last').after($('.carousel ul li:first'));  
       }  
-      $('.carousel ul').css({'left' : '-872px'});  
+      $('.carousel ul').css({'left' : '-218px'});  
   });
 }
 
