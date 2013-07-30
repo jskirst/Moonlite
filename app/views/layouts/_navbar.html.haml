@@ -33,7 +33,7 @@
             - if Rails.env == "development"
               %li.navitem{ title: "Search", style: "height: 100%;" }
                 = link_to new_group_search_url(@admin_group) do
-                  = image_tag NAVBAR_API, alt: "Search"  
+                  = image_tag NAVBAR_SEARCH, alt: "Search"  
                   %span Search
         - else
           %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
