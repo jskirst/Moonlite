@@ -112,3 +112,7 @@ h5 { font-weight: bold; }
   background-color: #b94a48;
   border-color: #eed3d7;
 }
+
+input[disabled] {
+  background-color: #CCC;
+}

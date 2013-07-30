@@ -31,7 +31,8 @@
         %div{ style: "display: inline-block; vertical-align: top; float: right; text-align: right; margin-top: 10px; "}
           %h3{ style: "font-size:17px; line-height: 25px"}
             = link_to @user.email, "mailto:#{@user.email}"
-          %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{@user.state}, #{@user.country}
+          - country = Carmen::Country.coded(@user.country)
+          %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
       .actions
         - if @evaluation_enrollment.submitted_at
           %span.submitted_at Submitted #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago
@@ -95,40 +96,39 @@
                         %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
               %table.table.overview
                 %tbody
-                %tr
-                  %td.table_tip
-                    %h3 #{r[:performance].percent_correct}%
-                    %p.tip-below{ data: {tip: "Percent of multiple choice questions answered correctly."}} Correct MC
-                  %td.table_tip
-                    %h3 #{r[:performance].avg_time_to_answer.round(1)}s
-                    %p.tip-below{ data: {tip: "Average response time per correct multiple choice question."}} Avg. Time per MC
-                  - if r[:creative]
+                  %tr
                     %td.table_tip
-                      %h3= r[:creative].count {|x| not x.content.blank? }.to_s+"/"+r[:creative].count.to_s
-                      %p.tip-below{ data: {tip: "Number of submitted Creative Response questions out of total available."}} Creative Response
+                      %h3 #{r[:performance].percent_correct}%
+                      %p.tip-below{ data: {tip: "Percent of multiple choice questions answered correctly."}} Correct MC
+                    %td.table_tip
+                      %h3 #{r[:performance].avg_time_to_answer.round(1)}s
+                      %p.tip-below{ data: {tip: "Average response time per correct multiple choice question."}} Avg. Time per MC
+                    - if r[:creative]
+                      %td.table_tip
+                        %h3= r[:creative].count {|x| not x.content.blank? }.to_s+"/"+r[:creative].count.to_s
+                        %p.tip-below{ data: {tip: "Number of submitted Creative Response questions out of total available."}} Creative Response
               / This actually needs to be a check for custom challenge, not just metascore
-              - if r[:metascore_available]
-                .strengths_weaknesses{ style: ""}
-                  .strengths 
-                    .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
-                      Strengths
-                    .body
-                      - if r[:performance].strengths.empty?
-                        %p{ style: "font-size: 12px;" } More data required.
-                      - else
-                        %ul
-                          - r[:performance].strengths.first(3).each do |topic_name, stats|
-                            %li= topic_name
-                  .weaknesses 
-                    .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
-                      Weaknesses
-                    .body
-                      - if r[:performance].weaknesses.empty?
-                        %p{ style: "font-size: 12px;" } More data required.
-                      - else
-                        %ul
-                          - r[:performance].weaknesses.first(3).each do |topic_name, stats|
-                            %li= topic_name
+              .strengths_weaknesses{ style: ""}
+                .strengths 
+                  .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
+                    Strengths
+                  .body
+                    - if r[:performance].strengths.empty?
+                      %p{ style: "font-size: 12px;" } More data required.
+                    - else
+                      %ul
+                        - r[:performance].strengths.first(3).each do |topic_name, stats|
+                          %li= topic_name
+                .weaknesses 
+                  .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
+                    Weaknesses
+                  .body
+                    - if r[:performance].weaknesses.empty?
+                      %p{ style: "font-size: 12px;" } More data required.
+                    - else
+                      %ul
+                        - r[:performance].weaknesses.first(3).each do |topic_name, stats|
+                          %li= topic_name
                 
             - if r[:creative].any?
               %div

@@ -40,9 +40,8 @@ class GroupsController < ApplicationController
       render form
     else
       if @group.save_with_stripe(params[:group][:stripe_token])
-        flash[:success] = "Your subscription has been successfully enabled. Welcome to MetaBright!"
         GroupMailer.signup(@group)
-        redirect_to root_url
+        render "groups/signup/order_confirmation"
       else
         @error = "There was an error validating your credit card information."
         render form

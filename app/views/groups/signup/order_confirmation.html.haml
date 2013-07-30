@@ -11,12 +11,13 @@
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       .text{ style: ""}
         %h1{ style: "margin-top:0;" } Welcome to MetaBright!
-    .invite_box
-      %div
-        %h3 Invite your colleagues to join you:
-        %p Just put their email addresses in the box below. They'll be asked to register and will automatically be added to your company's account. Your plan allows you to add up to **X** people.
-        %textarea{ rows: "3" }
-        %button.submit_button Invite
+    - if false and @group.can_add_users?
+      .invite_box
+        %div
+          %h3 Invite your colleagues to join you:
+          %p Just put their email addresses in the box below. They'll be asked to register and will automatically be added to your company's account. Your plan allows you to add up to **X** people.
+          %textarea{ rows: "3" }
+          %button.submit_button Invite
     .body
       %h3 Your company's hiring is about to get turbocharged!
       %p Take a look at the nav bar at the top of the page. Here's a quick overview of what everything does:
@@ -27,16 +28,22 @@
           .text
             %span Evaluations: 
             This is where you create and manage all your Evaluations. Your candidates' results are organized here as well.
+            %div{ style: "margin: 15px 10px 20px 0;"}
+              = link_to "Create your first Evaluation", new_group_evaluation_url(@group), class: "submit_button", style: "float: inherit;"
         %li 
           .picture
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/challenges_dark.png" }
           .text
             %span Challenges: 
             If you want to test your candidates on custom content specific to your company, you'll want to start here. After you create a Challenge, you can access it in any Evaluation you set up.
+            %div{ style: "margin: 15px 10px 20px 0;"}
+              = link_to "Create your first custom Challenge", new_group_path_url(@group), class: "submit_button", style: "float: inherit;"
         %li 
           .picture
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/account_dark.png" }
           .text
             %span Account: 
             Details of your company plan and settings are located here. You can invite additional people to your account, change your plan, and even add custom CSS styles to your Evaluations.
+            %div{ style: "margin: 15px 10px 20px 0;"}
+              = link_to "Manage your account", account_group_url(@group), class: "submit_button", style: "float: inherit;"
       %p If you need help getting going, have a question, or you just want to talk, feel free to contact our support team at #{link_to "support@metabright.com", "mailto:support@metabright.com"}. We're here to help!

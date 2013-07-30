@@ -69,7 +69,8 @@
                 = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
               = f.submit "Save", class: "button"
           - else
-            %h5 Location saved as #{current_user.city}, #{current_user.country}
+            - country = Carmen::Country.coded(current_user.country)
+            %h5 Location saved as #{current_user.city}, #{country.name}
             
       .step
         .img-circle
@@ -101,7 +102,7 @@
           %span 4
         .instructions
           %h4 Submit Application
-          - if evaluation_completed
+          - if current_user and evaluation_completed
             - if @evaluation_enrollment.submitted?
               %p You successfully submitted this application #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago.
             - else
