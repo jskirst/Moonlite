@@ -1,17 +1,17 @@
 %nav.navbar.navbar-fixed-top
   %div.fill.navbar-inner{ style: "height: 100%;" }
-    %div{ style: "margin-left: 6%; height: 100%; width: 90%; margin: 0 auto;" }
+    %div{ style: "height: 100%; width: 87%; margin: 0 auto;" }
       %div.new-brand.brand{ style: "display: none;" }
         = link_to root_url do
           = image_tag(STONEY_SMALL_URL)
           %h1 MetaBright
-      %div.brand.old-brand{ style: "padding-top: 3px; width: 150px;" }
+      %div.brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; border-right: 1px solid #020D25;" }
         = link_to root_url do
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       - if current_user and show_nav_bar
         - if @admin_group
-          %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid rgba(255,255,255,0.2);" }
-            %li.navitem{ title: "Evaluations", style: "height: 100%; border-left: 1px solid #56698B;" }
+          %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
+            %li.navitem{ title: "Evaluations", style: "height: 100%;" }
               = link_to group_evaluations_path(@admin_group) do
                 = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
                 %span Evaluations
@@ -35,8 +35,8 @@
                   = image_tag NAVBAR_API, alt: "Search"  
                   %span Search
         - else
-          %ul.nav.navicons{ style: "height: 100%; margin-left: 10px;border-left: 1px solid rgba(255,255,255,0.2); border-right: 1px solid #56698B;" }
-            %li.navitem{ title: "Home", style: "height: 100%; border-left: 1px solid #56698B;" }
+          %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
+            %li.navitem{ title: "Home", style: "height: 100%; " }
               = link_to root_url do
                 = image_tag NAVBAR_HOME,  alt: "Home"
                 %span Home
@@ -56,7 +56,7 @@
       %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
         = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
       - if current_user and show_nav_bar
-        %ul.nav.pull-right{ style: "float:right; margin-right: 6%; " }
+        %ul.nav.pull-right{ style: "float:right; margin-right: -.6%;" }
           - if current_user
             %li.navuser
               %div.dropdown.pull-right
@@ -73,8 +73,8 @@
                       %span.caret
                 - if groups or enrollments
                   %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
-                    %div
-                      %div.nub{ style: "left:150px;" }
+                    .outter-nub{ style: "left: 148px; "}
+                      .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
                     - if groups
                       %div.leftboxheader Your Groups
                       %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD;"}
@@ -108,7 +108,8 @@
                 - if notifications_ary.any?
                   %ul.dropdown-menu{ role: "button", style: "padding: 0 0 10px 0; top:42px; right:-104px; min-width: 317px; min-height: 135px;" }
                     %div
-                      %div.nub
+                      .outter-nub{ style: "left: 184px; "}
+                        .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
                     %div.leftboxheader Notifications
                     %div.leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: auto;"}
                       - notifications.each do |event|
@@ -124,8 +125,8 @@
                   %img{ src: ICON_GEAR, style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
                 %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-40px; min-width: 25px; min-height: 50px;" }
                   %li
-                    %div
-                      %div.nub{ style: "left: 62px;"}
+                    .outter-nub
+                      .inner-nub
                     %div{ style: "padding: 3px 0px;"}
                       %ul.profile_dropdown{ style: "list-style: none; margin: 0px;"}
                         - if @enable_administration
