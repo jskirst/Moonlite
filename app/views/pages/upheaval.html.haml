@@ -41,7 +41,7 @@
               - @paths.first(10).each do |path|
                 %li
                   %div{ "data-tip" => "Take the #{path.name} Challenge!" }
-                    = link_to intro_path(c: path.permalink) do
+                    = link_to challenge_url(path.permalink) do
                       = image_tag path.picture, alt: "#{path.name}"
             %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
   #happy_users.row-fluid
@@ -96,12 +96,12 @@
               %ul
                 - @paths.each do |path|
                   %li.mosaic-block.bar2
-                    = link_to intro_path(c: path.permalink), class: "mosaic-overlay" do
+                    = link_to challenge_url(path.permalink), class: "mosaic-overlay" do
                       .details
                         %h4= truncate(path.name,length: 14, separator: ' ')
                         %h5 Try this Challenge!
                     .background
-                      = link_to intro_path(c: path.permalink) do
+                      = link_to challenge_url(path.permalink) do
                         = image_tag path.picture, class: "mosaic-backdrop", size: "110x110", alt: "#{path.name}"
                   
                 

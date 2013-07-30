@@ -131,9 +131,9 @@
                         - if @enable_administration
                           %li= link_to "Admin", admin_overview_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li.explore_link= link_to "Explore", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
-                        - unless @user.employer? 
+                        - unless @current_user.employer?
                           %li= link_to "View Profile", user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
-                        - unless @user.employer? 
+                        - unless @current_user.employer?
                           %li= link_to "Edit Profile", edit_user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li.invite_facebook_friends= link_to "Invite Friends", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "MetaBright Labs", ideas_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
