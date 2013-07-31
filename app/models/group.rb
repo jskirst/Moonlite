@@ -45,7 +45,7 @@ class Group < ActiveRecord::Base
     if existing_user
       self.creator = existing_user
       if self.creator.groups.any?
-        self.creator.errors[:base] << "This account is already registered with another account."
+        self.creator.errors[:base] << "This email address is already registered to another account."
         return false
       end
     else

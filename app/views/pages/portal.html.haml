@@ -2,7 +2,7 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
 
 #employer.aboutcontainer{ style: "margin-top: 35px; width: 550px;" }
-  #organization_portal.aboutbox{ style: "padding: 8px;"}
+  #organization_portal.aboutbox
     .header{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 72px; display: inline; vertical-align: middle", alt: "Stoney"
       %h1{ style: "display: inline; vertical-align: middle; font-size:25px;" }= @group.name
@@ -31,28 +31,28 @@
           })
           
         .signup
-          %h3 Sign in to your account
-          = link_to "/auth/google_oauth2", style: "margin-right: 10px; margin-bottom: 0;", class: "button btn" do
+          %h3 Sign in to your new account
+          = link_to "/auth/google_oauth2", style: "margin-top: 10px;", class: "button btn" do
             = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
             %span.landingbuttontext Google sign up »
-          = link_to "/auth/linkedin_oauth2", style: "margin: 0 6px;", class: "button btn" do
+          = link_to "/auth/linkedin_oauth2", class: "button btn" do
             = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
             %span.landingbuttontext LinkedIn sign up »
-          = link_to "/auth/github", style: " margin-left: 10px;", class: "button btn" do
+          = link_to "/auth/github", class: "button btn" do
             = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
             %span.landingbuttontext GitHub sign up »
           
-          %p{ style: "margin: 15px 0;" } - Or create an account with email and password -
+          %p{ style: "margin: 20px 0 15px;" } - Or create an account with email and password -
             
           = form_for(current_user) do |f|
             - if @error
               %p.errors{ style: "color: #b94a48;" }= @error
             - else
               %p.errors.hide{ style: "color: #b94a48;" }
-            %p= f.text_field :name, value: nil, placeholder: "Name"
-            %p= f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
-            %p= f.password_field :password, value: nil, placeholder: "Password"
-            = f.submit "Submit", class: "submit_button button button-small button-actionable", style: "width: auto; padding: 3px 10px;"
+            %p.text_field= f.text_field :name, value: nil, placeholder: "Name"
+            %p.text_field= f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
+            %p.text_field= f.password_field :password, value: nil, placeholder: "Password"
+            = f.submit "Submit", class: "submit_button"
       - else
         = link_to group_evaluations_url(@group) do
           .option{ style: "border-bottom: 1px solid #DDD; border-right: 1px solid #DDD; margin-right: -4px;"}
