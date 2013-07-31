@@ -29,7 +29,10 @@
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
         %h1{ style: "margin-top:0;" } MetaBright Evaluator
         %h3 Order Checkout
-    .body{ style: "padding: 0 16px;" }
+    .body{ style: "padding:16px 16px 0;" }
+      %p{ style: "position: relative; left: 77px; bottom: 10px; float: left; "}
+        = link_to "https://stripe.com/help/security", target: "_blank" do
+          = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/stripe_solid_clipped.png"
       = form_for(@new_group, html: { class: "form-horizontal" }, remote: true) do |f|
         - plan = Group::PLAN_TYPES[@new_group.plan_type]
         = f.hidden_field :token
