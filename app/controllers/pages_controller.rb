@@ -13,7 +13,12 @@ class PagesController < ApplicationController
       if @group.requires_payment?
         raise "Something has gone wrong."
       else
-        render "portal"
+        if current_user.guest_user?
+          @show_nav_bar = false
+          render "portal"
+        else
+          render "portal"
+        end
       end
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
@@ -219,15 +224,6 @@ class PagesController < ApplicationController
     @hide_background = true
     @show_sign_in = false
     render "evaluator"
-  end
-  
-  def organization_portal
-    @title = "Organization Portal"
-    @show_footer = true
-    @hide_background = true
-    @owned_groups = current_user.groups
-    @group = @owned_groups.first
-    render "organization_portal"
   end
   
   def challenges
