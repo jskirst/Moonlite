@@ -129,9 +129,6 @@
               .price_footer
                 = link_to "Select", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button"
           %div
-            %p{ style: "margin: 0; float: left;"}
-              = link_to "https://stripe.com/help/security", target: "_blank" do
-                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/stripe_outline.png"
             %p{ style: "margin: 0; float: right;"}
               Have more than 50 users? 
               %a{href: "mailto:support@metabright.com?subject=Inquiry for more than 50 Evaluator users"}Contact us for pricing.
