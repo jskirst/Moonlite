@@ -135,7 +135,7 @@ class EvaluationsController < ApplicationController
     if current_user
       @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)
       if @evaluation_enrollment.nil?
-        @evaluation.evaluation_enrollments.create!(user_id: current_user.id, evaluation_id: @evaluation.id)
+        @evaluation_enrollment = @evaluation.evaluation_enrollments.create!(user_id: current_user.id, evaluation_id: @evaluation.id)
       end
     end
     @group = @evaluation.group

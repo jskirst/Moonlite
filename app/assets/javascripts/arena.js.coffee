@@ -24,8 +24,7 @@ $.MB.Arena.start_countdown = ->
   ,3000
   
 $.MB.Arena.keyboard_shortcuts = ->
-  $(document).keyup (event) ->
-    console.log event
+  $(document).unbind("keyup").keyup (event) ->
     if event.which == 49
       $(".answer_content[data-order=0]").trigger "click"
     else if event.which == 50
@@ -35,8 +34,9 @@ $.MB.Arena.keyboard_shortcuts = ->
     else if event.which == 52
       $(".answer_content[data-order=3]").trigger "click"
     else if event.which == 13
-      $("#nextbutton, #submit_exact").trigger "click"
-      Turbolinks.visit($("#nextbutton").attr("href"))
+      if $("#nextbutton:visible").length > 0
+        $("#nextbutton:visible").trigger "click"
+        Turbolinks.visit($("#nextbutton").attr("href"))
 
 $.MB.Arena.init = (options = {}) ->
   $.continue_countdown = true

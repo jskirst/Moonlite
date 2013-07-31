@@ -21,7 +21,7 @@
       %h1.title= form_title      
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       - unless @evaluation.errors.empty?
-        .alert.alert-error{ style: "color: #b94a48;"}
+        .alert.alert-error
           %p= @evaluation.errors.full_messages.join(". ")
       = form_for(@evaluation, url: form_url) do |f|
         %div{ style: "text-align: center; margin: 10px auto;" }
