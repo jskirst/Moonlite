@@ -1,0 +1,57 @@
+:css
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .container.body { padding: 0; background-color: transparent;   }
+  .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;}
+  .aboutbox { border-radius: 0; padding: 20px; }
+  .errors { margin: 20px 0 5px 0; color: red; font-size: 17px; }
+%script
+  $(function(){ $.MB.Checkout.init(); });
+
+- if Rails.env == "development"
+  :javascript
+    $(function(){
+      $("input[data-stripe=number]").val("4242424242424242");
+      $("input[data-stripe=cvc]").val("123");
+      $("input[data-stripe='exp-month']").val("01");
+      $("input[data-stripe='exp-year']").val("2018");
+    })
+
+#employer_product.aboutcontainer
+  .aboutbox
+    .aboutheader
+      %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
+      %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
+        %h1{ style: "margin-top:0;" } MetaBright Evaluator
+        %h3 Order Checkout (Step 2 of 2)
+    .body{ style: "padding-bottom: 0; padding-top: 6px;" }
+      %div
+        = form_for(@group, url: checkout_group_url(@group), remote: true, html: { class: "form-horizontal", id: "new_subscription" }) do |f|
+          - plan = Group::PLAN_TYPES[@group.plan_type]
+          = f.hidden_field :stripe_token
+          %label Product
+          .product_name Evaluator #{plan[:description]}: #{plan[:price]}
+          %p.errors= @error
+          %label{ style: "display: inline-block;"} Card Number
+          .checkout_tt1
+            %div{ "data-tip" => "We accept Visa, Mastercard, American Express, Discover, and JCB."}
+              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
+          %input{ type: "text", size: 20, data: { stripe: "number" }, style: "width: 24ex;" }
+          %div
+            %label{ style: "display: inline-block;"} CVC
+            .checkout_tt2
+              %div{ "data-tip" => "Your Card Verification Code (CVC) is a 3-digit number printed on the back of your Visa/Mastercard/Discover. It appears just to the right of the signature box. The American Express verification number is 4-digits and printed on the front of the card. It is immediately to the right of your credit card number."}
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
+          %input{ type: "text", size: 4, data: { stripe: "cvc" }, class: "input-small", style: "width: 3em;" }
+          %label Expiration (MM/YYYY)
+          %input{ type: "text", size: 2, data: { stripe: "exp-month" }, placeholder: "MM", class: "input-small", style: "width: 1.5em;" }
+          %span /
+          %input{ type: "text", size: 4, data: { stripe: "exp-year" }, placeholder: "YYYY", class: "input-small", style: "width: 3em;" }
+          
+          / To Do
+          %label Coupon (Optional)
+          %input
+          
+          .control-group
+            .back{ "data-tip" => "Back"}
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
+            %input{ type: "submit", value: "Checkout", class: "submit_button"}

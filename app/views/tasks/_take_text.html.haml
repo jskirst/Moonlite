@@ -10,15 +10,15 @@
         Creative Response:    
     %pre.CRquestion= @task.question
   %div.CRresponsespace{ style: "min-height: 175px;" }
-    - if @task.template
+    - if @path.template
       = f.submit "View Preview", class: "button button-small button-info", id: "preview_button", style: "float:right; margin: 0px 10px 3px 0; padding: 3px 10px;"
     = link_to "View hotkeys", "https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts", target: '_blank', style: "float: left; position: relative; font-size: 13px; top: 3px; margin-left: 10px;"
-    %p{ style:"display: none; float: right; font-size: 12px; margin-right: 15px; top: 15px; position: relative;"} (Save: Ctrl-S, Preview: Ctrl-R)
     %h4{ style: "text-align: center; margin-bottom: 5px; font-size: 15px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
     
-    %textarea{ name: "content", id: "answer_input", data: { template: @task.template.to_s } }= @submitted_answer.content || @task.template
-    %div{ id: "editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 275px; position: relative; padding-top:0;"}
+    %textarea{ name: "content", id: "answer_input", style: "min-height: 275px;", data: { template: @task.template.to_s } }= @submitted_answer.content || @task.template
+    - if @path.template
+      %div{ id: "editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 275px; position: relative; padding-top:0;"}
         
     - if params[:m] == "preview" and (@task.template or @submitted_answer.preview or @submitted_answer.preview_errors)
       %div{ style: "text-align:center; "}
