@@ -30,7 +30,7 @@
         %h1{ style: "margin-top:0;" } MetaBright Evaluator
         %h3 Order Checkout
     .body{ style: "padding:16px 16px 0;" }
-      %p{ style: "position: relative; left: 77px; bottom: 10px; float: left; "}
+      %p{ style: "position: relative; left: 78px; bottom: 10px; float: left; "}
         = link_to "https://stripe.com/help/security", target: "_blank" do
           = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/stripe_solid_clipped.png"
       = form_for(@new_group, url: "/groups", method: :post, html: { class: "form-horizontal unspinnable" }, remote: true) do |f|
@@ -49,8 +49,6 @@
         = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email"
         %label Create a password:
         = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password"
-        %label Coupon
-        = f.text_field :coupon, placeholder: "Optional..."
         %div{ style: "display: inline-block; width: 64%;"}
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1
@@ -68,6 +66,8 @@
         %input{ type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.5em;" }
         %span /
         %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 3em;" }
+        %label Coupon
+        = f.text_field :coupon, placeholder: "Optional..."
         .control-group
           %p.in-progress.hide Creating your account now. This may take a minute or two...
           .controls
