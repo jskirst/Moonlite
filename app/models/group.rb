@@ -14,7 +14,9 @@ class Group < ActiveRecord::Base
   PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   
-  attr_accessor :creator_name, :creator_email, :creator_password, :creator
+  COUPONS = ["skills"]
+  
+  attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
   attr_protected :token
   attr_accessible :name,
     :description, 
@@ -45,7 +47,7 @@ class Group < ActiveRecord::Base
     if existing_user
       self.creator = existing_user
       if self.creator.groups.any?
-        self.creator.errors[:base] << "This account is already registered with another account."
+        self.creator.errors[:base] << "This email address is already registered with another account."
         return false
       end
     else
@@ -70,13 +72,18 @@ class Group < ActiveRecord::Base
   
   def save_with_stripe(stripe_card_token)
     begin
-      customer = Stripe::Customer.create(description: self.id, plan: self.plan_type, card: stripe_card_token)
+      customer_details = { description: self.id, plan: self.plan_type, card: stripe_card_token }
+      if COUPONS.include? self.coupon
+        customer_details[:coupon] = self.coupon 
+      end
+      customer = Stripe::Customer.create(customer_details)
       self.stripe_token = customer.id
       save!
     rescue Stripe::InvalidRequestError => e
-      logger.error "Stripe error while creating customer: #{e.message}"
-      false
+      self.errors[:base] << e.message
+      return false
     end
+    return true
   end
    
   def picture

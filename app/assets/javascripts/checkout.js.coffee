@@ -5,7 +5,7 @@ $.MB.Checkout.init = ->
   $("#new_group").submit ->
     $(".errors").text("")
     valid = true
-    $($("#new_group input[type=text], #new_group input[type=password]").get().reverse()).each ->
+    $($("#new_group input[type=text][data-label], #new_group input[type=password][data-label]").get().reverse()).each ->
       if $(this).val() == ""
         $(".errors").show().text("Please enter "+$(this).data("label")+".")
         valid = false
@@ -18,6 +18,7 @@ $.MB.Checkout.init = ->
       console.log response.error
       $form.find(".errors").text(response.error)
     else
+      $(".in-progress").show()
       $form.find("#group_token").val(response.token)
       $.MB.Checkout.sendToStripe()
 
@@ -26,15 +27,18 @@ $.MB.Checkout.sendToStripe = ->
   $form = $("#new_group")
   $form.find("input[type=submit]").prop("disabled", true).addClass("disabled")
   Stripe.createToken($form, $.MB.Checkout.stripeResponseHandler)
+  $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
   
 $.MB.Checkout.stripeResponseHandler = (status, response) ->
   $form = $("#new_group")
   if response.error
     $form.find(".errors").text(response.error.message)
     $form.find("input[type=submit]").prop('disabled', false).removeClass("disabled")
+    $(".in-progress").hide();
     stopSpinner()
   else
     stripe_token = response.id
+    $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
     $form.find("#group_stripe_token").val(stripe_token)
     $form.get(0).submit()
     

@@ -115,7 +115,7 @@
         document.addEventListener("page:receive", stopSpinner);
       });
       
-      $("form").submit(function(){
+      $("form:not(.unspinnable)").submit(function(){
         $(this).find("input[type=submit]").addClass("disabled").attr("disabled", "disabled");
         $('#page_loading').fadeIn(1000);
         setTimeout("$('#page_loading').hide();", 5000);

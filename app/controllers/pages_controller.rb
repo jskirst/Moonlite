@@ -11,7 +11,7 @@ class PagesController < ApplicationController
       @group = @admin_group
       @group_custom_style = @group.custom_style
       if @group.requires_payment?
-        redirect_to checkout_group_url(@group)
+        raise "Something has gone wrong."
       else
         render "portal"
       end

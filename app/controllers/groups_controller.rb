@@ -11,6 +11,9 @@ class GroupsController < ApplicationController
   end
   
   def create
+    @show_nav_bar = false
+    @show_footer = false
+    @hide_background = false
     token = params[:group].delete(:token)
     if token.blank?
       plan_type = params[:group].delete(:plan_type)
@@ -28,9 +31,13 @@ class GroupsController < ApplicationController
     else
       @new_group = Group.find_by_token(token)
       if @new_group.admin?(current_user)
-        @new_group.stripe_token = params[:group][:stripe_token]
-        @new_group.save
-        redirect_to confirmation_group_url(@new_group)
+        @new_group.coupon = params[:group][:coupon]
+        if @new_group.save_with_stripe(params[:group][:stripe_token])
+          redirect_to confirmation_group_url(@new_group)
+        else
+          @errors = @new_group.errors.full_messages.join(". ")
+          render "groups/signup/form"
+        end
       else
         raise "Access Denied: Not your group"
       end
@@ -204,10 +211,6 @@ class GroupsController < ApplicationController
   def authorize_resource
     unless @group.admin?(current_user) and @group.closed_at.nil?
       raise "Access Denied"
-    end
-    
-    if @group.plan_type != Group::FREE_PLAN and @group.stripe_token.nil? and params[:action] != "checkout"
-      redirect_to checkout_group_url(@group)
     end
   end
 end
