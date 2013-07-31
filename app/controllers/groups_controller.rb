@@ -41,6 +41,9 @@ class GroupsController < ApplicationController
     else
       if @group.save_with_stripe(params[:group][:stripe_token])
         GroupMailer.signup(@group)
+        @show_footer = true
+        @hide_background = true
+        @show_nav_bar = true
         render "groups/signup/order_confirmation"
       else
         @error = "There was an error validating your credit card information."
