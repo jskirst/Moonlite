@@ -41,17 +41,21 @@ class Group < ActiveRecord::Base
   validates :plan_type, inclusion: { in: PLAN_TYPES }
    
   before_create do
-    if self.creator_name
-      existing_user = User.find_by_email(self.creator_email)
-      if existing_user
-        self.creator = existing_user
-      else
-        self.creator = User.create_with_nothing({"name" => self.creator_name, "email" => self.creator_email, "password" => self.creator_password})
+    existing_user = User.find_by_email(self.creator_email)
+    if existing_user
+      self.creator = existing_user
+      if self.creator.groups.any?
+        self.creator.errors[:base] << "This account is already registered with another account."
+        return false
       end
+    else
+      self.creator = User.create_with_nothing({"name" => self.creator_name, "email" => self.creator_email, "password" => self.creator_password})
     end
+    
     unless self.creator.valid?
       return false
     end
+    
     grant_permalink
     grant_token
   end
@@ -94,6 +98,7 @@ class Group < ActiveRecord::Base
     
   def can_add_users?() users.count < PLAN_TYPES[self.plan_type][:max_seats] end
   def seats_available() PLAN_TYPES[self.plan_type][:max_seats] - users.count end
+  def requires_payment?() self.plan_type != FREE_PLAN and self.stripe_token.nil? end
   
   # Cached methods
   

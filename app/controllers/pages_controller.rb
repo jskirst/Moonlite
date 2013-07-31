@@ -5,13 +5,12 @@ class PagesController < ApplicationController
   before_filter :authenticate, only: [:create]
   
   def home
-    #raise current_user.employer?.to_s
     @title = "Home"
     @url_for_newsfeed 
     if @admin_group
       @group = @admin_group
       @group_custom_style = @group.custom_style
-      if @group.plan_type != Group::FREE_PLAN and @group.stripe_token.nil?
+      if @group.requires_payment?
         redirect_to checkout_group_url(@group)
       else
         render "portal"

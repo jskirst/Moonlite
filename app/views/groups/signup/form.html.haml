@@ -4,21 +4,23 @@
   .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;}
   .aboutbox { border-radius: 0; padding: 20px; }
   .errors { color: red; font-size: 17px; }
+  .error-field { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); }
   
 :javascript
-  $(function(){
-    $("#new_group").submit(function(){
-      var valid = true;
-      $($("#new_group input").get().reverse()).each(function(){
-        if($(this).val() == ""){
-          $(".errors").show().text("Please enter "+$(this).data("label")+".")
-          valid = false
-          stopSpinner()
-        }
-      })
-      return valid
+  $(function(){ $.MB.Checkout.init(); });
+  
+- if Rails.env == "development"
+  :javascript
+    $(function(){
+      $("#group_name").val("Alabama");
+      $("#group_creator_name").val("Alabama Joe");
+      $("#group_creator_email").val("alabama@joe.com");
+      $("#group_creator_password").val("alabama@joe.com");
+      $("input[data-stripe=number]").val("4242424242424242");
+      $("input[data-stripe=cvc]").val("123");
+      $("input[data-stripe='exp-month']").val("01");
+      $("input[data-stripe='exp-year']").val("2018");
     })
-  });
 
 #employer_product.aboutcontainer
   .aboutbox
@@ -26,10 +28,11 @@
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
         %h1{ style: "margin-top:0;" } MetaBright Evaluator
-        %h3 Order Checkout (Step 1 of 2)
     .body{ style: "padding: 0 16px;" }
-      = form_for(@new_group, html: { class: "form-horizontal" }) do |f|
+      = form_for(@new_group, html: { class: "form-horizontal" }, remote: true) do |f|
         - plan = Group::PLAN_TYPES[@new_group.plan_type]
+        = f.hidden_field :token
+        = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
         %label Product:
         .product_name Evaluator #{plan[:description]}: #{plan[:price]}
@@ -42,6 +45,21 @@
         = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email"
         %label Create a password:
         = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password"
+        %label{ style: "display: inline-block;"} Card Number
+        .checkout_tt1
+          %div{ "data-tip" => "We accept Visa, Mastercard, American Express, Discover, and JCB."}
+            %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
+        %input{ type: "text", size: 20, data: { stripe: "number", label: "card number" }, style: "width: 24ex;" }
+        %div
+          %label{ style: "display: inline-block;"} CVC
+          .checkout_tt2
+            %div{ "data-tip" => "Your Card Verification Code (CVC) is a 3-digit number printed on the back of your Visa/Mastercard/Discover. It appears just to the right of the signature box. The American Express verification number is 4-digits and printed on the front of the card. It is immediately to the right of your credit card number."}
+              %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
+        %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "cvc", label: "CVC" }, class: "input-small", style: "width: 3em;" }
+        %label Expiration (MM/YYYY)
+        %input{ type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.5em;" }
+        %span /
+        %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 3em;" }
         .control-group
           .controls
             = f.submit "Submit", class: "submit_button", style: "width: inherit;"

@@ -11,53 +11,38 @@ class GroupsController < ApplicationController
   end
   
   def create
-    @new_group = Group.new(params[:group])
-    @new_group.plan_type = params[:group][:plan_type]
-    if @new_group.save
-      raise "New user" if @new_group.creator.nil?
-      if @new_group.creator
+    token = params[:group].delete(:token)
+    if token.blank?
+      plan_type = params[:group].delete(:plan_type)
+      @new_group = Group.new(params[:group])
+      @new_group.plan_type = plan_type
+      if @new_group.save
         @creator = @new_group.creator
         @creator.reload
         sign_in(@creator)
-        redirect_to checkout_group_url(@new_group)
+        render json: { token: @new_group.token }
       else
-        redirect_to groups_admin_url
+        @errors = @new_group.errors.full_messages.join(". ") + @new_group.creator.errors.full_messages.join(". ")
+        render json: { error: @errors }
       end
     else
-      @errors = @new_group.errors.full_messages.join(". ") + @new_group.creator.errors.full_messages.join(". ")
-      render "groups/signup/form"
-    end
-  end
-  
-  def checkout
-    @title = "Checkout"
-    @show_footer = true
-    @hide_background = true
-    @show_nav_bar = false
-    form = "groups/signup/checkout"
-    
-    if request.get?
-      render form
-    else
-      if @group.save_with_stripe(params[:group][:stripe_token])
-        GroupMailer.signup(@group)
-        @show_footer = true
-        @hide_background = true
-        @show_nav_bar = true
-        render "groups/signup/order_confirmation"
+      @new_group = Group.find_by_token(token)
+      if @new_group.admin?(current_user)
+        @new_group.stripe_token = params[:group][:stripe_token]
+        @new_group.save
+        redirect_to confirmation_group_url(@new_group)
       else
-        @error = "There was an error validating your credit card information."
-        render form
+        raise "Access Denied: Not your group"
       end
     end
   end
   
-  def order_confirmation
+  def confirmation
     @title = "Order Confirmation"
     @show_footer = true
     @hide_background = true
     @show_nav_bar = true
-    render "groups/signup/order_confirmation"
+    render "groups/signup/confirmation"
   end
   
   def show

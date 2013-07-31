@@ -12,6 +12,12 @@ class GroupUser < ActiveRecord::Base
   validates_presence_of :group_id
   validates_presence_of :user_id
   
+  before_create do
+    if user.groups.any?
+      raise "Access Denied: Only one group allowed."
+    end
+  end
+  
   def flush_cache
     Rails.cache.delete(["Group", "user", user_id])
   end
