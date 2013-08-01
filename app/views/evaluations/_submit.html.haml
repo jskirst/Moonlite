@@ -1,4 +1,4 @@
 %div.CRbuttonspace
-  = link_to "Skip Question", challenge_evaluation_path(@evaluation), class: "button button-standard", style: "float: left;", confirm: "Note: You will not be able to come back to this question once you skip it."
+  = link_to "Skip Question", challenge_evaluation_path(@evaluation), confirm: "Note: You will not be able to come back to this question once you skip it.", class: "button button-standard", style: "float: left;"
   = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
   = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"

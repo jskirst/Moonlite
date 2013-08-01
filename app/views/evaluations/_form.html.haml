@@ -63,7 +63,7 @@
                           = check_box_tag "evaluation[selected_paths][#{p.id}]", 1, @evaluation_path_ids.include?(p.id)
                           = p.name
                     %p{ style: "margin-left: 10px;"}
-                      = link_to "Create new custom skill.", new_group_path_path
+                      = link_to "Create new custom Challenge.", new_group_path_path
                 - else
                   %p 
                     You don't have any custom Challenges. 
