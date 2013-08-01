@@ -53,7 +53,6 @@ Metabright::Application.routes.draw do
 	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
 	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
 
-  get '/groups/users' => "users#index"
   resources :groups, path: "g" do
     member do
       get :checkout
@@ -207,7 +206,7 @@ Metabright::Application.routes.draw do
 
   match '/emailtest' => 'pages#email_test', as: 'email'
 	match '/send_reset' => 'users#send_reset'
-	match '/challenges/:permalink' => 'paths#show', as: 'challenge'
-	match '/:username/hovercard' => 'users#hovercard', as: "hovercard_user"
-	match '/:username' => 'pages#profile', as: 'profile'
+	get '/challenges/:permalink' => 'paths#show', as: 'challenge'
+	get '/:username/hovercard' => 'users#hovercard', as: "hovercard_user"
+	get '/:username' => 'pages#profile', as: 'profile'
 end

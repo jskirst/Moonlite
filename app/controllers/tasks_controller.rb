@@ -110,6 +110,11 @@ class TasksController < ApplicationController
     task = Task.cached_find(params[:id])
     raise "Access Denied: Task is currently locked." if task.locked_at
     completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])
+    if task.time_limit
+      if (completed_task.created_at + (task.time_limit + 10).seconds) < Time.now()
+        raise "Time expired"
+      end
+    end
     
     publish = !(["draft", "preview"].include?(params[:mode]))
     submitted_answer = completed_task.submitted_answer ||  task.submitted_answers.new
