@@ -15,8 +15,27 @@ class Task < ActiveRecord::Base
   LONG_EXACT  = 103
   SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
   
+  # Time limits
+  ONE         = 60
+  TWO         = 120
+  THREE       = 180
+  FOUR        = 240
+  FIVE        = 300
+  TEN         = 600
+  FIFTEEN     = 900
+  TWENTY      = 1200
+  TWENTYFIVE  = 1500
+  THIRTY      = 1800
+  THIRTYFIVE  = 2100
+  FORTY       = 2400
+  FORTYFIVE   = 2700
+  FIFTY       = 3000
+  FIFTYFIVE   = 3300
+  SIXTY       = 3600
+  TIME_LIMIT  = { ONE => "1 minute", TWO => "2 minutes", THREE => "3 minutes", FOUR => "4 minutes", FIVE => "5 minutes", TEN => "10 minutes", FIFTEEN => "15 minutes", TWENTY => "20 minutes", TWENTYFIVE => "25 minutes", THIRTY => "30 minutes", THIRTYFIVE => "35 minutes", FORTY => "40 minutes", FORTYFIVE => "45 minutes", FIFTY => "50 minutes", FIFTYFIVE => "55 minutes", SIXTY => "60 minutes" }
+  
   attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name
-  attr_protected :section_id, :archived_at
+  attr_protected :section_id, :archived_at, :time_limit
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
