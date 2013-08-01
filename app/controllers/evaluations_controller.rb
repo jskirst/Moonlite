@@ -207,6 +207,12 @@ class EvaluationsController < ApplicationController
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
   end
   
+  def destroy
+    @evaluation.destroy
+    flash[:success] = "Evaluation has been deleted."
+    redirect_to group_evaluations_url(@group)
+  end
+  
   private
   
   def load_group_and_evaluation

@@ -12,9 +12,9 @@ class Evaluation < ActiveRecord::Base
   belongs_to :user
   belongs_to :group
   
-  has_many :evaluation_enrollments
+  has_many :evaluation_enrollments, dependent: :destroy
   has_many :users, through: :evaluation_enrollments
-  has_many :evaluation_paths
+  has_many :evaluation_paths, dependent: :destroy
   has_many :paths, through: :evaluation_paths
   
   validates_presence_of :group_id
