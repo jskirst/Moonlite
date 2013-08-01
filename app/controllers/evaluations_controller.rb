@@ -1,7 +1,7 @@
 class EvaluationsController < ApplicationController
   before_filter :authenticate, except: [:take]
   before_filter :load_group_and_evaluation
-  before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation]
+  before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation, :submit]
   before_filter { @show_footer = true and @hide_background = true }
   before_filter :prepare_form, only: [:new, :create, :edit, :update]
 
@@ -155,8 +155,9 @@ class EvaluationsController < ApplicationController
       current_user.enroll!(@evaluation)
     end
     
-    unless params[:task_id] and @task = @path.tasks.find(params[:task_id])
-      @task = @evaluation.next_task(current_user, @path)
+    next_task = @evaluation.next_task(current_user, @path)
+    if next_task
+      @task = next_task[:next_task] 
     end
 
     if @task
@@ -169,6 +170,9 @@ class EvaluationsController < ApplicationController
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       if @task.core?
+        @question_count = next_task[:completed_count]
+        @session_total = next_task[:total]
+        
         session[:ssf] = @streak
         @start_countdown = true
         @show_stats = true
@@ -192,9 +196,14 @@ class EvaluationsController < ApplicationController
     @show_nav_bar = false
     @show_footer = false
     @evaluation_enrollment = current_user.evaluation_enrollments.find_by_evaluation_id(params[:id])
-    @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
-    @evaluation = @evaluation_enrollment.evaluation
-    GroupMailer.submission(@evaluation_enrollment)
+    unless @evaluation_enrollment.submitted?
+      @group.admins.each do |admin|
+        UserEvent.log_event(admin, "#{current_user.name} has just submitted their evaluation for the #{@evaluation.title} position.", current_user, grade_group_evaluation_url(@group, @evaluation, u: current_user.id), current_user.picture)  
+      end
+      @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
+      GroupMailer.submission(@evaluation_enrollment)
+    end
+    
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
   end
   
@@ -204,7 +213,8 @@ class EvaluationsController < ApplicationController
     @evaluation = Evaluation.find(params[:id]) if params[:id]
     @evaluation = Evaluation.find(params[:evaluation_id]) if params[:evaluation_id]
     @evaluation = Evaluation.find_by_permalink(params[:permalink]) if params[:permalink]
-    @group = Group.find(params[:group_id]) if params[:group_id]
+    @group = Group.find_by_permalink(params[:group_id]) if params[:group_id]
+    @group = Group.find(params[:group_id]) if not @group and params[:group_id]
     
     if @evaluation and @group
       raise "Access Denied: Not your evaluation" unless @evaluation.group_id == @group.id
@@ -214,12 +224,11 @@ class EvaluationsController < ApplicationController
     
     if @group
       @group_custom_style = @group.custom_style
-      #raise @group_custom_style.to_yaml
     end
   end
   
   def authorize_group
-    unless @group.admin?(current_user) || @enable_administration
+    unless @group.admin?(current_user)
       raise "Access Denied"
     end
   end

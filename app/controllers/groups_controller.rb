@@ -201,8 +201,8 @@ class GroupsController < ApplicationController
   private
   def load_resource
     @group = Group.find_by_permalink(params[:permalink]) if params[:permalink]
-    @group = Group.find_by_permalink(params[:id]) if params[:id] && @group.nil?
-    @group = Group.find_by_id(params[:id]) if params[:id] && @group.nil?
+    @group = Group.find_by_permalink(params[:id]) if params[:id] and @group.nil?
+    @group = Group.find_by_id(params[:id]) if params[:id] and @group.nil?
     @group_custom_style = @group.custom_style if @group
     @admin_group = @group
     redirect_to root_path unless @group
@@ -210,7 +210,7 @@ class GroupsController < ApplicationController
   
   def authorize_resource
     unless @group.admin?(current_user) and @group.closed_at.nil?
-      raise "Access Denied"
+      raise @group.to_yaml + current_user.to_yaml + current_user.group_users.to_yaml
     end
   end
 end

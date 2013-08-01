@@ -54,7 +54,7 @@ Metabright::Application.routes.draw do
 	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
 
   get '/groups/users' => "users#index"
-  resources :groups do
+  resources :groups, path: "g" do
     member do
       get :checkout
       put :checkout

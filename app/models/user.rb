@@ -48,7 +48,6 @@ class User < ActiveRecord::Base
   has_many    :visits
   has_many    :group_users, dependent: :destroy
   has_many    :groups, through: :group_users
-  has_many    :owned_groups, through: :group_users, :conditions => { "group_users.is_admin" => true }
   has_many    :sent_emails
   has_many    :authored_evaluations, class_name: "Evaluation"
   has_many    :evaluation_enrollments, dependent: :destroy

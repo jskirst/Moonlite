@@ -1,4 +1,8 @@
 class Group < ActiveRecord::Base
+  def to_param
+    permalink
+  end
+  
   FREE_PLAN = "free_to_demo"
   SINGLE_PLAN = "single"
   TWO_TO_FIVE_PLAN = "two_to_five"
@@ -85,6 +89,10 @@ class Group < ActiveRecord::Base
     end
     return true
   end
+  
+  def admins
+    users.joins(:group_users).where("group_users.is_admin = ?", true)
+  end
    
   def picture
     return image_url unless image_url.blank?
@@ -124,7 +132,7 @@ class Group < ActiveRecord::Base
       new_permalink = self.name.downcase.gsub(/[^a-z0-9]/,'')
       new_combined_permalink = new_permalink
       permalink_count = Path.where(permalink: new_combined_permalink).size
-      while Path.where(permalink: new_combined_permalink).size > 0
+      while Group.where(permalink: new_combined_permalink).size > 0
         permalink_count += 1
         new_combined_permalink = "#{new_permalink}#{permalink_count}"
       end
