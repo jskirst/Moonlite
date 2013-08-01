@@ -156,7 +156,7 @@ class User < ActiveRecord::Base
           info["placesLived"].each { |place| user_details[:location] = place["value"] if place["primary"] == true }
         end
       
-      elsif auth[:provider] == "linkedin_oauth2"
+      elsif auth[:provider] == "linkedin"
       
         user_details[:description] = auth[:info][:description]
         user_details[:link] = info[:publicProfileUrl]

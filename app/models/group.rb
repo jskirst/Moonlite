@@ -1,5 +1,5 @@
 class Group < ActiveRecord::Base
-  FREE_PLAN = "free"
+  FREE_PLAN = "free_to_demo"
   SINGLE_PLAN = "single"
   TWO_TO_FIVE_PLAN = "two_to_five"
   SIX_TO_FIFTEEN_PLAN = "six_to_fifteen"
