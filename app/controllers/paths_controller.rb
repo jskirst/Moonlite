@@ -46,8 +46,8 @@ class PathsController < ApplicationController
   def create
     @path = current_user.paths.new(params[:path])
     @path.user_id = current_user.id
-    if params[:group_id]
-      @path.group_id = params[:group_id]
+    if @group
+      @path.group_id = @group.id
       now = Time.now
       @path.published_at = now
       @path.public_at = now
