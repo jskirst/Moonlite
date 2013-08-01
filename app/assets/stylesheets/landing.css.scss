@@ -59,7 +59,7 @@ $landing_green: #73bb6e;
               padding: 24px 20px; 
               color: white; 
       
-              &:hover .button { color: gray; box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
+              &:hover .button { box-shadow: 0px 0px 20px rgba(255, 255, 255, 1); }
               
               h4 {
                 font-size: 1.6em; 
@@ -69,19 +69,15 @@ $landing_green: #73bb6e;
               p {
                 font-size: 15px; 
               }
-              button {
-                float: right; 
-                background-color: rgb(231, 231, 231);
-              }
             }
-      
             .button { 
               padding: 0; 
               height: 30px; 
-              background-color: rgb(231, 231, 231); 
               float: right; 
+              background-color: #254972;
+              border-width: 0;
               text-shadow: none; 
-              color: #8a8d99;
+              color: white;
         
               &:active { position: relative; top: 1px; };
             }

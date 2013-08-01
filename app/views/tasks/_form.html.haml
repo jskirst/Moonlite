@@ -20,7 +20,7 @@
         
     - if task.new_record? or task.multiple_choice? or task.exact?
       .multiple_choice.exact.control-group
-        %label.control-label Quoted Text (optional)
+        %label.control-label Quoted text (optional)
         .controls{ style: "margin-top: 6px;" }
           - unless task.quoted_text
             %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
@@ -57,10 +57,15 @@
                 %label.control-label
                   = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px; margin-top: -11px; margin-right: -12px;"
                 .controls{ style: "width: 400px;" }
-                  %p.free_text_note.answer_note.hide To answer this question, the user will be asked to type an appropriate free text response into a text box.
+                  %p.free_text_note.answer_note.hide{ style: "margin-bottom: 5px;" } To answer this question, the user will be asked to type an appropriate free response into a text box.
                   %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.
                   %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
             .control-group
+              %label.control-label 
+                Time limit
+              .controls
+                = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), {}, class: "span2"
+            .control-group      
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
                 %a.show_template{ onclick: "$(this).hide(); $(this).siblings('div').show();", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
@@ -73,7 +78,7 @@
               %label.control-label
                 = image_tag LIGHT_BULB_URL, style: "width: 16px; height: 16px; margin-top: -11px; margin-right: -12px;"
               .controls{ style: "width: 400px;" }
-                %p To answer this question, the user will be asked to type an answer to the question. Exact questions work best with numerical or one-word answers. (Responses are case-insensitive.)
+                %p{ style: "margin-bottom: 15px;" } To answer this question, the user will be asked to type an answer to the question. Exact questions work best with numerical or one-word answers. (Responses are case-insensitive.)
               %label.control-label Exact Answer
               .controls
                 = text_field_tag("task[exact1]", nil, { maxlength: 255, size: 75 })
