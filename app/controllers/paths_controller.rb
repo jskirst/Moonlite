@@ -392,13 +392,18 @@ class PathsController < ApplicationController
     
     def load_group
       if params[:group_id]
-        @group = current_user.groups.where(id: params[:group_id]).first
+        @group = current_user.groups.where(permalink: params[:group_id]).first
+        @group = current_user.groups.where(id: params[:group_id]).first unless @group
         raise "Access Denied: Not a group member." unless @group
       elsif @path and @path.group_id
         @group = current_user.groups.where(id: @path.group_id).first
         raise "Access Denied: Not a group member." unless @group
       end
       @group_custom_style = @group.custom_style if @group
+      
+      if @group and not @group.admin?(current_user)
+        raise "Access Denied"
+      end
     end
     
     def authorize_edit

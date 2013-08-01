@@ -53,21 +53,23 @@ class Evaluation < ActiveRecord::Base
   
   def next_task(user, path)
     type = [Task::MULTIPLE, Task::EXACT]
-    if path.group_id.nil? or completed_count(user, path, type) < 30
+    cc = completed_count(user, path, type)
+    if path.group_id or cc < 30
       task = next_task_of_type(user, path, type)
-      return task if task
+      return { next_task: task, completed_count: cc, total: 30 } if task
     end
     
     type = [Task::CREATIVE]
+    cc = completed_count(user, path, type)
     if path.group_id or completed_count(user, path, type) < 5
       task = next_task_of_type(user, path, type)
-      return task if task
+      return { next_task: task, completed_count: cc, total: 5 } if task
     end
     
-    if path.group_id
-      type = [Task::CHECKIN]
-      return next_task_of_type(user, path, type)
-    end
+    # if path.group_id
+    #   type = [Task::CHECKIN]
+    #   return next_task_of_type(user, path, type)
+    # end
   end
   def next_task_of_type(user, path, answer_types)
     return Task.where("tasks.path_id = ?", path.id)
