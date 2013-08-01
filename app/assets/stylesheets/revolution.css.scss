@@ -1462,6 +1462,9 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       margin-right: 5px;
     }
     .gear {
+      padding: 15px 7px; 
+      width: 20px;
+      
       [data-tip]:before { left: 5px; }
       [data-tip]:after { left: -8px; }
       
