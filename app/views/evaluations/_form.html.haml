@@ -19,6 +19,10 @@
     %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
       %h1.title= form_title      
+    - if form_title == "Edit Evaluation"
+      .edit_eval_notice{ style: ""}
+        Please note that you are editing a live Evaluation! If you add additional Challenges to your Evaluation, and you have candidates who have already submitted their Evaluation, they will have to return to the Evaluation URL to take the new Challenges. 
+    
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       - unless @evaluation.errors.empty?
         .alert.alert-error

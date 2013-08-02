@@ -30,7 +30,6 @@
           = f.hidden_field :stripe_token
           %label Product
           .product_name Evaluator #{plan[:description]}: #{plan[:price]}
-          %p.errors= @error
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1
             %div{ "data-tip" => "We accept Visa, Mastercard, American Express, Discover, and JCB."}
@@ -50,6 +49,7 @@
           / To Do
           %label Coupon (Optional)
           %input
+          %p.errors= @error
           
           .control-group
             .back{ "data-tip" => "Back"}

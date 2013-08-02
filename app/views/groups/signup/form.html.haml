@@ -40,7 +40,6 @@
         = f.hidden_field :plan_type
         %label Product:
         .product_name Evaluator #{plan[:description]}: #{plan[:price]}
-        %p.errors= @errors
         %label Your name:
         = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
@@ -68,7 +67,8 @@
         %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 3em;" }
         %label Coupon
         = f.text_field :coupon, placeholder: "Optional..."
-        .control-group
+        %p.errors= @errors
+        .control-group{ style: "margin-top: -10px; "}
           %p.in-progress.hide Creating your account now. This may take a minute or two...
           .controls
             = f.submit "Submit", class: "submit_button", style: "width: inherit;"

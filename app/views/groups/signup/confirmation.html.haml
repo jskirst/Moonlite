@@ -43,8 +43,12 @@
           .picture
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/account_dark.png" }
           .text
+            - plan = @group.plan_type
             %span Account: 
             Details of your company plan and settings are located here. You can invite additional people to your account, change your plan, and even add custom CSS styles to your Evaluations.
             %div{ style: "margin: 15px 10px 20px 0;"}
-              = link_to "Manage your account", account_group_url(@group), class: "submit_button", style: "float: inherit;"
+              - if plan == "single"
+                = link_to "Manage your account", account_group_url(@group), class: "submit_button", style: "float: inherit;"
+              - else
+                = link_to "Invite people to your account", account_group_url(@group), class: "submit_button", style: "float: inherit;"
       %p If you need help getting going, or you just want to talk, feel free to contact our support team at #{link_to "support@metabright.com", "mailto:support@metabright.com"}. We're here to help!

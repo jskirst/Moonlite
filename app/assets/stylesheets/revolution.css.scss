@@ -382,7 +382,6 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .CRquestion { font-size:15px; padding: 0; margin: 15px 5px 0 10px; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;} 
 .CRresponsespace { width: 97%; width: calc(100% - 10px); margin-top: 20px; display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:5px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
-.CRbuttonspace { margin-top:12px; }
 .input input{ background-color: #F9F9F9;}
 .task_proof_options { font-size: 12px; text-align:center; margin:15px auto 0 auto; width: 258px; }
 .task_proof_options span { text-transform:uppercase; color: #0088cc; font-weight:bold; cursor:pointer; }
@@ -394,6 +393,12 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #editor, .ace_editor { border: 1px solid #CCC; }
 #editor div, #editor span, .ace_editor div, .ace_editor span { font-size: 13px; font-family: 'Menlo', 'Ubuntu Mono', 'Droid Sans Mono', 'Consolas', monospace !important; }
 .ace_gutter { border-right: 1px solid #CCC; }
+
+.CRbuttonspace {
+  margin-top:12px;
+  
+  .countdown { float: right; font-size: 24px; padding: 8px; margin-right: 10px; color: rgb(75, 75, 75); }
+}
 
 
 .headerspace { text-shadow: 0 1px 0 white; padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; background-color: #FCFCFC;}
@@ -976,6 +981,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
         padding: 8px 12px;
         border-radius: 8px;
         color: white;
+        margin-bottom: 17px;
       }
       .control-group {
         margin: 0;
@@ -1154,6 +1160,14 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
  }
  .button-xlarge { font-size: 22px;}
  
+ .edit_eval_notice { 
+   background-color: $employer_orange_light; 
+   font-size: 15px; 
+   padding: 15px 20px; 
+   margin: 20px 20px 30px; 
+   border: 4px solid $employer_orange; 
+   border-radius: 4px;
+ }
  .evaluation_info{
    border: 4px solid $employer_green;
    background: $employer_green_light;
