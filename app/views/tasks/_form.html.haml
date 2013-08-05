@@ -23,7 +23,7 @@
         %label.control-label Quoted text (optional)
         .controls{ style: "margin-top: 6px;" }
           - unless task.quoted_text
-            %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
+            %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.quoted_text_tt').hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
             .quoted_text_tt
               %div{ "data-tip" => "Quoted text is good for a block of text that your question references. For example, you might want to include a paragraph of text with your question, or a code snippet."}
                 %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
