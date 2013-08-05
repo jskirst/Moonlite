@@ -1773,7 +1773,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   bottom: 3px; 
   
   [data-tip]:after { left: -36px; white-space: normal; height: 90px; width: 184px; top: -107px; }
-  [data-tip]:before { left: 3px; }
+  [data-tip]:before { left: 5px; }
   
 }
 .cr_template_tt {
@@ -1782,7 +1782,20 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   bottom: 3px; 
   
   [data-tip]:after { left: -36px; white-space: normal; height: 107px; width: 207px; top: -124px; }
-  [data-tip]:before { left: 3px; }
+  [data-tip]:before { left: 5px; }
+}
+
+.tt_signal {
+  .image_upload_tt {
+    /* The !important is necessary to override the display: none; set in the html since it is a stored resource */
+    display: inline-block !important;
+    margin-left: 0 !important;
+  
+    [data-tip]:after { left: -36px; white-space: normal; height: 73px; width: 182px; top: -90px; }
+    [data-tip]:before { left: 5px; }
+  
+    div {margin: 0;}
+  }
 }
 
 

@@ -35,9 +35,11 @@
         - if task.new_record?
           .control-group
             %label.control-label Answer type
-            .controls.image_upload
+            /* The class tt_signal allows us to insert a tt into the image upload resource */
+            .controls.image_upload.tt_signal
               = f.select :answer_type, hash_to_array(Task::TYPES), style: "display: inline-block; "
               = render "stored_resources/new_image"
+              
         
           .control-group.hide.sub_type
             %label.control-label Response type
