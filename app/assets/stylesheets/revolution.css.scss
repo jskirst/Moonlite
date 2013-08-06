@@ -1765,6 +1765,40 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   }
 }
 
+/* Challenge Editor Tooltips */
+
+.quoted_text_tt {
+  display: inline-block;
+  position: relative;
+  bottom: 3px; 
+  
+  [data-tip]:after { left: -36px; white-space: normal; height: 90px; width: 184px; top: -107px; }
+  [data-tip]:before { left: 5px; }
+  
+}
+.cr_template_tt {
+  display: inline-block;
+  position: relative;
+  bottom: 3px; 
+  
+  [data-tip]:after { left: -36px; white-space: normal; height: 107px; width: 207px; top: -124px; }
+  [data-tip]:before { left: 5px; }
+}
+
+.tt_signal {
+  .image_upload_tt {
+    /* The !important is necessary to override the display: none; set in the html since it is a stored resource */
+    display: inline-block !important;
+    margin-left: 0 !important;
+  
+    [data-tip]:after { left: -36px; white-space: normal; height: 73px; width: 182px; top: -90px; }
+    [data-tip]:before { left: 5px; }
+  
+    div {margin: 0;}
+  }
+}
+
+
 /*.navbar-inner { background-image: none !important; background-color: #406B9B !important; }*/
 /*body { background-image: url(http://d1c739w2xm33i4.cloudfront.net/2.2/top_image.jpg) }*/
 /*.navbar .old-brand { display: none; }

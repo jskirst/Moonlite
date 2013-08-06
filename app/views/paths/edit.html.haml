@@ -28,7 +28,6 @@
         %div.control-group
           %label.control-label Default code template (Optional)
           %div.controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
-      / For Group users we can auto-apply an image here when the challenge creation begins, or we can make adding an image optional, at which point we can have an image render to the end-user if the user supplied image is blank
       %div.control-group{ style: "margin-bottom: 5px;" }
         %label.control-label Image (Optional)
         %div.controls= render "stored_resources/new_image"      
@@ -38,6 +37,9 @@
         %div.control-group{ style: "margin-bottom: 10px;" }
           %label.control-label Custom CSS
           %div.controls{ style: "margin-top: 6px;" }= link_to "Customize Challenge Styles", style_path_path(@path.permalink), style: "line-height:18px; padding-top: 5px;"
+        %div.control-group{ style: "margin-bottom: 10px;" }
+          %label.control-label Permanently delete Challenge
+          %div.controls{ style: "margin-top: 6px;" }= link_to "Delete", path_url(@path), method: :delete, confirm: "Are you sure you want to delete this Challenge? The Challenge will be removed from all your Evaluations and all candidate information collected with this Challenge will be deleted. This action is irreversible.", style: "line-height:18px; padding-top: 5px;"
       - if false
         %div.control-group{ style: "margin-bottom: 5px;" }
           %label.control-label Collaborators

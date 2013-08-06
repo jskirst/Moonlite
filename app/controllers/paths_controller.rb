@@ -179,7 +179,7 @@ class PathsController < ApplicationController
   def destroy
     @path.destroy
     flash[:success] = "#{name_for_paths} successfully deleted."
-    redirect_back_or_to root_path
+    redirect_to root_path
   end
 
   def collaborator
