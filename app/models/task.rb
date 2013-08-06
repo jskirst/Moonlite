@@ -34,6 +34,12 @@ class Task < ActiveRecord::Base
   SIXTY       = 3600
   TIME_LIMIT  = { ONE => "1 minute", TWO => "2 minutes", THREE => "3 minutes", FOUR => "4 minutes", FIVE => "5 minutes", TEN => "10 minutes", FIFTEEN => "15 minutes", TWENTY => "20 minutes", TWENTYFIVE => "25 minutes", THIRTY => "30 minutes", THIRTYFIVE => "35 minutes", FORTY => "40 minutes", FORTYFIVE => "45 minutes", FIFTY => "50 minutes", FIFTYFIVE => "55 minutes", SIXTY => "60 minutes" }
   
+  EASY = 1
+  MEDIUM = 2
+  HARD = 3
+  EXPERT = 4
+  DIFFICULTY_TYPES = { EASY => "Easy", MEDIUM => "Medium", HARD => "Hard", EXPERT => "Expert" }
+  
   attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name
   attr_protected :section_id, :archived_at, :time_limit
   attr_accessible :question,
@@ -50,7 +56,8 @@ class Task < ActiveRecord::Base
     :resource_title,
     :quoted_text,
     :topic_id, :topic_name,
-    :time_limit
+    :time_limit,
+    :difficulty
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
