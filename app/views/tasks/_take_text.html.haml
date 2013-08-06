@@ -46,16 +46,9 @@
 
 :javascript
   $("#challenge_form").submit(function(){
-    if($("#answer_input").val() != ""){
-      $("#challenge_form").unbind("submit");
-      $("#challenge_form").submit();
-      $("#submit_button").attr("disabled","disabled");
-      return true;
-    } else {
-      $("#submit_button").removeAttr("disabled").removeClass("disabled");
-      alert("Please enter an answer before submitting.");
-      return false;
-    }
+    $("#challenge_form").unbind("submit");
+    $("#challenge_form").submit();
+    $("#submit_button").attr("disabled","disabled");
   });
   
   var editor = ace.edit("editor");
@@ -78,3 +71,11 @@
   if($textarea.data("template") == $textarea.val()){
     $submit.addClass("disabled").attr("disabled", "disabled");
   }
+  
+- if @task.time_limit
+  :javascript
+    var time_limit = #{@task.time_limit};
+    $(function(){
+      var timerCountdown = setInterval(function(){ $(".countdown_time").text(parseInt($(".countdown_time").text()) - 1) }, 1000);
+      var timedSubmit = setTimeout(function(){ $("#challenge_form").submit() }, time_limit*1000);
+    })

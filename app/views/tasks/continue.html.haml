@@ -1,9 +1,10 @@
 %div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 110px;'} #{'width: inherit;' unless @show_stats}" }
   = render "modals/report_issue"
   %div.quizspace
+    - @show_feedback = true if @show_feedback.nil?
     :javascript
       $(function(){
-        $.MB.Arena.init({start_countdown: #{@start_countdown}});
+        $.MB.Arena.init({start_countdown: #{@start_countdown}, show_feedback: #{@show_feedback}});
         $(".quizcontainer").fadeIn();
       });
      
@@ -11,7 +12,7 @@
       = image_tag @path.path_pic, style: "width: 50px; height: 50px;", alt: "#{@path.name}"
       %div{ style: "display:inline-block;" }
         %span.name <strong>#{@path.name}</strong>
-      - if current_user and @question_count and @session_total
+      - if current_user and @show_feedback and @question_count and @session_total
         %div.quiz_progress
           Question #{@question_count} / #{@session_total}
     %div{ style: "text-align:center;" }
@@ -55,21 +56,32 @@
         %div.pointsandstreakspace
           %div.pointspace.counterbox
             %span.counter{style: "display:block"}
-              - total_points = @enrollment ? @enrollment.total_points.to_s : "0"
-              - earned_points_digits = total_points.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
-              - earned_points_digits.each do |d|
+              - if @show_feedback
+                - digits = @enrollment ? @enrollment.total_points.to_s : "0"
+                - label = "Points"
+              - else
+                - digits = @question_count ? @question_count.to_s : "0"
+                - label = "Completed"
+              - split_digits = digits.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
+              - split_digits.each do |d|
                 %span.digit
-                  %span{ title: "#{d}" }= d
+                  %span= d
             %br
-            %span Points
+            %span= label
           %div.streakspace.counterbox
             %span.counter
-              - streak = @streak.to_i.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
-              - streak.each do |s|
+              - if @show_feedback
+                - digits = @streak
+                - label = "Streak"
+              - else
+                - digits = (@session_total - @question_count)
+                - label = "Remaining"
+              - split_digits = digits.to_i.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
+              - split_digits.each do |s|
                 %span.digit
                   %span{ title: s }= s
             %br
-            %span Streak
+            %span= label
         %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
       - if current_user
         %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question

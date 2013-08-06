@@ -49,7 +49,8 @@ class Task < ActiveRecord::Base
     :resource,
     :resource_title,
     :quoted_text,
-    :topic_id, :topic_name
+    :topic_id, :topic_name,
+    :time_limit
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
@@ -149,6 +150,21 @@ class Task < ActiveRecord::Base
     return "ruby" if template.include?("#ruby")
     return "php" if template.include?("//php")
     return "html"
+  end
+  
+  def to_json
+    { 
+      question: self.question,
+      answer_type: self.answer_type,
+      answer_sub_type: self.answer_sub_type,
+      template: self.template,
+      source_title: self.resource_title,
+      source_link: self.resource,
+      quoted_text: self.quoted_text,
+      time_limit: self.time_limit,
+      topic: self.topic.try(&:name),
+      answers: self.answers.collect{ |a| { is_correct: a.is_correct, content: a.content } }
+    }
   end
   
   # Cached methods

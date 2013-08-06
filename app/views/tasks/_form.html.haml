@@ -1,6 +1,11 @@
 - rand_id = rand(1000)
 - template_id = "template_#{rand_id}"
 
+:css
+  .status { padding: 5px; border-radius: 4px; color: white; width: inherit; font-size: 14px; text-align: center; width: 400px; }
+  .error { background-color: red; }
+  .success { background-color: green; }
+
 = form_for(task, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator"}) do |f|
   = f.hidden_field :section_id
   %div.floatr
@@ -10,12 +15,12 @@
     - else
       %span.button.button-standard.button-small{ onclick: "$(this).parents('td').find('div.question_display').show(); $(this).parents('.question_creator').remove();" } Close
   %div.task_form{ style: "margin-top:10px;" }
-    %div.message_container.alert.alert-message{ style: "display: none; width:350px; margin-left: 70px; margin-top:10px;" }
-    %h4#form_title= (task.new_record? ? "Add" : "Update") + " Question"
-    %p.errors
-    %div.control-group
+    .control-group
+      .controls.status.alert-error.hide
+        This is what an alert will look like.
+    .control-group
       %label.control-label Question
-      %div.controls
+      .controls
         = f.text_area :question, class: "input-xlarge question_input", placeholder: "Type your question here...", style: "width: 450px; height: 100px;"
         
     - if task.new_record? or task.multiple_choice? or task.exact?
@@ -64,7 +69,7 @@
               %label.control-label 
                 Time limit
               .controls
-                = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), {}, class: "span2"
+                = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), { include_blank: true }, class: "span2"
             .control-group      
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
@@ -187,8 +192,14 @@
     }
   });
   
-  $(".question_creator").on("ajax:success", function(xhr, data){
-    if(data.errors){
-      $(this).find("p.errors").text(data.errors)
-    }
-  });
+  $(function(){
+    $(".question_creator").on("ajax:success", function(xhr, data){
+      $(this).find(".status").removeClass("alert-error");
+      $(this).find(".status").addClass("alert-success").text("Question added...").show().fadeOut(10000);
+    }).on("ajax:error", function(xhr, data){
+      data = $.parseJSON(data.responseText);
+      console.log(data.error)
+      $(this).find(".status").removeClass("alert-success");
+      $(this).find(".status").addClass("alert-error").text(data.error).show().fadeOut(10000);
+    })
+  })

@@ -145,5 +145,7 @@ namespace :db do
         section.tasks.create!(path_id: path.id, question: "This is a task3", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
       end
     end
+    moonlite_company.user_role_id = second_role.id
+    moonlite_company.save!
   end
 end
