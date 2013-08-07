@@ -56,14 +56,14 @@
           = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
             %div{ "data-tip" => "Favorite" }
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
-    .body        
-      - path = @results.first
+    .body
       %ul#results_list.nav.nav-tabs
         - @results.each do |r|
           %li{ data: { permalink: r[:permalink], name: r[:name] } }
             %a= truncate(r[:name], length: 15, separator: ' ')
       .evaluations
         - @results.each do |r|
+        - path = Path.where(name: r[:name])
           .evaluation.hide{ id: r[:permalink] }
             %h3 Candidate Summary
             .challenge_stats
@@ -107,28 +107,28 @@
                       %td.table_tip
                         %h3= r[:creative].count {|x| not x.content.blank? }.to_s+"/"+r[:creative].count.to_s
                         %p.tip-below{ data: {tip: "Number of submitted Creative Response questions out of total available."}} Creative Response
-              / This actually needs to be a check for custom challenge, not just metascore
-              .strengths_weaknesses{ style: ""}
-                .strengths 
-                  .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
-                    Strengths
-                  .body
-                    - if r[:performance].strengths.empty?
-                      %p{ style: "font-size: 12px;" } More data required.
-                    - else
-                      %ul
-                        - r[:performance].strengths.first(3).each do |topic_name, stats|
-                          %li= topic_name
-                .weaknesses 
-                  .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
-                    Weaknesses
-                  .body
-                    - if r[:performance].weaknesses.empty?
-                      %p{ style: "font-size: 12px;" } More data required.
-                    - else
-                      %ul
-                        - r[:performance].weaknesses.first(3).each do |topic_name, stats|
-                          %li= topic_name
+              - unless path.first.group_id?
+                .strengths_weaknesses
+                  .strengths 
+                    .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
+                      Strengths
+                    .body
+                      - if r[:performance].strengths.empty?
+                        %p{ style: "font-size: 12px;" } More data required.
+                      - else
+                        %ul
+                          - r[:performance].strengths.first(3).each do |topic_name, stats|
+                            %li= topic_name
+                  .weaknesses 
+                    .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
+                      Weaknesses
+                    .body
+                      - if r[:performance].weaknesses.empty?
+                        %p{ style: "font-size: 12px;" } More data required.
+                      - else
+                        %ul
+                          - r[:performance].weaknesses.first(3).each do |topic_name, stats|
+                            %li= topic_name
                 
             - if r[:creative].any?
               %div
