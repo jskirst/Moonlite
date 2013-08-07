@@ -1,11 +1,16 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .container.body {width: 1040px;   }
   .aboutbox{ border-radius: 0; }
   .aboutbox .header { margin-bottom: 10px; }
-  .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: 25px; border-radius: 0;  }
+  .aboutcontainer{ width: 1040px; background-color:rgba(36, 72, 109, 0.8); margin-top: 25px; border-radius: 0;  }
   [data-tip]:before { left: 4px; }
   [data-tip]:after { left: -50px; }
+  .no_data {display: inline-block;}
   .no_data [data-tip]:after { width: 180px; height: 56px; top: -73px; white-space: normal;}
+  .challenge_image_tt { display: inline-block; }
+  .challenge_image_tt [data-tip]:before { left: 11px;  }
+  .challenge_image_tt [data-tip]:after { left: -2px; }
   .body tbody tr:hover { background-color: #EEE; }
 
 #evaluation_manager.aboutcontainer
@@ -30,10 +35,12 @@
             %th Name
             %th Email
             - @paths.each do |p|
-              %th{ title: p.name }
-                = truncate(p.name, length: 10, separator: ' ')
+              %th{ title: p.name, style: "width: 70px; text-align: center; " }
+                .challenge_image_tt
+                  %div{ "data-tip" => p.name }
+                    = image_tag p.picture, class: "challenge_pic"
                 - unless p.metascore_available?
-                  .no_data{ style: "display: inline-block;"}
+                  .no_data
                     %div{ "data-tip" => "Not enough data. There needs to be at least 20 participants in a Challenge to calculate percentile rankings."}
                       %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
                   
@@ -43,10 +50,10 @@
           - @evaluations.each do |e|
             %tr
               %td
-                = link_to "#{e.name}", grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
-              %td= e.email
+                = link_to truncate(e.name, length: 20, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
+              %td= truncate(e.email, length: 25, separator: ' ')
               - @paths.each do |p|
-                %td
+                %td{ style: "padding-left: 20px;"}
                   - if e["e#{p.id}_metapercentile"] == "0"
                     N/A
                   - else

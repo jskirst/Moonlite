@@ -939,7 +939,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 #employer_product{ 
   $evaluator_text_color: #8a8d99;
   
-  .aboutcontainer { width: 950px; }
+  .aboutcontainer { width: 980px; }
   .aboutheader {
    padding: 15px 0 0 15px;
    
@@ -1122,7 +1122,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     .pricing_table {
       line-height: 150%;
       font-size: 12px;
-      margin: 10px auto;
+      margin: 10px auto 0;
       padding-top: 10px;
       text-align: center; 
       height: 340px;
@@ -1576,8 +1576,12 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 
 #evaluations_index {
   .evaluations {
-    .challenge_img {
+    .path_pic {
+      display: inline-block;
       margin-right: 5px;
+      
+      [data-tip]:before { left: 7px; }
+      [data-tip]:after { left: -8px; }
     }
     .gear {
       padding: 15px 7px; 
@@ -1692,7 +1696,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           vertical-align: top;
         }
         .strengths_weaknesses {
-          display: inline-block; margin-left: 20px; vertical-align: top; width: 280px;
+          display: inline-block; margin-left: 20px; vertical-align: top; width: 41.5%;
           .header {
             padding: 0;
             margin: 0;
@@ -1769,6 +1773,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           div {
             display: inline-block; 
             margin-right: 8px;
+            position: relative;
+            top: 15px;
           
             img {
               height: 25px;
@@ -1785,14 +1791,10 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   .body{
     table{
       th{
-        
-        img{
-          display: block;
-          margin:0 auto;
+        .challenge_pic {
+          width: 35px;
+          height: 35px; 
           border-radius: 3px;
-          height: 40px;
-          width: 40px;
-          margin-bottom: 5px;
         }
       }
     }
