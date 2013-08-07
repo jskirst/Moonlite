@@ -12,7 +12,7 @@
 
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px; margin-top: 25px; border-radius: 0; }
+  .aboutcontainer{ width: 980px; margin-top: 25px; border-radius: 0; }
   .header { margin: 0 0 20px 0; }
   [data-tip]:before { left: 7px; }
   [data-tip]:after { left: -17px; }
@@ -61,7 +61,7 @@
       %ul#results_list.nav.nav-tabs
         - @results.each do |r|
           %li{ data: { permalink: r[:permalink], name: r[:name] } }
-            %a= r[:name]
+            %a= truncate(r[:name], length: 15, separator: ' ')
       .evaluations
         - @results.each do |r|
           .evaluation.hide{ id: r[:permalink] }

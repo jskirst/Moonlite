@@ -39,7 +39,7 @@
         = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
         %label Product:
-        .product_name Evaluator #{plan[:description]}: #{plan[:price]}
+        .product_name Evaluator #{plan[:description]}: #{plan[:price]}/mo.
         %label Your name:
         = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:

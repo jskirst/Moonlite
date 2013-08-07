@@ -2,10 +2,12 @@
   %tbody
     - @evaluations.to_a.reverse.each do |e|
       %tr
-        %td{ style: "width: 25%; overflow: hidden" }= link_to e.title, group_evaluation_path(@group, e)
-        %td{ style: "width: 25%; overflow: hidden" }
+        %td{ style: "width: 25%; overflow: hidden;" }= link_to e.title, group_evaluation_path(@group, e)
+        %td{ style: "width: 25%;" }
           - e.paths.each do |path|
-            %img.challenge_img{ src: path.picture, style: "width: 25px; height: 25px;", title: path.name, alt: path.name }
+            .path_pic
+              %div{ "data-tip" => path.name }
+                %img{ src: path.picture, style: "width: 25px; height: 25px;", title: path.name, alt: path.name }
         %td{ style: "width: 30%; overflow: hidden" }= take_group_evaluation_url(e.permalink)
         %td{ style: "text-align: center; "}
           = e.evaluation_enrollments.where("submitted_at IS NOT NULL").count.to_s
