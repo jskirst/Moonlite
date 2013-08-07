@@ -30,7 +30,7 @@
                 = link_to dashboard_group_path(@admin_group) do
                   = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
                   %span Dashboard
-            - if Rails.env == "development"
+            - if Rails.env == "development" and @enable_administration
               %li.navitem{ title: "Search", style: "height: 100%;" }
                 = link_to new_group_search_url(@admin_group) do
                   = image_tag NAVBAR_SEARCH, alt: "Search"  

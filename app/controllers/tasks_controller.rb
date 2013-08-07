@@ -30,7 +30,7 @@ class TasksController < ApplicationController
         render partial: "task", locals: { task: @task, move: false }
       end
     else
-      respond_to {|f| f.json { render :json => { :errors => @task.errors.full_messages.join(". ") } } }
+      respond_to {|f| f.json { render :json => { :error => @task.errors.full_messages.join(". ") }, status: :bad_request } }
     end
   end
   

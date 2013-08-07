@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130724230808) do
+ActiveRecord::Schema.define(:version => 20130806233618) do
 
   create_table "answers", :force => true do |t|
     t.integer  "task_id"
@@ -397,6 +397,7 @@ ActiveRecord::Schema.define(:version => 20130724230808) do
     t.text     "quoted_text"
     t.integer  "topic_id"
     t.integer  "path_id"
+    t.integer  "difficulty",         :default => 1
   end
 
   add_index "tasks", ["section_id"], :name => "index_tasks_on_path_id"

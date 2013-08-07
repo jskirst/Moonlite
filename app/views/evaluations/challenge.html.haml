@@ -26,8 +26,11 @@
       %div.CRbuttonspace
         = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "button button-standard", style: "float: left;", confirm: "Note: You will not be able to come back to this question once you skip it."
         = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
-        .countdown
-          = @task.time_limit
+        - if @task.time_limit
+          .countdown
+            Time Remaining: 
+            %span.countdown_time
+              = @task.time_limit
         = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
 
       :javascript
