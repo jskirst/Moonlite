@@ -937,6 +937,8 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 }
 
 #employer_product{ 
+  $evaluator_text_color: #8a8d99;
+  
   .aboutcontainer { width: 950px; }
   .aboutheader {
    padding: 15px 0 0 15px;
@@ -948,6 +950,19 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   .body { 
     padding: 26px 16px; 
     
+    .area {
+      margin: 35px 0;
+      &:first-child { margin-top:0; }
+      &:last-child { margin-bottom: 0; };
+    }
+    .be_bold {
+      text-align: center;
+      font-size: 18px;
+      line-height: 27px;
+      margin: 0;
+      position: relative;
+      top: 13px;  
+    }
     .pitch_tiles{
       text-align: center;
       
@@ -967,7 +982,52 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       img { padding: 25px 0;}
       h3 { text-align:left; }
     }
-    
+    .gradient_down {
+      background: url(https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gradient_divider_down.jpg) no-repeat center top;
+    }
+    .gradient_up {
+      background: url(https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gradient_divider_up.jpg) no-repeat center bottom;
+    }
+    .sexy_time {
+      margin: 40px 0; 
+      
+      section {
+        border-top: 1px solid rgba(0,0,0,0.2);
+      
+      
+        .holder {
+          height: 284px;
+          padding: 35px 0;
+        
+          .image {
+            display: inline-block;
+            width: 45%;
+            vertical-align: top;
+        
+          }
+          .text {
+            display: inline-block;
+            width: 45%;
+            text-align: center;
+            padding: 50px 20px;
+        
+            h1 {
+              font-size: 31.5px; 
+              line-height: 37px;
+              margin-bottom: 12px;
+            }
+            p {
+              font-size: 15px; 
+              color: $evaluator_text_color;
+              line-height: 23px;
+            }
+          }
+          .right {
+            float: right;
+          }
+        }
+      }
+    }
     form {
       width: 315px;
       margin: 12px auto;
@@ -1028,8 +1088,11 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     }
     h2 { 
       text-transform: uppercase;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      margin-bottom: 10px;
+      border-bottom: 1px solid rgba(0,0,0,0.2);
+      margin-bottom: 15px;
+      text-align: center;
+      letter-spacing: 1.5px;
+      word-spacing: 1px;
     }    
     h4 { 
       border-bottom: 1px solid rgba(0,0,0,0.1);
@@ -1037,9 +1100,10 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       margin-bottom: 12px; 
       padding-bottom: 8px; 
     }    
-    p, ol {
+    p {
       font-size: 15px;
       margin-bottom: 20px; 
+      line-height: 23px;
     }   
     ul {
       font-size: 15px;
@@ -1063,8 +1127,48 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       text-align: center; 
       height: 340px;
       
-      h3{ text-transform: uppercase; padding: 5px 0; background: #333; margin: -10px 0 1px 0; }
-    
+      h3{ 
+        text-transform: uppercase; 
+        padding: 5px 0; 
+        background: #333; 
+        margin: -10px 0 1px 0; 
+      }
+      .price_block.popular {
+        position: relative;
+        bottom: 30px;
+      
+        &:hover{ box-shadow: 0 0 0px 5px rgba(0, 0, 0, 0.5); transform: scale(1.04) translateY(-5px); z-index: 1; border-bottom: 0 none; }
+        &:hover .price{ box-shadow: none;}
+        &:hover h3{}
+        &:hover .action_button{ background-color: #e9685b;  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);}
+        
+        h3 {
+          height: 70px;
+          line-height: 32px;
+          padding-top: 7px;
+          padding-bottom: 3px;
+          
+          span {
+            text-shadow: 0px 1px 0px rgba(255,255,255,.35);
+            font-family: 'MuliRegular';
+            color: #3E5D3D;
+          }
+        }
+        .features {
+          background: lighten($landing_green, 30%);
+        }
+        .price {
+          background: $landing_green;
+        
+        }
+        .price_footer { 
+           height: 50px;
+           background: lighten($landing_green, 30%);
+        }
+        h3 {
+          background: #638c61;
+        }
+      }
     }
     .price_block {
       width: 100%;

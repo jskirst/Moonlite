@@ -12,24 +12,62 @@
       %h1 MetaBright Evaluator
     .body
       %div
-        %h2
-          Optimize your sourcing
-        %p
-          Never waste your time in an interview again. MetaBright's <strong>Evaluator</strong> measures and verfies the skills of your job candidates <span style="font-family: 'MuliItalic';">before</span> you interview them. 
-          Just direct your candidates to your unique MetaBright URL, and we take care of the rest. 
-        %h3
-          Our philosophy
-        %p
-          When evaluating a potential new-hire, we believe the most important thing is whether that person has the skills necessary to do the job. Things like where they went to school or where they previously worked are just distractions from what really matters: Can they perform?
-        %h3 
-          How it works
-        %ol
-          %li Choose the skills in which you want your candidates measured.
-          %li We'll give you a unique MetaBright URL.
-          %li Include your this URL with your job posting. 
-          %li MetaBright evaluates the skills of each candidate, and you decide who to interview. 
-        .pitch_tiles
-          %h3 Why you'll love MetaBright
+        .area
+          %h2
+            Optimize your sourcing
+          %p.be_bold
+            Never waste your time in an interview again. MetaBright's <strong>Evaluator</strong> measures and verfies the skills of your job candidates <span style="font-family: 'MuliItalic';">before</span> you interview them. Just direct your candidates to your unique MetaBright URL, and we take care of the rest. 
+        .sexy_time
+          %section
+            .holder
+              .text
+                %h1
+                  What skills does your company need?
+                %p
+                  The Evaluator helps you identify the job candidates that have the skills your company needs to perform its best. Choose from over 40 MetaBright Challenges, or create your own.
+              .image.right
+                %img{ src: "http://images2.fanpop.com/image/photos/9800000/Great-Mountains-mountains-and-waterfalls-9841962-1920-1440.jpg"}
+          %section.gradient_down
+            .holder.gradient_up
+              .image
+                %img{ src: "http://images2.fanpop.com/image/photos/9800000/Great-Mountains-mountains-and-waterfalls-9841962-1920-1440.jpg"}
+              .text.right
+                %h1
+                  Expand your candidate pool.
+                  / Measure and validate your candidates' skills.
+                  / Scalable candidate testing.
+                  / Your candidates take your Evaluation.
+                %p
+                  Don't miss out on your next top achiever. Your Evaluator subscription lets you measure an unlimited number of candidates. Go ahead, aim wide with your talent search.
+          %section
+            .holder
+              .text
+                %h1
+                  Robust and dynamic testing.
+                %p
+                  Take advantage of MetaBright's industry-leading testing. We measure your candidates across more dimensions than anyone else. And our question formats uncover your candidates' real-world knowledge.
+              .image.right
+                %img{ src: "http://images2.fanpop.com/image/photos/9800000/Great-Mountains-mountains-and-waterfalls-9841962-1920-1440.jpg"}
+          %section.gradient_down
+            .holder.gradient_up
+              .image
+                %img{ src: "http://images2.fanpop.com/image/photos/9800000/Great-Mountains-mountains-and-waterfalls-9841962-1920-1440.jpg"}
+              .text.right
+                %h1
+                  Compare your candidates at a glance.
+                %p
+                  The Evaluator concisely organizes all of your candidates in a single view. Even better, you can sort and compare your candidates based on their aptitude. Try doing that with resumes.
+          %section
+            .holder.gradient_up
+              .text
+                %h1
+                  Make a confident choice.
+                %p
+                  Know for certain when a candidate is deserving of an interview. Examine their performance, drill down into responses, and see how they stack-up against their peers. 
+              .image.right
+                %img{ src: "http://images2.fanpop.com/image/photos/9800000/Great-Mountains-mountains-and-waterfalls-9841962-1920-1440.jpg"}
+        .area.pitch_tiles
+          %h2 Why you'll love MetaBright
           .tile
             .circle
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/medal_green.png"
@@ -42,94 +80,99 @@
             .circle
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/clock_green.png"
             %p Never waste your time interviewing another underqualified candidate.
-        %h3 FAQ
-        #faq_accordion.accordion          
-          .accordion-group
-            .accordion-heading
-              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"}
-                How are my candidates evaluated?
-            #collapseTwo.accordion-body.collapse.in
-              .accordion-inner
-                We evaluate your candidates with things called <strong>Challenges</strong> -- fancy quizzes that analyze people's raw knowledge, their creative ability, and what they’ve accomplished. 
-                We distill all this information down into one easy to understand percentile ranking that indicates how capable a candidate actually is.
-          .accordion-group
-            .accordion-heading
-              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"}
-                How long will it take for my candidates to complete a Challenge?
-            #collapseFour.accordion-body.collapse
-              .accordion-inner
-                Each Challenge can be completed in less than 10 minutes.
-          .accordion-group
-            .accordion-heading
-              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFive"}
-                How does MetaBright work to prevent cheating?
-            #collapseFive.accordion-body.collapse
-              .accordion-inner
-                MetaBright questions are timed so we have a good understanding of who actually knows the material and who is trying to cheat (or who is getting lucky with a guess!). 
-                Our algorithms look for irregularities when a candidate is taking a Challenge and adjust their percentile accordingly.
-                We also work to ensure that your candidate is actually the one taking the Challenge.
-          .accordion-group
-            .accordion-heading
-              %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"}
-                Why does MetaBright look so playful?
-            #collapseSix.accordion-body.collapse
-              .accordion-inner
-                We’ve found that people are more likely to stay engaged with a Challenge when incentives are in place to make the process feel like a game. 
-                This means we can evaluate your candidates with a higher degree of confidence and we can deliver more examples of their abilities! 
-        %h3 
-          Evaluator Pricing
-        %div  
-          %ul.pricing_table
-            %li.price_block
-              %h3 1 User
-              .price
-                .price_figure
-                  %span.price_number $9.99
-                  %span.price_tenure per month
-              %ul.features
-                %li Unlimited Evaluations and Candidates
-                %li Talent Search Tool
-                %li Premium Support
-              .price_footer
-                = link_to "Select", new_group_path(p: Group::SINGLE_PLAN), class: "action_button"
-            %li.price_block
-              %h3 2-5 Users
-              .price
-                .price_figure
-                  %span.price_number $19.99
-                  %span.price_tenure per month
-              %ul.features
-                %li Unlimited Evaluations and Candidates
-                %li Talent Search Tool
-                %li Premium Support
-              .price_footer
-                = link_to "Select", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button"
-            %li.price_block
-              %h3 6-15 Users
-              .price
-                .price_figure
-                  %span.price_number $39.99
-                  %span.price_tenure per month
-              %ul.features
-                %li Unlimited Evaluations and Candidates
-                %li Talent Search Tool
-                %li Premium Support
-              .price_footer
-                = link_to "Select", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button"
-            %li.price_block
-              %h3 16-50 Users
-              .price
-                .price_figure
-                  %span.price_number $79.99
-                  %span.price_tenure per month
-              %ul.features
-                %li Unlimited Evaluations and Candidates
-                %li Talent Search Tool
-                %li Premium Support
-              .price_footer
-                = link_to "Select", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button"
-          %div
-            %p{ style: "margin: 0; float: right;"}
-              Have more than 50 users? 
-              %a{href: "mailto:support@metabright.com?subject=Inquiry for more than 50 Evaluator users"}Contact us for pricing.
+        .area
+          %h2
+            Our philosophy
+          %p
+            When evaluating a potential new-hire, we believe the most important thing is whether that person has the skills necessary to do the job. Things like where they went to school or where they previously worked are just distractions from what really matters: Can they perform?
+        .area
+          %h2 FAQ
+          #faq_accordion.accordion          
+            .accordion-group
+              .accordion-heading
+                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"}
+                  How are my candidates evaluated?
+              #collapseTwo.accordion-body.collapse.in
+                .accordion-inner
+                  We evaluate your candidates with things called <strong>Challenges</strong> -- fancy quizzes that analyze people's raw knowledge, their creative ability, and what they’ve accomplished. 
+                  We distill all this information down into one easy to understand percentile ranking that indicates how capable a candidate actually is.
+            .accordion-group
+              .accordion-heading
+                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"}
+                  How long will it take for my candidates to complete a Challenge?
+              #collapseFour.accordion-body.collapse
+                .accordion-inner
+                  Each Challenge can be completed in less than 10 minutes.
+            .accordion-group
+              .accordion-heading
+                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFive"}
+                  How does MetaBright work to prevent cheating?
+              #collapseFive.accordion-body.collapse
+                .accordion-inner
+                  MetaBright questions are timed so we have a good understanding of who actually knows the material and who is trying to cheat (or who is getting lucky with a guess!). 
+                  Our algorithms look for irregularities when a candidate is taking a Challenge and adjust their percentile accordingly.
+                  We also work to ensure that your candidate is actually the one taking the Challenge.
+            .accordion-group
+              .accordion-heading
+                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"}
+                  Why does MetaBright look so playful?
+              #collapseSix.accordion-body.collapse
+                .accordion-inner
+                  We’ve found that people are more likely to stay engaged with a Challenge when incentives are in place to make the process feel like a game. 
+                  This means we can evaluate your candidates with a higher degree of confidence and we can deliver more examples of their abilities! 
+        .area
+          %h2{ style: "margin-bottom: 50px;" } 
+            Evaluator Pricing
+          %div  
+            %ul.pricing_table
+              %li.price_block
+                %h3 1 User
+                .price
+                  .price_figure
+                    %span.price_number $9.99
+                    %span.price_tenure per month
+                %ul.features
+                  %li Unlimited Evaluations and Candidates
+                  %li Premium Support
+                .price_footer
+                  = link_to "Select", new_group_path(p: Group::SINGLE_PLAN), class: "action_button"
+              %li.price_block.popular
+                %h3 
+                  %span Most Popular
+                  2-5 Users
+                .price
+                  .price_figure
+                    %span.price_number $19.99
+                    %span.price_tenure per month
+                %ul.features
+                  %li Unlimited Evaluations and Candidates
+                  %li Premium Support
+                .price_footer
+                  = link_to "Select", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button"
+              %li.price_block
+                %h3 6-15 Users
+                .price
+                  .price_figure
+                    %span.price_number $39.99
+                    %span.price_tenure per month
+                %ul.features
+                  %li Unlimited Evaluations and Candidates
+                  %li Premium Support
+                .price_footer
+                  = link_to "Select", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button"
+              %li.price_block
+                %h3 16-50 Users
+                .price
+                  .price_figure
+                    %span.price_number $79.99
+                    %span.price_tenure per month
+                %ul.features
+                  %li Unlimited Evaluations and Candidates
+                  %li Premium Support
+                .price_footer
+                  = link_to "Select", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button"
+            %div
+              %p{ style: "margin: 0; float: right;"}
+                Have more than 50 users? 
+                %a{href: "mailto:support@metabright.com?subject=Inquiry for more than 50 Evaluator users"}Contact us for pricing.
         
