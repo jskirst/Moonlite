@@ -1,3 +1,9 @@
+.small-header-image {
+  height: 50px;
+  width: 50px;
+  border-radius: 5px;
+}
+
 .task_form {
   .big_text_area { 
     height: 150px; 
@@ -10,4 +16,14 @@
     font-family: 'Menlo', 'Courier New', 'Terminal', monospace; 
     font-size: 14px; 
   }
+}
+
+.new-task-form {
+  padding: 10px;
+  margin: 10px 0 20px 15px;
+  border: 1px solid #DDD;
+
+  .status { margin-bottom: 0px; padding: 5px; border-radius: 4px; color: white; width: inherit; font-size: 14px; text-align: center; width: 400px; }
+  .error { background-color: red; }
+  .success { background-color: green; }
 }
