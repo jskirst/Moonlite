@@ -83,31 +83,34 @@
     
 #employer.aboutcontainer
   .aboutbox
-    %div.row{ style: "vertical-align: top; margin: 0 0 20px 0;"}
-      %div.span3{ style: "width: 160px; margin-left: 0; "}
+    .header{ style: "vertical-align: top; margin: 0 0 20px 0;"}
+      %div{ style: "display: inline-block; vertical-align: middle;" }
         %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }
-          %div.path-caption{ style: "opacity: 0.75;width: 165px; height: inherit; margin-top: 90px; display: none; position: absolute; background-color: rgb(245, 245, 245); padding-left: 10px; color: black;" }
-            %span.caption-title{ style: "font-size:20px; line-height:24px;" } Edit
-          = image_tag(@path.path_pic, class: "bigheaderimage")
-      %div.span4{ style: "margin-left: 5px;" }
+          = image_tag(@path.path_pic, class: "small-header-image")
+      %div{ style: "display: inline-block; vertical-align: middle;" }
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
         - unless @group
           %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
-      %div.floatr{ style: "margin-top:10px;"}
+      %div.floatr{ style: "margin-top:10px; vertical-align: middle;"} 
         - if @path.group_id
-          = link_to "Back to Create Evaluation", new_group_evaluation_path(@group), class: "button button-standard"
-        - elsif @path.published? && @path.approved?
-          = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
-        - elsif @path.published?
-          = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
+          .controls{ style: "margin-top: 10px;" }
+            %div{ style: "display: inline-block;" }
+              = link_to new_group_evaluation_path(@group) do
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", style: "height: 20px; width: 20px; margin-right: 10px;"
+            %div.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})", style: "display: inline-block;" }
+              %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Edit Evaluation", style: "height: 20px; width: 20px; cursor: pointer;"}
         - else
-          = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", confirm: (@group ? "Once published, your challenge will be available to be added to your evaluations, though you can return here and edit it at any time." : "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved.")
-        %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
+          - if @path.published? && @path.approved?
+            = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
+          - elsif @path.published?
+            = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
+          - else
+            = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", confirm: (@group ? "Once published, your challenge will be available to be added to your evaluations, though you can return here and edit it at any time." : "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved.")
+          %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
     %div
       - unless @group
         = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
         %h2{ style: "font-size: 20px; color: darkgray;" } QUESTIONS
-      %hr{ style: "margin: 5px 0 0 0;" }
       :javascript
         $(function(){ $(".section_questions_container").show() });
       %table.table
