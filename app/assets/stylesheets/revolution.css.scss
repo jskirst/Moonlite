@@ -951,7 +951,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     padding: 26px 16px; 
     
     .area {
-      margin: 35px 0;
+      margin: 20px 0 40px;
       &:first-child { margin-top:0; }
       &:last-child { margin-bottom: 0; };
     }
@@ -965,6 +965,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
     }
     .pitch_tiles{
       text-align: center;
+      margin-top:0;
       
       .tile {
         display: inline-block;
@@ -989,7 +990,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
       background: url(https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gradient_divider_up.jpg) no-repeat center bottom;
     }
     .sexy_time {
-      margin: 40px 0; 
+      margin: 40px 0 0; 
       
       section {
         border-top: 1px solid rgba(0,0,0,0.2);
