@@ -76,6 +76,7 @@ class EvaluationsController < ApplicationController
     @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(params[:u])
     @user = @evaluation_enrollment.user
     @results = []
+    @minutes_to_complete = 
     @evaluation.paths.each do |path|
       @enrollment = @user.enrollments.find_by_path_id(path.id)
       core = @enrollment.completed_tasks.joins(:task)

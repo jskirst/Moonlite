@@ -18,7 +18,7 @@
   [data-tip]:before { left: 7px; }
   [data-tip]:after { left: -17px; }
   .table_tip [data-tip]:before { left: 34px; top: 35px;}
-  .table_tip [data-tip]:after { left: 8px; top: 45px; width: 165px; height: 52px; white-space: normal; }
+  .table_tip [data-tip]:after { left: 8px; top: 44px; width: 165px; height: 52px; white-space: normal; }
 
   
 #evaluations_overview.aboutcontainer
@@ -138,6 +138,9 @@
                   %ol
                     - r[:creative].each do |completed_task|
                       %li
+                        - total_time = (completed_task.updated_at - completed_task.created_at).round(0)
+                        - minutes = total_time / 60
+                        - seconds = total_time % 60
                         .answer
                           - task = completed_task.task
                           %p= task.question
@@ -147,6 +150,13 @@
                               %p{ style: "display: inline-block; "} Candidate skipped this question. 
                           - else
                             %pre= completed_task.submitted_answer.try(:content).to_s
+                          .time_taken
+                            %div 
+                              Completed in 
+                              - if minutes != 0 
+                                #{minutes} minutes 
+                              - if seconds != 0
+                                #{seconds} seconds
             - if r[:core].any?
               %div
                 - if r[:creative].any?

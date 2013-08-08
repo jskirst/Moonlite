@@ -1004,6 +1004,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
             display: inline-block;
             width: 45%;
             vertical-align: top;
+            box-shadow: 0 0 18px 0px #DFDFDF;
         
           }
           .text {
@@ -1697,7 +1698,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           vertical-align: top;
         }
         .strengths_weaknesses {
-          display: inline-block; margin-left: 20px; vertical-align: top; width: 41.5%;
+          display: inline-block; margin-left: 20px; vertical-align: top; width: 40.5%;
           .header {
             padding: 0;
             margin: 0;
@@ -1752,6 +1753,13 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           
           img { height: 22px; }
           p {display: inline-block; margin-left: 5px; }
+        }
+        .time_taken {
+          text-align: right;
+          
+          div {
+            text-align: right; color: white; background: $employer_green; border-radius: 20px; display: inline-block; padding: 4px 10px;
+          }
         }
       }
     }
