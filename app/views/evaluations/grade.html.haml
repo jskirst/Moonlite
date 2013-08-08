@@ -99,10 +99,16 @@
                 %tbody
                   %tr
                     %td.table_tip
-                      %h3 #{r[:performance].percent_correct}%
+                      - if r[:completed_tasks].nil?
+                        %h3 --
+                      - else
+                        %h3 #{r[:performance].percent_correct}%
                       %p.tip-below{ data: {tip: "Percent of multiple choice questions answered correctly."}} Correct MC
                     %td.table_tip
-                      %h3 #{r[:performance].avg_time_to_answer.round(1)}s
+                      - if r[:completed_tasks].nil?
+                        %h3 --
+                      - else
+                        %h3 #{r[:performance].avg_time_to_answer.round(1)}s
                       %p.tip-below{ data: {tip: "Average response time per correct multiple choice question."}} Avg. Time per MC
                     - if r[:creative]
                       %td.table_tip

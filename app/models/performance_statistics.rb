@@ -6,7 +6,7 @@ class PerformanceStatistics
   attr_accessor :total, :number_correct, :number_incorrect, :percent_correct, 
     :avg_time_to_answer, :strengths, :weaknesses, :completed_tasks, :completed_tasks_count
   
-  def initialize(completed_tasks, enrollment = nil)
+  def initialize(completed_tasks = [], enrollment = nil)
     self.completed_tasks = completed_tasks
     self.total = self.completed_tasks.size
     if self.total == 0
@@ -20,7 +20,9 @@ class PerformanceStatistics
     end
     calculate_saw
     calculate_avg_time_to_answer
-    enrollment ||= completed_tasks.first.enrollment
+    unless completed_tasks.empty? 
+      enrollment ||= completed_tasks.first.enrollment
+    end
     if enrollment
       enrollment.calculate_metascore
       enrollment.calculate_metapercentile
