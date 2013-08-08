@@ -9,10 +9,8 @@ PHRASE_PAIRINGS = [
 ]
 
 FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt/anton/CaveJohnson/CaveJohnson50.png"], 
-    ["Carl Malone","http://uvtblog.com/wp-content/uploads/2009/07/stocktonmalone.jpg"], 
     ["Mara Jade","http://fc07.deviantart.net/fs50/f/2009/270/6/c/Mara_Jade_Skywalker_by_wraithdt.jpg"], 
     ["JC Denton", "http://fc02.deviantart.net/fs15/f/2007/076/7/d/JC_Denton_by_egoyette.png"],
-    ["Butch Cassidy", "http://i.telegraph.co.uk/multimedia/archive/01202/butch-cassidy-paul_1202903c.jpg"],
     ["Dr. Sam Beckett","http://www.tvacres.com/images/bakula_pig.jpg"],
     ["Hugo Weaving","http://iblackedout.com/wp-content/uploads/2010/02/2003_the_matrix_revolution_002.jpg"], 
     ["Mr. Anderson","http://www.volacci.com/files/imce-uploads/Logical%20Neo.jpg"],
@@ -23,27 +21,28 @@ FAKE_USERS = [["Cave Johnson","http://www.holyduffgaming.se/filarkiv/webbprojekt
     ["Jayne Cobb","http://www.orangellous.com/cdn/photos/2009/01/20090123_jayneorig2.jpg"],
     ["Ellen Ripley","http://1.bp.blogspot.com/_Ne5Lb2SiFHg/TL8dO16QdjI/AAAAAAAA3XU/rXLB9LlLrB0/s1600/ellen+ripley.jpg"],
     ["John Crichton","http://images.wikia.com/farscape/images/f/fa/John_aeryn.jpg"],
-    ["Atticus Finch","http://i699.photobucket.com/albums/vv354/Jude714/Gregory-Peck-as-Atticus-Finch.jpg"],
     ["Dak Ralter","http://porkins.home.insightbb.com/Rebel/Pilots/DakRalter.jpg"]]
+    
+EMAIL_DOMAINS = ["@gmail.com", "@yahoo.com", "@hotmail.com", "@outlook.com"]
     
 PERSONAS = YAML.load(File.read(File.join(Rails.root, "/lib/tasks/personas.yml")))
 
 PATHS = [
   ["LEAN Startup Methodology 2","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
-  ["Ruby on Rails 2","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
-  ["Heroku 2","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],
-  ["jQuery 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", 0],
-  ["HTML5 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", 0],
-  ["CSS 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", 0],
-  ["Ruby Without Rails2 ","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", 0],
-  ["RubyGems 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", 0],
-  ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
-  ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
-  ["Heroku","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],
-  ["jQuery","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", 0],
-  ["HTML5","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", 0],
-  ["CSS","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", 0],
-  ["Ruby Without Rails","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", 0],
+  # ["Ruby on Rails 2","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
+  #   ["Heroku 2","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],
+  #   ["jQuery 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", 0],
+  #   ["HTML5 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", 0],
+  #   ["CSS 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", 0],
+  #   ["Ruby Without Rails2 ","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", 0],
+  #   ["RubyGems 2","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", 0],
+  #   ["LEAN Startup Methodology","Lean startup is a term coined by Eric Ries, his method advocates the creation...", "http://lean.st/images/startup-feedback-loop1.png?1315940898", 0],
+  #   ["Ruby on Rails","Ruby on Rails is a breakthrough in lowering the barriers of entry to programming...", "http://upload.wikimedia.org/wikipedia/commons/9/9c/Ruby_on_Rails_logo.jpg", 0],
+  #   ["Heroku","Our solar system is a cool place.", "http://moonlite.s3.amazonaws.com/objs/71/original.png?1354912232", 0],
+  #   ["jQuery","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/68/original.png?1354911643", 0],
+  #   ["HTML5","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", 0],
+  #   ["CSS","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", 0],
+  #   ["Ruby Without Rails","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/115/original.png?1359821271", 0],
   ["RubyGems","Brutal stuff.", "http://moonlite.s3.amazonaws.com/objs/74/original.png?1354916814", 0]
 ]
 
@@ -53,6 +52,8 @@ PATH_SECTIONS = [
   ["Advanced", "/images/default_section_pic_3.PNG"],
   ["Final test", "/images/default_section_pic_4.PNG"]
 ]
+
+POSITIONS = ["Software Engineer", "Front-end Developer", "Account Executive", "Customer Support Specialist"]
 
 def create_user(company,user_role,name,email,image_url)
   u = company.users.new(name: name, 
@@ -147,5 +148,40 @@ namespace :db do
     end
     moonlite_company.user_role_id = second_role.id
     moonlite_company.save!
+    
+    
+    FAKE_USERS.each do |fu|
+      user = create_user(moonlite_company, second_role, fu[0], fu[0].downcase.gsub(" ",".")+EMAIL_DOMAINS.shuffle.first, fu[1])
+    end
+    
+    group = Group.new(name: "Wayne Enterprises", plan_type: Group::SIX_TO_FIFTEEN_PLAN)
+    group.stripe_token = "fakestripetoken"
+    group.save!
+    
+    group_admin = create_user(moonlite_company, default_role, "Bruce Wayne", "bruce@wayne.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
+    group.group_users.create!(user_id: group_admin.id)
+    POSITIONS.each do |p|
+      eval = group.evaluations.new(title: p, company: group.name)
+      path_number = rand(4) + 1
+      eval.selected_paths = Hash[*Path.all.shuffle.first(path_number).collect{ |p| [p.id, true] }.flatten]
+      eval.user_id = group_admin.id
+      eval.save!
+    end
+    
+    User.all.each do |u|
+      skill = 10 - rand(3)
+      Path.all.each do |p|
+        path_skill = skill - rand(1)
+        u.enroll!(p)
+        p.tasks.each do |t|
+          correct = rand(10) > path_skill ? 0 : 1
+          u.completed_tasks.create!(task_id: t.id, status_id: correct, enrollment_id: u.enrolled?(p).id)
+        end
+      end
+      
+      Evaluation.all.each do |eval|
+        u.evaluation_enrollments.create!(evaluation_id: eval.id, submitted_at: Time.now())
+      end
+    end
   end
 end
