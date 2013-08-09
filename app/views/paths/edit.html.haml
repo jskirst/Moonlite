@@ -89,8 +89,6 @@
           = image_tag(@path.path_pic, class: "small-header-image")
       %div{ style: "display: inline-block; vertical-align: middle;" }
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
-        - unless @group
-          %p.editable{ style: "font-size:15px;", title: "Click to edit" }= @path.description.empty? ? "Click here to add a description. (Optional)" : @path.description
       %div.floatr{ style: "margin-top:10px; vertical-align: middle;"} 
         - if @path.group_id
           .controls{ style: "margin-top: 10px;" }
