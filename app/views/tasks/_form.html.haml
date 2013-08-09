@@ -1,14 +1,14 @@
 - rand_id = rand(1000)
 - template_id = "template_#{rand_id}"
 - new_task = task.new_record?
-- submit_label = new_task ? "Add" : "Save"
+- submit_label = new_task ? "Add New Question" : "Save"
 
 = form_for(task, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator #{'new-task-form' if new_task}"}) do |f|
   = f.hidden_field :section_id
   %div.floatr
-    = f.submit submit_label, id: "save_question_button", class: "button button-standard"
+    %button#save_question_button.button.button-standard.button-small= submit_label
     - unless new_task
-      %span.button.button-standard.button-small{ onclick: "$(this).parents('td').find('div.question_display').show(); $(this).parents('.question_creator').remove();" } Close
+      %button.button.button-standard.button-small{ type: "button", onclick: "$(this).parents('td').find('div.question_display').show(); $(this).parents('.question_creator').remove();" } Close
   %div.task_form
     .control-group{ style: "margin-bottom: 5px" }
       .controls.status.alert-error.hide

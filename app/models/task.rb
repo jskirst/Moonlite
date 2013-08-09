@@ -174,6 +174,13 @@ class Task < ActiveRecord::Base
     }
   end
   
+  def desc(attribute)
+    case attribute
+    when :difficulty
+      DIFFICULTY_TYPES[self.difficulty]
+    end
+  end
+  
   # Cached methods
   
   def self.cached_find(id)

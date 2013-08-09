@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   include SessionsHelper
   include NavigationHelper
+  include EditorHelper
   
   before_filter :determine_enabled_features
   before_filter :log_visit
