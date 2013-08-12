@@ -905,6 +905,47 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   .title { display: inline; vertical-align: middle; font-size:25px; position: relative; bottom: 3px;}
 }
 
+#challenge_editor {
+  background: $employer_blue;
+  border-radius: 0;
+  
+  .aboutbox {
+    border-radius: 0;
+    padding: 15px 30px;
+    
+    .header {
+      vertical-align: top; 
+      margin: 0 0 20px 0;
+      
+      div { display: inline-block; vertical-align: middle; }
+      
+      .floatr {
+        top: 85px; 
+        right: 13px; 
+        position: relative;
+        
+        .controls { 
+          margin-top: 10px;
+          [data-tip]:before { left: 5px; }
+          [data-tip]:after { left: -4px; }
+          
+          div { display: inline-block; }
+          
+          .gear { 
+            height: 20px; 
+            width: 20px; 
+            cursor: pointer; 
+            opacity: 0.7;
+            margin-right: 7px;
+            
+            &:hover { opacity: 1; }
+          }
+        }
+      }
+    }
+  }
+}
+
 #employer_landing{
   .aboutheader{
    padding: 15px 0 0 15px;
