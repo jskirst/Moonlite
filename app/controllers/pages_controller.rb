@@ -15,8 +15,7 @@ class PagesController < ApplicationController
       else
         if current_user.guest_user?
           @show_nav_bar = false
-          set_return_back_to = group_confirmation_url(@group)
-          raise session[:return_back_to]
+          set_return_back_to = confirmation_group_url(@group)
         end
         render "portal"
       end
@@ -219,6 +218,7 @@ class PagesController < ApplicationController
   end
   
   def evaluator
+    redirect_to root_url if current_user
     @title = "Evaluator"
     @show_footer = true
     @hide_background = true

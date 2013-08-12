@@ -112,6 +112,7 @@ class PathsController < ApplicationController
       end
       @path.promoted_at = params[:path][:promoted].to_i == 1 ? Time.now : nil
       @path.approved_at = params[:path][:approved].to_i == 1 ? Time.now : nil
+      @path.professional_at = params[:path][:professional].to_i == 1 ? Time.now : nil
     end
     
     unless params[:stored_resource_id].blank?

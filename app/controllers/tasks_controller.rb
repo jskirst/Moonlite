@@ -186,6 +186,7 @@ class TasksController < ApplicationController
   private
     def load_resource
       @task = Task.cached_find(params[:id])
+      @path = @task.path
     end
   
     def authorize_resource
