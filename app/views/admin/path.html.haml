@@ -28,6 +28,10 @@
       %div.controls
         = f.check_box :promoted, checked: @path.promoted?
     %div.control-group
+      %label.control-label Professional
+      %div.controls
+        = f.check_box :professional, checked: @path.professional?
+    %div.control-group
       %label.control-label Approved
       %div.controls
         = f.check_box :approved, checked: @path.approved?

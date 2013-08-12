@@ -1,7 +1,7 @@
 class Path < ActiveRecord::Base
-  attr_accessor :persona, :approved, :promoted, :template_type
+  attr_accessor :persona, :approved, :promoted, :professional, :template_type
   attr_readonly :company_id
-  attr_protected :approved_at, :published_at, :public_at, :promoted_at, :group_id
+  attr_protected :approved_at, :published_at, :public_at, :promoted_at, :professional, :group_id
   attr_accessible :user_id,
     :category_id,
     :name, 
@@ -56,6 +56,7 @@ class Path < ActiveRecord::Base
   def public?() public_at.nil? ? false : true end
   def approved?() approved_at.nil? ? false : true end
   def promoted?() promoted_at.nil? ? false : true end
+  def professional?() professional_at.nil? ? false : true end
   
   def path_pic
     return self.image_url if self.image_url

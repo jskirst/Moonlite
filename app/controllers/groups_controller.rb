@@ -165,7 +165,8 @@ class GroupsController < ApplicationController
       group_user.is_admin = true if params[:token] and @group.token == params[:token]
       group_user.save!
     end
-    set_return_back_to(join_group_url(@group))
+    @show_nav_bar = false
+    set_return_back_to(confirmation_group_url(@group))
     render "pages/portal"
   end
   

@@ -245,6 +245,7 @@ class SectionsController < ApplicationController
         if current_user.guest_user?
           set_return_back_to(finish_section_url(@section, @session_id, s: 3))
         elsif step == 2
+          clear_return_back_to
           render "register3" and return
         end
         render "register#{step}"
