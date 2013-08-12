@@ -249,6 +249,7 @@ class PathsController < ApplicationController
     @responses = []
     
     if current_user
+      clear_return_back_to
       session[:ssf] = 0
       @enrollment = current_user.enrolled?(@path) || current_user.enrollments.create(path_id: @path.id)
       if current_user.enrollments.size == 1 and @enrollment.total_points == 0

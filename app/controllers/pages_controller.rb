@@ -15,10 +15,10 @@ class PagesController < ApplicationController
       else
         if current_user.guest_user?
           @show_nav_bar = false
-          render "portal"
-        else
-          render "portal"
+          set_return_back_to = group_confirmation_url(@group)
+          raise session[:return_back_to]
         end
+        render "portal"
       end
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"

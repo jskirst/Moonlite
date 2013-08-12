@@ -38,6 +38,7 @@
               %span.landingbuttontext Sign in with Facebook »
           %div.divider OR
           = form_for(current_user, html: { id: "update_user" }) do |f|
+            = hidden_field_tag "redirect_uri", user_url(current_user.id)
             = f.text_field :name, value: nil, placeholder: "Name"
             = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
             = f.password_field :password, value: nil, placeholder: "Password", style: "margin-right: 10px;"
