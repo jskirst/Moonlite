@@ -85,7 +85,7 @@ class Task < ActiveRecord::Base
     self.quoted_text = nil if quoted_text.blank?
     
     unless topic_name.blank?
-      t = Topic.where("topics.name ILIKE ?", topic_name).first
+      t = Topic.where("topics.name ILIKE ? and topics.path_id = ?", topic_name, self.path_id).first
       t = Topic.create!(name: topic_name, path_id: path.id) unless t
       self.topic_id = t.id
     end
