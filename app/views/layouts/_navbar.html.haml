@@ -68,11 +68,13 @@
                   - groups = @groups if not @admin_group and (@groups and @groups.size > 0)
                   - enrollments = current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").to_a
                   - enrollments = nil if enrollments.empty?
-                  %a.dropdown-toggle{ "data-toggle" => "dropdown"}
-                    = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
-                    %span.users_name{ style: "vertical-align: middle;" }= current_user.name
-                    - if groups or enrollments
+                  - if groups or enrollments
+                    %a.dropdown-toggle{ "data-toggle" => "dropdown"}
+                      = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
+                      %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                       %span.caret
+                  - else
+                    %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
                 - if groups or enrollments
                   %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
                     .outter-nub{ style: "left: 148px; "}
@@ -100,6 +102,9 @@
                                 %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{e.points_to_next_level} more points to level up!
                                 %div.progress.progress-info
                                   %div.bar{ style: "width: #{e.level_percent}%;"}
+                - else
+                  
+                  
             %li
               - notifications_ary = notifications.to_a
               %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
@@ -121,6 +126,14 @@
                               %img.photo{ src: event.image_link, style: "width:35px; height: 35px;", alt: "Notification" }
                               %p.notification_body= event.content
                               %p.notification_time #{time_ago_in_words(event.created_at)} ago
+                - else
+                  %ul.dropdown-menu{ role: "button", style: "padding: 0 0 10px 0; top:42px; right:-104px; min-width: 317px;" }
+                    %div
+                      .outter-nub{ style: "left: 184px; "}
+                        .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
+                    %div.leftboxheader Notifications
+                    %div.leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: auto;"}
+                      %p{ style: "margin: 10px 10px 0;"} No notifications yet.
             %li
               %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:10px;" }
