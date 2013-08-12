@@ -39,5 +39,5 @@
       %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
       %h2 #{@group.name} Account
       %input{ type: "text", placeholder: "Search account...", id: "account_search" }
-    %div.notificationpanelbody.users
+    #account_table.users
       = render "account_table"
