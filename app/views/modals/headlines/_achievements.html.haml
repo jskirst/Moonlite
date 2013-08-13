@@ -18,9 +18,9 @@
         - subtext = "You're now ranked #{@enrollment.rank.ordinalize} in the #{@path.name} Challenge!"
         - sharing_text = "Just broke the Top #{new_rank} in the #{@path.name} Challenge on @MetaBright!"
       
-  .body{ style: "margin: 30px 0 8px 0;" }
-    %p{ style: "font-size: 17px; margin: 0 0 20px 15px;" } #{subtext} Share this achievement and brag to your friends.
-    %div{ style: "text-align: center; "}
+  .body
+    %p.headline_text #{subtext} Share this achievement and brag to your friends.
+    %div
       %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
       %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
       %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter

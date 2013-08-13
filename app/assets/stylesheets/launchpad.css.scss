@@ -141,16 +141,21 @@ $success_color: #62c462;
     min-height: 275px;
     
     .header {
+      height: 110px;
+      
       img { height: 115px; margin: -13px 0 0 -10px; float: left }
       h1 { font-size: 45px; font-weight: normal; width: inherit; }
       h2 { font-size: 23px; line-height: 25px; }
     }
     .body { 
-      margin: 20px auto; 
+      margin: 30px 0 10px 0; 
+      text-align: center;
+      
       .editor_view legend { display: none; }
       input.error { border-color: $error_color; }
       input.successful { border-color: $success_color; color: $success_color }
       p.error { color: $error_color; }
+      p.headline_text { font-size: 17px; line-height: 28px; margin: 0px 10px 25px; }
     }
     .exit {
       float: right; margin-top: 5px; text-decoration: none;
