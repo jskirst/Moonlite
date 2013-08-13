@@ -94,7 +94,12 @@
     var open_tab;
     if(display_type == 0){ open_tab = "#questions_tab_link"; } 
     if(display_type == 2){ open_tab = "#arena_tab_link"; } 
-    if(display_type == 3){ open_tab = "#achievement_tab_link"; }
+    if(display_type == 3){ 
+      open_tab = "#achievement_tab_link";
+      $("#editor_link").hide()
+    } else {
+      $("#editor_link").show()
+    }
     
     $(".tab_content").hide();
     $("ul.nav-tabs li.active").removeClass("active");
@@ -106,11 +111,16 @@
       $("ul.nav-tabs li.active").removeClass("active");
       $(this).parent().addClass("active");
       $(".active_tab").removeClass("active_tab");
-      var $open_tab = $("#"+$(this).attr("data-tab"));
+      var $open_tab = $("#"+$(this).data("tab"));
       $open_tab.addClass("active_tab");
       $open_tab.find(".task_view").show();
       $open_tab.find(".editor_view").hide();
       $open_tab.show();
+      if($(this).data("tab") == "achievements_tab"){
+        $("#editor_link").hide()
+      } else {
+        $("#editor_link").show()
+      }
     });
   
   - if @enrollment.contribution_unlocked?
@@ -203,17 +213,17 @@
           }
         });
     
-        $editor.find(".step4 a.restart").click(function(){
-          $editor.find(".step4").hide();
-          $editor.find(".step1").find("input[type=text],textarea[]").val("");
+        $editor.find(".restart").click(function(){
+          $editor.find(".step4, .step3").hide();
+          $editor.find(".step1").find("input[type=text],textarea").val("");
           $editor.find(".step1").show();
           $editor.parents(".headlines").find(".exit").show();
         });
     
-        $editor.find(".step4 a.finish").click(function(){
+        $editor.find(".finish").click(function(){
           $(".headlines").hide();
           $(".launchpadcontent").show();
-          $editor.find(".step4").hide();
+          $editor.find(".step4, .step3").hide();
           $editor.find(".step1").find("input[type=text],textarea").val("");
           $editor.find(".step1").show();
           $editor.hide();
