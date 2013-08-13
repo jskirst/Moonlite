@@ -1,5 +1,6 @@
 :css 
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; } 
+  .container.body { width: 980px; }
   .aboutcontainer{ width: 980px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;} 
   .aboutbox { border-radius: 0; padding: 20px 20px 0; } 
   #screen_carousel { width: 700px; height: 400px; margin: 30px auto; } 
@@ -118,11 +119,12 @@
                 %h3 1 User 
                 .price 
                   .price_figure 
-                    %span.price_number $9.99 
+                    %span.price_number $19.99 
                     %span.price_tenure per month 
                 %ul.features 
-                  %li Unlimited Evaluations and Candidates 
-                  %li Premium Support 
+                  %li Unlimited Evaluations
+                  %li Unlimited Candidates 
+                  %li Email Support
                 .price_footer 
                   = link_to "Select", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
               %li.price_block.popular 
@@ -132,40 +134,43 @@
                   2-5 Users 
                 .price 
                   .price_figure 
-                    %span.price_number $19.99 
+                    %span.price_number $29.99 
                     %span.price_tenure per month 
                 %ul.features 
-                  %li Unlimited Evaluations and Candidates 
-                  %li Premium Support 
+                  %li Unlimited Evaluations
+                  %li Unlimited Candidates 
+                  %li Premium Phone and Email Support
                 .price_footer 
                   = link_to "Select", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
               %li.price_block 
                 %h3 6-15 Users 
                 .price 
                   .price_figure 
-                    %span.price_number $39.99 
+                    %span.price_number $49.99 
                     %span.price_tenure per month 
                 %ul.features 
-                  %li Unlimited Evaluations and Candidates 
-                  %li Premium Support 
+                  %li Unlimited Evaluations
+                  %li Unlimited Candidates 
+                  %li Premium Phone and Email Support
                 .price_footer 
                   = link_to "Select", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button" 
               %li.price_block 
                 %h3 16-50 Users 
                 .price 
                   .price_figure 
-                    %span.price_number $79.99 
+                    %span.price_number $89.99 
                     %span.price_tenure per month 
                 %ul.features 
-                  %li Unlimited Evaluations and Candidates 
-                  %li Premium Support 
+                  %li Unlimited Evaluations
+                  %li Unlimited Candidates  
+                  %li Premium Phone and Email Support
                 .price_footer 
                   = link_to "Select", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button" 
             %div{ style: "margin-top: -30px; "} 
               %p{ style: "margin: 0; float: right;"} 
                 Have more than 50 users?  
                 %a{href: "mailto:support@metabright.com?subject=Inquiry for more than 50 Evaluator users"}Contact us for pricing. 
-        .area 
+        .area{ style: "margin-top: 110px;"} 
           %h2 
             Our philosophy 
           %p.be_bold
@@ -187,7 +192,7 @@
                   How long will it take for my candidates to complete a Challenge? 
               #collapseFour.accordion-body.collapse 
                 .accordion-inner 
-                  Each Challenge can be completed in less than 10 minutes. 
+                  It depends on the Challenge, and the skill of the candidate, but most Challenges can be completed in under 20 minutes.
             .accordion-group 
               .accordion-heading 
                 %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"} 

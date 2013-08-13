@@ -2,6 +2,11 @@ $divider: "https://s3.amazonaws.com/moonlite-nsdub/static/divider.png";
 $landing_red: #dc7563;
 $landing_yellow: #e3b164;
 $landing_green: #73bb6e;
+$employer_blue: rgba(36, 72, 109, 0.8);
+$employer_orange: rgba(126, 78, 54, 0.78);
+$employer_green: rgba(114, 153, 89, 0.88);
+$employer_orange_light: rgba(212, 152, 123, 0.14);
+$employer_green_light: rgba(150, 201, 117, 0.27);
 
 /* General/Revolution - this should always stay at the top */
 pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
@@ -494,8 +499,80 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
 /* Footer/Revolution */
 .footer{ height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position: relative; bottom: 0; width:100%; }
 .footerlinks a {text-decoration: none; color:#707070}
-.feedback_tab { background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); padding:3px; border-top-width: 1px;border-right-width: 1px;border-left-width: 1px;border-style: solid solid none;border-top-color: rgb(255, 255, 255);border-right-color: rgb(255, 255, 255);border-left-color: rgb(255, 255, 255);border-top-left-radius: 4px;border-top-right-radius: 4px;border-bottom-right-radius: 0px;border-bottom-left-radius: 0px;-webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;font-style: normal;font-variant: normal;font-weight: bold;font-size: 14px;line-height: 1em;font-family: Arial, sans-serif;position: fixed;right: 10px;bottom: 0px;z-index: 9999;background-color: rgb(64, 64, 64);margin-bottom: 0px;display: block;background-position: 0px 50%;background-repeat: no-repeat no-repeat;}
-.feedback_tab a { background-color: transparent;display: block;padding: 6px 10px 2px 42px;text-decoration: none; color:white; cursor:pointer; font-size:15px; }
+.footer_tab { 
+  padding: 3px; 
+  border-width: 1px 1px 0 1px;
+  border-style: solid solid none;
+  border-top-color: rgb(255, 255, 255);
+  border-right-color: rgb(255, 255, 255);
+  border-left-color: rgb(255, 255, 255);
+  border-radius: 4px 4px 0 0;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;
+  box-shadow: rgba(255, 255, 255, 0.247059) 1px 1px 1px inset, rgba(0, 0, 0, 0.498039) 0px 1px 2px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 1em;
+  font-family: Arial, sans-serif;
+  position: fixed;
+  right: 10px;
+  bottom: 0px;
+  z-index: 9999;
+  margin-bottom: 0px;
+  display: block;
+  background-position: 0px 50%;
+  background-repeat: no-repeat no-repeat;
+  
+  a, div {
+    background-color: transparent;
+    display: block;
+    text-decoration: none; 
+    color:white; 
+    cursor:pointer; 
+    
+  }
+}
+.feedback_tab {
+  background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); 
+  background-color: rgb(64, 64, 64);
+  
+  a { padding: 6px 10px 2px 42px; }
+}
+.sales_help_tab{
+  background-color: #0CC000;
+  background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); 
+  
+  div { padding: 6px 10px 2px 40px;}
+}
+.enterprise_tab {
+  background-color: rgb(64, 64, 64);
+  background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); 
+  
+  div { padding: 6px 10px 2px 40px;}
+}
+.sales_help_modal, .enterprise_modal {
+  .modal-header {
+    border-radius: 6px 6px 0 0; 
+    background-color: $employer_green_light;
+    
+    .stoney { height:65px; margin:-8px -4px -10px -5px; }
+    .modal_close { margin-right: -4px; }
+    h3 { display: inline-block; position: relative; top: 5px; }
+  }
+  .modal-body {
+    max-height: none; font-size: 15px;
+    p {line-height: 22px; }
+    ul {
+      list-style: none;
+      li {
+        line-height: 24px; 
+        
+        span { font-weight: bold; font-family: 'MuliRegular';}
+      }
+    }
+  }
+}
 
 /* About/Revolution */
 .aboutcontainer{margin-top:84px; margin-bottom:10px; overflow:hidden; width:695px;margin-left:auto;margin-right:auto;border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
@@ -876,12 +953,6 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
 
 /* Employer pages */
 
-$employer_blue: rgba(36, 72, 109, 0.8);
-$employer_orange: rgba(126, 78, 54, 0.78);
-$employer_green: rgba(114, 153, 89, 0.88);
-$employer_orange_light: rgba(212, 152, 123, 0.14);
-$employer_green_light: rgba(150, 201, 117, 0.27);
-
 .green{
   border: 4px solid $employer_green;
   border-radius: 4px;
@@ -903,6 +974,47 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
   }
   .stoney {height: 75px; display: inline; vertical-align: middle; margin-top:-5px;}
   .title { display: inline; vertical-align: middle; font-size:25px; position: relative; bottom: 3px;}
+}
+
+#challenge_editor {
+  background: $employer_blue;
+  border-radius: 0;
+  
+  .aboutbox {
+    border-radius: 0;
+    padding: 15px 30px;
+    
+    .header {
+      vertical-align: top; 
+      margin: 0 0 20px 0;
+      
+      div { display: inline-block; vertical-align: middle; }
+      
+      .floatr {
+        top: 85px; 
+        right: 13px; 
+        position: relative;
+        
+        .controls { 
+          margin-top: 10px;
+          [data-tip]:before { left: 5px; }
+          [data-tip]:after { left: -4px; }
+          
+          div { display: inline-block; }
+          
+          .gear { 
+            height: 20px; 
+            width: 20px; 
+            cursor: pointer; 
+            opacity: 0.7;
+            margin-right: 7px;
+            
+            &:hover { opacity: 1; }
+          }
+        }
+      }
+    }
+  }
 }
 
 #employer_landing{
@@ -1760,6 +1872,29 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
           div {
             text-align: right; color: white; background: $employer_green; border-radius: 20px; display: inline-block; padding: 4px 10px;
           }
+        }
+      }
+    }
+  }
+}
+
+#account_table {
+  padding-top:0; 
+  padding:0 20px;
+  
+  table {
+    .edit_user_details_link {
+      text-align: right; 
+      cursor: pointer;
+      [data-tip]:before { left: 5px; }
+      [data-tip]:after { left: -18px; }
+      
+      div {
+        display: inline-block;
+        
+        .gear {
+          opacity: 0.7;
+          &:hover {opacity: 1;}
         }
       }
     }

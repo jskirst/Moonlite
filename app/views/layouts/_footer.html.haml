@@ -1,3 +1,45 @@
+:javascript
+  $(".sales_help_tab").each(function(){
+    $(this).click(function(){$('#sales_help_modal').modal({show: true, keyboard: true, static: true});});
+  });
+  $(".enterprise_tab").each(function(){
+    $(this).click(function(){$('#enterprise_modal').modal({show: true, keyboard: true, static: true});});
+  });
+
+%div.sales_help_modal.modal.hide.fade 
+  %div.modal-header
+    .modal_close
+      = image_tag ICON_CLOSE_URL, alt: "Close"
+    = image_tag STONEY_SMALL_URL, alt:"Stoney", class: "stoney"
+    %h3 Get in touch with us!
+  %div.modal-body
+    %p Trying to pick the right plan? Wondering if MetaBright is right for your company? We're happy to answer all of your questions.
+    %ul
+      %li 
+        %span Call us: 
+        (415) 423-1151
+      %li 
+        %span Email us: 
+        %a{href: "mailto:support@metabright.com"} support@metabright.com
+    
+  
+%div.enterprise_modal.modal.hide.fade 
+  %div.modal-header
+    .modal_close
+      = image_tag ICON_CLOSE_URL, alt: "Close"
+    = image_tag STONEY_SMALL_URL, alt:"Stoney", class: "stoney"
+    %h3 Get in touch with us!
+  %div.modal-body
+    %p If you have any questions about MetaBright or your Evaluator subscription, please don't hesitate to reach out. Our team can make sure you're using your Evaluator subscription to its fullest.
+    %ul
+      %li 
+        %span Call us: 
+        (415) 423-1151
+      %li 
+        %span Email us: 
+        %a{href: "mailto:support@metabright.com"} support@metabright.com
+  
+
 %div.footer
   %span.copyright © 2013 MetaBright, Inc. /
   %span.footerlinks
@@ -8,5 +50,12 @@
     = link_to "Feedback", ideas_path 
     \/
     = link_to "Terms of Service", tos_path
-%div.feedback_tab
-  =link_to "Feedback", ideas_path
+- if (not current_user) and params[:action] == "evaluator"
+  .footer_tab.sales_help_tab
+    %div{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})"} Need some help?
+- elsif current_user and @admin_group
+  .footer_tab.enterprise_tab
+    %div{ onclick: "$('.enterprise_modal').modal({keyboard: true, show: true})"} Need some help?
+- else
+  .footer_tab.feedback_tab
+    = link_to "Feedback", ideas_path

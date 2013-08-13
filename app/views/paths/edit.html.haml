@@ -79,24 +79,23 @@
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .container.body {width: 980px; }
   .aboutcontainer{ width: 980px; margin-top: -25px;}
-  .aboutbox { padding: 15px 30px; }
     
-#employer.aboutcontainer
+#challenge_editor.aboutcontainer
   .aboutbox
-    .header{ style: "vertical-align: top; margin: 0 0 20px 0;"}
-      %div{ style: "display: inline-block; vertical-align: middle;" }
+    .header
+      %div
         %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }
           = image_tag(@path.path_pic, class: "small-header-image")
-      %div{ style: "display: inline-block; vertical-align: middle;" }
+      %div
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
-      .floatr{ style: "margin-top:10px; vertical-align: middle;"} 
+      .floatr 
         - if @path.group_id
-          .controls{ style: "margin-top: 10px;" }
-            %div{ style: "display: inline-block;" }
+          .controls
+            %div{ "data-tip" => "Back" }
               = link_to new_group_evaluation_path(@group) do
-                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", style: "height: 20px; width: 20px; margin-right: 10px;"
-            .edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})", style: "display: inline-block;" }
-              %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Edit Evaluation", style: "height: 20px; width: 20px; cursor: pointer;"}
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear"
+            .edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})", "data-tip" => "Settings" }
+              %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Challenge Settings"}
         - else
           - if @path.published? && @path.approved?
             = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
@@ -126,7 +125,7 @@
                           %a.edit_section_questions_pill{ onclick: "display_section_questions($(this).parents('td.section'));", style:"cursor:pointer;" } Questions
                         %li
                           %a.edit_section_settings_pill{ onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});", style:"cursor:pointer;" } Settings
-                  .span6{ style: "margin-left: 12px;"}
+                  .span6{ style: "margin: 0 0 -12px 12px;"}
                     - if @group
                       %h3 Challenge questions
                     - else
