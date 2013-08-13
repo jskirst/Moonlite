@@ -1,7 +1,29 @@
-:javascript
+:javascript  
   $(function(){
     $('.textfill').textfill({ maxFontPixels: 24 });
   });
+  $("#preview_button").click(function(){
+    $("input[name=mode]").val("preview");
+  });
+  
+- if @task.time_limit
+  :javascript
+    function setTimer(){ 
+      var remaining_seconds = parseInt($(".countdown").data("time")) - 1
+      var minutes = Math.floor(remaining_seconds / 60)
+      var seconds = remaining_seconds - (minutes * 60)
+      if(seconds < 10){ seconds = "0"+seconds.toString(); }
+      $(".countdown_minutes").text(minutes)
+      $(".countdown_seconds").text(seconds)
+      $(".countdown").data("time", remaining_seconds)
+      console.log(remaining_seconds)
+    }
+  
+    $(function(){
+      var time_limit = #{@task.time_limit};
+      var timerCountdown = setInterval(function(){ setTimer(); }, 1000);
+      var timedSubmit = setTimeout(function(){ $("#challenge_form").submit() }, time_limit*1000);
+    });
   
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
@@ -35,18 +57,7 @@
         = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "button button-standard", style: "float: left;", confirm: "Note: You will not be able to come back to this question once you skip it."
         = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
         - if @task.time_limit
-          .countdown
+          .countdown{ data: { time: @task.time_limit } }
             Time Remaining: 
-            %span.countdown_time
-              = @task.time_limit
+            <span class='countdown_minutes'>--</span>:<span class='countdown_seconds'>--</span>
         = image_tag ICON_LOADING_URL, size: "25x25", style: "float: right; display: none; padding: 5px;", id: "loading_image", alt: "Loading"
-
-      :javascript
-        $("#preview_button").click(function(){
-          $("input[name=mode]").val("preview");
-        });
-
-        $("#draft_button").click(function(){
-          $("input[name=mode]").val("draft");
-        });
-        
