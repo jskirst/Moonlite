@@ -16,12 +16,6 @@
       %label.control-label Question
       .controls
         = f.text_area :question, class: "input-xlarge question_input", placeholder: "Type your question here...", style: "width: 450px; height: 100px;"
-      
-    .control-group
-      %label.control-label Difficulty
-      .controls
-        = f.select :difficulty, Task::DIFFICULTY_TYPES.collect{ |k,v| [v, k]}, class: "select input-medium"
-
     - if new_task or task.multiple_choice? or task.exact?
       .multiple_choice.exact.control-group
         %label.control-label Quoted text (optional)
@@ -101,8 +95,16 @@
               %div.control-group
                 %label.control-label= a.is_correct ? "Correct answer" : "Wrong answer"
                 %div.controls
-                  = f.text_field "answer_#{a.id || "new_" + (i + 1).to_s}", value: a.content, maxlength: 255, size: 75, class: (a.is_correct ? "correct_answer" : "wrong_answer")        
-        
+                  = f.text_field "answer_#{a.id || "new_" + (i + 1).to_s}", value: a.content, maxlength: 255, size: 75, class: (a.is_correct ? "correct_answer" : "wrong_answer")   
+                       
+        .control-group
+          %label.control-label Difficulty
+          .controls
+            = f.select :difficulty, Task::DIFFICULTY_TYPES.collect{ |k,v| [v, k]}, class: "select input-medium"
+            .difficulty_tt
+              %div{ "data-tip" => "Choose the approximate difficulty level for this question. This helps MetaBright more quickly identify the skill level of the person taking the question." }
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
+                
         - unless new_task
           .control-group
             .controls

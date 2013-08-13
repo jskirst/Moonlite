@@ -2034,7 +2034,14 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
   [data-tip]:after { left: -36px; white-space: normal; height: 107px; width: 207px; top: -124px; }
   [data-tip]:before { left: 5px; }
 }
-
+.difficulty_tt {
+  display: inline-block;
+  position: relative;
+  bottom: 3px; 
+  
+  [data-tip]:after { left: -36px; white-space: normal; height: 91px; width: 162px; top: -108px; }
+  [data-tip]:before { left: 5px; }
+}
 .tt_signal {
   .image_upload_tt {
     /* The !important is necessary to override the display: none; set in the html since it is a stored resource */
