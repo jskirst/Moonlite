@@ -27,7 +27,10 @@
         %label.control-label Quoted text (optional)
         .controls{ style: "margin-top: 6px;" }
           - unless task.quoted_text
-            %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
+            %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.quoted_text_tt').hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
+            .quoted_text_tt
+              %div{ "data-tip" => "Quoted text is good for a block of text that your question references. For example, you might want to include a paragraph of text with your question, or a code snippet."}
+                %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
           = text_area_tag "task[quoted_text]", task.quoted_text, class: "big_text_area", style: task.quoted_text.blank? ? "display: none;" : ""
 
     %div.row
@@ -36,7 +39,8 @@
         - if new_task
           .control-group
             %label.control-label Answer type
-            .controls.image_upload
+            /* The class tt_signal allows us to insert a tt into the image upload resource */
+            .controls.image_upload.tt_signal
               = f.select :answer_type, hash_to_array(Task::TYPES), style: "display: inline-block; "
               = render "stored_resources/new_image"
         
@@ -73,6 +77,9 @@
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
                 %a.show_template{ onclick: "$(this).hide(); $(this).siblings('div').show();", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
+                .cr_template_tt
+                  %div{ "data-tip" => "Text you include in the template will be supplied to the user in their editable answer field. Templates are useful to guide what format you'd like a response in. They can also be used to give the user something to edit, improve, or build upon."}
+                    %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
                 = text_area_tag "task[template]", task.template, class: "hidden_text_area", style: "display: none;"
                 %div{ id: template_id, class: "ace_editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 175px; position: relative; padding-top:0; #{task.template.blank? ? "display: none;" :  ""}"} 
         
