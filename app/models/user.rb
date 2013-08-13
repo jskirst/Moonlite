@@ -2,6 +2,8 @@ require 'open-uri'
 class User < ActiveRecord::Base
   MAX_DAILY_EMAILS = 5
   
+  GUEST_WHITELIST = ["jskirst@metabright.com", "nsdub@metabright.com", "team@metabright.com", "founders@metabright.com", "support@metabright.com"]
+  
   attr_readonly :signup_token
   attr_protected :admin, 
     :login_at, :logout_at, :locked_at,
@@ -93,7 +95,7 @@ class User < ActiveRecord::Base
   def to_s() self.name end
     
   def locked?() locked_at.nil? ? false : true end
-  def guest_user?() email.include?("@metabright") end
+  def guest_user?() email.include?("@metabright") and not GUEST_WHITELIST.include?(email) end
     
   def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
   
