@@ -6,8 +6,8 @@
     .header{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 72px; display: inline; vertical-align: middle", alt: "Stoney"
       %h1{ style: "display: inline; vertical-align: middle; font-size:25px;" }= @group.name
-    .body
-      - if current_user.guest_user?
+    - if current_user.guest_user?
+      .body
         :javascript
           $(function(){
             $(".signup form").submit(function(){
@@ -53,28 +53,31 @@
             %p.text_field= f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
             %p.text_field= f.password_field :password, value: nil, placeholder: "Password"
             = f.submit "Submit", class: "submit_button"
-      - else
-        = link_to group_evaluations_url(@group) do
-          .option{ style: "border-bottom: 1px solid #DDD; border-right: 1px solid #DDD; margin-right: -4px;"}
-            %div
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
-              %h3 Evaluations
-        = link_to account_group_url(@group) do
-          .option{ style: "border-bottom: 1px solid #DDD;" }
-            %div
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
-              %h3 Account
-        = link_to group_paths_url(@group) do
-          .option{ style: "border-right: 1px solid #DDD; margin-right: -4px;"}
-            %div
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"
-              %h3 Challenges
-        = link_to "#" do
-          .option
-            %div{ style: "cursor: default; opacity: 0.7;"}
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_search.png"
-              %h3 Search
-              %h5 Coming Soon...
+    - else
+      .body{ style: "text-align: inherit;" }
+        .portal-row{ style: "border-bottom: 1px solid #DDD;" }
+          = link_to group_evaluations_url(@group) do
+            .option{ style: " border-right: 1px solid #DDD;" }
+              %div
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
+                %h3 Evaluations
+          = link_to account_group_url(@group) do
+            .option{ style: "border-right: 1px solid transparent;" }
+              %div
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
+                %h3 Account
+        .portal-row
+          = link_to group_paths_url(@group) do
+            .option{ style: "border-right: 1px solid #DDD;" }
+              %div
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"
+                %h3 Challenges
+          = link_to "#" do
+            .option{ stye: "border-right: 1px solid #DDD;" }
+              %div{ style: "cursor: default; opacity: 0.7;" }
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_search.png"
+                %h3 Search
+                %h5 Coming Soon...
     
 
         
