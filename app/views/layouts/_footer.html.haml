@@ -50,7 +50,7 @@
     = link_to "Feedback", ideas_path 
     \/
     = link_to "Terms of Service", tos_path
-- if (not current_user) and params[:action] == "evaluator"
+- if (not current_user) and (params[:action] == "evaluator" or params[:controller] == "groups")
   .footer_tab.sales_help_tab
     %div{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})"} Need some help?
 - elsif current_user and @admin_group
