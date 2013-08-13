@@ -1075,6 +1075,24 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
       position: relative;
       top: 13px;  
     }
+    .free_trial {
+      text-align: center;
+      border: 4px solid #638c61;
+      border-radius: 4px;
+      background: $employer_green_light;
+      padding: 16px 20px;
+      margin-bottom: 50px;
+      
+      h1 {
+        font-size: 35px;
+        margin-bottom: 10px;
+      }
+      p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 27px;
+      }
+    }
     .pitch_tiles{
       text-align: center;
       margin-top:0;
@@ -1156,6 +1174,12 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
         border-radius: 8px;
         color: white;
         margin-bottom: 17px;
+      }
+      .gear {
+        opacity: 0.7;
+        height: 30px;
+        width: 30px;
+        &:hover { opacity: 1; }
       }
       .control-group {
         margin: 0;
@@ -1261,8 +1285,9 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
           line-height: 32px;
           padding-top: 7px;
           padding-bottom: 3px;
+          background: #638c61;
           
-          span {
+          div {
             text-shadow: 0px 1px 0px rgba(255,255,255,.35);
             font-family: 'MuliRegular';
             color: #3E5D3D;
@@ -1278,9 +1303,6 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
         .price_footer { 
            height: 50px;
            background: lighten($landing_green, 30%);
-        }
-        h3 {
-          background: #638c61;
         }
       }
     }
@@ -1327,7 +1349,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
       color: #404040;
       margin: 0; 
       
-      li{ padding: 12px 15px; border-bottom: 1px solid rgba(0,0,0,.1); font-size: 15px; list-style-type: none; }
+      li{ padding: 15px; border-bottom: 1px solid rgba(0,0,0,.1); font-size: 15px; list-style-type: none; margin-bottom: 0;}
     }
     .price_footer {
       padding: 15px;
@@ -2034,7 +2056,14 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
   [data-tip]:after { left: -36px; white-space: normal; height: 107px; width: 207px; top: -124px; }
   [data-tip]:before { left: 5px; }
 }
-
+.difficulty_tt {
+  display: inline-block;
+  position: relative;
+  bottom: 3px; 
+  
+  [data-tip]:after { left: -36px; white-space: normal; height: 91px; width: 162px; top: -108px; }
+  [data-tip]:before { left: 5px; }
+}
 .tt_signal {
   .image_upload_tt {
     /* The !important is necessary to override the display: none; set in the html since it is a stored resource */

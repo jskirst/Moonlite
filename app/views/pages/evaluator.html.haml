@@ -111,8 +111,11 @@
           %a.carousel-control.left{"data-slide" => "prev", :href => "#screen_carousel"} ‹ 
           %a.carousel-control.right{"data-slide" => "next", :href => "#screen_carousel"} ›
         .area
-          %h2{ style: "margin-bottom: 50px;" }  
+          %h2{ style: "margin-bottom: 17px;" }  
             Evaluator Pricing 
+          .free_trial 
+            %h1 All plans come with a FREE 14-day trial.
+            %p No risk. No obligation. If at any point during your first 14 days you don't think the Evaluator is right for your company, just cancel your subscription. Your credit card won't ever be charged. 
           %div   
             %ul.pricing_table 
               %li.price_block 
@@ -124,13 +127,12 @@
                 %ul.features 
                   %li Unlimited Evaluations
                   %li Unlimited Candidates 
-                  %li Email Support
+                  %li{ style: "padding: 25px 15px;" } Email Support
                 .price_footer 
                   = link_to "Select", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
               %li.price_block.popular 
                 %h3  
-                  %span Most Popular 
-                  %br 
+                  %div Most Popular
                   2-5 Users 
                 .price 
                   .price_figure 

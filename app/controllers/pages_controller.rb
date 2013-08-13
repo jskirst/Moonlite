@@ -218,7 +218,9 @@ class PagesController < ApplicationController
   end
   
   def evaluator
-    redirect_to root_url if current_user
+    if current_user
+      redirect_to root_url and return
+    end
     @title = "Evaluator"
     @show_footer = true
     @hide_background = true
