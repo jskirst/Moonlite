@@ -1,13 +1,23 @@
-%div#homepage
-  %div#topsection
-    %div.headerspace
-      %div#leftheaderspace Explore the world of MetaBright
-    %div#carousel_container
+#homepage
+  - if ongoing_evaluation
+    .help_box
+      .header
+        = image_tag STONEY_SMALL_URL, alt: "Stoney" 
+        %h1 Feeling a bit lost?
+      .body
+        %h4
+          Are you trying to get back to your application for the #{ongoing_evaluation.title} position with #{ongoing_evaluation.company}? All your previous responses have been saved. 
+        %div{ style: "height: 30px; margin-top: 10px;"}
+          = link_to "Return to Application", take_group_evaluation_url(ongoing_evaluation.permalink), class: "submit_button"
+  #topsection
+    .headerspace
+      #leftheaderspace Explore the world of MetaBright
+    #carousel_container
       - if @enrollments.size > 1
-        %div#left_scroll
+        #left_scroll
           %a{href: "javascript:home_slide(\"left\");"}
             %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
-      %div#carousel_inner
+      #carousel_inner
         %ul#carousel_ul
           = render "shared/mosaic", { custom_class: "invite_facebook_friends", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
           - @enrollments.each do |e|
@@ -17,31 +27,31 @@
           - unless current_user.profile_complete?
             = render "shared/mosaic", { link: edit_user_path(current_user), title: "Whoooo are you?", subtitle: "Tell your story to the world!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/complete_profile_pic_carousel_altered.png" }
       - if @enrollments.size > 1
-        %div#right_scroll
+        #right_scroll
           %a{href: "javascript:home_slide(\"right\");"}
             %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png", alt: "Right"}/
       %input#hidden_auto_slide_seconds{:type => "hidden", :value => "0"}/
   
-  %div.row
-    %div.span5
+  .row
+    .span5
       - unless @suggested_paths.empty?
-        %div.leftbox
-          %div.leftboxheader Suggested Challenges
-          %div.leftboxfooter
+        .leftbox
+          .leftboxheader Suggested Challenges
+          .leftboxfooter
             %li.leftrailcontent
               - @suggested_paths.each do |p|
                 = link_to challenge_path(p.permalink) do
                   = image_tag p.path_pic, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
-      %div.leftbox
-        %div.leftboxheader Enrolled Personas
-        %div.leftboxfooter
+      .leftbox
+        .leftboxheader Enrolled Personas
+        .leftboxfooter
           %li.leftrailcontent
             - @enrolled_personas.each do |p|
               %a.explore_link{ style: "cursor: pointer; text-decoration: none;" }
                 = image_tag p.picture, class: "leftrailicon", title: "#{p.name}", alt: "#{p.name}"
-    %div.span11
-      %div.newsfeed
-        %div.box_header
+    .span11
+      .newsfeed
+        .box_header
           %div{ style: "display:inline;" }
             %span{ style: "border-bottom: 0px; padding-top:1px;" } Stream
             = link_to "Hot", root_url(order: "hot"), class: "btn leftbtn"
@@ -50,5 +60,5 @@
             = link_to "Hall of Fame", root_url(order: "halloffame"), class: "btn rightbtn"
         :javascript
           $.ajax({ type: "GET", url: "#{newsfeed_path(order: params[:order])}", success: function(data){ $(".empty_post").replaceWith(data); } });
-        %div.post.empty_post{ style: "height: 300px; text-align: center;" }
+        .post.empty_post{ style: "height: 300px; text-align: center;" }
           %img{ src: ICON_LOADING_URL, style: "width: 30px; height: 30px;" }
