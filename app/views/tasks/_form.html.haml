@@ -64,9 +64,8 @@
                   %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
             - if @group
               .control-group
-                %label.control-label 
-                  Time limit
-                  .controls
+                %label.control-label Time limit
+                .controls
                   = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), { include_blank: true }, class: "span2"
             .control-group      
               %label.control-label Template (optional)
@@ -95,7 +94,7 @@
             - answers.each_with_index do |a, i|
               %div.control-group
                 %label.control-label= a.is_correct ? "Correct answer" : "Wrong answer"
-                %div.controls
+                .controls
                   = f.text_field "answer_#{a.id || "new_" + (i + 1).to_s}", value: a.content, maxlength: 255, size: 75, class: (a.is_correct ? "correct_answer" : "wrong_answer")   
                        
         .control-group
