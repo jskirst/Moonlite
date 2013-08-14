@@ -27,7 +27,7 @@ class PagesController < ApplicationController
     else
       @show_nav_bar = false
       @show_header = false
-      @show_footer = true
+      @show_footer = false
       @hide_background = true
       @paths = Path.by_popularity(10).where("promoted_at is not ?", nil).to_a
       render "upheaval"
@@ -247,15 +247,6 @@ class PagesController < ApplicationController
     @title = "Ideas"
     @show_footer = true
     render "ideas"
-  end
-  
-  def upheaval
-    @title = "Upheaval"
-    @show_footer = true
-    @show_nav_bar = false
-    @show_sign_in = true
-    @paths = Path.by_popularity(10).where("promoted_at is not ?", nil).to_a
-    render "upheaval"
   end
   
   def email_test
