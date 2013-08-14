@@ -2,7 +2,8 @@ require 'open-uri'
 class User < ActiveRecord::Base
   MAX_DAILY_EMAILS = 5
   
-  GUEST_WHITELIST = ["jskirst@metabright.com", "nsdub@metabright.com", "team@metabright.com", "founders@metabright.com", "support@metabright.com"]
+  GUEST_WHITELIST = ["jskirst@metabright.com", "nsdub@metabright.com", "team@metabright.com", 
+    "founders@metabright.com", "support@metabright.com", "admin@metabright.com"]
   
   attr_readonly :signup_token
   attr_protected :admin, 
@@ -65,6 +66,10 @@ class User < ActiveRecord::Base
     if self.password.present?
       self.salt = make_salt
       self.encrypted_password = encrypt(password)
+    end
+    
+    if self.name_changed?
+      grant_username(force_rename: true)
     end
     self.user_role_id = self.company.user_role_id if self.user_role_id.nil?
   end

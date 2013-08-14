@@ -62,11 +62,12 @@
                   %p.free_text_note.answer_note.hide{ style: "margin-bottom: 5px;" } To answer this question, the user will be asked to type an appropriate free response into a text box.
                   %p.image_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to an image from the internet.
                   %p.youtube_link_note.answer_note.hide To answer this question, the user will be asked to copy and paste a link to a video from Youtube.
-            .control-group
-              %label.control-label 
-                Time limit
-              .controls
-                = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), { include_blank: true }, class: "span2"
+            - if @group
+              .control-group
+                %label.control-label 
+                  Time limit
+                  .controls
+                  = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), { include_blank: true }, class: "span2"
             .control-group      
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 6px;" }
@@ -113,21 +114,20 @@
                 = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, confirm: "Are you sure you want to remove this attachment?"
               - else
                 = link_to "Add Image", add_stored_resource_task_path(task)
-          
+          - unless @group  
+            .control-group
+              %label.control-label Section
+              .controls
+                = f.select :section_id, @sections.collect { |s| [s.name, s.id] }
+        - unless @group      
           .control-group
-            %label.control-label Section
+            %label.control-label Source URL
             .controls
-              = f.select :section_id, @sections.collect { |s| [s.name, s.id] }
-        - unless @group
-          %h4 Source        
-          .control-group
-            %label.control-label URL
-            .controls
-              = f.text_field :resource                
+              = f.text_field :resource, placeholder: "Optional, but suggested..."           
           .control-group 
-            %label.control-label Title
+            %label.control-label Source Description
             .controls
-              = f.text_field :resource_title
+              = f.text_field :resource_title, placeholder: "Optional, but suggested..."
         
         - if @enable_administration
           %h4 Admin        
