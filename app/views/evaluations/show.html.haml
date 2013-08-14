@@ -73,5 +73,5 @@
                   = link_to "+ Show archived candidates", group_evaluation_url(@group, @evaluation, archived: true), style: "color: #404040"
           - if @evaluations.empty? and not @archive_exists
             %tr
-              %td{ colspan: 4, style: "border-top: none;" } No one has taken this evaluation yet.
+              %td{ colspan: 5, style: "border-top: none;" } No one has taken this evaluation yet.
 
