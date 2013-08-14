@@ -38,7 +38,11 @@ $.MB.Checkout.stripeResponseHandler = (status, response) ->
     stopSpinner()
   else
     stripe_token = response.id
-    $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
-    $form.find("#group_stripe_token").val(stripe_token)
-    $form.get(0).submit()
+    console.log $("#group_token").val()
+    if $("#group_token").val().length > 0
+      $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
+      $form.find("#group_stripe_token").val(stripe_token)
+      $form.get(0).submit()
+    else
+      alert "ERROR: NO TOKEN"
     
