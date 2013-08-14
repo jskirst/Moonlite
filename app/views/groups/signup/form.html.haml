@@ -64,9 +64,9 @@
                 %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
           %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "cvc", label: "CVC" }, class: "input-small", style: "width: 3em;" }
         %label Expiration (MM/YYYY)
-        %input{ type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.5em;" }
+        %input{ type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.8em; text-align: center;" }
         %span /
-        %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 3em;" }
+        %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
         %label Coupon
         = f.text_field :coupon, placeholder: "Optional..."
         %p.errors= @errors
