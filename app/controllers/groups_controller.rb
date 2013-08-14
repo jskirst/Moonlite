@@ -5,8 +5,21 @@ class GroupsController < ApplicationController
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   
   def new
-    @new_group = Group.new
-    @new_group.plan_type = params[:p]
+    if @admin_group
+      if @admin_group.stripe_token.nil?
+        @new_group = @admin_group
+      else
+        sign_out
+        flash[:error] = "Something has gone wrong with your signup. You were not charged. Please contact support@metabright.com. We apologize for the inconvenience."
+        redirect_to root_url and return
+      end
+    else
+      @new_group = Group.new
+      @new_group.plan_type = params[:p]
+    end
+    
+    @show_nav_bar = false
+    @show_sign_in = true
     render "groups/signup/form"
   end
   
@@ -31,12 +44,16 @@ class GroupsController < ApplicationController
     else
       @new_group = Group.find_by_token(token)
       if @new_group.admin?(current_user)
-        @new_group.coupon = params[:group][:coupon]
-        if @new_group.save_with_stripe(params[:group][:stripe_token])
-          redirect_to confirmation_group_url(@new_group)
+        if params[:group][:stripe_token].present?
+          @new_group.coupon = params[:group][:coupon]
+          if @new_group.save_with_stripe(params[:group][:stripe_token])
+            redirect_to confirmation_group_url(@new_group)
+          else
+            @errors = @new_group.errors.full_messages.join(". ")
+            render "groups/signup/form"
+          end
         else
-          @errors = @new_group.errors.full_messages.join(". ")
-          render "groups/signup/form"
+          render json: { token: @new_group.token }
         end
       else
         raise "Access Denied: Not your group"

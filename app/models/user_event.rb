@@ -28,6 +28,7 @@ class UserEvent < ActiveRecord::Base
   
   def self.log_point_event(user, enrollment, event_type)
     path = enrollment.path
+    return false if path.group_id.present?
     path_url = BASE_URL + "challenges/#{path.permalink}"
     if event_type == :contribution_unlocked
       content = "You have unlocked the ability to contribute your own questions to the #{path.name} Challenge!"

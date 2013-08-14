@@ -40,14 +40,16 @@
         = f.hidden_field :plan_type
         %label Product:
         .product_name Evaluator #{plan[:description]}: #{plan[:price]}/mo.
-        %label Your name:
-        = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
+        - unless current_user
+          %label Your name:
+          = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
         = f.text_field :name, placeholder: "Company name...", "data-label" => "your company's name"
-        %label Your email address:
-        = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email"
-        %label Create a password:
-        = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password"
+        - unless current_user
+          %label Your email address:
+          = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email"
+          %label Create a password:
+          = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password"
         %div{ style: "display: inline-block; width: 64%;"}
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1
