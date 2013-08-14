@@ -87,5 +87,5 @@
             %br
             %span= label
         %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
-      - if current_user
+      - if current_user and params[:controller] != "evaluations"
         %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question

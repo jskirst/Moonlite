@@ -10,6 +10,7 @@ $employer_green_light: rgba(150, 201, 117, 0.27);
 
 /* General/Revolution - this should always stay at the top */
 pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
+.profile_dropdown li { min-width: 130px; }
 .profile_dropdown li:hover { color: white; }
 .navbar{ z-index:1010; }
 .container.body { padding-top: 51px; }

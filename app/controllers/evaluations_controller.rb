@@ -203,7 +203,6 @@ class EvaluationsController < ApplicationController
         UserEvent.log_event(admin, "#{current_user.name} has just submitted their evaluation for the #{@evaluation.title} position.", current_user, grade_group_evaluation_url(@group, @evaluation, u: current_user.id), current_user.picture)  
       end
       @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
-      GroupMailer.submission(@evaluation_enrollment)
     end
     
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a

@@ -124,6 +124,21 @@ class Group < ActiveRecord::Base
         .to_a
     end
   end
+  
+  # Mail Alert
+  
+  def self.new_groups(time)
+    where("created_at > ?",time)
+  end
+  
+  def send_welcome_email(deliver = false)
+    m = GroupMailer.signup(self)
+    m.deliver if deliver
+  end
+  
+  def self.send_all_welcome_emails(time, deliver = false)
+    new_groups(time).each { |g| g.send_welcome_email(deliver) }
+  end
    
   private
   

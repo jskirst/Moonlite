@@ -55,6 +55,13 @@ FactoryGirl.define do
     association :path
     association :user
   end
+  
+  factory :group do
+    name              Faker::Lorem.sentence(1)
+    creator_email     Faker::Internet.email
+    creator_name      Faker::Name.name
+    creator_password Faker::Internet.password
+  end
 
   sequence :email do |n|
     "person#{n}@example.com"

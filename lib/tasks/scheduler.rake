@@ -1,4 +1,5 @@
 task :send_alerts => :environment do
+  time = Time.now - 10.minutes.ago
   puts "VOTE ALERTS"
   votes = Vote.where("created_at > ?", 10.minutes.ago)
   votes.each do |vote|
@@ -53,6 +54,23 @@ task :send_alerts => :environment do
       puts "Contribution Unlock alert rejected: #{$!}"
     end
   end
+  
+  puts "NEW GROUP WELCOME EMAIL"
+  groups = Group.where("created_at > ?", 10.minutes.ago)
+  groups.each do |e|
+    puts "Sending signup email..."
+    begin
+      GroupMailer.signup(group).deliver
+    rescue
+      puts "Group signup email"
+    end
+  end
+  
+  puts "NEW GROUP WELCOME EMAILS"
+  Group.send_all_welcome_emails(time, true)
+  
+  puts "NEW EVALUATION ENROLLMENT SUBMISSION EMAILS"
+  EvaluationEnrollment.send_all_submission_emails(time, true)
 end
 
 task :daily_alerts => :environment do
