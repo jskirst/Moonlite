@@ -207,7 +207,7 @@
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I can do...
               - if @user == current_user
-                = link_to "Add new CR", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
+                = link_to "Continue Challenge", challenge_path(enrollment.path.permalink, c: true, type: Task::CREATIVE), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
               %h4 #{enrollment_details[:creative].posts.size} Creative Responses
               %div.profilecontent
                 = render "newsfeed/feed", feed: enrollment_details[:creative]
@@ -218,7 +218,7 @@
                 = link_to challenge_path(enrollment.path.permalink) do
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I have done...
-              - if @user == current_user
+              - if false and @user == current_user
                 = link_to "Add new Task", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
               %h4 #{enrollment_details[:tasks].posts.size} Tasks Completed
               %div.profilecontent

@@ -6,21 +6,30 @@ $.MB.Arena.count_down_points = ->
     $.points_remaining = $.points_remaining - 1
     $(".pointbarfiller").parent().find("div.pointbartext").text($.points_remaining + " points")
     $("#points_remaining").val($.points_remaining);
-    setTimeout($.MB.Arena.count_down_points, 450)
   else
-    $.continue_countdown = false
+    if window.count_down_points_timeout
+      clearInterval(window.count_down_points_timeout);
 
 $.MB.Arena.count_down_bar = ->
   if $.continue_countdown == true
     $bar = $(".pointbarfiller")
     $.percent_remaining = $.percent_remaining - .1
     $bar.css("width", $.percent_remaining+"%")
-    setTimeout($.MB.Arena.count_down_bar, 45)
+  else
+    if window.count_down_bar_timeout
+      clearInterval(window.count_down_bar_timeout);
     
 $.MB.Arena.start_countdown = ->
-  setTimeout ->
-    setTimeout($.MB.Arena.count_down_bar, 450)
-    setTimeout($.MB.Arena.count_down_points, 450)
+  if window.countdown_starter
+    clearTimeout(window.countdown_starter);
+    
+  window.countdown_points_starter = window.setTimeout ->
+    if window.count_down_bar_timeout
+      clearInterval(window.count_down_bar_timeout);
+    if window.count_down_points_timeout
+      clearInterval(window.count_down_points_timeout);
+    window.count_down_bar_timeout = window.setInterval($.MB.Arena.count_down_bar, 45)
+    window.count_down_points_timeout = window.setInterval($.MB.Arena.count_down_points, 450)
   ,3000
   
 $.MB.Arena.keyboard_shortcuts = ->

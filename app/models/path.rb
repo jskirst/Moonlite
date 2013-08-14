@@ -99,9 +99,9 @@ class Path < ActiveRecord::Base
         cached_find_by_persona_id(persona.id).collect {|path| path unless enrolled_paths.include?(path.id) } 
       end
     else
-      suggested_paths = Persona.first.cached.to_a
+      raise "User should not be nil"
     end
-    return suggested_paths.flatten.compact
+    return suggested_paths.flatten.compact.first(8)
   end
   
   def has_creative_response() tasks.where("answer_type = ?", 0).count > 0 end
