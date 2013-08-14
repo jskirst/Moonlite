@@ -104,15 +104,17 @@ class PathsController < ApplicationController
     @path.name = params[:path][:name] if params[:path][:name]
     @path.description = params[:path][:description] if params[:path][:name]
     @path.template = params[:path][:template] if params[:path][:template]
-    
+
     if @enable_administration
       unless params[:path][:persona].blank?
         @path.path_personas.destroy_all
         @path.path_personas.create!(persona_id: params[:path][:persona])
       end
-      @path.promoted_at = params[:path][:promoted].to_i == 1 ? Time.now : nil
-      @path.approved_at = params[:path][:approved].to_i == 1 ? Time.now : nil
-      @path.professional_at = params[:path][:professional].to_i == 1 ? Time.now : nil
+      if params[:path][:promoted].present?
+        @path.promoted_at = params[:path][:promoted].to_i == 1 ? Time.now : nil
+        @path.approved_at = params[:path][:approved].to_i == 1 ? Time.now : nil
+        @path.professional_at = params[:path][:professional].to_i == 1 ? Time.now : nil
+      end
     end
     
     unless params[:stored_resource_id].blank?

@@ -51,31 +51,25 @@
     $("#submit_button").attr("disabled","disabled");
   });
   
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/github");
-  editor.getSession().setMode("ace/mode/#{@task.language}");
-  editor.getSession().setUseSoftTabs(true);
-  editor.getSession().setTabSize(2);
-  var $textarea = $('textarea[name="content"]').hide();
-  var $submit = $("#submit_button");
-  editor.getSession().setValue($textarea.val());
-  editor.getSession().on('change', function(){
-    $textarea.val(editor.getSession().getValue());
-    if($textarea.data("template") != $textarea.val()){
-      $submit.removeClass("disabled").removeAttr("disabled");
-    } else {
+  if($("#editor").length){
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/github");
+    editor.getSession().setMode("ace/mode/#{@task.language}");
+    editor.getSession().setUseSoftTabs(true);
+    editor.getSession().setTabSize(2);
+    var $textarea = $('textarea[name="content"]').hide();
+    var $submit = $("#submit_button");
+    editor.getSession().setValue($textarea.val());
+    editor.getSession().on('change', function(){
+      $textarea.val(editor.getSession().getValue());
+      if($textarea.data("template") != $textarea.val()){
+        $submit.removeClass("disabled").removeAttr("disabled");
+      } else {
+        $submit.addClass("disabled").attr("disabled", "disabled");
+      }
+    });
+  
+    if($textarea.data("template") == $textarea.val()){
       $submit.addClass("disabled").attr("disabled", "disabled");
     }
-  });
-  
-  if($textarea.data("template") == $textarea.val()){
-    $submit.addClass("disabled").attr("disabled", "disabled");
   }
-  
-- if @path.group_id and @task.time_limit
-  :javascript
-    var time_limit = #{@task.time_limit};
-    $(function(){
-      var timerCountdown = setInterval(function(){ $(".countdown_time").text(parseInt($(".countdown_time").text()) - 1) }, 1000);
-      var timedSubmit = setTimeout(function(){ $("#challenge_form").submit() }, time_limit*1000);
-    })

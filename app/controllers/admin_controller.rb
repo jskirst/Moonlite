@@ -42,8 +42,11 @@ class AdminController < ApplicationController
   end
   
   def paths
-    conditions = params[:search].nil? ? nil : ["name ILIKE ?", "%#{params[:search]}%"]
-    @paths = Path.paginate(page: params[:page], conditions: conditions).order("id DESC")
+    @paths = Path.where(group_id: nil)
+    if params[:search].present?
+      @paths = @paths.where("name ILIKE ?", "%#{params[:search]}%")
+    end
+    @paths = @paths.paginate(page: params[:page]).order("id DESC")
   end
   
   def path

@@ -4,17 +4,17 @@
   %hr{style:"margin:0;"}
   = form_for(@user, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
     = render 'shared/error_messages', object: f.object
-    %div.notificationpanelbody
+    .notificationpanelbody
       %h4 How you appear on MetaBright
-      %div.editprofilemanagementarea 
+      .editprofilemanagementarea 
         %div{ style:"display:inline-block; width: 60%;" }       
-          %div.control-group
+          .control-group
             %label.control-label Name
-            %div.controls
+            .controls
               = f.text_field :name
-          %div.control-group
+          .control-group
             %label.control-label Profile Picture URL
-            %div.controls
+            .controls
               = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
               %a.btn.secondary{ style: "margin-left:10px;" } Preview   
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
@@ -26,56 +26,56 @@
             %p{ style: "font-size: 15px; word-break: normal; width: 72%; display: inline-block; " } Customize your profile! You can directly the edit the CSS of your profile to give it your own style to best showcase your skills.
             =link_to "Customize Profile", style_user_path(current_user.username), style:"vertical-align: top; margin-left: 12px;"
         %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
-          %div.control-group
-            %div.controls{style:"margin-left:112px;"}
+          .control-group
+            .controls{style:"margin-left:112px;"}
               = image_tag @user.picture, id: "image_url_preview", width: "150", alt: "#{@user.name}"      
       %h4 Vital stats
-      %div.editprofilemanagementarea
-        %div.control-group
+      .editprofilemanagementarea
+        .control-group
           %label.control-label Location
-          %div.controls
+          .controls
             = f.text_field :location
-        %div.control-group
+        .control-group
           %label.control-label Education
-          %div.controls
+          .controls
             = f.text_field :education
-        %div.control-group
+        .control-group
           %label.control-label Company Name
-          %div.controls
+          .controls
             = f.text_field :company_name
-        %div.control-group
+        .control-group
           %label.control-label Title
-          %div.controls
+          .controls
             = f.text_field :title
-        %div.control-group
+        .control-group
           %label.control-label About
-          %div.controls
+          .controls
             = f.text_area :description, rows: "5", style: "width: 390px;", placeholder: "Tell us about yourself..."
       %h4 Change password
-      %div.editprofilemanagementarea
-        %div.control-group
+      .editprofilemanagementarea
+        .control-group
           %label.control-label New password
-          %div.controls
+          .controls
             = f.password_field :password, style: "width: 150px;"
-        %div.control-group
+        .control-group
           %label.control-label Confirm new password
-          %div.controls
+          .controls
             = f.password_field :password_confirmation, style: "width: 150px;"
         = f.submit "Save new password", class: "button button-actionable", style: "padding: 4px 10px 3px 10px; font-size:13px; position: relative; float: right; bottom: 3px;"
         
       %h4 Your email address
       %span{style:"position:relative; bottom:5px;"}
         (We hate spam too. We'll never sell, rent, or otherwise abuse your email address.)
-      %div.editprofilemanagementarea
-        %div.control-group
+      .editprofilemanagementarea
+        .control-group
           %label.control-label Email
-          %div.controls
+          .controls
             = f.text_field :email
         %div{style:"margin-left:180px;"}
           = link_to "Manage your notification settings.", notification_settings_path(current_user.signup_token)
     %hr
-    %div.control-group
-      %div.controls
+    .control-group
+      .controls
       = link_to "Remove Account", current_user, method: :delete, confirm: "Are you absolutely certain you would like to delete your account? This action is irreversible",  style: "margin-left: 20px; margin-top:7px; float: left;"
       = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
       = link_to "Back", profile_path(current_user.username), class: "button button-standard", style: "float: right;"
