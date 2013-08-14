@@ -68,13 +68,13 @@
                   - groups = @groups if not @admin_group and (@groups and @groups.size > 0)
                   - enrollments = current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").to_a
                   - enrollments = nil if enrollments.empty?
-                  - if groups or enrollments
+                  - if @admin_group
+                    %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
+                  - elsif groups or enrollments
                     %a.dropdown-toggle{ "data-toggle" => "dropdown"}
                       = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
                       %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                       %span.caret
-                  - else
-                    %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
                 - if groups or enrollments
                   %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
                     .outter-nub{ style: "left: 148px; "}
