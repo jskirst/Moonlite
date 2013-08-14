@@ -18,7 +18,11 @@
   $(function(){ 
     $('#screen_carousel').carousel() 
   }); 
- 
+  $(".sales_help_inline").each(function(){
+    $(this).click(function(){$('#sales_help_modal').modal({show: true, keyboard: true, static: true});});
+  });
+
+
 #employer_product.aboutcontainer 
   .aboutbox 
     .aboutheader 
@@ -168,10 +172,10 @@
                   %li Premium Phone and Email Support
                 .price_footer 
                   = link_to "Select", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button" 
-            %div{ style: "margin-top: -30px; "} 
+            %div.sales_help_inline{ style: "margin-top: -30px; "} 
               %p{ style: "margin: 0; float: right;"} 
                 Have more than 50 users?  
-                %a{href: "mailto:support@metabright.com?subject=Inquiry for more than 50 Evaluator users"}Contact us for pricing. 
+                %a{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})" }Contact us for pricing. 
         .area{ style: "margin-top: 110px;"} 
           %h2 
             Our philosophy 

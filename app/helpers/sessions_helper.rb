@@ -143,6 +143,14 @@ module SessionsHelper
   
   def name_for_paths() "Challenge" end
   def name_for_personas() "Persona" end
+    
+  def ongoing_evaluation
+    @ongoing_evaluation ||= Evaluation.joins(:evaluation_enrollments)
+      .where("evaluation_enrollments.user_id = ?", current_user.id)
+      .where("evaluation_enrollments.submitted_at is NULL")
+      .select("evaluation_enrollments.*, evaluations.*")
+      .first
+  end
   
   def determine_enabled_features
     unless ["raw"].include?(params[:action])

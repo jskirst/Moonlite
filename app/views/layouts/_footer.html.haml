@@ -33,11 +33,19 @@
     %p If you have any questions about MetaBright or your Evaluator subscription, please don't hesitate to reach out. Our team can make sure you're using your Evaluator subscription to its fullest.
     %ul
       %li 
-        %span Call us: 
-        (415) 423-1151
-      %li 
         %span Email us: 
         %a{href: "mailto:support@metabright.com"} support@metabright.com
+      /* This if statement works here so long as premium support is offered with plans with multiple seats */
+      - if @group and @group.can_add_users?
+        %li 
+          %span Call us: 
+          (415) 423-1151
+      - elsif @group
+        %li
+          %span Call us:
+          Phone support not available with your current subscription.
+          = link_to "Upgrade your plan.", edit_group_url(@group)
+      
   
 
 %div.footer
