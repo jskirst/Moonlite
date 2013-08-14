@@ -2,7 +2,7 @@ class GroupMailer < ActionMailer::Base
   default from: "Team MetaBright <team@metabright.com>"
   layout "mail"
   
-  def signup(group)
+  def welcome(group)
     @group = group
     @user = group.users.first
     m = mail(to: @user.email, subject: "Welcome to MetaBright!")

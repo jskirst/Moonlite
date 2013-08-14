@@ -115,12 +115,14 @@ class GroupsController < ApplicationController
     @group.update_attributes(params[:group])
     if params[:group][:plan_type]
       flash[:success] = "Plan type has been updated."
+    else
+      flash[:success] = "Account settings have been updated."
     end
     
     if params[:redirect_uri]
       redirect_to params[:redirect_uri]
     else
-      redirect_to @group
+      redirect_to account_group_url(@group)
     end
   end
   
