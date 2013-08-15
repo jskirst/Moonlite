@@ -132,7 +132,7 @@ class Group < ActiveRecord::Base
   end
   
   def send_welcome_email(deliver = false)
-    m = GroupMailer.signup(self)
+    m = GroupMailer.welcome(self)
     m.deliver if deliver
   end
   

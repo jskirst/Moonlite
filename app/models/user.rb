@@ -71,7 +71,10 @@ class User < ActiveRecord::Base
     if self.name_changed?
       grant_username(force_rename: true)
     end
-    self.user_role_id = self.company.user_role_id if self.user_role_id.nil?
+    
+    if self.user_role_id.nil?
+      self.user_role_id = Company.first.user_role_id
+    end
   end
   
   before_create do
@@ -108,7 +111,8 @@ class User < ActiveRecord::Base
     details = {} unless details
     group = Group.find(details["group_id"]) unless details["group_id"].blank?
     user = User.new
-    user.company_id = 1
+    #raise "No company present" if Company.first.nil? or Company.first.new_record?
+    user.company = Company.first
     user.name = details["name"] || grant_anon_username
     user.email = details["email"] || "#{user.name}@metabright.com"
     user.grant_username
@@ -350,10 +354,10 @@ class User < ActiveRecord::Base
     
     if (last_email_sent_at && last_email_sent_at.to_date.today?)
       if emails_today && emails_today >= MAX_DAILY_EMAILS
-        puts "Emailed too much today"
+        #puts "Emailed too much today"
         return false
       else
-        puts "Can send email."
+        #puts "Can send email."
         return true
       end
     else

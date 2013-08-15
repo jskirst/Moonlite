@@ -16,17 +16,17 @@ describe SubmittedAnswer do
     @sa = SubmittedAnswer.new(content: Faker::Lorem.sentence(12))
     @sa.task_id = @task.id
     @sa.save!
-    ct = @user.completed_tasks.create!(task_id: @task.id, status_id: 1, submitted_answer_id: @sa.id)
+    ct = @user.completed_tasks.create!(enrollment_id: @user.enrolled?(@task.path).id, task_id: @task.id, status_id: 1, submitted_answer_id: @sa.id)
     
     @sa2 = SubmittedAnswer.new(content: Faker::Lorem.sentence(12))
     @sa2.task_id = @task2.id
     @sa2.save!
-    ct = @user.completed_tasks.create!(task_id: @task2.id, status_id: 1, submitted_answer_id: @sa2.id)
+    ct = @user.completed_tasks.create!(enrollment_id: @user.enrolled?(@task2.path).id, task_id: @task2.id, status_id: 1, submitted_answer_id: @sa2.id)
     
     @sa3 = SubmittedAnswer.new(content: Faker::Lorem.sentence(12))
     @sa3.task_id = @task.id
     @sa3.save!
-    ct = @user2.completed_tasks.create!(task_id: @task.id, status_id: 1, submitted_answer_id: @sa3.id)
+    ct = @user2.completed_tasks.create!(enrollment_id: @user2.enrolled?(@task.path).id, task_id: @task.id, status_id: 1, submitted_answer_id: @sa3.id)
   end
   
   describe "uninducted submitted answer" do

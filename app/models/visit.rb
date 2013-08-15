@@ -46,7 +46,7 @@ class Visit < ActiveRecord::Base
         m.deliver if deliver
         return m
       else
-        puts "Did not mail - not enough visits or 0 user visits"
+        #puts "Did not mail - not enough visits or 0 user visits"
       end
     end
   end
