@@ -224,7 +224,8 @@ class PagesController < ApplicationController
     @title = "Evaluator"
     @show_footer = true
     @hide_background = true
-    @show_sign_in = false
+    @show_sign_in = true
+    @show_employer_link = false
     render "evaluator"
   end
   

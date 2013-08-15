@@ -1,5 +1,5 @@
-body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-.container.body { width: inherit; background-color: transparent; padding: 0px;}
+body.employer { background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+body.employer .container.body { width: inherit; background-color: transparent; padding: 0px; }
 .employer-container { width: 980px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); height: 100%; padding-top:1px;}
 .employer-box{ margin:12px; background-color:white; min-height: 600px; border-radius: 0; border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:20px 20px 5px 20px;}
 .employer-box .header { margin-bottom: 10px;}

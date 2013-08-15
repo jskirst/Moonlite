@@ -4,7 +4,7 @@
     = render "layouts/head"
     :javascript
       $('#page_loading').hide();
-  %body
+  %body{ class: "#{'employer' if hide_background}"}
     - if current_user
       - if @path and @current_section
         = render "modals/launchpad"
@@ -16,7 +16,7 @@
       = render "modals/login"
       
     = render "layouts/navbar"
-    %div.container.body{ style: ("background-color: transparent; padding: 0px;" if hide_background) }
+    %div.container.body
       - flash.each do |key, value|
         = content_tag(:div, value, class: "alert alert-#{key}")
       = yield
