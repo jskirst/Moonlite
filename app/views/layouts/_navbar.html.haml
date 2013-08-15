@@ -6,11 +6,11 @@
           = image_tag(STONEY_SMALL_URL)
           %h1 MetaBright
       .brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; " }
-        - if params[:controller] != "evaluations"
+        - if params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue")
+          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
+        - else
           = link_to root_url do
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-        - else
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       - if current_user and show_nav_bar
         - if @admin_group
           %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
