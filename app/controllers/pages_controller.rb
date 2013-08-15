@@ -218,7 +218,7 @@ class PagesController < ApplicationController
   end
   
   def evaluator
-    if current_user
+    if current_user and not current_user.guest_user?
       redirect_to root_url and return
     end
     @title = "Evaluator"
