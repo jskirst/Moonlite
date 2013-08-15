@@ -35,7 +35,7 @@ class Evaluation < ActiveRecord::Base
   
   def update_evaluation_paths
     return true if selected_paths.nil? or selected_paths.empty?
-    available_paths = (Persona.first.paths.to_a + group.paths.to_a).collect(&:id)
+    available_paths = (Path.where("professional_at is not NULL").to_a + group.paths.to_a).collect(&:id)
     selected_ids = selected_paths.keys.map{ |id| id.to_i }
     existing_ids = []
     evaluation_paths.each do |ep|

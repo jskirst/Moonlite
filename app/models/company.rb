@@ -28,6 +28,10 @@ class Company < ActiveRecord::Base
     cs.owner_id = self.id
     cs.owner_type = "Company"
     cs.save!
+    
+    ur = user_roles.create!(name: "Default", enabled_administration: false)
+    self.user_role_id = ur.id
+    self.save!
   end
   
   def email_from

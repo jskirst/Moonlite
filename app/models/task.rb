@@ -62,7 +62,7 @@ class Task < ActiveRecord::Base
   belongs_to :section
   belongs_to :creator, class_name: "User"
   belongs_to :topic
-  has_one :path, through: :section
+  belongs_to :path
   has_many :completed_tasks
   has_many :answers
   has_many :comments, dependent: :destroy
