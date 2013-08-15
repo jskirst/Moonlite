@@ -4,9 +4,9 @@
 - if @user_custom_style and (@user_custom_style.on? or (@user_custom_style.preview? and @user_custom_style.owner == current_user))
   :css
     #{@user_custom_style.styles}
-- if @group_custom_style
+- if @group_custom_style and (@group_custom_style.on? or (@group_custom_style.preview? and @admin_group))
   :css
     #{@group_custom_style.styles}
-- if @path_custom_style and (@path_custom_style.on? or (@path_custom_style.preview? and @path_custom_style.owner == c))
+- if @path_custom_style and (@path_custom_style.on? or (@path_custom_style.preview? and @path_custom_style.owner == current_user))
   :css
     #{@path_custom_style.styles}

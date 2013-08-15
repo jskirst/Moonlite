@@ -74,15 +74,9 @@
         %div{ style: "float:right; margin: 20px 0 0px 0;" }
           %span.button.button-standard{ onclick: "$(this).parents('.modal').modal('hide');", style: "margin-right: 8px;" } Close
           = f.submit "Save", class: "button button-actionable"
-
-
-:css
-  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .container.body {width: 980px; }
-  .aboutcontainer{ width: 980px; margin-top: -25px;}
     
-#challenge_editor.aboutcontainer
-  .aboutbox
+#challenge_editor.employer-container
+  .employer-box
     .header
       %div
         %a.edit_caption_container.edit_path_settings_button{ style: "cursor: pointer;", title: "Click to edit" }

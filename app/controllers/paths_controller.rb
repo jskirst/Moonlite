@@ -11,6 +11,7 @@ class PathsController < ApplicationController
   def index
     if @group
       @paths = @group.paths
+      render "groups/challenges"
     else
       @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
     end
@@ -403,7 +404,11 @@ class PathsController < ApplicationController
         @group = current_user.groups.where(id: @path.group_id).first
         raise "Access Denied: Not a group member." unless @group
       end
-      @group_custom_style = @group.custom_style if @group
+      
+      if @group
+        @hide_background = true
+        @group_custom_style = @group.custom_style 
+      end
       
       if @group and not @group.admin?(current_user)
         raise "Access Denied"

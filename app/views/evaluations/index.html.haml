@@ -1,18 +1,3 @@
-:css
-  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .container.body { width: inherit; }
-  .aboutcontainer{ width: 980px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
-  .aboutbox{ min-height: 600px; border-radius: 0; }
-  .aboutbox .header { margin-bottom: 10px;}
-  .aboutbox .header img { height: 72px; margin-top: -15px; }
-  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
-  .aboutbox .header hr { margin: 8px; }
-  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
-  .aboutbox table { width: 100%; }
-  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
-  .aboutbox table td a { font-size: 17px; color: #333; }
-  .evaluations tr:hover { background-color: #EEE; }
-
 :javascript
   function compare_and_search(){
     var new_value = $("#evaluation_search").val();
@@ -35,11 +20,11 @@
     setInterval("compare_and_search();", 300);
   });
 
-#evaluations_index.aboutcontainer
-  .aboutbox
+.employer-container
+  .employer-box
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
-      %h2 Evaluations Manager
+      %h2 Evaluations
       %input{ type: "text", placeholder: "Search Evaluations...", id: "evaluation_search" }
     .body
       .evaluations

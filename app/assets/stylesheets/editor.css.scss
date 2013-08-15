@@ -1,29 +1,70 @@
-.small-header-image {
-  height: 50px;
-  width: 50px;
-  border-radius: 5px;
-}
+#challenge_editor {
+  background: $employer_blue;
 
-.task_form {
-  .big_text_area { 
-    height: 150px; 
-    width: 95%; 
-    overflow: auto; 
-    border: 1px solid #cccccc; 
-    background-color: #ffffff; 
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); 
-    border-radius: 4px; 
-    font-family: 'Menlo', 'Courier New', 'Terminal', monospace; 
-    font-size: 14px; 
+  .task_form {
+    .big_text_area { 
+      height: 150px; 
+      width: 95%; 
+      overflow: auto; 
+      border: 1px solid #cccccc; 
+      background-color: #ffffff; 
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); 
+      border-radius: 4px; 
+      font-family: 'Menlo', 'Courier New', 'Terminal', monospace; 
+      font-size: 14px; 
+    }
   }
-}
 
-.new-task-form {
-  padding: 10px;
-  margin: 10px 0 20px 15px;
-  border: 1px solid #DDD;
+  .new-task-form {
+    padding: 10px;
+    margin: 10px 0 20px 15px;
+    border: 1px solid #DDD;
 
-  .status { margin-bottom: 0px; padding: 5px; border-radius: 4px; color: white; width: inherit; font-size: 14px; text-align: center; width: 400px; }
-  .error { background-color: red; }
-  .success { background-color: green; }
+    .status { margin-bottom: 0px; padding: 5px; border-radius: 4px; color: white; width: inherit; font-size: 14px; text-align: center; width: 400px; }
+    .error { background-color: red; }
+    .success { background-color: green; }
+  }
+  
+  .employer-box {
+    padding: 15px 30px;
+    
+    .header {
+      vertical-align: top; 
+      margin: 0 0 20px 0;
+      
+      div { display: inline-block; vertical-align: middle; }
+      
+      .small-header-image {
+        height: 50px;
+        width: 50px;
+        border-radius: 5px;
+        margin-top: 0px;
+      }
+      
+      .floatr {
+        top: 85px; 
+        right: 13px; 
+        position: relative;
+        
+        .controls { 
+          margin-top: 10px;
+          [data-tip]:before { left: 5px; }
+          [data-tip]:after { left: -4px; }
+          
+          div { display: inline-block; }
+          
+          .gear { 
+            height: 20px; 
+            width: 20px; 
+            cursor: pointer; 
+            opacity: 0.7;
+            margin-right: 7px;
+            margin-top: 0px;
+            
+            &:hover { opacity: 1; }
+          }
+        }
+      }
+    }
+  }
 }

@@ -3,6 +3,7 @@ class GroupsController < ApplicationController
   before_filter :authenticate, except: [:new, :create, :show, :newsfeed, :join]
   before_filter :load_resource, except: [:new, :create]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
+  before_filter { @hide_background = true }
   
   def new
     if @admin_group
@@ -18,6 +19,7 @@ class GroupsController < ApplicationController
       @new_group.plan_type = params[:p]
     end
     
+    @hide_background = false
     @show_nav_bar = false
     @show_sign_in = true
     render "groups/signup/form"
@@ -64,7 +66,6 @@ class GroupsController < ApplicationController
   def confirmation
     @title = "Order Confirmation"
     @show_footer = true
-    @hide_background = true
     @show_nav_bar = true
     render "groups/signup/confirmation"
   end

@@ -1,7 +1,7 @@
 task :send_alerts => :environment do
-  time = Time.now - 10.minutes.ago
+  time = 10.minutes.ago
   puts "VOTE ALERTS"
-  votes = Vote.where("created_at > ?", 10.minutes.ago)
+  votes = Vote.where("created_at > ?", time)
   votes.each do |vote|
     begin
       Mailer.content_vote_alert(vote).deliver
@@ -12,7 +12,7 @@ task :send_alerts => :environment do
   end
   
   puts "FOLLOW ALERTS"
-  subs = Subscription.where("created_at > ?", 10.minutes.ago)
+  subs = Subscription.where("created_at > ?", time)
   subs.each do |sub|
     begin
       Mailer.content_sub_alert(sub).deliver
@@ -23,7 +23,7 @@ task :send_alerts => :environment do
   end
   
   puts "COMMENT ALERTS"
-  comments = Comment.where("created_at > ?", 10.minutes.ago)
+  comments = Comment.where("created_at > ?", time)
   comments.each do |comment|
     begin
       Mailer.content_comment_alert(comment).deliver
@@ -45,24 +45,13 @@ task :send_alerts => :environment do
   end
   
   puts "CONTRIBUTION UNLOCK ALERTS"
-  enrollments = Enrollment.where("contribution_unlocked_at > ?", 10.minutes.ago)
+  enrollments = Enrollment.where("contribution_unlocked_at > ?", time)
   enrollments.each do |e|
     puts "Sending contribution unlock alert..."
     begin
       Mailer.contribution_unlocked(e.user.email, e.path).deliver
     rescue
       puts "Contribution Unlock alert rejected: #{$!}"
-    end
-  end
-  
-  puts "NEW GROUP WELCOME EMAIL"
-  groups = Group.where("created_at > ?", 10.minutes.ago)
-  groups.each do |e|
-    puts "Sending signup email..."
-    begin
-      GroupMailer.signup(group).deliver
-    rescue
-      puts "Group signup email"
     end
   end
   

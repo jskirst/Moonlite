@@ -24,13 +24,25 @@
       $(".button-actionable").removeClass("disabled").removeAttr("disabled")
     });
   });
-
+  
 :css
+  body { background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .container.body { width: inherit; background-color: transparent;  padding: 0px; }
+  .aboutcontainer{ width: 980px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
+  .aboutbox{ min-height: 600px; border-radius: 0; }
+  .aboutbox .header { margin-bottom: 10px;}
+  .aboutbox .header img { height: 72px; margin-top: -15px; }
+  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
+  .aboutbox .header hr { margin: 8px; }
+  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
+  .aboutbox table { width: 100%; }
+  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
+  .aboutbox table td a { font-size: 17px; color: #333; }
+  .evaluations tr:hover { background-color: #EEE; }
+  .aboutbox .invite { border-radius: 0; padding: 6px 6px; font-size: 15px; margin: 4px 0 4px -8px; }
+  .documentation { padding: 10px 20px; }
+  .container .body { padding: 0; }
   .form-horizontal li.controls { margin-left: 155px; }
-  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutbox{ border-radius: 0; }
-  .aboutbox .header { margin-bottom: 10px; }
-  .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: -35px; border-radius: 0;  }
   
 #search.aboutcontainer
   .aboutbox
