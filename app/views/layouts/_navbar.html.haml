@@ -1,12 +1,15 @@
 %nav.navbar.navbar-fixed-top
-  %div.fill.navbar-inner{ style: "height: 100%;" }
+  .fill.navbar-inner{ style: "height: 100%;" }
     %div{ style: "height: 100%; width: 87%; margin: 0 auto;" }
-      %div.new-brand.brand{ style: "display: none;" }
+      .new-brand.brand{ style: "display: none;" }
         = link_to root_url do
           = image_tag(STONEY_SMALL_URL)
           %h1 MetaBright
-      %div.brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; " }
-        = link_to root_url do
+      .brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; " }
+        - if params[:controller] != "evaluations"
+          = link_to root_url do
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
+        - else
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       - if current_user and show_nav_bar
         - if @admin_group
@@ -61,42 +64,42 @@
         %ul.nav.pull-right{ style: "float:right; margin-right: -.6%;" }
           - if current_user
             %li.navuser
-              %div.dropdown.pull-right
+              .dropdown.pull-right
                 - if current_user.guest_user?
                   %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:2px; margin-right: 17px; text-shadow:none; color:white;" } Sign up
                 - else
                   - groups = @groups if not @admin_group and (@groups and @groups.size > 0)
                   - enrollments = current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").to_a
                   - enrollments = nil if enrollments.empty?
-                  - if groups or enrollments
+                  - if @admin_group
+                    %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
+                  - elsif groups or enrollments
                     %a.dropdown-toggle{ "data-toggle" => "dropdown"}
                       = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
                       %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                       %span.caret
-                  - else
-                    %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
                 - if groups or enrollments
                   %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
                     .outter-nub{ style: "left: 148px; "}
                       .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
                     - if groups
-                      %div.leftboxheader Your Groups
-                      %div.leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD;"}
+                      .leftboxheader Your Groups
+                      .leftboxfooter{style:"padding:0; background-color:white; border-bottom: 1px solid #DDD;"}
                         - @groups.each do |group|
                           = link_to root_url(g: group.id), style: "text-decoration: none; padding: 0;" do
-                            %div.singlegroupentry{ style: "padding: 6px 12px; "}
+                            .singlegroupentry{ style: "padding: 6px 12px; "}
                               = image_tag group.picture, style: "display: inline-block; height: 50px; width: 50px;", class: "img-circle"
                               %div{ style: "margin-left: 5px; display: inline-block; color: gray; vertical-align: middle; "}
                                 %div{ style: "font-size: 20px; line-height: 23px; "} #{truncate(group.name, length:22, separator: ' ')}
                                 %div{ style: "font-size: 13px; "} #{truncate(group.description, length: 41, separator: ' ')}
                     - if enrollments
-                      %div.leftboxheader Your Challenges
-                      %div.leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:auto;"}
+                      .leftboxheader Your Challenges
+                      .leftboxfooter{style:"padding:0; background-color:white; max-height: 412px; overflow-y:auto;"}
                         - enrollments.each do |e|
                           = link_to challenge_path(e.path.permalink), style:"padding:0;" do
-                            %div.singleprogressentry
+                            .singleprogressentry
                               = image_tag e.path.image, style: "width: 50px; height: 50px;", alt: "#{e.path.name}"            
-                              %div.challengeprogress
+                              .challengeprogress
                                 %span{ style: "font-size:18px;"} #{truncate(e.path.name,length: 18, separator: ' ')}
                                 %span{style: "font-size:14px; float:right; "} Level #{e.level}
                                 %span{ style: "position:relative; bottom:3px;display:block; line-height:16px;"} #{e.points_to_next_level} more points to level up!
@@ -107,7 +110,7 @@
                   
             %li
               - notifications_ary = notifications.to_a
-              %div.dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
+              .dropdown.pull-right.notification-icon{ style: "padding-top: 11px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", onclick: "mark_notifications_as_read();", style: "padding:10px;" }
                   = image_tag ICON_NOTIFICATIONS, style: "width: 18px; height: 18px;", title: "Notifications", alt: "Notifications"
                   - if unread_notification_count > 0
@@ -117,8 +120,8 @@
                     %div
                       .outter-nub{ style: "left: 184px; "}
                         .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
-                    %div.leftboxheader Notifications
-                    %div.leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: auto;"}
+                    .leftboxheader Notifications
+                    .leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: auto;"}
                       - notifications.each do |event|
                         %li.notification_space
                           %div.notification{ class: "#{event.read_at ? '' : 'notification-unread'}" }
@@ -131,11 +134,11 @@
                     %div
                       .outter-nub{ style: "left: 184px; "}
                         .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
-                    %div.leftboxheader Notifications
-                    %div.leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: auto;"}
+                    .leftboxheader Notifications
+                    .leftboxfooter{style: "padding: 0;background-color: white;max-height: 352px;overflow-y: auto;"}
                       %p{ style: "margin: 10px 10px 0;"} No notifications yet.
             %li
-              %div.dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
+              .dropdown.pull-right.notification-icon{ style: "padding-top:9px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:10px;" }
                   %img{ src: ICON_GEAR, style: "height:20px; width:20px;", title:"Settings", alt: "Settings"}
                 %ul.dropdown-menu{ role: "button", style: "margin:0px;padding: 0 0 0px 0; top:43px; right:-40px; min-width: 25px; min-height: 50px;" }
@@ -168,5 +171,5 @@
               = image_tag @path.image, style: "width: 32px; height: 32px; margin-top: 2px;", alt: "#{@path.name}"            
               %div{ style: "vertical-align: top; width: 255px; margin-left: 5px; display: inline-block; color: white;" }
                 %span Level #{@enrollment.level} - #{@enrollment.points_to_next_level} more points to next level
-                %div.progress.progress-info{ style: "height: 10px; margin:0;" }
-                  %div.bar{ style: "width: #{@enrollment.level_percent}%;"}
+                .progress.progress-info{ style: "height: 10px; margin:0;" }
+                  .bar{ style: "width: #{@enrollment.level_percent}%;"}
