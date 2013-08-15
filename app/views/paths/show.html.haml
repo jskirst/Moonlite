@@ -33,7 +33,7 @@
       - if current_user
         Level #{@enrollment.level}, #{@enrollment.total_points} points
       - else
-        %a.login_link Login or register to join this Challenge!
+        #{@path.enrollments.count} Participants
     .carousel
       - if @enrollments.size > 4
         .left_scroll{ onclick: "slide('left');" }
