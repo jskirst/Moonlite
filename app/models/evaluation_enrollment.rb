@@ -13,12 +13,12 @@ class EvaluationEnrollment < ActiveRecord::Base
     where("submitted_at > ?", time)
   end
 
-  def send_submission_email(deliver = false)
+  def send_submission_alert(deliver = false)
     m = GroupMailer.submission(self)
     m.deliver if deliver
   end
 
-  def self.send_all_welcome_emails(time, deliver = false)
-    new_submissions(time).each { |g| g.send_submission_email(deliver) }
+  def self.send_all_submission_alerts(time, deliver = false)
+    new_submissions(time).each { |g| g.send_submission_alert(deliver) }
   end
 end
