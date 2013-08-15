@@ -102,7 +102,7 @@
           %span 4
         .instructions
           %h4 Submit Application
-          - if current_user and evaluation_completed
+          - if current_user and evaluation_completed and not current_user.country.nil?
             - if @evaluation_enrollment.submitted?
               %p You successfully submitted this application #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago.
             - else
