@@ -21,6 +21,22 @@
       %li 
         %span Email us: 
         %a{href: "mailto:support@metabright.com"} support@metabright.com
+        
+%div.take_support_modal.modal.hide.fade 
+  %div.modal-header
+    .modal_close
+      = image_tag ICON_CLOSE_URL, alt: "Close"
+    = image_tag STONEY_SMALL_URL, alt:"Stoney", class: "stoney"
+    %h3 Get in touch with us!
+  %div.modal-body
+    %p Have a question? Something not working? We're here to help. Feel free to contact us via one of the following methods:
+    %ul
+      %li 
+        %span Call us: 
+        (415) 423-1151
+      %li 
+        %span Email us: 
+        %a{href: "mailto:support@metabright.com"} support@metabright.com
     
   
 %div.enterprise_modal.modal.hide.fade 
@@ -60,6 +76,9 @@
 - elsif current_user and @admin_group
   .footer_tab.enterprise_tab
     %div{ onclick: "$('.enterprise_modal').modal({keyboard: true, show: true})"} Need some help?
+- elsif params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue")
+  .footer_tab.take_support_tab
+    %div{ onclick: "$('.take_support_modal').modal({keyboard: true, show: true})"} Need some help?
 - else
   .footer_tab.feedback_tab
     = link_to "Feedback", ideas_path

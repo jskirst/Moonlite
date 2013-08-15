@@ -540,7 +540,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
   
   a { padding: 6px 10px 2px 42px; }
 }
-.sales_help_tab{
+.sales_help_tab, .take_support_tab{
   background-color: #0CC000;
   background-image: url(https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/feedback_bubble.png); 
   
@@ -552,7 +552,7 @@ ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cur
   
   div { padding: 6px 10px 2px 40px;}
 }
-.sales_help_modal, .enterprise_modal {
+.sales_help_modal, .enterprise_modal, .take_support_modal {
   .modal-header {
     border-radius: 6px 6px 0 0; 
     background-color: $employer_green_light;
