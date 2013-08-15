@@ -51,11 +51,7 @@
 %div.footer
   %span.copyright © 2013 MetaBright, Inc. /
   %span.footerlinks
-    = link_to "Evaluator", evaluator_path
-    \/
     %a{href: "http://metabright.blogspot.com/", target: "_blank"} Blog
-    \/
-    = link_to "Feedback", ideas_path 
     \/
     = link_to "Terms of Service", tos_path
 - if (not current_user) and (params[:action] == "evaluator" or params[:controller] == "groups")
