@@ -28,7 +28,8 @@
         = image_tag @user.picture, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
           %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
-          %h3{ style: "font-size:20px; "}= @evaluation.title
+          %h3{ style: "font-size:20px; "}
+            = link_to @evaluation.title, group_evaluation_path(@group, @evaluation)
         %div{ style: "display: inline-block; vertical-align: top; float: right; text-align: right; margin-top: 10px; "}
           %h3{ style: "font-size:17px; line-height: 25px"}
             = link_to @user.email, "mailto:#{@user.email}"

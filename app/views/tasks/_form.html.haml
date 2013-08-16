@@ -19,7 +19,7 @@
     - if new_task or task.multiple_choice? or task.exact?
       .multiple_choice.exact.control-group
         %label.control-label Quoted text (optional)
-        .controls{ style: "margin-top: 6px;" }
+        .controls{ style: "margin-top: 3px;" }
           - unless task.quoted_text
             %a.show_quoted_text{ onclick: "$(this).hide(); $(this).siblings('.quoted_text_tt').hide(); $(this).siblings('.big_text_area').show();" } Add quoted text
             .quoted_text_tt

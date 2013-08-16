@@ -200,7 +200,7 @@ class EvaluationsController < ApplicationController
     @evaluation_enrollment = current_user.evaluation_enrollments.find_by_evaluation_id(params[:id])
     unless @evaluation_enrollment.submitted?
       @group.admins.each do |admin|
-        UserEvent.log_event(admin, "#{current_user.name} has just submitted their evaluation for the #{@evaluation.title} position.", current_user, grade_group_evaluation_url(@group, @evaluation, u: current_user.id), current_user.picture)  
+        UserEvent.log_event(admin, "#{current_user.name} has just submitted their Evaluation for the #{@evaluation.title} position.", current_user, grade_group_evaluation_url(@group, @evaluation, u: current_user.id), current_user.picture)  
       end
       @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
     end
