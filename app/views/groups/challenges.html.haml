@@ -3,13 +3,16 @@
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
       %h2 Challenges
-      %input{ type: "text", placeholder: "Search Challenges...", id: "evaluation_search" }
+      - unless @paths.empty?
+        %input{ type: "text", placeholder: "Search Challenges...", id: "evaluation_search" }
     .body
       .custom_challenges
         - if @paths.empty?
-          %p 
-            You don't have any custom Challenges. 
-            = link_to "Create one now.", new_group_path_url
+          .first_timer
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/challenges_dark.png"
+            %h3 Custom Challenges
+            %p Challenges contain the content that your candidates are tested on. Multiple Challenges can be included in a single Evaluation.
+            = link_to "Create a custom Challenge", new_group_path_url, class: "submit_button"
         - else
           %table
             %tbody
