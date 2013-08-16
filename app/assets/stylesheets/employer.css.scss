@@ -44,6 +44,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
   .gear.medium { height: 25px; width: 25px; }
   .gear.large { height: 30px; width: 30px; }
   .gear {
+    cursor: pointer;
     opacity: 0.7;
     &:hover {opacity:1;}
   }

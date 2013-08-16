@@ -14,11 +14,11 @@
         = render "shared/error_messages", object: f.object
         %div{ style: "text-align: center; margin: 10px auto;" }
           %div.action_group
-            %h3 Give your Challenge a name
+            %h3 Give your Challenge a name:
             = f.text_field :name, autofocus: "autofocus", style: "padding: 8px; width: 400px; font-size: 16px; text-align: center;"
             %h5 Examples: Hadoop Test, Salesforce Administration, Marketing Principles
           %div.action_group
-            %h3 Add an image (optional)
+            %h3 Choose a Challenge image:
             %div.field.clearfix
               %div.form_field
                 = render "stored_resources/new_image"

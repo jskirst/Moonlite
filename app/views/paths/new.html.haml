@@ -13,7 +13,7 @@
       = form_for(@path, url: start_path_path) do |f|
         %div{ style: "text-align: center; margin: 10px auto;" }
           %div.action_group.challenge_naming
-            %h3 Give your Challenge a name
+            %h3 Give your Challenge a name:
             %div.control-group
               %div.controls
                 = f.text_field :name, autofocus: "autofocus", style: "padding: 20px; width: 500px; font-size: 28px; line-height: 36px; text-align: center;", placeholder: "Something awesome..."
