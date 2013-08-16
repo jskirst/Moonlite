@@ -113,3 +113,13 @@ NAVBAR_CHALLENGES = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icon
 NAVBAR_EVALUATIONS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/evaluations.png"
 NAVBAR_VERTICAL_DOTS = "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/vertical_dots.png"
 
+CHALLENGE_IMAGE_STRATEGY = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/strategy_chess.png"
+CHALLENGE_IMAGE_CODE = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/code.png"
+CHALLENGE_IMAGE_FINANCE = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/finance.png"
+CHALLENGE_IMAGE_NETWORKING = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/networking.png"
+CHALLENGE_IMAGE_SALES = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/sales.png"
+CHALLENGE_IMAGE_WRITING = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/writing.png"
+CHALLENGE_IMAGE_GENERIC1 = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/rocket.png"
+CHALLENGE_IMAGE_GENERIC2 = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/mountain.png"
+
+
