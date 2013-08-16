@@ -17,22 +17,27 @@
               Choose a Challenge image:
             %table.image_picker
               %tr
-                %img{ src: "http://www.placekitten.com/200/200"}
-                %img{ src: "http://www.placekitten.com/200/200"}
-                %img{ src: "http://www.placekitten.com/200/200"}
-                %img{ src: "http://www.placekitten.com/200/200"}
+                %td
+                  %img{ src: "http://www.placekitten.com/200/200"}
+                  %img{ src: "http://www.placekitten.com/200/200"}
+                  %img{ src: "http://www.placekitten.com/200/200"}
+                  %img{ src: "http://www.placekitten.com/200/200"}
               %tr
-                %img{ src: "http://www.placekitten.com/200/200"}
-                %img{ src: "http://www.placekitten.com/200/200"}
-                %img{ src: "http://www.placekitten.com/200/200"}
-                %img{ src: "http://www.placekitten.com/200/200"}
-            %div.field.clearfix
+                %td
+                  %img{ src: "http://www.placekitten.com/200/200"}
+                  %img{ src: "http://www.placekitten.com/200/200"}
+                  %img{ src: "http://www.placekitten.com/200/200"}
+                  %img{ src: "http://www.placekitten.com/200/200"}
+            %a.image_upload_toggle{onclick: "$(this).hide();$('#challenge_image_upload').show();"} 
+              Or upload your own image...
+            #challenge_image_upload.field.clearfix.hide
               %div.form_field
                 = render "stored_resources/new_image"
-            %div.tips
-              %h5 
-                %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-                Try to choose an image of medium resolution that's roughly a square, and has a color background.
+              %div.tips
+                %h5 
+                  %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
+                  Try to choose an image of medium resolution that's roughly a square, and has a color background.
+
     
       %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
         %button.button.button-actionable{ onclick: "$('#new_path').submit();", style: "margin-top: 15px;" } Create My Challenge
