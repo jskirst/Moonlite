@@ -45,7 +45,7 @@
         %td{ style: "text-align: right;" } Joined #{u.created_at.strftime("%m/%d/%Y")}
         %td.edit_user_details_link{ onclick: "$('.group_admin_modal[data-user=#{u.id}]').modal({keyboard: true, show: true})"}
           %div{"data-tip" => "User Settings"}
-            %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Settings"}
+            %img.gear.small{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Settings"}
     - if @users.empty?
       %tr
         %td{ colspan: "4", style: "border-bottom: 0; font-size; 13px;" }
