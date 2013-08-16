@@ -15,6 +15,10 @@ class GroupsController < ApplicationController
         redirect_to root_url and return
       end
     else
+      if current_user and current_user.guest_user?
+        sign_out
+      end
+
       @new_group = Group.new
       @new_group.plan_type = params[:p]
     end
@@ -22,6 +26,7 @@ class GroupsController < ApplicationController
     @hide_background = false
     @show_nav_bar = false
     @show_sign_in = true
+    @show_employer_link = false
     render "groups/signup/form"
   end
   
@@ -32,6 +37,7 @@ class GroupsController < ApplicationController
     token = params[:group].delete(:token)
     if token.blank?
       plan_type = params[:group].delete(:plan_type)
+      
       @new_group = Group.new(params[:group])
       @new_group.plan_type = plan_type
       if @new_group.save

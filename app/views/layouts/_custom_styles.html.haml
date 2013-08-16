@@ -7,6 +7,6 @@
 - if @group_custom_style and (@group_custom_style.on? or (@group_custom_style.preview? and @admin_group))
   :css
     #{@group_custom_style.styles}
-- if @path_custom_style and (@path_custom_style.on? or (@path_custom_style.preview? and @path_custom_style.owner == current_user))
+- if @path_custom_style and (@path_custom_style.on? or (@path_custom_style.preview? and @path.user == current_user))
   :css
     #{@path_custom_style.styles}
