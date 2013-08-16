@@ -1,20 +1,17 @@
 /* ...
 //= require_self
+//= require bootstrap
+//= require challenge
+//= require core
+//= require css_tooltips
+//= require font
+//= require landing
+//= require launchpad
+//= require newsfeed
+//= require origin
+//= require profile
+//= require revolution
+//= require bootstrap-overrides
+//= require employer
+//= require editor
 */
-
-@import "variables.css.scss";
-@import "bootstrap.css.scss";
-@import "challenge.css.scss";
-@import "core.css.scss";
-@import "css_tooltips.css.scss";
-@import "font.css.scss";
-@import "jquery-ui-1.8.17.custom.css.scss";
-@import "landing.css.scss";
-@import "launchpad.css.scss";
-@import "newsfeed.css.scss";
-@import "origin.css.scss";
-@import "profile.css.scss";
-@import "revolution.css.scss";
-@import "bootstrap-overrides.css.scss";
-@import "employer.css.scss";
-@import "editor.css.scss";

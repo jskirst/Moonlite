@@ -1,3 +1,5 @@
+@import "variables.css.scss";
+
 .box_header {background-color: #FCFCFC; border-top-right-radius: 5px; border-top-left-radius: 5px; padding:10px 12px; border-bottom: 1px solid #DDD; font-weight: normal; text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; text-transform:uppercase;}
 .box_header a, .box_header button{text-shadow: 0 1px 0 white; font-size: 11px; line-height: 16px; padding:3px 7px; font-weight:normal;}
 .newsfeed>.box_header{padding:6px 12px;}
