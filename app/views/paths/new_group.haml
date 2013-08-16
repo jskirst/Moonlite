@@ -1,13 +1,8 @@
-:css
-  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer { margin-top: 25px; width: 900px; }
-
-
-#employer.aboutcontainer
-  #create_evaluation.aboutbox{ style: "padding: 8px; "}
-    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
+.employer-container{ style: "width: 880px;"}
+  #create_evaluation.employer-box
+    .header
       = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
-      %h1.title Create a Challenge
+      %h2 Create a Challenge
     
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       = form_for(@path, url: group_paths_path) do |f|
@@ -18,7 +13,19 @@
             = f.text_field :name, autofocus: "autofocus", style: "padding: 8px; width: 400px; font-size: 16px; text-align: center;"
             %h5 Examples: Hadoop Test, Salesforce Administration, Marketing Principles
           %div.action_group
-            %h3 Choose a Challenge image:
+            %h3 
+              Choose a Challenge image:
+            %table.image_picker
+              %tr
+                %img{ src: "http://www.placekitten.com/200/200"}
+                %img{ src: "http://www.placekitten.com/200/200"}
+                %img{ src: "http://www.placekitten.com/200/200"}
+                %img{ src: "http://www.placekitten.com/200/200"}
+              %tr
+                %img{ src: "http://www.placekitten.com/200/200"}
+                %img{ src: "http://www.placekitten.com/200/200"}
+                %img{ src: "http://www.placekitten.com/200/200"}
+                %img{ src: "http://www.placekitten.com/200/200"}
             %div.field.clearfix
               %div.form_field
                 = render "stored_resources/new_image"

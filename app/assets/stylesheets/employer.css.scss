@@ -432,6 +432,16 @@ body.employer .container.body { width: inherit; background-color: transparent; p
    border: 4px solid $employer_orange; 
    border-radius: 4px;
  }
+ .image_picker {
+   tr{
+     img {
+       display: inline-block;
+       height: 120px;
+       width: 120px;
+       padding: 20px;
+     }
+   }
+ }
  .evaluation_info{
    border: 4px solid $employer_green;
    background: $employer_green_light;
