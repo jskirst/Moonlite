@@ -23,7 +23,7 @@
 .employer-container
   .employer-box
     .header
-      = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
+      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
       %h2 Evaluations
       - unless @evaluations.empty?
         %input{ type: "text", placeholder: "Search Evaluations...", id: "evaluation_search" }
