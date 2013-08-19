@@ -188,9 +188,15 @@ class PathsController < ApplicationController
   end
 
   def destroy
-    @path.destroy
-    flash[:success] = "#{name_for_paths} successfully deleted."
-    redirect_to root_path
+    if @path.group_id?
+      @path.destroy
+      flash[:success] = "#{name_for_paths} successfully deleted."
+      redirect_to group_paths_url(@group)
+    else
+      @path.destroy
+      flash[:success] = "#{name_for_paths} successfully deleted."
+      redirect_to paths_path
+    end
   end
 
   def collaborator
