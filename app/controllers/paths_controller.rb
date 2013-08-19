@@ -11,6 +11,13 @@ class PathsController < ApplicationController
   def index
     if @group
       @paths = @group.paths
+      if params[:q]
+        @paths = @paths.where("name ILIKE ?", "%#{params[:q]}%") unless params[:q].blank?
+        if request.xhr?
+          render partial: "paths/table"
+          return
+        end
+      end
       render "groups/challenges"
     else
       @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
