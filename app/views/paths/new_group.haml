@@ -1,6 +1,7 @@
 :javascript
   $(function(){
     $(".image_picker img").click(function(){
+      $(".image_picker img").removeClass("selected");
       $("#path_image_url").val($(this).attr("src"));
       $(this).addClass("selected");
     })

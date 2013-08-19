@@ -461,7 +461,14 @@ body.employer .container.body { width: inherit; background-color: transparent; p
          
          &:hover { box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
          &:active { position: relative; top: 1px; }
-         &.selected { box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.95); }
+         &.selected { 
+           outline-color: rgb(91, 157, 217); 
+           outline-offset: 0px; 
+           outline-style: auto; 
+           outline-width: 5px; 
+           
+           &:hover { box-shadow: none;}
+         }
        }
      }
    }
