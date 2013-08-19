@@ -10,13 +10,15 @@ $.MB.Checkout.init = ->
         $(".errors").show().text("Please enter "+$(this).data("label")+".")
         valid = false
         stopSpinner();
+    if valid
+      $(this).find("input").attr("readonly", true)
     return valid
   
   $("#new_group").on "ajax:success", (status, response) ->
     $form = $(this)
     if response.error
-      console.log response.error
       $form.find(".errors").text(response.error)
+      $(this).find("input").removeAttr("readonly")
     else
       $(".in-progress").show()
       $form.find("#group_token").val(response.token)
@@ -36,13 +38,13 @@ $.MB.Checkout.stripeResponseHandler = (status, response) ->
     $form.find("input[type=submit]").prop('disabled', false).removeClass("disabled")
     $(".in-progress").hide();
     stopSpinner()
+    $(this).find("input").removeAttr("readonly")
   else
     stripe_token = response.id
-    console.log $("#group_token").val()
     if $("#group_token").val().length > 0
       $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
       $form.find("#group_stripe_token").val(stripe_token)
       $form.get(0).submit()
     else
-      alert "ERROR: NO TOKEN"
+      alert "An error occurred processing your transaction. No amount was charged to your account."
     

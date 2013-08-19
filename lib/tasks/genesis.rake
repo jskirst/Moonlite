@@ -97,6 +97,7 @@ namespace :db do
       path.approved_at = now
       path.public_at = now
       path.promoted_at = now
+      path.professional_at = now
       path.save!
       
       path.path_personas.create!(persona_id: Persona.first.id)

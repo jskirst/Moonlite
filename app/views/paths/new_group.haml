@@ -1,3 +1,11 @@
+:javascript
+  $(function(){
+    $(".image_picker img").click(function(){
+      $("#path_image_url").val($(this).attr("src"));
+      $(this).addClass("selected");
+    })
+  })
+
 .employer-container{ style: "width: 880px;"}
   #create_evaluation.employer-box
     .header
@@ -6,6 +14,7 @@
     
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       = form_for(@path, url: group_paths_path) do |f|
+        = f.hidden_field :image_url
         = render "shared/error_messages", object: f.object
         %div{ style: "text-align: center; margin: 10px auto;" }
           %div.action_group
@@ -28,7 +37,7 @@
                   = image_tag CHALLENGE_IMAGE_GENERIC2
                   = image_tag CHALLENGE_IMAGE_SALES
                   = image_tag CHALLENGE_IMAGE_FINANCE
-            %a.image_upload_toggle{onclick: "$(this).hide();$('#challenge_image_upload').show();"} 
+            %a.image_upload_toggle{onclick: "$(this).hide(); $('#path_image_url').val(''); $('.image_picker img').removeClass('selected'); $('#challenge_image_upload').show();"} 
               Or upload your own image...
             #challenge_image_upload.field.clearfix.hide
               %div.form_field
@@ -40,4 +49,4 @@
 
     
       %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
-        %button.button.button-actionable{ onclick: "$('#new_path').submit();", style: "margin-top: 15px;" } Create My Challenge
+        %button.button.button-actionable{ form: "new_path", style: "margin-top: 15px;" } Create My Challenge
