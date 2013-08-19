@@ -122,8 +122,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .userctrlpanel p { margin:31px 0 0 0; color:#404040; font-weight: bold; font-size:12px; }
 .userctrlpanel span { font-size:11px; color:#404040; }
 .challengecarousel{ display:inline-block; height: 78px; overflow: hidden; }
-.inlinedisplay { list-style-type: none; position:relative; margin: 0; bottom:6px; overflow-x: hidden; height: 85px; }
-.inlinedisplay li { display:inline; }
+
 .bar2 .mosaic-overlay { bottom:-20px; height:40px; background-color: rgba(0, 0, 0, .8); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)"; filter:alpha(opacity=80); }
 .bar2 .mosaic-overlay:hover { background-color: rgba(0,0,0,1); -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)"; filter:alpha(opacity=100); text-decoration: none; }
 .mosaic-block {cursor: pointer; display:inline-block;  position:relative;overflow:hidden;width:200px;height:80px;margin-right:10px; box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 5px;}
@@ -400,9 +399,6 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 
 .headerspace { text-shadow: 0 1px 0 white; padding: 12px 0 12px 12px; font:bold 11px arial, sans-serif; text-transform: uppercase; border-bottom: 1px solid #DDD; border-top-left-radius: 6px; border-top-right-radius: 6px; background-color: #FCFCFC;}
 #carouselupdatespace {background-color: whitesmoke;border-bottom-left-radius: 6px;border-bottom-right-radius: 6px;padding: 16px 0 3px 12px; }
-.inlinedisplay { list-style-type: none; position:relative; margin: 0; }
-.inlinedisplay li{ display:inline; }
-
 /* modal/help close button/Revolution*/
 .exploreheader>.modal_close{ margin: -8px 6px 0 0; }
 .modal_close, .help_close { float:right; cursor:pointer;}
@@ -485,8 +481,8 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
 /* Create and Administer/Revolution */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}
 .pills a { line-height: 23px; cursor: pointer }
-ul.inlinedisplay div.mosaic-block.bar2 { height: 130px; margin-bottom: 15px; cursor: pointer; }
 .overview td { text-align: center; border: 1px solid #DDD; width: 80px; }
+
 
 /* Footer/Revolution */
 .footer{ height:20px; margin-bottom: 6px; text-align:center; color:#8D8D8D; position: relative; bottom: 0; width:100%; }
