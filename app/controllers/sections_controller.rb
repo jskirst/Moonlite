@@ -207,11 +207,13 @@ class SectionsController < ApplicationController
     if current_user.completed_tasks.where(session_id: params[:session_id]).count == 0
       redirect_to challenge_path(@path.permalink, c: true)
     else
+      @hide_background = true
       render "pre_boss"
     end
   end
   
   def finish
+    @hide_background = true
     @session_id = params[:session_id]
     if params[:s].blank? and current_user.seen_opportunities
       completed_tasks = current_user.completed_tasks

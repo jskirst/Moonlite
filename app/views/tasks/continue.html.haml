@@ -63,10 +63,12 @@
               - if @show_feedback
                 - digits = @enrollment ? @enrollment.total_points.to_s : "0"
                 - label = "Points"
+                - split_digits = digits.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
               - else
                 - digits = @question_count ? @question_count.to_s : "0"
                 - label = "Completed"
-              - split_digits = digits.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
+                - split_digits = digits.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
+              
               - split_digits.each do |d|
                 %span.digit
                   %span= d
@@ -77,10 +79,11 @@
               - if @show_feedback
                 - digits = @streak
                 - label = "Streak"
+                - split_digits = digits.to_i.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
               - else
                 - digits = (@session_total - @question_count)
                 - label = "Remaining"
-              - split_digits = digits.to_i.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
+                - split_digits = digits.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
               - split_digits.each do |s|
                 %span.digit
                   %span{ title: s }= s
