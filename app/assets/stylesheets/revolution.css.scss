@@ -344,7 +344,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .counter span.separator {display:block;float:left; font-family:Georgia, serif; font-size:0.5em;position:relative; top:0.5em;}
 .counter span.separator hr {display:none;}
 
-.quizspace{background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px;}
+
 .quizheader { margin-bottom: 10px; }
 .quizheader img { width: 40px; height: 40px; display:inline-block; margin-right:4px; border-radius:3px;}
 .quizheader span{ font:normal 24px 'MuliLight', 'Helvetica', 'Arial', sans-serif; position:relative; left:5px;}
@@ -369,7 +369,6 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 
 /* Take/Revolution */
 
-.CRquizspace { background-color:white; margin:12px; border-radius:10px;border:1px solid rgba(0, 0, 0, .1);overflow:hidden; padding:12px; min-height:300px;}
 .label.notice { font-size:13px; float:right; margin:2px 6px 0 0; background-color:#3A87AD}
 #CRprogressbar { width:632px; height: 40px; margin: 0 auto;}
 .CRquestionspace { display:inline-block; padding-top:9px; text-align: center; width: 100%; }
@@ -408,7 +407,32 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .login_link { cursor: pointer; }
 
 body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'MuliLight', 'Helvetica', 'Arial', sans-serif; line-height:18px; font-size:13px;}
-.quizcontainer{overflow:hidden; width:768px;margin-left:auto;margin-right:auto;margin-top: 110px; border-radius:6px;border: 1px solid rgba(0, 0, 0, .1);background: rgba(255, 255, 255, .8); }
+.quizcontainer{
+  overflow:hidden; 
+  width:768px;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 130px; 
+  background: $employer_blue; 
+  
+  .quizspace {
+    background-color:white; 
+    margin:12px; 
+    border:1px solid rgba(0, 0, 0, .1);
+    overflow:hidden; 
+    padding:12px;
+    
+    button{float:right;}
+  }
+  .CRquizspace { 
+    background-color:white; 
+    margin:12px; 
+    border:1px solid rgba(0, 0, 0, .1);
+    overflow:hidden; 
+    padding:12px; 
+    min-height:300px;
+  }
+}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .completionmessagespace{display:inline-block; width:396px;overflow: hidden; border-right:1px solid rgba(0, 0, 0, .1);}
 .completionmessagespace a{ text-decoration:none; }
@@ -424,7 +448,7 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
 .completionnextsteps span{font-size:18px; line-height:36px;}
 .social_toolbar img {height:20px; margin:0 2px; position:relative; top:2px; vertical-align:baseline; width:20px;}
 .socialiconholder{position:relative; margin-left:292px; bottom:6px;}
-.quizspace button{float:right;}
+
 
 /*cr completion page/Revolution */
 .completioncontent{margin: 12px;font-size: 13px;border: 1px solid rgba(0, 0, 0, .1);padding: 9px 9px 0 9px;border-radius: 6px;background-color: #F9F9F9;}
