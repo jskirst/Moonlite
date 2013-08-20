@@ -8,7 +8,8 @@
             .path_pic
               %div{ "data-tip" => path.name }
                 %img{ src: path.picture, style: "width: 25px; height: 25px;", title: path.name, alt: path.name }
-        %td{ style: "width: 30%; overflow: hidden" }= take_group_evaluation_url(e.permalink)
+        %td{ style: "width: 32%; overflow: hidden" }
+          %input.eval_url{ value: take_group_evaluation_url(e.permalink), readonly:""}
         %td{ style: "text-align: center; "}
           = e.evaluation_enrollments.where("submitted_at IS NOT NULL").count.to_s
           - if e.evaluation_enrollments.where("submitted_at IS NOT NULL").count == 1 
@@ -27,7 +28,7 @@
     - if @evaluations.empty?
       %tr
         %td{ colspan: "5", style: "border-bottom: 0; font-size; 13px;" }
-          No evaluations with that Title or Company found.
+          No evaluations with that Position or Company found.
     %tr
       %td{ colspan: "5", style: "border-bottom: 0;" }
         = link_to "+ Create a new Evaluation", new_group_evaluation_path(@group)

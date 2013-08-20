@@ -91,6 +91,16 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       &:hover { background-color: #EEE; }
     }
   }
+  .eval_url {
+    text-align: center;
+    cursor: text;
+    -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.25);
+    border: 1px inset;
+    background-color: white;
+    padding: 2px 8px;
+    width: 92.5%;
+  }
 }
 
 .custom_challenges {
