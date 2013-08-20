@@ -11,6 +11,13 @@ class PathsController < ApplicationController
   def index
     if @group
       @paths = @group.paths
+      if params[:q]
+        @paths = @paths.where("name ILIKE ?", "%#{params[:q]}%") unless params[:q].blank?
+        if request.xhr?
+          render partial: "paths/table"
+          return
+        end
+      end
       render "groups/challenges"
     else
       @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
@@ -94,6 +101,7 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
+    @hide_background = true
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id) and return
     end
@@ -181,9 +189,15 @@ class PathsController < ApplicationController
   end
 
   def destroy
-    @path.destroy
-    flash[:success] = "#{name_for_paths} successfully deleted."
-    redirect_to root_path
+    if @path.group_id?
+      @path.destroy
+      flash[:success] = "#{name_for_paths} successfully deleted."
+      redirect_to group_paths_url(@group)
+    else
+      @path.destroy
+      flash[:success] = "#{name_for_paths} successfully deleted."
+      redirect_to paths_path
+    end
   end
 
   def collaborator

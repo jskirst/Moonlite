@@ -29,7 +29,7 @@
         .instructions
           %h4 Create an Account
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-          %p Registering allows #{@evaluation.company} to verify your identity. Your personal preferences and history are not saved.
+          %p To help #{@evaluation.company} verify your identity, we save your name, email address, and profile picture. 
           - if current_user
             %h5 Thank you for signing in, #{current_user.name.split.first}!
           - else

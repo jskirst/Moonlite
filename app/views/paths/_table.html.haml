@@ -1,0 +1,9 @@
+:javascript
+  $(function(){
+    $('.bar2').mosaic({ animation: 'slide' });
+  });
+
+%ul.inlinedisplay
+  - @paths.to_a.each do |path|
+    = render "shared/mosaic", { pic: path.path_pic, link: edit_group_path_path(path.group_id, path.permalink), title: path.name, subtitle: "#{path.enrollments.size} users" }
+= link_to "+ Create a new Challenge", new_group_path_url, class: "create_link"

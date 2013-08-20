@@ -1,20 +1,21 @@
-%div.single_pane
-  %h2{ style: "margin-bottom:10px;" }= @path.sections.empty? ? "Create a Section" : "Add a Section"
-  %h4 What are sections?
-  %p{ style: "margin: 5px 0 20px 0;padding: 0 200px 0 0;" } Every Challenge is made up of a series of sections that are <strong>organized by content</strong> or <strong>question difficulty</strong>.
-  %h4 Choosing a name
-  %p{ style: "margin: 5px 0 20px 0;padding: 0 200px 0 0;" } If you only plan on having one section, the section name won't be very important and can be the same name as your Challenge. Or, if you do plan on having multiple sections, you can name your sections based on topic or by order.</p>
-  = form_for @section do |f|
-    = render "shared/error_messages", object: f.object
-    = f.hidden_field :path_id, value: @path.id
-    %br
-    %div.field{ style: "margin-top:5px;" }
-      %label{ style: "font-weight: bold;" } Section Name
-      %div.input
-        = f.text_field :name, class: "xlarge", style: "margin-bottom: 5px;", autofocus: "autofocus"
-        %br
-        %span{ style: "font-style: italic;" } Examples: Level 1, Beginner Lessons, Fried food of the Midwest
-    %div.actions{ style: "margin-top: 125px; text-align:right;" }
-      - unless @path.sections.first.new_record?
-        = link_to "Back", edit_path_path(@path.permalink), class: "button button-standard"
-      = f.submit "Next", class: "button button-info"
+.employer-container
+  .employer-box{ style: "min-height: 0;"}
+    %h2{ style: "margin-bottom:10px;" }= @path.sections.empty? ? "Create a Section" : "Add a Section"
+    %h4 What are sections?
+    %p{ style: "margin: 5px 0 20px 0;padding: 0 200px 0 0;" } Every Challenge is made up of a series of sections that are <strong>organized by content</strong> or <strong>question difficulty</strong>.
+    %h4 Choosing a name
+    %p{ style: "margin: 5px 0 20px 0;padding: 0 200px 0 0;" } If you only plan on having one section, the section name won't be very important and can be the same name as your Challenge. Or, if you do plan on having multiple sections, you can name your sections based on topic or by order.</p>
+    = form_for @section do |f|
+      = render "shared/error_messages", object: f.object
+      = f.hidden_field :path_id, value: @path.id
+      %br
+      %div.field{ style: "margin-top:5px;" }
+        %label{ style: "font-weight: bold;" } Section Name
+        %div.input
+          = f.text_field :name, class: "xlarge", style: "margin-bottom: 5px;", autofocus: "autofocus"
+          %br
+          %span{ style: "font-style: italic;" } Examples: Level 1, Beginner Lessons, Fried food of the Midwest
+      %div.actions{ style: "margin-top: 125px; text-align:right;" }
+        - unless @path.sections.first.new_record?
+          = link_to "Back", edit_path_path(@path.permalink), class: "button button-standard"
+        = f.submit "Next", class: "button button-info"

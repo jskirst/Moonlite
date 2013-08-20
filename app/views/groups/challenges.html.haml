@@ -1,10 +1,32 @@
+:javascript
+  function compare_and_search(){
+    var new_value = $("#challenge_search").val();
+    if(new_value != original_value){
+      original_value = new_value;
+      $.ajax('#{group_paths_url(@group)}',
+        { 
+          type: "GET", 
+          data: { q: new_value }, 
+          success: function(data, responseText){ 
+            $(".custom_challenges").html(data);
+          } 
+        }
+      );
+    }
+  }
+  
+  $(function(){
+    original_value = $("#challenge_search").val();
+    setInterval("compare_and_search();", 300);
+  });
+
 .employer-container
   .employer-box
     .header
       = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
-      %h2 Challenges
+      %h2 #{@group.name}'s Challenges
       - unless @paths.empty?
-        %input{ type: "text", placeholder: "Search Challenges...", id: "evaluation_search" }
+        %input{ type: "text", placeholder: "Search Challenges...", id: "challenge_search" }
     .body
       .custom_challenges
         - if @paths.empty?
@@ -14,19 +36,4 @@
             %p Challenges contain the content that your candidates are tested on. Multiple Challenges can be included in a single Evaluation.
             = link_to "Create a custom Challenge", new_group_path_url, class: "submit_button"
         - else
-          %table
-            %tbody
-              - @paths.to_a.reverse.each do |path|
-                %tr
-                  %td{ style: "width: 25%; overflow: hidden;" }= link_to path.name, edit_path_url(path)
-                  %td
-                    = link_to edit_path_url(path) do
-                      %div{ "data-tip" => "Edit" }
-                        %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Edit"}
-                  %td
-                    = link_to path_url(path), method: :delete, confirm: "Are you sure you want to delete this Challenge? This action is irreversible." do
-                      %div{ "data-tip" => "Delete" }
-                        %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/trash.png", alt: "Delete"}
-              %tr
-                %td{ colspan: "5", style: "border-bottom: 0;" }
-                  = link_to "+ Create a new Challenge", new_group_path_url
+          = render "table"

@@ -102,17 +102,22 @@
                     %td.table_tip
                       - if r[:core].empty?
                         %h3 --
+                        %p.tip-below{ data: {tip: "There aren't any multiple choice questions in this Challenge."}} Correct MC
                       - else
                         %h3 #{r[:performance].percent_correct}%
-                      %p.tip-below{ data: {tip: "Percent of multiple choice questions answered correctly."}} Correct MC
+                        %p.tip-below{ data: {tip: "Percent of multiple choice questions answered correctly."}} Correct MC
                     %td.table_tip
                       - if r[:core].empty?
                         %h3 --
+                        %p.tip-below{ data: {tip: "There aren't any multiple choice questions in this Challenge."}} Avg. Time per MC
                       - else
                         %h3 #{r[:performance].avg_time_to_answer.round(1)}s
-                      %p.tip-below{ data: {tip: "Average response time per correct multiple choice question."}} Avg. Time per MC
-                    - if r[:creative]
-                      %td.table_tip
+                        %p.tip-below{ data: {tip: "Average response time per correct multiple choice question."}} Avg. Time per MC
+                    %td.table_tip
+                      - if r[:creative].count == 0
+                        %h3 --
+                        %p.tip-below{ data: {tip: "There are no Creative Response questions in this Challenge."}} Creative Response 
+                      - else
                         %h3= r[:creative].count {|x| not x.content.blank? }.to_s+"/"+r[:creative].count.to_s
                         %p.tip-below{ data: {tip: "Number of submitted Creative Response questions out of total available."}} Creative Response
               - unless path.first.group_id?

@@ -94,19 +94,36 @@ body.employer .container.body { width: inherit; background-color: transparent; p
 }
 
 .custom_challenges {
-  .gear {
-    height: 20px;
-    width: 20px;
+  .inlinedisplay {
+    list-style-type: none; 
+    position:relative; 
+    margin: 0 12px; 
+    bottom:6px; 
+    overflow-x: hidden;
+  
+    li { 
+      display:inline; 
     
-    [data-tip]:before { left: 5px; }
-    [data-tip]:after { left: -8px; }
-    
-    tr {
-      &:hover { background-color: #EEE; }
+      &:nth-child(4n-3) {
+        .mosaic-block.bar2 {
+          margin-left: 0;
+        }
+      }
+      &:nth-child(4n) {
+        .mosaic-block.bar2 {
+          margin-right: 0;
+        }
+      }
     }
-    td {
-      
+    .mosaic-block.bar2 {
+      height: 150px; 
+      width: 182px;
+      margin: 16px 25px ;
+      cursor: pointer; 
     }
+  }
+  .create_link {
+    font-size: 17px;
   }
 }
 
@@ -444,7 +461,14 @@ body.employer .container.body { width: inherit; background-color: transparent; p
          
          &:hover { box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); }
          &:active { position: relative; top: 1px; }
-         &.selected { box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.95); }
+         &.selected { 
+           outline-color: rgb(91, 157, 217); 
+           outline-offset: 0px; 
+           outline-style: auto; 
+           outline-width: 5px; 
+           
+           &:hover { box-shadow: none;}
+         }
        }
      }
    }
