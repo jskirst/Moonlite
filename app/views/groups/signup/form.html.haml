@@ -1,8 +1,6 @@
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
   .container.body { padding: 0; background-color: transparent;   }
-  .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;}
-  .aboutbox { border-radius: 0; padding: 20px; }
   .errors { color: red; font-size: 17px; margin-top: 10px; }
   .error-field { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); }
   
@@ -22,8 +20,8 @@
       $("input[data-stripe='exp-year']").val("2018");
     })
 
-#employer_product.aboutcontainer
-  .aboutbox
+#employer_product.employer-container{ style: "width: 760px;"}
+  .employer-box
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
