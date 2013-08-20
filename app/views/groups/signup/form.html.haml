@@ -36,18 +36,26 @@
         = f.hidden_field :token
         = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
-        %label Product:
-        .product_name Evaluator #{plan[:description]}: #{plan[:price]}/mo.
+        - if @coupon_applied
+          %span{ style: "font-size: 16px;"} COUPON APPLIED!
+          .product_name{ style: "margin-bottom: 8px;"} 
+            Evaluator #{plan[:description]}: #{plan[:price]}/mo.
+          .coupon_desc
+            First month free! $0 due now.
+        - else
+          .product_name Evaluator #{plan[:description]}: #{plan[:price]}/mo.
         - unless current_user
           %label Your name:
           = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
         = f.text_field :name, placeholder: "Company name...", "data-label" => "your company's name"
         - unless current_user
-          %label Your email address:
-          = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email"
-          %label Create a password:
-          = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password"
+          %div{ style: "display: inline-block; width: 60%;"}
+            %label Email address:
+            = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email", style: "width: 86%;"
+          %div{ style: "display: inline-block; width: 38%;"}
+            %label Password:
+            = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password", style: "width: 90%;"
         %div{ style: "display: inline-block; width: 64%;"}
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1
@@ -67,7 +75,7 @@
         %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
         %label Coupon
         = f.text_field :coupon, placeholder: "Optional...", style: "width: 180px;"
-        %a.submit_button{ onclick: "window.location = window.location + '&c='+document.getElementById('group_coupon').value;", style: "float: inherit;" } Apply
+        %a{ onclick: "window.location = window.location + '&c='+document.getElementById('group_coupon').value;", style: "float: inherit; position: relative; bottom: 6px; left: 10px; font-size: 14px;" } Apply
         %p.errors= @errors
         .control-group
           %p.in-progress.hide Creating your account now. This may take a minute or two...
