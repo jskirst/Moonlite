@@ -23,6 +23,10 @@ class GroupsController < ApplicationController
       @new_group.plan_type = params[:p]
     end
     
+    if params[:c] and Group::COUPONS.include?(params[:c])
+      @coupon_applied = true
+    end
+    
     @hide_background = false
     @show_nav_bar = false
     @show_sign_in = true

@@ -68,9 +68,10 @@
         %span /
         %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
         %label Coupon
-        = f.text_field :coupon, placeholder: "Optional..."
+        = f.text_field :coupon, placeholder: "Optional...", style: "width: 180px;"
+        %a.submit_button{ onclick: "window.location = window.location + '&c='+document.getElementById('group_coupon').value;", style: "float: inherit;" } Apply
         %p.errors= @errors
-        .control-group{ style: "margin-top: -10px; "}
+        .control-group
           %p.in-progress.hide Creating your account now. This may take a minute or two...
           = link_to evaluator_url(anchor: "prices") do
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear", title: "back"
