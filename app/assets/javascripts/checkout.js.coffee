@@ -38,7 +38,7 @@ $.MB.Checkout.stripeResponseHandler = (status, response) ->
     $form.find("input[type=submit]").prop('disabled', false).removeClass("disabled")
     $(".in-progress").hide();
     stopSpinner()
-    $(this).find("input").removeAttr("readonly")
+    $form.find("input").removeAttr("readonly")
   else
     stripe_token = response.id
     if $("#group_token").val().length > 0
