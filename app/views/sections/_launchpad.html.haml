@@ -2,7 +2,7 @@
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       - if current_user.guest_user?
-        %button.login_link.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;", onclick: "$('#login_modal').modal({ keyboard: true, backdrop: 'static', show: true });" } Save Score
+        %button.show_welcome_headline.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;", onclick: "$('.headlines:first').removeClass('cleared').show(); $('.launchpadcontent').hide();" } Save Score
       - elsif @enrollment.contribution_unlocked?
         %button#editor_link.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
       %ul.nav.nav-tabs
