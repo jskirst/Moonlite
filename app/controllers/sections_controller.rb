@@ -5,6 +5,7 @@ class SectionsController < ApplicationController
   before_filter :disable_navbar, except: [:new, :create]  
   
   def new
+    @hide_background = true
     @path = Path.find(params[:path_id])
     if can_edit_path(@path)
       @section = @path.sections.new

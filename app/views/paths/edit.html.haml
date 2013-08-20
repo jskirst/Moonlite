@@ -20,10 +20,6 @@
       .control-group
         %label.control-label Challenge Name
         .controls= f.text_field :name
-      - unless @group
-        .control-group
-          %label.control-label Description (Optional)
-          .controls= f.text_area :description, style: "width: 350px;", rows: "3", placeholder: "Try to describe this Challenge to others in a few sentences..."
       - if @enable_administration
         .control-group
           %label.control-label Default code template (Optional)
@@ -128,11 +124,11 @@
                       %h3.section_editable{ style: "margin: 0px;", onclick: "$('#section_settings_modal_#{s.id}').modal({show:true});" }= (i+1).to_s+". "+s.name
                       %div
                         %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                          %span#question_counter #{s.core_tasks.size} Core Questions
+                          %span#question_counter #{s.core_tasks.size} Multiple Choice
                         %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                          %span#question_counter #{s.challenge_tasks.size} Challenge Questions
+                          %span#question_counter #{s.challenge_tasks.size} Creative Responses
                         %span.label{ style: "font-size: 12px; vertical-align:middle;" }
-                          %span#question_counter #{s.achievement_tasks.size} Achievements
+                          %span#question_counter #{s.achievement_tasks.size} Tasks
                         - unless s.published_at
                           %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
                 .section_questions_container.row{ style: "display:none;" }

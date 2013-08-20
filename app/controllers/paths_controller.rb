@@ -101,6 +101,7 @@ class PathsController < ApplicationController
 # Begin Path Editing  
   
   def edit
+    @hide_background = true
     if @path.sections.empty?
       redirect_to new_section_path(:path_id => @path.id) and return
     end
