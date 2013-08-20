@@ -100,14 +100,14 @@
                 %tbody
                   %tr
                     %td.table_tip
-                      - if r[:completed_tasks].nil?
+                      - if r[:core].empty?
                         %h3 --
                         %p.tip-below{ data: {tip: "There aren't any multiple choice questions in this Challenge."}} Correct MC
                       - else
                         %h3 #{r[:performance].percent_correct}%
                         %p.tip-below{ data: {tip: "Percent of multiple choice questions answered correctly."}} Correct MC
                     %td.table_tip
-                      - if r[:completed_tasks].nil?
+                      - if r[:core].empty?
                         %h3 --
                         %p.tip-below{ data: {tip: "There aren't any multiple choice questions in this Challenge."}} Avg. Time per MC
                       - else

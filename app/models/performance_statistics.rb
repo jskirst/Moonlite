@@ -45,7 +45,8 @@ class PerformanceStatistics
   
   def calculate_avg_time_to_answer
     return 0 if self.total == 0
-    self.avg_time_to_answer = self.completed_tasks.inject(0){ |sum, ct| sum += ct.updated_at - ct.created_at } / self.total
+    #raise (self.completed_tasks.inject(0){ |sum, ct| sum += ct.updated_at - ct.created_at }.to_f / self.total.to_f).to_s
+    self.avg_time_to_answer = self.completed_tasks.inject(0){ |sum, ct| sum += ct.updated_at - ct.created_at }.to_f / self.total.to_f
   end
   
   def persisted?
