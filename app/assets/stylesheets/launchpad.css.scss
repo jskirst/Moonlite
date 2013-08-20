@@ -142,6 +142,8 @@ $success_color: #62c462;
     width: 75%;
     min-height: 275px;
     
+    &.cleared { display: none; }
+    
     .header {
       height: 110px;
       

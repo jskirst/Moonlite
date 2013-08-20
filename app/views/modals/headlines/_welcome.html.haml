@@ -1,5 +1,25 @@
 :javascript
-  $(function(){
+  function append_error(e){
+    $("#update_user").find("p.error").remove();
+    $("#update_user").append("<p class='error'>"+e+"</p>");
+  }
+  
+  $(function(){      
+    $("#update_user").submit(function(){
+      var e = "";
+      if($("#user_name").val() == ""){
+        e = "Please enter a name."
+      } else if($("#user_email").val() == ""){
+        e = "Please enter an email."
+      } else if($("#user_password").val() == ""){
+        e = "Please enter a password."
+      }
+      if(e != ""){
+        append_error(e);
+        return false;
+      }
+    });
+    
     $(".continue_to_launchpad").click(function(){
       $.MB.submit_or_close(this);
     })
@@ -15,26 +35,33 @@
       }
     });
   })
+:css
+  #update_user input { padding: 6px 10px; font-size: 14px; }
+  #update_user input[type=submit] { padding: 6px 10px; font-size: 14px; }
   
-.headlines.hide{ style: " min-height: auto; width:66%;"}
+.headlines.hide{ style: " min-height: auto; width:66%;" }
   %img{ src: GIANT_STONEY, style: "display: inline-block; height: 250px; vertical-align:top; position: relative; top:32px; "}
   %div{ style: "display: inline-block; width: 65%; margin-top:10px"}
-    .header     
+    .header
       %h1{ style: "font-size: 32px;" } Don't lose your progress!           
       %h2{ style: "font-size: 18px;" }
         Save your score, reserve your username, and keep racking up points!
-    .body.centered{ style: "margin-top: 17px; margin-bottom: 0; " }
+    .body.centered{ style: "margin-top: 0px; margin-bottom: 0; " }
       .signup
-        = link_to "/auth/google_oauth2", class: "btn danger" do
+        = link_to "/auth/google_oauth2", class: "btn danger", style: "padding: 4px 10px;" do
           = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
           %span.landingbuttontext Sign in with Google »
         
-        = link_to "/auth/facebook", class: "btn danger" do
+        = link_to "/auth/facebook", class: "btn danger", style: "padding: 4px 10px;" do
           = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
           %span.landingbuttontext Sign in with Facebook »
         
-        %div.divider OR
-        = form_for(current_user, remote: true, html: { id: "update_name" }) do |f|
-          = f.text_field :email, value: nil, placeholder: "Or sign up with email..."   
-  .exit{ style: "float: right; margin-top: 24px;" }
+        %div.divider{ style: "margin: 8px auto;" } OR
+        = form_for(current_user, html: { id: "update_user" }) do |f|
+          = hidden_field_tag "redirect_uri", challenge_url(@path.permalink, c: true)
+          = f.text_field :name, value: nil, placeholder: "Name"
+          = f.text_field :email, value: nil, placeholder: "E-Mail"
+          = f.password_field :password, value: nil, placeholder: "Password"
+          = f.submit "Submit", class: "button button-standard button-small", style: "display: block; margin: 5px auto; width: inherit;"
+  .exit{ style: "float: right; margin-top: 20px;" }
     %a.continue_to_launchpad Continue to Launchpad »

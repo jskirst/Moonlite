@@ -7,9 +7,9 @@ $.MB.log = (str) ->
 
 $.MB.next_headline = ($headline) ->
   $headline.fadeOut 700, ->
-    $(this).remove()
-    if $('.headlines').size() > 0
-      $('.headlines:first').show()
+    $(this).addClass("cleared")
+    if $('.headlines').not(".cleared").size() > 0
+      $('.headlines').not(".cleared").first().show()
     else
       $('.launchpadcontent').show()
       $(".modal_close").show();
