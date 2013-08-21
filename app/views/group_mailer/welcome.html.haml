@@ -1,12 +1,14 @@
 %p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
 %p{ style: "font-size:12px;"} 
-  Thanks for signing up for MetaBright! Your plan allows you to have #{@group.users.count} on your account. If you'd like to add more users, just go to #{link_to "your account management tab.", account_group_url(@group)}. 
+  Thanks for signing up for MetaBright! 
+  Your plan allows you to have #{@group.users.count} #{@u} on your account. 
+  If you'd like to add more users, just go to #{link_to "your account management tab", account_group_url(@group)}. 
 %p{ style: "font-size: 12px;"} 
   Here are a few of the features included with your MetaBright subscription:
-  %ul
-    %li <strong>Evaluations:</strong> Validate the skills of your job candidates before you spend time interviewing them. You can include up to 5 Challenges in each Evaluation. Each Challenge measures your candidate in a specific skill. #{link_to "Create an Evaluation.", new_group_evaluation_path(@group)}
-    %li <strong>Custom Challenges:</strong> If your company requires a specific skill set that MetaBright doesn't offer yet, you can create your own Challenge to measure your candidates. The best part is, MetaBright's organizational and algorithmic capabilities will still be applied to your Challenge! #{link_to "Create a custom Challenge.", new_group_path_url(@group)}
-    %li <strong>The MetaScore:</strong> We distill everything about your candidate down to a single, easy to understand figure: the MetaScore. This way you can easily compare all your candidates at a glance. The MetaScore is instantly available on all MetaBright Challenges, and even on your custom Challenges once you have over 20 participants.
+  %ul{ style: "font-size: 12px;"} 
+    %li{ style: "font-size: 12px;"}  <strong>Evaluations:</strong> Validate the skills of your job candidates before you spend time interviewing them. You can include up to 5 Challenges in each Evaluation. Each Challenge measures your candidate in a specific skill. #{link_to "Create an Evaluation.", new_group_evaluation_path(@group)}
+    %li{ style: "font-size: 12px;"}  <strong>Custom Challenges:</strong> If your company requires a specific skill set that MetaBright doesn't offer yet, you can create your own custom Challenge. The best part is MetaBright's organizational and algorithmic capabilities will still be applied to your Challenge! #{link_to "Create a custom Challenge.", new_group_path_url(@group)}
+    %li{ style: "font-size: 12px;"}  <strong>The MetaScore:</strong> We distill everything about your candidate down to a single, easy to understand figure: the MetaScore. This way you can easily compare all your candidates at a glance. The MetaScore is instantly available on all MetaBright Challenges, and even on your custom Challenges once you have over 20 participants.
 %p{ style: "font-size: 12px;"}
   If you ever have any questions about MetaBright or your plan, you can reach our support team at #{link_to "support@metabright.com", "mailto:support@metabright.com"}.
 %p{ style: "font-size:12px;"} 
