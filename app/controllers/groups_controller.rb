@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper
-  before_filter :authenticate, except: [:new, :create, :show, :newsfeed, :join]
-  before_filter :load_resource, except: [:new, :create]
+  before_filter :authenticate, except: [:new, :create, :coupon, :show, :newsfeed, :join]
+  before_filter :load_resource, except: [:new, :create, :coupon]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   before_filter { @hide_background = true }
   
@@ -23,15 +23,19 @@ class GroupsController < ApplicationController
       @new_group.plan_type = params[:p]
     end
     
-    if params[:c] and Group::COUPONS.include?(params[:c])
-      @coupon_applied = true
-    end
-    
     @hide_background = false
     @show_nav_bar = false
     @show_sign_in = true
     @show_employer_link = false
     render "groups/signup/form"
+  end
+  
+  def coupon
+    if params[:c] and Group::COUPONS.include?(params[:c])
+      render json: { coupon: true }
+    else
+      render json: { coupon: false }
+    end
   end
   
   def create
