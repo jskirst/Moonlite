@@ -31,12 +31,12 @@
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px 4px;" }
                   %span.caret{ style: "margin: 6px 0 0 0;" }
                 %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
-                  %li{ style: "margin-left: -10px;" }
-                    %div.graynub{ style: "top:-37px; left: 78px; margin:0; "}
-                    %div{ style: "padding: 3px 0px; margin:0;"}
+                  %li
+                    %div.graynub{ style: "top:-15px; left: 60px; "}
+                    %div{ style: "margin: -15px -1px 5px;"}
                       %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
-                        %li{ style: "margin-left:-8px; "}= link_to "Edit Submission", take_section_path(post["section_id"], task_id: post["task_id"]), style: "padding:0; padding-left:8px;"
-                        %li{style: "text-align:center;"}= link_to "Delete Submission", retract_submission_path(post["id"]), remote: true, confirm: "Are you sure you want to delete your submission?", class: "retract_link", style: "padding:0;"
+                        %li= link_to "Edit Submission", take_section_path(post["section_id"], task_id: post["task_id"]), style: "padding: 3px 20px 3px 12px;"
+                        %li{style: "text-align:center;"}= link_to "Delete Submission", retract_submission_path(post["id"]), remote: true, confirm: "Are you sure you want to delete your submission?", class: "retract_link", style: "padding: 3px 20px 3px 12px; margin: 0;"
             - else
               = link_to vote_task_path(post["task_id"], sa_id: post["submitted_answer_id"]), remote: true, class: ("btn vote_button " + (feed.votes.include?(post["submitted_answer_id"]) ? "btn-info" : "")) do
                 %img.up_vote{ src: ICON_UPVOTE_URL, alt: "Up-vote" }
