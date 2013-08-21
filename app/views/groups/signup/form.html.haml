@@ -61,11 +61,15 @@
         .coupon_desc.invalid-coupon{ style: "display: none;" }
           %div{ style: "font-size: 16px;"} Invalid coupon.
           Please try again.
-        - unless current_user
+        - if current_user
+          %label Your name:
+          %input{ type: "text", disabled: "disabled", value: current_user.name }
+        - else
           %label Your name:
           = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
         = f.text_field :name, placeholder: "Company name...", "data-label" => "your company's name"
+        
         - unless current_user
           %div{ style: "display: inline-block; width: 60%;"}
             %label Email address:
@@ -73,6 +77,7 @@
           %div{ style: "display: inline-block; width: 38%;"}
             %label Password:
             = f.password_field :creator_password, placeholder: "Password...", "data-label" => "your password", style: "width: 90%;"
+        
         %div{ style: "display: inline-block; width: 64%;"}
           %label{ style: "display: inline-block;"} Card Number
           .checkout_tt1

@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   
-  COUPONS = ["GETSKILLS"]
+  #COUPONS = ["GETSKILLS"]
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
   attr_protected :token
@@ -76,10 +76,13 @@ class Group < ActiveRecord::Base
   
   def save_with_stripe(stripe_card_token)
     begin
-      customer_details = { description: self.id, plan: self.plan_type, card: stripe_card_token }
-      if COUPONS.include? self.coupon
-        customer_details[:coupon] = self.coupon 
+      if self.creator_email
+        email = self.creator_email
+      else
+        email = self.users.first.email
       end
+      customer_details = { description: self.id, plan: self.plan_type, card: stripe_card_token, email: email }
+      customer_details[:coupon] = self.coupon if self.coupon.present?
       customer = Stripe::Customer.create(customer_details)
       self.stripe_token = customer.id
       save!

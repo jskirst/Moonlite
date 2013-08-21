@@ -7,18 +7,14 @@ class PagesController < ApplicationController
   def home
     @title = "Home"
     @url_for_newsfeed 
-    if @admin_group
+    if @admin_group and not @admin_group.requires_payment?
       @group = @admin_group
       @group_custom_style = @group.custom_style
-      if @group.requires_payment?
-        raise "Something has gone wrong."
-      else
-        if current_user.guest_user?
-          @show_nav_bar = false
-          set_return_back_to = confirmation_group_url(@group)
-        end
-        render "portal"
+      if current_user.guest_user?
+        @show_nav_bar = false
+        set_return_back_to = confirmation_group_url(@group)
       end
+      render "portal"
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).sort { |a,b| b.total_points <=> a.total_points }
@@ -218,13 +214,14 @@ class PagesController < ApplicationController
   end
   
   def evaluator
-    if current_user and not current_user.guest_user?
+    if @admin_group and @admin_group.stripe_token.present?
       redirect_to root_url and return
     end
     @title = "Evaluator"
     @show_footer = true
     @hide_background = true
     @show_sign_in = true
+    @show_nav_bar = false
     @show_employer_link = false
     render "evaluator"
   end
