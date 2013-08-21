@@ -52,7 +52,8 @@ Metabright::Application.routes.draw do
 	match '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
 	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
 	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
-
+  
+  get '/g/coupon' => 'groups#coupon', as: 'coupon'
   resources :groups, path: "g" do
     member do
       get :checkout

@@ -13,7 +13,7 @@ $.MB.Checkout.init = ->
     if valid
       $(this).find("input").attr("readonly", true)
     return valid
-  
+    
   $("#new_group").on "ajax:success", (status, response) ->
     $form = $(this)
     if response.error

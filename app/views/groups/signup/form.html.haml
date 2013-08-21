@@ -5,7 +5,24 @@
   .error-field { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); }
   
 :javascript
-  $(function(){ $.MB.Checkout.init(); });
+  $(function(){ 
+    $.MB.Checkout.init(); 
+    $("#coupon_check").on("click", function(){
+      $.get("#{coupon_url}",
+        { c: $("#group_coupon").val() }, 
+        function(data, response){
+          console.log(data);
+          if(data.coupon == true){
+            $(".invalid-coupon").hide();
+            $(".valid-coupon").show()
+          } else {
+            $(".valid-coupon").hide();
+            $(".invalid-coupon").show();
+          }
+        }
+      );
+    })
+  });
   
 - if Rails.env == "development"
   :javascript
@@ -36,14 +53,14 @@
         = f.hidden_field :token
         = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
-        - if @coupon_applied
-          %span{ style: "font-size: 16px;"} COUPON APPLIED!
-          .product_name{ style: "margin-bottom: 8px;"} 
-            Evaluator #{plan[:description]}: #{plan[:price]}/mo.
-          .coupon_desc
-            First month free! $0 due now.
-        - else
-          .product_name Evaluator #{plan[:description]}: #{plan[:price]}/mo.
+        .product_name{ style: "margin-bottom: 8px;"} 
+          Evaluator #{plan[:description]}: #{plan[:price]}/mo.
+        .coupon_desc.valid-coupon{ style: "display: none;" }
+          %div{ style: "font-size: 16px;"} COUPON APPLIED!
+          First month free! $0 due now.
+        .coupon_desc.invalid-coupon{ style: "display: none;" }
+          %div{ style: "font-size: 16px;"} Invalid coupon.
+          Please try again.
         - unless current_user
           %label Your name:
           = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
@@ -75,7 +92,7 @@
         %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
         %label Coupon
         = f.text_field :coupon, placeholder: "Optional...", style: "width: 180px;"
-        %a{ onclick: "window.location = window.location + '&c='+document.getElementById('group_coupon').value;", style: "float: inherit; position: relative; bottom: 6px; left: 10px; font-size: 14px;" } Apply
+        = link_to "Apply", "", id: "coupon_check", style: "float: inherit; position: relative; bottom: 6px; left: 10px; font-size: 14px;"
         %p.errors= @errors
         .control-group
           %p.in-progress.hide Creating your account now. This may take a minute or two...
