@@ -6,9 +6,9 @@ class GroupMailer < ActionMailer::Base
     @group = group
     @user = group.users.first
     if @group.users.count == 1
-      u = "user"
+      @u = "user"
     else
-      u = "users"
+      @u = "users"
     end
     m = mail(to: @user.email, subject: "Welcome to MetaBright!")
   end

@@ -1,6 +1,8 @@
 %p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
 %p{ style: "font-size:12px;"} 
-  Thanks for signing up for MetaBright! Your plan allows you to have #{@group.users.count} #{u} on your account. If you'd like to add more users, just go to #{link_to "your account management tab", account_group_url(@group)}. 
+  Thanks for signing up for MetaBright! 
+  Your plan allows you to have #{@group.users.count} #{@u} on your account. 
+  If you'd like to add more users, just go to #{link_to "your account management tab", account_group_url(@group)}. 
 %p{ style: "font-size: 12px;"} 
   Here are a few of the features included with your MetaBright subscription:
   %ul{ style: "font-size: 12px;"} 
