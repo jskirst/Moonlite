@@ -7,7 +7,12 @@
   $(function(){
     $('.textfill').textfill({ maxFontPixels: 50 });
   });
-  
+
+- if current_user and @admin_group
+  .alert-preview
+    %p You are viewing this in preview mode.
+    = link_to "Back to Evaluations", group_evaluations_url(@admin_group), class: "submit_button"
+
 #employer.aboutcontainer
   #take_evaluation.aboutbox
     .header
