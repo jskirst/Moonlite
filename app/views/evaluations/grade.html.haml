@@ -64,8 +64,10 @@
           %li{ data: { permalink: r[:permalink], name: r[:name] } }
             %a= truncate(r[:name], length: 15, separator: ' ')
       .evaluations
+        - if @results.empty?
+          %p This user has submitted this evaluation but has no results listed. It is possible that the evaluation has been changed since this user completed the evaluation, and their results are no longer valid.
         - @results.each do |r|
-        - path = Path.where(name: r[:name])
+          - path = Path.where(name: r[:name]).first
           .evaluation.hide{ id: r[:permalink] }
             %h3 Candidate Summary
             .challenge_stats
@@ -120,7 +122,7 @@
                       - else
                         %h3= r[:creative].count {|x| not x.content.blank? }.to_s+"/"+r[:creative].count.to_s
                         %p.tip-below{ data: {tip: "Number of submitted Creative Response questions out of total available."}} Creative Response
-              - unless path.first.group_id?
+              - unless path.group_id?
                 .strengths_weaknesses
                   .strengths 
                     .header{ style:"font-size: 16px; border-bottom: 1px solid rgba(0,0,0,.1);"}
@@ -172,10 +174,10 @@
             - if r[:core].any?
               %div
                 - if r[:creative].any?
-                  %a.header_link{ "data-target" => "#mc", "data-toggle" => "collapse", :type => "button"} Multiple Choice (click to expand)
+                  %a.header_link{ "data-target" => "#mc_#{path.id}", "data-toggle" => "collapse", :type => "button"} Multiple Choice (click to expand)
                 - else
                   %a.header_link Multiple Choice
-                #mc{ class: "#{"collapse" if r[:creative].any?}" }
+                %div{ class: "#{"collapse" if r[:creative].any?}", id: "mc_#{path.id}" }
                   %ol
                     - r[:core].each do |completed_task|
                       %li
