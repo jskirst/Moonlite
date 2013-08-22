@@ -38,13 +38,18 @@
         .sexy_time 
           %section 
             .holder  
-              .text{ style: "margin-left: 57px; "} 
+              .text
                 %h1 
                   What skills does your company need? 
                 %p 
-                  The Evaluator helps you identify the job candidates that have the skills your company needs to perform its best. Choose from over 40 MetaBright Challenges, or create your own. 
-              .image.right{ style: "width: 35%;"} 
-                %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Screenshots/create_eval_xl.jpg", style: "float:right;"} 
+                  The Evaluator helps you identify the job candidates that have the skills your company needs to perform its best. Choose from our growing collection of MetaBright Challenges, or create your own. 
+              .image.right{ style: "width: 47%; box-shadow: none; margin-top: 25px;"}
+                %ul
+                  - @paths.first(18).each do |path|
+                    %li
+                      %div{ "data-tip" => truncate(path.name, length: 17, separator: ' ')}
+                        = image_tag path.picture, alt: "#{path.name}"
+                %h3 ...or create your own!
           %section.gradient_down 
             .holder.gradient_up 
               .image{ style: "width: 55%; margin-top: 21px;"} 
@@ -89,7 +94,7 @@
           .tile 
             .circle 
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/medal_green.png" 
-            %p Choose from over 40 MetaBright skills, or create your own for your company. 
+            %p Choose from our MetaBright skills, or create your own for your company. 
           .tile 
             .circle 
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/group_green.png" 

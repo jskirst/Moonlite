@@ -79,6 +79,7 @@ class EvaluationsController < ApplicationController
     @minutes_to_complete = 
     @evaluation.paths.each do |path|
       @enrollment = @user.enrollments.find_by_path_id(path.id)
+      next unless @enrollment
       core = @enrollment.completed_tasks.joins(:task)
         .joins("LEFT JOIN topics on topics.id=tasks.topic_id")
         .select("topics.*, tasks.*, completed_tasks.*")

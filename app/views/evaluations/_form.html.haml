@@ -34,11 +34,11 @@
             %div.tips
               %h5 
                 %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-                Your company name and the position title will be displayed to candidates when they take your Evaluation.
+                The company name and the position will be displayed to candidates when they take your Evaluation.
             %div.control-group
               %div.controls    
                 = f.text_field :company, autofocus: "autofocus", style: "padding: 4px; width: 300px; font-size: 15px; text-align: center;", placeholder: "Company Name"
-                = f.text_field :title, autofocus: "autofocus", style: "padding: 4px; width: 300px; font-size: 15px; text-align: center;", placeholder: "Position Title"
+                = f.text_field :title, autofocus: "autofocus", style: "padding: 4px; width: 300px; font-size: 15px; text-align: center;", placeholder: "Position"
                 - if false
                   %div{style: "margin-top:10px;"} Upload job description (optional)
           %div.action_group

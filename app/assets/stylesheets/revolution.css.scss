@@ -1002,7 +1002,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
   
   .aboutcontainer { width: 980px; }
   .aboutheader {
-   padding: 6px 0 0 15px;
+   padding: 15px 0 0 15px;
    
    img { height: 140px; }
    h1 { font-size: 58px; display: inline-block; margin-top: 46px; vertical-align: top;} 
@@ -1084,7 +1084,45 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
             width: 45%;
             vertical-align: top;
             box-shadow: 0 0 18px 0px #DFDFDF;
+            
+            h3 {
+              float: right;
+              font-family: 'MuliRegular';
+              color: rgb(0, 145, 0);
+              font-size: 28px;
+              margin-right: 11px;
+            }
+            ul {
+              margin: 0;
+              
+              [data-tip] {
+                text-align: center;
+              }
+              [data-tip]:after { 
+                width: 98px; 
+                height: 19px; 
+                left: -34px;
+                top: -36px; 
+                white-space: normal;
+              }
+              [data-tip]:before { 
+                left:19px;
+              }
+              li {
+                display: inline-block;
+                float: left;
+                padding: 5px 10px;
+                &:nth-child(6n) {padding-right: 0;}
+                &:nth-child(6n+1) {padding-left: 0;}
         
+                img {
+                  height: 50px;
+                  width: 50px;
+          
+                  &:hover { box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.48); };
+                }
+              }
+            }
           }
           .text {
             display: inline-block;

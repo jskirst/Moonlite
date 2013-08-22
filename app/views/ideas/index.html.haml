@@ -37,12 +37,12 @@
                   %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px;" }
                     %span.caret{ style: "margin: 6px 0 0 0;" }
                   %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
-                    %li{ style: "margin-left: -10px;" }
-                      %div.graynub{ style: "top:-39px; left: 74px; margin:0; "}
-                      %div{ style: "padding: 3px 0px; margin:0;"}
+                    %li
+                      %div.graynub{ style: "top:-15px; left: 56px; "}
+                      %div{ style: "margin: -15px 0 5px 9px;"}
                         %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
-                          %li= link_to "Edit Idea", edit_idea_path(idea), style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px;"
-                          %li= link_to "Remove Idea", idea_path(idea), method: :delete, confirm: "Are you sure you want to delete your submission?", style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px;"
+                          %li= link_to "Edit Idea", edit_idea_path(idea), style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin: 0 -1px 2px -9px;"
+                          %li= link_to "Remove Idea", idea_path(idea), method: :delete, confirm: "Are you sure you want to delete your submission?", style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin: 0 -1px 2px -9px;"
               - else
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
                   %img{ src: ICON_UPVOTE_URL, alt: "Up-vote", class: "up_vote" }   
