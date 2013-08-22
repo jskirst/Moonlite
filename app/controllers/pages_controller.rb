@@ -226,6 +226,7 @@ class PagesController < ApplicationController
     @hide_background = true
     @show_sign_in = true
     @show_employer_link = false
+    @paths = Path.where("professional_at is not NULL").to_a
     render "evaluator"
   end
   
