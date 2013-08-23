@@ -25,5 +25,10 @@ class GroupMailer < ActionMailer::Base
     @url = url
     m = mail(to: email, subject: "You've been invited to join the #{group.name} account on MetaBright")
   end
+  
+  def cold_sales
+    @name = ????
+  end
+  
 end
     
