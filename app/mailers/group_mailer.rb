@@ -23,12 +23,13 @@ class GroupMailer < ActionMailer::Base
   def invite(email, group, url)
     @group = group
     @url = url
-    m = mail(to: email, subject: "You've been invited to join the #{group.name} account on MetaBright")
+    m = mail(to: email, subject: "You've been invited to join the #{group.name} account on MetaBright", bcc: "jonathan@metabright.com")
   end
   
-  def cold_sales
-    @name = ????
+  def send_email(email)
+    @content = email.body
+    @content = @content.gsub("@name", email.to_name)
+    m = mail(to: email.to_email, subject: email.subject, from: email.from)
   end
-  
 end
     

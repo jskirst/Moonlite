@@ -1,0 +1,28 @@
+#styles_editor{ style: "padding: 20px;" }
+  = form_for(@email, url: admin_email_url, method: :post, html: { class: "form-inline" }) do |f|
+    %fieldset{ style: "margin-bottom: 10px;" }
+      = f.text_field :subject, placeholder: "Subject", class: "input-xxlarge"
+    %fieldset
+      = f.text_field :to_email, placeholder: "To Email", class: "input-xlarge"
+      = f.text_field :to_name, placeholder: "To Name", class: "input-xlarge"
+      = f.text_field :from, placeholder: "From", class: "input-xlarge"
+    %div.field.clearfix
+      = f.text_area :body, rows: "15", placeholder: "Add email html here...", style: "margin:10px 0; width: 860px; min-height: 200px;"
+    %div#editor.ace_editor{ style: "margin:10px 0; width: 860px; min-height: 350px;" }
+    %div.actions
+      %button{ name: "commit", value: "preview", type: "submit", class: "submit_button", style: "float: inherit; background-color: gray;" } Preview
+      %button{ name: "commit", value: "preview", type: "submit", class: "submit_button", style: "margin-left: 20px; float: inherit;" } Send
+:css
+  .ace_scroller, .ace_gutter { padding-top: 3px; }
+
+:javascript
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/github");  
+  editor.getSession().setUseSoftTabs(true);
+  editor.getSession().setTabSize(2);
+  editor.getSession().setMode("html");
+  var $textarea = $("#email_body").hide()
+  editor.getSession().setValue($textarea.val());
+  editor.getSession().on('change', function(){
+    $textarea.val(editor.getSession().getValue());
+  });

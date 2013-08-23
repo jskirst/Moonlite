@@ -190,6 +190,8 @@ Metabright::Application.routes.draw do
     put '/styles' => 'admin#styles', as: "admin_styles"
     get '/groups' => 'admin#groups', as: "admin_groups"
     get '/groups/:group_id' => 'admin#group', as: "admin_group"
+    get '/email' => 'admin#email', as: "admin_email"
+    post '/email' => 'admin#email', as: "admin_email"
   end 
   
   match '/locallink' => 'sessions#locallink'

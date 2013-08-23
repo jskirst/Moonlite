@@ -7,7 +7,10 @@
     MetaBright, Inc. 500 Oak Street, Suite 5, San Francisco, CA, 94102
 - else
   %span{style:"font-size:10px; color:gray;"}
-    You are receiving this message because you've been invited to join MetaBright. 
+    - if @footer_message
+      = @footer_message
+    - else
+      You are receiving this message because you've been invited to join MetaBright. 
   %br
   %span{style:"font-size:10px; color:gray;"} 
     MetaBright, Inc. 500 Oak Street, Suite 5, San Francisco, CA, 94102

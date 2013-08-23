@@ -59,23 +59,6 @@ module ApplicationHelper
     popup_javascript(url)
   end
   
-  def admin_tabs
-    [
-      ["overview", "Overview", admin_overview_path],
-      ["funnel", "Funnel", admin_funnel_path],
-      ["visits", "Visits", admin_visits_path],
-      ["roles", "User Roles", user_roles_path],
-      ["styles", "Custom Styles", admin_styles_path],
-      ["personas", "Personas", personas_path],
-      ["paths", "Paths", admin_paths_path],
-      ["users", "Users", admin_users_path],
-      ["submissions", "Submissions", admin_submissions_path],
-      ["tasks", "Tasks", admin_tasks_path],
-      ["comments", "Comments", admin_comments_path],
-      ["groups", "Groups", admin_groups_path]
-    ]
-  end
-  
   def get_all_help
     {
       leaderboard_pop: {

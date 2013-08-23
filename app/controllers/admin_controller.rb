@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  include AdminHelper
   before_filter :authenticate
   before_filter { raise "ACCESS DENIED" unless @enable_administration }
   
@@ -214,6 +215,18 @@ class AdminController < ApplicationController
   
   def group
     @group = Group.find_by_id(params[:group_id])
+  end
+  
+  def email
+    if request.get?
+      @email = Email.new
+    else
+      @email = Email.new(params[:email])
+      GroupMailer.send_email(@email).deliver
+      flash[:success] = "Email sent to #{@email.to_name} <#{@email.to_email}>."
+    end
+    @email.to_email = nil
+    @email.to_name = nil
   end
   
   private
