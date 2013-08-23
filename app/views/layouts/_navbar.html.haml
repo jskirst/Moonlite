@@ -11,7 +11,21 @@
         - else
           = link_to root_url do
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
-      - if current_user and show_nav_bar
+      -# raise params.to_yaml
+      - if not current_user and (params[:controller] == "pages" or params[:controller] == "ideas") and (params[:action] == "home" or params[:action] == "evaluator" or params[:action] == "bugs" or params[:action] == "ideas")
+        %ul.nav.navicons.landing-nav{ style: "height: 100%;" }
+          %li
+          %li.navitem
+            = link_to root_url do
+              %span Home
+          %li.navitem
+            = link_to evaluator_url do
+              %span Plans
+          %li.navitem
+            = link_to bugs_path do
+              %span Support
+
+      - elsif current_user and show_nav_bar
         - if @admin_group
           %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
             %li{ style: "height: 100%; border-right: 1px solid #020D25; "}

@@ -208,6 +208,24 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
   }
 }
 
+.nav.landing-nav {
+  border: 0;
+  li.navitem {
+    text-align: center;
+    height: 100%;
+    border: 0;
+    a {
+      opacity: 1; 
+      padding: 6px 0;
+      width: 100px;
+    
+      span {
+        margin: 0; font-size: 15px
+      }
+    }
+  }
+}
+
 
 /* Profile/Revolution */
 #profile, #challenge, #homepage{
