@@ -26,6 +26,7 @@ gem 'awesome_print'
 gem 'font_assets'
 gem 'geocoder'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
+gem 'w3c_validators'
 
 group :assets do
   gem 'sass-rails'

@@ -31,7 +31,11 @@ class GroupsController < ApplicationController
   end
   
   def coupon
-    if params[:c] and Group::COUPONS.include?(params[:c])
+    valid = false
+    Stripe::Coupon.all.each do |coupon|
+      valid = true if coupon.id == params[:c]
+    end
+    if valid
       render json: { coupon: true }
     else
       render json: { coupon: false }
@@ -240,7 +244,11 @@ class GroupsController < ApplicationController
     @group = Group.find_by_id(params[:id]) if params[:id] and @group.nil?
     @group_custom_style = @group.custom_style if @group
     @admin_group = @group
-    redirect_to root_path unless @group
+    if @group.nil?
+      redirect_to root_path
+    elsif @admin_group.requires_payment?
+      redirect_to  new_group_url
+    end
   end
   
   def authorize_resource
