@@ -217,7 +217,7 @@ class PagesController < ApplicationController
     if @admin_group and @admin_group.stripe_token.present?
       redirect_to root_url and return
     end
-    @title = "Evaluator"
+    @title = "Evaluator -- Employee Skill Assessments"
     @show_footer = true
     @hide_background = true
     @show_sign_in = true
