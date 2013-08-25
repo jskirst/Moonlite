@@ -60,5 +60,5 @@ Metabright::Application.configure do
 	
 	config.assets.digest = true
 	
-	config.font_assets.origin = 'http://www.metabright.com'
+	#config.font_assets.origin = 'http://www.metabright.com'
 end
