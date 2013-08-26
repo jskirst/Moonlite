@@ -53,13 +53,16 @@
               - @challenge_tasks.each do |t|
                 %tr
                   %td
-                    %div= link_to truncate(t.question, length: 145), take_section_path(@current_section, task_id: t.id)
+                    - if t.submitted_answer_id and t.status_id.to_i != Answer::INCOMPLETE
+                      %div= link_to truncate(t.question, length: 145), submission_drilldown_path(t.submitted_answer_id)
+                    - else
+                      %div= link_to truncate(t.question, length: 145), take_section_path(@current_section, task_id: t.id)
                   %td.question_status
                     - if t.status_id
                       - if t.status_id.to_i == Answer::INCOMPLETE or t.status_id.to_i == Answer::INCORRECT
                         = link_to "Draft", take_section_path(@current_section, task_id: t.id), class: "label label-info"
                       - elsif t.status_id.to_i == Answer::CORRECT
-                        = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
+                        = link_to "Completed", take_section_path(@current_section, task_id: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                         %span.points= t.points_awarded.to_i.to_s + " points"
                     - else
                       = link_to "Incomplete", take_section_path(@current_section, task_id: t.id), class: "label label-important"
@@ -78,13 +81,13 @@
               - @achievement_tasks.each do |t|
                 %tr
                   %td
-                    - if t.status_id
-                      %div= link_to t.question, profile_path(current_user.username, task: t.id)
+                    - if t.submitted_answer_id
+                      %div= link_to t.question, submission_drilldown_path(t.submitted_answer_id)
                     - else
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
-                    - if t.status_id
-                      = link_to "Completed", profile_path(current_user.username, task: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
+                    - if t.status_id.to_i == Answer::CORRECT
+                      = link_to "Completed", take_section_path(@current_section, task_id: t.id), class: "label label-success", style:"position:relative; top:3px;", target: "_blank"
                       %br
                       %div.points{style:"margin-right:4px;"}= t.points_awarded.to_i.to_s + " points"
                     - else

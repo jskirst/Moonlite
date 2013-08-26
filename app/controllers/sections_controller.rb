@@ -110,7 +110,7 @@ class SectionsController < ApplicationController
     @current_section = @section
     if @section.unlocked?(current_user)
       @tasks = Task.joins("LEFT OUTER JOIN completed_tasks on tasks.id = completed_tasks.task_id and completed_tasks.user_id = #{current_user.id}")
-        .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type")
+        .select("section_id, status_id, question, tasks.id, points_awarded, answer_type, answer_sub_type, completed_tasks.submitted_answer_id")
         .where("tasks.section_id = ? and tasks.locked_at is ? and tasks.reviewed_at is not ?", @current_section.id, nil, nil)
       @core_tasks = @tasks.select { |t| t.core? }
       @challenge_tasks = @tasks.select { |t| t.creative? }

@@ -11,10 +11,6 @@
             = image_tag User.picture(post["user_image_url"]), class: "photo"
       %h3
         = link_to truncate(post["name"], length: 50), hovercard_user_path(post["username"]), class:"username hovercard_link", remote: true
-        - if false #user.groups.size > 0
-          - user.groups.each do |group|
-            = link_to group_path(group.permalink) do
-              = image_tag group.picture, class: "mini_group_icon img-circle", title: "Member of #{group.name}", alt: "Member of #{group.name}"
         - if badge = User.reputation_badge(post["earned_points"])
           = image_tag (badge[0]), class: "rep_badge_post", title: badge[1], alt: badge[1]
       %span
