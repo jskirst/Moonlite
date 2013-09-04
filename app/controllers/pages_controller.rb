@@ -59,6 +59,7 @@ class PagesController < ApplicationController
   
   def profile
     @user = User.find_by_username(params[:username])
+    @title = @user.name
     if @user.nil? || @user.locked? 
       redirect_to root_path
       return

@@ -1060,6 +1060,22 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
         line-height: 27px;
       }
     }
+    .reassurance {
+      text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,.2);
+      margin: -12px auto 30px;
+      
+      h2 { text-transform: none; border-bottom: none; margin-bottom: 0;}
+    }
+    .reaffirm {
+      margin-bottom: 40px;
+      
+      .image, .text { display: inline-block;}
+      .image { width: 15%; vertical-align: top; margin-right: 25px;}
+      .text { width: 80%; }
+      h4 { font-family: 'MuliRegular'; font-size: 20px; border-bottom: none; margin-bottom: 0;}
+      p { font-family: 'MuliRegular'; font-size: 14px;}
+    }
     .pitch_tiles{
       text-align: center;
       margin-top:0;
@@ -1178,7 +1194,8 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
         padding: 8px 12px;
         border-radius: 8px;
         color: white;
-        margin-bottom: 17px;
+        
+        div { margin-top: 3px; }
       }
       .coupon_desc {
         font-size: 16px;
@@ -1187,7 +1204,6 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
         padding: 8px 12px;
         border-radius: 8px;
         color: white;
-        margin-bottom: 17px;
       }
       .gear {
         height: 30px;
