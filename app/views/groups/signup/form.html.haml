@@ -42,13 +42,22 @@
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
-        %h1{ style: "margin-top:0;" } MetaBright Evaluator
-        %h3 Order Checkout
+        %h1{ style: "margin-top:14px; " } MetaBright Evaluator
     .body{ style: "padding:16px 16px 0;" }
       .reassurance
         %h2 Start Your Free 14-Day Trial
         %h3 Begin Testing Your Candidates in Less Than 60 Seconds.
-      %p{ style: "position: relative; left: 78px; bottom: 10px; float: left; "}
+      .reaffirm
+        .image
+          = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/free_14_day.png"
+        .text
+          %h4 100% no-risk, free trial
+          %p
+            1) Setup your account. Get access to all features.<br>
+            2) NOTHING will be billed to your card for 14 days. Guaranteed.<br>
+            3) If you want to continue after 14 days, only then will we begin billing you.<br>
+            4) During your free trial you can cancel at any time. No questions asked. Nothing billed at all.
+      %p{ style: "position: relative; left: 78px; bottom: 23px; float: left; "}
         = link_to "https://stripe.com/help/security", target: "_blank" do
           = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/stripe_solid_clipped.png"
       = form_for(@new_group, url: groups_url, method: :post, html: { class: "form-horizontal unspinnable", id: "new_group" }, remote: true) do |f|
@@ -56,19 +65,19 @@
         = f.hidden_field :token
         = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
-        .product_name{ style: "margin-bottom: 8px;"} 
-          Evaluator #{plan[:description]}: #{plan[:price]}/mo.
-        .coupon_desc.valid-coupon{ style: "display: none;" }
+        .product_name
+          Evaluator #{plan[:description]}: $0 for 14 Days
+          %div{ style: "font-size: 12px; "} After 14 Days: #{plan[:price]} per month
+        .coupon_desc.valid-coupon{ style: "display: none; margin-top: 8px;" }
           %div{ style: "font-size: 16px;"} COUPON APPLIED!
-          First month free! $0 due now.
-        .coupon_desc.invalid-coupon{ style: "display: none;" }
+          First month free!
+        .coupon_desc.invalid-coupon{ style: "display: none; margin-top: 8px;" }
           %div{ style: "font-size: 16px;"} Invalid coupon.
-          Please try again.
         - if current_user
-          %label Your name:
+          %label{ style: "margin-top: 16px; "} Your name:
           %input{ type: "text", disabled: "disabled", value: current_user.name }
         - else
-          %label Your name:
+          %label{ style: "margin-top: 16px; "} Your name:
           = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
         = f.text_field :name, placeholder: "Company name...", "data-label" => "your company's name"
