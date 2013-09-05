@@ -114,6 +114,16 @@
     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
     })();
+    / Google Code for Remarketing Tag
+    /*  */
+    var google_conversion_id = 1005446889;
+    var google_custom_params = window.google_tag_params;
+    var google_remarketing_only = true;
+    /*  */
+  %script{:src => "//www.googleadservices.com/pagead/conversion.js", :type => "text/javascript"}
+  %noscript
+    %div{:style => "display:inline;"}
+      %img{:alt => "", :height => "1", :src => "//googleads.g.doubleclick.net/pagead/viewthroughconversion/1005446889/?value=0&guid=ON&script=0", :style => "border-style:none;", :width => "1"}/
     
 
 / CrazyEgg Heat map tool /
@@ -123,5 +133,7 @@
     var b=document.getElementsByTagName("script")[0];
     a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0018/2117.js?"+Math.floor(new Date().getTime()/3600000);
     a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+    
+    
 
 = render "layouts/custom_styles"
