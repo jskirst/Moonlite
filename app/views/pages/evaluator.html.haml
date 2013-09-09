@@ -7,11 +7,6 @@
   #screen_carousel .carousel-control{ top: 50%; } 
   #screen_carousel .item img { width: 100%; height: 400px; } 
    
-/Centered header 
-:css 
-  #employer_product .aboutheader { text-align: center; } 
-  #employer_product .aboutheader h1 { margin-top: 35px; } 
-  #employer_product .aboutheader img { margin-top: -5px; margin-left: -6%; height: 130px; } 
    
 %script{ src: "https://raw.github.com/LeaVerou/prefixfree/gh-pages/prefixfree.min.js", type: "text/javascript" } 
 :javascript 
@@ -24,17 +19,38 @@
 
 
 #employer_product.aboutcontainer 
-  .aboutbox 
-    .aboutheader 
-      %img{ src: STONEY_SMALL_URL, alt: "Stoney"} 
-      %h1 MetaBright Evaluator 
+  .aboutbox
     .body 
       %div 
         .area 
-          %h2 
-            Optimize your sourcing 
+          %h1.header 
+            Validate your Candidates' Skills
           %p.be_bold 
             Never waste your time in an interview again. MetaBright's <strong>Evaluator</strong> measures and verfies the skills of your job candidates <span style="font-family: 'MuliItalic';">before</span> you interview them. Just direct your candidates to your unique MetaBright URL, and we take care of the rest.  
+        .happy_customers
+          .holder
+            .testimonial
+              %div
+                %p.speech.right "Talk about a time saver. MetaBright is a great talent screener. I never have to wonder if someone has the skills necessary to do the job."
+              %div
+                .bio
+                  %p 
+                    Nisa Q.
+                    %br 
+                    Recruiter at LinkedIn
+                .picture
+                  = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/testimonial+images/nisa.jpg", class: "img-circle"
+            .testimonial{ style: "float: right;"}
+              %div
+                %p.speech.left "MetaBright's approach to assessing an individual's strengths and weaknesses brings a whole new level of analytical rigor to hiring."
+                %div
+                  .bio{ style: "margin-top: 12px;"}
+                    %p 
+                      Val L.
+                      %br 
+                      Consultant at a Global Consulting Firm
+                  .picture
+                    = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/testimonial+images/val.jpg", class: "img-circle"
         .sexy_time 
           %section 
             .holder  
@@ -182,7 +198,7 @@
                 Have more than 50 users?  
                 %a{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})" }Contact us for pricing. 
         .area{ style: "margin-top: 110px;"} 
-          %h2 
+          %h2{ style: "margin-bottom: 0;"} 
             Our philosophy 
           %p.be_bold
             When evaluating a potential new-hire, we believe the most important thing is whether that person has the skills necessary to do the job. Things like where they went to school or where they previously worked are just distractions from what really matters: Can they perform? 

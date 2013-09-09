@@ -155,9 +155,6 @@ $landing_green: #73bb6e;
       color: white;
       
       .body {
-        .picture {
-          img { height: 110px; width: 110px; }
-        }
         .testimonial {
           display: inline-block; 
           width: 33%; 
@@ -250,6 +247,8 @@ $landing_green: #73bb6e;
           .picture { 
             display: inline-block; 
             float: right;
+            
+            img { height: 110px; width: 110px; }
           }
         }
       }
