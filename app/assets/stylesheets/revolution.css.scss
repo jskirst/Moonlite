@@ -1026,17 +1026,30 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
    h1 { font-size: 58px; display: inline-block; margin-top: 46px; vertical-align: top;} 
    h3 { margin-top: 10px; }
   }
-  .body { 
-    padding: 10px 16px; 
+  .header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+    text-align: center;
+    padding-bottom: 10px;
     
-    h1.header { 
-      border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+    img {
+      display: inline-block;
+      height: 70px;
+      margin-right: 10px;
+    }
+    h1 { 
+      position: relative;
+      top: 8px; 
       font-size: 41px;
       text-align: center;
       line-height: 62px;
       letter-spacing: 1.5px;
       word-spacing: 1px;
-    }    
+      display: inline-block;
+    }  
+  }
+  .body { 
+    padding: 10px 16px; 
+      
     h2 {
       text-transform: uppercase;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -1082,10 +1095,11 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
       padding-top: 18px;
       margin: 0;
       position: relative;
-      top: 13px;  
+      top: 13px; 
+      &:nth-child(1) { padding-top: 0; } 
     }
     .happy_customers{
-      background-color: $landing_green;
+      background: url('https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/green_texture_big3.png');
       width: 108.3%;
       position: relative;
       left: -37px;
@@ -1093,13 +1107,12 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
       .holder {
         margin: 0 auto; 
         width: 82%;
-        padding: 10px 0; 
         color: white;
         
         .testimonial {
           display: inline-block; 
           width: 47%; 
-          margin: 15px 0; 
+          margin: 15px 0 12px; 
           text-align: center; 
           vertical-align: top;
       
@@ -1143,7 +1156,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
             position: absolute;
             width: 0;
             height: 0;
-            left: 127px;
+            left: 145px;
             top: 110px;
             border: 25px solid;
             border-color: #666 transparent transparent #666;
@@ -1153,7 +1166,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
             position: absolute;
             width: 0;
             height: 0;
-            left: 135px;
+            left: 153px;
             top: 110px;
             border: 15px solid;
             border-color: #fff transparent transparent #fff;
@@ -1164,12 +1177,14 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
             margin-top: 25px; 
             width: 130px; 
             margin-left: 12px;
+            
+            p { line-height: 19px; }
           }
           .picture { 
             display: inline-block; 
             float: right;
         
-            img { height: 135px; width: 135px; }
+            img { height: 100px; width: 100px; }
           }
         }
       }
@@ -1238,6 +1253,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
       
       section {
         border-top: 1px solid rgba(0,0,0,0.2);
+        &:nth-child(1) { border-top: none; }
       
       
         .holder {
