@@ -168,6 +168,8 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
       }
     }
     .navitem {
+      opacity: 0.8;
+      &:hover { opacity: 1;}
       span {
         color: white;
         text-shadow: 0 -1px 1px rgba(0,0,0,.75); 
