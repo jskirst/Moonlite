@@ -145,7 +145,7 @@
           %div   
             %ul.pricing_table 
               %li.price_block 
-                %h3 1 User 
+                %h3 1 Admin 
                 .price 
                   .price_figure 
                     %span.price_number $19.99 
@@ -159,7 +159,7 @@
               %li.price_block.popular 
                 %h3  
                   %div Most Popular
-                  2-5 Users 
+                  2-5 Admins 
                 .price 
                   .price_figure 
                     %span.price_number $29.99 
@@ -171,7 +171,7 @@
                 .price_footer 
                   = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
               %li.price_block 
-                %h3 6-15 Users 
+                %h3 6-15 Admins 
                 .price 
                   .price_figure 
                     %span.price_number $49.99 
@@ -183,7 +183,7 @@
                 .price_footer 
                   = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button" 
               %li.price_block 
-                %h3 16-50 Users 
+                %h3 16-50 Admins 
                 .price 
                   .price_figure 
                     %span.price_number $89.99 
@@ -196,7 +196,7 @@
                   = link_to "Start Free Trial", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button" 
             %div.sales_help_inline{ style: "margin-top: -30px; "} 
               %p{ style: "margin: 0; float: right;"} 
-                Have more than 50 users?  
+                Have more than 50 admins?  
                 %a{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})" }Contact us for pricing. 
         .area{ style: "margin-top: 110px;"} 
           %h2{ style: "margin-bottom: 0;"} 
