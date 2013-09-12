@@ -1022,6 +1022,14 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
   
   .aboutcontainer { width: 980px; }
   .aboutbox { overflow: visible; }
+  .aboutheader {
+   padding: 15px 0 0 15px;
+   margin-top: -39px;
+   
+   img { height: 125px; }
+   h1 { font-size: 55px; display: inline-block; margin-top: 10px; vertical-align: top;} 
+   h3 { margin-top: 10px; }
+  }
   .header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
     text-align: center;
