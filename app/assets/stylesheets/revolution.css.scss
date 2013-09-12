@@ -1021,13 +1021,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
   $evaluator_text_color: #8a8d99;
   
   .aboutcontainer { width: 980px; }
-  .aboutheader {
-   padding: 15px 0 0 15px;
-   
-   img { height: 140px; }
-   h1 { font-size: 58px; display: inline-block; margin-top: 46px; vertical-align: top;} 
-   h3 { margin-top: 10px; }
-  }
+  .aboutbox { overflow: visible; }
   .header {
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
     text-align: center;
@@ -1102,7 +1096,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
     }
     .happy_customers{
       background: url('https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/green_texture_big3.png');
-      width: 108.3%;
+      width: 108.4%;
       position: relative;
       left: -37px;
       
@@ -1176,7 +1170,7 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
           .bio {
             display: inline-block; 
             float: right; 
-            margin-top: 25px; 
+            margin-top: 20px; 
             width: 130px; 
             margin-left: 12px;
             
