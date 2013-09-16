@@ -38,6 +38,7 @@ group :production do
   gem 'unicorn'
   gem 'memcachier'
   gem 'heroku-deflater'
+  gem 'google-tag-manager-rails'
 end
 
 group :development do
