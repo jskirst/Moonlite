@@ -126,14 +126,12 @@
       %img{:alt => "", :height => "1", :src => "//googleads.g.doubleclick.net/pagead/viewthroughconversion/1005446889/?value=0&guid=ON&script=0", :style => "border-style:none;", :width => "1"}/
     
 
-/ CrazyEgg Heat map tool /
-- if Rails.env == "production" and not current_user
+/ Heatmatic Heat map tool /
+- if not current_user and params[:action] == "evaluator"
   :javascript
-    setTimeout(function(){var a=document.createElement("script");
-    var b=document.getElementsByTagName("script")[0];
-    a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0018/2117.js?"+Math.floor(new Date().getTime()/3600000);
-    a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
+    heatmatic_token = '1276372374249857';
+    s = document.createElement("script"); s.setAttribute("type", "text/javascript")
+    s.setAttribute("src", "https://s3-us-west-1.amazonaws.com/heatmatic/heatmatic.js");
+    document.body.appendChild(s);
     
-    
-
 = render "layouts/custom_styles"
