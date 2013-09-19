@@ -3,7 +3,7 @@
   %head
     = render "layouts/head"
   %body{ class: "#{'employer' if hide_background}"}
-    = google_tag_manager
+    = google_tag_manager 
     - if current_user
       - if @path and @current_section
         = render "modals/launchpad"

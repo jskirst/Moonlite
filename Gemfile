@@ -27,6 +27,7 @@ gem 'font_assets'
 gem 'geocoder'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'w3c_validators'
+gem 'google-tag-manager-rails'
 
 group :assets do
   gem 'sass-rails'
@@ -38,7 +39,6 @@ group :production do
   gem 'unicorn'
   gem 'memcachier'
   gem 'heroku-deflater'
-  gem 'google-tag-manager-rails'
 end
 
 group :development do

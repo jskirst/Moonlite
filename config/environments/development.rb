@@ -34,4 +34,8 @@ Metabright::Application.configure do
 	#SqlLogging::Statistics.top_sql_queries = 50
 	
 	config.font_assets.origin = 'http://localhost:3000'
+  
+  # Google Tag Manager
+  GoogleTagManager.gtm_id = "GTM-K6NTXR"
+  
 end

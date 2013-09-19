@@ -1,5 +1,5 @@
 # Google Tag Manager
-GoogleTagManager.gtm_id = "GTM-XXXX" # Where GTM-K6NTXR is your container ID from Google Tag Manager
+GoogleTagManager.gtm_id = "GTM-K6NTXR"
 
 # Amazon S3
 ENV['AWS_ACCESS_KEY_ID']      = "AKIAJQGM5NKT235MHP3A"
