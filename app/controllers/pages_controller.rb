@@ -262,6 +262,10 @@ class PagesController < ApplicationController
     render text: robots, layout: false, content_type: "text/plain"
   end
   
+  def sitemap
+    redirect_to "https://s3-us-west-1.amazonaws.com/moonlite/sitemaps/sitemap.xml.gz"
+  end
+  
   def preview
     url = params[:url]
     preview = parse_url_for_preview(url)

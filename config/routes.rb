@@ -203,6 +203,7 @@ Metabright::Application.routes.draw do
 	match '/send_reset' => 'sessions#send_reset'
 	match '/finish_reset' => 'sessions#finish_reset'
 	match '/robots.txt' => 'pages#robots'
+  match '/sitemap.xml.gz' => 'pages#sitemap'
 	
 	get '/users/:username/follow' => 'users#follow', as: "follow_user"
 
