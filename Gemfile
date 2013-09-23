@@ -28,6 +28,8 @@ gem 'geocoder'
 gem 'stripe', :git => 'https://github.com/stripe/stripe-ruby'
 gem 'w3c_validators'
 gem 'google-tag-manager-rails'
+gem 'sitemap_generator'
+gem 'fog'
 
 group :assets do
   gem 'sass-rails'
