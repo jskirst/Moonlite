@@ -42,6 +42,7 @@ class PagesController < ApplicationController
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
+    
     if params[:order] == "hot"
       feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
     elsif params[:order] == "halloffame"
