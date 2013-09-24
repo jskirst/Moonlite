@@ -1,5 +1,5 @@
 class Path < ActiveRecord::Base
-  attr_accessor :persona, :approved, :promoted, :professional, :template_type
+  attr_accessor :persona, :approved, :promoted, :professional, :template_type, :batch_file
   attr_readonly :company_id
   attr_protected :approved_at, :published_at, :public_at, :promoted_at, :professional, :group_id
   attr_accessible :user_id,

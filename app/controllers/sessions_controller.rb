@@ -72,12 +72,6 @@ class SessionsController < ApplicationController
     redirect_to root_path
   end
   
-  def visit
-    @visit = Visit.find_by_external_id(params[:external_id])
-    @visit.update_attribute(:updated_at, Time.now())
-    render json: { status: "success" }
-  end
-  
   def share
     redirect_to params[:url]
   end

@@ -52,7 +52,7 @@ class PagesController < ApplicationController
     else
       feed.posts = feed.posts.order("completed_tasks.created_at DESC")
     end
-    feed.posts = feed.posts.limit(15).offset(offset).eager_load
+    feed.posts = feed.posts.limit(15).offset(offset)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end

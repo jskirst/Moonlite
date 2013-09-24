@@ -37,7 +37,9 @@
           = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
           %span.landingbuttontext Sign up with Facebook »
         .divider OR
-        = form_for(current_user, url: finish_section_path(@section, @session_id, s: 3)) do |f|
+        = form_for(current_user) do |f|
+          = hidden_field_tag :redirect_url, finish_section_path(@section, @session_id, s: 3)
+          = hidden_field_tag :error_redirect_url, finish_section_path(@section, @session_id, s: 2)
           - if @error
             %p.errors{ style: "color: #b94a48;" }= @error
           - else

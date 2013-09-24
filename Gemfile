@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 ruby '2.0.0'
 
-gem 'rails', "3.2.13"
+gem 'rails', "4.0.0"
 gem 'will_paginate'
 gem 'jquery-rails'
 gem 'paperclip'
@@ -30,12 +30,14 @@ gem 'w3c_validators'
 gem 'google-tag-manager-rails'
 gem 'sitemap_generator'
 gem 'fog'
+gem 'hamster_powered'
 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
+# add these gems to help with the transition:
+gem 'protected_attributes'
+
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :production do
   gem 'unicorn'

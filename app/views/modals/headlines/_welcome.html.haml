@@ -58,7 +58,7 @@
         
         %div.divider{ style: "margin: 8px auto;" } OR
         = form_for(current_user, html: { id: "update_user" }) do |f|
-          = hidden_field_tag "redirect_uri", challenge_url(@path.permalink, c: true)
+          = hidden_field_tag "redirect_url", challenge_url(@path.permalink, c: true)
           = f.text_field :name, value: nil, placeholder: "Name"
           = f.text_field :email, value: nil, placeholder: "E-Mail"
           = f.password_field :password, value: nil, placeholder: "Password"

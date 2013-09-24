@@ -231,22 +231,12 @@ class SectionsController < ApplicationController
     else
       step = params[:s].to_i
       current_user.update_attributes(seen_opportunities: true)
-      
-      if params[:user]
-        if !current_user.update_attributes(params[:user])
-          @error = current_user.errors.full_messages.first
-          render "register#{step - 1}"
-          return
-        end
-      end
-      
       if step == 3
-        sign_in(current_user)
         clear_return_back_to
         render "register3"
       else
         if current_user.guest_user?
-          set_return_back_to(finish_section_url(@section, @session_id, s: 3))
+          set_return_back_to(finish_section_path(@section, @session_id, s: 3))
         elsif step == 2
           clear_return_back_to
           render "register3" and return

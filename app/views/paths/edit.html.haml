@@ -9,6 +9,18 @@
       $(this).hover(function(){ $(this).find("div").show(); }, function(){ $(this).find("div").hide(); });
     });
   });
+  
+#settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
+  .modal-header
+    %a.close
+    %h3 Upload Questions
+  .modal-body{ style: "max-height: none; "}
+    = form_for(@path, url: upload_path_path(@path)) do |f|
+      %label.control-label Upload Questions
+      .controls= f.file_field :batch_file
+  .modal-footer
+    %button{ for: "edit_path", type: "submit" } Upload
+  
 
 #settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
   .modal-header
@@ -80,7 +92,7 @@
       %div
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
       - if @path.group_id
-        .floatr 
+        .floatr
           .controls
             %div{ "data-tip" => "Back" }
               = link_to new_group_evaluation_path(@group) do

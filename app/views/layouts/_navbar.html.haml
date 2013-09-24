@@ -166,7 +166,7 @@
                           %li= link_to "Edit Profile", edit_user_path(current_user.username), style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                           %li.invite_facebook_friends= link_to "Invite Friends", "#", style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                           %li= link_to "MetaBright Labs", ideas_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
-                        %li= link_to "Sign out", signout_path, style: "color: inherit; text-shadow: none;"
+                        %li= link_to "Sign out", signout_path, style: "color: inherit; text-shadow: none;", method: :delete
       - if current_user.nil?
         %ul.nav.pull-right
           - if show_employer_link

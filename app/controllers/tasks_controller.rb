@@ -121,9 +121,9 @@ class TasksController < ApplicationController
     submitted_answer.submit!(completed_task, current_user, publish, params)
     
     if publish
-      redirect_to params[:submit_redirect_uri]
+      redirect_to params[:submit_redirect_url]
     else
-      redirect_to params[:draft_redirect_uri]
+      redirect_to params[:draft_redirect_url]
     end
   end
   

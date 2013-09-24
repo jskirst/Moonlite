@@ -30,7 +30,9 @@
         We just need a few details...
       .professional_mb_form{ style: "margin-top:15px;"}
         .body
-          = form_for current_user, url: finish_section_path(@section, @session_id, s: 2) do |f|
+          = form_for current_user do |f|
+            = hidden_field_tag :redirect_url, finish_section_path(@section, @session_id, s: 2)
+            = hidden_field_tag :error_redirect_url, finish_section_path(@section, @session_id, s: 1)
             %h4 What opportunities might interest you?
             %label.checkbox
               Full time job

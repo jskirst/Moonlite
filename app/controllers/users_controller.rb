@@ -75,8 +75,8 @@ class UsersController < ApplicationController
         render json: { status: "success" }
       else
         flash[:success] = "User account updated."
-        if params[:redirect_uri]
-          redirect_to params[:redirect_uri]
+        if params[:redirect_url]
+          redirect_to params[:redirect_url]
         elsif place_to_go_back_to?
           redirect_back
         else
@@ -88,8 +88,10 @@ class UsersController < ApplicationController
         render json: { status: "error" }
       else
         flash[:error] = @user.errors.full_messages.join(". ")
-        if params[:redirect_uri]
-          redirect_to params[:redirect_uri]
+        if params[:error_redirect_url]
+          redirect_to params[:error_redirect_url]
+        elsif params[:redirect_url]
+          redirect_to params[:redirect_url]
         elsif place_to_go_back_to?
           redirect_back
         else

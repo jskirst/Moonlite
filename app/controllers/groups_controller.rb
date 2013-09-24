@@ -122,7 +122,7 @@ class GroupsController < ApplicationController
     else
       feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
     end
-    feed.posts = feed.posts.offset(offset).limit(15).eager_load
+    feed.posts = feed.posts.offset(offset).limit(15)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
@@ -138,8 +138,8 @@ class GroupsController < ApplicationController
       flash[:success] = "Account settings have been updated."
     end
     
-    if params[:redirect_uri]
-      redirect_to params[:redirect_uri]
+    if params[:redirect_url]
+      redirect_to params[:redirect_url]
     else
       redirect_to account_group_url(@group)
     end

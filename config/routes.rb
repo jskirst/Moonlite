@@ -1,12 +1,6 @@
 Metabright::Application.routes.draw do
 
 	resources :sessions
-	get '/assets/' => "pages#bad"
-	get '/visit/:external_id' => 'sessions#visit', as: 'visit'
-	get '/share' => 'sessions#share', as: 'share'
-	
-	# Custom Challenge Routing
-	get '/heroku' => 'paths#marketing'
 	
 	resources :users do
 	  member do
@@ -15,10 +9,10 @@ Metabright::Application.routes.draw do
 	    get :possess
 	  end
 	end
-	match '/users/subregion' => 'users#subregion', as: "subregion_users"
-	match '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
-	match '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
-  match '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
+	get '/users/subregion' => 'users#subregion', as: "subregion_users"
+	get '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
+	get '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
+  get '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
   	
   resources :paths do
 		member do
@@ -35,8 +29,13 @@ Metabright::Application.routes.draw do
 			get :join
 			get :leaderboard
 		end
+		
+		#post '/paths/start' => 'paths#start', as: 'start_path'
+		collection do
+		  post :start
+		end
 	end
-	post '/paths/start' => 'paths#start', as: 'start_path'
+	
 	
 	get '/labs' => 'ideas#ideas', as: 'ideas'
 	get '/labs/bugs' => 'ideas#bugs', as: 'bugs'
@@ -48,10 +47,10 @@ Metabright::Application.routes.draw do
 	  end
 	end
 	
-	match '/paths/:permalink/submission/:submission/' => 'paths#show', as: 'submission_details'
-	match '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
-	match '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
-	match '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
+	get '/paths/:permalink/submission/:submission/' => 'paths#show', as: 'submission_details'
+	get '/paths/:permalink/task/:task/' => 'paths#show', as: 'task_details'
+	get '/tasks/:task_id/view' => 'paths#drilldown', as: 'task_drilldown'
+	get '/submissions/:submission_id/view' => 'paths#drilldown', as: 'submission_drilldown'
   
   get '/g/coupon' => 'groups#coupon', as: 'coupon'
   resources :groups, path: "g" do
@@ -110,7 +109,7 @@ Metabright::Application.routes.draw do
   end
   get '/submissions/:id/raw' => "tasks#raw", as: "raw"
 	
-	match '/sections/subregion_options' => "sections#subregion_options", as: 'user_subregion_options'
+	get '/sections/subregion_options' => "sections#subregion_options", as: 'user_subregion_options'
 	resources :sections do
 		member do
       get :publish
@@ -121,13 +120,13 @@ Metabright::Application.routes.draw do
 		end
 	end
 	
-	match '/sections/:id/continue' => "sections#continue", as: 'start_section'
-	match '/sections/:id/continue/:session_id' => "sections#continue", as: 'continue_section'
-	match '/sections/:id/take/:task_id' => "sections#take", as: 'take_section'
-	match '/sections/:id/boss/:task_id/:session_id' => "sections#boss", as: 'boss_section'
-	match '/sections/:id/take/:task_id/:session_id' => "sections#take", as: 'take_bonus_section'
-	match '/sections/:id/took/:task_id' => "sections#took", as: 'took_section'
-	match '/sections/:id/finish/:session_id' => "sections#finish", as: 'finish_section'
+	get '/sections/:id/continue' => "sections#continue", as: 'start_section'
+	get '/sections/:id/continue/:session_id' => "sections#continue", as: 'continue_section'
+	get '/sections/:id/take/:task_id' => "sections#take", as: 'take_section'
+	get '/sections/:id/boss/:task_id/:session_id' => "sections#boss", as: 'boss_section'
+	get '/sections/:id/take/:task_id/:session_id' => "sections#take", as: 'take_bonus_section'
+	patch '/sections/:id/took/:task_id' => "sections#took", as: 'took_section'
+	get '/sections/:id/finish/:session_id' => "sections#finish", as: "finish_section"
 	
 	resources :enrollments
   
@@ -140,34 +139,30 @@ Metabright::Application.routes.draw do
 	end
 	
   resources :comments
-  match '/user_roles/update_user/:user_id' => 'user_roles#update_user', as: 'update_users_role'
+  get '/user_roles/update_user/:user_id' => 'user_roles#update_user', as: 'update_users_role'
+  #post '/user_roles/update_user/:user_id' => 'user_roles#update_user', as: 'update_users_role'
 	resources :user_roles
 	
 	root :to => 'pages#home'
 	
-	match '/newsfeed' => 'pages#newsfeed'
-  match '/intro' => 'pages#intro'
-  match '/start' => 'pages#start'
-  match '/mark_read' => 'pages#mark_read'
-  match '/visit/:id' => 'pages#visit'
-  match '/mark_help_read' => 'pages#mark_help_read'
-  match '/explore', to: 'personas#explore'
-  match '/about' => 'pages#about'
-  match '/internship' => 'pages#internship'
-  match '/evaluator' => 'pages#evaluator'
-  match '/employers' => 'pages#evaluator'
-  match '/organization_portal' => 'pages#organization_portal'
-  match '/product_form' => 'pages#product_form'
-  post  '/opportunity' => 'pages#opportunity'
-  match '/product_confirmation' => 'pages#product_confirmation'
-  match '/connect' => 'pages#connect'
-  match '/tos' => 'pages#tos'
-  match '/challenges' => 'pages#challenges'
-  match '/preview' => 'pages#preview'
+	get '/newsfeed' => 'pages#newsfeed'
+  get '/intro' => 'pages#intro'
+  get '/start' => 'pages#start'
+  get '/mark_read' => 'pages#mark_read'
+  get '/mark_help_read' => 'pages#mark_help_read'
+  get '/explore', to: 'personas#explore'
+  get '/about' => 'pages#about'
+  get '/internship' => 'pages#internship'
+  get '/evaluator' => 'pages#evaluator'
+  get '/organization_portal' => 'pages#organization_portal'
+  get '/product_form' => 'pages#product_form'
+  get '/tos' => 'pages#tos'
+  get '/challenges' => 'pages#challenges'
+  #get '/preview' => 'pages#preview'
 	
-	match '/stored_resources' => 'stored_resources#create', via: :post
-	match '/stored_resources' => 'stored_resources#create', via: :put
-	match '/stored_resources/:id' => 'stored_resources#destroy', via: :delete, as: 'delete_stored_resource'
+	post '/stored_resources' => 'stored_resources#create'
+	put '/stored_resources' => 'stored_resources#create'
+	delete '/stored_resources/:id' => 'stored_resources#destroy', as: 'delete_stored_resource'
 	
 	scope '/admin' do
     get '/overview' => 'admin#overview', as: "admin_overview"
@@ -187,28 +182,27 @@ Metabright::Application.routes.draw do
     get '/comments' => 'admin#comments', as: "admin_comments"
     put '/comments/:id' => 'admin#comments', as: 'admin_update_comment'
     get '/styles' => 'admin#styles', as: "admin_styles"
-    put '/styles' => 'admin#styles', as: "admin_styles"
     get '/groups' => 'admin#groups', as: "admin_groups"
     get '/groups/:group_id' => 'admin#group', as: "admin_group"
     get '/email' => 'admin#email', as: "admin_email"
-    post '/email' => 'admin#email', as: "admin_email"
+    post '/email' => 'admin#email', as: "admin_send_email"
   end 
   
-  match '/locallink' => 'sessions#locallink'
-  match '/auth/failure' => 'sessions#auth_failure'
-  match '/auth/:provider/callback' => 'sessions#create'
-	match '/signin' => 'sessions#new'
-	match '/signout' => 'sessions#destroy'
-	match '/request_reset' => 'sessions#request_reset'
-	match '/send_reset' => 'sessions#send_reset'
-	match '/finish_reset' => 'sessions#finish_reset'
-	match '/robots.txt' => 'pages#robots'
-  match '/sitemap.xml.gz' => 'pages#sitemap'
+  get '/locallink' => 'sessions#locallink'
+  get '/auth/failure' => 'sessions#auth_failure'
+  get '/auth/:provider/callback' => 'sessions#create'
+	get '/signin' => 'sessions#new'
+	delete '/signout' => 'sessions#destroy'
+	get '/request_reset' => 'sessions#request_reset'
+	get '/send_reset' => 'sessions#send_reset'
+	get '/finish_reset' => 'sessions#finish_reset'
+	get '/robots.txt' => 'pages#robots'
+  get '/sitemap.xml.gz' => 'pages#sitemap'
 	
 	get '/users/:username/follow' => 'users#follow', as: "follow_user"
 
-  match '/emailtest' => 'pages#email_test', as: 'email'
-	match '/send_reset' => 'users#send_reset'
+  get '/emailtest' => 'pages#email_test', as: 'email'
+	get '/send_reset' => 'users#send_reset'
 	get '/challenges/:permalink' => 'paths#show', as: 'challenge'
 	get '/:username/hovercard' => 'users#hovercard', as: "hovercard_user"
 	get '/:username' => 'pages#profile', as: 'profile'

@@ -1,11 +1,12 @@
 class PathsController < ApplicationController
   include PathsHelper
   include NewsfeedHelper
+  include HamsterPowered::HamsterHelper
   
   before_filter :authenticate, except: [:show, :newsfeed, :drilldown, :marketing]
   before_filter :load_resource, except: [:index, :new, :create, :drilldown, :marketing, :start]
   before_filter :load_group
-  before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators, :style]
+  before_filter :authorize_edit, only: [:edit, :update, :destroy, :collaborator, :collaborators, :style, :upload]
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
   def index
@@ -228,6 +229,22 @@ class PathsController < ApplicationController
     end
     redirect_to collaborator_path_path(@path.permalink)
   end
+  
+  def upload
+    flash[:success] = "Contacts successfully uploaded."
+    @header = nil
+    @tasks = []
+    file = params["path"]["batch_file"]
+    
+    CSV.foreach(file.path) do |row|
+      if @header
+        @tasks << Task.new(Hash[@header.zip(row)])
+      else
+        @header = row
+      end
+    end
+    render as_processing_screen(@tasks, :save, edit_path_path(@path))
+  end
 
 # Begin Path Journey
   
@@ -304,7 +321,6 @@ class PathsController < ApplicationController
       .where("enrollments.path_id = ? and users.locked_at is ? and total_points > ?", @path.id, nil, 0)
       .order("enrollments.total_points DESC")
       .limit(200)
-      .eager_load
       .to_a
       
     @enrollments = @leaderboard.shuffle.select{ |l| !l.image_url.blank? }.first(8)
@@ -354,18 +370,9 @@ class PathsController < ApplicationController
         feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
       end
     end
-    feed.posts = feed.posts.offset(offset).limit(15).eager_load
+    feed.posts = feed.posts.offset(offset).limit(15)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
-  end
-  
-  def marketing
-    path_name = request.url.split("/").last
-    if path = Path.find_by_permalink(path_name)
-      redirect_to challenge_path(path_name)
-    else
-      redirect_to root_path
-    end
   end
   
   def leaderboard

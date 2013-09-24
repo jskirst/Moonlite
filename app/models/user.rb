@@ -225,7 +225,7 @@ class User < ActiveRecord::Base
   end
   
   def self.auth(redirect_url)
-    FbGraph::Auth.new(ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"], :redirect_uri =>  redirect_url)
+    FbGraph::Auth.new(ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"], :redirect_url =>  redirect_url)
   end
   
   def send_password_reset

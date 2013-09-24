@@ -123,12 +123,12 @@ class Mailer < ActionMailer::Base
   
   def opportunity(opp)
     @opp = opp
-    mail(to: "team@metabright.com", subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}", message: "Body")
+    mail(to: "team@metabright.com", subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}", body: "Body")
   end
   
   def test_alert(user, email_type)
     return false unless user.can_email?(email_type)
-    m = mail(to: user.email, subject: "Test alert", message: "Test")
+    m = mail(to: user.email, subject: "Test alert", body: "Test")
     user.log_email(m)
   end
 end

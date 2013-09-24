@@ -13,7 +13,7 @@
       %h3 Edit User
     %div.modal-body{ style: "max-height: none; "}
       = form_for(user, html: { class: "form-horizontal" }) do |f|
-        = hidden_field_tag :redirect_uri, account_group_url(@group)
+        = hidden_field_tag :redirect_url, account_group_url(@group)
         %div.control-group
           %label.control-label Name
           %div.controls= f.text_field :name
@@ -60,7 +60,7 @@
         - else
           %a{ onclick: "$(this).hide();$('#upgrade_group').show();" } Upgrade your account to invite more users.
           = form_for(@group, html: { class: "hide", id: "upgrade_group" }) do |f|
-            = hidden_field_tag :redirect_uri, account_group_url(@group)
+            = hidden_field_tag :redirect_url, account_group_url(@group)
             .control-group
               %label.control-label Choose a plan you'd like to upgrade to:
               .controls

@@ -62,7 +62,7 @@
                 $(function(){ $("#update_location input, select").attr("disabled", "disabled").addClass("disabled"); });
                 
             = form_for @user, html: { id: "update_location" } do |f|
-              = hidden_field_tag "redirect_uri", take_group_evaluation_url(@evaluation.permalink)
+              = hidden_field_tag "redirect_url", take_group_evaluation_url(@evaluation.permalink)
               %div
                 %label Country
                 = f.country_select :country, priority: %w(US GB CA FR DE IN KE NL), prompt: 'Please select a country'
