@@ -5,7 +5,7 @@ class PagesController < ApplicationController
   before_filter :authenticate, only: [:create]
   
   def home
-    @title = "Home"
+    @title = "Skill Tests"
     @url_for_newsfeed 
     if @admin_group and not @admin_group.requires_payment?
       @group = @admin_group
@@ -219,7 +219,7 @@ class PagesController < ApplicationController
     if @admin_group and @admin_group.stripe_token.present?
       redirect_to root_url and return
     end
-    @title = "Evaluator -- Job Candidate Skill Assessments and Tests"
+    @title = "Pre-Employment Skill Tests - Evaluator"
     @show_footer = true
     @hide_background = true
     @show_sign_in = true
