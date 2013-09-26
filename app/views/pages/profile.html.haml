@@ -1,4 +1,4 @@
-#profile
+#profile{itemscope: "", itemtype: "http://data-vocabulary.org/Person"}
   - if @user == current_user && current_user.guest_user?
     .help_box
       :javascript
@@ -45,7 +45,7 @@
             = f.submit "Submit", class: "button button-standard button-small", style: "margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px;"
   #topsection
     #updatespace
-      = image_tag @user.picture, class: "bigheaderimage", alt: "#{@user.name}"
+      = image_tag @user.picture, class: "bigheaderimage", itemprop: "photo", alt: "#{@user.name}"
       .rightofbigheaderimage
         #topprofilecontent{}
           %div{ style: "float:right; text-align:center; " }
@@ -63,12 +63,14 @@
                 #follower_count.hi= @user.follower_count
                 .lo Followers
           .span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
-            %h1= @user.name
+            %h1
+              %span{itemprop: "name"}= @user.name
             - if badge = User.reputation_badge(@user.earned_points)
               = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
             - unless @user.description.blank?
               %p{ style: "font-family:'MuliItalic'; font-size:23px; margin: 10px 0 10px 0;"} "#{@user.description}"
-            %p{ style: "font-size: 18px; margin: 10px 0 5px 0; color: rgb(80, 80, 80);"}= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
+            %p{ style: "font-size: 18px; margin: 10px 0 5px 0; color: rgb(80, 80, 80);"}
+              %span{itemprop: "role"}= truncate(@user_personas.collect{|up| up.persona.name }.join(" | "), length: 70)
         #bottomboxcontent
           .span9
             .vitalinfo
@@ -79,7 +81,7 @@
               - unless @user.location.blank?
                 %div{ style: "display: block;" }
                   LOCATION:
-                  %span= @user.location
+                  %span{itemprop: "address"}= @user.location
             .shareprofile
               %p Share profile:
               = render "shared/sharing", { custom_style: "display: inline; float: right;", title: "#{@user.name}'s awesome profile on MetaBright.com", url: profile_url(@user.username) }
@@ -152,7 +154,7 @@
               - if @similar_people.empty?
                 %p{ style: "padding: 10px 10px 10px 0;" } Truly, there is no equal for this person. Unique in every sense of the word.
               - @similar_people.each do |person|
-                = link_to hovercard_user_path(person.username), class: "hovercard_link", remote: true do
+                = link_to hovercard_user_path(person.username), class: "hovercard_link", rel: "acquaintance", remote: true do
                   = image_tag person.picture, size: "50x50", title: person.name, alt: person.name
         
         
