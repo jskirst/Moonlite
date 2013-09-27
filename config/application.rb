@@ -27,7 +27,7 @@ module Metabright
     # config.time_zone = 'Central Time (US & Canada)
     config.assets.enabled = true
     
-    config.assets.version = '2.0'
+    config.assets.version = '3.0'
 
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
