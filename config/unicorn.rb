@@ -1,6 +1,6 @@
 # config/unicorn.rb
 
-worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
+worker_processes Integer(ENV['WEB_CONCURRENCY'] || 1)
 timeout Integer(ENV['WEB_TIMEOUT'] || 300)
 preload_app true
 

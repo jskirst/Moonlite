@@ -8,8 +8,8 @@ class Persona < ActiveRecord::Base
   has_many :user_personas
   has_many :users, through: :user_personas
   has_many :path_personas
-  has_many :paths, through: :path_personas, conditions: ["paths.group_id is NULL and published_at is not NULL and approved_at is not NULL"]
-  has_many :public_paths, source: :path, through: :path_personas, conditions: ["published_at is not ? and approved_at is not ? and public_at is not ?", nil, nil, nil]
+  has_many :paths, -> { where "paths.group_id is NULL and published_at is not NULL and approved_at is not NULL" }, through: :path_personas
+  has_many :public_paths, -> { where "published_at is not NULL and approved_at is not NULL and public_at is not NULL" }, source: :path, through: :path_personas
   
   validates :name, length: { within: 1..255 }
   validates :description, length: { within: 1..255 }

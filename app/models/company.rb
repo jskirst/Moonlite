@@ -13,7 +13,7 @@ class Company < ActiveRecord::Base
     :custom_email_from
   
   has_many :users
-  has_many :paths, conditions: ["published_at is not ? and approved_at is not ?", nil, nil]
+  has_many :paths, -> { where "published_at is not NULL and approved_at is not NULL" }
   has_many :all_paths, class_name: "Path"
   has_many :categories
   has_many :user_roles

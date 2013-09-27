@@ -12,7 +12,7 @@ Metabright::Application.configure do
 	# The production environment is meant for finished, "live" apps.
 	# Code is not reloaded between requests
 	config.cache_classes = true
-	config.eager_load = true
+	config.eager_load = true if config.eager_load.nil?
 
 	# Full error reports are disabled and caching is turned on
 	config.consider_all_requests_local       = false
@@ -62,7 +62,7 @@ Metabright::Application.configure do
 	ActionMailer::Base.delivery_method = :smtp
 	config.action_mailer.default_url_options = { host: "metabright.com" }
 	
-	config.assets.digest = true
+	config.assets.digest = false
 	
 	#config.font_assets.origin = 'http://www.metabright.com'
 end

@@ -192,14 +192,4 @@ class TasksController < ApplicationController
     def authorize_resource
       raise "Access Denied" unless @enable_administration or can_edit_path(@task.path)
     end
-    
-    def gather_answers(task)
-      answers = []
-      answers << { content: task[:exact1], is_correct: true } unless task[:exact1].blank?
-      answers << { content: task[:answer_new_1], is_correct: true } unless task[:answer_new_1].blank?
-      answers << { content: task[:answer_new_2], is_correct: false } unless task[:answer_new_2].blank?
-      answers << { content: task[:answer_new_3], is_correct: false } unless task[:answer_new_3].blank?
-      answers << { content: task[:answer_new_4], is_correct: false } unless task[:answer_new_4].blank?
-      return answers
-    end
 end

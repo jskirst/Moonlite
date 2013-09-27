@@ -39,8 +39,8 @@ class User < ActiveRecord::Base
   has_many    :collaborating_paths, through: :collaborations, source: :path
   has_many    :submitted_answers, through: :completed_tasks
   has_many    :ideas, foreign_key: "creator_id"
-  has_many    :votes, conditions: { owner_type: "SubmittedAnswer" }
-  has_many    :idea_votes, class_name: "Vote", conditions: { owner_type: "Idea" }
+  has_many    :votes, -> { where owner_type: "SubmittedAnswer" }
+  has_many    :idea_votes, -> { where owner_type: "Idea" }, class_name: "Vote"
   has_many    :user_transactions
   has_many    :task_issues
   has_many    :subscriptions, foreign_key: "follower_id"

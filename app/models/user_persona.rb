@@ -7,7 +7,7 @@ class UserPersona < ActiveRecord::Base
   validates :user_id, presence: true, uniqueness: { scope: :persona_id }
   validates :persona_id, presence: true
   
-  default_scope order: 'updated_at desc'
+  default_scope { order 'updated_at desc' }
   
   def total_points
     return persona.paths.joins(:enrollments).where("enrollments.user_id = ?", user.id).sum("enrollments.total_points").to_i

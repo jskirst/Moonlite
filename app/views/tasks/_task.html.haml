@@ -6,8 +6,8 @@
         %button.btn.dropdown-toggle{"data-toggle" => "dropdown"}
           %span.caret
         %ul.dropdown-menu{ style: "min-width: 100px;" }
-          %li= link_to "Delete", task, method: :delete, remote: true, confirm: "Are you sure you want to delete this question?", "data-type" => "json", class: "delete_button loadable"
-          %li= link_to "Archive", archive_task_path(task), method: :put, remote: true, confirm: "Are you sure you want to archive this question?", "data-type" => "json", class: "archive_button loadable"
+          %li= link_to "Delete", task, method: :delete, remote: true, data: { confirm: "Are you sure you want to delete this question?" }, "data-type" => "json", class: "delete_button loadable"
+          %li= link_to "Archive", archive_task_path(task), method: :put, remote: true, data: { confirm: "Are you sure you want to archive this question?" }, "data-type" => "json", class: "archive_button loadable"
     - else
       = link_to "Edit", edit_task_path(task.id), remote: true, class: "btn edit_button"
     
