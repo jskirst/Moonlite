@@ -57,7 +57,8 @@ class Task < ActiveRecord::Base
     :quoted_text,
     :topic_id, :topic_name,
     :time_limit,
-    :difficulty
+    :difficulty,
+    :topic
   
   belongs_to :section
   belongs_to :creator, class_name: "User"

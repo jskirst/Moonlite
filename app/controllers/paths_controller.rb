@@ -238,12 +238,28 @@ class PathsController < ApplicationController
     
     CSV.foreach(file.path) do |row|
       if @header
-        @tasks << Task.new(Hash[@header.zip(row)])
+        task_hash = Hash[@header.zip(row)]
+        task_hash["template"] = task_hash["image_url"]
+        task_hash["answer_content"] = gather_answers(task_hash)
+        task_hash["difficulty"] = Task::DIFFICULTY_TYPES.invert[task_hash["difficulty"]]# || raise "FUCK"
+        topic = task_hash.delete("topic")
+        @tasks << Task.new(task_hash)
       else
         @header = row
       end
     end
-    render as_processing_screen(@tasks, :save, edit_path_path(@path))
+    
+    section = @path.sections.create!(name: "Name")
+    
+    @tasks.each do |t|
+      t.path = @path
+      t.section = section
+      t.creator = current_user
+      t.answer_type = t.answer_content.size == 0 ? Task::CREATIVE : Task::MULTIPLE
+      t.answer_sub_type = Task::TEXT
+    end
+    
+    render as_processing_screen(@tasks, :save!, edit_path_path(@path))
   end
 
 # Begin Path Journey

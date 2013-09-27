@@ -144,4 +144,15 @@ module ApplicationHelper
       </object>
     EOF
   end
+  
+  def gather_answers(task)
+    task = task.symbolize_keys
+    answers = []
+    answers << { content: task.delete(:exact1), is_correct: true } unless task[:exact1].blank?
+    answers << { content: task.delete(:answer_new_1), is_correct: true } unless task[:answer_new_1].blank?
+    answers << { content: task.delete(:answer_new_2), is_correct: false } unless task[:answer_new_2].blank?
+    answers << { content: task.delete(:answer_new_3), is_correct: false } unless task[:answer_new_3].blank?
+    answers << { content: task.delete(:answer_new_4), is_correct: false } unless task[:answer_new_4].blank?
+    return answers
+  end
 end

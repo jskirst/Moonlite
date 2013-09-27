@@ -10,16 +10,18 @@
     });
   });
   
-#settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
+#upload_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px; " }
   .modal-header
     %a.close
     %h3 Upload Questions
   .modal-body{ style: "max-height: none; "}
-    = form_for(@path, url: upload_path_path(@path)) do |f|
+    = form_for(@path, url: upload_path_url(@path), method: :patch) do |f|
       %label.control-label Upload Questions
       .controls= f.file_field :batch_file
-  .modal-footer
-    %button{ for: "edit_path", type: "submit" } Upload
+  %hr{ style: "margin: 10px 0; "}
+  %div{ style: "float:right;" }
+    %span.button.button-standard{ onclick: "$('#upload_modal').modal('hide');" } Close
+    %button{ form: "edit_#{dom_id(@path)}", type: "submit" } Upload
   
 
 #settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
@@ -36,6 +38,9 @@
         .control-group
           %label.control-label Default code template (Optional)
           .controls= f.text_area :template, style: "width: 350px;", rows: "7", placeholder: "This is the default template to appear for each newly created CR. It can always be edited for each question."
+      .control-group
+        %label.control-label Upload
+        .controls{ style: "margin-top: 6px;", onclick: "$('#settings_modal').modal('hide'); $('#upload_modal').modal({keyboard: true, show: true, backdrop: true })" }= link_to "Upload questions from .CSV", "#", style: "line-height:18px; padding-top: 5px;"
       .control-group{ style: "margin-bottom: 5px;" }
         %label.control-label Image (Optional)
         .controls= render "stored_resources/new_image"      
