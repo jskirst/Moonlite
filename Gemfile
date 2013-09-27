@@ -31,6 +31,7 @@ gem 'google-tag-manager-rails'
 gem 'sitemap_generator'
 gem 'fog'
 gem 'hamster_powered'
+gem 'rails_12factor'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
