@@ -37,5 +37,5 @@ Metabright::Application.configure do
   # Google Tag Manager
   GoogleTagManager.gtm_id = "GTM-K6NTXR"
   
-  config.assets.digest = true
+  config.assets.digest = false
 end

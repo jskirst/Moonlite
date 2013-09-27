@@ -59,5 +59,5 @@ Metabright::Application.configure do
 	ActionMailer::Base.delivery_method = :smtp
 	config.action_mailer.default_url_options = { host: "staging.metabright.com" }
 	
-	config.assets.digest = true
+	config.assets.digest = false
 end
