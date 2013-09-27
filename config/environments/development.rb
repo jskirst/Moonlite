@@ -11,7 +11,7 @@ Metabright::Application.configure do
 	# since you don't have to restart the webserver when you make code changes.
 	config.cache_classes = false
 
-  config.eager_load = true
+  config.eager_load = true if config.eager_load.nil?
 
 	# Show full error reports and disable caching
 	config.consider_all_requests_local       = true
@@ -37,4 +37,5 @@ Metabright::Application.configure do
   # Google Tag Manager
   GoogleTagManager.gtm_id = "GTM-K6NTXR"
   
+  config.assets.digest = false
 end
