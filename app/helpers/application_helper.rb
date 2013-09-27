@@ -106,18 +106,6 @@ module ApplicationHelper
     query.count
   end
   
-  def newsfeed_fields
-    %Q[ 
-      completed_tasks.id as id, completed_tasks.created_at as created_at, completed_tasks.points_awarded, completed_tasks.status_id,
-      paths.id as path_id, paths.name as path_name, paths.permalink as path_permalink, 
-      submitted_answers.id as submitted_answer_id, submitted_answers.total_votes as total_votes, 
-        submitted_answers.content as submitted_answer_content, submitted_answers.caption as submitted_answer_caption,
-        submitted_answers.total_comments as total_comments, submitted_answers.promoted_at as promoted_at,
-      tasks.id as task_id, tasks.section_id, tasks.question as question, tasks.answer_type as answer_type, tasks.answer_sub_type as answer_sub_type, 
-      users.id as user_id, users.username, users.name, users.image_url as user_image_url, users.earned_points
-    ]
-  end
-  
   def clippy(text, bgcolor='#FFFFFF')
     html = <<-EOF
       <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
