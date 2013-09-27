@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper
   before_filter :authenticate, except: [:new, :create, :coupon, :show, :newsfeed, :join]
-  before_filter :load_resource, except: [:new, :create, :coupon]
+  before_filter :load_resource, except: [:new, :create, :coupon, :purchased]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   before_filter { @hide_background = true }
   
@@ -49,7 +49,6 @@ class GroupsController < ApplicationController
     token = params[:group].delete(:token)
     if token.blank?
       plan_type = params[:group].delete(:plan_type)
-      
       @new_group = Group.new(params[:group])
       @new_group.plan_type = plan_type
       if @new_group.save
@@ -79,6 +78,11 @@ class GroupsController < ApplicationController
         raise "Access Denied: Not your group"
       end
     end
+  end
+  
+  def purchased
+    group = current_user.groups.last
+    redirect_to confirmation_group_path(group)
   end
   
   def confirmation

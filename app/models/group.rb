@@ -35,7 +35,9 @@ class Group < ActiveRecord::Base
     :creator_email, 
     :creator_password, 
     :creator,
-    :plan_type
+    :plan_type,
+    :stripe_token,
+    :coupon
   
   has_one   :custom_style, as: :owner
   has_many  :group_users, dependent: :destroy
