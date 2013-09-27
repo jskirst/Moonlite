@@ -17,7 +17,7 @@ class SubmittedAnswer < ActiveRecord::Base
   has_one :completed_task, dependent: :destroy
   has_one :path, through: :completed_task
   has_one :user, through: :completed_task
-  has_many :comments, as: :owner, conditions: ["locked_at is ?", nil]
+  has_many :comments, -> { where "locked_at is NULL" }, as: :owner
   has_many :votes, as: :owner, dependent: :destroy
   has_many :stored_resources, as: :owner
  

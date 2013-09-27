@@ -9,7 +9,7 @@ class Idea < ActiveRecord::Base
   
   belongs_to :creator, class_name: "User"
   has_many :votes, as: :owner
-  has_many :comments, as: :owner, conditions: ["locked_at is ?", nil]
+  has_many :comments, -> { where "locked at is NULL" }, as: :owner
   
   validates :title, length: { within: 1..255 }
   validates :description, length: { within: 1..1000 }

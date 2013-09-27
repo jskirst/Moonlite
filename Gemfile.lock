@@ -292,6 +292,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-deprecated_finders
   annotate
   awesome_print
   aws-sdk

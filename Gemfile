@@ -35,14 +35,16 @@ gem 'rails_12factor'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
+gem 'activerecord-deprecated_finders'
 
 gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 
+gem 'unicorn'
+gem 'memcachier'
+
 group :production do
-  gem 'unicorn'
-  gem 'memcachier'
   gem 'heroku-deflater'
 end
 

@@ -67,7 +67,7 @@ class Task < ActiveRecord::Base
   has_many :completed_tasks
   has_many :answers
   has_many :comments, dependent: :destroy
-  has_many :submitted_answers, dependent: :destroy, limit: 10
+  has_many :submitted_answers, dependent: :destroy
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
   has_many :task_issues

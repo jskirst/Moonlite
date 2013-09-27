@@ -6,7 +6,7 @@ class Section < ActiveRecord::Base
     :points_to_unlock
   
   belongs_to :path
-  has_many :tasks, dependent: :destroy, conditions: ["tasks.archived_at is ?", nil]
+  has_many :tasks, -> { where "archived_at is NULL" }, dependent: :destroy
   has_many :completed_tasks, through: :tasks, source: :completed_tasks
   
   validates :name, length: { within: 1..255 }

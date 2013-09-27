@@ -8,7 +8,7 @@ class PhrasePairing < ActiveRecord::Base
   validates :phrase_id, presence: true, uniqueness: { scope: :paired_phrase_id }
   validates :paired_phrase_id, presence: true
   
-  default_scope order: 'strength desc'
+  default_scope { order 'strength desc' }
   
   def self.create_phrase_pairings(new_phrases)
     phrases = []

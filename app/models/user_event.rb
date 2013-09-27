@@ -3,7 +3,7 @@ class UserEvent < ActiveRecord::Base
   BASE_URL = "http://www.metabright.com/"
   attr_accessible :actioner_id, :content, :link, :image_link
   
-  scope :unread, where(read_at: nil)
+  scope :unread, -> { where read_at: nil }
   belongs_to :user
   belongs_to :actioner, class_name: "User"
 
