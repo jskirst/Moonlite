@@ -1,8 +1,6 @@
-%w[ facebook google github linkedin ].each do |provider|
-  raise "Missing key for #{provider}" if ENV["#{provider.upcase}_KEY"].blank? or ENV["#{provider.upcase}_SECRET"].blank? 
-end
-
 Rails.application.config.middleware.use OmniAuth::Builder do
+  %w[ facebook google github linkedin ].each { |provider| raise "Missing key for #{provider}" if ENV["#{provider.upcase}_KEY"].blank? or ENV["#{provider.upcase}_SECRET"].blank? }
+  
   if Rails.env == "production"
     provider :facebook, ENV['FACEBOOK_KEY'], ENV['FACEBOOK_SECRET'], :scope => 'email,user_about_me, user_work_history, user_location, user_education_history', :client_options => {:ssl => {:verify => false}}
     provider :google_oauth2, ENV['GOOGLE_KEY'], ENV['GOOGLE_SECRET'], access_type: 'online', approval_prompt: '', client_options: {ssl: {verify: false}}, scope: "userinfo.email, plus.me, userinfo.profile"
