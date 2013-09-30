@@ -73,6 +73,10 @@ Metabright::Application.routes.draw do
       put :close
     end
     
+    collection do
+      get :purchased
+    end
+    
     resources :evaluations, path: "e" do
       member do
         get :review

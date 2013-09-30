@@ -44,7 +44,8 @@ $.MB.Checkout.stripeResponseHandler = (status, response) ->
     if $("#group_token").val().length > 0
       $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
       $form.find("#group_stripe_token").val(stripe_token)
-      $form.get(0).submit()
+      $form.removeAttr("data-remote").unbind("ajax:success").submit().on "ajax:success", ->
+        window.location = "/g/purchased"
     else
       alert "An error occurred processing your transaction. No amount was charged to your account."
     
