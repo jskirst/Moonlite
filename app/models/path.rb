@@ -178,7 +178,11 @@ class Path < ActiveRecord::Base
   # Cached methods
   
   def self.cached_find(permalink)
-    Rails.cache.fetch([self.to_s, permalink]) { find_by_permalink(permalink) }
+    begin
+      Rails.cache.fetch([self.to_s, permalink]) { find_by_permalink(permalink) }
+    rescue
+      raise "Rails cache failed."
+    end
   end
   
   def self.cached_find_by_id(id)
