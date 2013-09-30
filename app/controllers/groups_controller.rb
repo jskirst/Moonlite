@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
     
     @hide_background = false
     @show_nav_bar = false
-    @show_sign_in = true
+    @show_sign_in = false
     @show_employer_link = false
     render "groups/signup/form"
   end

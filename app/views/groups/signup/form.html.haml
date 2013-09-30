@@ -113,6 +113,44 @@
         %p.errors= @errors
         .control-group
           %p.in-progress.hide Creating your account now. This may take a minute or two...
-          = link_to evaluator_url(anchor: "prices") do
+          = link_to evaluator_pricing_url do
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear", title: "back"
           = f.submit "Start My Free Trial", class: "submit_button", style: "width: inherit;"
+      %h3{ style: "margin-top: 20px;"} Common Questions
+      #faq_accordion.accordion           
+        .accordion-group 
+          .accordion-heading 
+            %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseOne"} 
+              Why do you need my credit card for a free trial? 
+          #collapseOne.accordion-body.collapse.in
+            .accordion-inner 
+              We ask for your credit card to allow your membership to continue after your free trial, should you choose not to cancel. 
+              This helps us reduce fraud and prevent multiple free trials for the same person. 
+              Because of this, we're able to deliver better service for all the honest customers. 
+              %br
+              %br
+              Remember that we won't bill you anything during your free trial and that you can cancel at any moment before your trial ends.
+        .accordion-group 
+          .accordion-heading 
+            %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"} 
+              Do I have to sign up for a contract or pre-pay for my Evaluator subscription? 
+          #collapseTwo.accordion-body.collapse 
+            .accordion-inner 
+              Nope! Evaluator subscriptions are month-to-month. There are no contracts or obligations to continue your membership any longer than you want. You'll be billed monthly and can cancel anytime.
+        .accordion-group 
+          .accordion-heading 
+            %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseThree"} 
+              Can I change plans?
+          #collapseThree.accordion-body.collapse 
+            .accordion-inner 
+              Yes, it's very easy. After signing up, you can upgrade or downgrade your plan by clicking "Account" in the nav bar. Your new account settings will take effect immediately.
+        .accordion-group 
+          .accordion-heading 
+            %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"} 
+              How do I add additional admins to my account?
+          #collapseFour.accordion-body.collapse 
+            .accordion-inner 
+              It's simple to invite additional admins to your account. After signing up, click "Account" in the nav bar. 
+              There is a field to input the email addresses of the people you want to invite.
+              Your invitees will automatically have administrator privileges.
+      
