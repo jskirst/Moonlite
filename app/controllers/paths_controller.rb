@@ -428,7 +428,7 @@ class PathsController < ApplicationController
         @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       end
       
-      #@path_custom_style = @path.custom_style if @path
+      @path_custom_style = @path.custom_style if @path
       redirect_to root_path unless @path
     end
     
