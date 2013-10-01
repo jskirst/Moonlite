@@ -1,0 +1,133 @@
+Question,Quoted Text (optional),Image URL (optional),Correct Answer,Incorrect Answer 1,Incorrect Answer 2,Incorrect Answer 3,Source URL,Source Title,Topic,Difficulty
+Which of the following is an expanded concept of a data structure in C++?,,,Class,Structure,Union,Enum,http://www.cplusplus.com/doc/tutorial/classes/,Classes(1),Classes,Easy
+Which operator is used to define a destructor in a class?,,,Tilde (~),"Hyphen (-)
+",Only classname,Asterisk (*),http://www.codersource.net/C/CTutorials/CTutorialclass.aspx,Destructors,Classes,Easy
+Which feature of C++ provides re-usability of the members of a base class and avoids redundancy?,,,Inheritance,Polymorphism,Data Hiding,None of them,http://www.codingunit.com/cplusplus-tutorial-inheritance,C++ Inheritance,Inheritance,Easy
+Which member variable is not accessible by a derived class?,,,Private members,Protected members,Public members,Private Protected members,http://www.codersource.net/C/CTutorials/CTutorialoninheritance.aspx,Inheritance,Inheritance,Easy
+Which value is held by pointers?,,,Memory Address,Variable value,Size of datatype,Logical Address,http://www.studiesinn.com/learn/Programming-Languages/C__/Pointers-in-C__.html,Pointers in C++,Pointers,Easy
+Which operator is used to declare a pointer?,,,Asterisk (*),Reference operator (&),Hash (#),Tilde (~),http://www.studiesinn.com/learn/Programming-Languages/C__/Pointers-in-C__.html,Pointers in C++,Pointers,Easy
+Which function is used to implement the concept of polymorphism?,,,Virtual Functions,Member function,Function overloading,Pure functions,http://www.exforsys.com/tutorials/c-plus-plus/c-virtual-functions.html,What are Virtual Functions? ,Virtual Functions,Easy
+Which property of virtual functions is untrue? ,,,Virtual functions possess all of these properties.,Virtual functions are member functions of a class. , Virtual functions are declared with the keyword virtual.,Dynamic Binding Property,http://www.exforsys.com/tutorials/c-plus-plus/c-virtual-functions.html,Properties of Virtual Functions,Virtual Functions,Easy
+Which type of files are handled by fstream class?,,,Text and binary files,Only text files,Only binary files,Source Files,http://www.cppforschool.com/tutorial/Files1.html,Data File Handling In C++,File Handling,Easy
+Which file format does not use delimiters for a line?,,,Binary file,Text file,Source File,All of these answers are correct.,http://www.cppforschool.com/tutorial/Files1.html,Data File Handling In C++,File Handling,Easy
+Which property of vector containers is incorrect?,,,"Linked list
+",Sequential,Dynamic,Allocator-aware,http://www.cplusplus.com/reference/vector/vector/,Vector: Container properties,Vectors,Easy
+Where are exceptions used?,,,To find both logic errors and runtime errors,To find compilation errors,To find logical errors,To find runtime errors,http://msdn.microsoft.com/en-us/library/vstudio/hh279678.aspx,Errors and Exception Handling (Modern C++),Exception Handling,Easy
+Which C++ feature is used to write independent code of any particular type?,,,Template,Inheritance,Classes,Polymorphism,http://www.tutorialspoint.com/cplusplus/cpp_templates.htm,C++ Templates,Templates,Easy
+Which programming technique is used to solve problems using objects?,,,Object Oriented Programming,Unstructured programming,Procedural Programming,Structural Programing,http://www.tutorialspoint.com/cplusplus/cpp_object_oriented.htm,C++ Object-Oriented Concepts,OOPS,Easy
+"What is CGI?
+",,,It's a standard that define how information is exchanged between the web server and a custom script.,"Interface between gateways/
+","It's a standard that hides information on browser.
+",None of the other answers are correct.,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,What is CGI?,CGI,Easy
+"What is the default access specifier for classes?
+",,,Private,Protected,Public,Private Protected,http://www.cplusplus.com/doc/tutorial/classes/,Classes(1),Classes,Medium
+Which is the correct syntax to declare a class?,,,class classname{   int a;  };,class {   int a;   },class classname{    int a;   },classname{    int a;   };,http://www.cplusplus.com/doc/tutorial/classes/,Classes(1),Classes,Medium
+Which is the correct syntax for inheritance?,,,class base{   ...   };   class derived : public base{   ...   };,class derived{   ...   };   class base : public derived{   ...   };,class base{   ...   }   class derived : public base{   ...   },base_class{   ...   };   derived_class : public base{   ...   };,http://www.codingunit.com/cplusplus-tutorial-inheritance,C++ Inheritance,Inheritance,Medium
+Define multiple inheritance.,,,When more than one class acts as base classes for other classes.,When one class acts as base classes for other classes.,When more than one class acts as derived classes from one base class.,When a base class is inherited by multiple derived classes is known as multiple inheritance.,http://www.codingunit.com/cplusplus-tutorial-inheritance,Multiple Inheritance,Inheritance,Medium
+How would you store the address of a variable in the pointer variable?,,,int i;   int *ptr;   ptr = &i;,int i;   int *ptr;   ptr = i;,int i;   int ptr;   ptr = &i;,int i;   int ptr;   ptr = i;,http://www.studiesinn.com/learn/Programming-Languages/C__/Pointers-in-C__.html,Pointers in C++,Pointers,Medium
+When does the asterisk (*) operator appear before a pointer variable?,,,Multiple answers are correct.,When declaring a pointer variable.,"When dereferencing a pointer variable (to find the data it points to).
+
+",None of the other answers are correct.,http://www.tenouk.com/Module8.html,Initializing Pointers,Pointers,Medium
+Which keyword that is used to declare a function and compiler will do dynamic binding?,,,Virtual,Dynamic,Constant,Pure virtual,http://publib.boulder.ibm.com/infocenter/zos/v1r11/index.jsp?topic=/com.ibm.zos.r11.cbclx01/cplr139.htm,Virtual functions,Virtual Functions,Medium
+Which functions are known as 'do nothing functions'?,,,Pure virtual function,Virtual Functions,Pure function,Abstract function,http://www.careerride.com/Interview-Questions-C++-Virtual-functions.aspx,Virtual functions,Virtual Functions,Medium
+Which stream class is used to read files?,,,"Both ifstream and fstream
+",ifstream class,ofstream class,fstream class,http://www.cppforschool.com/tutorial/Files1.html,Classes for file  stream operation ,File Handling,Medium
+Which class is used to append a file?,,,ios::app,ios::append,ios::ate,ios::out,http://www.cppforschool.com/tutorial/Files1.html,Opening a file,File Handling,Medium
+How do you declare vectors?,,,Multiple answers are correct.,vector<type> variable_name (number_of_elements);,vector<type> variable_name;,None of the other answers are correct.,http://www.mochima.com/tutorials/vectors.html,Basic Vectors Facilities,Vectors,Medium
+Which vector function is used to resize a vector?,,,resize,size,capacity,max_size,http://www.cplusplus.com/reference/vector/vector/,Vector member functions,Vectors,Medium
+Which keywords are used for exception handling in C++?,,,"Try, catch and throw",Try and catch,Exception,Terminate,http://msdn.microsoft.com/en-us/library/6dekhbbc.aspx,"try, catch, and throw Statements (C++)",Exception Handling,Medium
+"What is the purpose of a try block?
+",,,A try block encloses one or more statements that might throw an exception.,A try block encloses one or more statements that does not throw an exception.,A try block specifies the type of exception the block can handle.,A try block signals the error or exceptional condition.,http://msdn.microsoft.com/en-us/library/6dekhbbc.aspx,"try, catch, and throw Statements (C++)",Exception Handling,Medium
+How do you declare a template?,,,template < template-parameter-list > declaration,template < template-parameter-list >;,template declaration,None of the other answers are correct.,http://msdn.microsoft.com/en-us/library/x5w1yety.aspx,Template Specifications,Templates,Medium
+Which category do templates belong to?,,,Meta-programming,Programming,Inheritance,Code Hiding,http://www.yolinux.com/TUTORIALS/Cpp-Templates.html,C++ Templates: Description,Templates,Medium
+Which concept is used to represent the needed information in program without presenting the details?,,,Abstraction,Encapsulation,Class,Inheritance,http://www.tutorialspoint.com/cplusplus/cpp_object_oriented.htm,C++ Object-Oriented Concepts,OOPS,Medium
+Which concept is used to place the data and the functions that work on that data in the same place?,,,Encapsulation,Abstraction,Inheritance,Class ,http://www.tutorialspoint.com/cplusplus/cpp_object_oriented.htm,C++ Object-Oriented Concepts,OOPS,Medium
+"What is the default location on Apache Server where a CGI program runs?
+",,,/usr/lib/cgi-bin,/var/www,~/public_html,/home/username/,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,Web Server Configuration,CGI,Medium
+Which header defines the format of the file being returned?,,,Content-type,Content-length,Type,Header-type,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,HTTP Header,CGI,Medium
+"Which operator is used to define a member of a class outside the class definition itself?
+",,,Two Colons (::),One Colon (:),One colon and one semi-colon (:;),Dot Operator(.),http://www.cplusplus.com/doc/tutorial/classes/,Classes(1),Classes,Hard
+Identify the names of inheritance in the image.,,http://www.codingunit.com/images/inheritance.jpg,1) Simple / Single 2) Multilevel 3) Hierarchical 4) Multiple 5) Hybrid,1) Multilevel 2) Simple / Single 3) Hierarchical 4) Hybrid 5) Multiple,1) Simple 2) Hierarchical 3) Hybrid 4) Multilevel 5) Multiple,1) Simple 2) Multiple 3) Hierarchical 4) Multilevel 5) Hybrid,http://www.codingunit.com/cplusplus-tutorial-inheritance,C++ Inheritance,Classes,Hard
+How do you declare a NULL pointer?,,,int *ptr = NULL;,int *ptr = null;,int *ptr = 0;,int *ptr = nullptr;,http://www.tenouk.com/Module8.html,Uninitialized Pointers,Inheritance,Hard
+"What is an abstract class?
+",,,"
+An abstract class contains at least one pure virtual
+function.","
+An abstract class contains at least one virtual
+function.","An abstract class contains more than one pure virtual
+function.","An abstract class contains more than one virtual
+function.",http://publib.boulder.ibm.com/infocenter/zos/v1r11/index.jsp?topic=/com.ibm.zos.r11.cbclx01/cplr139.htm,"Abstract classes
+",Inheritance,Hard
+Which functions are used to write and read blocks of binary data?,,,write() and read(),read() and write(),put() and get(),puts() and gets(),http://www.cppforschool.com/tutorial/Files1.html,INPUT AND OUTPUT OPERATION,Pointers,Hard
+Which method is used to insert an element at the end of vector variable?,,,push_back,insert,add,"assign
+",http://www.mochima.com/tutorials/vectors.html,Inserting and Removing Elements,Pointers,Hard
+Which method is used to remove an element from a vector?,,,remove,"erase
+",delete,"clear
+",http://www.mochima.com/tutorials/vectors.html,Inserting and Removing Elements,Virtual Functions,Hard
+What is a bad_exception exception?,,,Thrown when an exception type doesn't match any catch,Thrown when an exception when arithmetic error occurs.,Thrown by new on allocation failure,Thrown by dynamic_cast when fails with a referenced type,http://www.cplusplus.com/doc/tutorial/exceptions/,Standard exceptions,Virtual Functions,Hard
+What is a runtime_error exception?,,,An exception that theoretically can not be detected by reading the code.,An exception that occurs while executing the code.,An exception that thrown when a mathematically invalid domain is used.,An exception that is occurred when you try to store a value which is out of range.,http://www.tutorialspoint.com/cplusplus/cpp_exceptions_handling.htm,C++ Standard Exceptions,File Handling,Hard
+Which keyword can be used by any type anywhere in a template declaration or definition?,,,typename,typedef,template,"class
+",http://msdn.microsoft.com/en-us/library/8y88s595.aspx,typename,File Handling,Hard
+Which is the correct syntax for defining function template?,,,"template <class type> type func-name(parameter list)
+{
+   // body of function
+} ","template <class type> func-name(parameter list)
+{
+   // body of function
+} ","template ret-type func-name(parameter list)
+{
+   // body of function
+} ","type template func-name(parameter list)
+{
+   // body of function
+} ",http://www.tutorialspoint.com/cplusplus/cpp_templates.htm,Function Template,Vectors,Hard
+How do you exchange information between objects?,,,Use message passing,Use classes,Use inheritance,Create copy objects,http://www.hscripts.com/tutorials/cpp/cpp-message-passing.php,Message Passing and OOPs concept in C++,Vectors,Hard
+Which binding refers to linking a procedure call to the code that will be executed only at run time?,,,Dynamic binding,Static binding,Dynamic and Static binding,None of the other answers are correct.,http://www.hscripts.com/tutorials/cpp/cpp-dynamic-binding.php,Dynamic Binding - OOPs concept in C++,Exception Handling,Hard
+Why do premature end of script header errors occur when executing CGI programs?,,,Content-type is not mentioned in the first line of the program,Semi-colon missing,Incorrect script,This error never occurs,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,HTTP Header,Exception Handling,Hard
+"Which header is used to set a cookie in a CGI program?
+",,,Set-Cookie,Cookie,Cookie-type,Content-type,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,HTTP Header,Templates,Hard
+What is the name of a class that contains at least one pure virtual function?,,,Abstract class,Virtual Class,Pure Class,Pure Virtual Class,http://msdn.microsoft.com/en-us/library/c8whxhf1.aspx,Abstract Classes (C++),Classes,Expert
+What kind of class can be declared within the scope of another class?,,,Nested Class,Scope class,Inheritance,Abstract class,http://msdn.microsoft.com/en-us/library/x23h0937.aspx,Nested Class Declarations,Classes,Expert
+What is the order of calling constructors?,,,1) Base class constructor 2) Member constructors 3) Derived class constructor,1) Member constructors 2) Base class constructor 3) Derived class constructor,1) Member constructors 2) Default class constructor 3) Base class constructor,1) Derived class constructor 2) Member constructors 3) Base class constructor,http://www.cs.rochester.edu/~nelson/courses/csc_173/review/CppClasses.html,Derived Class,Inheritance,Expert
+What doesn't a derived class inherit?,,,All of these answers are correct,The base class' assignment operator ,The base class' friends,The base class' constructors and destructor,http://www.csse.monash.edu.au/~jonmc/CSE2305/Topics/05.09.Inheritance/html/text.html#initializer_lists,Derived Class,Inheritance,Expert
+What is the syntax for declaring const data with a const pointer?,,,"const type * const variable = some memory address;
+",type * const variable = some memory address;,const type * variable = some memory address;,type * variable = some memory address;,http://www.cprogramming.com/reference/pointers/const_pointers.html,Const Data with a Const Pointer,Pointers,Expert
+Which member function does not have a 'this' pointer?,,,Static Member function,Friend member function,Constant member function,Public member function,http://publib.boulder.ibm.com/infocenter/comphelp/v8v101/index.jsp?topic=%2Fcom.ibm.xlcpp8a.doc%2Flanguage%2Fref%2Fcplr035.htm,The this pointer (C++ only),Pointers,Expert
+What happens when we create a virtual constructor?,,,Compiler flags an error,Compiler shows a warning,Compiler compiles the code without error.,None of the other answers are correct,http://www.geeksforgeeks.org/advanced-c-virtual-constructor/,Advanced C++ | Virtual Constructor,Virtual Functions,Expert
+What is a property of a pure virtual destructor?,,,A pure virtual destructor makes its class abstract.,You can create an object of class which have pure virtual destructor.,Pure virtual destructors are not legal in C++.,All of these answers are correct,http://www.studytonight.com/cpp/virtual-destructors.php,Pure Virtual Destructor,Virtual Functions,Expert
+What is the correct order for the return value of following error handling functions?,"a. fail() 
+b. bad() 
+c. good()",,a) returns true when an input or output operation has failed b) returns true if an invalid operation is attempted or any unrecoverable error has occurred c) returns true if no error has occurred.,a) returns true when an input or output operation has failed b) returns true if no error has occurred c) returns true if an invalid operation is attempted or any unrecoverable error has occurred.,a) returns true if no error has occurred b) returns true if an invalid operation is attempted or any unrecoverable error has occurred c) returns true when an input or output operation has failed.,a) returns true when an input or output operation has failed b) returns true if an invalid operation is attempted or any unrecoverable error has occurred c) returns true if error has occurred.,http://www.cppforschool.com/tutorial/Files1.html,ERROR HANDLING FUNCTION,File Handling,Expert
+Which file pointer function is used to move the pointer to a specified location?,,,seekg(),seekp(),tellg(),tellp(),http://www.cppforschool.com/tutorial/Files1.html,File Pointers And Their Manipulation,File Handling,Expert
+Which is the correct syntax to swap two vectors foo and bar?,,,foo.swap(bar);,"swap(foo.bar);
+","swap(foo,bar);
+","interchange(foo,bar);",http://www.cplusplus.com/reference/vector/vector/swap/,vector::swap,Vectors,Expert
+Which value is returned by the crbegin function?,,,Returns a const_reverse_iterator pointing to the last element in the container.,Returns a const_iterator pointing to the last element in the container,Returns a iterator pointing to the last element in the container,Returns a reverse_iterator pointing to the last element in the container.,http://www.cplusplus.com/reference/vector/vector/crbegin/,vector::crbegin,Vectors,Expert
+What is the default action of terminate?,,,To call abort,To call set_terminate,Terminate the process,To call stop,http://msdn.microsoft.com/en-us/library/ax8460b1%28v=vs.100%29.aspx,Order of Handlers,Exception Handling,Expert
+How do you declare a class template?,,,"template <class type> class class-name {
+.
+.
+.
+}","class template <class type> class-name {
+.
+.
+.
+}","template <class type> class-name {
+.
+.
+.
+}","template class class-name {
+.
+.
+.
+}",http://www.tutorialspoint.com/cplusplus/cpp_templates.htm,Class Template,Templates,Expert
+When do we use OOPS?,,,All of these answers are correct,To solve real time problems,When writing modular code,When creating reusable code/programs,http://www.ntu.edu.sg/home/ehchua/programming/cpp/cp3_OOP.html,OOPS,OOPS,Expert
+Which variable is used to set the full path of the CGI script?,,,SCRIPT_FILENAME,SCRIPT_NAME,FILENAME,SET_NAME,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,CGI Environment Variables,CGI,Expert
+Which variable is used to set the server's hostname or IP Address?,,,SERVER_NAME,SCRIPT_FILENAME,SERVER_NAME,SET_SERVER,http://www.tutorialspoint.com/cplusplus/cpp_web_programming.htm,CGI Environment Variables,CGI,Expert
+"Which is the correct explanation of one to many relationship between classes and their friends
+when templates are involved?",,,"A non-template function may be a
+friend to all template class instantiations.","All instantiations of a template
+function may be friends to a regular non-template class.","All instantiations of a template
+function may be a friend to all instantiations of the template class.","A template function instantiated with
+one set of template arguments may be a friend to one template class instantiated
+with the same set of template arguments.",http://publib.boulder.ibm.com/infocenter/lnxpcomp/v8v101/index.jsp?topic=%2Fcom.ibm.xlcpp8l.doc%2Flanguage%2Fref%2Ffriends_and_templates.htm,Friends and templates (C++ only),Templates,Expert

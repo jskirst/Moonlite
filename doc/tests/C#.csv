@@ -1,0 +1,113 @@
+Question,Quoted Text (optional),Image URL (optional),Correct Answer,Incorrect Answer 1,Incorrect Answer 2,Incorrect Answer 3,Source URL,Source Title,Topic,Difficulty
+Variables can be categorized into the following types except:,,,String,Value,Reference,Pointer,http://www.tutorialspoint.com/csharp/csharp_data_types.htm,Data Types,"Expressions, Types, Variables",Easy
+Console.ReadLine() accepts data in which format?,,,String,Char,Int,Float,http://www.tutorialspoint.com/csharp/csharp_variables.htm,Variables,"Expressions, Types, Variables",Easy
+Name the control statement that allows the iteration of processing over elements in arrays and collections.,,,foreach,for,while,do while,http://www.c-sharpcorner.com/uploadfile/prvn_131971/control-statements-in-C-Sharp/,ForEach,Control Statements,Easy
+"Which of the following is known as labelled statement?
+",,,goto,yield,break ,continue,http://msdn.microsoft.com/en-us/library/ms173143.aspx,Labeled statements,Control Statements,Easy
+Members of nested namespace can be accessed using which operator?,,,dot (.) operator,:: operator,?: operator,~ operator,http://www.tutorialspoint.com/csharp/csharp_namespaces.htm,Nested Namespaces,Methods & Namespaces,Easy
+Which of the following is not an element of a method?,,,Namespace,Acces specifier,Return type,Method body,http://www.tutorialspoint.com/csharp/csharp_methods.htm,Defining methods in C#,Methods & Namespaces,Easy
+What is the default access specifier for a class type?,,,Internal,Public,Private,Protected,http://www.tutorialspoint.com/csharp/csharp_classes.htm,class defination,Classes,Easy
+"Which keyword, when attached to a class, makes it unable to instantiate?",,,static,this,new,partial,http://msdn.microsoft.com/en-us/library/vstudio/79b3xss3.aspx,static classes and static members,Classes,Easy
+Which of the following techniques is used to implement dynamic polymorphism?,,,Virtual functions,Function overloading,Operator overloading,Virtual Classes,http://www.tutorialspoint.com/csharp/csharp_polymorphism.htm,Dynamic polymorphism,Polymorphism,Easy
+A derived class can override a base class member if the base class member is declared as:,,,abstract,sealed,partial,static,http://msdn.microsoft.com/en-us/library/ms173152.aspx,Virtual members,Polymorphism,Easy
+Which property accessor is used to return the property value?,,,get,set,return ,value,http://msdn.microsoft.com/en-us/library/x9fsa0sw.aspx,Properties Overview,Properties,Easy
+Which keyword is used to declare an indexer on a class or struct?,,,this,new,ref,using,http://msdn.microsoft.com/en-us/library/2549tw02.aspx,Using Indexers,Indexes,Easy
+Which keyword is used to explicitly generate Exceptions in a program?,,,throw,try,finally,catch,http://msdn.microsoft.com/en-us/library/ms173160.aspx,Exceptions Overview,Exception Handling,Easy
+"Which of the following is a predefined attribute in C#?
+",,,Obsolete,Static,Override,Abstract,http://www.tutorialspoint.com/csharp/csharp_attributes.htm,Predefined attributes,Attributes,Easy
+Which access specifier allows a class to expose its member variables and member functions to other functions and objects in the current assembly?,,,Internal,Private,Public,Protected,http://www.tutorialspoint.com/csharp/csharp_encapsulation.htm,Internal access specifier,Encapsulation,Easy
+Which of following is not a relational operator?,,,x << y,x < y,x > y,x <= y,http://msdn.microsoft.com/en-us/library/6a71f45d.aspx,Relational and Type Tetsing,"Expressions, Types, Variables",Medium
+"What error does this line of code produce? 
+"," void ProcessMessages()
+{
+    while (ProcessMessage())
+        ; 
+}",,No error,Syntax error,Statement needed within the loop,Loop out of bound,http://msdn.microsoft.com/en-us/library/ms173143.aspx,The empty statement,Control Statements,Medium
+Namespaces implicitly have which access modifier?,,,public,private,protected ,internal,http://msdn.microsoft.com/en-us/library/z2kcy19k(v=vs.90).aspx,Remarks,Methods & Namespaces,Medium
+Which class type cannot be used as a base class?,,,sealed class,abstract class,friend class,partial class,http://msdn.microsoft.com/en-us/library/vstudio/ms173150.aspx,sealed classes and class members,Classes,Medium
+Which keyword is used to declare method hiding?,,,new,virtual,override,super,http://www.akadia.com/services/dotnet_polymorphism.html,Method Hiding,Polymorphism,Medium
+Which of the following is a property access modifier in C#?,,,All of these responses are correct,sealed,abstract,virtual,http://zetcode.com/lang/csharp/properties/,Other Notes,Properties,Medium
+Which OOPs concept is supported by accessing field data via methods?,,,Encapsulation,Inheritance,Polymorphism,Overloading,http://csharp-station.com/Tutorial/CSharp/Lesson10,Encapsulating Type State with Properties,Properties,Medium
+At least how many parameters must exist in an Indexer?,,,1,0,2,3,http://www.c-sharpcorner.com/UploadFile/senthurganesh/109172007050741AM/1.aspx,Indexer in C#,Indexers,Medium
+Which 2 parameter modifiers are not permitted in Indexers?,,,ref and out,ref and new,const and new,static and const,http://www.dotnetperls.com/indexer,parameter,Indexers,Medium
+Which of the following does not have the SystemException class as its base class?,,,DanglingException,ExecutionEngineException,StackOverFlowException ,OutOfMemoryException,http://www.c-sharpcorner.com/UploadFile/rajeshvs/ExceptionHandlinginCSharp11282005051444AM/ExceptionHandlinginCSharp.aspx,Standard Exceptions,Exception Handling,Medium
+User-defined exception classes are derived from which class?,,,ApplicationException,SystemException,IOException,FormatException,http://www.tutorialspoint.com/csharp/csharp_exception_handling.htm,Exception Classes in C#,Exception Handling,Medium
+The default value of the AllowMultiple parameter is:,,,FALSE,TRUE,0,1,http://msdn.microsoft.com/en-us/library/aa288454(v=vs.71).aspx,Attribute Usage,Attributes,Medium
+Which of the following is a mechanism for adding metadata to a program?,,,Attributes,Reflection,Invocation,Encapsulation,http://oreilly.com/catalog/progcsharp/chapter/ch18.html,Attributes and Reflection,Attributes,Medium
+"When encapsulating data, we may want to configure a read-only property. For this, which block should we omit?",,,set ,get,none,both,http://www.bogotobogo.com/CSharp/csharp_encapsulation.php,READ/WRITE ONLY PROPERTY GET/SET,Encapsulation,Medium
+What are the allowable access modifiers for data types?,,,public or internal,private or internal,public or private,public or private or internal or protected,http://www.csharp-station.com/tutorials/lesson19.aspx,Access Modifiers for Types,Encapsulation,Medium
+Which keyword ensures that one thread does not enter a critical section of code while another thread is in the same critical section?,,,lock,fixed,checked,sealed,http://msdn.microsoft.com/en-us/library/c5kehkcz.aspx,Lock statement,"Expressions, Types, Variables",Hard
+What is the default value of the bool data type?,,,FALSE,TRUE,0,1,http://www.tutorialspoint.com/csharp/csharp_data_types.htm,Data Types,"Expressions, Types, Variables",Hard
+Which of the following statements is used to end an iteration?,,,yield break,Exit Function,Return,yield return,http://msdn.microsoft.com/en-us/library/dscyy5s0.aspx,Iterators,Control Statements,Hard
+What will this code snippet do?,"for (; ; )  
+   {                
+   Console.WriteLine(""Hey!"");           
+   }",,Infinite loop,Error statement,Iteration 0,,http://www.tutorialspoint.com/csharp/csharp_loops.htm,The Infinite Loop,Control Statements,Hard
+Which keyword is used for creating a reference type in C#?,,,class,ref,struct,new,http://msdn.microsoft.com/en-us/library/ms173114.aspx,Passing by Reference Vs. Passing by Value,Methods & Namespaces,Hard
+Which is the root namespace in C#?,,,global,system,MyServices,Alias,http://msdn.microsoft.com/en-us/library/vstudio/0d941h9d.aspx,Namespace Overview,Methods & Namespaces,Hard
+Which of the following is not true for partial methods?,,,Partial methods cannot have ref parameters.,Partial method declarations must begin with the contextual keyword partial and the method must return void.,The partial method must return void.,Partial methods cannot be extern.,http://msdn.microsoft.com/en-us/library/vstudio/wa80x488.aspx,Partial Methods,Classes,Hard
+In which class type is the lazy instantiation approach followed?,,,Singleton,Partial,Static,Abstract,http://msdn.microsoft.com/en-us/library/ms998558.aspx,singleton,Classes,Hard
+Which  of the following cannot be virtual in derived class?,,,Fields,Methods,Indexers,Events,http://msdn.microsoft.com/en-us/library/ms173152.aspx,Virtual members,Polymorphism,Hard
+A derived class can stop virtual inheritance by declaring an override as:,,,Sealed,Abstract,Locked,Static,http://msdn.microsoft.com/en-us/library/ms173152.aspx,Preventing derived cass from overriding virtual members,Polymorphism,Hard
+Properties can be used to replace:,,,Both methods & fields,Methods,Fields,Neither methods nor fields,http://www.dotnetperls.com/property,Summary,Properties,Hard
+Accessors of interface indexers differ from the accessors of class indexers in which of the following ways?,,,Interface accessors do not use modifiers,Interface indexers do not use get and set accessors for their definitions.,Interface indexers do not use the 'this' keyword.,String based parameters are not allowed in interface indexers.,http://msdn.microsoft.com/en-us/library/tkyhsw31.aspx,Indexers in Interface,Indexers,Hard
+"Let's say there's an int.Parse(string) method that you can use to convert a string to an int. If it can't do the conversion, which exception of the following would not be raised?",,,ArithmeticException,Argument null,Format,Overflow,http://cplus.about.com/od/learnc/a/exception-handling-tutorial-in-csharp.htm,Exception Handling Tutorial in C#,Exception Handling,Hard
+What is positional parameter of the AttributeUsage attribute?,,,AllowOn,AllowMultiple,ToString,GetType,http://msdn.microsoft.com/en-us/library/aa288454(v=vs.71).aspx,Declaring an Attribute Class,Attributes,Hard
+"Instead of using accessors or mutators, what is an alternative mechanism you can use for encapsulation?",,,Properties,Attributes,Classes,Objects,http://www.techopedia.com/definition/3787/encapsulation-c,Techopedia explains Encapsulation,Encapsulation,Hard
+Pointers initialized in fixed statements cannot be:,,,modified,used,assigned value,assigned memory,http://msdn.microsoft.com/en-us/library/f58wzh21.aspx,Note under fixed statement,,Expert
+" When a compiler determines that the flow of control can never reach a particular statement, what warning will be produced?",,,CS0162,CS0070,AS9012,CE9013,http://msdn.microsoft.com/en-us/library/ms173143.aspx,Unreachable Statements,,Expert
+Which of the following classes cannot be called by the MyServices namespace?,,,FileSystemProxy,Computer,Clock,Audio,http://msdn.microsoft.com/en-us/library/vstudio/ms173136.aspx,Example,,Expert
+Which OOP concept is implemented when the member variable of a class is kept private?,,,Encapsulation,Inheritance,Polymorphism,Overloading,http://www.tutorialspoint.com/csharp/csharp_classes.htm,Member Functions and Encapsulation,,Expert
+Which keywod needs to be used if you want your derived member to have the same name as a member in a base class?,,,new,virtual,this,override,http://msdn.microsoft.com/en-us/library/ms173152.aspx,Hiding Base class members with new members,,Expert
+Here we have a program for mutable struct using fields and properties. What will be the output on the console?,"using System;
+
+struct MutableStruct
+{
+    public int Value { get; set; }
+    
+    public void SetValue(int newValue)
+    {
+        Value = newValue;
+    }
+}
+
+class MutableStructHolder
+{
+    public MutableStruct Field;
+    public MutableStruct Property { get; set; }
+}
+
+class Test
+{    
+    static void Main(string[] args)
+    {
+        MutableStructHolder holder = new MutableStructHolder();
+        // Affects the value of holder.Field
+        holder.Field.SetValue(10);
+        // Retrieves holder.Property as a copy and changes the copy
+        holder.Property.SetValue(10);
+        
+        Console.WriteLine(holder.Field.Value);
+        Console.WriteLine(holder.Property.Value);
+    }
+}
+
+",,10 0,0 10,0 0,"10
+10",http://csharpindepth.com/articles/chapter8/propertiesmatter.aspx,Why Properties Matter,,Expert
+"How could you use properties to break into the debugger, whenever the value of a private field changes?",,,By adding a breakpoint in the setter,By adding a breakpoint in the getter,By add logging to the getter,By adding logging to the setter,http://csharpindepth.com/articles/chapter8/propertiesmatter.aspx,Practical benefits of properties,,Hard
+Which of the following classes does not use an index to locate items?,,,Hashtable,ArrayList,SortedList,BitArray,http://www.tutorialspoint.com/csharp/csharp_collections.htm,Various Collection Classes and Their Usage,,Expert
+"The modifiers virtual, override, and abstract are mutually exclusive except in one case. The ________ and _______ modifiers may be used together so that an abstract indexer can override a (an) _______ one",,,"1. abstract
+2. override
+3. virtual","1. virtual
+2. abstract
+3. override","1. static
+2. abstract
+3. override","1. static
+2. abstract
+3. virtual",http://msdn.microsoft.com/en-us/library/aa664459(v=vs.71).aspx,Indexers,,Expert
+"When the exception is thrown by the function F3, even though the caller is F2, as there is no catch handler, the execution comes out of F2 and enters the catch block of F1. Travelling back from F3->F2->F1 is ___________",,,Stack Unwind.,Exception handling,Exception Bubbling,Stack Bubbling,http://www.codeproject.com/Articles/125470/Exception-Handling-for-C-Beginners,Exception Bubbling,,Expert
+Which of the following object shows which method threw the exception?,,,Targetsite,StackTrace,TargetStack,SiteTrace,http://www.codeproject.com/Articles/125470/Exception-Handling-for-C-Beginners,What is Exception Class?,,Expert
+"When an attribute is consumed by the CLR during execution,  the .NET Framework offers which attribute?",,,ThreadStaticAttribute,ObsoleteAttribute,DebuggerDisplayAttribute, SerializationAttribute,http://www.c-sharpcorner.com/UploadFile/PatrickSmacchia/attributes02022006132738PM/attributes.aspx,When do we need attributes ?,,Expert
+"In the Obsolete attribute, when the parameter iserror has a value of false, what does the compiler do? ",,,Generates warning,Generates error,Ignores it,Generates an inappropriate output,http://www.tutorialspoint.com/csharp/csharp_attributes.htm,Obsolete,,Expert
+The private access modifier restricts access to only: ,,,members of a type,any piece of code,any data,methods,http://www.csharp-station.com/tutorials/lesson19.aspx,Summary,,Expert
+The hidden part of a class acts like ___________ and the  exposed part of a class acts like _____________ ,,,"Encapsulation, Abstraction","Abstraction, Encapsulation","Data hiding, Encapsulation","Encapsulation, Data hiding",http://www.onlinebuff.com/article_oops-principle-encapsulation-in-c-with-an-example_15.html,Using Encapsulation,,Expert
