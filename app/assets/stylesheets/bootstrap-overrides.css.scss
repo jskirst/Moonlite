@@ -29,12 +29,14 @@
 .fill { height: 40px; }
 .navbar-inner, .navbar .fill {
   border: 0;
+  background: #406B9B;
   background-image: -moz-linear-gradient(top, #406B9B, #263042); 
   background-image: -ms-linear-gradient(top, #406B9B, #263042); 
   background-image: -o-linear-gradient(top, #406B9B, #263042);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#406B9B), to(#263042)); 
   background-image: -webkit-linear-gradient(top, #406B9B, #263042);
   background-image: linear-gradient(top, #406B9B, #263042);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#406B9B', endColorstr='#263042');
 }
 
 /* Navbar/Z_boostrap-overrides */

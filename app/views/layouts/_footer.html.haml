@@ -70,7 +70,7 @@
     %a{href: "http://metabright.blogspot.com/", target: "_blank"} Blog
     \/
     = link_to "Terms of Service", tos_path
-- if (not current_user) and (params[:action] == "evaluator" or params[:controller] == "groups")
+- if (not current_user) and (params[:action] == "evaluator" or params[:action] == "evaluator_pricing" or params[:controller] == "groups")
   / Start of Zopim Live Chat Script
   :javascript
     window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
