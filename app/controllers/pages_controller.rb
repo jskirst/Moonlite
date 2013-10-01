@@ -219,14 +219,27 @@ class PagesController < ApplicationController
     if @admin_group and @admin_group.stripe_token.present?
       redirect_to root_url and return
     end
-    @title = "Pre-Employment Skill Tests - Evaluator"
+    @title = "Pre-Employment Skill Tests - MetaBright Evaluator"
     @show_footer = true
     @hide_background = true
-    @show_sign_in = true
+    @show_sign_in = false
     @show_nav_bar = false
     @show_employer_link = false
     @paths = Path.where("professional_at is not NULL").to_a
     render "evaluator"
+  end
+  
+  def evaluator_pricing
+    if @admin_group and @admin_group.stripe_token.present?
+      redirect_to root_url and return
+    end
+    @title = "Pre-Employment Skill Tests - MetaBright Evaluator"
+    @show_footer = true
+    @hide_background = true
+    @show_sign_in = false
+    @show_nav_bar = false
+    @show_employer_link = false
+    render "evaluator_pricing"
   end
   
   def challenges

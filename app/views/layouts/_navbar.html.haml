@@ -12,7 +12,7 @@
           = link_to root_url do
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       -# raise params.to_yaml
-      - if not current_user and (params[:controller] == "pages" or params[:controller] == "ideas" or params[:controller] == "groups") and (params[:action] == "home" or params[:action] == "evaluator" or params[:action] == "bugs" or params[:action] == "ideas" or params[:action] == "new" or params[:action] == "create")
+      - if not current_user and (params[:controller] == "pages" or params[:controller] == "ideas" or params[:controller] == "groups") and (params[:action] == "home" or params[:action] == "evaluator" or params[:action] == "evaluator_pricing" or params[:action] == "bugs" or params[:action] == "ideas" or params[:action] == "new" or params[:action] == "create")
         %ul.nav.navicons.landing-nav{ style: "height: 100%;" }
           %li
           %li.navitem
@@ -20,7 +20,10 @@
               %span Home
           %li.navitem
             = link_to evaluator_url do
-              %span Plans
+              %span Features
+          %li.navitem
+            = link_to evaluator_pricing_url do
+              %span Pricing
 
       - elsif current_user and show_nav_bar
         - if @admin_group
