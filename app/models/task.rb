@@ -41,7 +41,7 @@ class Task < ActiveRecord::Base
   DIFFICULTY_TYPES = { EASY => "Easy", MEDIUM => "Medium", HARD => "Hard", EXPERT => "Expert" }
   
   attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name
-  attr_protected :section_id, :archived_at, :time_limit
+  attr_protected :archived_at
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
@@ -58,7 +58,13 @@ class Task < ActiveRecord::Base
     :topic_id, :topic_name,
     :time_limit,
     :difficulty,
-    :topic
+    :topic,
+    :section_id,
+    :time_limit,
+    :answer_new_1, 
+    :answer_new_2, 
+    :answer_new_3, 
+    :answer_new_4
   
   belongs_to :section
   belongs_to :creator, class_name: "User"

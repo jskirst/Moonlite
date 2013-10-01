@@ -1,4 +1,4 @@
-Question,Quoted Text (optional),Image URL (optional),Correct Answer,Incorrect Answer 1,Incorrect Answer 2,Incorrect Answer 3,Source URL,Source Title,Topic,Difficulty
+question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic,difficulty
 What are the two general categories of data types supported by the common type system?,,,Value type & Reference type,System type & Data type,System type and Non system type,Safe type and Unsafe type,http://msdn.microsoft.com/en-us/library/cc265151(v=vs.95).aspx,The Common Type System,Common type system,Easy
 Where are values types allocated?,,,Stack,Heap,Array,List,http://msdn.microsoft.com/en-us/library/cc265151(v=vs.95).aspx,The Common Type System-Value types,Common type system,Medium
 Where are reference types allocated?,,,Heap,Stack,Array,List,http://msdn.microsoft.com/en-us/library/cc265151(v=vs.95).aspx,The Common Type System-Reference types,Common type system,Medium

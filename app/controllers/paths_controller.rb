@@ -236,24 +236,25 @@ class PathsController < ApplicationController
     @tasks = []
     file = params["path"]["batch_file"]
     
+    # Header must contain:
+    # question, answer_new_1, answer_new_2, answer_new_3, answer_new_4, quoted_text, template, image_url, resource, resource_title, topic, difficulty
+    path_id = @path.id
+    section_id = @path.sections.last.id
     CSV.foreach(file.path) do |row|
       if @header
         task_hash = Hash[@header.zip(row)]
         task_hash["template"] = task_hash["image_url"]
         task_hash["answer_content"] = gather_answers(task_hash)
         task_hash["difficulty"] = Task::DIFFICULTY_TYPES.invert[task_hash["difficulty"]]# || raise "FUCK"
-        topic = task_hash.delete("topic")
+        task_hash["path_id"] = path_id
+        task_hash["section_id"] = section_id
         @tasks << Task.new(task_hash)
       else
         @header = row
       end
     end
     
-    section = @path.sections.create!(name: "Name")
-    
     @tasks.each do |t|
-      t.path = @path
-      t.section = section
       t.creator = current_user
       t.answer_type = t.answer_content.size == 0 ? Task::CREATIVE : Task::MULTIPLE
       t.answer_sub_type = Task::TEXT
