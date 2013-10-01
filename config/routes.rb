@@ -166,8 +166,7 @@ Metabright::Application.routes.draw do
   get '/challenges' => 'pages#challenges'
   #get '/preview' => 'pages#preview'
 	
-	post '/stored_resources' => 'stored_resources#create'
-	put '/stored_resources' => 'stored_resources#create'
+	patch '/stored_resources' => 'stored_resources#create'
 	delete '/stored_resources/:id' => 'stored_resources#destroy', as: 'delete_stored_resource'
 	
 	scope '/admin' do

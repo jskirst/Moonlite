@@ -3,6 +3,7 @@
   :javascript
     $(function(){
       $('##{unique_id}').fileupload({
+        method: "patch",
         url: '#{stored_resources_path}',
         dataType: 'json',
         done: function (e, data) {
