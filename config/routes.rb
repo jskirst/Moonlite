@@ -106,7 +106,7 @@ Metabright::Application.routes.draw do
       get :vote
       post :report
       get :add_stored_resource
-      put :add_stored_resource
+      patch :add_stored_resource
       put :archive
       put :complete
       put :took

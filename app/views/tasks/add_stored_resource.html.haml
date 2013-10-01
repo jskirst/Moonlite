@@ -1,7 +1,7 @@
 %div.single_pane
   %h2 New Picture
   %p{ style: "padding: 10px 10px 10px 0px;"} You can upload a picture for any task and have it displayed just below the question. You can use this for "identify this" type questions or just for some added visuals.
-  = form_tag({ controller: "tasks", action: "add_stored_resource" }, { class: "form-horizontal", multipart: true, method: :put }) do
+  = form_tag({ controller: "tasks", action: "add_stored_resource" }, { class: "form-horizontal", multipart: true, method: :patch }) do
     %div.control-group
       %div.controls= file_field_tag :obj
     %div.control-group.floatr{ style: "margin-top: 20px;" }
