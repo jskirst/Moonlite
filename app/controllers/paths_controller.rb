@@ -421,6 +421,7 @@ class PathsController < ApplicationController
 
   private    
     def load_resource
+      raise "Unknown cache issue" unless Rails.cache.stats
       @path = Path.cached_find(params[:permalink] || params[:id])
       unless @path
         @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
