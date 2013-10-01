@@ -153,41 +153,27 @@ module SessionsHelper
   end
   
   def determine_enabled_features
-    unless ["raw"].include?(params[:action])
-      if Rails.env == "development"
-        @custom_style = Company.find(1).custom_style
-      end
+    return unless current_user
+    @enable_administration = current_user.enable_administration
+    return if request.xhr?
+    
+    @groups = Group.joins("INNER JOIN group_users on group_users.group_id=groups.id")
+      .where("groups.closed_at is ?", nil)
+      .where("group_users.user_id = ?", current_user.id)
+      .select("group_users.is_admin, groups.*")
+      .to_a
       
-      if current_user
-        @is_consumer = true
-        @enable_administration = current_user.enable_administration == "t"
-        unless request.xhr?
-          if @enable_administration
-            @custom_style = Company.find(1).custom_style
-          else
-            @custom_style = nil
-          end
-          
-          @groups = Group.joins("INNER JOIN group_users on group_users.group_id=groups.id")
-            .where("groups.closed_at is ?", nil)
-            .where("group_users.user_id = ?", current_user.id)
-            .select("group_users.is_admin, groups.*")
-            .to_a
-            
-          @admin_groups = @groups.select{ |g| g.is_admin? }
-          @admin_groups = nil if @admin_groups.empty?
-          if @admin_groups
-            group_id = params[:g] || session[:g]
-            if group_id
-              @admin_group = @admin_groups.select{ |g| g.id.to_s == group_id.to_s }.first
-            end
-            if @admin_group.nil?
-              @admin_group = @admin_groups.first
-            end
-            session[:g] = @admin_group.id
-          end
-        end
+    @admin_groups = @groups.select{ |g| g.is_admin? }
+    @admin_groups = nil if @admin_groups.empty?
+    if @admin_groups
+      group_id = params[:g] || session[:g]
+      if group_id
+        @admin_group = @admin_groups.select{ |g| g.id.to_s == group_id.to_s }.first
       end
+      if @admin_group.nil?
+        @admin_group = @admin_groups.first
+      end
+      session[:g] = @admin_group.id
     end
   end
   

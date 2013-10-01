@@ -117,7 +117,7 @@ class Mailer < ActionMailer::Base
   
   def new_idea(idea)
     @idea = idea
-    admins = User.joins(:user_role).where("user_roles.enable_administration = ? and is_fake_user = ? and is_test_user = ?", true, false, false)
+    admins = User.joins(:user_role).where("users.enable_administration = ? and is_fake_user = ? and is_test_user = ?", true, false, false)
     mail(to: admins.first.email, subject: "[NEW IDEA] #{@idea.title}", cc: admins.collect(&:email))
   end
   

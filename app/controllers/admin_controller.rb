@@ -1,10 +1,10 @@
 class AdminController < ApplicationController
   include AdminHelper
-  before_filter :authenticate
-  before_filter { raise "ACCESS DENIED" unless @enable_administration }
+  before_action :authenticate
+  before_action { raise "ACCESS DENIED" unless @enable_administration }
   
   def overview
-    @excluded = User.joins(:user_role).where("user_roles.enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ? and earned_points > 0", true, true, true, nil).to_a.collect &:id
+    @excluded = User.where("enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ? and earned_points > 0", true, true, true, nil).to_a.collect &:id
 
     @stats = {
       users:              User.where("id not in (?) and earned_points > ?", @excluded, 300),

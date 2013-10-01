@@ -37,7 +37,7 @@ class TaskIssue < ActiveRecord::Base
   validates_inclusion_of :issue_type, in: ISSUE_TYPES
   
   after_create do
-    if user.user_role.enable_administration || task.task_issues.where(resolved: false).size >= 2
+    if user.enable_administration || task.task_issues.where(resolved: false).size >= 2
       task.update_attribute(:locked_at, Time.now)
       creator = task.creator
       creator.enroll!(task.path)
