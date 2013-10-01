@@ -8,7 +8,7 @@ if ENV["RAILS_ENV"] == "development"
   listen 3000, :tcp_nopush => false
 else
   port = ENV["PORT"].to_i
-  listen port, :tcp_nopush => false
+  listen port#, :tcp_nopush => false
 end
 
 before_fork do |server, worker|
