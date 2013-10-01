@@ -258,9 +258,11 @@ class PathsController < ApplicationController
       t.creator = current_user
       t.answer_type = t.answer_content.size == 0 ? Task::CREATIVE : Task::MULTIPLE
       t.answer_sub_type = Task::TEXT
+      t.save!
     end
     
-    render as_processing_screen(@tasks, :save!, edit_path_path(@path))
+    redirect_to edit_path_path(@path)
+    #render as_processing_screen(@tasks, :save!, edit_path_path(@path))
   end
 
 # Begin Path Journey
