@@ -1,4 +1,4 @@
-question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic,difficulty
+question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic_name,difficulty
 Which is the transaction code for the Repository Browser in the ABAP Workbench?,,,SE80,SE38,SE81,SE01,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2e22358411d1829f0000e829fbfe/frameset.htm,Creating and Changing ABAP Programs,Fundamentals,Easy
 Which is the component that allows a user to define fixed values for the input fields on the selection screen of a report?,,,Variants,Source Code,Attributes,Text elements,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2d26358411d1829f0000e829fbfe/frameset.htm,Opening Programs in the ABAP Editor,Fundamentals,Medium
 "What is the name of the interface for the R/3 communication protocols (RFC, CPI/C)?",,,Gateway,Dispatcher,Work Processes,Shared Memory,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2e8a358411d1829f0000e829fbfe/frameset.htm,Application Servers,Fundamentals,Hard

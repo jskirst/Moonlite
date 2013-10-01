@@ -1,4 +1,4 @@
-question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic,difficulty
+question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic_name,difficulty
 Which of the following is an expanded concept of a data structure in C++?,,,Class,Structure,Union,Enum,http://www.cplusplus.com/doc/tutorial/classes/,Classes(1),Classes,Easy
 Which operator is used to define a destructor in a class?,,,Tilde (~),"Hyphen (-)
 ",Only classname,Asterisk (*),http://www.codersource.net/C/CTutorials/CTutorialclass.aspx,Destructors,Classes,Easy
