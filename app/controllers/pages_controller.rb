@@ -141,9 +141,8 @@ class PagesController < ApplicationController
         @contributions = @contributions.values
       end
       
-      @similar_people = User.joins(:user_role)
-        .joins("INNER JOIN user_personas on users.id = user_personas.user_id")
-      	.where("user_roles.enable_administration = ? and users.id != ? and user_personas.persona_id = ?", false, @user.id, @current_user_persona.persona_id)
+      @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
+      	.where("users.enable_administration = ? and users.id != ? and user_personas.persona_id = ?", false, @user.id, @current_user_persona.persona_id)
 	      .where("users.image_url is not ?", nil)
       	.limit(100)
       	.to_a.shuffle

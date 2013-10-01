@@ -163,7 +163,7 @@ class TasksController < ApplicationController
   end
   
   def add_stored_resource
-    unless params[:commit]
+    if request.get?
       @stored_resource = @task.stored_resources.new
     else
       @stored_resource = @task.stored_resources.new(params)

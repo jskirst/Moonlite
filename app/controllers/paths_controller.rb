@@ -236,30 +236,33 @@ class PathsController < ApplicationController
     @tasks = []
     file = params["path"]["batch_file"]
     
+    # Header must contain:
+    # question, answer_new_1, answer_new_2, answer_new_3, answer_new_4, quoted_text, template, image_url, resource, resource_title, topic, difficulty
+    path_id = @path.id
+    section_id = @path.sections.last.id
     CSV.foreach(file.path) do |row|
       if @header
         task_hash = Hash[@header.zip(row)]
         task_hash["template"] = task_hash["image_url"]
         task_hash["answer_content"] = gather_answers(task_hash)
         task_hash["difficulty"] = Task::DIFFICULTY_TYPES.invert[task_hash["difficulty"]]# || raise "FUCK"
-        topic = task_hash.delete("topic")
+        task_hash["path_id"] = path_id
+        task_hash["section_id"] = section_id
         @tasks << Task.new(task_hash)
       else
         @header = row
       end
     end
     
-    section = @path.sections.create!(name: "Name")
-    
     @tasks.each do |t|
-      t.path = @path
-      t.section = section
       t.creator = current_user
       t.answer_type = t.answer_content.size == 0 ? Task::CREATIVE : Task::MULTIPLE
       t.answer_sub_type = Task::TEXT
+      t.save!
     end
     
-    render as_processing_screen(@tasks, :save!, edit_path_path(@path))
+    redirect_to edit_path_path(@path)
+    #render as_processing_screen(@tasks, :save!, edit_path_path(@path))
   end
 
 # Begin Path Journey
@@ -421,14 +424,16 @@ class PathsController < ApplicationController
 
   private    
     def load_resource
+      raise "Unknown cache issue" unless Rails.cache.stats
       @path = Path.cached_find(params[:permalink] || params[:id])
       unless @path
         @path = Path.find_by_permalink(params[:permalink]) if params[:permalink]
         @path = Path.find_by_permalink(params[:id]) if params[:id] && @path.nil?
         @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       end
-      
-      @path_custom_style = @path.custom_style if @path
+      puts @path.name
+      raise "No path found." unless @path
+      #@path_custom_style = @path.custom_style if @path
       redirect_to root_path unless @path
     end
     

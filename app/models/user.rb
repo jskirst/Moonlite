@@ -92,7 +92,7 @@ class User < ActiveRecord::Base
   
   after_save :flush_cache
   before_destroy do
-    if Rails.env != "development" and user_role.enable_administration
+    if Rails.env != "development" and self.enable_administration
       raise "Cannot delete an admin account."
     else
       return true
@@ -124,7 +124,7 @@ class User < ActiveRecord::Base
   end
   
   def self.find_with_omniauth(auth)
-    return User.joins(:user_auths, :user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").where("user_auths.provider = ? and user_auths.uid = ?", auth["provider"], auth["uid"]).first
+    return User.joins(:user_auths).where("user_auths.provider = ? and user_auths.uid = ?", auth["provider"], auth["uid"]).first
   end
   
   def merge_existing_with_omniauth(auth)
@@ -243,7 +243,7 @@ class User < ActiveRecord::Base
   def has_password?(submitted_password) encrypted_password == encrypt(submitted_password) end
   
   def self.authenticate(email, submitted_password)
-    user = User.where(email: email).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first
+    user = User.where(email: email).first
     return nil if user.nil?
     return user if user.has_password?(submitted_password)
   end
@@ -485,11 +485,11 @@ class User < ActiveRecord::Base
   
   def self.cached_find_by_id(id)
     return nil unless id
-    Rails.cache.fetch([self.to_s, id]) { where(id: id).joins(:user_role).select("users.*, user_roles.enable_administration, user_roles.enable_content_creation").first }
+    Rails.cache.fetch([self.to_s, id]) { where(id: id).first }
   end
   
   def self.cached_find_by_username(username)
-    Rails.cache.fetch([self.to_s, username]) { find_by_username(username) }
+    Rails.cache.fetch([self.to_s, username]) { where(username: username).first }
   end
   
   def flush_cache

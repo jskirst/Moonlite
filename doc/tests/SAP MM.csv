@@ -1,4 +1,4 @@
-Question,Quoted Text (optional),Image URL (optional),Correct Answer,Incorrect Answer 1,Incorrect Answer 2,Incorrect Answer 3,Source URL,Source Title,Topic,Difficulty
+question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic_name,difficulty
 "In the MM01 initial screen, what is necessary to specify when a material master record is created?",,,Material Type and Industry Sector.,Purchasing Group and Material Group.,Material Type and Plant.,Purchaing Group and Industry Sector.,http://help.sap.com/printdocu/core/print46c/en/data/pdf/CAARCLO/CAARCLO.pdf,Material Master Record,Logistics ,Easy
 What is the table name for General Material Data?,,,MARA,MATNR,MARC,MARD,http://www.sap123.com/a/1/,SAP MM Tables,Logistics ,Medium
 NLAG is a Material Type for:,,,Non-stock materials.,Pipeline Materials.,Trading Goods.,Non-valuated materials.,http://sapmmhelp.blogspot.com/2008/09/master-data-master-data-contains.html,Different Material Types Available,Logistics ,Hard
