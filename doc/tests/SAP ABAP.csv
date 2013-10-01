@@ -1,0 +1,51 @@
+Question,Quoted Text (optional),Image URL (optional),Correct Answer,Incorrect Answer 1,Incorrect Answer 2,Incorrect Answer 3,Source URL,Source Title,Topic,Difficulty
+Which is the transaction code for the Repository Browser in the ABAP Workbench?,,,SE80,SE38,SE81,SE01,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2e22358411d1829f0000e829fbfe/frameset.htm,Creating and Changing ABAP Programs,Fundamentals,Easy
+Which is the component that allows a user to define fixed values for the input fields on the selection screen of a report?,,,Variants,Source Code,Attributes,Text elements,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2d26358411d1829f0000e829fbfe/frameset.htm,Opening Programs in the ABAP Editor,Fundamentals,Medium
+"What is the name of the interface for the R/3 communication protocols (RFC, CPI/C)?",,,Gateway,Dispatcher,Work Processes,Shared Memory,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2e8a358411d1829f0000e829fbfe/frameset.htm,Application Servers,Fundamentals,Hard
+What kind of processing block describes the functions of classes in ABAP Objects?,,,Methods,Function Modules,Subroutines,Event Blocks ,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb2d67358411d1829f0000e829fbfe/frameset.htm,Processing Blocks in ABAP Programs,Fundamentals,Expert
+Which keyword determines the category of this statement?,"
+DATA: wa_city TYPE city.",,DATA,TYPE,wa_city,city,http://help.sap.com/abapdocu_702/en/abenabap_words.htm,ABAP words ,Programming Language - Syntax.,Easy
+What  statement block defines a macro? ,,,DEFINE and END-OF-DEFINITION.,DATA and END_DATA.,START-OF-SELECTION and END-OF-SELECTION.,LOOP AT and END LOOP.,http://help.sap.com/saphelp_46c/helpdata/en/9f/db972835c111d1829f0000e829fbfe/frameset.htm,Macros,Programming Language - Modularization Techniques,Hard
+Which element contains the data that programs work with at runtime?,,,Data objects,Objects,Data types,Classes,http://help.sap.com/saphelp_46c/helpdata/en/9f/70bed8fe1211d2b92f0000e8353423/frameset.htm,Types and Objects,Programming Language - Types and Objects,Medium
+In what situation do you use the GET RUN TIME FIELD statement?,,,Checking the runtime of program segments.,To catch runtime errors.,Checking authorizations.,Generating and running programs dynamically.,http://help.sap.com/saphelp_46c/helpdata/en/9f/db993535c111d1829f0000e829fbfe/frameset.htm,Special Techniques,Programming Language - Special Techniques,Expert
+What is the transaction code to maintain messages?,,,SE91,SE93,SE01,T100,http://help.sap.com/saphelp_46c/helpdata/en/9f/dbaad635c111d1829f0000e829fbfe/frameset.htm,Message Management,User Dialogs,Easy
+What screen number is prohibited from being used because the standard selection screen has this number?,,,1000,100,900,9000,http://help.sap.com/saphelp_46c/helpdata/en/e4/2adbec449911d1949c0000e8353423/frameset.htm,Selection Screen,User Dialogs,Medium
+What is the event block for user-defined function codes?,,,AT USER-COMMAND,SET USER-COMMAND,AT LINE-SELECTION,AT PF05,http://help.sap.com/saphelp_46c/helpdata/en/9f/dba3ae35c111d1829f0000e829fbfe/frameset.htm,List Events in an ABAP Program,User Dialogs,Hard
+Which statement is best used in the case of a non class-based exception because it offers the option of providing additional text information with an exception?,,,RAISE EXCEPTION,DISPLAY LIKE,INTO TEXT,WITH DOBJ1,http://help.sap.com/abapdocu_702/en/abapmessage_options.htm,Messages in Function Modules and Methods,User Dialogs,Expert
+"In your executable program, what statements can you use for database accesses?",,,SELECT,LOOP,WHERE,FORM,http://help.sap.com/saphelp_46c/helpdata/en/9f/db99b435c111d1829f0000e829fbfe/frameset.htm,Linking to a Logical Database,Running Programs,Easy
+What is the event block in this statement?,"REPORT demo.
+PARAMETERS datum TYPE sy-datum.
+NODES SPLFLI.
+INITIALIZATION.
+        CITY_FR = 'New York'.",,INITIALIZATION,REPORT,PARAMETERS,NODES,http://help.sap.com/saphelp_46c/helpdata/en/9f/db9a1435c111d1829f0000e829fbfe/frameset.htm,Description of Events,Running Programs,Medium
+"When running a typical executable program with a logical database, when does the event ""START-OF-SELECTION"" occcur?",,,"After the standard selection screen has been processed, before data is read from the logical database.",Before the standard selection screen is displayed.,After all data has been read by the logical database.,When the user triggers the predefined function code PICK.,http://help.sap.com/saphelp_46c/helpdata/en/9f/db9a1435c111d1829f0000e829fbfe/frameset.htm,Description of Events,Running Programs,Hard
+What can you define in the flow logic editor of the Screen Painter?,,,The ABAP modules for a screen.,"The screen number, number of the next screen, and other attributes.",The attributes of the individual fields on a screen.,"Positions of the texts, fields, pushbuttons, and so on for a screen.",http://help.sap.com/saphelp_46c/helpdata/en/9f/db9ce935c111d1829f0000e829fbfe/frameset.htm,Dialog Programs,Running Programs,Hard
+"When is it necessary to use an ""EXIT"" statement?",,,To terminate a loop but not the processing block. ,To cause the system to stop processing the block immediately.,To check the contents of the table work area.,To leave a GET Event Block.,http://help.sap.com/saphelp_46c/helpdata/en/9f/db9af135c111d1829f0000e829fbfe/frameset.htm,Leaving Event Blocks,Running Programs,Expert
+What happens if you omit the AND RETURN when using the SUBMIT statement?,,,All data and list levels of the calling program (the entire internal session) are deleted. , The system stores the data of the calling executable program and returns to the calling after processing the called program.,The system resumes executing the calling program at the statement following the call.,A  runtime error occurs.,http://help.sap.com/saphelp_46c/helpdata/en/9f/db9dd035c111d1829f0000e829fbfe/frameset.htm,Calling Executable Programs,Running Programs,Expert
+Which keyword is used to add lines to database tables?,,,INSERT,UPDATE,SELECT,DELETE,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb3969358411d1829f0000e829fbfe/frameset.htm,Open SQL,Database Access,Easy
+"After every Open SQL statement, what value will the system field SY-SUBRC contain if the operation was successful?",,,0,4,1,6,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb3969358411d1829f0000e829fbfe/frameset.htm,Return Codes,Database Access,Medium
+What is the name of the tool that allows you to view and analize how the Open SQL statements in the ABAP programs are converted to Native SQL statements and its parameters? ,,,SQL Trace,ABAP Query,Workbench,Code Inspector,http://www.saptechies.org/sap-pdf-books-download/ABAP_DB_ACCESS_Optimization3211282128314.pdf,Optimize Database Access,Database Access,Hard
+"Which update technique is useful when response time from the transaction is critical, and the database updates themselves are so complex that they justify the extra system load of logging them in VBLOG?",,,Asynchronous Update,Synchronous Update,Local Update,Updating Asynchronously in Steps,http://help.sap.com/saphelp_46c/helpdata/en/41/7af4cea79e11d1950f0000e82de14a/frameset.htm,Update Techniques,Database Access,Expert
+Which system field contains the number of database lines processed?,,,SY-DBCNT,SY-SUBRC,SY-INDEX,SY-DATUM,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb3969358411d1829f0000e829fbfe/frameset.htm,Return Codes,Database Access,Easy
+Which clause is used to define a sequence <fields> for the lines resulting from the selection in this statement?,"SELECT         * 
+INTO TABLE   l_lfa1
+FROM           lfa1 
+WHERE        land1 EQ 'New York'
+GROUP BY   ktokk
+ORDER BY   name1",,ORDER BY,GROUP BY,WHERE ,FROM,http://help.sap.com/saphelp_46c/helpdata/en/fc/eb3983358411d1829f0000e829fbfe/frameset.htm,Reading Data,Database Access,Medium
+"What tool can you use to examine repository objects regarding performance, security, syntax, and adherence to name conventions?",,,Code Inspector,Set of Objects,Check Variant,Function Builder,http://help.sap.com/saphelp_nw04/helpdata/en/56/fd3b87d203064aa925256ff88d931b/content.htm,ABAP Tools,Database Access,Hard
+Which administrative task allows for the removal of data from the database and stores it in a consistent and secure manner?,,,Data Archiving,Task List ,Maintenance Task,Standard Task,http://help.sap.com/saphelp_nw04s/helpdata/en/ad/b594429d7c0631e10000000a1550b0/content.htm,Optimize Database Access,Database Access,Expert
+What is a section of source code that contains data and provides services? ,,,Object,Class,Method,Event,http://help.sap.com/saphelp_46c/helpdata/en/c3/225b5654f411d194a60000e8353423/frameset.htm,Object Orientation,Objects,Easy
+What happens in this statement?,"DATA: CREF1 TYPE REF TO C_COUNTER,
+      CREF2 TYPE REF TO C_COUNTER,
+      CREF3 LIKE CREF1.",,This declares three different class reference variables for the class C_COUNTER. All of the references are initial. ,The system creates three objects of the class from the three class reference variables.,The system will call the public methods of the class C_COUNTER.,The system creates two objects for the class.,http://help.sap.com/saphelp_46c/helpdata/en/48/ad3779b33a11d194f00000e8353423/frameset.htm,Objects - Introductory Example,Objects,Medium
+How can the events of a class be triggered in the methods of the same class?,,,Using the RAISE EVENT statement.,Using the SET HANDLER statement.,Using the CLASS-EVENTS statement.,Using the TYPES statement.,http://help.sap.com/saphelp_46c/helpdata/en/c3/225b5c54f411d194a60000e8353423/frameset.htm,Events,Objects,Hard
+How are class pools structured?,,,"1. Definition part for types.
+2. Declaration part of class.
+3. Implementation part of class.","1. Public Section.
+2. Protected Section.
+3. Private Section.","1. Instance Methods.
+2. Static Methods.
+3. Special Methods.","1. Public Components.
+2. Privated Components.
+3. Protected Components.",http://help.sap.com/saphelp_46c/helpdata/en/ec/d9ab291b0b11d295400000e8353423/frameset.htm,Class Pools,Objects,Expert
