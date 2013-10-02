@@ -7,6 +7,12 @@ GIT
       rails
 
 GIT
+  remote: https://github.com/jskirst/hamster_powered
+  revision: 2ea306eead840d003a4df283324ebed1cb3d5da1
+  specs:
+    hamster_powered (0.2)
+
+GIT
   remote: https://github.com/stripe/stripe-ruby
   revision: 49724d755db799c39aee743054bdd6f55e8a23cc
   specs:
@@ -118,7 +124,6 @@ GEM
       rails (>= 3.0.0)
     haml (4.0.3)
       tilt
-    hamster_powered (0.2)
     hashie (2.0.5)
     heroku-deflater (0.5.1)
       rack (>= 1.4.5)
@@ -311,7 +316,7 @@ DEPENDENCIES
   geocoder
   google-tag-manager-rails
   haml
-  hamster_powered
+  hamster_powered!
   heroku-deflater
   jquery-rails
   memcachier

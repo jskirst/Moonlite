@@ -30,7 +30,7 @@ gem 'w3c_validators'
 gem 'google-tag-manager-rails'
 gem 'sitemap_generator'
 gem 'fog'
-gem 'hamster_powered'
+gem 'hamster_powered', git: 'https://github.com/jskirst/hamster_powered'
 gem 'rails_12factor'
 
 # add these gems to help with the transition:

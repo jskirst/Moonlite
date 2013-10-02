@@ -4,12 +4,7 @@ worker_processes Integer(ENV['WEB_CONCURRENCY'] || 3)
 timeout Integer(ENV['WEB_TIMEOUT'] || 300)
 preload_app true
 
-if ENV["RAILS_ENV"] == "development"
-  listen 3000, :tcp_nopush => false
-else
-  port = ENV["PORT"].to_i
-  listen port, :tcp_nopush => false
-end
+listen (ENV["PORT"] || 3000).to_i, tcp_nopush: false, tcp_nodelay: true
 
 before_fork do |server, worker|
 
