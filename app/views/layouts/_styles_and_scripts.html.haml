@@ -98,7 +98,7 @@
     return true;
   });
 
-- if not current_user and params[:action] == "evaluator"
+- if not current_user
   / Heatmatic Heat map tool /
   - if Rails.env == "development"
     :javascript
