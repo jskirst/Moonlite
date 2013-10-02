@@ -1,0 +1,132 @@
+question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic_name,difficulty
+Which default content database is created when you complete an installation with the SharePoint Products Configuration Wizard?,,,WSS_Content,WSSD_Content,WSSL_Content,WSSX_Content,http://technet.microsoft.com/en-us/library/cc678868(v=office.15).aspx,Database types and descriptions-Content database,Database,Easy
+Which database stores external content types and related objects?,,,Business data connectivity database,App management database,Search Administration database,Analytics Reporting database,http://technet.microsoft.com/en-us/library/cc678868(v=office.15).aspx,Business Data Connectivity service application database,Database,Medium
+"Which database contains data about SharePoint databases, internet information services (IIS) web sites, web applications, trusted solutions, web part packages, site templates, and web application and farm settings?",,,SharePoint_Config,SharePoint_Master,SharePoint_config_master,SharePoint_Content,http://technet.microsoft.com/en-us/library/cc678868(v=office.15).aspx,Database types and descriptions-SharePoint 2013 databases,Database,Easy
+Which databse stores all configuration data for the central administration site collection?,,,SharePoint_AdminContent,SharePoint_AdminConfig,SharePoint_Admin,SharePoint_AdminCentral,http://technet.microsoft.com/en-us/library/cc678868(v=office.15).aspx,Database types and descriptions-Central Administration content,Database,Easy
+Which database stores the state of the crawled data and the crawl history?,,,Search_Service_Application_CrawlStoreDB,Search_Service_Application_Crawl,Crawl_Content,Content_Crawl_Search,http://technet.microsoft.com/en-us/library/cc678868(v=office.15).aspx,Database types and descriptions-Search service application databases,Database,Expert
+SQL Server Reporting Services Databases run under which recovery model?,,,Full,Simple,Medium,Non recoverable,http://technet.microsoft.com/en-us/library/cc678868(v=office.15).aspx,Database types and descriptions-SQL Server Reporting Services databases,Database,Expert
+Will read permissions allow for the downloading of documents?,,,Yes,No,To download you need full permissions,To download you need to be the owner,http://technet.microsoft.com/EN-US/library/cc721640.aspx,User permissions and permission levels,Permissions,Medium
+"There are ___ permissions, which are used in the five default permission levels.",,,33,44,30,80,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-User permissions,Permissions,Hard
+"""Delete Items"" and ""Edit Items"" fall under which category of permissions?",,,List permission,Site permission,Special privilege permissions,Personal permissions,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-User permissions,Permissions,Medium
+"""Apply Themes and Borders"" is which type of permission?",,,Site permission,List permission,Special privilege permissions,Personal permissions,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-User permissions,Permissions,Expert
+"""Update Personal Web Parts"" is which type of permission?",,,Personal permissions,List permission,Special privilege permissions,Site permission,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-User permissions,Permissions,Expert
+"Users can change their own user information, such as adding a picture, using which type of permissions?",,,Site permissions,Personal permissions,List Permissions,Special privilege permissions,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-Site permissions,Permissions,Hard
+To add/remove personal web parts you need which permission level?,,,Contribute,Read,Edit,Design,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-Default permission levels,Permissions,Hard
+To view usage data you need which permission level?,,,Full control,Contribute,Design,Edit,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-Site permissions,Permissions,Hard
+Which of the following permission levels cannot be customised?,,,Limited access and Full control permission,Contribute,Design,Edit,http://technet.microsoft.com/EN-US/library/cc721640(v=office.14).aspx,User permissions and permission levels-Default permission levels,Permissions,Hard
+"Which tool provides an administrator full access to applicable application programming interfaces (APIs), along with the ability to unlock the capability to interact directly with SharePoint products to manipulate web applications, site collections, sites, and lists?",,,Windows PowerShell,Powertoyou,Powerutility,Windows Powercontrol,http://technet.microsoft.com/en-us/library/ee806878(v=office.14).aspx,SharePoint 2010 Products administration by using Windows PowerShell,PowerShell,Easy
+Which permissions are required on the SQL instance to use PowerShell?,,,DB_Owner,DB_Reader,DB_Admin,DB_Creator,http://technet.microsoft.com/en-us/library/ee806878(v=office.14).aspx,SharePoint 2010 Products administration by using Windows PowerShell-Permissions,PowerShell,Easy
+Which of the following commands adds a SharePoint solution package to the farm but will not deploy the uploaded SharePoint solution?,,,Add-SPSolution,Activatefeature,Install-SPWebPartPack,New-SPSite,http://technet.microsoft.com/en-us/library/ff607552(v=office.14).aspx,Add-SPSolution,PowerShell,Easy
+Which command deploys an installed SharePoint solution in the farm?,,,Install-SPSolution,Add-SPSolution,Activatefeature,Install-SPWebPartPack,http://technet.microsoft.com/en-us/library/ff607534(v=office.14).aspx,Install-SPSolution,PowerShell,Easy
+Which command is used to retract a SharePoint solution?,,,Uninstall-SPSolution,Install-SPSolution,Add-SPSolution,Activatefeature,http://technet.microsoft.com/en-us/library/ff607873(v=office.14).aspx,Uninstall-SPSolution,PowerShell,Easy
+Which of the following is a grouping of websites under a common top-level site that have the same owner and share administration settings?,,,Site collection,Web site,Web application,Web Pool,http://technet.microsoft.com/en-us/library/cc263094.aspx,Create a site collection in SharePoint,Site Collection,Easy
+"State true or false:
+1) A web application can host many site collections.
+2) A site collection can be hosted in many web applications.",,,1) True; 2) False,1) True; 2) True,1) False; 2) False,1) False; 2) True,http://technet.microsoft.com/en-us/library/cc263094.aspx,Create a site collection in SharePoint,Site Collection,Easy
+Which command is used to create a new site collection?,,,New-SPSite,New-Spcollection,New-SPWeb,New-SPSiteCollection,http://technet.microsoft.com/en-us/library/cc263094(v=office.14).aspx,Create a site collection-Create a site collection by using Windows PowerShell,Site Collection,Hard
+Can the New-SPSite command be used without specifying the content db?,,,"Yes, content db is an optional paramter","No, content DB is a required parameter",The command has no provision to provide content db,SharePoint ignores the content db parameter,http://technet.microsoft.com/en-us/library/ff607937(v=office.14).aspx,New-SPSite,Site Collection,Hard
+Which command is used to delete a site collection?,,,Remove-SPSite,Remove-Spcollection,Remove-SPWeb,Remove-SPSitecollection,http://technet.microsoft.com/EN-US/library/cc262392.aspx,Delete a site collection in SharePoint-Delete a site collection by using Windows PowerShell,Site Collection,Medium
+What does the following command do?,"Get-SPWebApplication –Limit All | "" | Get-SPSite | Format-Table -Property URL,ContentDatabase",,This command displays the URLs of all the web applications in a server farm and the site collections in each web application.,Fetches the value of a farm,Fetches the IP addresses of all sites,,http://technet.microsoft.com/EN-US/library/cc262261.aspx,View all site collections in SharePoint-To view all site collections by using Windows PowerShell,Site Collection,Expert
+Which of the following are modular elements that add functionality on pages of SharePoint sites?,,,Web parts,Web controls,Web farms,Web server pools,http://technet.microsoft.com/EN-US/library/ff428120.aspx,Manage Web Parts in SharePoint,Web Parts,Easy
+ASP.NET web parts can be deployed to which of the following two locations?,,,bin directory or to the Global Assembly Cache (GAC),bin directory or hard disk,bin directory or cache,Global Assembly Cache (GAC) or file system,http://technet.microsoft.com/EN-US/library/cc261736.aspx,Configure and deploy Web Parts in SharePoint-Configuration options,Web Parts,Medium
+What is the default value for the 'trust' element's 'level' attribute of the Bin directory?,,,WSS_Minimal,WSS_Medium,WSS_Maximum,WSS_Normal,http://technet.microsoft.com/EN-US/library/cc261736.aspx,Configure and deploy Web Parts in SharePoint--Setting security attributes,Web Parts,Expert
+The XML file which describes each web part has which extension?,,,.webpart,.xmlweb,.xml,.xsdl,http://technet.microsoft.com/EN-US/library/cc261736.aspx,Configure and deploy Web Parts in SharePoint-Add a component to the Web Part Gallery,Web Parts,Medium
+Which of the following contains information that the Feature definition file in your project uses to deploy the web part?,,,Elements.xml,.webpart,Code file,Master file,http://msdn.microsoft.com/en-us/library/ee231579.aspx,Creating Web Parts for SharePoint,Web Parts,Expert
+Which of the following are main components of the business connectivity services?,"1) Profile pages
+2) Business data webpart
+3) Rich client extensions
+4) External data search
+5) Secure store services
+",,All of them,Only 1 & 2,Only 2,Only 3,http://msdn.microsoft.com/en-us/library/ee557898(v=office.14).aspx,Business Connectivity Services Overview,BCS,Expert
+"What enables users to read and write data from external systems—through web services, databases, and microsoft .NET framework assemblies—from within Microsoft SharePoint?",,,Business connectivity services,Workflow,Office 365,Business application services,http://msdn.microsoft.com/en-us/library/ee557790(v=office.14).aspx,"Business Connectivity Services Fundamentals
+
+",BCS,Medium
+"State true or false:
+1) External content types are reusable connectivity definitions stored in SharePoint Online that provide access to external data without needing to know the underlying connection details.
+2) These definitions contain metadata descriptions of connectivity information and data definitions plus the behaviors you want to apply to a certain category of external data.",,,1) True; 2) True,1) False; 2) False,1) True; 2) False,1) False; 2) True,http://msdn.microsoft.com/en-us/library/hh412217(v=office.14).aspx#IntroToBCSinSPO_ExternalContentTypes,"Introduction to Business Connectivity Services in SharePoint Online-External Content Types
+",BCS,Easy
+Which command deletes all data from the Business Data Connectivity Metadata Store for a specified partition?,,,Clear-SPSiteSubscriptionBusinessDataCatalogConfig,Delete-SPSiteSubscriptionBusinessDataCatalogConfig,Disable-SPSiteSubscriptionBusinessDataCatalogConfig,ClearALL-SPSiteSubscriptionBusinessDataCatalogConfig,http://technet.microsoft.com/en-us/library/ff793361.aspx,Use Windows PowerShell cmdlets to manage Business Connectivity Services in SharePoint,BCS,Expert
+Which command imports a Business Data Connectivity Model?,,,Import-SPBusinessDataCatalogModel,Import-SPBusinessDataCatalog,ImportAll-SPBusinessDataCatalogModel,Get-SPBusinessDataCatalogModel,http://technet.microsoft.com/en-us/library/ff793361.aspx,Use Windows PowerShell cmdlets to manage Business Connectivity Services in SharePoint,BCS,Expert
+Which of following holds true for farm backups?,"1) Performing a backup does not affect the state of the farm.
+2) The farm backup process does not back up any certificates that you used to form trust relationships.
+3) Backing up the farm backs up the configuration and Central Administration content databases, but these cannot be restored using Microsoft SharePoint Server 2010/2013 tools",,All are true,Only 1,1 & 2 Only,2 & 3 Only,http://technet.microsoft.com/en-us/library/ee428316(v=office.14).aspx,Back up a farm in SharePoint Server 2010,Backup,Expert
+Which option needs to be selected to ensure backup of the farm configurations?,,,Backup only configuration settings,Configuration setting backup,Backup All,Backup Settings,http://technet.microsoft.com/en-us/library/ee428320(v=office.14).aspx,Back up a farm configuration in SharePoint Server 2010,Backup,Hard
+Which command can be used to backup web application using PowerShell?,,,Backup-SPFarm,Backup-WebApplication,Backup-Webapp,Backup-SpWeb,http://technet.microsoft.com/en-us/library/ee748650(v=office.14).aspx,"Back up a Web application in SharePoint Server 2010-Use Windows PowerShell to back up a Web application in SharePoint Server
+
+",Backup,Hard
+Which of the following options lets you backup the site collection through central admin?,,,Perform a site collection backup,Site backup,Backup Site,Perform backup Site,http://technet.microsoft.com/en-us/library/ee748617(v=office.14).aspx,"Back up a site collection in SharePoint Server 2010
+
+",Backup,Expert
+In which section will you find the option to export a list or document library?,,,Granular Backup,Modular Backup,Granular restore,Granular Site Backup,http://technet.microsoft.com/en-us/library/ee428301(v=office.14).aspx,"Use Central Administration to export a site, list, or document library in SharePoint Server
+",Backup,Expert
+"Which of the following parameters helps specify the version of the site, list, or document library to be backed up?",,,IncludeVersions,VersionMention,VersionNumber,Versiondetails,http://technet.microsoft.com/en-us/library/ee428301(v=office.14).aspx,"Use Windows PowerShell to export a site, list, or document library in SharePoint Server
+",Backup,Hard
+Which option do you select to perform a restore from central admin?,,,Restore from a backup,Restore,Create and restore,Restore from Sourcesafe,http://technet.microsoft.com/en-us/library/ee428314(v=office.14).aspx,"Use Central Administration to restore a farm
+",Backup,Hard
+"True or False: Once a restore is complete, there is no need to start a service.",,,FALSE,TRUE,It depends,,http://technet.microsoft.com/en-us/library/ee428314(v=office.14).aspx,"Restore a farm in SharePoint Server 2010
+
+",Backup,Medium
+What does CAML stand for?,,,Collaborative Application Markup Language,Coding Application Markup Language,Cooperative Application markup language,Cohensive Application markuplanguage,http://msdn.microsoft.com/en-us/library/dd588092(v=office.11).aspx,"Introduction — What Is CAML?
+
+",CAML,Easy
+What does the following CAML query do?,"<Switch>
+<Expr><UserID/></Expr>
+<Case Value=""0"">User Zero</Case>
+<Default>Not User Zero</Default>
+</Switch>",,"Checks the value of a UserID field and returns ""User Zero"" if the value is 0. Otherwise, it sets a default value: ""Not User Zero"".
+",Syntax error,Will return list of non zero users.,Will return list of zero users.,http://msdn.microsoft.com/en-us/library/dd588119(v=office.11).aspx,"Case Element
+
+",CAML,Hard
+What does the following CAML query do?,"<Field Type=""Text"" Name=""FavColor"">
+<Description>Enter your favorite color here. If you dont have a favorite color, enter ""Black"".
+</Description>
+<Default>Black</Default>
+</Field>",,Provides descriptive text and sets the default value of the FavColor field to black.,Syntax error,"Will remove the default value of ""Black.""",Checks if the default value is black.,http://msdn.microsoft.com/en-us/library/dd588133(v=office.11).aspx,"Default Element
+
+",CAML,Easy
+Can division and subtraction be done on a string using the 'Length' element?,,,Yes division and subtraction can be specified,Only division can be done,The 'Length' element only provides the length. Division and subtraction require other elements.,"No, this can't be done",http://msdn.microsoft.com/en-us/library/dd588326(v=office.11).aspx,Length Element,CAML,Medium
+What does the following CAML query do?,"<Query>
+<Where>
+<Geq>
+<FieldRef Name=""Expires""/>
+<Value Type=""DateTime"">
+<Today/>
+</Value>
+</Geq>
+</Where>
+<OrderBy>
+<FieldRef Name=""Modified""/>
+</OrderBy>
+</Query>",,Returns cases where the date/time value in the expires field is greater than today's date/time.,Syntax error,Compares datetime,Removes all datetime fields,http://msdn.microsoft.com/en-us/library/dd588623(v=office.11).aspx,Where,CAML,Hard
+"Which element defines a view for a list in a web site based on SharePoint Team Services, where each list can contain a number of views?",,,View,URL,DataView,ListView,http://msdn.microsoft.com/en-us/library/dd588577(v=office.11).aspx,"View Element
+
+",CAML,Medium
+"Which of the following helps route documents from person to person so that they can each complete their document management tasks, such as reviewing documents, approving their publication, or managing their disposition?",,,Workflow,Content list,Sites Manager,SharePoint Office ,http://technet.microsoft.com/en-us/library/cc262735.aspx,Plan workflows,Workflow,Medium
+What is the maximum allowable length for strings in workflow text fields?,,,255,100,300,1024,http://msdn.microsoft.com/en-us/library/dn292551.aspx#bkm_05,"SharePoint workflow development best practices
+
+",Workflow,Hard
+What are the two main types of workflows?,,,Declarative and compiled,Declarative and Document,Compiled and Document,Compiled and non compiled,http://technet.microsoft.com/en-us/library/cc263148(v=office.14).aspx#Types,"Workflow types: Declarative and compiled
+",Workflow,Hard
+Workflows can be associated with which of the following?,"1) List or library
+2) List or library content type
+3) Site content type
+4) Site
+",,All of these,1 and 2 only,2 and 3 conly ,3 and 4 only,http://technet.microsoft.com/en-us/library/cc263148(v=office.14).aspx#Types,"Workflows overview -Workflow associations
+",Workflow,Medium
+Which of the following are predefined workflows in SharePoint?,"1) Collect Feedback
+2) Approval   
+3) Disposition Approval
+4) Collect Signatures
+5) Three-state
+6) Version Control ",,"1,2,3,4,5",All of these,None of these,"2, 3, 4, 5",http://technet.microsoft.com/en-us/library/cc263148(v=office.14).aspx#Types,"Workflows overview -Predefined workflows
+",Workflow,Medium
+What are the collections of files that you share with team members called?,,,Document Libraries,Dcoument repositories,Document caches,Document Databases,http://technet.microsoft.com/en-us/library/cc768326.aspx,Create a document library,Document Library,Easy
+"What is the feature in SharePoint Server that enables an organization to manage a single deliverable, or work product, which can include multiple documents or files?",,,Document Set,Document Metadata,Document Structure,Document Cache,http://technet.microsoft.com/EN-US/library/ff603637.aspx,"Plan document sets in SharePoint Server 2013
+
+",Document Library,Medium
+What is the maximum number of Document Sets that can exist in a document library?,,,Unlimited,4000,10000,3500,http://technet.microsoft.com/EN-US/library/ff603637.aspx,"Administering Document Sets
+",Document Library,Expert
+"With the 'Send to' feature, what is the maximum size of the sum of all documents in a Document Set?",,,50 MB,40MB,25MB,10MB,http://technet.microsoft.com/EN-US/library/ff603637.aspx,"Administering Document Sets
+",Document Library,Expert
+"Which of the following is a set of rules for a kind of content, such as whether items of the content type can be printed?",,,Policy,Version ,Permission,Data,http://technet.microsoft.com/EN-US/library/ff603637.aspx,"Planning Document Set content types
+",Document Library,Medium

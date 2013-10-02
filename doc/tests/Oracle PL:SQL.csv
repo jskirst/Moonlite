@@ -1,0 +1,223 @@
+question,quoted_text,image_url,answer_new_1,answer_new_2,answer_new_3,answer_new_4,resource,resource_title,topic_name,difficulty
+What parts does a PL/SQL block have?,,,All of these parts,Declarative part ,Executable part,Exception-handling part,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/overview.htm#CEGGFECE,Overview of PL/SQL,Procedures,Easy
+Which part of a PL/SQL block is required?,,,Executable part,Declarative part + Executable part,Executable part + Exception-handling part,All of these parts are required,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/overview.htm#CEGGFECE,Overview of PL/SQL,Procedures,Medium
+What does the '%' delimiter mean ?,,,Attribute indicator,It is a relational operator,Returns the remainder (modulus) of argument 1 divided by argument,Item separator,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/fundamentals.htm#CHDJAFIF,PL/SQL Language Fundamentals - Delimiters,Procedures,Medium
+What characters are not allowed in a PL/SQL identifier?,,,All of these are disallowed,Double quotation marks, New line characters,Null characters,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/fundamentals.htm#CIHIADCI,PL/SQL Language Fundamentals. Quoted User-Defined Identifiers,Variables,Medium
+Are PL/SQL identifiers case-sensitive?,,,Quoted user-defined identifiers are case-sensitive,Yes,No,Only for subprograms names,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/fundamentals.htm#i6075,PL/SQL Language Fundamentals. Identifiers,Variables,Easy
+What will be the block output ?,"Declare a number:=3;
+  begin 
+  declare a number:=7; 
+  begin 
+  dbms_output.put_line(a);
+  end;
+  dbms_output.put_line(a);
+  end;",,"7
+3","3
+3","3
+7","7
+7",http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/fundamentals.htm#CIHBJJJJ,PL/SQL Language Fundamentals. Scope and Visibility of Identifiers,Variables,Hard
+Assume that variables with the same name are declared in nested blocks. Is it possible to access all of them inside an inner block?,,,Blocks should be labeled. Variables could be referenced by qualifying its name with the block label,"Yes, all variables are always visible","No, only variables declared in the inner block will be visible",It is impossible to declare multiple variables with the same name,http://asktom.oracle.com/pls/asktom/f?p=100:11:0::::P11_QUESTION_ID:369249500346809581,Ask Tom,Variables,Expert
+Which of the folowing statements is not a PL/SQL Control Statement?,,,BEGIN,NULL,CASE,EXIT,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/controlstatements.htm#CIHIAGAF,PL/SQL Language Reference. PL/SQL Control Statements,Control Statements,Medium
+What is the difference between SQL and PL/SQL?,,,"You can embed SQL in a PL/SQL program, but you cannot embed PL/SQL within a SQL statement",PL/SQL is executed one statement at a time,DML statements can't be used in PL/SQL,SQL is executed as a block of code,http://www.orafaq.com/wiki/PL/SQL_FAQ#What_is_the_difference_between_SQL_and_PL.2FSQL.3F,Oracle FAQ,Procedures,Easy
+"You need to get the value of a sequence into a PL/SQL variable. Select all correct options, considering that you have Oracle 11g","(a) select sq_sequence.NEXTVAL into i from dual;
+ (b) i := sq_sequence.NEXTVAL;
+ (c) i:= sq_sequence.next(i);",,(a) and (b),(a),(b),(c),http://www.orafaq.com/wiki/PL/SQL_FAQ#How_does_one_get_the_value_of_a_sequence_into_a_PL.2FSQL_variable.3F,Oracle FAQ,Procedures,Medium
+Can you execute an operating system command from PL/SQL?,,,OS commands could be executed via the DBMS_SCHEDULER package,"No, there is no way to execute operating system commands from PL/SQL",It depends on operating system,Only SYSDBA can use operating system commands,http://www.orafaq.com/wiki/PL/SQL_FAQ#Can_one_execute_an_operating_system_command_from_PL.2FSQL.3F,Oracle FAQ,Procedures,Expert
+Let's say you've granted 'SELECT' on a table to a user via ROLE. The user reports 'no access'. What is wrong ?,,,You should grant direct access on the tables to your user. Do not use roles.,Using roles is ok for this situation.,Only tables from user schema can be accesed from PL/SQL.,The role RESOURCE should be granted.,http://www.orafaq.com/wiki/PL/SQL_FAQ#I_can_SELECT_from_SQL.2APlus_but_not_from_PL.2FSQL._What_is_wrong.3F,Oracle FAQ,Procedures,Expert
+Is there a limit on the maximum size of a PL/SQL package ?,,,"Yes, the max size is not an explicit byte limit, but related to the parse tree that is created when you compile the code","Yes, 16384 kb",It depends on PGA Size,"Yes, 32000 lines",http://www.orafaq.com/wiki/PL/SQL_FAQ#Is_there_a_limit_on_the_size_of_a_PL.2FSQL_block.3F,Oracle FAQ,Packages,Expert
+You need to use DDL statements from PL/SQL. Is this possible ?,,, DDL statements could be used via Dynamic SQL,DDL only could be used in packages,"No, you can't use DDL in PL/SQL",Permissions should be granted in order to use DDL in PL/SQL,http://www.orafaq.com/wiki/PL/SQL_FAQ#Can_one_call_DDL_statements_from_PL.2FSQL.3F,Oracle FAQ,SQL  in PL/SQL,Hard
+What is the difference between stored procedures and functions?,,,"Functions MUST return a value, procedures don't need to", DML can't be used in a function,You can't invoke function from SQL Plus,Functions does not have OUT parameters,http://www.orafaq.com/wiki/PL/SQL_FAQ#What_is_the_difference_between_stored_procedures_and_functions.3F,Oracle FAQ's,Functions,Expert
+Is it possible to return more than one value from a function?,,,"Yes, you can use OUT parameters","No, functions can only return one value","Yes, use 'RETURN (var1, var2)' in the function body","Yes, use 'RETURNS Number,Number' like code in the function specification",http://psoug.org/snippet/FUNCTIONS-with-output-parameters_872.htm,PSOUG.org,Functions,Expert
+Identify the incorrect declarations:,"(a) a number; 
+(b) acct_id INTEGER(4) NOT NULL := 9999; 
+(c) max_days_in_year CONSTANT INTEGER := 366; 
+(d) foo, bar NUMBER;",,(d),(b),(c) and (d),(b) and (c),http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/fundamentals.htm#i27306,PL/SQL Language Fundamentals. Declarations,Variables,Easy
+Which of of the following does not fire the trigger?,"(a) INSERT
+ (b) DROP
+ (c) SELECT 
+ (d) LOGOFF",,(c),(d),(b),(b) and (d),http://docs.oracle.com/cd/B19306_01/appdev.102/b14251/adfns_triggers.htm,Oracle® Database Application Developer's Guide - Fundamentals. Coding Triggers,Triggers,Easy
+To change the declaration or definition of an existing trigger we could use:,,,CREATE OR REPLACE TRIGGER,ALTER TRIGGER,RECOMPILE TRIGGER,CHANGE TRIGGER,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/alter_trigger.htm#BABFDCBJ,PL/SQL Language Reference. ALTER TRIGGER Statement,Triggers,Easy
+In order to disable triggers you could use:,,,All of them,ALTER TRIGGER trigger_name DISABLE,ALTER TABLE table_name DISABLE ALL TRIGGERS,Specify DISABLE in CREATE TRIGGER,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/triggers.htm#CIHJJJHG,PL/SQL Language Reference. PL/SQL Triggers. Trigger Enabling and Disabling,Triggers,Medium
+Can DML statements be used in functions called from SQL?,,,"When invoked from a SELECT, INSERT, UPDATE, DELETE, or MERGE statement, the subprogram cannot execute DML statements unless PRAGMA AUTONOMOUS_TRANSACTION was specified",DML can't be used in functions,DML can't be used in functions you call from SQL,"It is possible to use DML, but without COMMIT",http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/subprograms.htm#CHDJJCEC,PL/SQL Language Reference. PL/SQL Subprograms. PL/SQL Functions that SQL Statements Can Invoke,SQL  in PL/SQL,Hard
+Can we guarantee the execution order for triggers defined with the same timing point?,,,We can use the FOLLOWS clause,Only one trigger is allowed for each timing point,Triggers are executed in the order of creation,Oracle has never guaranteed the execution order of triggers defined with the same timing point,http://oracle-base.com/articles/11g/trigger-enhancements-11gr1.php,ORACLE-BASE,Triggers,Expert
+The amount of records in a given code block is big. What is the potential problem with this code?,"FOR records IN my_cursor LOOP
+ ...DO something...    
+ COMMIT;
+ END LOOP;
+ COMMIT;",,High frequency of commits can cause ORA-1555 errors,COMMIT could not be used inside LOOP,No problem here,COMMIT is inside of LOOP - no need to COMMIT after LOOP,http://psoug.org/snippet/Using-COMMIT-in-a-PLSQL-loop_696.htm,PSOUG.org,Procedures,Hard
+How could you recompile all invalid packages of one user?,,,Use DBMS_UTILITY,Oracle recompiles packages automaticaly,Use ALTER PACKAGE COMPILE one by one,Invalid packages should be recreated,http://docs.oracle.com/cd/E11882_01/appdev.112/e40758/d_util.htm#CHDGHICD,PL/SQL Packages and Types Reference. DBMS_UTILITY,Packages,Medium
+Which of the following can't be grouped into a package?,"(a) types
+ (b) subprograms
+ (c) views 
+ (d) constants",,(c),(a),(b) and (c),(d),http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Packages,Easy
+Which of the following is true about packages?,,,The body is optional,A specification and body are required,"A specification is optional, but a body is required",Variables may be declared only in the body,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Packages,Medium
+When is a package body required?,,,"If a package specification declares cursors or subprograms, then a package body is required",A package body is always required,A package body is required to declare constants,A package body is required for the implicit recompile feature,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Packages,Hard
+How can you declare private items in a package?,,,Declare items in the package body,All items of packages are public,Declare items with a PRIVATE clause,Use special permissions,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Packages,Hard
+Using the same name for several different subprograms:,,,Is overloading,Is not allowed,"Is ""multiple invoke""",Is allowed for standalone subprograms,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/subprograms.htm#i12352,PL/SQL Language Reference. PL/SQL Subprograms. Overloaded Subprograms,Procedures,Hard
+"In the given code snippet, which procedure version is invoked ?","Declare a PLS_INTEGER; 
+PROCEDURE my_proc(p_par NUMBER); 
+PROCEDURE my_proc(p_par BINARY_DOUBLE); 
+Begin my_proc(a); 
+END; ",,my_proc(p_par NUMBER);,It will cause overload errors,my_proc(p_par BINARY_DOUBLE);,Such overloading is not allowed,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/subprograms.htm#i12352,PL/SQL Language Reference. PL/SQL Subprograms. Overloaded Subprograms,Procedures,Expert
+What is a stateless package ?,,,"Package without declaration of at least one variable, constant, or cursor",A stateless package is an invalid package,Package without body,Package without subprograms declared,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Packages,Hard
+What is the output of this code snippet?,"CREATE OR REPLACE PACKAGE pkg IS 
+  n NUMBER := 5;
+END pkg;
+/
+
+CREATE OR REPLACE PACKAGE sr_pkg IS
+  PRAGMA SERIALLY_REUSABLE;
+  n NUMBER := 5;
+END sr_pkg;
+/
+
+BEGIN
+  pkg.n := 10;
+  sr_pkg.n := 10;
+END;
+/
+
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('pkg.n: ' || pkg.n);
+  DBMS_OUTPUT.PUT_LINE('sr_pkg.n: ' || sr_pkg.n);
+END;
+/",,"10
+5","10
+10","5
+10","5
+5",http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Packages,Expert
+What is the output of this code snippet?,"T1 data:
+
+ID
+1
+2
+3
+4
+-----------
+CREATE OR REPLACE PACKAGE sr_pkg IS
+  PRAGMA SERIALLY_REUSABLE;
+  CURSOR c IS SELECT id FROM t1;
+END sr_pkg;
+/
+
+CREATE OR REPLACE PROCEDURE my_proc IS
+  v_id  t1.id%TYPE;
+BEGIN
+  IF NOT sr_pkg.c%ISOPEN THEN
+    OPEN sr_pkg.c;
+  END IF;
+ 
+  FETCH sr_pkg.c INTO v_id;
+  DBMS_OUTPUT.PUT_LINE(id);
+ 
+  FETCH sr_pkg.c INTO v_id;
+    DBMS_OUTPUT.PUT_LINE(id);
+  END;
+/
+
+BEGIN
+  my_proc;
+  my_proc;
+END;",,"1
+2
+3
+4","1
+2
+1
+2",It will give an INVALID_CURSOR error,It will give an CURSOR_ALREADY_OPEN error,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/packages.htm#i2404,PL/SQL Language Reference. PL/SQL Packages,Cursors,Expert
+"After the explicit cursor is opened but before the first fetch, the %NOTFOUND attribute returns:",,,NULL,TRUE,No such attribute,FALSE,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/static.htm#CIHJGBAG,PL/SQL Language Reference. PL/SQL Static SQL. Explicit Cursor Attributes,Cursors,Hard
+What will be the block output ?,"DECLARE
+A NUMBER:=5;
+BEGIN
+IF A>1 THEN
+dbms_output.put_line(1);
+ELSE
+IF A>2 THEN
+dbms_output.put_line(2);
+ELSE
+dbms_output.put_line(3);
+END IF;
+END IF;
+END;",,1,2,3,It will not produce output - provided code has errors,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/controlstatements.htm#CJAEDEIH,PL/SQL Language Reference. PL/SQL Control Statements,Control Statements,Easy
+What will be the block output ?,"DECLARE
+  grade CHAR(1);
+BEGIN
+  grade := 'B';
+
+  CASE grade
+    WHEN 'A' THEN DBMS_OUTPUT.PUT_LINE('Excellent');
+    WHEN 'B' THEN DBMS_OUTPUT.PUT_LINE('Very Good');
+    WHEN 'C' THEN DBMS_OUTPUT.PUT_LINE('Good');
+    WHEN 'D' THEN DBMS_OUTPUT.PUT_LINE('Fair');
+    WHEN 'F' THEN DBMS_OUTPUT.PUT_LINE('Poor');
+    ELSE DBMS_OUTPUT.PUT_LINE('No such grade');
+  END CASE;
+END;",,Very Good,No such grade,It will not produce an output - provided code has errors,Good,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/controlstatements.htm#CJAEDEIH,PL/SQL Language Reference. PL/SQL Control Statements,Control Statements,Easy
+What statement will exit the loop satement?,,,EXIT,STOP,BREAK,SKIP,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/controlstatements.htm#CJAFAJIA,PL/SQL Language Reference. PL/SQL Control Statements,Control Statements,Easy
+What exception categories are not raised implicitly?,,,User-defined,Internally defined,Predefined,All categories,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/errors.htm#BABFIEBF,PL/SQL Language Reference. PL/SQL Error Handling,Exceptions,Hard
+Internally defined exceptions have a name if:,,,Either PL/SQL gives it one or the programmer gives it one,Internall defined exceptions never have a name,Declared globally in the package STANDARD,The name is given by the programmer,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/errors.htm#BABIIEFC,PL/SQL Language Reference. PL/SQL Error Handling,Exceptions,Hard
+What error code is not allowed to be used in the EXCEPTION_INIT Pragma?,,,-1403,100,-100,-2048,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/exceptioninit_pragma.htm#i33787,PL/SQL Language Reference. EXCEPTION_INIT Pragma,Exceptions,Hard
+What number will be inserted into the ERRORS table?,"DECLARE
+past_due  EXCEPTION;
+v_code  NUMBER;
+BEGIN
+RAISE past_due;
+WHEN OTHERS THEN
+v_code := SQLCODE;
+INSERT INTO errors (code) VALUES (v_code);
+END;",,1,0,100,-1,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/sqlcode_function.htm#i36302,PL/SQL Language Reference. SQLCODE Function,Exceptions,Expert
+What is maximum size of the VARCHAR2 data type?,,,32767 bytes,2000 bytes,4000 bytes,1024 bytes,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/datatypes.htm#CHDDCGEE,PL/SQL Language Reference. PL/SQL Data Types,Variables,Medium
+What are the components of a collection called?,,,Elements,Fields,Members,Parts,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/composites.htm#CIHIEBJC,PL/SQL Language Reference. PL/SQL Collections and Records,Collections,Medium
+What collection type does not have a constructor?,,,Associative array,VARRAY,Nested table,None of these have a constructor,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/composites.htm#i20453,PL/SQL Language Reference. PL/SQL Collections and Records,Collections,Hard
+What collection type is always dense?,,,VARRAY,Associative array,Nested table,Associative array and Nested table,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/composites.htm#CHDBHJEI,PL/SQL Language Reference. PL/SQL Collections and Records,Collections,Hard
+How many dimensions do collections have?,,,One,Any number,Two,Only nested tables can have 2 dimensions,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/composites.htm#i33997,PL/SQL Language Reference. PL/SQL Collections and Records,Collections,Medium
+Which calls succeed?,"CREATE OR REPLACE PACKAGE pkg AS
+  TYPE NumList IS TABLE OF NUMBER;
+  PROCEDURE print_numlist (nums NumList);
+END pkg;
+/
+CREATE OR REPLACE PACKAGE BODY pkg AS
+  PROCEDURE print_numlist (nums NumList) IS
+  BEGIN
+    FOR i IN nums.FIRST..nums.LAST LOOP
+      DBMS_OUTPUT.PUT_LINE(nums(i));
+    END LOOP;
+  END;
+END pkg;
+/
+DECLARE
+  TYPE NumList IS TABLE OF NUMBER;
+  n1 pkg.NumList := pkg.NumList(2,4);
+  n2     NumList :=     NumList(6,8);
+BEGIN
+  pkg.print_numlist(n1);  
+  pkg.print_numlist(n2);  
+END;",,pkg.print_numlist(n1);,pkg.print_numlist(n2),"pkg.print_numlist(n1);  
+pkg.print_numlist(n2);",None,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/composites.htm#CJAJEIBA,PL/SQL Language Reference. PL/SQL Collections and Records,Collections,Expert
+"When resolving the table name HR.JOBS, PL/SQL searches first for:",,,"Packages, types, tables, and views named HR in the current schema",Objects named JOBS in the HR schema,Public synonyms,"Packages, types, tables, and views named HR in the HR schema",http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/nameresolution.htm#CHDGABGF,PL/SQL Language Reference. PL/SQL Name Resolution,Variables,Hard
+What form of function execution is wrong?,,,employer_details_func;,dbms_output.put_line(employer_details_func);,employee_name :=  employer_details_func;,SELECT employer_details_func FROM dual;,http://plsql-tutorial.com/plsql-functions.htm,PL/SQL tutorial,Functions,Easy
+How could you get the value from a record field?,,,my_rec.my_field,my_rec%my_field,my_rec:my_field,my_rec->my_field,http://plsql-tutorial.com/plsql-records.htm,PL/SQL tutorial,Collections,Medium
+Which execution from SQL Plus is incorrect?,,,exec my_func,exec :a:=my_func,call my_func() into :a,select my_f from dual;,http://docs.oracle.com/cd/B19306_01/server.102/b14357/ch12022.htm,SQL*Plus User's Guide and Reference - EXECUTE,Functions,Medium
+What is the following snippet an example of?,"$IF DBMS_DB_VERSION.VER_LE_10_1 $THEN
+$ERROR 'unsupported database release' $END",,Conditional compilation ,Control statement,Dynamic PL/SQL,This code is incorrect,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/fundamentals.htm#BABIHIHF,PL/SQL Language Reference. PL/SQL Language Fundamentals. Conditional Compilation,Packages,Expert
+What kind of cursor do FOR LOOP statements accept?,,,All of these answers are correct,Only implicit cursors,Implicit cursors and explicit cursor without parameters,Parametrized cursors,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/static.htm#CIHCGJAD,PL/SQL Language Reference. PL/SQL Static SQL. Explicit Cursor Attributes,Cursors,Expert
+What is the output of this code block?,"DECLARE
+A BOOLEAN:=FALSE;
+B BOOLEAN;
+BEGIN
+
+IF A != B THEN
+  DBMS_OUTPUT.PUT_LINE(1);
+ELSIF B THEN
+  DBMS_OUTPUT.PUT_LINE(1);
+ELSIF NOT B THEN
+DBMS_OUTPUT.PUT_LINE(3);
+ELSE
+DBMS_OUTPUT.PUT_LINE(4);
+END IF;
+END;",,4,3,2,1,http://docs.oracle.com/cd/B10501_01/appdev.920/a96624/02_funds.htm#4107,PL/SQL User's Guide and Reference. Fundamentals of PL/SQL,Variables,Easy
+What kind of functions can be invoked from a materialized view that have query-rewrite enabled?,,,DETERMINISTIC,PIPELINED,Parallel enabled,Any kind of functions,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/function.htm,PL/SQL Language Reference. Function Declaration and Definition,Functions,Expert
+Which value is invalid for the SIGNTYPE data type?,,,2,1,-1,0,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/datatypes.htm#CIHBAGBD,PL/SQL Language Reference. PL/SQL Data Types,Variables,Medium
+Which of the following is not a PL/SQL unit?,,,VIEW,LIBRARY,TYPE,PL/SQL anonymous block,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/overview.htm#CEGGFECE,PL/SQL Language Reference. Overview of PL/SQL,Procedures,Easy
+How could you print a text line from PL/SQL?,,,DBMS_OUTPUT.PUT_LINE,PRINT,DBMS_OUTPUT.PUT,DBMS_OUTPUT.NEW_LINE,http://www.orafaq.com/wiki/DBMS_OUTPUT,Oracle FAQ's,Packages,Easy
+What is a subprogram created at the schema level called?,,,Standalone subprogram,Nested subprogram,Package subprogram,Anonymous block,http://docs.oracle.com/cd/E11882_01/appdev.112/e25519/subprograms.htm#CHDBEJGF,PL/SQL Language Reference. PL/SQL Subprograms,Procedures,Easy
