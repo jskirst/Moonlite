@@ -70,27 +70,6 @@ function truncate(text, length, ellipsis) {
   return text.substr(0, length) + ellipsis;
 }
 
-function init_iph(){
-  if(iph_off == true){ return false }
-  for(help_pop in all_help){
-    if(viewed_help.indexOf(help_pop) < 0){
-      $('#'+help_pop).popover({
-        trigger: 'manual',
-        placement: all_help[help_pop].placement,  
-        template: '<div class="popover" data-id="'+help_pop+'"><div class="arrow"></div><div class="popover-inner"><div class="popover-content"><p></p></div><a class="popover-close"></a></div></div>',
-        content: all_help[help_pop].content,            
-      });
-      $('#'+help_pop).popover('show');
-    }
-  }
-  
-  $(".popover-close").click(function(){
-    var $popover = $(this).parents(".popover");
-    $popover.fadeOut();
-    $.ajax({ data: { id: $popover.attr("data-id") }, url: mark_help_read_url });
-  });
-}
-
 // Code source: http://stackoverflow.com/questions/37684/how-to-replace-plain-urls-with-links
 function convert_links(){
   var replacedText, replacePattern1, replacePattern2;
