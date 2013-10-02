@@ -22,6 +22,7 @@ class PagesController < ApplicationController
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
     else
+      @show_chat = true
       @show_nav_bar = false
       @show_header = false
       @show_footer = false
@@ -208,7 +209,7 @@ class PagesController < ApplicationController
     @title = "Pre-Employment Skill Tests - MetaBright Evaluator"
     @show_footer = true
     @hide_background = true
-    @show_sign_in = false
+    @show_sign_in = true
     @show_nav_bar = false
     @show_chat = true
     @show_employer_link = false
@@ -223,7 +224,7 @@ class PagesController < ApplicationController
     @show_footer = true
     @show_chat = true
     @hide_background = true
-    @show_sign_in = false
+    @show_sign_in = true
     @show_nav_bar = false
     @show_employer_link = false
   end

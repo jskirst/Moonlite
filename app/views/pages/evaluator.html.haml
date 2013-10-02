@@ -53,7 +53,7 @@
                   .picture
                     = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/testimonial+images/val.jpg", class: "img-circle"
         .clear_floats
-        .click-it.top.bottom{ style: "margin: -8px 0 10px 0;"}
+        .click-it.top.bottom{ style: "margin: -8px 0 15px 0;"}
           .holder
             %p 
               %span Guaranteed
@@ -68,9 +68,9 @@
                   What skills does your company need? 
                 %p 
                   The Evaluator helps you identify the job candidates that have the skills your company needs to perform its best. Choose from our growing collection of MetaBright Challenges, or create your own. 
-              .image.right{ style: "width: 47%; box-shadow: none; margin-top: 25px;"}
+              .image.right{ style: "width: 47%; box-shadow: none; "}
                 %ul
-                  - @paths.first(18).each do |path|
+                  - @paths.first(24).each do |path|
                     %li
                       %div{ "data-tip" => truncate(path.name, length: 17, separator: ' ')}
                         = image_tag path.picture, alt: "#{path.name}"

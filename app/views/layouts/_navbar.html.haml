@@ -37,10 +37,16 @@
               = link_to group_paths_url(@admin_group) do
                 = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
                 %span Challenges
-            %li.navitem{ title: "Account", style: "height: 100%;" }
-              = link_to account_group_path(@admin_group) do
-                = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
-                %span Account
+            - if @admin_group.is_private?
+              %li.navitem{ title: "Account", style: "height: 100%;" }
+                = link_to account_group_path(@admin_group) do
+                  = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
+                  %span Account
+            - else
+              %li.navitem{ title: "Dashboard", style: "height: 100%;" }
+                = link_to dashboard_group_path(@admin_group) do
+                  = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
+                  %span Dashboard
             - if Rails.env == "development" and @enable_administration
               %li.navitem{ title: "Search", style: "height: 100%;" }
                 = link_to new_group_search_url(@admin_group) do
@@ -165,13 +171,11 @@
                           %li= link_to "MetaBright Labs", ideas_path, style: "border-bottom: 1px solid #DDD; color: inherit; text-shadow: none;"
                         %li= link_to "Sign out", signout_path, style: "color: inherit; text-shadow: none;", method: :delete
       - if current_user.nil?
-        %ul.nav.pull-right
-          - if show_employer_link
-            %li{ style: "margin-top: 4px;"} 
-              = link_to "Employer? We can turbocharge your recruiting.", "/evaluator", class: "employers_link"
+        %ul.nav.landing-nav.pull-right
           - if show_sign_in
-            %li
-              %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:6px; text-shadow:none; color:white;" } Sign in
+            %li.navitem{ style: "border: none;"}
+              = link_to "#", class: "login_link" do
+                %span Sign in
       - elsif current_user and params[:controller] == "sections" and params[:action] != "new"
         %ul.nav.pull-right{ style: "float:right;" }
           %li
@@ -181,3 +185,4 @@
                 %span Level #{@enrollment.level} - #{@enrollment.points_to_next_level} more points to next level
                 .progress.progress-info{ style: "height: 10px; margin:0;" }
                   .bar{ style: "width: #{@enrollment.level_percent}%;"}
+      .clear_floats
