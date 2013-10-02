@@ -173,20 +173,6 @@ class PagesController < ApplicationController
     render json: { status: "success" }
   end
   
-  def mark_help_read
-    if current_user
-      current_user.set_viewed_help(params[:id])
-      render json: { status: "success" }
-    else
-      if session[:viewed_help].nil?
-        session[:viewed_help] = params[:id]
-      else
-        session[:viewed_help] = session[:viewed_help].split(",").push(params[:id]).join(",")
-      end
-      render json: { status: session[:viewed_help] }
-    end
-  end
-  
   def about
     @title = "About"
     @show_footer = true

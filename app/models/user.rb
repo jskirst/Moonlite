@@ -14,8 +14,7 @@ class User < ActiveRecord::Base
   attr_accessor :password, :password_confirmation, :guest_user, :group_id
   attr_accessible :name, :email, :image_url, :username, :company_id,
     :password,:password_confirmation, 
-    :description, :title, :company_name, :education, :link, :location,
-    :viewed_help, :guest_user,
+    :description, :title, :company_name, :education, :link, :location, :guest_user,
     :city, :state, :country, 
     :seen_opportunities, :wants_full_time, :wants_part_time, :wants_internship
     
@@ -327,24 +326,6 @@ class User < ActiveRecord::Base
   def completed?(task) completed_tasks.find_by_task_id(task.id) end
   def level(path) enrollments.find_by_path_id(path).level end
   def points(path) enrollments.find_by_path_id(path).total_points end
-  
-  def get_viewed_help
-    return [] if self.viewed_help.blank?
-    return self.viewed_help.split(",")
-  end
-  
-  def set_viewed_help(help_id)
-    raise "FATAL: Illegal viewed_help" if help_id && help_id.index(/[^a-z_,]/)
-    
-    if self.viewed_help.blank?
-      self.viewed_help = help_id
-    else
-      help = self.viewed_help.split(",")
-      help.push(help_id)
-      self.viewed_help = help.join(",")
-    end
-    self.save!
-  end
   
   def can_email?(type = nil)
     if locked?

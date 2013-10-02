@@ -47,7 +47,6 @@ module SessionsHelper
       end
       user.reload
       sign_in(user)
-      user.set_viewed_help(session[:viewed_help])
       if show_welcome_message
         Mailer.welcome(current_user.email).deliver
         UserEvent.log_event(current_user, "Welcome to MetaBright! Check your email for a welcome message from the MetaBright team.")  
@@ -79,14 +78,6 @@ module SessionsHelper
   def current_company
     current_user.company if current_user
     Company.find(1)
-  end
-  
-  def get_viewed_help
-    if current_user
-      return current_user.get_viewed_help
-    else
-      session[:viewed_help].nil? ? [] : session[:viewed_help]
-    end
   end
   
   def unread_notification_count
