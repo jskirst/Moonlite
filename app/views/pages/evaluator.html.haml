@@ -18,7 +18,7 @@
   });
 
 
-#employer_product.aboutcontainer 
+#employer_product.aboutcontainer{ "data-no-turbolink" => true } 
   .aboutbox
     .header 
       %img{ src: GIANT_STONEY, alt: "Stoney"} 
@@ -59,7 +59,7 @@
               %span Guaranteed
               to improve your hiring accuracy and eliminate bad interviewees... or your money back.
             .big_submit_button
-              = link_to "SIGN UP!", evaluator_pricing_url, class: "submit_button"
+              = link_to "SIGN UP!", pricing_url, class: "submit_button"
         .sexy_time 
           %section 
             .holder  
@@ -120,7 +120,7 @@
               %span Guaranteed
               to improve your hiring accuracy and eliminate bad interviewees... or your money back.
             .big_submit_button
-              = link_to "SIGN UP!", evaluator_pricing_url, class: "submit_button"
+              = link_to "SIGN UP!", pricing_url, class: "submit_button"
         .area.pitch_tiles{ style: "margin-top:0; "} 
           %h2 Why you'll love MetaBright 
           .tile 
@@ -204,5 +204,5 @@
               %span Guaranteed
               to improve your hiring accuracy and eliminate bad interviewees... or your money back.
             .big_submit_button
-              = link_to "SIGN UP!", evaluator_pricing_url, class: "submit_button"
+              = link_to "SIGN UP!", pricing_url, class: "submit_button"
         

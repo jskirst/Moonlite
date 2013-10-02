@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
   before_filter { @hide_background = true }
   
   def new
+    @show_chat = true
     if @admin_group
       if @admin_group.stripe_token.nil?
         @new_group = @admin_group
@@ -43,6 +44,7 @@ class GroupsController < ApplicationController
   end
   
   def create
+    @show_chat = true
     @show_nav_bar = false
     @show_footer = false
     @hide_background = false

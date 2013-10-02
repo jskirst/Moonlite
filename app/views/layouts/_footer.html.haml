@@ -70,15 +70,7 @@
     %a{href: "http://metabright.blogspot.com/", target: "_blank"} Blog
     \/
     = link_to "Terms of Service", tos_path
-- if (not current_user) and (params[:action] == "evaluator" or params[:action] == "evaluator_pricing" or params[:controller] == "groups")
-  / Start of Zopim Live Chat Script
-  :javascript
-    window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
-    d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
-    _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute('charset','utf-8');
-    $.src='//v2.zopim.com/?1Yhfe4JOBGvFdh38vjBWxK5ypAx7VIU6';z.t=+new Date;$.
-    type='text/javascript';e.parentNode.insertBefore($,e)})(document,'script');
-  / End of Zopim Live Chat Script
+- if not current_user and @show_chat
 
 - elsif current_user and @admin_group
   .footer_tab.enterprise_tab
