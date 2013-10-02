@@ -37,16 +37,10 @@
               = link_to group_paths_url(@admin_group) do
                 = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
                 %span Challenges
-            - if @admin_group.is_private?
-              %li.navitem{ title: "Account", style: "height: 100%;" }
-                = link_to account_group_path(@admin_group) do
-                  = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
-                  %span Account
-            - else
-              %li.navitem{ title: "Dashboard", style: "height: 100%;" }
-                = link_to dashboard_group_path(@admin_group) do
-                  = image_tag NAVBAR_ACCOUNT, style: "", alt: "Dashboard"
-                  %span Dashboard
+            %li.navitem{ title: "Account", style: "height: 100%;" }
+              = link_to account_group_path(@admin_group) do
+                = image_tag NAVBAR_ACCOUNT, style: "", alt: "Account"
+                %span Account
             - if Rails.env == "development" and @enable_administration
               %li.navitem{ title: "Search", style: "height: 100%;" }
                 = link_to new_group_search_url(@admin_group) do
