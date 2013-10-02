@@ -45,7 +45,7 @@ gem 'unicorn'
 gem 'memcachier'
 
 group :production do
-  gem 'heroku-deflater'
+#  gem 'heroku-deflater'
 end
 
 group :development do

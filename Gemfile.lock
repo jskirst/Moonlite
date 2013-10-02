@@ -125,8 +125,6 @@ GEM
     haml (4.0.3)
       tilt
     hashie (2.0.5)
-    heroku-deflater (0.5.1)
-      rack (>= 1.4.5)
     hike (1.2.3)
     httpauth (0.2.0)
     httpclient (2.3.4.1)
@@ -317,7 +315,6 @@ DEPENDENCIES
   google-tag-manager-rails
   haml
   hamster_powered!
-  heroku-deflater
   jquery-rails
   memcachier
   meta_request
