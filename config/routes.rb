@@ -193,6 +193,7 @@ Metabright::Application.routes.draw do
     post '/email' => 'admin#email', as: "admin_send_email"
   end 
   
+  get '/streaming' => 'pages#streaming'
   get '/locallink' => 'sessions#locallink'
   get '/auth/failure' => 'sessions#auth_failure'
   get '/auth/:provider/callback' => 'sessions#create'

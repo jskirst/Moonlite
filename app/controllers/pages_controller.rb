@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
   include PreviewHelper
   include NewsfeedHelper
+  include HamsterPowered::HamsterHelper
   
   before_filter :authenticate, only: [:create]
   
@@ -172,20 +173,6 @@ class PagesController < ApplicationController
     render json: { status: "success" }
   end
   
-  def mark_help_read
-    if current_user
-      current_user.set_viewed_help(params[:id])
-      render json: { status: "success" }
-    else
-      if session[:viewed_help].nil?
-        session[:viewed_help] = params[:id]
-      else
-        session[:viewed_help] = session[:viewed_help].split(",").push(params[:id]).join(",")
-      end
-      render json: { status: session[:viewed_help] }
-    end
-  end
-  
   def about
     @title = "About"
     @show_footer = true
@@ -289,7 +276,23 @@ class PagesController < ApplicationController
     raise "This is not valid."
   end
   
+  def streaming
+    tests = []
+    10.times { tests << ProcessingTest.new(0.3) }
+    render as_processing_screen(tests, :run_test, root_path)
+  end
+  
   private
+  
+  class ProcessingTest
+    def initialize(num)
+      @num = num
+    end
+    
+    def run_test
+      sleep @num
+    end
+  end
   
   def admin_only
     unless Rails.env == "development" or @enable_administration
