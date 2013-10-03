@@ -1,3 +1,9 @@
+:css 
+  body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; } 
+  .container.body { width: 980px; }
+  .aboutcontainer{ width: 980px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:27px;} 
+  .aboutbox { border-radius: 0; padding: 20px 20px 0; } 
+
 .aboutcontainer{style:"width:703px;"}
   .aboutbox
     .aboutheader
@@ -13,11 +19,11 @@
                 - if path.public?
                   = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
                     %div.details
-                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
+                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
                 - else
                   %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
                     %div.details
-                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 17, separator: ' ')}
+                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
                       %h5 Coming Soon!
                 %div 
                   = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
