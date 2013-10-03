@@ -20,7 +20,7 @@
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
           %div
             %p{ style: "font-size: 15px; word-break: normal; width: 77%; display: inline-block; " } MetaBright can match you with opportunities that fit your skills. 
-            =link_to "Edit settings", professional_settings_path(current_user.signup_token), style:"vertical-align: top; margin-left: 12px;"
+            =link_to "Edit settings", professional_user_path(current_user.signup_token), style:"vertical-align: top; margin-left: 12px;"
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
           %div
             %p{ style: "font-size: 15px; word-break: normal; width: 72%; display: inline-block; " } Customize your profile! You can directly the edit the CSS of your profile to give it your own style to best showcase your skills.
@@ -72,7 +72,7 @@
           .controls
             = f.text_field :email
         %div{style:"margin-left:180px;"}
-          = link_to "Manage your notification settings.", notification_settings_path(current_user.signup_token)
+          = link_to "Manage your notification settings.", notifications_user_path(current_user.signup_token)
     %hr
     .control-group
       .controls
