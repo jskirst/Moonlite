@@ -44,7 +44,7 @@
                     = link_to challenge_url(path.permalink) do
                       = image_tag path.picture, alt: "#{path.name}"
             %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
-            %a{ href: "/challenges", class: "more"} Explore more Challenges...
+            %a{ href: "/challenges", class: "more submit_button"} Explore more Challenges...
             .clear_floats
   #happy_users.row-fluid
     .container

@@ -11,21 +11,22 @@
     %hr{ style: "margin:0" }
       .aboutbody{style:"padding-left:2px;"}
         - @personas.each do |persona|
-          %h4= persona.name
-          %div
-            - persona.paths.each do |path|
-              %div.mosaic-block.bar2.challengepagechallenge
-                - if path.public?
-                  = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
-                    %div.details
-                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
-                - else
-                  %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
-                    %div.details
-                      %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
-                      %h5 Coming Soon!
-                %div 
-                  = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
-          %hr{ style: "margin:0"}
+          - unless persona.paths.count == 0
+            %h4= persona.name
+            %div
+              - persona.paths.each do |path|
+                %div.mosaic-block.bar2.challengepagechallenge
+                  - if path.public?
+                    = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
+                      %div.details
+                        %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
+                  - else
+                    %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
+                      %div.details
+                        %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
+                        %h5 Coming Soon!
+                  %div 
+                    = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
+            %hr{ style: "margin:0"}
                     
                 
