@@ -20,13 +20,15 @@
                     = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
                       %div.details
                         %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
+                        %h5 Try it out!
                   - else
                     %a.mosaic-overlay{ style: "height: 38px; bottom: -18px;" }
                       %div.details
                         %h4{style: "font: 300 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%;"} #{truncate(path.name,length: 15, separator: ' ')}
                         %h5 Coming Soon!
-                  %div 
-                    = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
+                  = link_to challenge_path(path.permalink), title: "#{path.name}" do
+                    %div 
+                      = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
             %hr{ style: "margin:0"}
                     
                 
