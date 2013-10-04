@@ -89,7 +89,7 @@
                     %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
                   - elsif groups or enrollments
                     %a.dropdown-toggle{ "data-toggle" => "dropdown"}
-                      = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}"
+                      = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
                       %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                       %span.caret
                 - if groups or enrollments
@@ -140,7 +140,7 @@
                         %li.notification_space
                           %div.notification{ class: "#{event.read_at ? '' : 'notification-unread'}" }
                             %a{ href: event.link }
-                              %img.photo{ src: event.image_link, style: "width:35px; height: 35px;", alt: "Notification" }
+                              %img.photo{ src: event.image_link, style: "width:35px; height: 35px;", alt: "Notification", onerror: "user_img_error(this);"  }
                               %p.notification_body= event.content
                               %p.notification_time #{time_ago_in_words(event.created_at)} ago
                 - else

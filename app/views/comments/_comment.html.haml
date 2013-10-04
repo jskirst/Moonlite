@@ -4,7 +4,7 @@
     :javascript
       $(".comment_delete").on("ajax:success", function(){ $(this).parents("li").slideUp(); });
     %a{ href: profile_path(user.username) }
-      %img.commentphoto{ src: user.picture }
+      %img.commentphoto{ src: user.picture, onerror: "user_img_error(this);" }
   %div{ style: "overflow:hidden; margin: 0 0 0 43px;" }
     %pre.unstyled.text_content{ style: "font-size: 13px; color: black; margin-left: 0; margin-bottom: 0;" }= comment.content
     %p{ style: "margin-left: 0;" } 

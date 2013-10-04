@@ -116,3 +116,10 @@ function bind_hovercard_links(){
     $("#hover_card").modal({ keyboard: true, show: true, backdrop: true});
   });
 }
+
+// Replaces broken user profile images with placeholder image
+function user_img_error(image) {
+    image.onerror = "";
+    image.src = "https://s3-us-west-1.amazonaws.com/moonlite/static/default_profile_pic.png";
+    return true;
+}

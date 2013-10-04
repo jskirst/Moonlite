@@ -2,13 +2,13 @@
   - unless feed.context == :profile or feed.context == :submission
     %div.postphotospace
       = link_to hovercard_user_path(post.username), class: "hovercard_link", remote: true do
-        = image_tag User.picture(post.user_image_url), class: "photo"
+        = image_tag User.picture(post.user_image_url), class: "photo", onerror: "user_img_error(this);"
   %div.postspace
     %div.postheader
       - if feed.context == :submission
         %div.postphotospace
           = link_to hovercard_user_path(post.username), class: "hovercard_link", remote: true do
-            = image_tag User.picture(post.user_image_url), class: "photo"
+            = image_tag User.picture(post.user_image_url), class: "photo", onerror: "user_img_error(this);"
       %h3
         = link_to truncate(post.name, length: 50), hovercard_user_path(post.username), class:"username hovercard_link", remote: true
         - if badge = User.reputation_badge(post.earned_points)

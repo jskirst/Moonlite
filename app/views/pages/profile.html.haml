@@ -45,7 +45,7 @@
             = f.submit "Submit", class: "button button-standard button-small", style: "margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px;"
   #topsection
     #updatespace
-      = image_tag @user.picture, class: "bigheaderimage", itemprop: "photo", alt: "#{@user.name}"
+      = image_tag @user.picture, class: "bigheaderimage", itemprop: "photo", alt: "#{@user.name}", onerror: "user_img_error(this);"
       .rightofbigheaderimage
         #topprofilecontent{}
           %div{ style: "float:right; text-align:center; " }
@@ -155,7 +155,7 @@
                 %p{ style: "padding: 10px 10px 10px 0;" } Truly, there is no equal for this person. Unique in every sense of the word.
               - @similar_people.each do |person|
                 = link_to hovercard_user_path(person.username), class: "hovercard_link", rel: "acquaintance", remote: true do
-                  = image_tag person.picture, size: "50x50", title: person.name, alt: person.name
+                  = image_tag person.picture, size: "50x50", title: person.name, alt: person.name, onerror: "user_img_error(this);" 
         
         
            

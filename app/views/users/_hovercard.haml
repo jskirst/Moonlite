@@ -4,7 +4,7 @@
       %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
       .picture
         = link_to profile_path(@user.username) do
-          = image_tag @user.picture, alt: "#{@user.name}"
+          = image_tag @user.picture, alt: "#{@user.name}", onerror: "user_img_error(this);"
       .stats
         = link_to profile_path(@user.username) do
           %h1= @user.name                    
