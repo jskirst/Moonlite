@@ -7,12 +7,16 @@ Metabright::Application.routes.draw do
 	    get :style
 	    put :style
 	    get :possess
+	    get :notifications
+	    patch :notifications
+	    get :professional
+	    patch :professional
 	  end
 	end
 	get '/users/subregion' => 'users#subregion', as: "subregion_users"
 	get '/retract/:submission_id' => 'users#retract', as: 'retract_submission'
-	get '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
-  get '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
+  # get '/notifications/:signup_token' => 'users#notifications', as: 'notification_settings'
+  #   get '/professional/:signup_token' => 'users#professional', as: 'professional_settings'
   	
   resources :paths do
 		member do

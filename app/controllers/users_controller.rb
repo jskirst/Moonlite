@@ -25,7 +25,7 @@ class UsersController < ApplicationController
   end
   
   def notifications
-    @user = User.find_by_signup_token(params[:signup_token])
+    @user = User.where(signup_token: params[:id]).first
     raise "Access Denied: Attempt to change settings" if current_user && current_user != @user
     
     @notification_settings = @user.notification_settings
@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   end
   
   def professional
-    @user = User.find_by_signup_token(params[:signup_token])
+    @user = User.where(signup_token: params[:id]).first
     raise "Access Denied: Attempt to change settings" if current_user && current_user != @user
     
     unless request.get?
