@@ -32,6 +32,7 @@ gem 'sitemap_generator'
 gem 'fog'
 gem 'hamster_powered', git: 'https://github.com/jskirst/hamster_powered'
 gem 'rails_12factor'
+gem 'exception_notification-rake'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
@@ -53,7 +54,7 @@ group :development do
 	gem 'rspec-rails'
 	gem 'annotate'
 	gem 'faker'
-  gem 'better_errors'
+  gem 'better_errors'   
   gem 'binding_of_caller'
   gem 'meta_request'
   #gem 'sql-logging'
