@@ -17,6 +17,18 @@ describe "Custom Styles" do
       click_on "Customize Profile"
       
       page.should have_content("Customize your Profile")
+      find("#custom_style_styles").set("my value")
+      click_on "Save"
+      
+      expect_content("Your styles have been saved.")
+      find("#custom_style_styles").set("my value")
+      click_on "Save"
+      
+      expect_content("There was a parsing error with your css. Please check and try again.")
+      find("#custom_style_styles").set("body { padding: 10px; }")
+      click_on "Save"
+      
+      expect_content("Your styles have been saved.")
     end
   end
 end

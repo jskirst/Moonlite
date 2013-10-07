@@ -55,8 +55,12 @@ class UsersController < ApplicationController
     end
     
     unless request.get?
-      @user_custom_style.update_attributes(params[:custom_style])
-      flash[:success] = "Your styles have been saved."
+      @user_custom_style.styles = params[:custom_style][:styles]
+      if @user_custom_style.save
+        flash[:success] = "Your styles have been saved."
+      else
+        flash[:error] = "There was a parsing error with your css. Please check and try again."
+      end
     end
   end
   
