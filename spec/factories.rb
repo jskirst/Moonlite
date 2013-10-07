@@ -1,22 +1,25 @@
 FactoryGirl.define do
-  factory :company do
-    name                    "MetaBright"
-  end
-
-  factory :user_role do
-    name                    "Admin"
-    enable_administration   "t"
-    association :company
-  end
-
   factory :user, :aliases => [:creator] do
     name                    { Faker::Name.name }
     username                { name.gsub(/[^a-z]/, '') }
     email                   { Faker::Internet.email }
-    password                "testpassword"
-    password_confirmation   "testpassword"
-    association :company
-    association :user_role
+    password                "a1b2c3d4"
+    password_confirmation   "a1b2c3d4"
+    enable_administration   false
+  end
+  
+  factory :persona do
+    name                    { Faker::Name.name }
+    description             { Faker::Lorem.sentence(12) }
+    image_url               { Faker::Internet.url }
+    
+    factory :persona_with_paths do
+      after(:create) do |persona| 
+        3.times do 
+          create(:path_persona, persona: persona)
+        end
+      end
+    end
   end
 
   factory :path do
@@ -27,6 +30,11 @@ FactoryGirl.define do
     promoted_at             { Time.now() }
     professional_at         { Time.now() }
     association :user
+  end
+  
+  factory :path_persona do
+    association :persona
+    association :path
   end
 
   factory :section do
@@ -68,10 +76,6 @@ FactoryGirl.define do
     creator_password        { Faker::Internet.password }
     plan_type               "two_to_five"
     stripe_token            "alskdjfalsdf"
-    
-    before(:create) do
-      create(:company)
-    end
   end
   
   factory :evaluation do

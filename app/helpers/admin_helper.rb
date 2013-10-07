@@ -4,7 +4,6 @@ module AdminHelper
       ["overview", "Overview", admin_overview_path],
       ["funnel", "Funnel", admin_funnel_path],
       ["visits", "Visits", admin_visits_path],
-      ["styles", "Custom Styles", admin_styles_path],
       ["personas", "Personas", personas_path],
       ["paths", "Paths", admin_paths_path],
       ["users", "Users", admin_users_path],

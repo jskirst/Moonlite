@@ -1,15 +1,12 @@
 class UserRole < ActiveRecord::Base
   attr_readonly :signup_token
   attr_accessor :enable_content_creation
-  attr_accessible :company_id, 
-    :name,  
+  attr_accessible :name,  
     :enable_administration,
     :signup_token
   
   has_many :users
-  belongs_to :company
   
-  validates :company_id, presence: true
   validates :name, length: { within: 1..255 }
   
   before_create { self.signup_token = random_alphanumeric }

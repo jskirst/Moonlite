@@ -1,5 +1,8 @@
 DEFAULT_PASSWORD = "a1b2c3"
+NUMBER_OF_PATHS = 5
+NUMBER_OF_SECTIONS = 3
 NUMBER_OF_USERS = 3
+NUMBER_OF_POSITIONS = 2
 TIME_PERIOD = 7
 AVG_SCORE = 9
 
@@ -51,18 +54,17 @@ PATH_SECTIONS = [
 
 POSITIONS = ["Software Engineer", "Front-end Developer", "Account Executive", "Customer Support Specialist"]
 
-def create_user(company,user_role,name,email,image_url)
-  u = company.users.new(name: name, 
+def create_user(name,email,image_url)
+  u = User.new(name: name, 
     email: email, 
     image_url: image_url, 
     password: DEFAULT_PASSWORD, 
-    password_confirmation: DEFAULT_PASSWORD, 
-    earned_points: 10)
+    password_confirmation: DEFAULT_PASSWORD)
+  u.enable_administration = true
   u.grant_username
   u.state = "CA"
   u.country = "US"
   u.city = "Oakland"
-  u.user_role = user_role
   u.save!
   return u
 end
@@ -72,14 +74,7 @@ namespace :db do
   task :genesis => :environment do
     raise "FATAL: CANNOT RUN SCRIPT OUTSIDE DEVELOPMENT" unless Rails.env == "development"
     Rake::Task['db:reset'].invoke
-    moonlite_company = Company.create!(:name => "MetaBright")
-    default_role = moonlite_company.user_roles.create!(name: "Admin", enable_administration: true, enable_content_creation: true)
-    second_role = moonlite_company.user_roles.create!(name: "Test")
-    moonlite_company.user_role_id = default_role.id
-    moonlite_company.save!
-    default_cat = moonlite_company.categories.create!(:name => "Everything")
-    
-    moonlite_admin = create_user(moonlite_company, default_role, "Jonathan Kirst", "admin@metabright.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
+    moonlite_admin = create_user("Jonathan Kirst", "admin@metabright.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
     raise "Failed to create user" unless moonlite_admin.valid?
     PHRASE_PAIRINGS.each do |pp|
       PhrasePairing.create_phrase_pairings(pp)
@@ -88,11 +83,11 @@ namespace :db do
     now = Time.now
     PERSONAS.each do |persona|
       persona = persona[1]
-      new_persona = moonlite_company.personas.create!(name: persona["name"], description: persona["description"], image_url: persona["link"])
+      new_persona = Persona.create!(name: persona["name"], description: persona["description"], image_url: persona["link"])
     end
     
-    PATHS.each do |p|
-      path = moonlite_company.paths.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id, category_id: default_cat.id)
+    PATHS.first(NUMBER_OF_PATHS).each do |p|
+      path = Path.create!(name: p[0], description: p[1], image_url: p[2], user_id: moonlite_admin.id)
       path.published_at = now
       path.approved_at = now
       path.public_at = now
@@ -110,8 +105,8 @@ namespace :db do
     end
   
     Path.all.each_with_index do |path, i|
-      PATH_SECTIONS.each do |s|
-        section = path.sections.create(name: s[0], category_id: default_cat.id, instructions: "Instructions to follow.")
+      PATH_SECTIONS.first(NUMBER_OF_SECTIONS).each do |s|
+        section = path.sections.create(name: s[0], instructions: "Instructions to follow.")
         section.published_at = now
         section.save!
         number_of_tasks = ((i+1)*1.5).to_i
@@ -131,7 +126,6 @@ namespace :db do
               { content: "#{x+z2}", is_correct: false },
               { content: "#{x+z3}", is_correct: false }
             ],
-            points: 10,
             answer_type: 2,
             creator_id: moonlite_admin.id,
             reviewed_at: now,
@@ -144,24 +138,21 @@ namespace :db do
         section.tasks.create!(path_id: path.id, question: "This is a task1", answer_type: Task::CHECKIN, creator_id: moonlite_admin.id, reviewed_at: now)
       end
     end
-    moonlite_company.user_role_id = second_role.id
-    moonlite_company.save!
     
-    
-    FAKE_USERS.each do |fu|
-      user = create_user(moonlite_company, second_role, fu[0], fu[0].downcase.gsub(" ",".")+EMAIL_DOMAINS.shuffle.first, fu[1])
+    FAKE_USERS.first(NUMBER_OF_USERS).each do |fu|
+      user = create_user(fu[0], fu[0].downcase.gsub(" ",".")+EMAIL_DOMAINS.shuffle.first, fu[1])
     end
     
     group = Group.new(name: "Wayne Enterprises", plan_type: Group::SIX_TO_FIFTEEN_PLAN)
     group.stripe_token = "fakestripetoken"
     group.save!
     
-    group_admin = create_user(moonlite_company, default_role, "Bruce Wayne", "bruce@wayne.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
+    group_admin = create_user("Bruce Wayne", "bruce@wayne.com", "http://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Kolm%C3%A5rden_Wolf.jpg/220px-Kolm%C3%A5rden_Wolf.jpg")
     group_admin_gu = group.group_users.new(user_id: group_admin.id)
     group_admin_gu.is_admin = true
     group_admin_gu.save!
     
-    POSITIONS.each do |p|
+    POSITIONS.first(NUMBER_OF_POSITIONS).each do |p|
       eval = group.evaluations.new(title: p, company: group.name)
       path_number = rand(4) + 1
       eval.selected_paths = Hash[*Path.all.shuffle.first(path_number).collect{ |p| [p.id, true] }.flatten]

@@ -63,7 +63,9 @@ end
 
 group :test do
 	gem 'capybara'
+	gem 'poltergeist'
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
+	gem 'launchy'
 	gem 'simplecov', :require => false
 end

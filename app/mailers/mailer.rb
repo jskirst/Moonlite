@@ -121,11 +121,6 @@ class Mailer < ActionMailer::Base
     mail(to: admins.first.email, subject: "[NEW IDEA] #{@idea.title}", cc: admins.collect(&:email))
   end
   
-  def opportunity(opp)
-    @opp = opp
-    mail(to: "team@metabright.com", subject: "[EMPLOYER REQUEST] #{Opportunity::PRODUCTS[opp.product]}", body: "Body")
-  end
-  
   def test_alert(user, email_type)
     return false unless user.can_email?(email_type)
     m = mail(to: user.email, subject: "Test alert", body: "Test")

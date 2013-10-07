@@ -47,6 +47,7 @@ GEM
       multi_json (~> 1.3)
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
+    addressable (2.3.5)
     annotate (2.5.0)
       rake
     arel (4.0.0)
@@ -74,6 +75,7 @@ GEM
       unicode_utils (~> 1.4.0)
     climate_control (0.0.3)
       activesupport (>= 3.0)
+    cliver (0.2.2)
     cocaine (0.5.2)
       climate_control (>= 0.0.3, < 1.0)
     coderay (1.1.0)
@@ -136,6 +138,8 @@ GEM
     jwt (0.1.8)
       multi_json (>= 1.5)
     kgio (2.8.1)
+    launchy (2.3.0)
+      addressable (~> 2.3)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -183,6 +187,11 @@ GEM
       cocaine (~> 0.5.0)
       mime-types
     pg (0.17.0)
+    poltergeist (1.4.1)
+      capybara (~> 2.1.0)
+      cliver (~> 0.2.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     polyglot (0.3.3)
     protected_attributes (1.0.3)
       activemodel (>= 4.0.0, < 5.0)
@@ -287,6 +296,7 @@ GEM
     w3c_validators (1.2)
       json
       nokogiri
+    websocket-driver (0.3.0)
     will_paginate (3.0.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -316,6 +326,7 @@ DEPENDENCIES
   haml
   hamster_powered!
   jquery-rails
+  launchy
   memcachier
   meta_request
   nokogiri
@@ -326,6 +337,7 @@ DEPENDENCIES
   omniauth-linkedin-oauth2
   paperclip
   pg
+  poltergeist
   protected_attributes
   quiet_assets
   rails (= 4.0.0)

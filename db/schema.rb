@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131001211509) do
+ActiveRecord::Schema.define(version: 20131005213033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,13 +26,6 @@ ActiveRecord::Schema.define(version: 20131001211509) do
   end
 
   add_index "answers", ["task_id"], name: "index_answers_on_task_id", using: :btree
-
-  create_table "categories", force: true do |t|
-    t.integer  "company_id"
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "collaborations", force: true do |t|
     t.integer  "path_id"
@@ -53,27 +46,6 @@ ActiveRecord::Schema.define(version: 20131001211509) do
     t.boolean  "is_locked",   default: false
     t.datetime "reviewed_at"
     t.datetime "locked_at"
-  end
-
-  create_table "companies", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.boolean  "enable_news",                  default: true
-    t.boolean  "enable_auto_enroll",           default: true
-    t.string   "default_profile_picture_link"
-    t.integer  "user_role_id"
-    t.integer  "seat_limit",                   default: 50
-    t.string   "name_for_paths",               default: "certification"
-    t.boolean  "enable_traditional_explore",   default: true
-    t.string   "home_title"
-    t.string   "home_subtitle"
-    t.string   "home_paragraph"
-    t.string   "big_logo_link"
-    t.string   "small_logo_link"
-    t.string   "referrer_url"
-    t.boolean  "enable_custom_landing",        default: false
-    t.string   "custom_email_from"
   end
 
   create_table "completed_tasks", force: true do |t|
@@ -233,12 +205,10 @@ ActiveRecord::Schema.define(version: 20131001211509) do
     t.integer  "user_id"
     t.datetime "created_at",                                 null: false
     t.datetime "updated_at",                                 null: false
-    t.integer  "company_id"
     t.string   "image_url"
     t.boolean  "is_public",                  default: false
     t.boolean  "is_published",               default: false
     t.boolean  "is_approved",                default: false
-    t.integer  "category_id",                default: 0
     t.string   "excluded_from_leaderboards"
     t.boolean  "is_locked",                  default: false
     t.string   "tags"
@@ -266,7 +236,6 @@ ActiveRecord::Schema.define(version: 20131001211509) do
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
     t.string   "image_url"
-    t.integer  "company_id"
     t.integer  "parent_id"
     t.integer  "unlock_threshold"
     t.boolean  "is_locked",        default: true
@@ -449,7 +418,6 @@ ActiveRecord::Schema.define(version: 20131001211509) do
 
   create_table "user_roles", force: true do |t|
     t.string   "name"
-    t.integer  "company_id"
     t.boolean  "enable_administration",   default: false
     t.boolean  "enable_content_creation", default: false
     t.string   "signup_token"
@@ -484,7 +452,6 @@ ActiveRecord::Schema.define(version: 20131001211509) do
     t.integer  "spent_points",                                   default: 0
     t.string   "image_url"
     t.string   "signup_token"
-    t.integer  "company_id"
     t.integer  "user_role_id"
     t.string   "username"
     t.boolean  "is_fake_user",                                   default: false
@@ -518,53 +485,6 @@ ActiveRecord::Schema.define(version: 20131001211509) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", using: :btree
-
-  create_table "vanity_conversions", force: true do |t|
-    t.integer "vanity_experiment_id"
-    t.integer "alternative"
-    t.integer "conversions"
-  end
-
-  add_index "vanity_conversions", ["vanity_experiment_id", "alternative"], name: "by_experiment_id_and_alternative", using: :btree
-
-  create_table "vanity_experiments", force: true do |t|
-    t.string   "experiment_id"
-    t.integer  "outcome"
-    t.datetime "created_at"
-    t.datetime "completed_at"
-  end
-
-  add_index "vanity_experiments", ["experiment_id"], name: "index_vanity_experiments_on_experiment_id", using: :btree
-
-  create_table "vanity_metric_values", force: true do |t|
-    t.integer "vanity_metric_id"
-    t.integer "index"
-    t.integer "value"
-    t.string  "date"
-  end
-
-  add_index "vanity_metric_values", ["vanity_metric_id"], name: "index_vanity_metric_values_on_vanity_metric_id", using: :btree
-
-  create_table "vanity_metrics", force: true do |t|
-    t.string   "metric_id"
-    t.datetime "updated_at"
-  end
-
-  add_index "vanity_metrics", ["metric_id"], name: "index_vanity_metrics_on_metric_id", using: :btree
-
-  create_table "vanity_participants", force: true do |t|
-    t.string  "experiment_id"
-    t.string  "identity"
-    t.integer "shown"
-    t.integer "seen"
-    t.integer "converted"
-  end
-
-  add_index "vanity_participants", ["experiment_id", "converted"], name: "by_experiment_id_and_converted", using: :btree
-  add_index "vanity_participants", ["experiment_id", "identity"], name: "by_experiment_id_and_identity", using: :btree
-  add_index "vanity_participants", ["experiment_id", "seen"], name: "by_experiment_id_and_seen", using: :btree
-  add_index "vanity_participants", ["experiment_id", "shown"], name: "by_experiment_id_and_shown", using: :btree
-  add_index "vanity_participants", ["experiment_id"], name: "index_vanity_participants_on_experiment_id", using: :btree
 
   create_table "visits", force: true do |t|
     t.integer  "user_id"

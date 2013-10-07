@@ -4,6 +4,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -37,6 +38,27 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = "random"
   
+  config.include Capybara::DSL
+  config.include RequestsHelper
+  
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, { timeout: 50 })
+  end
+  Capybara.default_driver = :poltergeist
+  
   config.include(MailerMacros)
   config.before(:each) { reset_email }
 end
+
+# Forces all threads to share the same connection
+# http://railscasts.com/episodes/257-request-specs-and-capybara?view=comments#comment_161230
+class ActiveRecord::Base
+  mattr_accessor :shared_connection
+  @@shared_connection = nil
+
+  def self.connection
+    @@shared_connection || retrieve_connection
+  end
+end
+ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+Rails.logger.level = 4

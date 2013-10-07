@@ -1,8 +1,6 @@
 class Persona < ActiveRecord::Base
   attr_accessor :criteria
-  attr_accessible :company_id, :name, :description, :image_url, :criteria
-
-  belongs_to :company
+  attr_accessible :name, :description, :image_url, :criteria
   
   has_many :stored_resources, as: :owner 
   has_many :user_personas

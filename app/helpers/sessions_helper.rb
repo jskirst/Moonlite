@@ -75,11 +75,6 @@ module SessionsHelper
     user == current_user
   end
   
-  def current_company
-    current_user.company if current_user
-    Company.find(1)
-  end
-  
   def unread_notification_count
     return 0 unless current_user
     notifications.select{ |n| n.read_at.nil? }.size

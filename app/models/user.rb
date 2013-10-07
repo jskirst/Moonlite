@@ -12,14 +12,12 @@ class User < ActiveRecord::Base
     :earned_points, :spent_points,
     :last_email_sent_at,:emails_today
   attr_accessor :password, :password_confirmation, :guest_user, :group_id
-  attr_accessible :name, :email, :image_url, :username, :company_id,
+  attr_accessible :name, :email, :image_url, :username,
     :password,:password_confirmation, 
     :description, :title, :company_name, :education, :link, :location, :guest_user,
     :city, :state, :country, 
     :seen_opportunities, :wants_full_time, :wants_part_time, :wants_internship
     
-
-  belongs_to  :company
   belongs_to  :user_role
   has_one     :notification_settings
   has_one     :custom_style, as: :owner
@@ -70,10 +68,6 @@ class User < ActiveRecord::Base
     if self.name_changed?
       grant_username(force_rename: true)
     end
-    
-    if self.user_role_id.nil?
-      self.user_role_id = Company.first.user_role_id
-    end
   end
   
   before_create do
@@ -110,8 +104,6 @@ class User < ActiveRecord::Base
     details = {} unless details
     group = Group.find(details["group_id"]) unless details["group_id"].blank?
     user = User.new
-    #raise "No company present" if Company.first.nil? or Company.first.new_record?
-    user.company = Company.first
     user.name = details["name"] || grant_anon_username
     user.email = details["email"] || "#{user.name}@metabright.com"
     user.grant_username

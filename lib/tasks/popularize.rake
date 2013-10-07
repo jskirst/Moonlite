@@ -5,8 +5,6 @@ def new_user
   u.is_fake_user = true
   u.password = "awdrgy"
   u.password_confirmation = u.password
-  u.company_id = Company.first.id
-  u.user_role_id = UserRole.first.id
   u.save!
   return u.reload
 end

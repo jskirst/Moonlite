@@ -32,7 +32,7 @@ class PersonasController < ApplicationController
   end
   
   def new
-    @paths = current_company.paths.all
+    @paths = Path.all
     @persona = Persona.new
     render "form"
   end

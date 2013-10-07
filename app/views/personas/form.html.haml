@@ -14,12 +14,12 @@
     %div.field.clearfix
       = image_tag @persona.image_url, size: "100x100", class: "input"
     %div.input
-      - if current_company.paths.empty?
+      - if Path.all.empty?
         %p You have not yet created any Challenges yet. You need to create at least one Challenge to create a Persona.
       - else
         %p Select Challenges
         %ul
-          - current_company.paths.each do |p|
+          - Paths.all.each do |p|
             %li
               %span= p.name
               - if @persona.path_personas && @persona.path_personas.find_by_path_id(p.id)

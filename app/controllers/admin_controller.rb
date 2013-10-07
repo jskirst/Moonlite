@@ -25,7 +25,7 @@ class AdminController < ApplicationController
     if request.get?
       conditions = params[:search].nil? ? nil : ["name ILIKE ? or email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%"]
       @sort = params[:sort] || "id"
-      @users = User.paginate(page: params[:page], conditions: conditions, order: "#{@sort} DESC").includes(:user_role)
+      @users = User.paginate(page: params[:page], conditions: conditions, order: "#{@sort} DESC")
     else
       user = User.find(params[:id])
       toggle(:locked_at, user)
@@ -102,15 +102,6 @@ class AdminController < ApplicationController
         toggle(:reviewed_at, comment)
       end
       render json: { status: "success" }
-    end
-  end
-    
-  def styles
-    @custom_style = Company.find(1).custom_style
-    unless request.get?
-      if @custom_style.update_attributes(params[:custom_style])
-        flash.now[:notice] = "Custom style updated."
-      end
     end
   end
   

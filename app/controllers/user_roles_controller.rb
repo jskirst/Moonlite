@@ -5,8 +5,7 @@ class UserRolesController < ApplicationController
   
   def index
     @mode = "roles"
-    @user_roles = current_user.company.user_roles.all
-    @company = current_user.company
+    @user_roles = UserRole.all
   end
   
   def new
@@ -16,7 +15,7 @@ class UserRolesController < ApplicationController
   end
   
   def create
-    @user_role = current_user.company.user_roles.new(params[:user_role])
+    @user_role = UserRole.new(params[:user_role])
     if @user_role.save
       redirect_to user_roles_path, notice: "User role created."
     else
@@ -63,12 +62,12 @@ class UserRolesController < ApplicationController
   
   def update_user
     if request.get?
-      @user_roles = current_company.user_roles
+      @user_roles = UserRole.all
       @user = User.find(params[:user_id])
       render "update_user"
     else
       @user = User.find(params[:user_id])
-      @user_role = current_company.user_roles.find(params[:user][:user_role_id])
+      @user_role = UserRole.find(params[:user][:user_role_id])
       @user.user_role_id = @user_role.id
       if @user.save
         redirect_to admin_users_path, flash: { success: "User role changed successfully." }
@@ -80,8 +79,7 @@ class UserRolesController < ApplicationController
   
   private
     def load_resource
-      @user_role = current_user.company.user_roles.find(params[:id])
-      @company = @user_role.company
+      @user_role = UserRole.find(params[:id])
     end
   
     def authorize_resource

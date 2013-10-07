@@ -1,6 +1,5 @@
 class Path < ActiveRecord::Base
   attr_accessor :persona, :approved, :promoted, :professional, :template_type, :batch_file
-  attr_readonly :company_id
   attr_protected :approved_at, :published_at, :public_at, :promoted_at, :professional, :group_id
   attr_accessible :user_id,
     :category_id,
@@ -15,7 +14,6 @@ class Path < ActiveRecord::Base
   has_one :stored_resource, as: :owner
   has_one :custom_style, as: :owner
   belongs_to :user
-  belongs_to :company
   belongs_to :category
   belongs_to :group
   has_many :sections, dependent: :destroy
@@ -93,7 +91,7 @@ class Path < ActiveRecord::Base
   def self.suggested_paths(user = nil, excluded_path_id = -1)
     if user
       personas = user.personas
-      personas = user.company.personas.to_a.last(3) if personas.empty?
+      personas = Persona.last(3) if personas.empty?
       enrolled_paths = user.enrolled_paths.to_a.collect &:id
       suggested_paths = personas.to_a.collect do |persona|
         cached_find_by_persona_id(persona.id).collect {|path| path unless enrolled_paths.include?(path.id) } 

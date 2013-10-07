@@ -1,6 +1,6 @@
 class PhrasePairing < ActiveRecord::Base
   attr_readonly :phrase_id, :paired_phrase_id
-  attr_accessible :strength
+  attr_accessible :strength, :phrase_id, :paired_phrase_id
   
   belongs_to :phrase
   belongs_to :paired_phrase, class_name: :phrase
@@ -15,14 +15,14 @@ class PhrasePairing < ActiveRecord::Base
     new_phrases.each do |np|
       next if np.blank?
       np = np.strip
-      p = Phrase.find_by_content(np.downcase)
+      p = Phrase.where(content: np.downcase).first
       p = Phrase.create!(:content => np) if p.nil?
       phrases << p
     end
     phrases.each do |p|
       phrases.each do |pp|
         unless pp == p
-          pairing = PhrasePairing.find_or_create_by_phrase_id_and_paired_phrase_id(p.id, pp.id)
+          pairing = PhrasePairing.find_or_create_by(phrase_id: p.id, paired_phrase_id: pp.id)
           pairing.strength += 1
           pairing.save
         end

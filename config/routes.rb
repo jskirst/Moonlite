@@ -190,7 +190,6 @@ Metabright::Application.routes.draw do
     put '/tasks/:id' => 'admin#tasks', as: 'admin_update_task'
     get '/comments' => 'admin#comments', as: "admin_comments"
     put '/comments/:id' => 'admin#comments', as: 'admin_update_comment'
-    get '/styles' => 'admin#styles', as: "admin_styles"
     get '/groups' => 'admin#groups', as: "admin_groups"
     get '/groups/:group_id' => 'admin#group', as: "admin_group"
     get '/email' => 'admin#email', as: "admin_email"
