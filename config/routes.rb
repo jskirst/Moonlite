@@ -5,7 +5,7 @@ Metabright::Application.routes.draw do
 	resources :users do
 	  member do
 	    get :style
-	    put :style
+	    patch :style
 	    get :possess
 	    get :notifications
 	    patch :notifications

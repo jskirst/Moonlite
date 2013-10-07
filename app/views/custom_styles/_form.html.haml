@@ -16,16 +16,18 @@
     %div.actions
       = link_to "Back", back, class: "button button-standard"
       = f.submit "Save", class: "button button-actionable", style: "margin-left: 10px;"
-:css
-  .ace_scroller, .ace_gutter { padding-top: 3px; }
 
-:javascript
-  var editor = ace.edit("editor");
-  editor.setTheme("ace/theme/github");    
-  editor.getSession().setUseSoftTabs(true);
-  editor.getSession().setTabSize(2);
-  var $textarea = $("#custom_style_styles").hide()
-  editor.getSession().setValue($textarea.val());
-  editor.getSession().on('change', function(){
-    $textarea.val(editor.getSession().getValue());
-  });
+- unless Rails.env == "test"
+  :css
+    .ace_scroller, .ace_gutter { padding-top: 3px; }
+
+  :javascript
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/github");    
+    editor.getSession().setUseSoftTabs(true);
+    editor.getSession().setTabSize(2);
+    var $textarea = $("#custom_style_styles").hide()
+    editor.getSession().setValue($textarea.val());
+    editor.getSession().on('change', function(){
+      $textarea.val(editor.getSession().getValue());
+    });
