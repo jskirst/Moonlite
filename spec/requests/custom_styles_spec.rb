@@ -7,14 +7,8 @@ describe "Custom Styles" do
   end
   
   describe "User" do
-    it "should be able to access custom styles through edit profile" do
-      visit profile_path(@user.username)
-      
-      expect_content(@user.name)
-      click_on "Edit Profile"
-      
-      expect_content("Edit Profile")
-      click_on "Customize Profile"
+    it "should be able to access custom styles through edit profile" do      
+      visit edit_user_path(@user.username)
       
       page.should have_content("Customize your Profile")
       find("#custom_style_styles").set("my value")

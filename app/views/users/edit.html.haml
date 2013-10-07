@@ -76,6 +76,6 @@
     %hr
     .control-group
       .controls
-      = link_to "Remove Account", current_user, method: :delete, confirm: "Are you absolutely certain you would like to delete your account? This action is irreversible",  style: "margin-left: 20px; margin-top:7px; float: left;"
+      = link_to "Remove Account", current_user, method: :delete, data: { confirm: "Are you absolutely certain you would like to delete your account? This action is irreversible" },  style: "margin-left: 20px; margin-top:7px; float: left;"
       = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
       = link_to "Back", profile_path(current_user.username), class: "button button-standard", style: "float: right;"
