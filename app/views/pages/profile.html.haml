@@ -64,7 +64,8 @@
                 .lo Followers
           .span7{style: "min-height: 65px; vertical-align: top; margin: 8px 0 0 0; width: 600px;"}
             %h1
-              %span{itemprop: "name"}= @user.name
+              %span{ itemprop: "name"}= @user.name
+              %meta{ itemprop: "affiliation", content: "MetaBright"}
             - if badge = User.reputation_badge(@user.earned_points)
               = image_tag badge[0], class: "rep_badge", title: badge[1], alt: badge[1]
             - unless @user.description.blank?
@@ -81,10 +82,10 @@
               - unless @user.location.blank?
                 %div{ style: "display: block;" }
                   LOCATION:
-                  %span{itemprop: "address"}= @user.location
+                  %span{itemprop: "homeLocation"}= @user.location
             .shareprofile
               %p Share profile:
-              = render "shared/sharing", { custom_style: "display: inline; float: right;", title: "#{@user.name}'s awesome profile on MetaBright.com", url: profile_url(@user.username) }
+              = render "shared/sharing", { custom_style: "display: inline; float: right;", title: "#{@user.name}'s MetaBright profile", url: profile_url(@user.username) }
   
   - unless @user_personas.size == 0 || @enrollments.size == 0            
     .span12{ style: "margin-left: 0px;" }
