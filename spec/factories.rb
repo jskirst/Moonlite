@@ -26,9 +26,10 @@ FactoryGirl.define do
     name                    { Faker::Name.name }
     permalink               { name.gsub(/[^a-z]/, '') }
     description             { Faker::Lorem.sentence(12) }
-    approved_at             { Time.now() }
-    promoted_at             { Time.now() }
-    professional_at         { Time.now() }
+    approved_at             { Time.now }
+    promoted_at             { Time.now }
+    professional_at         { Time.now }
+    published_at            { Time.now }
     association :user
   end
   

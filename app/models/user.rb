@@ -96,6 +96,7 @@ class User < ActiveRecord::Base
   def to_s() self.name end
     
   def locked?() locked_at.nil? ? false : true end
+  def content_creation_enabled?() not self.content_creation_enabled_at.nil? end
   def guest_user?() email.include?("@metabright") and not GUEST_WHITELIST.include?(email) end
     
   def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
@@ -283,7 +284,9 @@ class User < ActiveRecord::Base
         raise "Enrollment nil: "+task.to_yaml
       end 
       log_transaction(obj, points)
-      self.update_attribute('earned_points', self.earned_points + points)
+      self.earned_points = self.earned_points + points
+      self.content_creation_enabled_at = Time.now
+      self.save!
       enrollment.add_earned_points(points)
     end
   end

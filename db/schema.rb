@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131005213033) do
+ActiveRecord::Schema.define(version: 20131007164819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -443,19 +443,19 @@ ActiveRecord::Schema.define(version: 20131005213033) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.string   "encrypted_password"
     t.string   "salt"
-    t.boolean  "admin",                                          default: false
-    t.integer  "earned_points",                                  default: 0
-    t.integer  "spent_points",                                   default: 0
+    t.boolean  "admin",                                                default: false
+    t.integer  "earned_points",                                        default: 0
+    t.integer  "spent_points",                                         default: 0
     t.string   "image_url"
     t.string   "signup_token"
     t.integer  "user_role_id"
     t.string   "username"
-    t.boolean  "is_fake_user",                                   default: false
-    t.boolean  "is_test_user",                                   default: false
+    t.boolean  "is_fake_user",                                         default: false
+    t.boolean  "is_test_user",                                         default: false
     t.datetime "login_at"
     t.datetime "logout_at"
     t.string   "description"
@@ -464,11 +464,11 @@ ActiveRecord::Schema.define(version: 20131005213033) do
     t.string   "title"
     t.string   "location"
     t.string   "link"
-    t.boolean  "is_locked",                                      default: false
+    t.boolean  "is_locked",                                            default: false
     t.string   "large_image_url"
     t.text     "viewed_help"
     t.datetime "locked_at"
-    t.integer  "emails_today",                                   default: 0
+    t.integer  "emails_today",                                         default: 0
     t.datetime "last_email_sent_at"
     t.string   "city"
     t.string   "state"
@@ -478,9 +478,10 @@ ActiveRecord::Schema.define(version: 20131005213033) do
     t.boolean  "wants_part_time"
     t.boolean  "wants_internship"
     t.boolean  "wants_university"
-    t.decimal  "latitude",              precision: 10, scale: 6
-    t.decimal  "longitude",             precision: 10, scale: 6
-    t.boolean  "enable_administration",                          default: false
+    t.decimal  "latitude",                    precision: 10, scale: 6
+    t.decimal  "longitude",                   precision: 10, scale: 6
+    t.boolean  "enable_administration",                                default: false
+    t.datetime "content_creation_enabled_at"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
