@@ -66,16 +66,4 @@ Metabright::Application.configure do
 	config.assets.digest = true
 	
 	#config.font_assets.origin = 'http://www.metabright.com'
-  
-  # 1. Base configuration for ExceptionNotifier
-  config.middleware.use ExceptionNotification::Rack,
-      :ignore_if => lambda { true },
-      :email => {
-        :sender_address => %{"notifier" <notificationfailure@metabright.com>},
-        :exception_recipients => %w{nsdub@metabright.com}
-      }
-
-  # 2. Enable Rake notifications
-  ExceptionNotifier::Rake.configure
-  
 end

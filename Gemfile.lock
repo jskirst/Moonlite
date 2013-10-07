@@ -322,6 +322,7 @@ DEPENDENCIES
   carmen-rails!
   coffee-rails
   dalli
+  exception_notification
   exception_notification-rake (~> 0.1.0)
   factory_girl_rails
   faker
