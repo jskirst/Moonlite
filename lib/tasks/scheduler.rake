@@ -206,6 +206,11 @@ task :set_latitude_and_longitude => :environment do
   end
 end
 
+task :failing_task => :environment do
+  puts "Failing task in environment #{Rails.env}..."
+  FAIL!
+end
+
 task :cache_warmup => :environment do
   ap Rails.cache.stats
   

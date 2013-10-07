@@ -4,6 +4,20 @@ ENV['AWS_SECRET_ACCESS_KEY']  = "R68x1nER9r0rrpmg2kYEz5m5HOQ1NY9ih5Gbf2Qf"
 ENV['S3_BUCKET_NAME']					=	"moonlite-dev"
 
 Metabright::Application.configure do
+  
+  # 1. Point ActionMailer at mailcatcher
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { :host => "localhost", :port => 1025 }
+  config.action_mailer.raise_delivery_errors = true
+
+  # 2. Base configuration for ExceptionNotifier
+  config.middleware.use ExceptionNotifier,
+    :exception_recipients => %w{exceptions@example.com},
+    :ignore_if => lambda { true }
+
+  # 3. Enable Rake notifications
+  ExceptionNotifier::Rake.configure
+  
 	# Settings specified here will take precedence over those in config/environment.rb
 
 	# In the development environment your application's code is reloaded on
@@ -38,4 +52,5 @@ Metabright::Application.configure do
   GoogleTagManager.gtm_id = "GTM-K6NTXR"
   
   config.assets.digest = false
+
 end
