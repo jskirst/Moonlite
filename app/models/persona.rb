@@ -40,7 +40,8 @@ class Persona < ActiveRecord::Base
   # Cached methods
   
   def self.cached_personas
-    Rails.cache.fetch([self.to_s, "all"]){ Persona.all.to_a }
+    personas = Rails.cache.fetch([self.to_s, "all"]){ Persona.all.to_a }
+    Persona.all.to_a if personas.empty?
   end
   
   def flush_cache

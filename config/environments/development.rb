@@ -38,4 +38,6 @@ Metabright::Application.configure do
   GoogleTagManager.gtm_id = "GTM-K6NTXR"
   
   config.assets.digest = false
+  
+  config.active_record.mass_assignment_sanitizer = :strict
 end

@@ -2,10 +2,8 @@ module RequestsHelper
   def init_metabright
     persona = FactoryGirl.create(:persona_with_paths, name: "First Persona")
     user = User.first
-    persona.paths.each do |p|
-      FactoryGirl.create(:task, path: p, creator: user)
-    end
-    raise user.to_yaml
+    persona.paths.each { |p| FactoryGirl.create(:task, path: p, creator_id: user.id) }
+    #raise user.to_yaml
     return user
   end
   
