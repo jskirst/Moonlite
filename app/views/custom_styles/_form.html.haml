@@ -6,7 +6,7 @@
     .control-group
       %label.control-label Status
       .controls
-        %select{ name: "custom_style[mode]" }
+        %select#custom_style_mode{ name: "custom_style[mode]" }
           %option{ value: CustomStyle::OFF, selected: ('selected' if custom_style.off?) } Off
           %option{ value: CustomStyle::PREVIEW, selected: ('selected' if custom_style.preview?) } Preview
           %option{ value: CustomStyle::ON, selected: ('selected' if custom_style.on?) } On

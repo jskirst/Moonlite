@@ -41,7 +41,8 @@ class Persona < ActiveRecord::Base
   
   def self.cached_personas
     personas = Rails.cache.fetch([self.to_s, "all"]){ Persona.all.to_a }
-    Persona.all.to_a if personas.empty?
+    personas = Persona.all.to_a unless personas.size > 0
+    return personas
   end
   
   def flush_cache
