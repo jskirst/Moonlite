@@ -31,6 +31,14 @@ FactoryGirl.define do
     professional_at         { Time.now }
     published_at            { Time.now }
     association :user
+    
+    factory :path_with_tasks do
+      after(:create) do |p|
+        s = create(:section, path: p)
+        21.times { create(:multiple_choice_task, path: p, section: s, creator: p.user) }
+        3.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
+      end
+    end
   end
   
   factory :path_persona do
@@ -45,11 +53,36 @@ FactoryGirl.define do
   
   factory :task do
     question                { Faker::Lorem.sentence(1) }
-    answer_type             0
-    answer_sub_type         100
     association :path
     association :section
     association :creator
+    
+    factory :multiple_choice_task do
+      answer_type           2
+      answer_sub_type       nil
+      after(:create) do |t|
+        create(:correct_answer, task: t)
+        3.times { create(:incorrect_answer, task: t) }
+      end
+    end
+    
+    factory :creative_response_task do
+      answer_type             0
+      answer_sub_type         100
+    end
+  end
+  
+  factory :answer do
+    content                 { Faker::Lorem.sentence(1) }
+    association :task
+    
+    factory :correct_answer do
+      is_correct            true
+    end
+    
+    factory :incorrect_answer do
+      is_correct            false
+    end
   end
   
   factory :submitted_answer do
