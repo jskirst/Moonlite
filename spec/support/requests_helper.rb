@@ -2,7 +2,7 @@ module RequestsHelper
   def init_metabright
     persona = FactoryGirl.create(:persona_with_paths, name: "First Persona")
     user = FactoryGirl.create(:user)
-    FactoryGirl.create(:path_with_tasks, user: user)
+    path = FactoryGirl.create(:path_with_tasks, user: user, persona: persona)
     return user
   end
   

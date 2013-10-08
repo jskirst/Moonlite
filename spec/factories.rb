@@ -48,6 +48,7 @@ FactoryGirl.define do
 
   factory :section do
     name                    { Faker::Lorem.sentence(1) }
+    published_at            { Time.now }
     association :path
   end
   
