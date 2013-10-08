@@ -95,18 +95,18 @@
           .checkout_tt1
             %div{ "data-tip" => "We accept Visa, Mastercard, American Express, Discover, and JCB."}
               %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
-          %input{ type: "text", size: 20, data: { stripe: "number", label: "card number" }, style: "width: 24ex;" }
+          %input{ id: "group_card_number", type: "text", size: 20, data: { stripe: "number", label: "card number" }, style: "width: 24ex;" }
         %div{ style: "display: inline-block; "}
           %div
             %label{ style: "display: inline-block;"} CVC
             .checkout_tt2
               %div{ "data-tip" => "Your Card Verification Code (CVC) is a 3-digit number printed on the back of your Visa/Mastercard/Discover. It appears just to the right of the signature box. The American Express verification number is 4-digits and printed on the front of the card. It is immediately to the right of your credit card number."}
                 %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
-          %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "cvc", label: "CVC" }, class: "input-small", style: "width: 3em;" }
+          %input{ id: "group_cvc_number", type: "text", size: 4, maxlength: 4, data: { stripe: "cvc", label: "CVC" }, class: "input-small", style: "width: 3em;" }
         %label Expiration (MM/YYYY)
-        %input{ type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.8em; text-align: center;" }
+        %input{ id: "group_card_month_expr", type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.8em; text-align: center;" }
         %span /
-        %input{ type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
+        %input{ id: "group_card_year_expr",type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
         %label Coupon
         = f.text_field :coupon, placeholder: "Optional...", style: "width: 180px;"
         = link_to "Apply", "", id: "coupon_check", style: "float: inherit; position: relative; bottom: 6px; left: 10px; font-size: 14px;"

@@ -12,7 +12,6 @@ describe "Professional Registration" do
       visit root_path
       
       expect_content("Prove your skills.")
-    
       click_button "Get Started"
       find("#challenge_start_#{path.permalink}").click
       
@@ -62,10 +61,11 @@ describe "Professional Registration" do
       click_on "Try it out!"
       
       expect_content("We just need a few details...")
-      first('.checkbox').click
-      find('#user_country').click
-      find('US').click
-      find("#user_city").set("city")
+      find(:css, "#user_wants_part_time").set(true)
+      select "Afghanistan", from: "user_country"
+      select "Balkh", from: "user_state"
+      find("#user_city").set("San Francisco")
+      click_on "Continue to Register"
       
       expect_content("You're almost done!")
       find("#user_name").set("name")
