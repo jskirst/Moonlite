@@ -3,6 +3,7 @@ module RequestsHelper
     persona = FactoryGirl.create(:persona_with_paths, name: "First Persona")
     user = FactoryGirl.create(:user)
     path = FactoryGirl.create(:path_with_tasks, user: user, persona: persona)
+    raise "FUCK" if path.personas.first.nil?
     return user
   end
   

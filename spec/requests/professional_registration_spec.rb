@@ -12,14 +12,20 @@ describe "Professional Registration" do
       visit root_path
       
       expect_content("Prove your skills.")
-      click_on "Get Started"
-      sleep(2)
       
-      find("img[alt='#{path.name}']").click
-      sleep(2)
+      begin
+        click_button "Get Started"
+      rescue
+        puts $!
+      end
+      find("#challenge_start_#{path.permalink}").click
       
-      expect_content(path.tasks.first.question)
-      find('.answer_content:first-child').click
+      expect_content("Looks like you're new here...")
+      first('.answer_content').click
+      click_on "Let's Go!"
+      
+      expect_content(path.name)
+      first('.answer_content').click
       click_on "Next"
       
       expect_content(path.name)

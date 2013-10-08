@@ -193,7 +193,7 @@ class PathsController < ApplicationController
     if @path.group_id?
       @path.destroy
       flash[:success] = "#{name_for_paths} successfully deleted."
-      redirect_to group_paths_url(@group)
+      redirect_to group_paths_path(@group)
     else
       @path.destroy
       flash[:success] = "#{name_for_paths} successfully deleted."
@@ -272,7 +272,7 @@ class PathsController < ApplicationController
     section = @path.next_section_for_user(current_user)
     
     if section.nil? || section.published_at.nil?
-      redirect_to root_url
+      redirect_to root_path
     else
       redirect_to start_section_path(section)
     end

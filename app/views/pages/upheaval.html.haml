@@ -26,8 +26,7 @@
               .option
                 %h4 I want to be discovered.
                 %p MetaBright is the game that can get you a job. Compete against others as you improve together.
-                %button.button
-                  %a{:href => "#", :onclick => "goto('#consumer_slide', this); return false"} Get Started
+                %button.button{ onclick: "goto('#consumer_slide', this); return false" } Get Started
             .row-fluid.employer
               .option{ "data-no-turbolink" => true } 
                 %h4 I want to test my candidates.
@@ -41,11 +40,11 @@
               - @paths.first(10).each do |path|
                 %li
                   %div{ "data-tip" => "Take the #{path.name} Challenge!" }
-                    = link_to challenge_url(path.permalink) do
-                      = image_tag path.picture, alt: "#{path.name}"
+                    = link_to challenge_url(path.permalink), id: "challenge_start_#{path.permalink}" do
+                      = image_tag path.picture, class: "challenge-start", alt: "#{path.name}"
             %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
             %a{ href: "/challenges", class: "more submit_button"} Explore more Challenges...
-            .clear_floats
+            %div.clear_floats
   #happy_users.row-fluid
     .container
       .span12

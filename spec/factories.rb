@@ -30,6 +30,7 @@ FactoryGirl.define do
     promoted_at             { Time.now }
     professional_at         { Time.now }
     published_at            { Time.now }
+    public_at               { Time.now }
     association :user
     
     factory :path_with_tasks do
@@ -37,6 +38,7 @@ FactoryGirl.define do
         s = create(:section, path: p)
         21.times { create(:multiple_choice_task, path: p, section: s, creator: p.user) }
         3.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
+        create(:path_persona, path: p, persona: (Persona.first || create(:persona)))
       end
     end
   end
