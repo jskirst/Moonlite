@@ -5,7 +5,7 @@
 %div#ideapage{ style: "margin-top: 0px;" }    
   %div.ideas_header
     - if current_user
-      - if @ideas.first.try(:idea?)
+      - if @idea_mode == true
         = link_to "Post New Idea", new_idea_path, class: "button button-actionable", style: "float: right;"
       - else
         = link_to "Post New Bug", new_bug_path, class: "button button-actionable", style: "float: right;"
@@ -21,13 +21,13 @@
         - if params[:action] == "show"
           = link_to "Back to all #{@ideas.first.idea? ? 'Ideas' : 'Bugs'}", ideas_path, style: "float: right;"
         - else
-          = link_to "Newest", @ideas.first.try(:idea?) ? ideas_path(s: "c") : bugs_path(s: "c")
+          = link_to "Newest", @idea_mode == true ? ideas_path(s: "c") : bugs_path(s: "c")
           |
-          = link_to "Votes", @ideas.first.try(:idea?) ? ideas_path(s: "v") : bugs_path(s: "v") 
+          = link_to "Votes", @idea_mode == true ? ideas_path(s: "v") : bugs_path(s: "v") 
       %ul.nav.nav-tabs
-        %li{ class: @ideas.first.try(:idea?) ? "active" : "" }
+        %li{ class: @idea_mode == true ? "active" : "" }
           = link_to "Ideas", ideas_path
-        %li{ class: @ideas.first.try(:bug?) ? "active" : "" }
+        %li{ class: @idea_mode == false ? "active" : "" }
           = link_to "Bugs", bugs_path
     %div.ideas_list
       - @ideas.each do |idea|
