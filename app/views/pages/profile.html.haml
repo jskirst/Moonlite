@@ -115,7 +115,7 @@
         %div.challengeselector
           %ul
             - @enrollments.each do |enrollment|
-              %li{ class: ("selected" if enrollment == @enrollments.first), "data-enrollment" => enrollment.id } 
+              %li{ id: "challenge_selector_#{enrollment.path.permalink}", class: ("selected" if enrollment == @enrollments.first), "data-enrollment" => enrollment.id } 
                 = image_tag enrollment.path.picture
                 %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
                 %span.pts #{enrollment.total_points} points
@@ -181,19 +181,19 @@
                     %tbody
                     %tr
                       %td
-                        %h3= enrollment_details[:core].size
+                        %h3.questions-correct-count= enrollment_details[:core].size
                         %p Questions Correct
                       %td
-                        %h3= enrollment.longest_streak
+                        %h3.longest-streak-count= enrollment.longest_streak
                         %p Longest Streak
                       %td
-                        %h3= enrollment.highest_rank
+                        %h3.highest-rank-count= enrollment.highest_rank
                         %p Highest Rank
                       %td
-                        %h3= enrollment_details[:votes]
+                        %h3.votes-received-count= enrollment_details[:votes]
                         %p Votes Received
                       %td
-                        %h3= enrollment_details[:comments]
+                        %h3.comments-received-count= enrollment_details[:comments]
                         %p Comments Received
                 .my_strengths
                   %h3 Strengths
@@ -226,6 +226,9 @@
               %h4 #{enrollment_details[:tasks].posts.size} Tasks Completed
               %div.profilecontent
                 = render "newsfeed/feed", feed: enrollment_details[:tasks]
+            
+            %div{ style: "font-size: 12px; text-align: right; margin-top: 15px;" }
+              %p= link_to "Find more #{enrollment.path.name} experts at MetaBright"
                 
     
 

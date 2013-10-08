@@ -3,6 +3,7 @@ FactoryGirl.define do
     name                    { Faker::Name.name }
     username                { name.gsub(/[^a-z]/, '') }
     email                   { Faker::Internet.email }
+    image_url               { "/assets/test.jpg" }
     password                "a1b2c3d4"
     password_confirmation   "a1b2c3d4"
     enable_administration   true
@@ -11,7 +12,7 @@ FactoryGirl.define do
   factory :persona do
     name                    { Faker::Name.name }
     description             { Faker::Lorem.sentence(12) }
-    image_url               { "http://www.example.com" }
+    image_url               { "/assets/test.jpg" }
     
     factory :persona_with_paths do
       after(:create) do |persona| 
@@ -26,6 +27,7 @@ FactoryGirl.define do
     name                    { Faker::Name.name }
     permalink               { name.gsub(/[^a-z]/, '') }
     description             { Faker::Lorem.sentence(12) }
+    image_url               { "/assets/test.jpg" }
     approved_at             { Time.now }
     promoted_at             { Time.now }
     professional_at         { Time.now }
@@ -38,6 +40,7 @@ FactoryGirl.define do
         s = create(:section, path: p)
         21.times { create(:multiple_choice_task, path: p, section: s, creator: p.user) }
         3.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
+        3.times { create(:checkin_task, path: p, section: s, creator: p.user) }
         create(:path_persona, path: p, persona: (Persona.first || create(:persona)))
       end
     end
@@ -61,7 +64,7 @@ FactoryGirl.define do
     association :creator
     
     factory :multiple_choice_task do
-      answer_type           2
+      answer_type           Task::MULTIPLE
       answer_sub_type       nil
       after(:create) do |t|
         create(:correct_answer, task: t)
@@ -70,8 +73,12 @@ FactoryGirl.define do
     end
     
     factory :creative_response_task do
-      answer_type             0
+      answer_type             Task::CREATIVE
       answer_sub_type         100
+    end
+    
+    factory :checkin_task do
+      answer_type             Task::CHECKIN
     end
   end
   
