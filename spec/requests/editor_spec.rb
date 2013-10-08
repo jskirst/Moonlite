@@ -18,6 +18,7 @@ describe "Editor" do
   describe "editor" do
     it "should show all tasks" do
       visit edit_path_path(@path)
+      @path.tasks.size.should_not eq(0)
       @path.tasks.each do |t|
         expect_content(t.question)
       end
