@@ -12,12 +12,8 @@ describe "Professional Registration" do
       visit root_path
       
       expect_content("Prove your skills.")
-      
-      begin
-        click_button "Get Started"
-      rescue
-        puts $!
-      end
+    
+      click_button "Get Started"
       find("#challenge_start_#{path.permalink}").click
       
       expect_content("Looks like you're new here...")
