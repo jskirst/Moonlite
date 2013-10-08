@@ -25,13 +25,13 @@
             .row-fluid.consumer
               .option
                 %h4 I want to be discovered.
-                %p MetaBright is the game that can get you a job. Compete against others as you improve together.
-                %button.button{ onclick: "goto('#consumer_slide', this); return false" } Get Started
+                %p MetaBright is the game that can get you a job. Showcase your skills and compete against others.
+                .button{ onclick: "goto('#consumer_slide', this); return false" } Get Started
             .row-fluid.employer
               .option{ "data-no-turbolink" => true } 
                 %h4 I want to test my candidates.
                 %p The MetaBright Evaluator validates the skills of your job candidates before you interview them.
-                %button.button
+                .button
                   = link_to "Learn More", evaluator_path
         #consumer_slide
           .span12

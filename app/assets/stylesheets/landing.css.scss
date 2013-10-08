@@ -73,19 +73,20 @@ $landing_green: #73bb6e;
               }
             }
             .button { 
-              padding: 0; 
-              height: 30px; 
+              padding: 5px 20px;
+              height: 20px; 
+              line-height: 20px;
               float: right; 
               background-color: #254972;
               border-width: 0;
               text-shadow: none; 
               color: white;
+              font-family: 'MuliLight';
         
               &:active { position: relative; top: 1px; };
             }
             a { 
-              color: inherit; 
-              padding: 5px 20px;
+              color: inherit;
               &:hover {text-decoration: none ;} 
             }
           }
