@@ -56,6 +56,7 @@ class UsersController < ApplicationController
     
     unless request.get?
       @user_custom_style.styles = params[:custom_style][:styles]
+      @user_custom_style.mode = params[:custom_style][:mode]
       if @user_custom_style.save
         flash[:success] = "Your styles have been saved."
       else

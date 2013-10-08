@@ -39,5 +39,5 @@ Metabright::Application.configure do
 	
 	config.action_mailer.default_url_options = { host: "localhost:3000" }
 	
-	config.active_record.mass_assignment_sanitizer = :strict
+	#config.active_record.mass_assignment_sanitizer = :strict
 end

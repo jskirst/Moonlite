@@ -63,7 +63,7 @@
               %a.explore_link
                 = image_tag NAVBAR_EXPLORE, style: "", alt: "Explore"
                 %span Explore
-            - if current_user.content_creation_enabled? or Rails.env != "production"
+            - if current_user.content_creation_enabled?
               %li.navitem{ title: "Create", style: "height: 100%;" }
                 = link_to paths_path do
                   = image_tag NAVBAR_CREATE, style: "", alt: "Create"

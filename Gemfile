@@ -69,5 +69,6 @@ group :test do
 	gem 'rspec-rails'
 	gem 'factory_girl_rails'
 	gem 'launchy'
+	gem 'selenium-webdriver'
 	gem 'simplecov', :require => false
 end

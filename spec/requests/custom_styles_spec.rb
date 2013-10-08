@@ -1,22 +1,16 @@
 require 'spec_helper'
 
 describe "Custom Styles" do
-  before :all do
+  before :each do
     @user = init_metabright
     sign_in(@user)
   end
   
   describe "User" do
-    it "should be able to access custom styles through edit profile" do
-      visit profile_path(@user.username)
-      
-      expect_content(@user.name)
-      click_on "Edit Profile"
-      
-      expect_content("Edit Profile")
+    it "should be able to access custom styles through edit profile" do      
+      visit edit_user_path(@user.username)
       click_on "Customize Profile"
       
-      page.should have_content("Customize your Profile")
       find("#custom_style_styles").set("my value")
       click_on "Save"
       

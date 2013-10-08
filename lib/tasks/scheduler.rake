@@ -59,7 +59,7 @@ task :send_alerts => :environment do
   Group.send_all_welcome_emails(time, true)
   
   puts "NEW EVALUATION ENROLLMENT SUBMISSION EMAILS"
-  EvaluationEnrollment.send_all_submission_emails(time, true)
+  EvaluationEnrollment.send_all_submission_alerts(time, true)
 end
 
 task :daily_alerts => :environment do

@@ -106,7 +106,7 @@
       s = document.createElement("script"); s.setAttribute("type", "text/javascript")
       s.setAttribute("src", "http://localhost:3000/assets/heatmatic.js");
       document.body.appendChild(s);
-  - else
+  - elsif Rails.env == "production"
     :javascript
       heatmatic_token = '1276372374249857';
       s = document.createElement("script"); s.setAttribute("type", "text/javascript")
