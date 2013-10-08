@@ -149,7 +149,7 @@ class Task < ActiveRecord::Base
   def creative?() creative_response? end
     
   def creative_response?() answer_type == CREATIVE end
-  def task?() checkin end
+  def task?() checkin? end
   def checkin?() answer_type == CHECKIN end
   def exact?() answer_type == EXACT end
   def multiple_choice?() answer_type == MULTIPLE end
