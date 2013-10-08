@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe "Profile" do
-  before :all do
+  before :each do
     @user = init_metabright
   end
   
-  describe "follow button" do
+  describe "follow button", js: true do
     it "should follow an unfollowed user and unfollow a followed user" do
       sign_in(@user)
       @user2 = FactoryGirl.create(:user)
@@ -30,8 +30,7 @@ describe "Profile" do
       sign_in(@user)
       visit profile_path(@user.username)
       expect_content(@user.name)
-      save_and_open_page
-      click_on "Edit Profile"
+      find("#topprofilecontent a").click
       
       expect_content("Edit Profile")
       click_on "Customize Profile"

@@ -11,7 +11,7 @@ FactoryGirl.define do
   factory :persona do
     name                    { Faker::Name.name }
     description             { Faker::Lorem.sentence(12) }
-    image_url               { Faker::Internet.url }
+    image_url               { "http://www.example.com" }
     
     factory :persona_with_paths do
       after(:create) do |persona| 

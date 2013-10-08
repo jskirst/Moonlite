@@ -3,16 +3,17 @@ module RequestsHelper
     persona = FactoryGirl.create(:persona_with_paths, name: "First Persona")
     user = User.first
     persona.paths.each { |p| FactoryGirl.create(:task, path: p, creator_id: user.id) }
-    #raise user.to_yaml
     return user
   end
   
   def sign_in(user)
+    Capybara.reset_sessions!
     visit '/signin'
+    expect_content("Sign in to MetaBright")
     fill_in "session_email", with: user.email
     fill_in "session_password", with: "a1b2c3d4"
     click_button "Sign In"
-    expect_content("EXPLORE THE WORLD OF METABRIGHT")
+    expect_content(user.name)
   end
   
   def expect_content(str)
