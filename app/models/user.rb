@@ -191,7 +191,7 @@ class User < ActiveRecord::Base
       user.update_attributes(user_details)
       user.grant_username(force_rename: true)
     else
-      user = Company.first.users.new(user_details)
+      user = User.new(user_details)
       user.password = SecureRandom::hex(16)
       user.password_confirmation = user.password
       user.grant_username

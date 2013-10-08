@@ -15,12 +15,15 @@ class IdeasController < ApplicationController
   def ideas
     @ideas = Idea.where(idea_type: Idea::IDEA).order("#{@sort_by} DESC")
     @idea_votes = current_user.idea_votes.collect(&:owner_id) if current_user
+    @idea_mode = true
     render "index"
   end
   
   def bugs
+    @idea_mode = false
     @ideas = Idea.where(idea_type: Idea::BUG).order("#{@sort_by} DESC")
     @idea_votes = current_user.idea_votes.collect(&:owner_id) if current_user
+    
     render "index"
   end
   
@@ -61,10 +64,10 @@ class IdeasController < ApplicationController
   def create
     @idea = current_user.ideas.new(params[:idea])
     if @idea.save
-      flash[:alert] = "Your idea was created."
+      flash[:success] = "Your post was successfully submitted."
       redirect_to @idea
     else
-      flash[:alert] = @idea.errors.full_messages.join(". ")
+      flash[:sucess] = @idea.errors.full_messages.join(". ")
       render "form" 
     end
   end
