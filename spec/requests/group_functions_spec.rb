@@ -94,39 +94,19 @@ describe "Group Functions" do
         click_on "Save"
         
         find(".challenge_holder").first('a').click
-        next_task1 = evaluation.next_task(consumer_user, group_path)[:next_task]
-      
-        expect_content next_task1.question
-        sleep(5)
-        first('.answer_content').click
-        sleep(5)
-        save_and_open_page
-        click_on "Next"
         
-        next_task2 = evaluation.next_task(consumer_user, group_path)
-        raise "bad task" if next_task1 == next_task2
-        
-        expect_content next_task2.question
-        first('.answer_content').click
-        click_on "Next"
-        
-        next_task3 = evaluation.next_task(consumer_user, group_path)
-        
-        expect_content next_task3.question
-        first('.answer_content').click
-        click_on "Next"
-        
-        find("#answer_input").set("Blah")
-        click_on "Submit"
-        
-        find("#answer_input").set("Blah")
-        click_on "Submit"
-        
-        find("#answer_input").set("Blah")
-        click_on "Submit"
-        
-        
-        
+        21.times do |i|
+          expect_content "#{i + 1} / 21"
+          first('.answer_content').click
+          click_on "Next"
+          sleep 0.25
+        end
+    
+        3.times do
+          find("#answer_input").set("Blah")
+          click_on "Submit"
+          sleep 0.25
+        end
       end
     end
   end
