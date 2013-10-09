@@ -80,7 +80,8 @@ describe "Group Functions" do
       # 
       it "should be able to submit an Evaluation", js: true do
         group_path = FactoryGirl.create(:path_with_tasks, group_id: @group.id)
-        selected_paths = {group_path.id => true}
+        path = FactoryGirl.create(:path_with_tasks)
+        selected_paths = {path.id => true, group_path.id => true}
         evaluation = FactoryGirl.create(:evaluation, selected_paths: selected_paths)
         consumer_user = FactoryGirl.create(:user)
         sign_in(consumer_user)
@@ -107,6 +108,25 @@ describe "Group Functions" do
           click_on "Submit"
           sleep 0.25
         end
+        
+        find(".challenge_holder").first('a').click
+        
+        21.times do |i|
+          expect_content "#{i + 1} / 21"
+          first('.answer_content').click
+          click_on "Next"
+          sleep 0.25
+        end
+    
+        3.times do
+          find("#answer_input").set("Blah")
+          click_on "Submit"
+          sleep 0.25
+        end
+        
+        click_on "Submit"
+        
+        expect_content "Your application has been successfully submitted."
       end
     end
   end

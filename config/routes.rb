@@ -113,7 +113,7 @@ Metabright::Application.routes.draw do
       patch :add_stored_resource
       put :archive
       put :complete
-      put :took
+      patch :took
     end
   end
   get '/submissions/:id/raw' => "tasks#raw", as: "raw"
