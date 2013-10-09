@@ -12,7 +12,7 @@
           = link_to root_url do
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
       -# raise params.to_yaml
-      - if not current_user
+      - if not current_user and not params[:controller] == "evaluations" and not (params[:action] == "take" or params[:action] == "continue")
         %ul.nav.navicons.landing-nav{ style: "height: 100%;", "data-no-turbolink" => true }
           %li
           %li.navitem

@@ -524,7 +524,7 @@ left: -10px; }
 .button.button-standard:hover { color: black; }
 .button:hover { box-shadow: 0px 0px 1px black; text-decoration: none; color: white; }
 h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Arial'; font-weight: lighter; }
-.button.disabled { opacity: 0.70; box-shadow: 0px 0px 1px black; }
+.button.disabled { opacity: 0.70; box-shadow: 0px 0px 1px black; cursor: not-allowed;}
 
 /* Create and Administer/Revolution */
 .single_pane { padding: 15px; background-color: white; border-radius: 4px; min-height: 400px;}

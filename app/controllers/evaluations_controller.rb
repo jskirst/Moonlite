@@ -149,7 +149,7 @@ class EvaluationsController < ApplicationController
   def continue
     @show_nav_bar = false
     @show_footer = false
-    @show_feedback = false
+    @show_feedback = true
     @path = @evaluation.paths.find(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
@@ -173,7 +173,7 @@ class EvaluationsController < ApplicationController
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       if @task.core?
-        @question_count = next_task[:completed_count]
+        @question_count = next_task[:completed_count]+1
         @session_total = next_task[:total]
         
         session[:ssf] = @streak
@@ -248,7 +248,7 @@ class EvaluationsController < ApplicationController
   
   def prepare_form
     @group_paths = @group.paths
-    @public_paths = Persona.first.paths
+    @public_paths = Path.where.not(professional_at: nil)
     @evaluation_path_ids = @evaluation ? @evaluation.paths.pluck(:id) : []
   end
 end

@@ -15,7 +15,6 @@ module RequestsHelper
     fill_in "session_email", with: user.email
     fill_in "session_password", with: "a1b2c3d4"
     click_button "Sign In"
-    expect_content(user.name)
   end
   
   def complete_path(path, user)

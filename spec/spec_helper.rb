@@ -30,9 +30,9 @@ RSpec.configure do |config|
   config.include RequestsHelper
   
   # Capybara.register_driver :poltergeist do |app|
-  #   Capybara::Poltergeist::Driver.new(app, { timeout: 10 })
-  # end
-  # Capybara.default_driver = :poltergeist
+#     Capybara::Poltergeist::Driver.new(app, { timeout: 10 })
+#   end
+#   Capybara.default_driver = :poltergeist
   config.include(MailerMacros)
   config.before(:each) { reset_email }
 end

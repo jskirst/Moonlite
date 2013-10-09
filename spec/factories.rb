@@ -33,6 +33,7 @@ FactoryGirl.define do
     professional_at         { Time.now }
     published_at            { Time.now }
     public_at               { Time.now }
+    group_id                nil
     association :user
     
     factory :path_with_tasks do
@@ -59,6 +60,7 @@ FactoryGirl.define do
   
   factory :task do
     question                { Faker::Lorem.sentence(1) }
+    reviewed_at             { Time.now }
     association :path
     association :section
     association :creator
@@ -117,7 +119,7 @@ FactoryGirl.define do
     name                    { Faker::Lorem.sentence(1) }
     creator_email           { Faker::Internet.email }
     creator_name            { Faker::Name.name }
-    creator_password        { Faker::Internet.password }
+    creator_password        "a1b2c3d4"
     plan_type               "two_to_five"
     stripe_token            "alskdjfalsdf"
   end
