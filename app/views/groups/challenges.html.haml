@@ -22,8 +22,8 @@
 
 .employer-container
   .employer-box
-    .header
-      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
+    .header{ style: "margin-bottom: 15px;"}
+      = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
       %h2 #{@group.name}'s Challenges
       - unless @paths.empty?
         %input{ type: "text", placeholder: "Search Challenges...", id: "challenge_search" }

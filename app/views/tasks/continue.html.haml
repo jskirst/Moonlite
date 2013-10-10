@@ -42,7 +42,7 @@
           - elsif @task.exact?
             .control-group
               .controls
-                = text_field_tag "answer", nil, placeholder: "Enter exact answer here...", class: "answer_feedback"
+                = text_field_tag "answer", nil, placeholder: "Enter answer here (case insensitive)...", class: "answer_feedback", style: "width: 70%;"
                 %span.match_status_text
                 %p.match_status_exp
             .control-group

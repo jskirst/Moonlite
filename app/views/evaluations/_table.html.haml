@@ -2,7 +2,7 @@
   %tbody
     - @evaluations.to_a.reverse.each do |e|
       %tr
-        %td{ style: "width: 25%; overflow: hidden;" }= link_to e.title, group_evaluation_path(@group, e)
+        %td{ style: "width: 23%; overflow: hidden;" }= link_to e.title, group_evaluation_path(@group, e)
         %td{ style: "width: 22%;" }
           - e.paths.each do |path|
             .path_pic
@@ -15,9 +15,9 @@
         %td{ style: "text-align: center; "}
           = e.evaluation_enrollments.where("submitted_at IS NOT NULL").count.to_s
           - if e.evaluation_enrollments.where("submitted_at IS NOT NULL").count == 1 
-            user
+            Candidate
           - else 
-            users
+            Candidates
         / %td{ style: "text-align: center; "}= e.evaluation_enrollments.count.to_s + " users"
         %td.icon_table_cell
           = link_to edit_group_evaluation_path(@group, e) do

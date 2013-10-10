@@ -19,12 +19,15 @@
     original_value = $("#evaluation_search").val();
     setInterval("compare_and_search();", 300);
   });
-
+  
+:css
+  .employer-container {width: 1040px;   }
+  
 .employer-container
   .employer-box
     .header
-      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
-      %h2 Evaluations
+      = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
+      %h2 #{@group.name}'s Evaluations
       - unless @evaluations.empty?
         %input{ type: "text", placeholder: "Search Evaluations...", id: "evaluation_search" }
     .body

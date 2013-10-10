@@ -50,7 +50,7 @@
           - @evaluations.each do |e|
             %tr
               %td
-                = link_to truncate(e.name, length: 20, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
+                = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
               %td= truncate(e.email, length: 25, separator: ' ')
               - @paths.each do |p|
                 %td{ style: "padding-left: 20px;"}
