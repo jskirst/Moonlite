@@ -8,7 +8,7 @@
     - @show_feedback = true if @show_feedback.nil?
     :javascript
       $(function(){
-        $.MB.Arena.init({start_countdown: #{@start_countdown}, show_feedback: #{@show_feedback}});
+        $.MB.Arena.init({start_countdown: #{@start_countdown}, show_feedback: #{@show_feedback}, delay: #{@task.delay}});
         $(".quizcontainer").fadeIn();
       });
      

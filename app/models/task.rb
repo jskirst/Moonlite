@@ -189,6 +189,21 @@ class Task < ActiveRecord::Base
     end
   end
   
+  def delay
+    question = self.question.to_s
+    quoted = self.quoted_text.to_s
+    answers = answers_to_array.join 
+    q_length = (question + quoted + answers).length.to_f
+    # The character_mult is calculated according the speed at which the average American adult reads
+    character_mult = 36 
+    delay_time = q_length * character_mult
+    if delay_time > 3500
+      return 3500
+    else
+      return delay_time.round(3)
+    end
+  end
+  
   # Cached methods
   
   def self.cached_find(id)

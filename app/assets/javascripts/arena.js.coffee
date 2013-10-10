@@ -30,7 +30,7 @@ $.MB.Arena.start_countdown = ->
       clearInterval(window.count_down_points_timeout);
     window.count_down_bar_timeout = window.setInterval($.MB.Arena.count_down_bar, 45)
     window.count_down_points_timeout = window.setInterval($.MB.Arena.count_down_points, 450)
-  ,3000
+  ,$.delay
   
 $.MB.Arena.keyboard_shortcuts = ->
   $(document).unbind("keyup").keyup (event) ->
@@ -51,6 +51,7 @@ $.MB.Arena.init = (options = {}) ->
   $.continue_countdown = true
   $.percent_remaining = 100
   $.points_remaining = 100
+  $.delay = options["delay"] || 3000
   $.MB.Arena.keyboard_shortcuts()
   
   $(".answer_content").unbind();
