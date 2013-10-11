@@ -72,8 +72,8 @@ class Task < ActiveRecord::Base
   belongs_to :path
   has_many :completed_tasks
   has_many :answers
-  has_many :comments, dependent: :destroy
-  has_many :submitted_answers, dependent: :destroy
+  has_many :comments
+  has_many :submitted_answers
   has_many :stored_resources, as: :owner
   has_many :comments, as: :owner
   has_many :task_issues
