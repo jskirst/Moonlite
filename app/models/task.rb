@@ -13,7 +13,7 @@ class Task < ActiveRecord::Base
   IMAGE       = 101
   YOUTUBE     = 102
   LONG_EXACT  = 103
-  SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "Youtube video", LONG_EXACT => "Long Exact" }
+  SUBTYPES = { TEXT => "Text response", IMAGE => "Image upload", YOUTUBE => "YouTube video", LONG_EXACT => "Long Exact" }
   
   # Time limits
   ONE         = 60

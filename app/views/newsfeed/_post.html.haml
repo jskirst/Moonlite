@@ -87,7 +87,9 @@
           %center
             %div.youtube_answer{ id: "youtube_answer_#{post.id}", alt: post.url }
         
-        - else raise "Unknown answer subtype: #{post.answer_sub_type}"
+        - else
+          %div{style: "display: none;"}
+            = post.to_yaml
       
       - elsif post.answer_type == Task::CHECKIN
         %div.task_post
