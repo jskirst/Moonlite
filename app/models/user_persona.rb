@@ -10,7 +10,8 @@ class UserPersona < ActiveRecord::Base
   default_scope { order 'updated_at desc' }
   
   def total_points
-    return persona.paths.joins(:enrollments).where("enrollments.user_id = ?", user.id).sum("enrollments.total_points").to_i
+    @total_points ||= persona.paths.joins(:enrollments).where("enrollments.user_id = ?", user.id).sum("enrollments.total_points").to_i
+    return @total_points
   end
   def level() Enrollment.points_to_level(total_points) end
   def percent_level() Enrollment.level_percent(total_points) end

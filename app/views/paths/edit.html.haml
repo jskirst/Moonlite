@@ -16,12 +16,12 @@
     %h3 Upload Questions
   .modal-body{ style: "max-height: none; "}
     = form_for(@path, url: upload_path_url(@path), method: :patch) do |f|
-      %label.control-label Upload Questions
+      %label.control-label{ style: "font-size: 14px;" } Select .CSV file to upload questions to Challenge
       .controls= f.file_field :batch_file
-  %hr{ style: "margin: 10px 0; "}
-  %div{ style: "float:right;" }
-    %span.button.button-standard{ onclick: "$('#upload_modal').modal('hide');" } Close
-    %button{ form: "edit_#{dom_id(@path)}", type: "submit" } Upload
+    %hr{ style: "margin: 10px 0; "}
+    %div{ style: "float:right;" }
+      %span.button.button-standard{ onclick: "$('#upload_modal').modal('hide');" } Close
+      %a.button.button-actionable{ form: "edit_#{dom_id(@path)}", type: "submit" } Upload
   
 
 #settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }

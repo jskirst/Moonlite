@@ -76,7 +76,7 @@ class PagesController < ApplicationController
     
     @groups = @user.groups.where(is_private: false)
     
-    @user_personas = @user.user_personas.includes(:persona).sort{ |a, b| b.level <=> a.level }
+    @user_personas = @user.user_personas.includes(:persona).to_a.delete_if{ |up| up.total_points == 0 }.sort{ |a, b| b.level <=> a.level }
     if params[:p].blank?
       @current_user_persona = @user_personas.first
     else
