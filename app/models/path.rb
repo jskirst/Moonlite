@@ -26,7 +26,7 @@ class Path < ActiveRecord::Base
   has_many :user_events
   has_many :collaborations
   has_many :collaborating_users, through: :collaborations, source: :user
-  has_many :path_personas
+  has_many :path_personas, dependent: :destroy
   has_many :personas, through: :path_personas
   has_many :topics
   
