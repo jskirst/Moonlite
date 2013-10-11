@@ -64,7 +64,7 @@ class PagesController < ApplicationController
     @user = User.where(username: params[:username]).first
     unless @user
       flash[:error] = "User could not be found."
-      redirect_to root_url
+      redirect_to root_url and return
     end
     
     @title = @user.name
