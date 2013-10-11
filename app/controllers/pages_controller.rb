@@ -61,7 +61,12 @@ class PagesController < ApplicationController
   end
   
   def profile
-    @user = User.find_by_username(params[:username])
+    @user = User.where(username: params[:username]).first
+    unless @user
+      flash[:error] = "User could not be found."
+      redirect_to root_url
+    end
+    
     @title = @user.name
     if @user.nil? || @user.locked? 
       redirect_to root_path
@@ -270,6 +275,7 @@ class PagesController < ApplicationController
     url = params[:url]
     preview = parse_url_for_preview(url)
     
+    #raise preview.to_yaml
     render json: { data: preview.to_json }
   end
   

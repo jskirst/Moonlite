@@ -1,4 +1,6 @@
 require 'open-uri'
+require 'openssl'
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 module PreviewHelper
   
@@ -34,7 +36,7 @@ module PreviewHelper
       @results[:raw] = data.to_s
       page = Nokogiri::HTML(data)
     rescue
-      @results[:error] = "Could not load page."
+      @results[:error] = "Could not load page"
     end
     
     return @results if @results[:error]
