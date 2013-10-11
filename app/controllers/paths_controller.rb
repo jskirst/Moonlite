@@ -430,7 +430,11 @@ class PathsController < ApplicationController
         @path = Path.find_by_id(params[:id]) if params[:id] && @path.nil?
       end
       @path_custom_style = @path.custom_style if @path
-      redirect_to root_path unless @path
+      
+      unless @path
+        flash[:error] = "We're sorry, we could not find a challenge by that name!"
+        redirect_to root_path 
+      end
     end
     
     def load_group

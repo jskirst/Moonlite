@@ -168,7 +168,7 @@ Metabright::Application.routes.draw do
   get '/product_form' => 'pages#product_form'
   get '/tos' => 'pages#tos'
   get '/challenges' => 'pages#challenges'
-  #get '/preview' => 'pages#preview'
+  get '/preview' => 'pages#preview'
 	
 	patch '/stored_resources' => 'stored_resources#create'
 	delete '/stored_resources/:id' => 'stored_resources#destroy', as: 'delete_stored_resource'

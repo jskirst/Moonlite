@@ -51,7 +51,7 @@
           - else
             %table
               - @challenge_tasks.each do |t|
-                %tr
+                %tr.task-row
                   %td
                     - if t.submitted_answer_id and t.status_id.to_i != Answer::INCOMPLETE
                       %div= link_to truncate(t.question, length: 145), submission_drilldown_path(t.submitted_answer_id)
@@ -79,7 +79,7 @@
           - else
             %table
               - @achievement_tasks.each do |t|
-                %tr
+                %tr.task-row
                   %td
                     - if t.submitted_answer_id
                       %div= link_to t.question, submission_drilldown_path(t.submitted_answer_id)
