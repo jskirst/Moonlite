@@ -83,56 +83,15 @@ class Enrollment < ActiveRecord::Base
       .count
   end
   
-  PERCENT_CORRECT_MULTIPLIER  = 50
-  TASKS_TAKEN_PENALTY = 0.5
-  TASKS_TAKEN_MULTIPLIER = 2.5
-  
-  # MS = (core_tasks_percent_correct - population_average_core_tasks_percent_correct) * PCM
-  # MS = MS + 
-  # - if user_average_correct_points > population_average_correct_points
-  #     user_average_correct_points - population_average_correct_points
-  #   - else
-  #       0
-  # MS = MS + 
-  #   - if core_tasks_taken_count < population_average_core_tasks_taken_count
-  #       (core_tasks_taken_count - population_average_core_tasks_taken_count) * TTP
-  #   - else 
-  #       core_tasks_taken_count / population_average_core_tasks_taken_count
-  # MS = MS + completed_cr_count
-  # MS = MS +
-  #   - if total_votes > 0
-  #       2
-  #   - else
-  #       0
-  # MS = MS + (core_tasks_taken_count / population_average_core_tasks_taken_count) * TTM
-  
   def calculate_metascore
-    unless path.correct_points and path.tasks_attempted and path.percent_correct
-      self.metascore = 0
-      save! and return
+    cts = completed_tasks.joins(:task)
+      .where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
+      .select("tasks.difficulty, completed_tasks.*")
+    score = 0.0
+    cts.each do |ct|
+      score += ct.points_awarded * ct.difficulty
     end
-    
-    cts = completed_tasks.joins(:task).where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
-    total_cts = cts.count
-    return 0 if total_cts == 0
-    
-    correct_answers = cts.where("status_id = ?", Answer::CORRECT).count.to_f
-    correct_percent = correct_answers / total_cts
-    ms = (correct_percent - path.percent_correct) * PERCENT_CORRECT_MULTIPLIER
-    
-    average_correct_points = cts.where("status_id = ?", Answer::CORRECT).average(:points_awarded) || 0
-    if average_correct_points > path.correct_points
-      ms += average_correct_points - path.correct_points
-    end
-    if total_cts < path.tasks_attempted
-      ms += (total_cts - path.tasks_attempted) * TASKS_TAKEN_PENALTY
-    else
-      ms += total_cts / path.tasks_attempted
-    end
-    ms += 2 if votes.count > 0
-    
-    ms += (total_cts / path.tasks_attempted) * TASKS_TAKEN_MULTIPLIER
-    self.metascore = (ms * 10) + 1000
+    self.metascore = score.to_f / cts.size.to_f
     save!
   end
   

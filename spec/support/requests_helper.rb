@@ -18,25 +18,30 @@ module RequestsHelper
   end
   
   def complete_path(path, user)
-    cts = []
-    path.tasks.each do |t|
-      ct = CompletedTask.find_or_create(user.id, t.id)
-      raise "Invalid completed task" unless ct.id
-      cts << ct
-      if t.multiple_choice?
-        ct.complete_core_task!(t.correct_answer.content, 100)
-      elsif t.text?
-        sa = t.submitted_answers.new
-        sa.submit!(ct, user, true, { content: "Test Content" })
-        sa.update_attribute(:reviewed_at, Time.now)
-      elsif t.checkin?
-        sa = t.submitted_answers.new
-        sa.submit!(ct, user, true, { image_url: "/assets/test.jpg", title: Faker::Lorem.sentence(1) })
-      else
-        raise "Unknown question type: #{t.to_yaml}"
-      end
+    complete_tasks(path.tasks, user)
+  end
+  
+  def complete_tasks(tasks, user, score = 100)
+    tasks.each do |t|
+      complete_task(t, user, score)
     end
-    raise "BAD CT COUNT" unless cts.size == path.tasks.count
+  end
+  
+  def complete_task(t, user, score = 100)
+    ct = CompletedTask.find_or_create(user.id, t.id)
+    raise "Invalid completed task" unless ct.id
+    if t.multiple_choice?
+      ct.complete_core_task!(t.correct_answer.content, score)
+    elsif t.text?
+      sa = t.submitted_answers.new
+      sa.submit!(ct, user, true, { content: "Test Content" })
+      sa.update_attribute(:reviewed_at, Time.now)
+    elsif t.checkin?
+      sa = t.submitted_answers.new
+      sa.submit!(ct, user, true, { image_url: "/assets/test.jpg", title: Faker::Lorem.sentence(1) })
+    else
+      raise "Unknown question type: #{t.to_yaml}"
+    end
   end
   
   def expect_content(str)
