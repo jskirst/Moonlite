@@ -19,22 +19,19 @@ describe Enrollment do
     end
     
     it "easy difficulty" do
-      3.times { FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY) }
-      complete_tasks(@path.tasks.where(difficulty: Task::EASY), @user, 100)
+      t1 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      t2 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      t3 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      
+      complete_task(t1, @user, 100)
+      complete_task(t2, @user, 100)
+      complete_task(t3, @user, 100)
+      
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
-      multiplier = @multipliers[@easy]
-      completed_task_count = 3
-      average_score = 100
-      score = 0
-      completed_task_count.times do |i|
-        score += average_score * multiplier
-      end
-      computed_metascore = score / completed_task_count
-      computed_metascore.should == 100
-      
       enrollment.calculate_metascore
-      enrollment.metascore.should == computed_metascore
+      enrollment.reload
+      enrollment.metascore.should == 100
     end
     
     it "expert difficulty" do
