@@ -87,11 +87,11 @@ class Enrollment < ActiveRecord::Base
     cts = completed_tasks.joins(:task)
       .where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
       .select("tasks.difficulty, completed_tasks.*")
-    score = 0.0
+    score = 0
     cts.each do |ct|
       score += ct.points_awarded * ct.difficulty
     end
-    self.metascore = score.to_f / cts.size.to_f
+    self.metascore = score / cts.size
     save!
   end
   

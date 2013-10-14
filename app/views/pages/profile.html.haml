@@ -87,7 +87,7 @@
               %p Share profile:
               = render "shared/sharing", { custom_style: "display: inline; float: right;", title: "#{@user.name}'s MetaBright profile", url: profile_url(@user.username) }
   
-  - unless @user_personas.size == 0 || @enrollments.size == 0            
+  - unless @user_personas.try(:size) == 0 || @enrollments.try(:size) == 0            
     .span12{ style: "margin-left: 0px;" }
       .profileheader{ style: "background-color: white;" }
         #persona_list_link{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
