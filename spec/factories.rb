@@ -39,9 +39,12 @@ FactoryGirl.define do
     factory :path_with_tasks do
       after(:create) do |p|
         s = create(:section, path: p)
-        21.times { create(:multiple_choice_task, path: p, section: s, creator: p.user) }
-        3.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
-        3.times { create(:checkin_task, path: p, section: s, creator: p.user) }
+        3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::EASY) }
+        3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::MEDIUM) }
+        3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::HARD) }
+        3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::EXPERT) }
+        2.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
+        2.times { create(:checkin_task, path: p, section: s, creator: p.user) }
         create(:path_persona, path: p, persona: (Persona.first || create(:persona)))
       end
     end
@@ -61,6 +64,7 @@ FactoryGirl.define do
   factory :task do
     question                { Faker::Lorem.sentence(1) }
     reviewed_at             { Time.now }
+    difficulty              Task::EASY
     association :path
     association :section
     association :creator

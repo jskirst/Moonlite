@@ -16,7 +16,7 @@ class Path < ActiveRecord::Base
   belongs_to :user
   belongs_to :category
   belongs_to :group
-  has_many :sections, dependent: :destroy
+  has_many :sections
   has_many :tasks, -> { where "sections.published_at is not NULL and tasks.archived_at is NULL" }, through: :sections
   has_many :all_tasks, source: :tasks, through: :sections
   has_many :completed_tasks, through: :tasks
@@ -26,7 +26,7 @@ class Path < ActiveRecord::Base
   has_many :user_events
   has_many :collaborations
   has_many :collaborating_users, through: :collaborations, source: :user
-  has_many :path_personas
+  has_many :path_personas, dependent: :destroy
   has_many :personas, through: :path_personas
   has_many :topics
   
@@ -43,11 +43,10 @@ class Path < ActiveRecord::Base
   after_create { user.enroll!(self) }
   before_validation :grant_permalink
   after_save do
-    Rails.cache.delete([self.class.name, permalink])
-    Rails.cache.delete([self.class.name, id])
-    Persona.all.each do |persona|
-      Rails.cache.delete([self.class.name, "by_persona", persona.id])
-    end
+    flush_cache
+  end
+  after_destroy do
+    flush_cache
   end
   
   def published?() published_at.nil? ? false : true end
@@ -199,6 +198,14 @@ class Path < ActiveRecord::Base
         .where("path_personas.persona_id = ?", persona_id)
         .where("published_at is not ? and approved_at is not ? and public_at is not ?", nil, nil, nil)
         .to_a
+    end
+  end
+  
+  def flush_cache
+    Rails.cache.delete([self.class.name, permalink])
+    Rails.cache.delete([self.class.name, id])
+    Persona.all.each do |persona|
+      Rails.cache.delete([self.class.name, "by_persona", persona.id])
     end
   end
 end
