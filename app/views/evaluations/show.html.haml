@@ -27,7 +27,7 @@
         = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
           %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @evaluation.title
-          %h3{ style: "font-size:20px; "} Evaluation Overview
+          %h3{ style: "font-size:20px; "} Evaluation Results
     .body{ style: "padding: 0 12px;"}
       %table.table
         %thead
@@ -53,7 +53,7 @@
                 = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
               %td= truncate(e.email, length: 25, separator: ' ')
               - @paths.each do |p|
-                %td{ style: "padding-left: 20px;"}
+                %td{ style: "text-align: center;"}
                   - if e["e#{p.id}_metapercentile"] == "0"
                     N/A
                   - else

@@ -102,7 +102,13 @@ class Path < ActiveRecord::Base
     return suggested_paths.flatten.compact.first(8)
   end
   
-  def has_creative_response() tasks.where("answer_type = ?", 0).count > 0 end
+  def has_creative_response() 
+    tasks.where("answer_type = ?", 0).count > 0 
+  end
+  
+  def has_tasks()
+    tasks.count > 0
+  end
   
   def current_section(current_user)
     last_task = current_user.completed_tasks.includes(:section).where(["sections.path_id = ?", self.id]).first(:order => "sections.position DESC")
