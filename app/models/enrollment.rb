@@ -93,7 +93,7 @@ class Enrollment < ActiveRecord::Base
     end
     
     ct_constant = 0.00835
-    ct_multiplier = [1 + ct_constant * cts.count, 1.25].min 
+    ct_multiplier = [1 + ct_constant * cts.count, 1.3].min 
     incorrect_constant = 375
     summ_correct = 0
     summ_incorrect = 0

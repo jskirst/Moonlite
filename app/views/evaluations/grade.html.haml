@@ -164,13 +164,13 @@
                               %p{ style: "display: inline-block; "} Candidate skipped this question. 
                           - else
                             %pre= completed_task.submitted_answer.try(:content).to_s
-                          .time_taken
-                            %div 
-                              Completed in 
-                              - if minutes != 0 
-                                #{minutes} minutes 
-                              - if seconds != 0
-                                #{seconds} seconds
+                            .time_taken
+                              %div 
+                                Completed in 
+                                - if minutes != 0 
+                                  #{minutes} minutes 
+                                - if seconds != 0
+                                  #{seconds} seconds
             - if r[:core].any?
               %div
                 - if r[:creative].any?
