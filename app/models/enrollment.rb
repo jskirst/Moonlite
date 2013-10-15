@@ -102,7 +102,7 @@ class Enrollment < ActiveRecord::Base
       if ct.correct?
         pos_delta = ct.difficulty.to_f * ct.points_awarded * ct_multiplier
         summ_correct += pos_delta
-      elsif ct.incorrect?
+      elsif ct.incorrect? or ct.incomplete?
         neg_delta = incorrect_constant.to_f / ct.difficulty
         summ_incorrect += neg_delta
       else
