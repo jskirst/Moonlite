@@ -87,11 +87,34 @@ class Enrollment < ActiveRecord::Base
     cts = completed_tasks.joins(:task)
       .where("answer_type in (?)", [Task::MULTIPLE, Task::EXACT])
       .select("tasks.difficulty, completed_tasks.*")
-    score = 0
-    cts.each do |ct|
-      score += ct.points_awarded * ct.difficulty
+    if cts.empty? 
+      self.metascore = 0
+      save! and return
     end
-    self.metascore = score / cts.size
+    
+    ct_constant = 0.00835
+    ct_multiplier = [1 + ct_constant * cts.count, 1.25].min 
+    incorrect_constant = 375
+    summ_correct = 0
+    summ_incorrect = 0
+    
+    cts.each do |ct|
+      if ct.correct?
+        pos_delta = ct.difficulty.to_f * ct.points_awarded * ct_multiplier
+        summ_correct += pos_delta
+      elsif ct.incorrect?
+        neg_delta = incorrect_constant.to_f / ct.difficulty
+        summ_incorrect += neg_delta
+      else
+        raise ct.to_yaml
+      end
+    end
+    
+    ms_correct = summ_correct/ cts.count
+    
+    ms_incorrect = summ_incorrect / cts.count
+    
+    self.metascore = ms_correct - ms_incorrect
     save!
   end
   
