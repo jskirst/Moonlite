@@ -174,6 +174,7 @@ Metabright::Application.routes.draw do
 	delete '/stored_resources/:id' => 'stored_resources#destroy', as: 'delete_stored_resource'
 	
 	scope '/admin' do
+	  get '/grade' => 'admin#grade', as: "admin_grade"
     get '/overview' => 'admin#overview', as: "admin_overview"
     get '/settings' => 'admin#settings', as: "admin_settings"
     get '/users' => 'admin#users', as: "admin_users"

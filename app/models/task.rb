@@ -35,9 +35,9 @@ class Task < ActiveRecord::Base
   TIME_LIMIT  = { ONE => "1 minute", TWO => "2 minutes", THREE => "3 minutes", FOUR => "4 minutes", FIVE => "5 minutes", TEN => "10 minutes", FIFTEEN => "15 minutes", TWENTY => "20 minutes", TWENTYFIVE => "25 minutes", THIRTY => "30 minutes", THIRTYFIVE => "35 minutes", FORTY => "40 minutes", FORTYFIVE => "45 minutes", FIFTY => "50 minutes", FIFTYFIVE => "55 minutes", SIXTY => "60 minutes" }
   
   EASY = 1
-  MEDIUM = 1.33
-  HARD = 1.66
-  EXPERT = 2
+  MEDIUM = 1.25
+  HARD = 1.5
+  EXPERT = 1.75
   DIFFICULTY_TYPES = { EASY => "Easy", MEDIUM => "Medium", HARD => "Hard", EXPERT => "Expert" }
   
   attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name

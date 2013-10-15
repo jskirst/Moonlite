@@ -1,5 +1,6 @@
 class AdminController < ApplicationController
   include AdminHelper
+  include EnrollmentsHelper
   before_action :authenticate
   before_action { raise "ACCESS DENIED" unless @enable_administration }
   
@@ -218,6 +219,16 @@ class AdminController < ApplicationController
     end
     @email.to_email = nil
     @email.to_name = nil
+  end
+  
+  def grade
+    @user = User.where(username: params[:username]).first
+    @user = User.where(id: params[:username]).first unless @user
+    @results = []
+    @user.enrollments.each do |enrollment|
+      @results << extract_enrollment_details(enrollment)
+    end
+    render "evaluations/grade"
   end
   
   private

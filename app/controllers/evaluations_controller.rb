@@ -1,4 +1,5 @@
 class EvaluationsController < ApplicationController
+  include EnrollmentsHelper
   before_filter :authenticate, except: [:take]
   before_filter :load_group_and_evaluation
   before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation, :submit]
@@ -76,35 +77,10 @@ class EvaluationsController < ApplicationController
     @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(params[:u])
     @user = @evaluation_enrollment.user
     @results = []
-    @minutes_to_complete = 
     @evaluation.paths.each do |path|
-      @enrollment = @user.enrollments.find_by_path_id(path.id)
-      next unless @enrollment
-      core = @enrollment.completed_tasks.joins(:task)
-        .joins("LEFT JOIN topics on topics.id=tasks.topic_id")
-        .select("topics.*, tasks.*, completed_tasks.*")
-        .where("tasks.path_id = ?", path.id)
-        .where("tasks.answer_type in (?)", [Task::MULTIPLE, Task::EXACT]).to_a
-      creative = @enrollment.completed_tasks.joins(:task)
-        .joins("LEFT JOIN submitted_answers on submitted_answers.id = completed_tasks.submitted_answer_id")
-        .select("submitted_answers.*, tasks.*, completed_tasks.*")
-        .where("tasks.path_id = ?", path.id)
-        .where("tasks.answer_type in (?)", [Task::CREATIVE]).to_a
-      tasks = @enrollment.completed_tasks.joins(:task)
-        .where("tasks.path_id = ?", path.id)
-        .where("tasks.answer_type in (?)", [Task::CHECKIN]).to_a
-      
-      @results << { 
-        metascore_available: path.metascore_available?,
-        name: path.name, 
-        permalink: path.permalink, 
-        core: core,
-        creative: creative,
-        tasks: tasks,
-        performance: PerformanceStatistics.new(core),
-        metascore: @enrollment.metascore,
-        metapercentile: @enrollment.metapercentile
-      }
+      enrollment = @user.enrollments.find_by_path_id(path.id)
+      next unless enrollment
+      @results << extract_enrollment_details(enrollment)
     end
   end
   

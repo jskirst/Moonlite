@@ -28,36 +28,39 @@
         = image_tag @user.picture, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
           %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
-          %h3{ style: "font-size:20px; "}
-            = link_to @evaluation.title, group_evaluation_path(@group, @evaluation)
+          - if @evaluation
+            %h3{ style: "font-size:20px; "}
+              = link_to @evaluation.title, group_evaluation_path(@group, @evaluation)
         %div{ style: "display: inline-block; vertical-align: top; float: right; text-align: right; margin-top: 10px; "}
           %h3{ style: "font-size:17px; line-height: 25px"}
             = link_to @user.email, "mailto:#{@user.email}"
-          - country = Carmen::Country.coded(@user.country)
-          %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
-      .actions
-        - if @evaluation_enrollment.submitted_at
-          %span.submitted_at Submitted #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago
-        = link_to group_evaluation_url(@group, @evaluation) do
-          %div{ "data-tip" => "Back" }
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
-        - if @evaluation_enrollment.archived_at
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put do 
-            / Longer Text in this tip will not fit
-            %div{ data: { tip: "Un-Archive" } }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
-        - elsif @evaluation_enrollment.favorited_at
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put do
-            / Longer Text in this tip will not fit
-            %div{ data: { tip:  "Un-Favorite" } }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
-        - else
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put do
-            %div{ "data-tip" => "Archive" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
-          = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
-            %div{ "data-tip" => "Favorite" }
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
+          - if @user.country
+            - country = Carmen::Country.coded(@user.country)
+            %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
+      - if @evaluation_enrollment
+        .actions
+          - if @evaluation_enrollment.submitted_at
+            %span.submitted_at Submitted #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago
+          = link_to group_evaluation_url(@group, @evaluation) do
+            %div{ "data-tip" => "Back" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
+          - if @evaluation_enrollment.archived_at
+            = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unarchive"), method: :put do 
+              / Longer Text in this tip will not fit
+              %div{ data: { tip: "Un-Archive" } }
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "margin-right: 0"
+          - elsif @evaluation_enrollment.favorited_at
+            = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "unfavorite"), method: :put do
+              / Longer Text in this tip will not fit
+              %div{ data: { tip:  "Un-Favorite" } }
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite_selected_darker.png", style: "margin-right: 0"
+          - else
+            = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "archive"), method: :put do
+              %div{ "data-tip" => "Archive" }
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
+            = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
+              %div{ "data-tip" => "Favorite" }
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
     .body
       %ul#results_list.nav.nav-tabs
         - @results.each do |r|
