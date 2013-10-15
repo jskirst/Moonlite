@@ -31,7 +31,11 @@ module RequestsHelper
     ct = CompletedTask.find_or_create(user.id, t.id)
     raise "Invalid completed task" unless ct.id
     if t.multiple_choice?
-      ct.complete_core_task!(t.correct_answer.content, score)
+      if score == 0
+        ct.complete_core_task!("", 0)
+      else
+        ct.complete_core_task!(t.correct_answer.content, score)
+      end
     elsif t.text?
       sa = t.submitted_answers.new
       sa.submit!(ct, user, true, { content: "Test Content" })

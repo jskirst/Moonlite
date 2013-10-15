@@ -18,6 +18,38 @@ describe Enrollment do
       @user = FactoryGirl.create(:user)
     end
     
+    it "all wrong, easy difficulty" do
+      t1 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      t2 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      
+      complete_task(t1, @user, 0)
+      complete_task(t2, @user, 0)
+      
+      enrollment = @user.enrollments.where(path_id: @path.id).first
+      
+      enrollment.total_points.should == 0
+      
+      enrollment.calculate_metascore
+      enrollment.reload
+      enrollment.metascore.should == -375
+    end
+    
+    it "all wrong, expert difficulty" do
+      t1 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EXPERT)
+      t2 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EXPERT)
+      
+      complete_task(t1, @user, 0)
+      complete_task(t2, @user, 0)
+      
+      enrollment = @user.enrollments.where(path_id: @path.id).first
+      
+      enrollment.total_points.should == 0
+      
+      enrollment.calculate_metascore
+      enrollment.reload
+      enrollment.metascore.should == -214
+    end
+    
     it "easy difficulty" do
       t1 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
       t2 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
@@ -42,7 +74,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 205
+      enrollment.metascore.should == 179
     end
     
     it "mixed difficulty" do
@@ -52,7 +84,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 155
+      enrollment.metascore.should == 142
     end
     
     it "mixed difficulty and score" do
@@ -65,7 +97,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 133
+      enrollment.metascore.should == 121
     end
   end
 end
