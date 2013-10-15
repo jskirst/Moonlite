@@ -223,6 +223,7 @@ class AdminController < ApplicationController
   
   def grade
     @user = User.where(username: params[:username]).first
+    @user = User.where(id: params[:username]).first unless @user
     @results = []
     @user.enrollments.each do |enrollment|
       @results << extract_enrollment_details(enrollment)
