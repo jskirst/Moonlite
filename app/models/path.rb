@@ -178,6 +178,10 @@ class Path < ActiveRecord::Base
     not self.percent_correct.nil?
   end
   
+  def average_difficulty
+    return 1.3
+  end
+  
   # Cached methods
   
   def self.cached_find(permalink)
