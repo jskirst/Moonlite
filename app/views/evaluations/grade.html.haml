@@ -34,8 +34,9 @@
         %div{ style: "display: inline-block; vertical-align: top; float: right; text-align: right; margin-top: 10px; "}
           %h3{ style: "font-size:17px; line-height: 25px"}
             = link_to @user.email, "mailto:#{@user.email}"
-          - country = Carmen::Country.coded(@user.country)
-          %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
+          - if @user.country
+            - country = Carmen::Country.coded(@user.country)
+            %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
       - if @evaluation_enrollment
         .actions
           - if @evaluation_enrollment.submitted_at
