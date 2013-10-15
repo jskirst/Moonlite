@@ -47,7 +47,7 @@
         - if feed.context == :submission
           = render "shared/sharing", { custom_style: "", title: "Great response in the #{@path.name} Challenge on @MetaBright" }
                 
-      
+       
     %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post.answer_type == Task::CHECKIN}" }
       %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post.question}
     

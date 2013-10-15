@@ -61,11 +61,11 @@
               .challenges
                 - if @group_paths.any?
                   %ul.checklist.custom-challenges
-                    - @group_paths.each do |p|
+                    - @group_paths.each do |gp|
                       %li
                         %label
-                          = check_box_tag "evaluation[selected_paths][#{p.id}]", 1, @evaluation_path_ids.include?(p.id)
-                          = p.name
+                          = check_box_tag "evaluation[selected_paths][#{gp.id}]", 1, @evaluation_path_ids.include?(gp.id)
+                          = gp.name
                     %p{ style: "margin-left: 10px;"}
                       = link_to "Create new custom Challenge.", new_group_path_path
                 - else
