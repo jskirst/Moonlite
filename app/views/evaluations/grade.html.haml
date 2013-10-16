@@ -71,6 +71,10 @@
           %p This user has submitted this evaluation but has no results listed. It is possible that the evaluation has been changed since this user completed the evaluation, and their results are no longer valid.
         - @results.each do |r|
           - path = Path.where(name: r[:name]).first
+          - unless path.difficult?
+            %div.alert.alert-warning
+              This challenge does not have enough difficult questions to accurately assess a candidates skill level beyond whether they are competent or not. 
+              Add more difficult questions, or update the difficulty of existing questions, to help MetaBright better calculate the skill levels of your candidates.
           .evaluation.hide{ id: r[:permalink] }
             %h3 Candidate Summary
             .challenge_stats

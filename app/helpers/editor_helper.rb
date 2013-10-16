@@ -11,6 +11,6 @@ module EditorHelper
       "inverse"
     end
     
-    content_tag(:span, task.desc(:difficulty), class: "label label-#{difficulty_class}")
+    content_tag(:span, task.describe_difficulty, class: "label label-#{difficulty_class}")
   end
 end

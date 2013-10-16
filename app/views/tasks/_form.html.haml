@@ -110,7 +110,7 @@
             .controls
               - if sr = task.stored_resources.first
                 = image_tag sr.obj.url, style: "height: 100px;"
-                = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, confirm: "Are you sure you want to remove this attachment?"
+                = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, data: { confirm: "Are you sure you want to remove this attachment?" }
               - else
                 = link_to "Add Image", add_stored_resource_task_path(task)
           - unless @group  

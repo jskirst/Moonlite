@@ -36,5 +36,5 @@
               %ul.dropdown-menu{ role: "menu", "aria-labelledby" => "dLabel" }
                 - TaskIssue::ISSUE_TYPES_SHORT.each do |id, name|
                   %li= link_to name, admin_update_task_path(t, deny: id), class: "mark_reviewed", remote: true, method: "put"
-          %td= link_to "destroy", task_url(t), class: "mark_reviewed", remote: true, method: "delete", confirm: "Are you sure?"
+          %td= link_to "destroy", task_url(t), class: "mark_reviewed", remote: true, method: "delete", data: { confirm: "Are you sure?" }
   = link_to "Refresh", admin_tasks_path, class: "button button-standard"
