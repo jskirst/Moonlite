@@ -99,14 +99,14 @@ describe "Group Functions" do
         
         find(".challenge_holder").first('a').click
         
-        21.times do |i|
-          expect_content "#{i + 1} / 21"
+        12.times do |i|
+          expect_content "#{i + 1} / 12"
           first('.answer_content').click
           click_on "Next"
           sleep 0.25
         end
     
-        3.times do
+        2.times do
           find("#answer_input").set("Blah")
           click_on "Submit"
           sleep 0.25
@@ -114,14 +114,14 @@ describe "Group Functions" do
         
         find(".challenge_holder").first('a').click
         
-        21.times do |i|
-          expect_content "#{i + 1} / 21"
+        12.times do |i|
+          expect_content "#{i + 1} / 12"
           first('.answer_content').click
           click_on "Next"
           sleep 0.25
         end
     
-        3.times do
+        2.times do
           find("#answer_input").set("Blah")
           click_on "Submit"
           sleep 0.25

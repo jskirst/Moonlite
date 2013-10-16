@@ -46,7 +46,7 @@
                       %div{ style: "margin: -15px 0 5px 9px;"}
                         %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
                           %li= link_to "Edit Idea", edit_idea_path(idea), style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin: 0 -1px 2px -9px;"
-                          %li= link_to "Remove Idea", idea_path(idea), method: :delete, confirm: "Are you sure you want to delete your submission?", style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin: 0 -1px 2px -9px;"
+                          %li= link_to "Remove Idea", idea_path(idea), method: :delete, data: { confirm: "Are you sure you want to delete your submission?" }, style: "padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin: 0 -1px 2px -9px;"
               - else
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
                   %img{ src: ICON_UPVOTE_URL, alt: "Up-vote", class: "up_vote" }   
