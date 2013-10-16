@@ -219,15 +219,17 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       .challenge_stats {
         margin: 20px 0 20px 0px;
         
-        .big_number_space{
+        .big_skill_space{
           display: inline-block; 
           color: rgb(116, 116, 116); 
           margin-right: 12px; 
           text-align: center;
           
-          .big_number {
-            font-size: 95px; 
-            line-height: 95px ;
+          .big_skill {
+            padding: 35px 10px;
+            margin: 6px 0;
+            letter-spacing: 2px;
+            font-size: 42px;
           }
           .text {
             font-size: 14px;
@@ -332,6 +334,24 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       }
     }
   }
+}
+
+
+//Skill Label Styles
+.label.expert { 
+  background-color: #5cb85c; 
+}
+.label.advanced { 
+  background-color: #7DD368; 
+}
+.label.competent { 
+  background-color: #F0B64E; 
+}
+.label.familiar { 
+  background-color: rgba(223, 130, 69, 1); 
+}
+.label.novice { 
+  background-color: #d9534f;
 }
 
 #evaluation_manager{

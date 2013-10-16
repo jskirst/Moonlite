@@ -38,6 +38,21 @@ class Enrollment < ActiveRecord::Base
     end
   end
 
+  def describe_skill_level() Enrollment.describe_skill_level(self.metascore) end
+  def self.describe_skill_level(metascore)
+    if metascore < -30
+      return "Novice"
+    elsif metascore > -30 and metascore <= 10
+      return "Familiar"
+    elsif metascore > 10 and metascore <= 50
+      return "Competent"
+    elsif metascore > 50 and metascore <= 90
+      return "Advanced"
+    elsif metascore > 90
+      return "Expert"
+    end
+  end
+
   def points_to_next_level() Enrollment.points_to_next_level(self.total_points) end
   def self.points_to_next_level(points)
     POINT_LEVELS.each do |l, p|

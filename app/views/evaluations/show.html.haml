@@ -53,11 +53,9 @@
                 = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
               %td= truncate(e.email, length: 25, separator: ' ')
               - @paths.each do |p|
+                - skill_level = Enrollment.describe_skill_level(e["e#{p.id}_metascore"])
                 %td{ style: "text-align: center;"}
-                  - if e["e#{p.id}_metapercentile"] == "0"
-                    N/A
-                  - else
-                    #{e["e#{p.id}_metapercentile"]}%
+                  %span{class: "label #{skill_level.downcase}" }= skill_level
               %td
                 - if e.submitted_at
                   #{time_ago_in_words(e.submitted_at)} ago
