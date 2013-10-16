@@ -183,18 +183,16 @@ class Task < ActiveRecord::Base
     }
   end
   
-  def desc(attribute)
-    case attribute
-    when :difficulty
-      if self.difficulty < 1.25
-        "Easy"
-      elsif self.difficulty < 1.5
-        "Medium"
-      elsif self.difficulty < 1.75
-        "Hard"
-      else
-        "Expert"
-      end
+  def describe_difficulty() Task.describe_difficulty(self.difficulty) end
+  def self.describe_difficulty(difficulty)
+    if difficulty < 1.25
+      "Easy"
+    elsif difficulty < 1.5
+      "Medium"
+    elsif difficulty < 1.75
+      "Hard"
+    else
+      "Expert"
     end
   end
   
