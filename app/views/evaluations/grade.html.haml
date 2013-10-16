@@ -71,9 +71,9 @@
           %p This user has submitted this evaluation but has no results listed. It is possible that the evaluation has been changed since this user completed the evaluation, and their results are no longer valid.
         - @results.each do |r|
           - path = Path.where(name: r[:name]).first
-          - unless path.difficult?
-            = render "paths/difficulty_warning"
           .evaluation.hide{ id: r[:permalink] }
+            - unless path.difficult?
+              = render "paths/difficulty_warning"
             %h3 Candidate Summary
             .challenge_stats
               -# .myrank
@@ -158,8 +158,8 @@
                               %p{ style: "display: inline-block; "} Candidate skipped this question. 
                           - else
                             %pre= completed_task.submitted_answer.try(:content).to_s
-                            .time_taken
-                              %div 
+                            .time_taken_container
+                              .time_taken 
                                 Completed in 
                                 - if minutes != 0 
                                   #{minutes} minutes 
@@ -178,10 +178,11 @@
                         .answer
                           - task = completed_task.task
                           %p= task.question
+                          = difficulty_label(task)
                           - if completed_task.correct?
-                            %span.label.label-success Correct, #{completed_task.points_awarded} points
+                            .time_taken{ style: "float: right;"} Correct, #{completed_task.points_awarded} points
                           - else
-                            %span.label.label-important Incorrect
+                            .time_taken.incorrect{ style: "float: right;"}  Incorrect
                           %div{ style: "margin-top: 10px;"} 
                             Correct answer:
                             %pre= task.correct_answer.content # Correct answer
@@ -189,6 +190,7 @@
                             %div 
                               User response:
                               %pre= completed_task.answer # User supplied answer
+                          
         
                 
                 

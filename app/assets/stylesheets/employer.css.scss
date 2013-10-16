@@ -229,7 +229,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
             padding: 35px 10px;
             margin: 6px 0;
             letter-spacing: 2px;
-            font-size: 42px;
+            font-size: 30px;
           }
           .text {
             font-size: 14px;
@@ -305,14 +305,17 @@ body.employer .container.body { width: inherit; background-color: transparent; p
           img { height: 22px; }
           p {display: inline-block; margin-left: 5px; }
         }
-        .time_taken {
-          text-align: right;
-          
-          div {
-            text-align: right; color: white; background: $employer_green; border-radius: 20px; display: inline-block; padding: 4px 10px;
-          }
-        }
       }
+      .time_taken_container { text-align: right; }
+      .time_taken {
+        text-align: right; 
+        color: white; 
+        background: rgba($employer_green, 0.7); 
+        border-radius: 20px; 
+        display: inline-block; 
+        padding: 4px 10px;
+      }
+      .time_taken.incorrect { background-color: rgba(213, 114, 114, 0.7); }
     }
   }
 }

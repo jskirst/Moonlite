@@ -39,11 +39,6 @@
                 .challenge_image_tt
                   %div{ "data-tip" => p.name }
                     = image_tag p.picture, class: "challenge_pic"
-                - unless p.metascore_available?
-                  .no_data
-                    %div{ "data-tip" => "Not enough data. There needs to be at least 20 participants in a Challenge to calculate percentile rankings."}
-                      %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
-                  
             %th Submitted
             %th{ style: "text-align: right;" }
         %tbody
