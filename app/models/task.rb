@@ -40,7 +40,7 @@ class Task < ActiveRecord::Base
   EXPERT = 1.75
   DIFFICULTY_TYPES = { EASY => "Easy", MEDIUM => "Medium", HARD => "Hard", EXPERT => "Expert" }
   
-  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :topic_name
+  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :exact1, :topic_name
   attr_protected :archived_at
   attr_accessible :question,
     :answer_type, 
@@ -64,7 +64,8 @@ class Task < ActiveRecord::Base
     :answer_new_1, 
     :answer_new_2, 
     :answer_new_3, 
-    :answer_new_4
+    :answer_new_4,
+    :exact1
   
   belongs_to :section
   belongs_to :creator, class_name: "User"
@@ -182,10 +183,16 @@ class Task < ActiveRecord::Base
     }
   end
   
-  def desc(attribute)
-    case attribute
-    when :difficulty
-      DIFFICULTY_TYPES[self.difficulty]
+  def describe_difficulty() Task.describe_difficulty(self.difficulty) end
+  def self.describe_difficulty(difficulty)
+    if difficulty < 1.25
+      "Easy"
+    elsif difficulty < 1.5
+      "Medium"
+    elsif difficulty < 1.75
+      "Hard"
+    else
+      "Expert"
     end
   end
   
