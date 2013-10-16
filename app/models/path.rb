@@ -17,7 +17,7 @@ class Path < ActiveRecord::Base
   belongs_to :category
   belongs_to :group
   has_many :sections
-  has_many :tasks, -> { where "sections.published_at is not NULL and tasks.archived_at is NULL" }, through: :sections
+  has_many :tasks, -> { where "tasks.archived_at is NULL" }, through: :sections
   has_many :all_tasks, source: :tasks, through: :sections
   has_many :completed_tasks, through: :tasks
   has_many :submitted_answers, through: :tasks

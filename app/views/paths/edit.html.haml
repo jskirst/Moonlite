@@ -114,6 +114,8 @@
             = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", data: { confirm: (@group ? "Once published, your challenge will be available to be added to your evaluations, though you can return here and edit it at any time." : "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved.") }
           %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
     %div
+      - if @group and (@path.tasks.size > 5 and not @path.difficult?)
+        = render "difficulty_warning"
       - unless @group
         = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
         %h2{ style: "font-size: 20px; color: darkgray;" } QUESTIONS
