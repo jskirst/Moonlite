@@ -31,7 +31,7 @@ describe Enrollment do
       
       enrollment.calculate_metascore
       enrollment.reload
-      enrollment.metascore.should == -375
+      enrollment.metascore.should == 0
     end
     
     it "all wrong, expert difficulty" do
@@ -47,7 +47,7 @@ describe Enrollment do
       
       enrollment.calculate_metascore
       enrollment.reload
-      enrollment.metascore.should == -214
+      enrollment.metascore.should == 0
     end
     
     it "easy difficulty" do
@@ -65,7 +65,7 @@ describe Enrollment do
       
       enrollment.calculate_metascore
       enrollment.reload
-      enrollment.metascore.should == 102
+      enrollment.metascore.should == 477
     end
     
     it "expert difficulty" do
@@ -74,7 +74,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 179
+      enrollment.metascore.should == 554
     end
     
     it "mixed difficulty" do
@@ -84,7 +84,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 142
+      enrollment.metascore.should == 517
     end
     
     it "mixed difficulty and score" do
@@ -97,7 +97,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 121
+      enrollment.metascore.should == 496
     end
   end
 end

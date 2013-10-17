@@ -40,15 +40,15 @@ class Enrollment < ActiveRecord::Base
 
   def describe_skill_level() Enrollment.describe_skill_level(self.metascore) end
   def self.describe_skill_level(metascore)
-    if metascore < -30
+    if metascore < 345
       return "Novice"
-    elsif metascore > -30 and metascore <= 10
+    elsif metascore > -345 and metascore <= 385
       return "Familiar"
-    elsif metascore > 10 and metascore <= 50
+    elsif metascore > 385 and metascore <= 425
       return "Competent"
-    elsif metascore > 50 and metascore <= 90
+    elsif metascore > 425 and metascore <= 465
       return "Advanced"
-    elsif metascore > 90
+    elsif metascore > 465
       return "Expert"
     end
   end
@@ -125,11 +125,14 @@ class Enrollment < ActiveRecord::Base
       end
     end
     
-    ms_correct = summ_correct/ cts.count
+    if summ_correct == 0
+      self.metascore = 0
+    else
+      ms_correct = summ_correct/ cts.count
+      ms_incorrect = summ_incorrect / cts.count
+      self.metascore = (ms_correct - ms_incorrect) + incorrect_constant
+    end
     
-    ms_incorrect = summ_incorrect / cts.count
-    
-    self.metascore = ms_correct - ms_incorrect
     save!
   end
   
