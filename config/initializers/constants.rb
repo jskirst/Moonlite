@@ -122,4 +122,4 @@ CHALLENGE_IMAGE_WRITING = "https://s3.amazonaws.com/moonlite-nsdub/static/Challe
 CHALLENGE_IMAGE_GENERIC1 = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/rocket.png"
 CHALLENGE_IMAGE_GENERIC2 = "https://s3.amazonaws.com/moonlite-nsdub/static/Challenge+Images/mountain.png"
 
-
+HIGHCHARTS_JS = "https://s3-us-west-1.amazonaws.com/moonlite/static/highcharts.js"

@@ -1,3 +1,4 @@
+%script{ src: HIGHCHARTS_JS }
 :javascript
   $(function(){
     $("#results_list li:first").addClass("active");
@@ -8,6 +9,7 @@
       $("#results_list li").removeClass("active");
       $(this).addClass("active");
     })
+    $.MB.initEvaluationGradeCharts();
   });
 
 :css
@@ -19,7 +21,8 @@
   [data-tip]:after { left: -17px; }
   .table_tip [data-tip]:before { left: 34px; top: 35px;}
   .table_tip [data-tip]:after { left: 8px; top: 44px; width: 165px; height: 52px; white-space: normal; }
-
+  .ms [data-tip]:after { width: 276px; height: 143px; top: 23px; left:-20px; white-space: normal;}
+  .ms [data-tip]:before { left: 3px; }
   
 #evaluations_overview.aboutcontainer
   #grade.aboutbox
@@ -85,11 +88,7 @@
                   = skill_level
                 .text
                   MetaScore Ranking
-                  .ms{ style: "display: inline-block;" }
-                    :css
-                      .ms [data-tip]:after { width: 276px; height: 143px; top: 23px; left:-20px; white-space: normal;}
-                      .ms [data-tip]:before { left: 3px; }
-                    
+                  .ms{ style: "display: inline-block;" }                    
                     .tip-below{ style: "display: inline-block;", data: {tip: "This is the skill level MetaBright estimates this person to possess in this Challenge. Our algorithm takes analyzes many variables to reach this conclusion such as question difficulty, content topic, and responder speed. Question difficulty is dynamically calculated, so it's possible for your candidates' MetaScores to slightly shift as question difficulties evolve."}}
                       %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
               %table.table.overview
