@@ -77,13 +77,20 @@
           .evaluation.hide{ id: r[:permalink] }
             - unless path.difficult?
               = render "paths/difficulty_warning"
-            %h3 Candidate Summary
+            .header
+              %h3 Candidate Summary
+              - skill_level = Enrollment.describe_skill_level(r[:metascore])
+              - if r[:metascore] < 260
+                - ms_for_graph = 260
+              - else 
+                - ms_for_graph = r[:metascore]
+              .metascore_graph{ :data => { "metascore" => ms_for_graph, "skill" => skill_level } }
+              .clear_floats
             .challenge_stats
               -# .myrank
               -#   %span #
               -#   %p Percentile Rank
               .big_skill_space
-                - skill_level = Enrollment.describe_skill_level(r[:metascore])
                 .big_skill.label{ class: skill_level.downcase}
                   = skill_level
                 .text

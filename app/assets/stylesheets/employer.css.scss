@@ -91,6 +91,10 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       &:hover { background-color: #EEE; }
     }
   }
+  .header {
+    h3 { float: left;}
+    .metascore_graph { float: right; position: relative; bottom: 7px; margin-bottom: -12px;}
+  }
   .eval_url {
     width: 35.2%; 
     overflow: hidden;
@@ -355,6 +359,9 @@ body.employer .container.body { width: inherit; background-color: transparent; p
 }
 .label.novice { 
   background-color: #d9534f;
+}
+.label.unqualified {
+  font-size: 24px !important;
 }
 
 #evaluation_manager{

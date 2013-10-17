@@ -1,7 +1,7 @@
 $.MB.initEvaluationGradeCharts = function(){
   // Apply the grey theme
   Highcharts.setOptions({
-     colors: ["#DDDF0D", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee", 
+     colors: ["#f6c881", "#7798BF", "#55BF3B", "#DF5353", "#aaeeee", "#ff0066", "#eeaaee", 
         "#55BF3B", "#DF5353", "#7798BF", "#aaeeee"],
      chart: {
         backgroundColor: {
@@ -54,8 +54,7 @@ $.MB.initEvaluationGradeCharts = function(){
         tickWidth: 0,
         labels: {
            style: {
-              color: '#999',
-              fontWeight: 'bold'
+              color: '#BDBDBD'
            }
         },
         title: {
@@ -93,24 +92,32 @@ $.MB.initEvaluationGradeCharts = function(){
      toolbar: { itemStyle: { color: '#CCC' } }
   });
     
-  var change = { "-30": 'Familiar', "10": 'Competent', "50": 'Proficient', "90": 'Expert' };
+  var change = { "265": 'Unqualified', "305": 'Novice', "345": 'Familiar', "385": 'Competent', "425": 'Familiar', "465": 'Expert' }
     
-  $('#metascore_graph').highcharts({
+  $(".metascore_graph").each(function(){ 
+    console.log($(this).attr('data-metascore'))
+    var metascore = parseInt($(this).attr('data-metascore'))
+    var skill_level = $(this).attr('data-skill')
+    
+    $(this).highcharts({
+    
     chart: {
         type: 'column',
-        marginLeft: 80,
-        width: 150,
-        height: 300
+        marginLeft: 20,
+        marginRight: 20,
+        marginBottom: 22,
+        width: 550,
+        height: 52,
+        inverted: true
     },
     title: { text: '', style: { display: 'none' } },
     subtitle: { text: '', style: { display: 'none' } },
-    xAxis: { labels: { enabled: false } },
+    xAxis: { labels: { enabled: false }, categories: [skill_level] },
     yAxis: {
         title: null,
-        minRange: 100,
-        min: 0,
-        max: 100,
-        tickInterval: 20,
+        min: 250,
+        max: 490,
+        tickInterval: 5,
         labels: {
             formatter: function() {
                 var value = change[this.value];
@@ -122,10 +129,18 @@ $.MB.initEvaluationGradeCharts = function(){
     exporting: { enabled: false },
     plotOptions: {
         column: { pointPadding: 0, borderWidth: 0 },
-        series: { pointWidth: 20 }
+        series: { pointWidth: 10 }
     },
-    tooltip : { enabled: false },
-    series: [{ showInLegend: false,  data: [80] }]
+    tooltip : { enabled: true, positioner: function () { return { x: 415, y: 4 };}, 
+        formatter: function() {
+            if (this.y == 260) {
+                return this.x;
+            }
+            else return this.x + '<br />' + this.series.name +': ' + this.y;
+        }
+    },
+    series: [{ showInLegend: false,  name: 'MetaScore', data: [metascore] }]
   });
+});
 }
     
