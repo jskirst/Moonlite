@@ -11,9 +11,9 @@ class Group < ActiveRecord::Base
   PLAN_TYPES = {
     FREE_PLAN => { price: "$0.00", description: "Complimentary", max_seats: 100, active: false },
     SINGLE_PLAN => { price: "$19.99", description: "Single User", max_seats: 1, active: true }, 
-    TWO_TO_FIVE_PLAN => { price: "$29.99", description: "2-5 users", max_seats: 5, active: true }, 
-    SIX_TO_FIFTEEN_PLAN => { price: "$49.99", description: "6-15 users", max_seats: 15, active: true },
-    SIXTEEN_TO_FIFTY_PLAN => { price: "$89.99", description: "16-50 users", max_seats: 50, active: true }
+    TWO_TO_FIVE_PLAN => { price: "$29.99", description: "2-5 admins", max_seats: 5, active: true }, 
+    SIX_TO_FIFTEEN_PLAN => { price: "$49.99", description: "6-15 admins", max_seats: 15, active: true },
+    SIXTEEN_TO_FIFTY_PLAN => { price: "$89.99", description: "16-50 admins", max_seats: 50, active: true }
   }
   PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
   ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }

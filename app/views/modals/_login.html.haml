@@ -6,12 +6,10 @@
           = image_tag ICON_CLOSE_URL, alt: "Close"
         %h1
           = image_tag STONEY_SMALL_URL, alt:"Stoney"
-          %span Welcome to MetaBright! 
-      
+          %span Welcome back!
       %hr
-      
       .explorebody
-        %p We believe that everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
+        %p Please choose the same sign in option as you registered with.
         .social-sign-in-options
           %div
             = link_to "/auth/google_oauth2", class: "submit_button" do
@@ -43,9 +41,3 @@
           - unless current_user
             %p
               = link_to "Sign in with email & password", signin_path
-          %span Learn about these sign in options
-          %span
-            %a#signin_options_pop.mb-tooltip
-            
-  :javascript
-    $('#signin_options_pop').popover({trigger: 'click', placement:'bottom', content:'We think online communities work best when people use their real identities, and a good way to encourage this is to have people use a social sign-up before contributing. We take your privacy seriously and will never post on your behalf, or do anything our mothers would not approve of.'})

@@ -80,7 +80,7 @@
             %li.navuser
               .dropdown.pull-right
                 - if current_user.guest_user?
-                  %a.button.btn-danger.login_link{ style: "padding:3px 7px; border-radius:2px; margin-top:2px; margin-right: 17px; text-shadow:none; color:white;" } Sign up
+                  %a.button.btn-danger.register_link{ style: "padding:3px 7px; border-radius:2px; margin-top:2px; margin-right: 17px; text-shadow:none; color:white;" } Join
                 - else
                   - groups = @groups if not @admin_group and (@groups and @groups.size > 0)
                   - enrollments = current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").to_a
@@ -173,6 +173,9 @@
       - if current_user.nil?
         %ul.nav.landing-nav.pull-right
           - if show_sign_in
+            %li.navitem{ style: "border: none;"}
+              = link_to "#", class: "register_link" do
+                %span Join
             %li.navitem{ style: "border: none;"}
               = link_to "#", class: "login_link" do
                 %span Sign in
