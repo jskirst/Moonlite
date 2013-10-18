@@ -98,6 +98,9 @@ module SessionsHelper
   def can_edit_path(path)
     return true if path.user_id == current_user.id
     return true if path.collaborations.find_by_user_id(current_user.id)
+    
+    # nsdub: I think this is necessary only because collaborations isn't up to snuff yet. Should test after collab works well to see if we still need it.
+    return true if @admin_group.id == path.group_id
     return false
   end
   

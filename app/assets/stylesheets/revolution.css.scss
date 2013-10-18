@@ -838,6 +838,39 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
   .modal_close img { width:20px; height:20px; }
 }
 
+/* Sign in Modal */
+#login_modal {
+  background-color: transparent; 
+  border: none; 
+  box-shadow: none;
+  
+  .explorecontainer { width: 495px; background-color: transparent; border:none; }
+  .explorenewusercontent { margin:45px; box-shadow: 0 0 30px 12px #888; }
+  .exploreheader { 
+    width: inherit;
+    h1 { 
+      margin-bottom: 0; 
+      line-height: 23px; 
+      
+      img { height:65px; margin:-16px -4px -10px -5px; }
+      span { font-size:26px; }
+    } 
+  }
+  .explorebody { 
+    min-height: 235px; 
+    text-align: center;
+    
+    p { padding: 10px; font-size: 15px; }
+    .social-sign-in-options {
+      div { margin: 0 auto 12px; width: 244px;}
+      a { float: none; padding: 4px 0; display: block; }
+      img { height:30px; }
+    }
+  }
+  hr {margin: 0;}
+  
+}
+
 
 /* Finish page */
 

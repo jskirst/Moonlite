@@ -1,44 +1,43 @@
-#login_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1", style: "background-color: transparent; border: none; box-shadow: none;" }
-  .explorecontainer{ style: "width: 495px; background-color: transparent; border:none;" }
-    .explorenewusercontent{ style: "margin:45px; box-shadow: 0 0 30px 12px #888;" }
-      
-      .exploreheader{ style: "width: inherit;" }
+#login_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1"}
+  .explorecontainer
+    .explorenewusercontent
+      .exploreheader
         .modal_close
           = image_tag ICON_CLOSE_URL, alt: "Close"
-        %h1{ style: "margin-bottom: 0; line-height: 23px;" }
-          = image_tag STONEY_SMALL_URL, style: "height:65px; margin:-16px -4px -10px -5px;", alt:"Stoney"
-          %span{style: "font-size:26px;"} Welcome to MetaBright! 
+        %h1
+          = image_tag STONEY_SMALL_URL, alt:"Stoney"
+          %span Welcome to MetaBright! 
       
-      %hr{ style: "margin: 0;" }
+      %hr
       
-      .explorebody{ style: "min-height: 235px; text-align: center;" }
-        %p{ style: "padding: 10px; font-size: 15px;" } We believe that everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
+      .explorebody
+        %p We believe that everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
+        .social-sign-in-options
+          %div
+            = link_to "/auth/google_oauth2", class: "submit_button" do
+              = image_tag ICON_LOGIN_GOOGLE, alt: "Google"
+              %span.landingbuttontext Sign in with Google »
         
-        %div
-          = link_to "/auth/google_oauth2", class: "btn danger", style: "width:205px;" do
-            = image_tag ICON_LOGIN_GOOGLE, style: "height:30px;", alt: "Google"
-            %span.landingbuttontext Sign in with Google »
+          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
         
-        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+          %div
+            = link_to "/auth/facebook", class: "submit_button" do
+              = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook"
+              %span.landingbuttontext Sign in with Facebook »
         
-        %div
-          = link_to "/auth/facebook", class: "btn danger", style: "width:205px;" do
-            = image_tag ICON_LOGIN_FACEBOOK, style: "height:30px;", alt: "Facebook"
-            %span.landingbuttontext Sign in with Facebook »
+          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
         
-        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+          %div
+            = link_to "/auth/linkedin", class: "submit_button" do
+              = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn"
+              %span.landingbuttontext Sign in with LinkedIn »
         
-        %div
-          = link_to "/auth/linkedin", class: "btn danger", style: "width:205px;" do
-            = image_tag ICON_LOGIN_LINKEDIN, style: "height:30px;", alt: "LinkedIn"
-            %span.landingbuttontext Sign in with LinkedIn »
-        
-        %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
 
-        %div
-          = link_to "/auth/github", class: "btn danger", style: "width:205px;" do
-            = image_tag ICON_LOGIN_GITHUB, style: "height:30px;", alt: "Github"
-            %span.landingbuttontext Sign in with Github »
+          %div{ style: "margin-bottom: 0;"}
+            = link_to "/auth/github", class: "submit_button" do
+              = image_tag ICON_LOGIN_GITHUB, alt: "Github"
+              %span.landingbuttontext Sign in with Github »
         
         %div{style:"padding:12px;"}
           - unless current_user

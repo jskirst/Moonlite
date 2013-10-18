@@ -61,6 +61,8 @@ describe "Group Functions" do
       
       expect_content("Hella Fly Challenge")
     end
+    
+    
         
     it "should be able to create an Evaluation", js: true do
       @user = @group.users.first
@@ -107,7 +109,7 @@ describe "Group Functions" do
         click_on "Next"
         sleep 0.25
       end
-  
+      
       2.times do
         find("#answer_input").set("Blah")
         click_on "Submit"
@@ -122,7 +124,7 @@ describe "Group Functions" do
         click_on "Next"
         sleep 0.25
       end
-  
+      
       2.times do
         find("#answer_input").set("Blah")
         click_on "Submit"
@@ -132,6 +134,21 @@ describe "Group Functions" do
       click_on "Submit"
       
       expect_content "Your application has been successfully submitted."
+    end
+    
+    it "should give all admins edit access to custom Challenges", js: true do
+      @user = @group.users.first
+      sign_in(@user)
+      @group_paths = FactoryGirl.create(:path_with_tasks, group_id: @group.id, name: "Can U Get In?")
+      @user2 = @group.users.last
+      sign_in(@user2)
+      
+      find(:css, "img[alt=Challenges]").click
+      
+      expect_content("Can U Get In?")
+      find(".mosaic-block").first('a').click
+      
+      expect_content("Challenge questions")
     end
   end
 end
