@@ -109,8 +109,8 @@ describe "Group Functions" do
         click_on "Next"
         sleep 0.25
       end
-      
-      2.times do
+
+      3.times do
         find("#answer_input").set("Blah")
         click_on "Submit"
         sleep 0.25
@@ -125,7 +125,7 @@ describe "Group Functions" do
         sleep 0.25
       end
       
-      2.times do
+      3.times do
         find("#answer_input").set("Blah")
         click_on "Submit"
         sleep 0.25

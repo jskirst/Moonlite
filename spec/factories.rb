@@ -43,7 +43,7 @@ FactoryGirl.define do
         3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::MEDIUM) }
         3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::HARD) }
         3.times { create(:multiple_choice_task, path: p, section: s, creator: p.user, difficulty: Task::EXPERT) }
-        2.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
+        3.times { create(:creative_response_task, path: p, section: s, creator: p.user) }
         2.times { create(:checkin_task, path: p, section: s, creator: p.user) }
         create(:path_persona, path: p, persona: (Persona.first || create(:persona)))
       end
@@ -81,6 +81,7 @@ FactoryGirl.define do
     factory :creative_response_task do
       answer_type             Task::CREATIVE
       answer_sub_type         100
+      time_limit              8
     end
     
     factory :checkin_task do
@@ -126,6 +127,12 @@ FactoryGirl.define do
     creator_password        "a1b2c3d4"
     plan_type               "two_to_five"
     stripe_token            "alskdjfalsdf"
+    
+    factory :group_with_evaluation do
+      after(:create) do |g|
+        path = create(:path_with_tasks, group_id: g.id)
+      end
+    end
   end
   
   factory :evaluation do
@@ -134,6 +141,11 @@ FactoryGirl.define do
     selected_paths          { Hash[*Path.all.collect{ |p| [p.id, true] }.flatten] }
     association :group
     association :user
+  end
+  
+  factory :evalution_path do
+    association :path
+    association :evaluation
   end
   
   factory :evaluation_enrollment do
