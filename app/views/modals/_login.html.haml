@@ -15,28 +15,18 @@
             = link_to "/auth/google_oauth2", class: "submit_button" do
               = image_tag ICON_LOGIN_GOOGLE, alt: "Google"
               %span.landingbuttontext Sign in with Google »
-        
-          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
-        
           %div
             = link_to "/auth/facebook", class: "submit_button" do
               = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook"
               %span.landingbuttontext Sign in with Facebook »
-        
-          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
-        
           %div
             = link_to "/auth/linkedin", class: "submit_button" do
               = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn"
               %span.landingbuttontext Sign in with LinkedIn »
-        
-          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
-
           %div{ style: "margin-bottom: 0;"}
             = link_to "/auth/github", class: "submit_button" do
               = image_tag ICON_LOGIN_GITHUB, alt: "Github"
               %span.landingbuttontext Sign in with Github »
-        
         %div{style:"padding:12px;"}
           - unless current_user
             %p

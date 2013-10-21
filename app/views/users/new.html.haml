@@ -1,8 +1,8 @@
-.aboutcontainer
+#employer.aboutcontainer.registration
   .aboutbox
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
-      %span Sign in to MetaBright
+      %span Sign up for MetaBright
     %hr{ style: "margin:0"}
     .body
       = form_for(@user) do |f|
@@ -24,18 +24,24 @@
                 }
               });
             });
-        %div{ style: "margin-top: 20px;" }
-          %div
-            = link_to "/auth/google_oauth2", class: "btn danger", style: "width: 205px; margin-right: 60px; " do
-              = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-              %span.landingbuttontext Sign in with Google »        
-            = link_to "/auth/facebook", class: "btn danger" do
-              = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-              %span.landingbuttontext Sign in with Facebook »
-          %div.divider OR
+        .signup-options
+          = link_to "/auth/google_oauth2", class: "submit_button", style: "float: left" do
+            = image_tag ICON_LOGIN_GOOGLE, alt: "Google"
+            %span.landingbuttontext Register with Google »
+          = link_to "/auth/facebook", class: "submit_button", style: "float: right" do
+            = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook"
+            %span.landingbuttontext Register with Facebook »
+          = link_to "/auth/linkedin", class: "submit_button", style: "float: left" do
+            = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn"
+            %span.landingbuttontext Register with LinkedIn »
+          = link_to "/auth/github", class: "submit_button", style: "float: right" do
+            = image_tag ICON_LOGIN_GITHUB, alt: "Github"
+            %span.landingbuttontext Register with Github »
+          .clear_floats
+          %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; text-align: center; background-position: center 10px; width:550px; margin:10px auto 20px; "} OR
           = form_for(@user) do |f|
             = hidden_field_tag "redirect_url", root_path
             = f.text_field :name, value: nil, placeholder: "Name"
             = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
-            = f.password_field :password, value: nil, placeholder: "Password", style: "margin-right: 10px;"
-            = f.submit "Submit", class: "button button-standard button-small", style: "margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px;"
+            = f.password_field :password, value: nil, placeholder: "Password"
+            = f.submit "Submit", class: "button"

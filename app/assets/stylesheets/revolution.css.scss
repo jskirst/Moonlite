@@ -873,6 +873,18 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
   
 }
 
+/* New user sign up page */
+.registration {
+  .signup-options {
+    margin-top: 10px;
+    
+    .submit_button { margin: 10px 28px; width: 214px;}
+    img { height: 30px; width: 30px;}
+    input { width: 186px;}
+    .button { float: right; background: $employer_green; text-shadow: none; margin-bottom: 10px; width: inherit; font-size: 13px; color: white; }
+  }
+}
+
 
 /* Finish page */
 
