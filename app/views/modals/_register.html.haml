@@ -9,10 +9,12 @@
           %span Welcome to MetaBright
       %hr
       .explorebody
-        %p How do you want to use MetaBright?
+        %h4 Which best describes you?
         %div
-          = link_to "Yes, I make hiring decisions", pricing_path
-          %a Nope, I just want to prove my skills
+          %a.submit_button I want to prove my skills and make myself more marketable.
+          = link_to "I have job candidates that I want evaluated.", pricing_path, class: "submit_button"
+        .clear_floats
+          
         / .social-sign-in-options
 /           %div
 /             = link_to "/auth/google_oauth2", class: "submit_button" do
