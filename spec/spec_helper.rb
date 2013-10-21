@@ -48,3 +48,32 @@ class ActiveRecord::Base
   end
 end
 ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+
+# https://groups.google.com/forum/#!topic/ruby-capybara/VJFbj6_oKgo 
+Capybara::Node::Element.class_eval do
+  def click_at(x, y)
+    right = x - (native.size.width / 2)
+    top = y - (native.size.height / 2)
+    driver.browser.action.move_to(native).move_by(right.to_i, top.to_i).click.perform
+  end
+end
+
+def start_cli
+  puts "Waiting for command"
+  command = ""
+  while true
+    command = $stdin.gets.chomp
+    if command == "q"
+      break
+    else
+      begin
+        puts "Running #{command}"
+        eval(command)
+      rescue
+        puts "bad command: #{command} - #{$!}"
+      end
+    end
+  end
+end
+
+UPLOAD_FILE_PATH = File.expand_path("../fixtures/files/test.pdf", __FILE__)
