@@ -1,9 +1,30 @@
 class UsersController < ApplicationController
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:notifications, :index, :hovercard]
-  before_filter :load_resource, except: [:retract, :notifications, :professional, :index]
-  before_filter :authorize_resource, except: [:retract, :notifications, :professional, :follow, :unfollow, :index, :hovercard, :possess]
+  before_filter :authenticate, except: [:new, :create, :notifications, :index, :hovercard]
+  before_filter :load_resource, except: [:new, :create, :retract, :notifications, :professional, :index]
+  before_filter :authorize_resource, except: [:new, :create, :retract, :notifications, :professional, :follow, :unfollow, :index, :hovercard, :possess]
+  
+  def new
+    @user = User.new
+    @hide_background = true
+    redirect_to root_url if current_user
+  end
+  
+  def create
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.password = params[:user][:password]
+    if @user.save
+      flash[:success] = "MetaBright account created."
+      redirect_to root_path
+    else
+      flash[:error] = @user.errors.full_messages.join(", ")
+      @hide_background = true
+      render "new"
+    end
+  end
   
   def show
     redirect_to profile_path(@user.username)

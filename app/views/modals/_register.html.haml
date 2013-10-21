@@ -12,7 +12,7 @@
         %p How do you want to use MetaBright?
         %div
           = link_to "Yes, I make hiring decisions", pricing_path
-          %a Nope, I just want to prove my skills
+          = link_to "Nope, I just want to prove my skills", new_user_path
         / .social-sign-in-options
 /           %div
 /             = link_to "/auth/google_oauth2", class: "submit_button" do
