@@ -36,14 +36,16 @@
           .span12
             %h3 Take Challenges to measure and showcase your skills.
             %ul
-              - @paths.first(10).each do |path|
+              - @paths.first(21).each do |path|
                 %li
                   %div{ "data-tip" => "Take the #{path.name} Challenge!" }
                     = link_to challenge_url(path.permalink), id: "challenge_start_#{path.permalink}" do
                       = image_tag path.picture, class: "challenge-start", alt: "#{path.name}"
-            %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
-            %a{ href: "/challenges", class: "more submit_button"} Explore more Challenges...
-            %div.clear_floats
+            .clear_floats
+            .footer
+              %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
+              %a{ href: "/challenges", class: "more submit_button"} Explore more Challenges...
+              .clear_floats
   #happy_users.row-fluid
     .container
       .span12

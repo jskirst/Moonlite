@@ -6,18 +6,41 @@
           = image_tag ICON_CLOSE_URL, alt: "Close"
         %h1
           = image_tag STONEY_SMALL_URL, alt:"Stoney"
-          %span Welcome to MetaBright! 
+          %span Welcome to MetaBright
       %hr
       .explorebody
-        %p We believe that everyone has the right to be recognized for their knowledge and skills, not just what fits neatly on a resume.
-        %div{style:"padding:12px;"}
-          - unless current_user
-            %p
-              = link_to "Sign in with email & password", signin_path
-          %span Learn about these registration options
-          %span
-            %a#signin_options_pop.mb-tooltip
-        
-  :javascript
-    $('#signin_options_pop').popover({trigger: 'click', placement:'bottom', content:'We think online communities work best when people use their real identities, and a good way to encourage this is to have people use a social sign-up before contributing. We take your privacy seriously and will never post on your behalf, or do anything our mothers would not approve of.'})
-  
+        %p How do you want to use MetaBright?
+        %div
+          = link_to "Yes, I make hiring decisions", pricing_path
+          %a Nope, I just want to prove my skills
+        / .social-sign-in-options
+/           %div
+/             = link_to "/auth/google_oauth2", class: "submit_button" do
+/               = image_tag ICON_LOGIN_GOOGLE, alt: "Google"
+/               %span.landingbuttontext Sign in with Google »
+/         
+/           %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+/         
+/           %div
+/             = link_to "/auth/facebook", class: "submit_button" do
+/               = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook"
+/               %span.landingbuttontext Sign in with Facebook »
+/         
+/           %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+/         
+/           %div
+/             = link_to "/auth/linkedin", class: "submit_button" do
+/               = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn"
+/               %span.landingbuttontext Sign in with LinkedIn »
+/         
+/           %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; background-position: center 10px; width:234px; margin:10px auto; "}
+/ 
+/           %div{ style: "margin-bottom: 0;"}
+/             = link_to "/auth/github", class: "submit_button" do
+/               = image_tag ICON_LOGIN_GITHUB, alt: "Github"
+/               %span.landingbuttontext Sign in with Github »
+/         
+/         %div{style:"padding:12px;"}
+/           - unless current_user
+/             %p
+/               = link_to "Sign in with email & password", signin_path
