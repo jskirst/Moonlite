@@ -26,7 +26,8 @@ class AdminController < ApplicationController
     if request.get?
       conditions = params[:search].nil? ? nil : ["name ILIKE ? or email ILIKE ?", "%#{params[:search]}%", "%#{params[:search]}%"]
       @sort = params[:sort] || "id"
-      @users = User.paginate(page: params[:page], conditions: conditions, order: "#{@sort} DESC")
+      @users = User.where(conditions).order("#{@sort} DESC").paginate(page: params[:page])
+      #@users = User.paginate(page: params[:page], conditions: conditions, order: )
     else
       user = User.find(params[:id])
       toggle(:locked_at, user)
@@ -58,9 +59,9 @@ class AdminController < ApplicationController
   def submissions
     if request.get?
       if params[:search]
-        @submissions = SubmittedAnswer.paginate(page: params[:page], conditions: ["content ILIKE ?", "%#{params[:search]}%"])
+        @submissions = SubmittedAnswer.where("content ILIKE ?", "%#{params[:search]}%").paginate(page: params[:page])
       else
-        @submissions = SubmittedAnswer.paginate(page: params[:page], joins: [:completed_task], conditions: ["reviewed_at is ? and locked_at is ? and completed_tasks.status_id = ?", nil, nil, Answer::CORRECT])
+        @submissions = SubmittedAnswer.where("reviewed_at is ? and locked_at is ? and completed_tasks.status_id = ?", nil, nil, Answer::CORRECT).joins(:completed_task).paginate(page: params[:page])
       end
     else
       submission = SubmittedAnswer.find(params[:id])
@@ -78,7 +79,7 @@ class AdminController < ApplicationController
   def tasks
     if request.get?
       conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["question ILIKE ?", "%#{params[:search]}%"]
-      @tasks = Task.paginate(page: params[:page], conditions: conditions)
+      @tasks = Task.where(conditions).paginate(page: params[:page])
     else
       task = Task.find(params[:id])
       if params[:deny]
@@ -93,7 +94,7 @@ class AdminController < ApplicationController
   def comments
     if request.get?
       conditions = params[:search].nil? ? ["reviewed_at is ?", nil] : ["content ILIKE ?", "%#{params[:search]}%"]
-      @comments = Comment.paginate(page: params[:page], conditions: conditions)
+      @comments = Comment.where(conditions).paginate(page: params[:page])
     else
       comment = Comment.find(params[:id])
       if params[:mark] == "locked"
@@ -202,7 +203,7 @@ class AdminController < ApplicationController
   
   def groups
     conditions = params[:search].nil? ? [] : ["name ILIKE ?", "%#{params[:search]}%"]
-    @groups = Group.paginate(page: params[:page], conditions: conditions)
+    @groups = Group.where(conditions).paginate(page: params[:page])
   end
   
   def group
@@ -216,9 +217,6 @@ class AdminController < ApplicationController
       if params[:commit] == "preview"
         @user = User.last
         if params[:email][:body].include?("!!!")
-          # haml = params[:email][:body]
-          #           engine = Haml::Engine.new(haml)
-          #           @email.preview = engine.render
           render :inline => params[:email][:body], :type => 'haml', layout: false
         else
           render :inline => params[:email][:body], :type => 'html', layout: false

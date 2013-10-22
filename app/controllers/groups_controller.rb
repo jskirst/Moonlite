@@ -18,7 +18,9 @@ class GroupsController < ApplicationController
     else
       @new_group = Group.new
       @new_group.plan_type = params[:p]
-      @new_group.creator_email = current_user.email
+      if current_user
+        @new_group.creator_email = current_user.email
+      end
     end
     
     @hide_background = false

@@ -56,7 +56,7 @@
     - else
       .body{ style: "text-align: inherit;" }
         .portal-row{ style: "border-bottom: 1px solid #DDD;" }
-          = link_to group_evaluations_url(@group) do
+          = link_to group_evaluations_url(@group), descriptor: "evaluations-index-link" do
             .option{ style: " border-right: 1px solid #DDD;" }
               %div
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
@@ -67,7 +67,7 @@
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
                 %h3 Account
         .portal-row
-          = link_to group_paths_url(@group) do
+          = link_to group_paths_url(@group), descriptor: "challenges-index-link" do
             .option{ style: "border-right: 1px solid #DDD;" }
               %div
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"

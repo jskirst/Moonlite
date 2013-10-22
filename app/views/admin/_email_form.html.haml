@@ -25,7 +25,7 @@
   editor.setTheme("ace/theme/github");  
   editor.getSession().setUseSoftTabs(true);
   editor.getSession().setTabSize(2);
-  editor.getSession().setMode("html");
+  //editor.getSession().setMode("html");
   var $textarea = $("#email_body").hide()
   editor.getSession().setValue($textarea.val());
   editor.getSession().on('change', function(){

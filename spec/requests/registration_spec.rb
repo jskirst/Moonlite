@@ -8,7 +8,7 @@ describe "Registration" do
   describe "through new user page" do
     it "should allow email/password registration" do
       visit root_path
-      click_on "Join"
+      find("a.register_link").click
       find("a[description='link-to-registration']").click
       
       fill_in "user_name", with: "Test User"

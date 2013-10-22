@@ -27,9 +27,14 @@ class GroupMailer < ActionMailer::Base
   end
   
   def send_email(email)
-    @content = email.body
-    @content = @content.gsub("@name", email.to_name)
-    m = mail(to: email.to_email, subject: email.subject, from: email.from)
+    @user = User.where(email: email.to_email).first
+    @settings_url = notifications_user_url(@user.signup_token)
+    if email.body.include?("!!!")
+      @content = render :inline => email.body, :type => 'haml', layout: false
+    else
+      @content = render :inline => email.body, :type => 'html', layout: false
+    end
+    m = mail(to: email.to_email, subject: email.subject, from: email.from, body: @content.html_safe)
   end
 end
     

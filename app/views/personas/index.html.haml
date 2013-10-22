@@ -16,6 +16,6 @@
           %td
             %p= link_to "edit", edit_persona_path(p)
           %td
-            %p= link_to "delete", p, :method => :delete, :confirm => "Are you certain you want to delete this persona?"
+            %p= link_to "delete", p, method: :delete, data: { confirm: "Are you certain you want to delete this persona?" }
       
-  = link_to "New Persona", new_persona_path, :class => "button button-info"
+  = link_to "New Persona", new_persona_path, class: "button button-info"

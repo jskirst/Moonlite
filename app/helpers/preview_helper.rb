@@ -1,6 +1,5 @@
 require 'open-uri'
 require 'openssl'
-OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 module PreviewHelper
   
@@ -32,7 +31,7 @@ module PreviewHelper
     end
     
     begin
-      data = open(@url).read
+      data = open(@url, {ssl_verify_mode: OpenSSL::SSL::VERIFY_NONE}).read
       @results[:raw] = data.to_s
       page = Nokogiri::HTML(data)
     rescue

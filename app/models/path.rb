@@ -110,7 +110,7 @@ class Path < ActiveRecord::Base
   end
   
   def current_section(current_user)
-    last_task = current_user.completed_tasks.includes(:section).where(["sections.path_id = ?", self.id]).first(:order => "sections.position DESC")
+    last_task = current_user.completed_tasks.includes(:section).where(["sections.path_id = ?", self.id]).order("sections.position DESC").first
     logger.debug last_task
     return sections.first if last_task.nil?
     return last_task.section
@@ -118,7 +118,7 @@ class Path < ActiveRecord::Base
   
   def next_section(section=nil)
     position = section ? section.position : 0
-    return sections.where(["position > ? and published_at is not ?", position, nil]).first(order: "position ASC")
+    return sections.where(["position > ? and published_at is not ?", position, nil]).order("position ASC").first
   end
   
   def next_section_for_user(user)

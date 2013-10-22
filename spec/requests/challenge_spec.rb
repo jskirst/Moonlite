@@ -21,9 +21,9 @@ describe "Challenge" do
       expect_content "Creative Response"
       expect_content "Tasks"
       
-      find("#achievements_tab").click
-      first(".task-row").first("a").click
-      expect_content("Submit")
+      # find("#achievements_tab").click
+      #       first(".task-row").first("a").click
+      #       expect_content("Submit")
     end
   end
 end
