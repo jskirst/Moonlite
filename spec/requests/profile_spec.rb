@@ -5,7 +5,7 @@ describe "Profile" do
     @user = init_metabright
   end
   
-  describe "follow button", js: true do
+  describe "follow button" do
     it "should follow an unfollowed user and unfollow a followed user" do
        sign_in(@user)
        @user2 = FactoryGirl.create(:user)

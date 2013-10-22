@@ -6,7 +6,7 @@ describe "Professional Registration" do
   end
   
   describe "User" do
-    it "should be able to professionally register for MB", js: true do
+    it "should be able to professionally register for MB" do
       path = FactoryGirl.create(:path_with_tasks, user: @user)
       
       visit root_path

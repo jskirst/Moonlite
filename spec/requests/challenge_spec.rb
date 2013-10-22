@@ -10,7 +10,7 @@ describe "Challenge" do
     sign_in(@user)
   end
   
-  describe "launchpad", js: true do
+  describe "launchpad" do
     before :each do
       visit challenge_path(@path.permalink)
       find("#launch_button").click

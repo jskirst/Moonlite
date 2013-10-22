@@ -7,7 +7,7 @@ describe "Labs" do
   end
   
   describe "User" do
-    it "should be able to access and use Labs", js: true do
+    it "should be able to access and use Labs" do
       visit ideas_path
       
       expect_content("Help shape the MetaBright roadmap")

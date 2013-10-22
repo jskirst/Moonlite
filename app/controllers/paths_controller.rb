@@ -21,7 +21,7 @@ class PathsController < ApplicationController
       end
       render "groups/challenges"
     else
-      @paths = current_user.paths.to_a + current_user.collaborating_paths.all(:order => "updated_at DESC").to_a
+      @paths = current_user.paths.to_a + current_user.collaborating_paths.order("updated_at DESC").to_a
     end
   end
   
@@ -107,7 +107,7 @@ class PathsController < ApplicationController
       redirect_to new_section_path(:path_id => @path.id) and return
     end
     @topics = @path.topics
-    @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).all(order: "id ASC")
+    @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).order("id ASC")
   end
   
   def update
