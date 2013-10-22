@@ -59,21 +59,20 @@ class User < ActiveRecord::Base
   validates :password, confirmation: true, length: { within: 6..40 }, on: :create
   validates :password, confirmation: true, length: { within: 6..40 }, on: :update, if: Proc.new { self.password.present? }
   
-  before_save do
+  before_validation do
     if self.password.present?
       self.salt = make_salt
       self.encrypted_password = encrypt(password)
     end
     
-    if self.name_changed?
+    if self.name_changed? or self.username.blank?
       grant_username(force_rename: true)
     end
-  end
-  
-  before_create do
-    self.signup_token = SecureRandom::hex(16)
+    
+    if self.signup_token.blank?
+      self.signup_token = SecureRandom::hex(16)
+    end 
     self.login_at = Time.now
-    grant_username if username.blank?
   end
   
   after_create do

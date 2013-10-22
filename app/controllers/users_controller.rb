@@ -18,7 +18,8 @@ class UsersController < ApplicationController
     @user.password = params[:user][:password]
     if @user.save
       flash[:success] = "MetaBright account created."
-      redirect_to root_path
+      sign_in(@user)
+      redirect_to params[:redirect_url] or root_path
     else
       flash[:error] = @user.errors.full_messages.join(", ")
       @hide_background = true
