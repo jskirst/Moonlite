@@ -24,7 +24,7 @@
             = link_to pricing_url do
               %span Pricing
 
-      - elsif current_user and show_nav_bar
+      - elsif current_user and show_nav_bar and not @show_user_name
         - if @admin_group
           %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
             %li{ style: "height: 100%; border-right: 1px solid #020D25; "}
@@ -91,6 +91,10 @@
                       = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
                       %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                       %span.caret
+                  - elsif @show_user_name
+                    %div{ style: "margin: 4px 10px 0 0; color: rgb(238,238,238);" }
+                      = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
+                      %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                 - if groups or enrollments
                   %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
                     .outter-nub{ style: "left: 148px; "}

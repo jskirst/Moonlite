@@ -11,30 +11,10 @@
 #landing
   #holder1
     #holder2.row-fluid
-      #holder3
-        #main_slide
-          .span7
-            .hero
-              %h1 
-                Prove your skills. 
-                %br
-                Be discovered.
-              %h3 MetaBright is a skill assessment platform that makes it easier to hire and be hired.
-            .triangle
-          .span5
-            .row-fluid.consumer
-              .option
-                %h4 I want to be discovered.
-                %p MetaBright is the game that can get you a job. Showcase your skills and compete against others.
-                %button.button{ onclick: "goto('#consumer_slide', this); return false" } Get Started
-            .row-fluid.employer
-              .option{ "data-no-turbolink" => true } 
-                %h4 I want to test my candidates.
-                %p The MetaBright Evaluator validates the skills of your job candidates before you interview them.
-                %button.button{ onclick: "document.location.href = '/evaluator';"} Learn More
-        #consumer_slide
+      - if current_user
+        #registered-user-cta{ style: "height: inherit;"}
           .span12
-            %h3 Take Challenges to measure and showcase your skills.
+            %h2 Choose a Challenge and begin proving your skills...
             %ul
               - @paths.first(21).each do |path|
                 %li
@@ -42,9 +22,44 @@
                     = link_to challenge_url(path.permalink), id: "challenge_start_#{path.permalink}" do
                       = image_tag path.picture, class: "challenge-start", alt: "#{path.name}"
             .clear_floats
-            .footer
-              %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
+            .footer{ style: "margin-bottom: 35px;"}
               %a{ href: "/challenges", class: "more submit_button"} Explore more Challenges...
+          .clear_floats
+      -else
+        #holder3
+          #main-slide
+            .span7
+              .hero
+                %h1 
+                  Prove your skills. 
+                  %br
+                  Be discovered.
+                %h3 MetaBright is a skill assessment platform that makes it easier to hire and be hired.
+              .triangle
+            .span5
+              .row-fluid.consumer
+                .option
+                  %h4 I want to be discovered.
+                  %p MetaBright is the game that can get you a job. Showcase your skills and compete against others.
+                  %button.button{ onclick: "goto('#consumer_slide', this); return false" } Get Started
+              .row-fluid.employer
+                .option{ "data-no-turbolink" => true } 
+                  %h4 I want to test my candidates.
+                  %p The MetaBright Evaluator validates the skills of your job candidates before you interview them.
+                  %button.button{ onclick: "document.location.href = '/evaluator';"} Learn More
+          #consumer-slide
+            .span12
+              %h3 Take Challenges to measure and showcase your skills.
+              %ul
+                - @paths.first(21).each do |path|
+                  %li
+                    %div{ "data-tip" => "Take the #{path.name} Challenge!" }
+                      = link_to challenge_url(path.permalink), id: "challenge_start_#{path.permalink}" do
+                        = image_tag path.picture, class: "challenge-start", alt: "#{path.name}"
+              .clear_floats
+              .footer
+                %a{:href => "#", class: "back", :onclick => "goto('#main_slide', this); return false"} Back
+                %a{ href: "/challenges", class: "more submit_button"} Explore more Challenges...
               .clear_floats
   #happy_users.row-fluid
     .container
