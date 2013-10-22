@@ -214,13 +214,14 @@ class AdminController < ApplicationController
       @email = Email.new
     else
       if params[:commit] == "preview"
-        @email = Email.new(params[:email])
+        @user = User.last
         if params[:email][:body].include?("!!!")
-          haml = params[:email][:body]
-          engine = Haml::Engine.new(haml)
-          @email.preview = engine.render
+          # haml = params[:email][:body]
+          #           engine = Haml::Engine.new(haml)
+          #           @email.preview = engine.render
+          render :inline => params[:email][:body], :type => 'haml', layout: false
         else
-          @email.preview = params[:email][:body]
+          render :inline => params[:email][:body], :type => 'html', layout: false
         end
       else
         @email = Email.new(params[:email])

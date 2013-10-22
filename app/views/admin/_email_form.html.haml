@@ -1,5 +1,5 @@
 #styles_editor{ style: "padding: 20px;" }
-  = form_for(@email, url: admin_email_url, method: :post, html: { class: "form-inline" }) do |f|
+  = form_for(@email, url: admin_email_url, method: :post, html: { class: "form-inline", target: "_blank" }) do |f|
     = f.hidden_field :preview
     %div.actions{ style: "float: right;" }
       %button{ name: "commit", value: "submit", type: "submit", class: "submit_button", style: "margin-left: 20px; float: inherit;" } Send
