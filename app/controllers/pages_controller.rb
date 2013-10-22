@@ -23,11 +23,12 @@ class PagesController < ApplicationController
       @suggested_paths = Path.suggested_paths(current_user)
     else
       @show_chat = true
-      @show_nav_bar = false
+      @show_user_name = true
+      @show_nav_bar = true
       @show_header = false
       @show_footer = false
       @hide_background = true
-      @paths = Path.by_popularity(10).where("promoted_at is not ?", nil).to_a
+      @paths = Path.by_popularity(21).where("promoted_at is not ?", nil).to_a
       render "upheaval"
     end
   end

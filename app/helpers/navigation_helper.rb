@@ -7,6 +7,10 @@ module NavigationHelper
     return @show_header.nil? ? true : @show_header
   end
   
+  def show_user_name
+    return @show_user_name.nil? ? true : @show_user_name
+  end
+  
   def show_sign_in
     return @show_sign_in.nil? ? true : @show_sign_in
   end
