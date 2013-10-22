@@ -6,8 +6,8 @@
     - s[:action_button] = "float:right; margin-bottom: 0px;margin-top: 0px;vertical-align: middle;display: inline-block;text-shadow: 0 1px 0px black;color: white;padding: 7px 20px 5px 20px;cursor: pointer;font-size: 15px;border: 1px solid #DDD;border-radius: 3px;background-image: -moz-linear-gradient(top, #ee5f5b, #971D1C);background-image: -ms-linear-gradient(top, #ee5f5b, #971D1C);background-image: -o-linear-gradient(top, #ee5f5b, #971D1C);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#971D1C));background-image: -webkit-linear-gradient(top, #ee5f5b, #971D1C);background-image: linear-gradient(top, #ee5f5b, #971D1C);"
     - s[:challenge_image] = "vertical-align:top; width:75px; height:75px; display:inline-block; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;"
     - s[:challenge_box] = "text-decoration:none; color:#404040; "
-  %body
-    %table{ cellpadding: "0", cellspacing: "0", style: "border: 1px solid rgba(0, 0, 0, .1); width: 620px; color:#404040;" }
+  %body{ style: "background-color: rgb(250, 240, 240); padding: 30px;"}
+    %table{ cellpadding: "0", cellspacing: "0", style: "border: 1px solid rgba(0, 0, 0, .1); width: 620px; color:#404040; background-color: white; margin: 0 auto;" }
       %tbody
         %tr
           %td{ style: "background:#F9F9F9; padding:6px 0 3px 6px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
@@ -15,29 +15,30 @@
               = image_tag METABRIGHT_LOGO, style: "width:145px", alt: "MetaBright.com"
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
-            %h3{ style: "font-size:15px; font-weight:bold; margin:0;" } Hey #{@user.name.split.first},
-            %p{ style: "font-size:15px; margin: 0;" } Here's what's happening on MetaBright...
+            %h3{ style: "font-size:15px; font-weight:bold; margin:0;" } Hi #{@user.name.split.first},
+            %p{ style: "font-size:15px; margin: 0;" } Long time no email. We have some big news to announce: companies are now using MetaBright to find talented hires!
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
             %h3{ style: "font-size: 20px; margin:0;"} Updates
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
               %div
-                %h4{ style: "font-size:15px; font-weight:normal;"} This week, we're rolling out updates that make you look <em>good</em>.
+                %h4{ style: "font-size:15px; font-weight:normal;"} MetaBright can now help you land your next job or internship. This feature is purely opt-in, so if you want to participate, make sure you update your settings. Here's what you need to know:
                 %ul{ style: "font-size:15px;"}
                   %li{ style: "margin-bottom:7px;"}
-                    %strong Totally revamped profile:
-                    Highlighting your awesomeness in every Challenge you're enrolled in.
-                    = link_to "Check out your profile.", profile_url(@user.username) 
+                    %strong Your MetaScore:
+                    Calculated according to your performance in each Challenge, your MetaScore is an estimate for how talented you are at a given skill. Companies use the MetaScore to help identify who is likely to be a top performer.
+                    / Highlighting your awesomeness in every Challenge you're enrolled in.
+/                     = link_to "Check out your profile.", profile_url(@user.username) 
                   %li{ style: "margin-bottom:7px;"}
-                    %strong Executable code in Creative Responses:
-                    See the output of your code in HTML, jQuery, and CSS, with Ruby and Python on the way.
-                    = link_to "See it in action.", "http://www.metabright.com/challenges/jquery"
+                    %strong Your professional settings:
+                    If you want to use MetaBright to help you find jobs or internships, make sure you update your professional settings. You can specify what type of opportunity you're looking for (if any), and your location. 
+                    / See the output of your code in HTML, jQuery, and CSS, with Ruby and Python on the way.
+                    / = link_to "See it in action.", "http://www.metabright.com/challenges/jquery"
                   %li{ style: "margin-bottom:7px;"}
-                    %strong Prove that you completed Tasks:
-                    Visually demonstrate the impressiveness of your accomplishments.
-                  %li{ style: "margin-bottom:7px;"}
-                    %strong Edit and improve your existing answers:
-                    Since you're always improving, your Creative Responses and Tasks can too.
+                    %strong Your privacy is protected:
+                    Your personal information will never be revealed unless you say it's alright. And your status is never displayed on your public profile. Your current employer will never see that you're using MetaBright for professional purposes.
+                    / Visually demonstrate the impressiveness of your accomplishments.
+
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             %h3{ style: "font-size: 20px; margin:0;"} Challenges
@@ -71,4 +72,4 @@
             %span{style:"font-size:10px; color:gray;"}
               You are receiving this message because #{@user.email} is a member of MetaBright. To adjust your email settings or to unsubscribe, 
             %span{style:"font-size:10px;"}= link_to "click here.", @settings_url
-            %span{style:"font-size:10px; color:gray;"} MetaBright, Inc. 212 Valencia Street, Suite D, San Francisco, CA 94123
+            %span{style:"font-size:10px; color:gray;"} MetaBright, Inc. 500 Oak Street, Suite 5, San Francisco, CA 94102
