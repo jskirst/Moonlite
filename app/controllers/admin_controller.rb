@@ -213,12 +213,23 @@ class AdminController < ApplicationController
     if request.get?
       @email = Email.new
     else
-      @email = Email.new(params[:email])
-      GroupMailer.send_email(@email).deliver
-      flash[:success] = "Email sent to #{@email.to_name} <#{@email.to_email}>."
+      if params[:commit] == "preview"
+        @email = Email.new(params[:email])
+        if params[:email][:body].include?("!!!")
+          haml = params[:email][:body]
+          engine = Haml::Engine.new(haml)
+          @email.preview = engine.render
+        else
+          @email.preview = params[:email][:body]
+        end
+      else
+        @email = Email.new(params[:email])
+        GroupMailer.send_email(@email).deliver
+        flash[:success] = "Email sent to #{@email.to_name} <#{@email.to_email}>."
+        @email.to_email = nil
+        @email.to_name = nil
+      end
     end
-    @email.to_email = nil
-    @email.to_name = nil
   end
   
   def grade

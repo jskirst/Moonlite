@@ -1,7 +1,9 @@
 #styles_editor{ style: "padding: 20px;" }
   = form_for(@email, url: admin_email_url, method: :post, html: { class: "form-inline" }) do |f|
+    = f.hidden_field :preview
     %div.actions{ style: "float: right;" }
-      %button{ name: "commit", value: "preview", type: "submit", class: "submit_button", style: "margin-left: 20px; float: inherit;" } Send
+      %button{ name: "commit", value: "submit", type: "submit", class: "submit_button", style: "margin-left: 20px; float: inherit;" } Send
+      %button{ name: "commit", value: "preview", type: "submit", class: "submit_button", style: "float: inherit;" } Preview
     %fieldset{ style: "margin-bottom: 10px;" }
       = f.text_field :subject, placeholder: "Subject", class: "input-xxlarge"
     %fieldset
@@ -31,21 +33,6 @@
   });
 
 :javascript
-  refreshPreview = function(){
-    content = $("#email_body").val()
-    $("#preview").contents().find("html").html("<html><head></head><body>" + content + "</body></html>");
-  }
-
-  initializeEditor = function(){
-    if(window.iframeRefreshInterval)
-      clearInterval(window.iframeRefreshInterval)
-    setInterval(refreshPreview, 2500)
-
-    $(".stage-select").click(function(){
-      $("#message_stage").val($(this).data("stage"))
-      $(".btn-group .btn").removeClass("active")
-      $(this).addClass("active")
-    });
-  }
-
-  initializeEditor();
+  $(function(){
+    $("#preview").contents().find("html").html($("#email_preview").val());
+  })
