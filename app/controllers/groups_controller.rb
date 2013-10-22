@@ -16,12 +16,9 @@ class GroupsController < ApplicationController
         redirect_to root_url and return
       end
     else
-      if current_user and current_user.guest_user?
-        sign_out
-      end
-
       @new_group = Group.new
       @new_group.plan_type = params[:p]
+      @new_group.creator_email = current_user.email
     end
     
     @hide_background = false

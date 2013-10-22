@@ -5,7 +5,7 @@ describe "Group Functions" do
     init_metabright
   end
   
-  it "should be able to create a Group" do
+  it "should be able to create a Group without a Metabright account" do
     visit root_path
     
     expect_content("Prove your skills.")
@@ -30,6 +30,31 @@ describe "Group Functions" do
     sleep(10)
     
     expect_content("Welcome to MetaBright!")
+  end
+  
+  it "should be able to create a Group with a MetaBright account", js: true do
+    @user = FactoryGirl.create(:user)
+    sign_in(@user)
+    
+    visit evaluator_path
+    
+    expect_content("What skills does your company need?")
+    first('.submit_button').click
+    
+    expect_content("EVALUATOR PRICING")
+    first('.action_button').click
+    
+    expect_content("100% no-risk, free trial")
+    find("#group_name").set("Chicago Bulls")
+    find("#group_card_number").set("4242424242424242")
+    find("#group_cvc_number").set("123")
+    find("#group_card_month_expr").set("01")
+    find("#group_card_year_expr").set("2018")
+    click_on "Start My Free Trial"
+    sleep(10)
+    
+    expect_content("Welcome to MetaBright!")
+    expect_content(@user.name)
   end
   
   describe "Challenge and Eval creation" do

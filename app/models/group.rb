@@ -52,7 +52,7 @@ class Group < ActiveRecord::Base
     existing_user = User.find_by_email(self.creator_email)
     if existing_user
       self.creator = existing_user
-      if self.creator.groups.any?
+      if self.creator.groups.count > 0
         self.creator.errors[:base] << "This email address is already registered to another account."
         return false
       end
