@@ -5,7 +5,7 @@ describe "Group Functions" do
     init_metabright
   end
   
-  it "should be able to create a Group", js: true do
+  it "should be able to create a Group" do
     visit root_path
     
     expect_content("Prove your skills.")
@@ -85,7 +85,7 @@ describe "Group Functions" do
       expect_content("New Job")
     end
     
-    it "should be able to submit an Evaluation", js: true do
+    it "should be able to submit an Evaluation" do
       group_path = FactoryGirl.create(:path_with_tasks, group_id: @group.id)
       path = FactoryGirl.create(:path_with_tasks)
       selected_paths = {path.id => true, group_path.id => true}
@@ -136,7 +136,7 @@ describe "Group Functions" do
       expect_content "Your application has been successfully submitted."
     end
     
-    it "should give all admins edit access to custom Challenges", js: true do
+    it "should give all admins edit access to custom Challenges" do
       @user = @group.users.first
       sign_in(@user)
       @group_paths = FactoryGirl.create(:path_with_tasks, group_id: @group.id, name: "Can U Get In?")

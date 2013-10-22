@@ -20,7 +20,7 @@ module AdminHelper
     include ActiveModel::Conversion
     include ActiveModel::Validations
     
-    attr_accessor :to_email, :to_name, :from, :subject, :body
+    attr_accessor :to_email, :to_name, :from, :subject, :body, :preview
     
     def initialize(attributes = {})
       attributes.each do |name, value|
