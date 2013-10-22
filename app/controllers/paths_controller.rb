@@ -384,6 +384,9 @@ class PathsController < ApplicationController
       elsif params[:order] == "following"
         user_ids = current_user.subscriptions.collect(&:followed_id)
         feed.posts = feed.posts.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
+      # This elsif displays the newsfeed HoF view if the user isnt signed in and there are at least 3 HoF answers
+      elsif not current_user and feed.posts.where("submitted_answers.promoted_at is not ?", nil).count >= 3
+        feed.posts = feed.posts.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
       else
         feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
       end
