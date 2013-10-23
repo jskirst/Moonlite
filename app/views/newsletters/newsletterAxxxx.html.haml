@@ -16,7 +16,7 @@
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; "}
             %h3{ style: "font-size:15px; font-weight:bold; margin:0;" } Hi #{@user.name.split.first},
-            %p{ style: "font-size:15px; margin-top: 0;" } Long time no email. We have some big news to announce: Companies are now using MetaBright to find talented hires! 
+            %p{ style: "font-size:15px; margin-top: 0;" } We have some big news to announce: Companies are now using MetaBright to find talented hires! 
             %p{ style: "font-size:15px; margin: 0;" } 
               Employers have begun using MetaBright Challenges and custom Challenges to evaluate the skills of their job candidates. In addition to using MetaBright as a talent screener, companies are also using MetaBright to discover new candidates. You can learn more about this new product here:
               %a{ href: "http://www.metabright.com/evaluator"} www.metabright.com/evaluator
@@ -25,7 +25,10 @@
             %h3{ style: "font-size: 20px; margin:0;"} New Features
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
               %div
-                %h4{ style: "font-size:15px; font-weight:normal;"} MetaBright can now help you land your next job or internship. This feature is purely opt-in, so if you want to participate, make sure you update your settings. Here's what you need to know:
+                %h4{ style: "font-size:15px; font-weight:normal;"} 
+                  MetaBright can now help you land your next job or internship. This feature is purely opt-in, so if you want to participate, make sure you 
+                  = link_to "update your settings.", professional_user_path(@user.signup_token)
+                  Here's what you need to know:
                 %ul{ style: "font-size:15px;"}
                   %li{ style: "margin-bottom:7px;"}
                     %strong Your MetaScore:
@@ -37,7 +40,6 @@
                     %strong Your privacy is protected:
                     Your personal information will never be revealed unless you say it's alright. And your status is never displayed on your public profile. Your current employer will never see that you're using MetaBright for professional purposes.
                 %h4{ style: "font-size:15px; font-weight:normal;"} 
-
         %tr
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             %h3{ style: "font-size: 20px; margin:0;"} New Challenges
@@ -45,37 +47,40 @@
               
               = link_to "http://www.metabright.com/challenges/python", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", height: 75, width:75, style: s[:challenge_image], title: "HTML" }
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/245/original.jpg?1373363174", height: 75, width:75, style: s[:challenge_image], title: "HTML" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} Python
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} Python
                     %p{ style: "margin:3px 0 4px 0;"} 117 questions
-                    / %p{ style: "margin:0;"} This Challenge is massive
+                    %p{ style: "margin:0;"} This Challenge is almost as massive as the capabilities of Python. Put your object-oriented skills to the test.
               = link_to "http://www.metabright.com/challenges/java", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", height: 75, width:75, style: s[:challenge_image], title: "CSS" }
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/232/original.png?1372588009", height: 75, width:75, style: s[:challenge_image], title: "CSS" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} Java
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} Java
                     %p{ style: "margin:3px 0 4px 0;"} 74 questions
-                    / %p{ style: "margin:0;"} Styling the Interwebz to your heart's content. This Challenge is for CSS jockeys of all levels. Try to work your way up to the Master section!
-              = link_to "http://www.metabright.com/challenges/", style: s[:challenge_box] do
+                    %p{ style: "margin:0;"} Brought to us from the demigods at Oracle, Java runs on everything from servers to refrigerators.
+              = link_to "http://www.metabright.com/challenges/javascript", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/110/original.png?1359677420", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/300/original.jpg?1380654230", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} JavaScript
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} JavaScript
                     %p{ style: "margin:3px 0 4px 0;"} 73 questions
-                    / %p{ style: "margin:0;"} You can run your code - but do you know how to test it?
+                    %p{ style: "margin:0;"} JavaScript is becoming the dominant force of the Web. Don't get left behind -- come work on your JS. skills.
+              = link_to "http://www.metabright.com/challenges/net", style: s[:challenge_box] do
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/314/original.png?1382556759", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} .NET Framework
+                    %p{ style: "margin:3px 0 4px 0;"} 73 questions
+                    %p{ style: "margin:0;"} Making the building of your applications slightly less taxing.
+              
               = link_to "http://www.metabright.com/challenges/drupal", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/110/original.png?1359677420", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/234/original.jpeg?1372852113", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} Drupal
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} Drupal
                     %p{ style: "margin:3px 0 4px 0;"} 74 questions
-                    / %p{ style: "margin:0;"} You can run your code - but do you know how to test it? 
-
+                    %p{ style: "margin:0;"} Drupal is the free content management framework with a dense and growing community of developers.
         %tr
           %td{ style: "padding:3px 12px 6px;"}
             %span{style:"font-size:10px; color:gray;"}
