@@ -42,30 +42,40 @@
           %td{ style: "font-family:'lucida grande',tahoma,verdana,arial,sans-serif; color: #404040; padding:6px 12px 12px 12px; border-bottom:1px solid rgba(0, 0, 0, .1);"}
             %h3{ style: "font-size: 20px; margin:0;"} New Challenges
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;"}
-              = link_to "http://www.metabright.com/challenges/css", style: s[:challenge_box] do
-                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
-                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", height: 75, width:75, style: s[:challenge_image], title: "CSS" }
-                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
-                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} CSS
-                    %p{ style: "margin:3px 0 4px 0;"} 61 questions
-                    %p{ style: "margin:0;"} Styling the Interwebz to your heart's content. This Challenge is for CSS jockeys of all levels. Try to work your way up to the Master section! 
-              = link_to "http://www.metabright.com/challenges/html", style: s[:challenge_box] do
+              
+              = link_to "http://www.metabright.com/challenges/python", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
                   %img{ src: "http://moonlite.s3.amazonaws.com/objs/143/original.png?1362693305", height: 75, width:75, style: s[:challenge_image], title: "HTML" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} HTML
-                    %p{ style: "margin:3px 0 4px 0;"} 24 questions
-                    %p{ style: "margin:0;"} Practically the entire universe is built in HTML. Your domination of this Challenge means that you're essentially a diety.
-              = link_to "http://www.metabright.com/challenges/rubyrailstesting", style: s[:challenge_box] do
+                    %span{ style: "font-size: 16px; font-weight:normal"} Python
+                    %p{ style: "margin:3px 0 4px 0;"} 117 questions
+                    / %p{ style: "margin:0;"} This Challenge is massive
+              = link_to "http://www.metabright.com/challenges/java", style: s[:challenge_box] do
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/132/original.jpg?1361987588", height: 75, width:75, style: s[:challenge_image], title: "CSS" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} Java
+                    %p{ style: "margin:3px 0 4px 0;"} 74 questions
+                    / %p{ style: "margin:0;"} Styling the Interwebz to your heart's content. This Challenge is for CSS jockeys of all levels. Try to work your way up to the Master section!
+              = link_to "http://www.metabright.com/challenges/", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
                   %img{ src: "http://moonlite.s3.amazonaws.com/objs/110/original.png?1359677420", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
-                    %span{ style: "font-size: 16px; font-weight:normal"} Ruby / Rails Testing
-                    %p{ style: "margin:3px 0 4px 0;"} 6 questions
-                    %p{ style: "margin:0;"} You can run your code - but do you know how to test it? 
+                    %span{ style: "font-size: 16px; font-weight:normal"} JavaScript
+                    %p{ style: "margin:3px 0 4px 0;"} 73 questions
+                    / %p{ style: "margin:0;"} You can run your code - but do you know how to test it?
+              = link_to "http://www.metabright.com/challenges/drupal", style: s[:challenge_box] do
+                %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
+                  %img{ src: "http://moonlite.s3.amazonaws.com/objs/110/original.png?1359677420", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }
+                  %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
+                    %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} New Challenge!
+                    %span{ style: "font-size: 16px; font-weight:normal"} Drupal
+                    %p{ style: "margin:3px 0 4px 0;"} 74 questions
+                    / %p{ style: "margin:0;"} You can run your code - but do you know how to test it? 
+
         %tr
           %td{ style: "padding:3px 12px 6px;"}
             %span{style:"font-size:10px; color:gray;"}

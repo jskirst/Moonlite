@@ -116,7 +116,7 @@
                         - enrollments.each do |e|
                           = link_to challenge_path(e.path.permalink), style:"padding:0;" do
                             .singleprogressentry
-                              = image_tag e.path.image, style: "width: 50px; height: 50px;", alt: "#{e.path.name}"            
+                              = image_tag e.path.image, alt: "#{e.path.name}"            
                               .challengeprogress
                                 %span{ style: "font-size:18px;"} #{truncate(e.path.name,length: 18, separator: ' ')}
                                 %span{style: "font-size:14px; float:right; "} Level #{e.level}

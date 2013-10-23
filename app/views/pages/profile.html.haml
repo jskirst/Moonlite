@@ -119,34 +119,35 @@
                 = image_tag enrollment.path.picture
                 %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
                 %span.pts #{enrollment.total_points} points
-        
-        %div.leftbox.creations
-          %div.leftboxheader My Contributions
-          %div.leftboxfooter
-            %div 
-              %h2 Author
-              - authorships = @contributions.select{ |c| c[:primary] }
-              - if authorships.empty?
-                %p No authorships.
-              - else
-                - authorships.each do |c| 
-                  = render "users/contribution", contribution: c 
-            %div 
-              %h2 Top Contributor
-              - top_contributions = @contributions.select{ |c| !c[:primary] and c[:count] > 10 }                
-              - if top_contributions.empty?
-                %p No top contributions.
-              - else
-                - top_contributions.each do |c| 
-                  = render "users/contribution", contribution: c
-            %div 
-              %h2 Contributor
-              - contributions = @contributions.select{ |c| c[:primary] and c[:count] <= 10 }                
-              - if contributions.empty?
-                %p No contributions.
-              - else
-                - contributions.each do |c| 
-                  = render "users/contribution", contribution: c
+                
+        - authorships = @contributions.select{ |c| c[:primary] }
+        - top_contributions = @contributions.select{ |c| !c[:primary] and c[:count] > 10 } 
+        - contributions = @contributions.select{ |c| c[:primary] and c[:count] <= 10 }   
+        - unless authorships.empty? and top_contributions.empty? and contributions.empty?
+          %div.leftbox.creations
+            %div.leftboxheader My Contributions
+            %div.leftboxfooter
+              %div 
+                %h2 Author
+                - if authorships.empty?
+                  %p No authorships.
+                - else
+                  - authorships.each do |c| 
+                    = render "users/contribution", contribution: c 
+              %div 
+                %h2 Top Contributor 
+                - if top_contributions.empty?
+                  %p No top contributions.
+                - else
+                  - top_contributions.each do |c| 
+                    = render "users/contribution", contribution: c
+              %div 
+                %h2 Contributor
+                - if contributions.empty?
+                  %p No contributions.
+                - else
+                  - contributions.each do |c| 
+                    = render "users/contribution", contribution: c
                 
         %div.leftbox
           %div.leftboxheader Similar People

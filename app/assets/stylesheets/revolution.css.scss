@@ -97,7 +97,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
   &:last-child { padding-bottom:10px; }
   &:last-child:hover { border-bottom-right-radius:6px; border-bottom-left-radius:6px;}
   &:first-child {padding-top:6px;}
-  img { height:50px; width:50px; display:inline-block; border-radius:3px;}
+  img { height:50px; width:50px; display:inline-block; border-radius:3px; margin-top: 6px; vertical-align: top;}
   
   .challengeprogress { 
     display:inline-block; 
@@ -638,7 +638,6 @@ h1, h2, h3, h4, h5, h6, p, div, a { font-family: 'MuliLight', 'Helvetica', 'Aria
 /* FF specific CSS/Revolution */
 @-moz-document url-prefix() {
 	.persona_progress_area img{vertical-align:baseline; position:relative; top:8px;}
-	.singleprogressentry img{vertical-align:baseline;}
 }
 
 
