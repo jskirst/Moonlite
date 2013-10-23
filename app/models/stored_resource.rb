@@ -23,9 +23,10 @@ class StoredResource < ActiveRecord::Base
   def self.assign(id, obj)
     return false if id.blank?
     sr = find(id)
-    raise "FATAL: STEALING RESOURCE" if sr.owner_id
+    raise "FATAL: STEALING RESOURCE" if sr.owner_id and sr.owner_id != obj.id
     sr.owner_id = obj.id
     sr.owner_type = obj.class.to_s
     sr.save!
+    return sr
   end
 end
