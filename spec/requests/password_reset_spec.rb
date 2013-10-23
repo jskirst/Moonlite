@@ -6,7 +6,7 @@ describe 'Password Reset' do
     ActionMailer::Base.deliveries = []
   end
 
-  it "should send email to user with link to reset passoword", js: true do
+  it "should send email to user with link to reset passoword" do
   	visit signin_path
   	click_on "Reset it here."
 
@@ -21,9 +21,8 @@ describe 'Password Reset' do
   	email.body.encoded.should include(finish_reset_path(t: @user.signup_token))
   end
 
-  it "should send email to user with link to reset passoword", js: true do
+  it "should send email to user with link to reset passoword" do
   	visit finish_reset_path(t: @user.signup_token)
-  	start_cli
   	expect_content("Enter your new password and submit to continue.")
   	fill_in "session_password", with: "newpassword"
   	fill_in "session_password_confirmation", with: "newpassword"

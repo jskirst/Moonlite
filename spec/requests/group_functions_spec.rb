@@ -108,7 +108,7 @@ describe "Group Functions" do
       expect_content("New Job")
     end
     
-    it "should be able to submit an Evaluation" do
+    it "should be able to submit an Evaluation", js: true do
       group_path = FactoryGirl.create(:path_with_tasks, group_id: @group.id)
       path = FactoryGirl.create(:path_with_tasks)
       selected_paths = {path.id => true, group_path.id => true}
@@ -122,7 +122,8 @@ describe "Group Functions" do
       select "Afghanistan", from: "user_country"
       select "Balkh", from: "user_state"
       find("#user_city").set("San Francisco")
-      find("input[descriptor=save-evaluation-button]").trigger("click")
+      #find("input[descriptor=save-evaluation-button]").trigger("click")
+      find("input[descriptor=save-evaluation-button]").click
       
       find(".challenge_holder").first('a').click
       
