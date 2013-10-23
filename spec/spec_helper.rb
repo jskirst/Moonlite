@@ -59,7 +59,6 @@ Capybara::Node::Element.class_eval do
 end
 
 def start_cli
-  return true
   puts "Waiting for command"
   command = ""
   while true

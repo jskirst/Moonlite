@@ -204,8 +204,9 @@ Metabright::Application.routes.draw do
 	get '/signin' => 'sessions#new'
 	delete '/signout' => 'sessions#destroy'
 	get '/request_reset' => 'sessions#request_reset'
-	get '/send_reset' => 'sessions#send_reset'
-	get '/finish_reset' => 'sessions#finish_reset'
+	post '/send_reset' => 'sessions#send_reset'
+  get '/finish_reset' => 'sessions#finish_reset'
+	post '/finish_reset' => 'sessions#finish_reset'
 	get '/robots.txt' => 'pages#robots'
   get '/sitemap.xml.gz' => 'pages#sitemap'
 	

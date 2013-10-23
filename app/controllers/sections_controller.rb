@@ -141,8 +141,8 @@ class SectionsController < ApplicationController
     
     publish = !(["draft", "preview"].include?(params[:mode]))
     submitted_answer = completed_task.submitted_answer ||  task.submitted_answers.new
-    submitted_answer.submit!(completed_task, current_user, publish, params)
     
+    submitted_answer.submit!(completed_task, current_user, publish, params)
     if publish
       if completed_task.session_id
         redirect_to finish_section_path(@section, completed_task.session_id) and return

@@ -41,7 +41,12 @@ class SubmittedAnswer < ActiveRecord::Base
     self.locked_at = nil
     self.reviewed_at = nil
     evaluate_content if content
-    StoredResource.assign(args[:stored_resource_id], self) if args[:stored_resource_id]
+
+    if args[:stored_resource_id].presence
+      resource = StoredResource.assign(args[:stored_resource_id], self) 
+      self.image_url = resource.obj.url
+    end
+
     if publish and not user.guest_user?
       self.reviewed_at = Time.now
     end

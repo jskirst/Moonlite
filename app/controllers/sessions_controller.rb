@@ -21,6 +21,7 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       if user = User.find_by_email(params[:user][:email])
+        @email = params[:user][:email]
         Mailer.password_reset(user).deliver
         @hide_background = true
       else
