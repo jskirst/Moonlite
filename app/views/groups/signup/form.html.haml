@@ -27,15 +27,19 @@
 - if Rails.env == "development"
   :javascript
     $(function(){
-      $("#group_name").val("Alabama");
-      $("#group_creator_name").val("Alabama Joe");
-      $("#group_creator_email").val("alabama@joe.com");
-      $("#group_creator_password").val("alabama@joe.com");
       $("input[data-stripe=number]").val("4242424242424242");
       $("input[data-stripe=cvc]").val("123");
       $("input[data-stripe='exp-month']").val("01");
       $("input[data-stripe='exp-year']").val("2018");
     })
+  - unless current_user
+    :javascript
+      $(function(){
+        $("#group_name").val("Alabama");
+        $("#group_creator_name").val("Alabama Joe");
+        $("#group_creator_email").val("alabama@joe.com");
+        $("#group_creator_password").val("alabama@joe.com");
+      })
 
 #employer_product.employer-container{ style: "width: 760px;"}
   .employer-box
@@ -82,7 +86,9 @@
         %label Company name:
         = f.text_field :name, placeholder: "Company name...", "data-label" => "your company's name"
         
-        - unless current_user
+        - if current_user
+          = f.hidden_field :creator_email
+        - else
           %div{ style: "display: inline-block; width: 60%;"}
             %label Email address:
             = f.text_field :creator_email, placeholder: "Email...", "data-label" => "your email", style: "width: 86%;"

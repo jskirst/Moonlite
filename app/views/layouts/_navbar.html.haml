@@ -33,7 +33,7 @@
                 = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
                 %span Evaluations
             %li.navitem{ title: "Challenges", style: "height: 100%;" }
-              = link_to group_paths_url(@admin_group) do
+              = link_to group_paths_url(@admin_group), descriptor: "challenges-index-navbar-link" do
                 = image_tag NAVBAR_CHALLENGES, style: "", alt: "Challenges"
                 %span Challenges
             - if @admin_group.is_private?

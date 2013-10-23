@@ -5,14 +5,14 @@ describe "Group Functions" do
     init_metabright
   end
   
-  it "should be able to create a Group" do
+  it "should be able to create a Group without a Metabright account" do
     visit root_path
     
     expect_content("Prove your skills.")
     click_button "Learn More"
     
     expect_content("What skills does your company need?")
-    first('.submit_button').click
+    first("a[descriptor='signup-link']").trigger("click")
     
     expect_content("EVALUATOR PRICING")
     first('.action_button').click
@@ -32,15 +32,40 @@ describe "Group Functions" do
     expect_content("Welcome to MetaBright!")
   end
   
+  it "should be able to create a Group with a MetaBright account" do
+    @user = FactoryGirl.create(:user)
+    sign_in(@user)
+    
+    visit evaluator_path
+    
+    expect_content("What skills does your company need?")
+    first("a[descriptor='signup-link']").trigger("click")
+    
+    expect_content("EVALUATOR PRICING")
+    first('.action_button').click
+    
+    expect_content("100% no-risk, free trial")
+    find("#group_name").set("Chicago Bulls")
+    find("#group_card_number").set("4242424242424242")
+    find("#group_cvc_number").set("123")
+    find("#group_card_month_expr").set("01")
+    find("#group_card_year_expr").set("2018")
+    click_on "Start My Free Trial"
+    sleep(10)
+    
+    expect_content("Welcome to MetaBright!")
+    expect_content(@user.name)
+  end
+  
   describe "Challenge and Eval creation" do
     before :each do
       @group = FactoryGirl.create(:group)
     end
     
-    it "should be able to create a Challenge", js: true do
+    it "should be able to create a Challenge" do
       @user = @group.users.first
       sign_in(@user)
-      find(:css, "img[alt=Challenges]").click
+      find("a[descriptor='challenges-index-link']").click
     
       click_on "Create a custom Challenge"
     
@@ -57,18 +82,16 @@ describe "Group Functions" do
       click_button "Add New Question"
     
       expect_content("Question added")
-      find(:css, "img[alt=Challenges]").click
+      find("a[descriptor='challenges-index-navbar-link']").click
       
       expect_content("Hella Fly Challenge")
     end
-    
-    
-        
-    it "should be able to create an Evaluation", js: true do
+      
+    it "should be able to create an Evaluation" do
       @user = @group.users.first
       sign_in(@user)
       @group_paths = FactoryGirl.create(:path_with_tasks, group_id: @group.id)
-      find(:css, "img[alt=Evaluations]").click
+      find("a[descriptor='evaluations-index-link']").click
     
       expect_content("Create an Evaluation")
       click_on "Create an Evaluation"
@@ -99,7 +122,7 @@ describe "Group Functions" do
       select "Afghanistan", from: "user_country"
       select "Balkh", from: "user_state"
       find("#user_city").set("San Francisco")
-      click_on "Save"
+      find("input[descriptor=save-evaluation-button]").trigger("click")
       
       find(".challenge_holder").first('a').click
       
@@ -143,7 +166,7 @@ describe "Group Functions" do
       @user2 = @group.users.last
       sign_in(@user2)
       
-      find(:css, "img[alt=Challenges]").click
+      find("a[descriptor='challenges-index-link']").click
       
       expect_content("Can U Get In?")
       find(".mosaic-block").first('a').click

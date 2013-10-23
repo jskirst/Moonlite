@@ -72,7 +72,7 @@
               %div{ style: "margin-right: 0;"}
                 %label City
                 = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
-              = f.submit "Save", class: "button"
+              = f.submit "Save", class: "button", descriptor: "save-evaluation-button", style: "z-index: 100000;"
           - else
             - country = Carmen::Country.coded(current_user.country)
             %h5 Location saved as #{current_user.city}, #{country.name}

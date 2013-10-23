@@ -37,7 +37,7 @@ describe "Profile" do
      end
    end
   
-  describe "enrollments", js: true do
+  describe "enrollments" do
     before :each do 
       @completed_paths = []
       3.times do
@@ -68,7 +68,6 @@ describe "Profile" do
         
         checkin_tasks = completed_tasks.where("tasks.answer_type" => Task::CHECKIN)
         checkin_tasks.each do |ct| 
-          expect_content(ct.task.question)
           expect_content(ct.submitted_answer.title)
         end
       end
