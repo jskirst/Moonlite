@@ -11,6 +11,7 @@ describe "Registration" do
       find("a.register_link").click
       find("a[description='link-to-registration']").click
       
+      expect_content("Sign up for MetaBright")
       fill_in "user_name", with: "Test User"
       fill_in "user_email", with: "testuser@t.com"
       fill_in "user_password", with: "testpassword"
