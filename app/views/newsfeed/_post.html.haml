@@ -55,7 +55,7 @@
       - if post.answer_type == Task::CREATIVE
         .preview
           %div.sliderbar1
-            - if post.user_id == current_user.id
+            - if current_user and post.user_id == current_user.id
               = link_to "Edit", take_section_path(post.section_id, task_id: post.task_id), style: "color: #404040;"
               |
             - unless feed.context == :submission 
