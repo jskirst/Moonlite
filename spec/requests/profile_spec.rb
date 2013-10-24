@@ -25,17 +25,51 @@ describe "Profile" do
      end
    end
    
-   describe "edit profile button" do
-     it "should load profile editor" do
-       sign_in(@user)
-       visit profile_path(@user.username)
-       expect_content(@user.name)
-       find("#topprofilecontent a").click
-       
-       expect_content("Edit Profile")
-       click_on "Customize Profile"
-     end
-   end
+  describe "edit profile button" do
+    before :each do
+      sign_in(@user)
+      visit profile_path(@user.username)
+      expect_content(@user.name)
+      find("#topprofilecontent a").click
+      expect_content "Edit Profile"
+    end
+
+    it "should allow access to custom profile editor" do
+      click_on "Customize Profile"
+      expect_content "Edit the styles below"
+      # Tested further in requests/custom_styles_spec
+    end
+
+    it "should allow access to notification settings" do
+      click_on "Manage your notification settings."
+
+      expect_content "When do you want to receive emails from MetaBright?"
+      check "notification_settings_inactive"
+      click_on "Save"
+      expect_content "Your notification settings have been saved. Rock on."
+      @user.reload
+      @user.notification_settings.inactive.should be_true
+    end
+
+    it "should allow access to professional settings" do
+      click_on "Edit settings"
+      check "user_wants_full_time"
+      select "Albania", from: "user_country"
+      sleep 0.5
+      select "Fier", from: "user_state"
+      fill_in "user_city", with: "Booga Booga"
+      click_on "Save"
+
+      expect_content "Your settings have been saved. Rock on."
+      @user.reload
+      @user.country.should == "AL"
+      @user.state.should == "04"
+      @user.city.should == "Booga Booga"
+      @user.wants_full_time.should be_true
+      @user.wants_part_time.should be_false
+      @user.wants_internship.should be_false
+    end
+  end
   
   describe "enrollments" do
     before :each do 
@@ -50,6 +84,7 @@ describe "Profile" do
     end
     
     it "should all display with correct question statistics" do
+      sleep(3)
       @completed_paths.each do |p|
         find("#challenge_selector_#{p.permalink}").click
         expect_content("Find more #{p.name} experts at MetaBright")
