@@ -17,17 +17,15 @@
       - @tasks.to_a.each do |t|
         %tr
           %td= t.id
-          %td= t.path.name
-          - if t.creator
-            %td= link_to t.creator.name, profile_path(t.creator.username)
-          - else
-            %td Creator Account Removed
+          %td= t.path ? t.path.name : "Path Removed"
+          %td= t.creator ? link_to(t.creator.name, profile_path(t.creator.username)) : "Creator Removed"
           %td
             %pre.unstyled= t.question
             %pre.unstyled= t.quoted_text
             %ul{ style: "list-style: none;" }
               - t.answers.each do |t|
-                %li{ style: "padding: 5px; #{'background-color: green; color: white; border-radius: 3px;' if t.is_correct}"}= t.content
+                %li{ style: "padding: 5px; #{'background-color: green; color: white; border-radius: 3px;' if t.is_correct}"}
+                  = t.content
           %td= Task::TYPES[t.answer_type]
           %td= link_to "approve", admin_update_task_path(t), class: "mark_reviewed", remote: true, method: "put"
           %td
