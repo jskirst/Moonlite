@@ -455,6 +455,12 @@ class User < ActiveRecord::Base
   def send_test_alert(email_type = :interaction)
     Mailer.test_alert(self, email_type).deliver
   end
+
+  def self.send_all_newsletters(newsletter_name, subject = "Updates from MetaBright!")
+    User.where(locked_at: nil).each do |user|
+      Newsletters.newsletter(user, newsletter_name, subject).deliver
+    end
+  end
   
   # Cached methods
   

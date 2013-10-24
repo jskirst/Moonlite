@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe CustomStyle do
-  before :all do
+  before :each do
     @user = FactoryGirl.create(:user)
   end
   
@@ -34,7 +34,7 @@ describe CustomStyle do
   end
   
   describe "self.validate_all_styles" do
-    before :all do
+    before :each do
       @user2 = FactoryGirl.create(:user)
       @user3 = FactoryGirl.create(:user)
     end

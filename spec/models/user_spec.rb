@@ -142,4 +142,66 @@ describe User do
       end
     end
   end
+
+  describe "newsletters" do
+    before :each do
+      reset_email
+      @u = FactoryGirl.create(:user)
+      User.count.should == 1
+    end
+
+    it "should not send newsletter to locked user" do
+      @u.update_attribute(:locked_at, Time.now)
+      User.send_all_newsletters("newsletter_10232013", "Big News!")
+      @u.reload
+      @u.last_email_sent_at.should be_nil
+      @u.emails_today.should == 0
+      emails.size.should == 0
+      SentEmail.count.should == 0
+    end
+
+    it "should not send newsletter to unsubscribed user" do
+      @u.notification_settings.update_attribute(:inactive, true)
+      User.send_all_newsletters("newsletter_10232013", "Big News!")
+      @u.reload
+      @u.last_email_sent_at.should be_nil
+      @u.emails_today.should == 0
+      emails.size.should == 0
+      SentEmail.count.should == 0
+    end
+
+    it "should not send newsletter to user with MAX_DAILY_EMAILS" do
+      time = Time.now - 1.minute
+      @u.update_attribute(:last_email_sent_at, time)
+      @u.update_attribute(:emails_today, User::MAX_DAILY_EMAILS)
+      User.send_all_newsletters("newsletter_10232013", "Big News!")
+      @u.reload
+      @u.emails_today.should == User::MAX_DAILY_EMAILS
+      emails.size.should == 0
+      SentEmail.count.should == 0
+    end
+
+    it "should not send newsletter to user that has turned off weekely emails" do
+      @u.notification_settings.update_attribute(:weekly, false)
+      User.send_all_newsletters("newsletter_10232013", "Big News!")
+      @u.reload
+      @u.last_email_sent_at.should be_nil
+      @u.emails_today.should == 0
+      emails.size.should == 0
+      SentEmail.count.should == 0
+    end
+
+    it "should send one newsletter to all users valid users" do
+      4.times do
+        FactoryGirl.create(:user)
+      end
+      User.count.should == 5
+      User.send_all_newsletters("newsletter_10232013", "Big News!")
+      @u.reload
+      @u.last_email_sent_at.should_not be_nil
+      @u.emails_today.should == 1
+      emails.size.should == 5
+      SentEmail.count.should == 5
+    end
+  end
 end

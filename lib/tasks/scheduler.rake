@@ -72,23 +72,6 @@ task :daily_alerts => :environment do
   puts "Daily alerts finished."
 end
 
-task :send_newsletter => :environment do
-  raise "Fatal: No newsletter specified" unless ENV["NEWSLETTER_PATH"]
-  if ENV["NEWSLETTER_TEST"]
-    puts "Sending to test..."
-    Newsletters.newsletter(ENV["NEWSLETTER_TEST"], ENV["NEWSLETTER_PATH"], ENV["NEWSLETTER_SUBJECT"]).deliver
-  else
-    puts "Sending to all users..."
-    User.where("locked_at is ?", nil).each do |user|
-      begin
-        Newsletters.newsletter(user.email, ENV["NEWSLETTER_PATH"], ENV["NEWSLETTER_SUBJECT"]).deliver
-      rescue
-        puts "Newsletter alert rejected: #{$!}"
-      end
-    end
-  end    
-end
-
 task :order_by_easy => :environment do
   tasks = 0
   ineligible_tasks = 0
