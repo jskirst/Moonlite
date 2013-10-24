@@ -1,5 +1,6 @@
 # Test run code:
 # NLTEST=jskirst@gmail.com NLNAME=newsletter_10232013 NLSUBJECT='Big news from MetaBright' rake send_newsletter
+# NLTEST=nathanielsokollward@gmail.com NLNAME=newsletter_10232013 NLSUBJECT='Big news from MetaBright' rake send_newsletter
 # Production run code: 
 # NLNAME=newsletter_10232013 NLSUBJECT='Big news from MetaBright' rake send_newsletter
 

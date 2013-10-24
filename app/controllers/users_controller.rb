@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include NewsfeedHelper
   
-  before_filter :authenticate, except: [:new, :create, :notifications, :index, :hovercard]
+  before_filter :authenticate, except: [:new, :create, :notifications, :professional, :index, :hovercard]
   before_filter :load_resource, except: [:new, :create, :retract, :notifications, :professional, :index]
   before_filter :authorize_resource, except: [:new, :create, :retract, :notifications, :professional, :follow, :unfollow, :index, :hovercard, :possess]
   
