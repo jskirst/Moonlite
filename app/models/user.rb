@@ -456,9 +456,18 @@ class User < ActiveRecord::Base
     Mailer.test_alert(self, email_type).deliver
   end
 
-  def self.send_all_newsletters(newsletter_name, subject = "Updates from MetaBright!")
-    User.where(locked_at: nil).each do |user|
-      Newsletters.newsletter(user, newsletter_name, subject).deliver
+  def self.send_all_newsletters(newsletter_name, subject = "Updates from MetaBright!", test_user = nil)
+    test_user_email = test_user.email if test_user
+    User.where(locked_at: nil).where("users.email NOT LIKE ?", '%@metabright.com').each do |user|
+      if test_user.nil?
+        Newsletters.newsletter(user, newsletter_name, subject).deliver
+      elsif user.guest_user?
+        puts "Skipping #{user.email}, is guest user"
+      elsif test_user and test_user == user
+        Newsletters.newsletter(user, newsletter_name, subject).deliver
+      else
+        puts "Skipping #{user.email}, not test user: #{test_user_email}"
+      end
     end
   end
   

@@ -191,6 +191,18 @@ describe User do
       SentEmail.count.should == 0
     end
 
+    it "should not send newsletter to users with email @metabright.com" do
+      @u.update_attribute(:enable_administration, false)
+      @u.destroy
+      @u = User.create_with_nothing
+      User.send_all_newsletters("newsletter_10232013", "Big News!")
+      @u.reload
+      @u.last_email_sent_at.should be_nil
+      @u.emails_today.should == 0
+      emails.size.should == 0
+      SentEmail.count.should == 0
+    end
+
     it "should send one newsletter to all users valid users" do
       4.times do
         FactoryGirl.create(:user)

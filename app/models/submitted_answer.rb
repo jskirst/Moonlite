@@ -14,7 +14,7 @@ class SubmittedAnswer < ActiveRecord::Base
     :preview_errors
   
   belongs_to :task
-  has_one :completed_task, dependent: :destroy
+  has_one :completed_task
   has_one :path, through: :completed_task
   has_one :user, through: :completed_task
   has_many :comments, -> { where "locked_at is NULL" }, as: :owner
