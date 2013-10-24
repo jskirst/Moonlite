@@ -6,7 +6,7 @@
     - s[:action_button] = "float:right; margin-bottom: 0px;margin-top: 0px;vertical-align: middle;display: inline-block;text-shadow: 0 1px 0px black;color: white;padding: 7px 20px 5px 20px;cursor: pointer;font-size: 15px;border: 1px solid #DDD;border-radius: 3px;background-image: -moz-linear-gradient(top, #ee5f5b, #971D1C);background-image: -ms-linear-gradient(top, #ee5f5b, #971D1C);background-image: -o-linear-gradient(top, #ee5f5b, #971D1C);background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ee5f5b), to(#971D1C));background-image: -webkit-linear-gradient(top, #ee5f5b, #971D1C);background-image: linear-gradient(top, #ee5f5b, #971D1C);"
     - s[:challenge_image] = "vertical-align:top; width:75px; height:75px; display:inline-block; border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px;"
     - s[:challenge_box] = "text-decoration:none; color:#404040; "
-  %body{ style: "background-color: rgb(250, 240, 240); padding: 30px;"}
+  %body{ style: "background-color: rgb(254, 255, 247); padding: 30px;"}
     %table{ cellpadding: "0", cellspacing: "0", style: "border: 1px solid rgba(0, 0, 0, .1); width: 620px; color:#404040; background-color: white; margin: 0 auto;" }
       %tbody
         %tr
@@ -26,8 +26,8 @@
             %hr{ style: "border:1px solid rgba(0, 0, 0, .1); border-bottom:none;" }
               %div
                 %h4{ style: "font-size:15px; font-weight:normal;"} 
-                  MetaBright can now help you land your next job or internship. This feature is purely opt-in, so if you want to participate, make sure you 
-                  = link_to "update your settings.", professional_user_path(@user.signup_token)
+                  MetaBright can now help you land your next job or internship. This feature is purely opt-in. If you want to participate, make sure you 
+                  = link_to "update your settings.", @professional_url
                   Here's what you need to know:
                 %ul{ style: "font-size:15px;"}
                   %li{ style: "margin-bottom:7px;"}
@@ -65,7 +65,7 @@
                   %div{ style: "display:inline-block; margin-left:10px; width:84%;"}
                     %span{ style: "font-size: 16px; font-weight:bold; margin:0;"} JavaScript
                     %p{ style: "margin:3px 0 4px 0;"} 73 questions
-                    %p{ style: "margin:0;"} JavaScript is becoming the dominant force of the Web. Don't get left behind -- come work on your JS. skills.
+                    %p{ style: "margin:0;"} JavaScript is becoming the dominant force of the Web. Don't get left behind. Come work on your JS skills.
               = link_to "http://www.metabright.com/challenges/net", style: s[:challenge_box] do
                 %div{ style: "margin-bottom: 12px; padding:12px; background-color:whitesmoke; border: 1px solid rgba(0, 0, 0, .1); border-radius:6px; -moz-border-radius:6px; -webkit-border-radius:6px; "}                
                   %img{ src: "http://moonlite.s3.amazonaws.com/objs/314/original.png?1382556759", height: 75, width:75, style: s[:challenge_image], title: "Ruby / Rails Testing" }

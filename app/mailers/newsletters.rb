@@ -5,6 +5,7 @@ class Newsletters < ActionMailer::Base
     raise "Fatal: Newsletter does not exist for today" unless File.exists? "#{Rails.root}/app/views/newsletters/#{newsletter}.html.haml"
     @user = user
     @settings_url = notification_settings_url(@user.signup_token)
+    @professional_url = professional_user_path(@user.signup_token)
     return false unless @user.can_email?(:weekly)
     
     m = mail(to: @user.email, 
