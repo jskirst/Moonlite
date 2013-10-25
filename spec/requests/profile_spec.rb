@@ -58,7 +58,7 @@ describe "Profile" do
       sleep 0.5
       select "Fier", from: "user_state"
       fill_in "user_city", with: "Booga Booga"
-      click_on "Save"
+      find("input[descriptor='save-button']").trigger("click")
 
       expect_content "Your settings have been saved. Rock on."
       @user.reload

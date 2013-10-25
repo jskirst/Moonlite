@@ -115,8 +115,7 @@ module SessionsHelper
   
   def deny_access
     store_location
-    logger.debug "Access Denied: requires logged in user"
-    flash[:notice] = "Please sign in to access this page."
+    flash[:success] = "Please sign in to access this page."
     redirect_to root_path
   end
   

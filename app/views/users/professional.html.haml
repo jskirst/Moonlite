@@ -46,5 +46,5 @@
       %hr
       %div.control-group
         %div.controls
-        = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
+        = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;", descriptor: "save-button"
         = link_to "Back", profile_path(@user.username), class: "button button-standard", style: "float: right;"
