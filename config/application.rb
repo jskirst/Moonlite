@@ -36,5 +36,7 @@ module Metabright
     config.filter_parameters += [:password]
     
     config.action_dispatch.default_headers['X-Frame-Options'] = "ALLOWALL"
+
+    config.i18n.load_path += Dir[Rails.root.join("config/carmen.yml")]
   end
 end
