@@ -13,6 +13,7 @@ describe "Registration" do
       expect_content("I want to prove my skills and make myself more marketable.")
       find("a[description='link-to-registration']").click
       
+      sleep(2)
       expect_content("Sign up for MetaBright")
       fill_in "user_name", with: "Test User"
       fill_in "user_email", with: "testuser@t.com"
