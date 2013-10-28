@@ -1,4 +1,4 @@
-%div.sectioninfocontainer
+%div.sectioninfocontainer{ style: ("width: 95.5%;" if @path.sections.count == 1 )}
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       - if current_user.guest_user?
