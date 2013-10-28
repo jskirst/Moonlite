@@ -107,7 +107,7 @@ class PathsController < ApplicationController
       redirect_to new_section_path(:path_id => @path.id) and return
     end
     @topics = @path.topics
-    @sections = @path.sections.includes({ :tasks => :answers }, { :tasks => :stored_resources }).order("id ASC")
+    @sections = @path.sections.order("id ASC")
   end
   
   def update

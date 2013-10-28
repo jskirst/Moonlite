@@ -65,6 +65,7 @@ FactoryGirl.define do
     question                { Faker::Lorem.sentence(1) }
     reviewed_at             { Time.now }
     difficulty              Task::EASY
+    topic_name              { Faker::Lorem.sentence(1) }
     association :path
     association :section
     association :creator
