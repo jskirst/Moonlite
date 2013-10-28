@@ -12,6 +12,8 @@
       = link_to "Edit", edit_task_path(task.id), remote: true, class: "btn edit_button"
     
   %div{ style: "padding:15px;" }
+    - if params[:archived] and task.archived_at
+      %span.label.label-inverse Archived Question
     %h5{ style: "margin: 5px 0 5px 15px;"} Question
     %blockquote{ style: "margin-top:0px; width:77%;" }
       %pre{ style:"word-break:normal;" }= task.question

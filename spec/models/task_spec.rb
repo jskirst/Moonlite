@@ -22,4 +22,18 @@ describe Task do
       Task.describe_difficulty(1.99).should == "Expert"
     end
   end
+
+  describe ".deep_copy" do
+    path1 = FactoryGirl.create(:path_with_tasks)
+
+    path2 = FactoryGirl.create(:path)
+    section2 = FactoryGirl.create(:section, path: path2)
+    
+    task1 = path1.tasks.where(answer_type: Task::MULTIPLE).first
+    task2 = task1.deep_copy(path2)
+
+    task1.should_not == task2
+    task2.path_id.should == path2.id
+    task2.answers.size.should > 0
+  end
 end
