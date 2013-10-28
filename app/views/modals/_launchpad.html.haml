@@ -1,6 +1,6 @@
 %div#launchpad.dropdown_modal.modal.hide{ style: "top: 5%; margin: 0; width: 0px; background-color: transparent;", tabindex: "-1"}
   %div.launchpad{ style: "height: 545px; width: 900px; margin-left: -470px;" }
-    %div.modal_close.hide
+    %div.modal_close.hide{ style: "height: 20px;"}
       = image_tag ICON_CLOSE_URL, alt:"Close"
     %h1
       = image_tag @path.path_pic, style:"vertical-align:baseline;", alt: "#{@path.name}"
@@ -20,7 +20,7 @@
         = render "modals/headlines/achievements"
     
     %div.launchpadcontent{ style: ("display: none;" if headlines) }
-      %div.launchpadsectioncolumn
+      %div.launchpadsectioncolumn{ style: ("display: none;" if @path.sections.count == 1 )}
         %h3
           Sections
         %ul
