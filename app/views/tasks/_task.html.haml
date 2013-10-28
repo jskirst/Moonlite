@@ -31,7 +31,14 @@
       %h5{ style: "margin: 5px 0 5px 15px;"} Template
       %blockquote{ style: "margin-top:0px; width:77%;" }
         %pre{ style:"word-break:normal;" }= task.template
+    - if task.task_issues.any?
+      %div
+        %h5 Issues
+        %ol{ style: "list-style-type: decimal; margin-top: 5px;" }
+          - task.task_issues.each do |ti|
+            %li #{TaskIssue::ISSUE_TYPE_CONTENT[ti.issue_type]} #{time_ago_in_words(ti.created_at)} ago.
   %div{ style: "position: relative; bottom: 0px; margin-left: 45px; font-size: 11px;"}
+    = completion_statistics_label(task)
     = difficulty_label(task)
     - unless task.topic_id.to_i == 0
       |
