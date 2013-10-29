@@ -88,9 +88,16 @@
           #faq_accordion.accordion{ style: "margin-top: 10px; text-align: left;"}
             .accordion-group 
               .accordion-heading 
+                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"} 
+                  How many administrator seats do I need?
+              #collapseSix.accordion-body.collapse.in
+                .accordion-inner 
+                  Having multiple admins for your account allows you to easily share information and manage candidates across your organization. You'll want to have an administrator seat for every person in your organization who is involved in the talent acquisition process.
+            .accordion-group 
+              .accordion-heading 
                 %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseThree"} 
                   Do I have to sign up for a contract or pre-pay for my Evaluator subscription? 
-              #collapseThree.accordion-body.collapse.in
+              #collapseThree.accordion-body.collapse
                 .accordion-inner 
                   Nope! Evaluator subscriptions are month-to-month. There are no contracts or obligations to continue your membership any longer than you want. You'll be billed monthly and can cancel anytime.
             .accordion-group 
