@@ -220,6 +220,35 @@ class Task < ActiveRecord::Base
   def flush_cache
     Rails.cache.delete([self.class.name, self.id])
   end
+
+  def deep_copy(dest_path, archive = true)
+    raise "Destination path must not be the same path." unless dest_path != self.path
+    t = Task.new
+    t.path_id = dest_path.id
+    t.section_id = dest_path.sections.first.id
+    t.question = self.question
+    t.answer_type = self.answer_type
+    t.answer_sub_type = self.answer_sub_type
+    t.template = self.template
+    t.resource_title = self.resource_title
+    t.resource = self.resource
+    t.quoted_text = self.quoted_text
+    t.time_limit = self.time_limit
+    t.topic_name = self.topic.try(&:name)
+    t.creator_id = self.creator_id
+    t.save!
+
+    self.answers.each do |a| 
+      t.answers.create!(is_correct: a.is_correct, content: a.content)
+    end
+
+    if archive
+      self.archived_at = Time.now
+      self.save!
+    end
+
+    return t
+  end
   
   private
   

@@ -7,6 +7,7 @@ class Section < ActiveRecord::Base
   
   belongs_to :path
   has_many :tasks, -> { where "archived_at is NULL" }, dependent: :destroy
+  has_many :all_tasks, class_name: "Task"
   has_many :completed_tasks, through: :tasks, source: :completed_tasks
   
   validates :name, length: { within: 1..255 }

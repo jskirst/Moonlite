@@ -151,4 +151,4 @@
                         - unless s.published_at
                           %span.label.warning{ style: "font-size: 12px; vertical-align:middle; background-color: #0069D6;" } draft
                 .section_questions_container.row
-                  = render "sections/edit_tasks", { section: s, tasks: s.tasks, display_new_task_form: true }
+                  = render "sections/edit_tasks", { section: s, tasks: (params[:archived] ? s.all_tasks : s.tasks), display_new_task_form: true }
