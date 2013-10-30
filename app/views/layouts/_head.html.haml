@@ -11,6 +11,24 @@
  
 - if @path && !@path.new_record?
   %link{ rel: "canonical", href: challenge_url(@path.permalink) }
+  
+/ Facebook coversion tracking  
+- if params[:controller] == "groups" and params[:action] == "confirmation"
+  :javascript
+    var fb_param = {};
+    fb_param.pixel_id = '6007367518027';
+    fb_param.value = '0.00';
+    fb_param.currency = 'USD';
+    (function(){
+      var fpw = document.createElement('script');
+      fpw.async = true;
+      fpw.src = '//connect.facebook.net/en_US/fp.js';
+      var ref = document.getElementsByTagName('script')[0];
+      ref.parentNode.insertBefore(fpw, ref);
+    })();
+  %noscript
+    %img{alt: "", height: "1", src: "https://www.facebook.com/offsite_event.php?id=6007367518027&value=0¤cy=USD", style: "display:none", width: "1"}/
+
 
 %meta{ property: "og:title", content: "#{social_title}" } 
 %meta{ property: "og:description", content: "#{social_description}" } 
