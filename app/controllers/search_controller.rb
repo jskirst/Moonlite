@@ -7,7 +7,7 @@ class SearchController < ApplicationController
     @group = @admin_group
     @group_custom_style = @group.custom_style if @group
     @search = Search.new
-    @paths = Persona.find_by_name("Hacker").paths
+    @paths = Path.where.not(professional_at: nil)
     user_states = User.pluck(:state).uniq.compact
     user_countries = User.pluck(:country).uniq.compact.collect
     @countries = Carmen::Country.all.collect do |c| 

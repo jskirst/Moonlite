@@ -71,7 +71,8 @@ class Search
   end
   
   def sort_by_seeking
-    all_blank = not(full_time or part_time or internship)
+    #all_blank = not(full_time or part_time or internship)
+    all_blank = true
     conditions = []
     conditions << "wants_full_time = ?" if full_time or all_blank
     conditions << "wants_part_time = ?" if part_time or all_blank
