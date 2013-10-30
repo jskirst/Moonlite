@@ -1,0 +1,17 @@
+{
+  "name": "MetaBright Evaluator",
+  "description": "Measure the skills of your job candidates, and never waste time in an interview again.",
+  "version": "0.0.0.1",
+  "manifest_version": 2,
+  "app": {
+    "urls": [
+      "*://employers.metabright.com/"
+    ],
+    "launch": {
+      "web_url": "http://employers.metabright.com/?ref=cw"
+    }
+  },
+  "icons": {
+    "128": "mb_128.png"
+  }
+}

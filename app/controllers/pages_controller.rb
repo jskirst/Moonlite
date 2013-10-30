@@ -21,6 +21,8 @@ class PagesController < ApplicationController
       @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).references(:path).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
+    elsif request.original_url.include?("employers.metabright.com")
+      redirect_to evaluator_path
     else
       @show_chat = true
       @show_user_name = true
