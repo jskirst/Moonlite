@@ -54,7 +54,7 @@
             %h4
               = link_to idea.title, idea
               - unless idea.status.blank?
-                %span.label.label-success= idea.status
+                %span.label.label-success{ style: "position: relative; top: -2px;"}= idea.status
             %h6{ style: "margin: 0px;" } Submitted by #{link_to idea.creator.name, profile_path(idea.creator.username)}
             %p{ style: "padding: 5px 0; margin: 0;" }
               %pre= idea.description
