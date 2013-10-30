@@ -24,16 +24,18 @@ describe Task do
   end
 
   describe ".deep_copy" do
-    path1 = FactoryGirl.create(:path_with_tasks)
+    it "should create a copy of task1, including answers, and put it into supplied path" do
+      path1 = FactoryGirl.create(:path_with_tasks)
 
-    path2 = FactoryGirl.create(:path)
-    section2 = FactoryGirl.create(:section, path: path2)
-    
-    task1 = path1.tasks.where(answer_type: Task::MULTIPLE).first
-    task2 = task1.deep_copy(path2)
+      path2 = FactoryGirl.create(:path)
+      section2 = FactoryGirl.create(:section, path: path2)
+      
+      task1 = path1.tasks.where(answer_type: Task::MULTIPLE).first
+      task2 = task1.deep_copy(path2)
 
-    task1.should_not == task2
-    task2.path_id.should == path2.id
-    task2.answers.size.should > 0
+      task1.should_not == task2
+      task2.path_id.should == path2.id
+      task2.answers.size.should > 0
+    end
   end
 end

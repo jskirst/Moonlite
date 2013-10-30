@@ -6,10 +6,6 @@ describe Search do
   end
 
   it "should be" do
-    params = {
-      paths: [Path.pluck(:id).to_a],
-      
-
-    }
+    params = { paths: [Path.pluck(:id).to_a] }
   end
 end

@@ -1,5 +1,6 @@
 module RequestsHelper
   def init_metabright
+    raise "EXISTING PERSONAS" unless Persona.count == 0
     persona = FactoryGirl.create(:persona_with_paths, name: "First Persona")
     user = FactoryGirl.create(:user)
     path = FactoryGirl.create(:path_with_tasks, user: user)
