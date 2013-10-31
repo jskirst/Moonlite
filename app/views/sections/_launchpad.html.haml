@@ -136,8 +136,10 @@
       $(".core_question_type").click(function(){
         if($(this).data("type") == "exact"){
           $(".wrong_answer").attr("disabled", "disabled");
+          $("#task_answer_type").val("1");
         } else {
           $(".wrong_answer").removeAttr("disabled");
+          $("#task_answer_type").val("2");
         }
       })
   
