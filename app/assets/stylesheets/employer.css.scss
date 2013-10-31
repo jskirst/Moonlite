@@ -360,7 +360,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
 .label.novice { 
   background-color: #d9534f;
 }
-.label.unqualified {
+.big_skill.label.unqualified {
   font-size: 24px !important;
 }
 
@@ -403,6 +403,9 @@ body.employer .container.body { width: inherit; background-color: transparent; p
           height: 35px; 
           border-radius: 3px;
         }
+      }
+      td {
+        padding: 10px 8px;
       }
     }
   }
