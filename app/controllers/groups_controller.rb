@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper
-  before_filter :authenticate, except: [:new, :create, :coupon, :show, :newsfeed, :join]
-  before_filter :load_resource, except: [:new, :create, :coupon, :purchased]
+  before_filter :authenticate, except: [:new, :create, :coupon, :show, :newsfeed, :join, :trial, :start]
+  before_filter :load_resource, except: [:new, :create, :coupon, :purchased, :trial, :start]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   before_filter { @hide_background = true }
   
@@ -91,6 +91,37 @@ class GroupsController < ApplicationController
     @show_footer = true
     @show_nav_bar = true
     render "groups/signup/confirmation"
+  end
+
+  # For trial customers (bloggers) - join pre-inited group using token
+  def trial
+    @group = Group.where(token: params[:t]).first
+    @group.plan_type = Group::FREE_PLAN
+
+    if @group.nil? or @group.users.count > 0
+      flash[:error] = "No trial account was found for that token. Please check and try again."
+      redirect_to root_url and return
+    end
+    render "groups/signup/trial"
+  end
+
+  def start
+    @group = Group.find(params[:id])
+    @group.name = params[:group][:name]
+    @group.plan_type = Group::FREE_PLAN
+    @group.creator_name = params[:group][:creator_name]
+    @group.creator_email = params[:group][:creator_email]
+    @group.creator_password = params[:group][:creator_password]
+    @group.stripe_token = "free_as_in_beer"
+    @group.init_group
+    if @group.save
+      @group.add_group_creator
+      sign_in(@group.creator)
+      redirect_to confirmation_group_url(@group)
+    else
+      @errors = @group.errors.full_messages.join(". ")
+      render "groups/signup/trial"
+    end
   end
   
   def show

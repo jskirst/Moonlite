@@ -20,7 +20,7 @@ class Group < ActiveRecord::Base
   
   #COUPONS = ["GETSKILLS"]
   
-  attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
+  attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon, :skip_init
   attr_protected :token
   attr_accessible :name,
     :description, 
@@ -48,7 +48,10 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
   validates :plan_type, inclusion: { in: PLAN_TYPES }
    
-  before_create do
+  before_create :init_group, if: -> (user) { !user.skip_init }
+  after_create :add_group_creator, if: -> (user) { !user.skip_init }
+
+  def init_group
     existing_user = User.find_by_email(self.creator_email)
     if existing_user
       self.creator = existing_user
@@ -67,8 +70,8 @@ class Group < ActiveRecord::Base
     grant_permalink
     grant_token
   end
-  
-  after_create do
+
+  def add_group_creator
     if self.creator
       gu = group_users.new(user_id: creator.id)
       gu.is_admin = true

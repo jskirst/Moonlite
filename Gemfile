@@ -34,6 +34,7 @@ gem 'hamster_powered', git: 'https://github.com/jskirst/hamster_powered'
 gem 'rails_12factor'
 gem 'exception_notification'
 gem 'exception_notification-rake', '~> 0.1.0'
+gem 'sextant'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

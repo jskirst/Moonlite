@@ -56,6 +56,27 @@ describe "Group Functions" do
     expect_content("Welcome to MetaBright!")
     expect_content(@user.name)
   end
+
+  it "should be able to create a trial group" do
+    @group = Group.new
+    @group.token = "123ABC"
+    @group.skip_init = true
+    @group.save(validate: false)
+
+    visit trial_groups_path(t: @group.token)
+
+    fill_in "group_name", with: "My Blog"
+    fill_in "group_creator_name", with: "Blogger Man"
+    fill_in "group_creator_email", with: "bloggerman@t.com"
+    fill_in "group_creator_password", with: "a1b2c3d4"
+
+    click_on "Start My Free Trial"
+    sleep(10)
+    
+    expect_content("Welcome to MetaBright!")
+    @group.reload
+    expect_content(@group.users.first.name)
+  end
   
   describe "Challenge and Eval creation" do
     before :each do
