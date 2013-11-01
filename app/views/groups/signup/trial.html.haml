@@ -3,20 +3,21 @@
   .container.body { padding: 0; background-color: transparent;   }
   .errors { color: red; font-size: 17px; margin-top: 10px; }
   .error-field { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); }
+  #new_group { padding-top: 10px !important;} 
   
 :javascript
   $(function(){ $.MB.Checkout.init(); });
 
 #employer_product.employer-container{ style: "width: 760px;"}
-  .employer-box
+  .employer-box{ style: "min-height: 575px;"}
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       %div{ style: "display: inline-block; vertical-align: top; margin-top: 31px;"}
         %h1 MetaBright Evaluator
     .body{ style: "padding:16px 16px 0;" }
-      .reassurance
-        %h2 Start Your Free Trial
-        %h3 Begin Testing Your Candidates in Less Than 60 Seconds.
+      .reassurance{ style: "margin-bottom: 50px;"}
+        %h2{ style: "font-size: 31px; "} You're Invited to Try MetaBright for Free
+        %h3 Begin Testing Your Candidates in Less Than 60 Seconds
       %p{ style: "position: relative; left: 78px; bottom: 23px; float: left; "}
         = link_to "https://stripe.com/help/security", target: "_blank" do
           = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/stripe_solid_clipped.png"
