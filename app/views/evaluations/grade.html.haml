@@ -77,7 +77,7 @@
           .evaluation.hide{ id: r[:permalink] }
             - unless path.difficult?
               = render "paths/difficulty_warning"
-            .header
+            .header{ style: "padding-left: 0;"}
               %h3 Candidate Summary
               - skill_level = Enrollment.describe_skill_level(r[:metascore])
               - if r[:metascore] < 260

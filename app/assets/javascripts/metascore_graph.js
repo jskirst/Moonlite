@@ -92,7 +92,7 @@ $.MB.initEvaluationGradeCharts = function(){
      toolbar: { itemStyle: { color: '#CCC' } }
   });
     
-  var change = { "265": 'Unqualified', "305": 'Novice', "345": 'Familiar', "385": 'Competent', "425": 'Familiar', "465": 'Expert' }
+  var change = { "265": 'Unqualified', "305": 'Novice', "345": 'Familiar', "385": 'Competent', "425": 'Advanced', "465": 'Expert' }
     
   $(".metascore_graph").each(function(){ 
     console.log($(this).attr('data-metascore'))
