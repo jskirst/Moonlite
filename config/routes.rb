@@ -1,4 +1,9 @@
 Metabright::Application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resource :user
+    end
+  end
 
 	resources :sessions
 	
