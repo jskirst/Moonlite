@@ -431,19 +431,20 @@ class User < ActiveRecord::Base
   def self.grant_anon_username() USERNAME_ADJS.shuffle.first.capitalize + USERNAME_NOUNS.shuffle.first.capitalize + rand(500).to_s end
   
   def to_json
-    all_enrollments = enrollments.where("total_points > ?", 0)
+    all_enrollments = enrollments.where("total_points > ?", 500)
       .joins(:path)
       .select("enrollments.id, enrollments.metascore, enrollments.metapercentile, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
-      .where("paths.approved_at is not ? and published_at is not ?", nil, nil)
+      .where("paths.approved_at is not ? and published_at is not ? and paths.professional_at is not ?", nil, nil, nil)
     
-    results = { id: self.id, username: self.username, email: self.email, name: self.name, picture: self.image_url }
+    results = { id: self.id, username: self.username, picture: self.image_url }
     results[:challenges] = all_enrollments.collect do |e|
        { name: e.challenge_name,
          picture: e.challenge_picture, 
          points: e.total_points,
          metascore: e.metascore,
          percentile: e.metapercentile,
-         answers: e.completed_tasks.count }
+         answers: e.completed_tasks.count,
+         skill_level: e.describe_skill_level }
     end
     return results
   end
