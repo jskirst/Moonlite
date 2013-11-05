@@ -44,6 +44,7 @@ class PagesController < ApplicationController
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
     feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
+      .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       .where("paths.id in (?)", relevant_paths)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
@@ -66,20 +67,16 @@ class PagesController < ApplicationController
   
   def profile
     @user = User.where(username: params[:username]).first
-    unless @user
+    if @user.nil?
       flash[:error] = "User could not be found."
       redirect_to root_url and return
+    elsif @user.locked? or (@user.private? and @user != current_user)
+      redirect_to root_path and return
     end
-    
+
     @title = @user.name
-    if @user.nil? || @user.locked? 
-      redirect_to root_path
-      return
-    end
     @user_custom_style = @user.custom_style
-    
     @groups = @user.groups.where(is_private: false)
-    
     @user_personas = @user.user_personas.includes(:persona).to_a.delete_if{ |up| up.total_points == 0 }.sort{ |a, b| b.level <=> a.level }
     if params[:p].blank?
       @current_user_persona = @user_personas.first
@@ -153,6 +150,7 @@ class PagesController < ApplicationController
       end
       
       @similar_people = User.joins("INNER JOIN user_personas on users.id = user_personas.user_id")
+        .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       	.where("users.enable_administration = ? and users.id != ? and user_personas.persona_id = ?", false, @user.id, @current_user_persona.persona_id)
 	      .where("users.image_url is not ?", nil)
       	.limit(100)

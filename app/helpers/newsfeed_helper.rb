@@ -8,7 +8,7 @@ module NewsfeedHelper
         submitted_answers.total_comments as total_comments, submitted_answers.promoted_at as promoted_at, submitted_answers.image_url as image_url,
         submitted_answers.title as title, submitted_answers.description as description, submitted_answers.url as url,
       tasks.id as task_id, tasks.section_id, tasks.question as question, tasks.answer_type as answer_type, tasks.answer_sub_type as answer_sub_type, 
-      users.id as user_id, users.username, users.name, users.image_url as user_image_url, users.earned_points
+      users.id as user_id, users.locked_at, users.private_at, users.username, users.name, users.image_url as user_image_url, users.earned_points
     ]
   end
   

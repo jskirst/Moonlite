@@ -287,6 +287,7 @@ class PathsController < ApplicationController
       @feed = Feed.new(params, current_user)
       @feed.context = :submission
       @feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+        .where("users.locked_at is not ? and users.private_at is not ?", nil, nil)
         .where("submitted_answers.id = ?", params[:submission])
         .select(newsfeed_fields)
         .where("completed_tasks.status_id = ?", Answer::CORRECT)
@@ -335,7 +336,8 @@ class PathsController < ApplicationController
     @display_type = params[:type] || 2
       
     @leaderboard = User.joins(:enrollments)
-      .select("users.id, enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at, users.image_url")
+      .select("users.id, enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at, users.private_at, users.image_url")
+      .where("users.private_at = ?", nil)
       .where("enrollments.path_id = ? and users.locked_at is ? and total_points > ?", @path.id, nil, 0)
       .order("enrollments.total_points DESC")
       .limit(200)

@@ -100,7 +100,8 @@ class User < ActiveRecord::Base
   
   def to_s() self.name end
     
-  def locked?() locked_at.nil? ? false : true end
+  def locked?() locked_at.presence end
+  def private?() locked_at.presence end
   def content_creation_enabled?() not self.content_creation_enabled_at.nil? end
   def guest_user?() email.include?("@metabright") and not GUEST_WHITELIST.include?(email) end
     

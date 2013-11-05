@@ -43,7 +43,7 @@ if ENV['FOG_DIRECTORY']
     add '/about'
     add '/challenges'
     add '/labs'
-    User.find_each do |user|
+    User.where(locked_at: nil, private_at: nil).find_each do |user|
       add profile_path(user.username), :lastmod => user.updated_at, :priority => 0.8
     end
     Path.where.not(published_at: nil, approved_at: nil).where(group_id: nil).find_each do |path|
@@ -53,6 +53,8 @@ if ENV['FOG_DIRECTORY']
       path.tasks.find_each do |task|
         if task.answer_type == 0
           task.completed_tasks.find_each do |completed_task|
+            user = completed_task.user
+            next if user.locked? or user.private?
             next if completed_task.submitted_answer_id.nil?
             add submission_details_path(permalink, completed_task.submitted_answer_id), :lastmod => completed_task.updated_at, :priority => 0.7
           end
