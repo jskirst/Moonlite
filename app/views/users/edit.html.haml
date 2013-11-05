@@ -19,11 +19,11 @@
               %a.btn.secondary{ style: "margin-left:10px;" } Preview   
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
           %div
-            %p{ style: "font-size: 15px; word-break: normal; width: 77%; display: inline-block; " } MetaBright can match you with opportunities that fit your skills. 
-            =link_to "Edit settings", professional_user_path(current_user.signup_token), style:"vertical-align: top; margin-left: 12px;"
+            %p{ style: "font-size: 15px; word-break: normal; width: 67%; display: inline-block; " } MetaBright can match you with opportunities that fit your skills. 
+            =link_to "Edit professional settings", professional_user_path(current_user.signup_token), style:"vertical-align: top; margin-left: 12px;"
           %hr{ style: "margin: 10px 0; border-top: 1px solid rgb(213, 213, 213);"}       
           %div
-            %p{ style: "font-size: 15px; word-break: normal; width: 72%; display: inline-block; " } Customize your profile! You can directly the edit the CSS of your profile to give it your own style to best showcase your skills.
+            %p{ style: "font-size: 15px; word-break: normal; width: 76%; display: inline-block; " } Customize your profile! You can directly the edit the CSS of your profile to give it your own style to best showcase your skills.
             =link_to "Customize Profile", style_user_path(current_user.username), style:"vertical-align: top; margin-left: 12px;"
         %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
           .control-group
@@ -76,13 +76,19 @@
             
         
       %h4 Privacy Settings
-      %span{style:"position:relative; bottom:5px;"}
-        You can make your activity on MetaBright totally private - it will not appear on leaderboards, in the newsfeed, and will not be searchable by Google or discoverable by other users. Note: This is seperate from your professional settings. You can keep your anonymous profile searchable by potential employers by enabling those professional settings above.
       .editprofilemanagementarea
         .control-group
           %label.control-label Lock my profile
           .controls
             = f.check_box :mark_private, checked: !@user.private_at.nil?
+        %div{ style: "margin-left: 63px; float: right; word-break: normal;"}
+          %p
+            %img{ alt: "Lightbulb", src: LIGHT_BULB_URL, style: "position: relative; width: 20px; bottom: 2px;" }
+            This will make you "invisible" on MetaBright -- you won't appear on leaderboards, in the newsfeed, and your profile won't be crawled by search engines or discovered by other users.
+          %p
+            %span{ style: "font-family: 'MuliRegular'; "} Note:
+            Locking your profile is independent of your professional settings. You can keep your anonymous profile searchable by potential employers by enabling those professional settings above.
+        .clear_floats
 
     %hr
     .control-group
