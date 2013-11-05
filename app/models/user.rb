@@ -11,12 +11,12 @@ class User < ActiveRecord::Base
     :is_fake_user, :is_test_user, :user_role_id,
     :earned_points, :spent_points,
     :last_email_sent_at,:emails_today
-  attr_accessor :password, :password_confirmation, :guest_user, :group_id
+  attr_accessor :password, :password_confirmation, :guest_user, :group_id, :mark_private
   attr_accessible :name, :email, :image_url, :username,
     :password,:password_confirmation, 
     :description, :title, :company_name, :education, :link, :location, :guest_user,
     :city, :state, :country, 
-    :seen_opportunities, :wants_full_time, :wants_part_time, :wants_internship
+    :seen_opportunities, :wants_full_time, :wants_part_time, :wants_internship, :mark_private
     
   belongs_to  :user_role
   has_one     :notification_settings
@@ -73,6 +73,12 @@ class User < ActiveRecord::Base
       self.signup_token = SecureRandom::hex(16)
     end 
     self.login_at = Time.now
+
+    if self.mark_private == "1"
+      self.private_at = Time.now
+    elsif self.mark_private == "0"
+      self.private_at = nil
+    end
   end
   
   after_create do

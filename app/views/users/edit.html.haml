@@ -65,7 +65,7 @@
         
       %h4 Your email address
       %span{style:"position:relative; bottom:5px;"}
-        (We hate spam too. We'll never sell, rent, or otherwise abuse your email address.)
+        We hate spam too. We'll never sell, rent, or otherwise abuse your email address.
       .editprofilemanagementarea
         .control-group
           %label.control-label Email
@@ -73,6 +73,17 @@
             = f.text_field :email
         %div{style:"margin-left:180px;"}
           = link_to "Manage your notification settings.", notifications_user_path(current_user.signup_token)
+            
+        
+      %h4 Privacy Settings
+      %span{style:"position:relative; bottom:5px;"}
+        You can make your activity on MetaBright totally private - it will not appear on leaderboards, in the newsfeed, and will not be searchable by Google or discoverable by other users. Note: This is seperate from your professional settings. You can keep your anonymous profile searchable by potential employers by enabling those professional settings above.
+      .editprofilemanagementarea
+        .control-group
+          %label.control-label Lock my profile
+          .controls
+            = f.check_box :mark_private, checked: !@user.private_at.nil?
+
     %hr
     .control-group
       .controls
