@@ -15,13 +15,13 @@
     %a.close
     %h3 Upload Questions
   .modal-body{ style: "max-height: none; "}
-    = form_for(@path, url: upload_path_url(@path), method: :patch) do |f|
+    = form_for(@path, url: upload_path_url(@path), method: :patch, html: { id: "upload_to_path" } ) do |f|
       %label.control-label{ style: "font-size: 14px;" } Select .CSV file to upload questions to Challenge
       .controls= f.file_field :batch_file
     %hr{ style: "margin: 10px 0; "}
     %div{ style: "float:right;" }
       %span.button.button-standard{ onclick: "$('#upload_modal').modal('hide');" } Close
-      %a.button.button-actionable{ form: "edit_#{dom_id(@path)}", type: "submit" } Upload
+      %a.button.button-actionable{ onclick: "$('#upload_to_path').submit()", type: "submit" } Upload
   
 
 #settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }

@@ -245,7 +245,7 @@ class PathsController < ApplicationController
         task_hash = Hash[@header.zip(row)]
         task_hash["template"] = task_hash["image_url"]
         task_hash["answer_content"] = gather_answers(task_hash)
-        task_hash["difficulty"] = Task::DIFFICULTY_TYPES.invert[task_hash["difficulty"]]# || raise "FUCK"
+        task_hash["difficulty"] = Task::DIFFICULTY_TYPES.invert[task_hash["difficulty"]] || Task::EASY
         task_hash["path_id"] = path_id
         task_hash["section_id"] = section_id
         @tasks << Task.new(task_hash)
