@@ -297,7 +297,7 @@ class PathsController < ApplicationController
       render "submission" and return
     end
     
-    @title = "#{@path.name} Quiz" 
+    @title = "#{@path.name} Skill Test" 
     @tasks = @path.tasks
     @responses = []
     
