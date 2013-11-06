@@ -337,8 +337,8 @@ class PathsController < ApplicationController
       
     @leaderboard = User.joins(:enrollments)
       .select("users.id, enrollments.path_id, enrollments.total_points, users.name, users.username, users.locked_at, users.private_at, users.image_url")
-      .where("users.private_at = ?", nil)
-      .where("enrollments.path_id = ? and users.locked_at is ? and total_points > ?", @path.id, nil, 0)
+      .where("users.private_at is ? and users.locked_at is ? ", nil, nil)
+      .where("enrollments.path_id = ? and total_points > ?", @path.id, 0)
       .order("enrollments.total_points DESC")
       .limit(200)
       .to_a
