@@ -80,12 +80,12 @@ Metabright::Application.routes.draw do
       post :invite
       get :close
       put :close
-      patch :start
     end
     
     collection do
       get :purchased
       get :trial
+      post :start
     end
     
     resources :evaluations, path: "e" do

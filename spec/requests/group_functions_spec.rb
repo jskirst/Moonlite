@@ -57,13 +57,8 @@ describe "Group Functions" do
     expect_content(@user.name)
   end
 
-  it "should be able to create a trial group" do
-    @group = Group.new
-    @group.token = "123ABC"
-    @group.skip_init = true
-    @group.save(validate: false)
-
-    visit trial_groups_path(t: @group.token)
+  it "should be able to create a trial group", js: true do
+    visit trial_groups_path
 
     fill_in "group_name", with: "My Blog"
     fill_in "group_creator_name", with: "Blogger Man"

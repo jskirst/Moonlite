@@ -20,7 +20,7 @@ class Group < ActiveRecord::Base
   
   #COUPONS = ["GETSKILLS"]
   
-  attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon, :skip_init
+  attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
   attr_protected :token
   attr_accessible :name,
     :description, 
@@ -48,8 +48,8 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
   validates :plan_type, inclusion: { in: PLAN_TYPES }
    
-  before_create :init_group, if: -> (user) { !user.skip_init }
-  after_create :add_group_creator, if: -> (user) { !user.skip_init }
+  before_create :init_group
+  after_create :add_group_creator
 
   def init_group
     existing_user = User.find_by_email(self.creator_email)
@@ -122,6 +122,11 @@ class Group < ActiveRecord::Base
   def can_add_users?() users.count < PLAN_TYPES[self.plan_type][:max_seats] end
   def seats_available() PLAN_TYPES[self.plan_type][:max_seats] - users.count end
   def requires_payment?() self.plan_type != FREE_PLAN and self.stripe_token.nil? end
+
+  def available_evaluations?
+    return true unless self.plan_type == FREE_PLAN
+    return evaluations.size < 3
+  end
   
   # Cached methods
   
