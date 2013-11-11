@@ -21,7 +21,7 @@
       %p{ style: "position: relative; left: 78px; bottom: 23px; float: left; "}
         = link_to "https://stripe.com/help/security", target: "_blank" do
           = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/stripe_solid_clipped.png"
-      = form_for(@group, url: start_group_url(@group.id), method: :patch, html: { class: "form-horizontal unspinnable", id: "new_group" }) do |f|
+      = form_for(@group, url: start_groups_path, html: { class: "form-horizontal unspinnable", id: "new_group" }) do |f|
         - plan = Group::PLAN_TYPES[@group.plan_type]
         = f.hidden_field :token
         = f.hidden_field :stripe_token
