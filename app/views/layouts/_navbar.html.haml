@@ -72,7 +72,7 @@
                 = image_tag NAVBAR_PROFILE, alt: "Profile"  
                 %span Profile
       %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
-        = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", id: "page_loading"
+        = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", class: "page_loading"
       - if current_user and show_nav_bar
         %ul.nav.pull-right{ style: "float:right; margin-right: -.6%;" }
           - if current_user

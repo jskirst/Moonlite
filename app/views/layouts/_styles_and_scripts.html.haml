@@ -17,7 +17,7 @@
   
   $(function(){
     $(".alert").fadeOut(10000);
-    $('#page_loading').hide();
+    $('.page_loading').hide();
   })
   
   $("body").on("ajax:complete", ".hovercard_link", function(jqXHR, data){
@@ -77,12 +77,12 @@
   });
   
   function startSpinner(){
-    $('#page_loading').show();
+    $('.page_loading').show();
   }
   
   function stopSpinner(){
     $('.disabled').removeClass("disabled").removeAttr("disabled");
-    $('#page_loading').hide();
+    $('.page_loading').hide();
   }
   
   $(function(){
@@ -93,10 +93,10 @@
   
   $("form:not(.unspinnable)").submit(function(){
     $(this).find("input[type=submit]").addClass("disabled").attr("disabled", "disabled");
-    $('#page_loading').fadeIn(1000);
-    setTimeout("$('#page_loading').hide();", 5000);
+    $('.page_loading').fadeIn(1000);
+    setTimeout("$('.page_loading').hide();", 5000);
     $(this).on("ajax:success", function(){
-      $("#page_loading").hide();
+      $(".page_loading").hide();
       $(this).find("input[type=submit]").removeClass("disabled").removeAttr("disabled");
     });
     return true;

@@ -16,13 +16,16 @@
     - unless current_user.personas.empty?
       %div.modal_close{ style: "margin: -8px 14px 0 0;" }
         %img{:src => "https://s3.amazonaws.com/moonlite-nsdub/static/close_icon.png", alt: "Close"}
-    %div{ style: "padding-bottom:8px;" }
+    %div{ style: "padding-bottom:8px; display: inline-block; width: 74%;" }
       = image_tag @persona.picture, style: "position:relative; bottom:2px;", alt: "#{@persona.name}"
       %h1{ style: "font-size: 23px; position:relative; top:8px; line-height:1;" }
         - if current_user.enrollments.size == 0
           <strong>#{@persona.name}:</strong> Choose your first Challenge...
         - else
           <strong>#{@persona.name}:</strong> Choose your Challenge...
+      .clear_floats
+    %div{ style: "display: inline-block;" }
+      = image_tag ICON_LOADING, alt: "Loading...", style: "width: 20px; height: 20px; float: none; margin: 0;", class: "page_loading"
     %div
       %img{ src: LIGHT_BULB_URL, style: "width:15px; height:15px; margin:4px 4px 0 0; position:relative; top:1px;", alt: "Tip" }
       %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Challenges represent skillsets where you can prove what you know, and be inspired by others. 
@@ -36,7 +39,7 @@
           = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do
             %h4{ style: "margin-top: 2px; line-height: 17px; font-size: 12px;" } #{truncate(path.name,length: 30, separator: ' ')}
             
-        %div 
+        = link_to challenge_path(path.permalink), title: "#{path.name}" do 
           = image_tag path.path_pic, class: "mosaic-backdrop", style: "display:inline;", size: "140x140", alt: "#{path.name}"
   %div.explorenewuserfooter
     - if false
