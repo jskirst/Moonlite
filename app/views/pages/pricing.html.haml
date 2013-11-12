@@ -12,24 +12,38 @@
           %h2{ style: "margin-bottom: 17px;" }  
             Evaluator Pricing 
           .free_trial 
-            %h1 All plans come with a FREE 14-day trial.
+            %h1 All paid plans come with a FREE 14-day trial.
             %p No risk. No obligation. If at any point during your first 14 days you don't think the Evaluator is right for your company, just cancel your subscription. Your credit card won't ever be charged. 
           %div   
             %ul.pricing_table 
               %li.price_block 
-                %h3 1 Admin 
+                %h3 1 Free Admin 
+                .price 
+                  .price_figure 
+                    %span.price_number FREE
+                    %span.price_tenure  
+                %ul.features 
+                  %li 3 Evaluations
+                  %li Unlimited Challenges 
+                  %li Unlimited Candidates 
+                  %li{ style: "padding: 25px 15px;" } Limited Email Support
+                .price_footer 
+                  = link_to "Start Free Trial", trial_groups_path, class: "action_button" 
+              %li.price_block
+                %h3 1 Admin
                 .price 
                   .price_figure 
                     %span.price_number $19.99 
                     %span.price_tenure per month 
                 %ul.features 
                   %li Unlimited Evaluations
+                  %li Unlimited Challenges 
                   %li Unlimited Candidates 
-                  %li{ style: "padding: 25px 15px;" } Email Support
+                  %li{ style: "padding: 25px 15px;" } Prioritized Email Support
                 .price_footer 
                   = link_to "Start Free Trial", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
-              %li.price_block.popular 
-                %h3  
+              %li.price_block.popular
+                %h3
                   %div Most Popular
                   2-5 Admins 
                 .price 
@@ -38,9 +52,10 @@
                     %span.price_tenure per month 
                 %ul.features 
                   %li Unlimited Evaluations
+                  %li Unlimited Challenges 
                   %li Unlimited Candidates 
                   %li Premium Phone and Email Support
-                .price_footer 
+                .price_footer
                   = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
               %li.price_block 
                 %h3 6-15 Admins 
@@ -50,25 +65,14 @@
                     %span.price_tenure per month 
                 %ul.features 
                   %li Unlimited Evaluations
-                  %li Unlimited Candidates 
-                  %li Premium Phone and Email Support
-                .price_footer 
-                  = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button" 
-              %li.price_block 
-                %h3 16-50 Admins 
-                .price 
-                  .price_figure 
-                    %span.price_number $89.99 
-                    %span.price_tenure per month 
-                %ul.features 
-                  %li Unlimited Evaluations
+                  %li Unlimited Challenges 
                   %li Unlimited Candidates  
                   %li Premium Phone and Email Support
-                .price_footer 
-                  = link_to "Start Free Trial", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button" 
+                .price_footer
+                  = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button" 
             %div.sales_help_inline{ style: "margin-top: -30px; "} 
-              %p{ style: "margin: 0; float: right;"} 
-                Have more than 50 admins?  
+              %p{ style: "margin: -30px 0 12px; float: right;"} 
+                Have more than 15 admins?  
                 %a{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})" }Contact us for pricing. 
         .clear_floats
         .area.pitch_tiles{ style: "margin-top: 5px;"}
