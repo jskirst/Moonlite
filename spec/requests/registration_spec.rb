@@ -13,7 +13,7 @@ describe "Registration" do
       expect_content("I want to prove my skills and make myself more marketable.")
       find("a[description='link-to-registration']").click
       
-      sleep(2)
+      sleep(4)
       expect_content("Sign up for MetaBright")
       fill_in "user_name", with: "Test User"
       fill_in "user_email", with: "testuser@t.com"
@@ -42,7 +42,7 @@ describe "Registration" do
       expect_content("Looks like you're new here...")
       first('.answer_content').click
       click_on "Let's Go!"
-
+  
       7.times do
         expect_content(path.name)
         first('.answer_content').click
@@ -58,10 +58,10 @@ describe "Registration" do
       
       expect_content("Nice work!")
       click_on "Continue"
-
+  
       expect_content("MetaBright is the game that can land you your next job or internship.")
     end
-
+  
     it "should be able to professionally register for MB" do
       click_on "Try it out!"
       
@@ -80,7 +80,7 @@ describe "Registration" do
       
       expect_content("You're all done!")
     end
-
+  
     it "should be able to unprofessionally register for MB" do
       click_on "No thanks, I'll just play MetaBright as a game."
       

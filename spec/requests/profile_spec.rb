@@ -52,7 +52,7 @@ describe "Profile" do
     end
 
     it "should allow access to professional settings" do
-      click_on "Edit settings"
+      click_on "Edit professional settings"
       check "user_wants_full_time"
       select "Albania", from: "user_country"
       sleep 0.5

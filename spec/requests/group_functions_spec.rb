@@ -14,8 +14,11 @@ describe "Group Functions" do
     expect_content("What skills does your company need?")
     first("a[descriptor='signup-link']").trigger("click")
     
+    expect_content("Begin Testing Your Candidates in Less Than 60 Seconds")
+    click_on "premium subscriptions."
+    
     expect_content("EVALUATOR PRICING")
-    first('.action_button').click
+    first("a[descriptor='six_to_fifteen']").trigger("click")
     
     expect_content("100% no-risk, free trial")
     find("#group_creator_name").set("Michael Jordan")
@@ -41,8 +44,11 @@ describe "Group Functions" do
     expect_content("What skills does your company need?")
     first("a[descriptor='signup-link']").trigger("click")
     
+    expect_content("Begin Testing Your Candidates in Less Than 60 Seconds")
+    click_on "premium subscriptions."
+    
     expect_content("EVALUATOR PRICING")
-    first('.action_button').click
+    first("a[descriptor='six_to_fifteen']").trigger("click")
     
     expect_content("100% no-risk, free trial")
     find("#group_name").set("Chicago Bulls")
@@ -65,7 +71,7 @@ describe "Group Functions" do
     fill_in "group_creator_email", with: "bloggerman@t.com"
     fill_in "group_creator_password", with: "a1b2c3d4"
 
-    click_on "Start My Free Trial"
+    click_on "Create My Account"
     sleep(10)
     
     expect_content("Welcome to MetaBright!")
