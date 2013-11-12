@@ -6,6 +6,7 @@ class GroupsController < ApplicationController
   before_filter { @hide_background = true }
   
   def new
+    @title = "Evaluator Sign Up"
     @show_chat = true
     if @admin_group
       if @admin_group.stripe_token.nil?
@@ -94,6 +95,7 @@ class GroupsController < ApplicationController
   end
 
   def trial
+    @title = "Evaluator Sign Up"
     @group = Group.new
     @group.plan_type = Group::FREE_PLAN
     render "groups/signup/trial"

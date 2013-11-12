@@ -3,7 +3,6 @@
   .container.body { padding: 0; background-color: transparent;   }
   .errors { color: red; font-size: 17px; margin-top: 10px; }
   .error-field { box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6); }
-  #new_group { padding-top: 10px !important;} 
   
 :javascript
   $(function(){ $.MB.Checkout.init(); });
@@ -16,7 +15,7 @@
         %h1 MetaBright Evaluator
     .body{ style: "padding:16px 16px 0;" }
       .reassurance{ style: "margin-bottom: 50px;"}
-        %h2{ style: "font-size: 30px; "} You're Invited to Use MetaBright for Free
+        %h2 Sign Up For Your Free Account
         %h3 Begin Testing Your Candidates in Less Than 60 Seconds
       %p{ style: "position: relative; left: 78px; bottom: 23px; float: left; "}
         = link_to "https://stripe.com/help/security", target: "_blank" do
@@ -26,6 +25,8 @@
         = f.hidden_field :token
         = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
+        .product_name
+          Evaluator #{plan[:description]}, Free Account
         %label{ style: "margin-top: 16px; "} Your name:
         = f.text_field :creator_name, placeholder: "Your name...", "data-label" => "your name"
         %label Company name:
@@ -43,4 +44,25 @@
           %p.in-progress.hide Creating your account now. This may take a minute or two...
           = link_to pricing_url do
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear", title: "back"
-          = f.submit "Start My Free Trial", class: "submit_button", style: "width: inherit;"
+          = f.submit "Create My Account", class: "submit_button", style: "width: inherit;"
+      %h4{ style: "font-size: 20px; margin-top: 40px; border: none;"} 
+        Some things to keep in mind about your free MetaBright account...
+      %ul{ style: "list-style: inherit;"}
+        %li 
+          %span{ style: "font-family: 'MuliRegular';" } You can create a maximum of 3 Evaluations:
+          An evaluation is a set of skills you wish to test your candidates on. While an unlimited number of candidates can complete each Evaluation, the maximum number of different Evaluations you can have at any given time is three.
+        %li 
+          %span{ style: "font-family: 'MuliRegular';" } Email support is limited:
+          If you require expedited and direct support, you may want to consider one of our 
+          = link_to "premium plans.", pricing_path
+        %li
+          %span{ style: "font-family: 'MuliRegular';" } Only one administrator:
+          You will be the only person in your oganization who will be allowed to access candidate information, test results, and reports. Additional administrators can be added if you choose to upgrade to a 
+          = link_to "premium plan.", pricing_path
+        %li
+          %span{ style: "font-family: 'MuliRegular';" } Limited access to new features:
+          Your free plan will not have full access to the newest MetaBright analytical and talent search features. You will however receive access to all MetaBright testing content as soon as it's published. 
+      %p 
+        These restrictions are removed in MetaBright's
+        = link_to "premium subscriptions.", pricing_path 
+        
