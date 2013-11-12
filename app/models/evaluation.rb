@@ -22,6 +22,10 @@ class Evaluation < ActiveRecord::Base
   validates_presence_of :company
   validates_presence_of :title
   validate do
+    unless group.available_evaluations?
+      errors[:base] << "Free plans are limited to 3 evaluations. You must upgrade your account to continue."
+    end
+
     if new_record? and (selected_paths.nil? or selected_paths.empty?)
       errors[:base] << "You must select at least one skill to evaluate your candidates on before creating an evaluation."
     end
