@@ -57,9 +57,9 @@
           .holder
             %p 
               %span Guaranteed
-              to improve your hiring accuracy and eliminate bad interviewees... or your money back.
+              to improve your hiring accuracy and eliminate bad interviewees. Get started for free!
             .big_submit_button
-              = link_to "SIGN UP!", pricing_url, class: "submit_button", descriptor: "signup-link"
+              = link_to "SIGN UP FOR FREE!", trial_groups_path, class: "submit_button", descriptor: "signup-link"
         .sexy_time 
           %section 
             .holder  
@@ -118,9 +118,9 @@
           .holder
             %p 
               %span Guaranteed
-              to improve your hiring accuracy and eliminate bad interviewees... or your money back.
+              to improve your hiring accuracy and eliminate bad interviewees. Get started for free!
             .big_submit_button
-              = link_to "SIGN UP!", pricing_url, class: "submit_button", descriptor: "signup-link"
+              = link_to "SIGN UP FOR FREE!", trial_groups_path, class: "submit_button", descriptor: "signup-link"
         .area.pitch_tiles{ style: "margin-top:0; "} 
           %h2 Why you'll love MetaBright 
           .tile 
@@ -169,6 +169,14 @@
                   We distill all this information down into one easy to understand percentile ranking that indicates how capable a candidate actually is. 
             .accordion-group 
               .accordion-heading 
+                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"} 
+                  How can MetaBright be free? 
+              #collapseSix.accordion-body.collapse
+                .accordion-inner 
+                  MetaBright has several different subscription types. Many companies find a free account fits their needs just fine. Others who are heavy users of MetaBright, may find it optimal to upgrade to a premium package. 
+                  = link_to "Learn about different MetaBright subscriptions.", pricing_path
+            .accordion-group 
+              .accordion-heading 
                 %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"} 
                   How long will it take for my candidates to complete a Challenge? 
               #collapseTwo.accordion-body.collapse 
@@ -180,7 +188,7 @@
                   Do I have to sign up for a contract or pre-pay for my Evaluator subscription? 
               #collapseThree.accordion-body.collapse 
                 .accordion-inner 
-                  Nope! Evaluator subscriptions are month-to-month. There are no contracts or obligations to continue your membership any longer than you want. You'll be billed monthly and can cancel anytime.
+                  Nope! You can get started using the Evaluator for free. If you choose to sign up for a premium plan, the subscriptions are month-to-month. There are no contracts or obligations to continue your membership any longer than you want. You'll be billed monthly and can cancel anytime.
             .accordion-group 
               .accordion-heading 
                 %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"} 
@@ -202,7 +210,7 @@
           .holder
             %p 
               %span Guaranteed
-              to improve your hiring accuracy and eliminate bad interviewees... or your money back.
+              to improve your hiring accuracy and eliminate bad interviewees. Get started for free!
             .big_submit_button
-              = link_to "SIGN UP!", pricing_url, class: "submit_button", descriptor: "signup-link"
+              = link_to "SIGN UP FOR FREE!", trial_groups_path, class: "submit_button", descriptor: "signup-link"
         
