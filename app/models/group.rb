@@ -123,6 +123,10 @@ class Group < ActiveRecord::Base
   def seats_available() PLAN_TYPES[self.plan_type][:max_seats] - users.count end
   def requires_payment?() self.plan_type != FREE_PLAN and self.stripe_token.nil? end
 
+  def is_trial? 
+    return true if self.plan_type == FREE_PLAN
+  end
+
   def available_evaluations?
     return true unless self.plan_type == FREE_PLAN
     return evaluations.size < 3
