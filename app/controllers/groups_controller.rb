@@ -11,6 +11,11 @@ class GroupsController < ApplicationController
     if @admin_group
       if @admin_group.stripe_token.nil?
         @new_group = @admin_group
+      elsif @admin_group.plan_type == "free_to_demo"
+        @is_trial = true
+        @new_group = @admin_group
+        @new_group.stripe_token = nil
+        @new_group.plan_type = params[:p]
       else
         sign_out
         flash[:error] = "Something has gone wrong with your signup. You were not charged. Please contact support@metabright.com. We apologize for the inconvenience."
