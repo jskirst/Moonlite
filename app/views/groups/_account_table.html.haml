@@ -57,7 +57,7 @@
           = form_tag(invite_group_url(@group), id: "invite_form", class: "hide") do
             = text_field_tag :email, nil, placeholder: "Enter email address...", class: "invite"
             = submit_tag "Invite", class: "button button-standard button-mini"
-        - else
+        - elsif @group.can_add_users? and not @group.is_trial?
           %a{ onclick: "$(this).hide();$('#upgrade_group').show();" } Upgrade your account to invite more users.
           = form_for(@group, html: { class: "hide", id: "upgrade_group" }) do |f|
             = hidden_field_tag :redirect_url, account_group_url(@group)
