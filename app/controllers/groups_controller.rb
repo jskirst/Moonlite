@@ -49,6 +49,7 @@ class GroupsController < ApplicationController
   end
   
   def create
+    session[:previous_plan_type] = nil
     @show_chat = true
     @show_nav_bar = false
     @show_footer = false
@@ -69,8 +70,8 @@ class GroupsController < ApplicationController
       end
     else
       @new_group = Group.find_by_token(token)
-      plan_type = params[:group].delete(:plan_type)
-      @new_group.plan_type = plan_type
+      session[:previous_plan_type] = @new_group.plan_type
+      @new_group.plan_type = params[:group][:plan_type]
       if @new_group.admin?(current_user)
         if params[:group][:stripe_token].present?
           @new_group.coupon = params[:group][:coupon]
@@ -91,22 +92,17 @@ class GroupsController < ApplicationController
   
   def purchased
     group = current_user.groups.last
-    # This needs to be changed back to just the normal confirmation page
-    redirect_to upgraded_group_path(group)
+    redirect_to confirmation_group_path(group)
   end
   
   def confirmation
+    if session[:previous_plan_type] == Group::FREE_PLAN.to_s
+      @was_trial = true
+    end
     @title = "Order Confirmation"
     @show_footer = true
     @show_nav_bar = true
     render "groups/signup/confirmation"
-  end
-  
-  def upgraded
-    @title = "Upgrade Confirmation"
-    @show_footer = true
-    @show_nav_bar = true
-    render "groups/signup/upgraded"
   end
 
   def trial
