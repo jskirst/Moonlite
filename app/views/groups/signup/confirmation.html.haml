@@ -23,8 +23,12 @@
       /     %textarea{ rows: "3" }
       /     %button.submit_button Invite
     .body
-      %h3 Your company's hiring is about to get turbocharged!
-      %p Take a look at the nav bar at the top of the page. Here's a quick overview of what everything does:
+      - if @was_trial
+        %h3 Your account upgrade has been successfully processed!
+        %p You now have access to all features of MetaBright. Here's a quick recap of what everything does:
+      - else
+        %h3 Your company's hiring is about to get turbocharged!
+        %p Take a look at the nav bar at the top of the page. Here's a quick overview of what everything does:
       %ul 
         %li 
           .picture
@@ -33,7 +37,10 @@
             %span Evaluations: 
             This is where you create and manage all your Evaluations. Your candidates' results are organized here as well.
             %div{ style: "margin: 15px 10px 20px 0;"}
-              = link_to "Create your first Evaluation", new_group_evaluation_url(@group), class: "submit_button", style: "float: inherit;"
+              - if @was_trial
+                = link_to "Create an Evaluation", new_group_evaluation_url(@group), class: "submit_button", style: "float: inherit;"
+              - else
+                = link_to "Create your first Evaluation", new_group_evaluation_url(@group), class: "submit_button", style: "float: inherit;"
         %li 
           .picture
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/challenges_dark.png" }
@@ -41,7 +48,10 @@
             %span Challenges: 
             If you want to test your candidates on custom content specific to your company, you'll want to start here. After you create a Challenge, you can access it in any Evaluation you create.
             %div{ style: "margin: 15px 10px 20px 0;"}
-              = link_to "Create your first custom Challenge", new_group_path_url(@group), class: "submit_button", style: "float: inherit;"
+              - if @was_trial
+                = link_to "Create a custom Challenge", new_group_path_url(@group), class: "submit_button", style: "float: inherit;"
+              - else
+                = link_to "Create your first custom Challenge", new_group_path_url(@group), class: "submit_button", style: "float: inherit;"
         %li 
           .picture
             %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/nav+bar+icons/account_dark.png" }
