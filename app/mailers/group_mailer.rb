@@ -13,6 +13,11 @@ class GroupMailer < ActionMailer::Base
     m = mail(to: @user.email, subject: "Welcome to MetaBright!")
   end
   
+  # def intro_new_trial_user(group)
+  #   @user = group.users.first
+  #   m = mail(to: @user.email, from: jonathan@metabright.com, subject: "Checking in to see how MetaBright is going for you")
+  # end
+  
   def submission(evaluation_enrollment)
     @evaluation_enrollment = evaluation_enrollment
     @evaluation = @evaluation_enrollment.evaluation

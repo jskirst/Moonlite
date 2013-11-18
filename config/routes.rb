@@ -68,6 +68,7 @@ Metabright::Application.routes.draw do
       get :checkout
       put :checkout
       get :confirmation
+      get :upgraded
       get :style
       put :style
       get :join
@@ -80,6 +81,7 @@ Metabright::Application.routes.draw do
       post :invite
       get :close
       put :close
+      put :new
     end
     
     collection do

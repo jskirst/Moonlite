@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
         @is_trial = true
         @new_group = @admin_group
         @new_group.stripe_token = nil
-        @new_group.plan_type = params[:p]
+        @new_group.plan_type = params[:group][:plan_type]
       else
         sign_out
         flash[:error] = "Something has gone wrong with your signup. You were not charged. Please contact support@metabright.com. We apologize for the inconvenience."
@@ -69,6 +69,8 @@ class GroupsController < ApplicationController
       end
     else
       @new_group = Group.find_by_token(token)
+      plan_type = params[:group].delete(:plan_type)
+      @new_group.plan_type = plan_type
       if @new_group.admin?(current_user)
         if params[:group][:stripe_token].present?
           @new_group.coupon = params[:group][:coupon]
@@ -89,7 +91,8 @@ class GroupsController < ApplicationController
   
   def purchased
     group = current_user.groups.last
-    redirect_to confirmation_group_path(group)
+    # This needs to be changed back to just the normal confirmation page
+    redirect_to upgraded_group_path(group)
   end
   
   def confirmation
@@ -97,6 +100,13 @@ class GroupsController < ApplicationController
     @show_footer = true
     @show_nav_bar = true
     render "groups/signup/confirmation"
+  end
+  
+  def upgraded
+    @title = "Upgrade Confirmation"
+    @show_footer = true
+    @show_nav_bar = true
+    render "groups/signup/upgraded"
   end
 
   def trial
