@@ -13,6 +13,17 @@ class GroupMailer < ActionMailer::Base
     m = mail(to: @user.email, subject: "Welcome to MetaBright!")
   end
   
+  def upgraded(group)
+    @group = group
+    @user = group.users.first
+    if @group.users.count == 1
+      @u = "admin"
+    else
+      @u = "admins"
+    end
+    m = mail(to: @user.email, subject: "Your MetaBright account has been upgraded!")
+  end
+  
   # def intro_new_trial_user(group)
   #   @user = group.users.first
   #   m = mail(to: @user.email, from: jonathan@metabright.com, subject: "Checking in to see how MetaBright is going for you")
