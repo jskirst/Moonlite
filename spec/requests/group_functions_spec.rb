@@ -6,6 +6,7 @@ describe "Group Functions" do
   end
   
   it "should be able to create a Group without a Metabright account" do
+    ActionMailer::Base.deliveries = nil
     visit root_path
     
     expect_content("Prove your skills.")
@@ -36,6 +37,7 @@ describe "Group Functions" do
   end
   
   it "should be able to create a Group with a MetaBright account" do
+    ActionMailer::Base.deliveries = nil
     @user = FactoryGirl.create(:user)
     sign_in(@user)
     
@@ -75,8 +77,8 @@ describe "Group Functions" do
     sleep(10)
     
     expect_content("Welcome to MetaBright!")
-    @group.reload
-    expect_content(@group.users.first.name)
+    group = Group.last
+    expect_content(group.users.first.name)
   end
   
   describe "Challenge and Eval creation" do

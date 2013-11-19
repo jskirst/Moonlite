@@ -124,7 +124,12 @@ class SectionsController < ApplicationController
   
   def take
     @task = Task.cached_find(params[:task_id])
-    raise "Access Denied: Task is currently locked." if @task.locked_at
+    if @task.nil?
+      flash[:error] = "Could not find the question you were looking for."
+      redirect_to root_path
+    elsif @task.locked_at
+      raise "Access Denied: Task is currently locked."
+    end
     @session_id = params[:session_id]
     
     @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])

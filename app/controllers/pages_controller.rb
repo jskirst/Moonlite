@@ -78,10 +78,11 @@ class PagesController < ApplicationController
     @user_custom_style = @user.custom_style
     @groups = @user.groups.where(is_private: false)
     @user_personas = @user.user_personas.includes(:persona).to_a.delete_if{ |up| up.total_points == 0 }.sort{ |a, b| b.level <=> a.level }
-    if params[:p].blank?
+    if params[:persona].blank?
       @current_user_persona = @user_personas.first
     else
-      @current_user_persona = @user_personas.select{ |up| up.persona_id == params[:p].to_i }.first
+      @current_user_persona = @user_personas.select{ |up| up.persona_id == params[:persona].to_i }.first
+      @current_user_persona = @user_personas.first if @user_personas.first
     end
     
     if @current_user_persona
