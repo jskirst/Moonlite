@@ -40,6 +40,7 @@ class Enrollment < ActiveRecord::Base
 
   def describe_skill_level() Enrollment.describe_skill_level(self.metascore) end
   def self.describe_skill_level(metascore)
+    metascore = metascore.to_i
     if metascore < 305
       return "Unqualified"
     elsif metascore > 305 and metascore <= 345

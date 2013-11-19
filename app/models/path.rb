@@ -180,7 +180,7 @@ class Path < ActiveRecord::Base
   
   def average_difficulty() tasks.average(:difficulty) end
   def describe_average_difficulty() Task.describe_difficulty(average_difficulty) end
-  def difficult?() average_difficulty >= 1.25 end
+  def difficult?() average_difficulty >= 1.1 end
   
   # Cached methods
   
