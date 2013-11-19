@@ -1,0 +1,12 @@
+%p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
+%p{ style: "font-size:12px;"} 
+  Thanks for upgrading your MetaBright account!
+%p{ style: "font-size:12px;"} 
+  Your plan allows you to have #{@group.users.count} #{@u} on your account and grants you full access to all of MetaBright's features. 
+  To invite people to your account, or to add more admin capacity, just go to #{link_to "your account management tab", account_group_url(@group)}. 
+%p{ style: "font-size:12px;"} 
+  If you ever have any questions about MetaBright or your plan, you can reach our support team at #{link_to "support@metabright.com", "mailto:support@metabright.com"}.
+%p{ style: "font-size:12px;"} 
+  Thanks,
+  %br
+  Team MetaBright

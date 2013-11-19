@@ -68,7 +68,6 @@ Metabright::Application.routes.draw do
       get :checkout
       put :checkout
       get :confirmation
-      get :upgraded
       get :style
       put :style
       get :join
