@@ -111,6 +111,15 @@ class Group < ActiveRecord::Base
     group_users.find_by_user_id(user)
   end
   
+  def candidate_count
+    new_sum = 0
+    evaluations.each do |e|
+      sum = e.evaluation_enrollments.where("submitted_at IS NOT NULL").count
+      new_sum = sum + new_sum
+    end
+    return new_sum.to_s
+  end
+  
   def admin?(user)
     m = membership(user)
     return false if m.nil?

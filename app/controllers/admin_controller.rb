@@ -3,6 +3,7 @@ class AdminController < ApplicationController
   include EnrollmentsHelper
   before_action :authenticate
   before_action { raise "ACCESS DENIED" unless @enable_administration }
+  helper_method :sort_column, :sort_direction
   
   def overview
     @excluded = User.where("enable_administration = ? or is_fake_user = ? or is_test_user = ? or locked_at is not ? and earned_points > 0", true, true, true, nil).to_a.collect &:id
@@ -203,7 +204,8 @@ class AdminController < ApplicationController
   
   def groups
     conditions = params[:search].nil? ? [] : ["name ILIKE ?", "%#{params[:search]}%"]
-    @groups = Group.where(conditions).paginate(page: params[:page])
+    @groups = Group.where(conditions).paginate(page: params[:page]).order(sort_column + " " + sort_direction)
+    # @groups = Group.order(params[:sort])
   end
   
   def group
@@ -249,4 +251,13 @@ class AdminController < ApplicationController
   def filter(query, user_table_name = :user)
     query.joins(user_table_name).where("users.id not in (?) and users.earned_points > ?", @excluded, 300)
   end
+  
+  def sort_column
+    Group.column_names.include?(params[:sort]) ? params[:sort] : "id"
+  end
+  
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+  
 end

@@ -6,21 +6,34 @@
   %table.table
     %thead
       %tr
-        %th id
-        %th Name
-        %th Permalink
-        %th Users
-        %th Evaluations
-        %th Challenges
-        %th Type
+        %th 
+          = sortable "id", "ID"
+        %th 
+          = sortable "name", "Name"
+        %th 
+          Creator Email
+        %th 
+          = sortable "permalink", "Permalink"
+        %th 
+          Admins
+        %th 
+          Evaluations
+        %th 
+          Challenges
+        %th 
+          Candidates
+        %th 
+          = sortable "plan_type", "Plan"
     %tbody
-      - @groups.to_a.each do |g|
+      - @groups.each do |g|
         %tr
           %td= link_to g.id, admin_group_path(g.id)
           %td= g.name
-          %th= g.permalink
-          %td= g.users.count
+          %td= g.users.first.email
+          %td= g.permalink
+          %td= g.admins.count
           %td= g.evaluations.count
           %td= g.paths.count
-          %td= Group::PLAN_TYPES[g.plan_type]
+          %td= g.candidate_count
+          %td= Group::PLAN_TYPES[g.plan_type][:description]
   = link_to "Refresh", admin_groups_path, class: "button button-standard"

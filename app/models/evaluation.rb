@@ -23,7 +23,7 @@ class Evaluation < ActiveRecord::Base
   validates_presence_of :title
   validate do
     unless group.available_evaluations?
-      errors[:base] << "Free plans are limited to 3 evaluations. You must upgrade your account to continue."
+      errors[:base] << "Your trial account is limited to 3 evaluations. You must upgrade your account to continue."
     end
 
     if new_record? and (selected_paths.nil? or selected_paths.empty?)
