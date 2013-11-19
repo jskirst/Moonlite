@@ -103,7 +103,7 @@
           - @user_personas.each do |p|
             - next if p == @current_user_persona
             %div.profileheader{ style: "border: none; border-radius: 0px; border-left: 1px solid rgba(0,0,0,.1); border-right: 1px solid rgba(0,0,0,.1); background-image: none; background-color: white;" }
-              = link_to profile_path(@user.username, p: p.persona.id) do
+              = link_to profile_path(@user.username, persona: p.persona.id) do
                 %div{style: "display:inline-block; vertical-align: middle; width: 300px; cursor: pointer;"}
                   =image_tag p.persona.picture, style: "vertical-align: middle;"
                   %h3{ style: "vertical-align: middle; padding-top: 5px;" }= p.persona.name
