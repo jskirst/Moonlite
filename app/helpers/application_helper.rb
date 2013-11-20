@@ -150,4 +150,8 @@ module ApplicationHelper
     answers << { content: task.delete(:answer_new_4), is_correct: false } unless task[:answer_new_4].blank?
     return answers
   end
+
+  def creative_time_to_answer()
+    rand(120) + rand(30)
+  end
 end

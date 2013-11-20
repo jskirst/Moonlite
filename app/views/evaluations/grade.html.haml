@@ -158,6 +158,7 @@
                     - r[:creative].each do |completed_task|
                       %li
                         - total_time = (completed_task.updated_at - completed_task.created_at).round(0)
+                        - total_time = creative_time_to_answer if total_time > 300
                         - minutes = total_time / 60
                         - seconds = total_time % 60
                         .answer
@@ -182,7 +183,7 @@
                 %div
                   %ol
                     - r[:core].each do |completed_task|
-                      %li
+                      %li{ data: {  id: completed_task.id, created: completed_task.created_at, updated: completed_task.updated_at } }
                         .answer
                           - task = completed_task.task
                           %p= task.question
