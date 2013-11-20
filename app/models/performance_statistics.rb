@@ -39,8 +39,8 @@ class PerformanceStatistics
       end
     end
     saw = saw.select{ |name, stats| (stats[0] + stats[1]) >= 1 }
-    self.strengths = saw.select{ |topic_name, stats| (stats[0].to_f / (stats[0]+stats[1])) > 0.75 }
-    self.weaknesses = saw.select{ |topic_name, stats| (stats[1].to_f / (stats[0]+stats[1])) > 0.5 }
+    self.strengths = saw.select{ |topic_name, stats| (stats[0].to_f / (stats[0]+stats[1])) > 0.6 }
+    self.weaknesses = saw.select{ |topic_name, stats| (stats[1].to_f / (stats[0]+stats[1])) > 0.6 }
   end
   
   def calculate_avg_time_to_answer
