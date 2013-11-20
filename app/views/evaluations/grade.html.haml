@@ -186,6 +186,8 @@
                         .answer
                           - task = completed_task.task
                           %p= task.question
+                          - if task.quoted_text
+                            %pre= task.quoted_text
                           = difficulty_label(task)
                           - if completed_task.correct?
                             .time_taken{ style: "float: right;"} Correct, #{completed_task.points_awarded} points
