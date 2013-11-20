@@ -25,7 +25,7 @@ describe Path do
   end
   
   describe ".difficult?" do
-    it "should return true if average difficulty is 1.25 or above" do
+    it "should return true if average difficulty is 1.1 or above" do
       @path.difficult?.should be_true
       @task3.destroy
       @path.difficult?.should be_false

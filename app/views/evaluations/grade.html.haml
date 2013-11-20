@@ -75,14 +75,19 @@
         - @results.each do |r|
           - path = Path.where(name: r[:name]).first
           .evaluation.hide{ id: r[:permalink] }
-            - unless path.difficult?
+            - is_difficult = path.difficult?
+            - unless is_difficult
               = render "paths/difficulty_warning"
             .header{ style: "padding-left: 0;"}
               %h3 Candidate Summary
-              - skill_level = Enrollment.describe_skill_level(r[:metascore])
               - if r[:metascore] < 260
+                - skill_level = Enrollment.describe_skill_level(r[:metascore])
                 - ms_for_graph = 260
-              - else 
+              - elsif !is_difficult and r[:metascore] > 385
+                - skill_level = "Competent"
+                - ms_for_graph = 385
+              - else
+                - skill_level = Enrollment.describe_skill_level(r[:metascore])
                 - ms_for_graph = r[:metascore]
               .metascore_graph{ :data => { "metascore" => ms_for_graph, "skill" => skill_level } }
               .clear_floats
@@ -173,11 +178,8 @@
                                   #{seconds} seconds
             - if r[:core].any?
               %div
-                - if r[:creative].any?
-                  %a.header_link{ "data-target" => "#mc_#{path.id}", "data-toggle" => "collapse", :type => "button"} Multiple Choice (click to expand)
-                - else
-                  %a.header_link Multiple Choice
-                %div{ class: "#{"collapse" if r[:creative].any?}", id: "mc_#{path.id}" }
+                %a.header_link Multiple Choice
+                %div
                   %ol
                     - r[:core].each do |completed_task|
                       %li
