@@ -215,11 +215,6 @@ class EvaluationsController < ApplicationController
     unless @group.admin?(current_user)
       raise "Access Denied"
     end
-    
-    if @admin_group.requires_payment?
-      @show_nav_bar = false
-      redirect_to  new_group_url
-    end
   end
   
   def prepare_form
