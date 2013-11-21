@@ -46,13 +46,8 @@ class PerformanceStatistics
   def calculate_avg_time_to_answer
     return 0 if self.total == 0
     time = self.avg_time_to_answer = self.completed_tasks.inject(0) do |sum, ct|
-      if ct.creator_id == ct.user_id
-        sum += 5
-      else
-        sum += ct.updated_at - ct.created_at
-      end
+      sum += ct.updated_at - ct.created_at
     end
-    #raise time.to_yaml + self.total.to_yaml
     self.avg_time_to_answer = (time.to_f / self.total.to_f)
     if self.avg_time_to_answer > 60
       self.avg_time_to_answer = rand(20) + rand(4)
