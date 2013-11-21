@@ -30,10 +30,10 @@
           Sign up with Google or Facebook to make your profile awesome in a hurry. Or sign up with your email address, and edit your profile manually.
         %div{ style: "margin-top: 20px;" }
           %div
-            = link_to "/auth/google_oauth2", class: "btn danger", style: "width: 205px; margin-right: 60px; " do
+            = link_to "/auth/google_oauth2", class: "submit_button", style: "width: 205px; margin-right: 60px; float: " do
               = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
               %span.landingbuttontext Sign in with Google »        
-            = link_to "/auth/facebook", class: "btn danger" do
+            = link_to "/auth/facebook", class: "submit_button" do
               = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
               %span.landingbuttontext Sign in with Facebook »
           %div.divider OR

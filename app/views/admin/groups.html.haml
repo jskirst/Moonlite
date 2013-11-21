@@ -29,7 +29,7 @@
         %tr
           %td= link_to g.id, admin_group_path(g.id)
           %td= g.name
-          %td= g.users.first.email
+          %td= g.users.first.try(:email)
           %td= g.permalink
           %td= g.admins.count
           %td= g.evaluations.count
