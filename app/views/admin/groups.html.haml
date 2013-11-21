@@ -35,5 +35,5 @@
           %td= g.evaluations.count
           %td= g.paths.count
           %td= g.candidate_count
-          %td= Group::PLAN_TYPES[g.plan_type][:description]
+          %td= Group::PLAN_TYPES[g.try(:plan_type)][:description]
   = link_to "Refresh", admin_groups_path, class: "button button-standard"
