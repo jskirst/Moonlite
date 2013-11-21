@@ -40,7 +40,7 @@
   #update_user input[type=submit] { padding: 6px 10px; font-size: 14px; }
   
 .headlines.hide{ style: " min-height: auto; width:66%;" }
-  %img{ src: GIANT_STONEY, style: "display: inline-block; height: 250px; vertical-align:top; position: relative; top:32px; "}
+  %img{ src: GIANT_STONEY, style: "display: inline-block; height: 250px; vertical-align:top; position: relative; top: 45px; "}
   %div{ style: "display: inline-block; width: 65%; margin-top:10px"}
     .header
       %h1{ style: "font-size: 32px;" } Don't lose your progress!           
@@ -48,20 +48,20 @@
         Save your score, reserve your username, and keep racking up points!
     .body.centered{ style: "margin-top: 0px; margin-bottom: 0; " }
       .signup
-        = link_to "/auth/google_oauth2", class: "btn danger", style: "padding: 4px 10px;" do
+        = link_to "/auth/google_oauth2", class: "submit_button", style: "padding: 4px 10px;" do
           = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
           %span.landingbuttontext Sign in with Google »
-        
-        = link_to "/auth/facebook", class: "btn danger", style: "padding: 4px 10px;" do
+        = link_to "/auth/facebook", class: "submit_button", style: "padding: 4px 10px;" do
           = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
           %span.landingbuttontext Sign in with Facebook »
-        
-        %div.divider{ style: "margin: 8px auto;" } OR
+        .clear_floats
+        %div.divider OR
         = form_for(current_user, html: { id: "update_user" }) do |f|
           = hidden_field_tag "redirect_url", challenge_url(@path.permalink, c: true)
           = f.text_field :name, value: nil, placeholder: "Name"
           = f.text_field :email, value: nil, placeholder: "E-Mail"
-          = f.password_field :password, value: nil, placeholder: "Password"
-          = f.submit "Submit", class: "button button-standard button-small", style: "display: block; margin: 5px auto; width: inherit;"
+          = f.password_field :password, value: nil, placeholder: "Password", style: "float: left; margin-left: 10px;"
+          = f.submit "Submit", class: "submit_button_alt", style: "display: block; margin-right: 10px; width: inherit;"
+          .clear_floats
   .exit{ style: "float: right; margin-top: 20px;" }
     %a.continue_to_launchpad Continue to Launchpad »

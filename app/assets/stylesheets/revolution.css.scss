@@ -1,13 +1,28 @@
 @import "variables.css.scss";
 
 /* General/Revolution - this should always stay at the top */
-pre.unstyled { padding: 0px; background-color: inherit; border: 0px; word-break:normal;}
+pre.unstyled { padding: 0px; background-color: inherit; border: 0px; }
+pre { word-break: normal; }
 .profile_dropdown li { min-width: 130px; }
 .profile_dropdown li:hover { color: white; }
 .navbar{ z-index:1010; }
 .container.body { padding-top: 51px; }
 .submit_button {
   background-color: #e9685b;
+  color: white;
+  float: right;
+  font-weight: normal;
+  box-shadow: none;
+  margin: 0;
+  font-size: 15px;
+  border: none;
+  border-radius: 3px;
+  padding: 7px 20px 5px 20px;
+  &:hover{ box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); text-decoration: none; color: white;}
+  &:active{ position: relative; top: 1px; }
+}
+.submit_button_alt {
+  background-color: $employer_green;
   color: white;
   float: right;
   font-weight: normal;

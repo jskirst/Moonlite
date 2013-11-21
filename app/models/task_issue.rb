@@ -1,16 +1,18 @@
 class TaskIssue < ActiveRecord::Base
-  SPAM      = 1
-  SPELLING  = 2
-  MISPLACED = 3
-  REPEAT    = 4
-  QUALITY   = 5
-  COPYRIGHT = 6
-  WRONG     = 7
+  SPAM        = 1
+  SPELLING    = 2
+  MISPLACED   = 3
+  REPEAT      = 4
+  QUALITY     = 5
+  COPYRIGHT   = 6
+  WRONG       = 7
+  FORMATTING  = 8
   
-  ISSUE_TYPES = [SPAM, SPELLING, MISPLACED, REPEAT, QUALITY, COPYRIGHT, WRONG]
+  ISSUE_TYPES = [SPAM, SPELLING, FORMATTING, MISPLACED, REPEAT, QUALITY, COPYRIGHT, WRONG]
   ISSUE_TYPES_SHORT = {
     SPAM => "Spam",
     SPELLING => "Spelling",
+    FORMATTING => "Formatting",
     MISPLACED => "Misplaced",
     REPEAT => "Repeat",
     QUALITY => "Quality",
@@ -20,6 +22,7 @@ class TaskIssue < ActiveRecord::Base
   ISSUE_TYPE_CONTENT = {
     SPAM => "Unwanted commercial content or spam",
     SPELLING => "Spelling or grammatical error",
+    FORMATTING => "Question formatting is incorrect",
     MISPLACED => "Doesn't belong in this section or Challenge",
     REPEAT => "Too similar to another question",
     QUALITY => "So poor that it detracts from the Challenge",
