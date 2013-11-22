@@ -49,7 +49,7 @@
               .controls
                 = submit_tag "Submit", id: "submit_exact", class: "button button-info"
             
-        = link_to (@next_text || "Next"), @next_link, id: "nextbutton", class: "hide button button-actionable", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled"); return true;'
+        = link_to (@next_text || "Next"), @next_link, id: "nextbutton", class: "hide submit_button", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled"); return true;'
     
     - if @show_stats
       %div{ style: "display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 260px; margin-left: 28px;" }

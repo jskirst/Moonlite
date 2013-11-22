@@ -2,9 +2,9 @@
   %div.launchpadCRcolumn
     %div.launchpadcolumnheader
       - if current_user.guest_user?
-        %button.show_welcome_headline.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;", onclick: "$('.headlines:first').removeClass('cleared').show(); $('.launchpadcontent').hide();" } Save Score
+        %button.show_welcome_headline.button.button-small.submit_button{ style: "margin: -4px 1px 0 0; text-shadow: none;", onclick: "$('.headlines:first').removeClass('cleared').show(); $('.launchpadcontent').hide();" } Save Score
       - elsif @enrollment.contribution_unlocked?
-        %button#editor_link.button.button-small.button-actionable{ style: "margin-top: -5px; text-shadow:none;" } Create a Question
+        %button#editor_link.button.button-small.submit_button{ style: "margin: -4px 1px 0 0; text-shadow: none;" } Create a Question
       %ul.nav.nav-tabs
         %li.active
           %a#arena_tab_link{ data: { tab: "arena_tab" }, title: "Arena"} Arena
@@ -33,11 +33,11 @@
             %p You have <strong>#{tasks_remaining_count} unanswered questions</strong>.
             - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0           
             - if tasks_remaining
-              %p= link_to "Continue", start_section_path(@current_section), class: "button button-actionable button-large"
+              %p= link_to "Continue", start_section_path(@current_section), class: "submit_button_alt_big", style: "text-shadow: none; float: none;"
             - else
               %p Arena questions are added frequently. When more are available, you can return here to take them. Complete <strong>Tasks</strong> or answer some <strong>Creative Responses</strong> to earn more points and continue to level up. 
           - else
-            %p= link_to "Start", start_section_path(@current_section), class: "button button-actionable button-large"            
+            %p= link_to "Start", start_section_path(@current_section), class: "submit_button_alt_big", style: "text-shadow: none; float: none;"
       
       %div#questions_tab.tab_content
         - if @enrollment.contribution_unlocked?

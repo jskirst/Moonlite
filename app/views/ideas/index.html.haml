@@ -6,9 +6,9 @@
   %div.ideas_header
     - if current_user
       - if @idea_mode == true
-        = link_to "Post New Idea", new_idea_path, class: "button button-actionable", style: "float: right;"
+        = link_to "Post New Idea", new_idea_path, class: "submit_button"
       - else
-        = link_to "Post New Bug", new_bug_path, class: "button button-actionable", style: "float: right;"
+        = link_to "Post New Bug", new_bug_path, class: "submit_button"
     %div{ style: "border-bottom: 1px solid #DDD; margin-bottom: 10px; margin-top:-10px;" }
       %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
       %h1{ style: "display: inline-block;" } MetaBright Labs

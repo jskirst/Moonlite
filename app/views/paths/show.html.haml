@@ -24,10 +24,10 @@
       = image_tag @path.path_pic, alt: "#{@path.name}"
     - if current_user
       - if @enrollment.total_points > 0
-        %a#launch_button.button.button-actionable{ onclick: "$('#launchpad').removeClass('hide').modal({ keyboard: true, backdrop: 'static', show: true });" } 
+        %a#launch_button.submit_button{ onclick: "$('#launchpad').removeClass('hide').modal({ keyboard: true, backdrop: 'static', show: true });" } 
           Continue Level #{@enrollment.level} »
       - else
-        = link_to "Start Level 1", continue_path_path(@path.permalink), class: "button button-actionable", id: "launch_button"
+        = link_to "Start Level 1", continue_path_path(@path.permalink), class: "submit_button", id: "launch_button"
     %h1= @path.name
     %h2
       - if current_user

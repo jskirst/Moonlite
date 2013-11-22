@@ -30,12 +30,12 @@
           Sign up with Google or Facebook to make your profile awesome in a hurry. Or sign up with your email address, and edit your profile manually.
         %div{ style: "margin-top: 20px;" }
           %div
-            = link_to "/auth/google_oauth2", class: "submit_button", style: "width: 205px; margin-right: 60px; float: " do
+            = link_to "/auth/google_oauth2", class: "submit_button", style: "margin-right: 60px;" do
               = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-              %span.landingbuttontext Sign in with Google »        
+              %span.landingbuttontext Sign up with Google »        
             = link_to "/auth/facebook", class: "submit_button" do
               = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
-              %span.landingbuttontext Sign in with Facebook »
+              %span.landingbuttontext Sign up with Facebook »
           %div.divider OR
           = form_for(current_user, html: { id: "update_user" }) do |f|
             = hidden_field_tag "redirect_url", user_url(current_user.id)
@@ -51,11 +51,12 @@
         #topprofilecontent{}
           %div{ style: "float:right; text-align:center; " }
             - if @user == current_user
-              = link_to "Edit Profile", edit_user_path(@user.username), class: "button button-actionable"
+              = link_to "Edit Profile", edit_user_path(@user.username), class: "submit_button"
             - elsif current_user
               #following_box
-                = link_to "Following", follow_user_path(@user.username), id: "unfollow_button", class: "button button-info", remote: true, style: ("display:none" unless current_user.following?(@user))
-                = link_to "Follow", follow_user_path(@user.username), id: "follow_button", class: "button button-actionable", remote: true, style: ("display:none" if current_user.following?(@user))         
+                = link_to "Following", follow_user_path(@user.username), id: "unfollow_button", class: "submit_button_alt", remote: true, style: ("display:none" unless current_user.following?(@user))
+                = link_to "Follow", follow_user_path(@user.username), id: "follow_button", class: "submit_button", remote: true, style: ("display:none;" if current_user.following?(@user))
+            .clear_floats
             .social_stats
               .stat
                 #following_count.hi= @user.following_count
@@ -212,7 +213,7 @@
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I can do...
               - if @user == current_user
-                = link_to "Continue Challenge", challenge_path(enrollment.path.permalink, c: true, type: Task::CREATIVE), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
+                = link_to "Continue Challenge", challenge_path(enrollment.path.permalink, c: true, type: Task::CREATIVE), class: "button-small button submit_button_alt", style: "float: right; top: 2px; right: -3px; position: relative; text-shadow: none;"
               %h4 #{enrollment_details[:creative].posts.size} Creative Responses
               %div.profilecontent
                 = render "newsfeed/feed", feed: enrollment_details[:creative]
@@ -224,7 +225,7 @@
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I have done...
               - if false and @user == current_user
-                = link_to "Add new Task", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small button-actionable", style: "float: right; top: 2px; right: -3px; position: relative;"
+                = link_to "Add new Task", challenge_path(enrollment.path.permalink, c: true, type: Task::CHECKIN), class: "button button-small submit_button_alt", style: "float: right; top: 2px; right: -3px; position: relative;"
               %h4 #{enrollment_details[:tasks].posts.size} Tasks Completed
               %div.profilecontent
                 = render "newsfeed/feed", feed: enrollment_details[:tasks]
@@ -266,25 +267,25 @@
     
   $("#following_box").on("mouseenter", function() {
     var $unfollow_button = $(this).find("#unfollow_button");
-    $unfollow_button.addClass("button-actionable");
-    $unfollow_button.removeClass("button-info");
+    $unfollow_button.addClass("submit_button");
+    $unfollow_button.removeClass("submit_button_alt");
     $unfollow_button.text("Unfollow");
   }).on("mouseleave", function() {
     var $unfollow_button = $(this).find("#unfollow_button");
-    $unfollow_button.removeClass("button-actionable");
-    $unfollow_button.addClass("button-info");
+    $unfollow_button.removeClass("submit_button");
+    $unfollow_button.addClass("submit_button_alt");
     $unfollow_button.text("Following");
   });
   
   $("#modal_following_box").on("mouseenter", function() {
     var $modal_unfollow_button = $(this).find("#modal_unfollow_button");
-    $modal_unfollow_button.addClass("button-actionable");
-    $modal_unfollow_button.removeClass("button-info");
+    $modal_unfollow_button.addClass("submit_button");
+    $modal_unfollow_button.removeClass("submit_button_alt");
     $modal_unfollow_button.text("Unfollow");
   }).on("mouseleave", function() {
     var $modal_unfollow_button = $(this).find("#modal_unfollow_button");
-    $modal_unfollow_button.removeClass("button-actionable");
-    $modal_unfollow_button.addClass("button-info");
+    $modal_unfollow_button.removeClass("submit_button");
+    $modal_unfollow_button.addClass("submit_button_alt");
     $modal_unfollow_button.text("Following");
   });
   

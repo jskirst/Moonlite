@@ -17,7 +17,7 @@
           = f.text_area(:description, style: "width: 400px; height: 100px;")
       %div.control-group
         %div.controls
-          = f.submit("Submit #{Idea::TYPES[@idea.idea_type]}", class: "button button-actionable", style: "float:right;")
+          = f.submit("Submit #{Idea::TYPES[@idea.idea_type]}", class: "submit_button")
   %div.submit_idea_tips
     %h3 
       %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Lightbulb", style:"height:30px; width:30px;"}
