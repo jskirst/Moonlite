@@ -24,6 +24,7 @@
         %hr{ style: "margin: 0;" }
         %div.explorebody{ style: "padding:10px;" }
           = form_for(current_user.task_issues.new, url: report_task_path(@task.id), html: { style: "margin:10px 18px 0 18px;" }) do |f|
+            = hidden_field_tag :redirect_url, request.url
             %fieldset
               %label{style:"font-size:16px;"} What's wrong with this question?
               - TaskIssue::ISSUE_TYPES.each do |t|

@@ -124,7 +124,7 @@ class GroupsController < ApplicationController
       sign_in(@group.creator)
       redirect_to confirmation_group_url(@group)
     else
-      @errors = @group.errors.full_messages.join(". ")
+      @errors = @group.errors.full_messages.join(". ") + @group.creator.errors.full_messages.join(". ")
       render "groups/signup/trial"
     end
   end

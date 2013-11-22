@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PerformanceStatistics
+describe PerformanceStatistics do
   before :each do
     @user = init_metabright
   end

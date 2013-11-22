@@ -9,7 +9,7 @@ class Group < ActiveRecord::Base
   SIX_TO_FIFTEEN_PLAN = "six_to_fifteen"
   SIXTEEN_TO_FIFTY_PLAN = "sixteen_to_fifty"
   PLAN_TYPES = {
-    FREE_PLAN => { price: "$0.00", description: "Trial Admin", max_seats: 1, active: true },
+    FREE_PLAN => { price: "$0.00", description: "Trial Admin", max_seats: 1, active: false },
     SINGLE_PLAN => { price: "$19.99", description: "1 Admin", max_seats: 1, active: true }, 
     TWO_TO_FIVE_PLAN => { price: "$29.99", description: "2-5 Admins", max_seats: 5, active: true }, 
     SIX_TO_FIFTEEN_PLAN => { price: "$49.99", description: "6-15 Admins", max_seats: 15, active: true },

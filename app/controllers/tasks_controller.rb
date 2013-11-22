@@ -159,7 +159,11 @@ class TasksController < ApplicationController
     else
       flash[:error] = "We're sorry, your issue could not be reported. You may have tried to create another issue report for the same question."  
     end
-    redirect_to continue_path_path(@task.path.permalink)
+    if params[:redirect_url]
+      redirect_to params[:redirect_url]
+    else
+      redirect_to continue_path_path(@task.path.permalink)
+    end
   end
   
   def add_stored_resource
