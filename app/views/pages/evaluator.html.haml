@@ -21,13 +21,13 @@
 #employer_product.aboutcontainer{ "data-no-turbolink" => true } 
   .aboutbox
     .header 
-      %img{ src: GIANT_STONEY, alt: "Stoney"} 
       %h1 Measure your Job Candidates' Skills
+      %h2 
+        Improve your Quality of Hire and Decrease your Time to Fill 
+        %br
+        with the MetaBright Evaluator.
     .body 
       %div 
-        .area 
-          %p.be_bold 
-            Never waste your time in an interview again. MetaBright's <strong>Evaluator</strong> measures and verfies the skills of your job candidates <span style="font-family: 'MuliItalic';">before</span> you interview them. Just direct your candidates to your unique MetaBright URL, and we take care of the rest.  
         .happy_customers
           .holder
             .testimonial
@@ -57,12 +57,17 @@
           .holder
             %p 
               %span Guaranteed
-              to improve your hiring accuracy and eliminate bad interviewees. Get started for free!
+              to improve your quality of hire and decrease your time to fill. Get started for free!
             .big_submit_button
               = link_to "SIGN UP FOR FREE!", trial_groups_path, class: "submit_button", descriptor: "signup-link"
+        .area{ style: "margin-top: 75px;"} 
+          %h2{ style: "margin-bottom: 0;"} 
+            The MetaBright Evaluator
+          %p.be_bold
+            Never waste your time in an interview again. The MetaBright Evaluator is a skill assessment platform that measures and verfies the skills of your job candidates <span style="font-family: 'MuliItalic';">before</span> you interview them. Just direct your candidates to your unique MetaBright URL, and we take care of the rest.
         .sexy_time 
-          %section 
-            .holder  
+          %section.gradient_down 
+            .holder.gradient_up 
               .text
                 %h1 
                   What skills does your company need? 
@@ -75,20 +80,17 @@
                       %div{ "data-tip" => truncate(path.name, length: 17, separator: ' ')}
                         = image_tag path.picture, alt: "#{path.name}"
                 %h3 ...or create your own!
-          %section.gradient_down 
-            .holder.gradient_up 
+          %section
+            .holder
               .image{ style: "width: 55%; margin-top: 21px;"} 
                 %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Screenshots/submit4_transparent_bg.png"} 
               .text.right{ style: "width: 38%;"} 
                 %h1 
                   Expand your candidate pool. 
-                  / Measure and validate your candidates' skills. 
-                  / Scalable candidate testing. 
-                  / Your candidates take your Evaluation. 
                 %p 
                   Don't miss out on your next top achiever. Your Evaluator subscription lets you measure an unlimited number of candidates. Go ahead, aim wide with your talent search. 
-          %section 
-            .holder 
+          %section.gradient_down 
+            .holder.gradient_up
               .text{ style: "width: 46%; "} 
                 %h1 
                   Robust and dynamic testing. 
@@ -96,8 +98,8 @@
                   Take advantage of MetaBright's industry-leading testing. We assess your candidates across more dimensions than anyone else. And our question formats uncover your candidates' real-world knowledge. 
               .image.right{ style: "margin-top:15px; "} 
                 %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Screenshots/CR.png"} 
-          %section.gradient_down 
-            .holder.gradient_up 
+          %section
+            .holder
               .image{ style: "width: 52%; margin-top: 13px;"} 
                 %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Screenshots/eval_overview_big_zoom8.png"} 
               .text.right{ style: "width: 40%;"} 
@@ -105,8 +107,8 @@
                   Compare your candidates at a glance. 
                 %p 
                   The Evaluator concisely organizes all of your candidates in a single view. Even better, you can sort and compare your candidates based on their aptitude. Try doing that with resumes. 
-          %section 
-            .holder 
+          %section.gradient_down 
+            .holder
               .text{ style: "width: 38%;"} 
                 %h1 
                   Make a confident choice. 
@@ -118,7 +120,7 @@
           .holder
             %p 
               %span Guaranteed
-              to improve your hiring accuracy and eliminate bad interviewees. Get started for free!
+              to improve your quality of hire and decrease your time to fill. Get started for free!
             .big_submit_button
               = link_to "SIGN UP FOR FREE!", trial_groups_path, class: "submit_button", descriptor: "signup-link"
         .area.pitch_tiles{ style: "margin-top:0; "} 
@@ -210,7 +212,7 @@
           .holder
             %p 
               %span Guaranteed
-              to improve your hiring accuracy and eliminate bad interviewees. Get started for free!
+              to improve your quality of hire and decrease your time to fill. Get started for free!
             .big_submit_button
               = link_to "SIGN UP FOR FREE!", trial_groups_path, class: "submit_button", descriptor: "signup-link"
         

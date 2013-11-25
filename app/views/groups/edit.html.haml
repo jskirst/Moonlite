@@ -16,7 +16,7 @@
               %label.control-label Group picture URL
               .controls
                 = f.text_field :image_url, id: "image_url_input", class: "xxlarge"
-                %a.btn.secondary{ style: "margin-left:10px;" } Preview   
+                %a.submit_button_standard{ style: "margin-left:10px; float: none; padding: 3px 20px; position: relative; top: 2px;" } Preview   
             .control-group
               %label.control-label About
               %div.controls
@@ -70,5 +70,5 @@
       %hr
       %div.control-group
         %div.controls
-        = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
-        = link_to "Back", account_group_path(@group.permalink), class: "button button-standard", style: "float: right;"
+        = f.submit "Save", class: "submit_button", style: "margin-left: 10px; margin-right: 20px;"
+        = link_to "Back", account_group_path(@group.permalink), class: "submit_button_standard"

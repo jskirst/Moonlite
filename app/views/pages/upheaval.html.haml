@@ -19,7 +19,7 @@
               - @paths.first(21).each do |path|
                 %li
                   %div{ "data-tip" => truncate("Take the #{path.name} Challenge!", length: 30, separator:' ')  }
-                    = link_to challenge_url(path.permalink), id: "challenge_start_#{path.permalink}" do
+                    = link_to intro_path(c: path.permalink), id: "challenge_start_#{path.permalink}" do
                       = image_tag path.picture, class: "challenge-start", alt: "#{path.name}"
             .clear_floats
             .footer{ style: "margin-bottom: 35px;"}

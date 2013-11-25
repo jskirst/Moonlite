@@ -58,8 +58,8 @@
           = render "tasks/take_task", f: f
       
       %div.CRbuttonspace
-        = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "button button-standard", style: "float: left;", data: { confirm: "Note: You will not be able to come back to this question once you skip it.", "no-turbolinks" => true }
-        = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
+        = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "submit_button_standard", style: "float: left;", data: { confirm: "Note: You will not be able to come back to this question once you skip it.", "no-turbolinks" => true }
+        = f.submit "Submit", class: "submit_button", id: "submit_button"
         - if @task.time_limit
           .countdown{ data: { time: @task.time_limit } }
             Time Remaining: 
