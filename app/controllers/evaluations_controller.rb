@@ -125,7 +125,7 @@ class EvaluationsController < ApplicationController
   def continue
     @show_nav_bar = false
     @show_footer = false
-    @show_feedback = true
+    @show_feedback = false
     @path = @evaluation.paths.find(params[:path_id])
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)

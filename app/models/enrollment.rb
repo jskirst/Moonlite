@@ -15,7 +15,15 @@ class Enrollment < ActiveRecord::Base
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true
   
-  after_create { path.personas.each { |p| user.enroll!(p) } }
+  after_create do 
+    path.personas.each do |p| 
+      begin
+        user.enroll!(p)
+      rescue
+        raise user.to_yaml + p.to_yaml
+      end
+    end
+  end
   
   def add_earned_points(points)
     points = points.to_i

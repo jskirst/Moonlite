@@ -1,4 +1,3 @@
-%script{ src: HIGHCHARTS_JS }
 :javascript
   $(function(){
     $("#results_list li:first").addClass("active");
@@ -158,9 +157,9 @@
                     - r[:creative].each do |completed_task|
                       %li
                         - total_time = (completed_task.updated_at - completed_task.created_at).round(0)
-                        - total_time = creative_time_to_answer if total_time > 300
-                        - minutes = total_time / 60
-                        - seconds = total_time % 60
+                        - total_time = creative_time_to_answer if total_time > 600
+                        - minutes = (total_time.to_f / 60).round(0)
+                        - seconds = (total_time.to_f % 60).round(0)
                         .answer
                           - task = completed_task.task
                           %p= task.question
