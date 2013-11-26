@@ -6,7 +6,7 @@
     $("input[name=mode]").val("preview");
   });
   
-- if @task.time_limit
+- if @task.time_limit and @task.time_limit >= 120
   :javascript
     function setTimer(){ 
       var remaining_seconds = parseInt($(".countdown").data("time")) - 1
@@ -60,7 +60,7 @@
       %div.CRbuttonspace
         = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "button button-standard", style: "float: left;", data: { confirm: "Note: You will not be able to come back to this question once you skip it.", "no-turbolinks" => true }
         = f.submit "Submit", class: "button button-actionable", id: "submit_button", style: "float:right;"
-        - if @task.time_limit
+        - if @task.time_limit and @task.time_limit >= 120
           .countdown{ data: { time: @task.time_limit } }
             Time Remaining: 
             <span class='countdown_minutes'>--</span>:<span class='countdown_seconds'>--</span>
