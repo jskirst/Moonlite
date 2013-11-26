@@ -95,7 +95,6 @@ $.MB.initEvaluationGradeCharts = function(){
   var change = { "265": 'Unqualified', "305": 'Novice', "345": 'Familiar', "385": 'Competent', "425": 'Advanced', "465": 'Expert' }
     
   $(".metascore_graph").each(function(){ 
-    console.log($(this).attr('data-metascore'))
     var metascore = parseInt($(this).attr('data-metascore'))
     var skill_level = $(this).attr('data-skill')
     

@@ -110,7 +110,7 @@ class TasksController < ApplicationController
     task = Task.cached_find(params[:id])
     raise "Access Denied: Task is currently locked." if task.locked_at
     completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])
-    if task.time_limit
+    if task.time_limit and task.time_limit >= 120
       if (completed_task.created_at + (task.time_limit + 10).seconds) < Time.now()
         raise "Time expired"
       end

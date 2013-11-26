@@ -95,13 +95,13 @@
                   - status = @evaluation.user_status(current_user, p)
                   - if status == :start or status == :continue
                     - evaluation_completed = false
-                    = link_to status.to_s.humanize, continue_evaluation_path(@evaluation.id, p.id), class: "button button-small button-actionable"
+                    = link_to status.to_s.humanize, continue_evaluation_path(@evaluation.id, p.id), class: "button button-small submit_button", style: "float: none; text-shadow: none;"
                   - else
                     %div Completed
                 - elsif current_user
-                  = link_to "Enter Location", "", class: "button disabled button-small button-actionable"
+                  = link_to "Enter Location", "", class: "button disabled button-small submit_button", style: "float: none; text-shadow: none;"
                 - else
-                  = link_to "Sign up to begin", "", class: "button disabled button-small button-actionable"
+                  = link_to "Sign up to begin", "", class: "button disabled button-small submit_button", style: "float: none; text-shadow: none;"
       .step
         .img-circle
           %span 4
@@ -112,7 +112,7 @@
               %p You successfully submitted this application #{time_ago_in_words(@evaluation_enrollment.submitted_at)} ago.
             - else
               %div{ style: "text-align: center; margin-top: 12px; "}
-                = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "button button-large button-actionable", style: "margin: 10px; float: left;"
+                = link_to "Submit", submit_group_evaluation_path(@group, @evaluation), class: "submit_button", style: "margin: 10px; float: left;"
           - else
             = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
             %p Once all previous steps are completed, you'll be able to submit your application.

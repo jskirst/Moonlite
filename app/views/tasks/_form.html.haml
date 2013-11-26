@@ -205,7 +205,6 @@
       $(this).find(".status").addClass("alert-success").text("Question added...").show().fadeOut(10000);
     }).on("ajax:error", function(xhr, data){
       data = $.parseJSON(data.responseText);
-      console.log(data.error)
       $(this).find(".status").removeClass("alert-success");
       $(this).find(".status").addClass("alert-error").text(data.error).show().fadeOut(10000);
     })
