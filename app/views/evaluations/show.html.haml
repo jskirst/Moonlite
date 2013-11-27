@@ -45,7 +45,7 @@
           - @evaluations.each do |e|
             %tr
               %td
-                = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id)
+                = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id), "data-no-turbolinks" => true
               %td= truncate(e.email, length: 25, separator: ' ')
               - @paths.each do |p|
                 - skill_level = Enrollment.describe_skill_level(e["e#{p.id}_metascore"])

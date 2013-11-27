@@ -67,27 +67,28 @@ class Evaluation < ActiveRecord::Base
     end
     
     type = [Task::CREATIVE]
+    sub_types = path.group_id.nil? ? [Task::TEXT] : nil
     max = 5
     cc = completed_count(user, path, type)
     if path.group_id or completed_count(user, path, type) < max
-      task = next_task_of_type(user, path, type)
-      total = tasks_of_type(path, type).count
+      task = next_task_of_type(user, path, type, sub_types)
+      total = tasks_of_type(path, type, sub_types).count
       total = (total <= max or path.group_id) ? total : max
       return { next_task: task, completed_count: cc, total: total } if task
     end
-    
-    # if path.group_id
-    #   type = [Task::CHECKIN]
-    #   return next_task_of_type(user, path, type)
-    # end
   end
   
-  def tasks_of_type(path, answer_types)
-    Task.where("tasks.path_id = ?", path.id).where("tasks.locked_at is NULL and tasks.reviewed_at is not NULL and answer_type in (?)", answer_types)
+  def tasks_of_type(path, answer_types, answer_sub_types = nil)
+    tasks = Task.where("tasks.path_id = ?", path.id)
+      .where("tasks.locked_at is NULL and tasks.reviewed_at is not NULL and answer_type in (?)", answer_types)
+    if answer_sub_types
+      tasks = tasks.where("tasks.answer_sub_type in (?)", answer_sub_types)
+    end
+    return tasks
   end
   
-  def next_task_of_type(user, path, answer_types)
-    return tasks_of_type(path, answer_types).where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id).first
+  def next_task_of_type(user, path, answer_types, answer_sub_types = nil)
+    return tasks_of_type(path, answer_types, answer_sub_types).where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id).first
   end
   
   def completed_count(user, path, types)

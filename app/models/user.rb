@@ -264,7 +264,9 @@ class User < ActiveRecord::Base
     if obj.is_a? Path
       enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
     elsif obj.is_a? Persona
-      user_personas.create!(persona_id: obj.id) unless user_personas.find_by_persona_id(obj.id)
+      unless user_personas.find_by_persona_id(obj.id)
+        user_personas.create!(persona_id: obj.id) 
+      end
     elsif obj.is_a? Evaluation
       evaluation_enrollments.create!(evaluation_id: obj.id) unless evaluation_enrollments.find_by_evaluation_id(obj.id)
     else
