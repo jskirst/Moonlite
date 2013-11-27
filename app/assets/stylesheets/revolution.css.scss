@@ -1622,7 +1622,7 @@ th {
 }
 
 // This makes the jagged edges on the top of the click-it box
-.top {
+.jagged_top {
   &:before {
     content: " ";
     display:block;
@@ -1637,7 +1637,7 @@ th {
 }
 
 // This makes the jagged edges on the bottom of the click-it box
-.bottom {
+.jagged_bottom {
   &:after {
     content: " ";
     display:block;
