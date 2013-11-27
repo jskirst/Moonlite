@@ -1,0 +1,208 @@
+@import "variables.css.scss";
+
+#custom_landing{
+  #image_wrapper{
+    overflow: hidden;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: white url(https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/custom_landings/airs_bg1.jpg);
+    width: 100%;
+    height: 100%;
+    background-size: 100%;
+    
+    #big_background_image {
+      
+    }
+  }
+  #content_wrapper {
+    position: relative;
+  }
+  header {
+      height: 485px;
+      
+      section {
+          color: rgb(51, 51, 51);
+          height: 199px;
+          text-align: center;
+          text-decoration: none solid rgb(51, 51, 51);
+          width: 940px;
+          border: 0px none rgb(51, 51, 51);
+          font: normal normal normal 14px/20px;
+          margin: 0px 250px;
+          outline: rgb(51, 51, 51) none 0px;
+          padding: 100px 0px 120px;
+      }
+      h1 {
+          color: rgb(255, 255, 255);
+          height: 40px;
+          text-align: center;
+          text-decoration: none solid rgb(255, 255, 255);
+          text-rendering: optimizelegibility;
+          text-shadow: rgb(55, 70, 131) 0px 1px 0px;
+          width: 940px;
+          border: 0px none rgb(255, 255, 255);
+          font: normal normal normal 44px 'MuliLight', sans-serif;
+          margin: 25px 0px;
+          outline: rgb(255, 255, 255) none 0px;
+      }
+
+      h2 {
+          color: rgb(255, 255, 255);
+          height: 40px;
+          text-align: center;
+          text-decoration: none solid rgb(255, 255, 255);
+          text-rendering: optimizelegibility;
+          width: 940px;
+          border: 0px none rgb(255, 255, 255);
+          font: normal normal 300 32px/40px 'MuliLight', sans-serif;
+          margin: 10px 0px;
+          outline: rgb(255, 255, 255) none 0px;
+      }
+  }
+  article {
+    h2 {
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      margin-bottom: 15px;
+      text-align: center;
+      letter-spacing: 1.5px;
+      word-spacing: 1px;
+    }
+  }
+  #art_1 {
+    background: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/green_texture_big3.png");
+    font: normal normal normal 14px/20px 'MuliLight', Helvetica, Arial, sans-serif;
+    margin: 20px 0 0;
+    position: relative;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, .1);
+  }
+  #art_2 {
+    background: $opacity_level;
+    
+    .area { padding: 40px 0; }
+  }
+  #art_3{
+    background: $opacity_level;
+    
+    .sexy_time { padding: 0 0 20px 0; }
+  }
+  #art_4 {
+    padding: 0;
+    background: $opacity_level;
+  }
+  #art_5 {
+    background: $opacity_level;
+    font-size: 18px;
+    line-height: 23px;
+    
+    .area{ padding: 70px 0 0 0; }
+  }
+  #art_6 {
+    background: $opacity_level;
+    
+    .stretcher { padding-bottom: 50px; }
+    .area { padding: 30px 0 ; border-radius: 0 0 6px 6px; }
+  }
+  #art_7{
+    padding: 50px 0 50px ;
+    color: white;
+    
+    .area { background: transparent; }
+    h2 { border-bottom: 1px solid rgba(255, 255, 255, 0.5);   }
+  }
+  #art_8{
+    background: $opacity_level;
+    padding: 50px 0 0 0;
+    
+    .area { padding: 0 0 20px 0; border-radius: 6px;}
+  }
+  #happy_users {
+    background: none;
+    width: 70%;
+    margin: 0 auto;
+    position: inherit;
+    font-size: 15px;
+    
+    .picture {  }
+    .bio { width: 114px; margin-top: 20px;}
+    
+    .speech { width: 260px; }
+    .speech.right:before {
+      right: 130px;
+      top: 110px;
+    }
+    .speech.right:after {
+      right: 138px;
+      top: 110px;
+    }
+    .speech.left { float: right; }
+    .speech.left:before {
+      left: 125px;
+      top: 110px;
+    }
+    .speech.left:after {
+      left: 134px;
+      top: 110px;
+    }
+    .speech.center { margin: 0 auto 50px; }
+    .speech.center:before {
+      right: 105px;
+      top: 110px;
+    }
+    .speech.center:after {
+      right: 118px;
+      top: 110px;
+    }
+  }
+  .click-it {
+    width: 100%;
+    position: inherit;
+    
+    .holder{
+      margin: -35px auto;
+      width: 70%;
+      
+      p { width: 69%; font-size: 22px; }
+      .big_submit_button { width: 25%; }
+    }
+  }
+
+  //  The make_room class adds padding to each article it appears as a child of
+  .make_room { padding: 30px 30px 25px; }
+  .make_room_sides { padding: 0 30px; }
+  
+  .be_bold {
+    text-align: center;
+    font-size: 18px;
+    line-height: 31px;
+    padding-top: 18px;
+    margin: 13px 0 0 0;
+    &:nth-child(1) { padding-top: 0; } 
+  }
+  .area {
+    width: 70%;
+    margin: 60px auto 47px;
+    background: white;
+    &:first-child { margin-top:0; }
+    &:last-child { margin-bottom: 0; };
+  }
+  .sexy_time { 
+    width: 70%;
+    margin: 0 auto;
+    background: white;
+    
+    section { 
+      
+      .inner_holder {
+        width: 882px;
+        margin: 0 auto;
+      }
+    }
+  }
+  #screen_carousel {
+    margin: 0 auto;
+  }
+}

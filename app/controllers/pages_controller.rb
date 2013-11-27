@@ -210,6 +210,17 @@ class PagesController < ApplicationController
     render "talentminer"
   end
   
+  def airs_landing
+    @title = "MetaBright Welcomes AIRS Training Students"
+    @show_user_name = false
+    @show_nav_bar = false
+    @show_header = false
+    @show_footer = false
+    @hide_background = true
+    @paths = Path.by_popularity(21).where("promoted_at is not ?", nil).to_a
+    render "airs_landing"
+  end
+  
   def evaluator
     if @admin_group and @admin_group.stripe_token.present?
       redirect_to root_url and return
