@@ -370,6 +370,7 @@ class PathsController < ApplicationController
     offset = feed.page * 15
     feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
+      .where("users.locked_at is not ? and users.private_at is not ?", nil, nil)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
