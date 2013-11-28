@@ -69,7 +69,7 @@
                   = f.select :time_limit, hash_to_array(Task::TIME_LIMIT), { include_blank: true }, class: "span2"
             .control-group      
               %label.control-label Template (optional)
-              .controls{ style: "margin-top: 6px;" }
+              .controls{ style: "margin-top: 3px;" }
                 %a.show_template{ onclick: "$(this).hide(); $(this).siblings('div').show();", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
                 .cr_template_tt
                   %div{ "data-tip" => "Text you include in the template will be supplied to the user in their editable answer field. Templates are useful to guide what format you'd like a response in. They can also be used to give the user something to edit, improve, or build upon."}

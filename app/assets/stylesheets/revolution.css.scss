@@ -280,6 +280,13 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 
 
 /* Profile/Revolution */
+#profile {
+  .help_box {
+    .submit_button { margin: 0 auto; display: inline-block; float: none; width: 220px;}
+    .submit_button_alt { float: none; margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px; }
+  }
+}
+
 #profile, #challenge, #homepage{
   .help_box{
     background-clip: padding-box;
@@ -298,9 +305,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
     .body { 
       margin: 0 0 10px 10px;
       text-align: center;
-      
-      .submit_button { margin: 0 auto; display: inline-block; float: none; width: 220px;}
-      .submit_button_alt { float: none; margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px; }
+
       h4 { text-align: left; }
       img { height: 30px; width: 30px; }
       form { margin-bottom: 5px; border: none; }
