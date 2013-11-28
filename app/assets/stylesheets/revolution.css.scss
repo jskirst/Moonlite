@@ -49,6 +49,11 @@ pre { word-break: normal; }
   font-size: 18px;
   line-height: 30px;
 }
+.submit_button_blue {
+  @extend .sexy_buttons;
+  background-color: #5BD2E9;
+  color: white;
+}
 .submit_button_standard {
   @extend .sexy_buttons;
   background-color: #DAE1E4;

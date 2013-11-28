@@ -11,7 +11,7 @@
     %pre.CRquestion= @task.question
   %div.CRresponsespace{ style: "min-height: 175px;" }
     - if @path.template and @evaluation.nil?
-      = f.submit "View Preview", class: "button button-small button-info", id: "preview_button", style: "float:right; margin: 0px 10px 3px 0; padding: 3px 10px;"
+      = f.submit "View Preview", class: "button button-small submit_button_blue", id: "preview_button", style: "text-shadow: none; margin: 0px 10px 3px 0; padding: 3px 10px;"
     = link_to "View hotkeys", "https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts", target: '_blank', style: "float: left; position: relative; font-size: 13px; top: 3px; margin-left: 10px;"
     %h4{ style: "text-align: center; margin-bottom: 5px; font-size: 15px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
