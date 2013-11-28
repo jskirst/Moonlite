@@ -9,7 +9,7 @@
   
   h1{ font-size:40px; line-height:26px; display: inline-block; }
   
-  .submit_button, .submit_button_alt { width: 78px; }
+  .submit_button, .submit_button_green { width: 78px; }
   .social_stats { 
     margin-top: 8px;
     
@@ -264,8 +264,8 @@
           vertical-align: top;  
           
           .submit_button { border: 1px solid rgb(88, 79, 79); }
-          .submit_button_alt { border: 1px solid rgb(80, 83, 92); }
-          .submit_button, .submit_button_alt { width: 68px; }
+          .submit_button_green { border: 1px solid rgb(80, 83, 92); }
+          .submit_button, .submit_button_green { width: 68px; }
           
         }
         .stat { 

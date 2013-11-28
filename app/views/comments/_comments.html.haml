@@ -8,7 +8,7 @@
     %div.displayin.floatl
       %a.comment{ style: "position: relative; top: 5px;", onclick: "open_comments(this);" } #{comments.size}  Comments
     - if context == :submission
-      = link_to "Go back to challenge", challenge_path(@path.permalink), class: "button button-info button-small"
+      = link_to "Go back to challenge", challenge_path(@path.permalink), class: "button button-small submit_button_blue", style: "color: white; text-shadow: none; margin-right: 12px;"
     - else
       = render "shared/sharing", { custom_style: "display: inline; margin-left: 10px; float: left;", title: sharing_title, url: sharing_url }
   %div.comments{ style: "text-align: left; display: none;" }
@@ -23,4 +23,4 @@
           = f.text_area :content, :rows => 2, :style => "width: 90%; height: 55px; "
         = hidden_field :comment, :owner_type, { :value => owner_type }
         = hidden_field :comment, :owner_id, { :value => owner_id }
-        = f.submit "Add Comment", :class => "button button-standard button-small", :style => "margin-top:15px;"
+        = f.submit "Add Comment", :class => "button button-small submit_button_standard", :style => "margin-top:15px; text-shadow: none; color: #666; float: none;"

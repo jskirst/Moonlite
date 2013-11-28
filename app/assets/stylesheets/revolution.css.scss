@@ -39,13 +39,13 @@ pre { word-break: normal; }
   line-height: 36px;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.75);
 }
-.submit_button_alt {
+.submit_button_green {
   @extend .sexy_buttons;
   background-color: $employer_green;
   color: white;
 }
-.submit_button_alt_big {
-  @extend .submit_button_alt;
+.submit_button_green_big {
+  @extend .submit_button_green;
   font-size: 18px;
   line-height: 30px;
 }
@@ -53,6 +53,11 @@ pre { word-break: normal; }
   @extend .sexy_buttons;
   background-color: #5BD2E9;
   color: white;
+}
+.submit_button_blue_big {
+  @extend .submit_button_blue;
+  font-size: 18px;
+  line-height: 30px;
 }
 .submit_button_standard {
   @extend .sexy_buttons;
@@ -288,7 +293,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #profile {
   .help_box {
     .submit_button { margin: 0 auto; display: inline-block; float: none; width: 220px;}
-    .submit_button_alt { float: none; margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px; }
+    .submit_button_green { float: none; margin-bottom: 10px; width: inherit; padding: 4px 10px; font-size: 14px; }
   }
 }
 
@@ -977,13 +982,12 @@ th {
   }
   .signup{
     margin: 10px 0px 8px 0; 
-    
-    .button{
-      width: 166px; 
-      
-      .landingbuttontext{
-        left: 0;
-      }
+    .landingbuttontext{
+      left: 0;
+      width: 166px;
+      float: none;
+      vertical-align: top;
+      line-height: 18px;
     }
   }
 }
@@ -1009,12 +1013,19 @@ th {
   
   h4 { margin-top: 12px; text-align: center; }
   
+  .submit_button, .submit_button_blue { 
+    width:210px; 
+    padding-top:7px; 
+    padding-bottom:7px; 
+    float: none;
+    
+    img { height:30px; }
+  }
+  
   .signup_pro{
     text-align: center;
     margin-top: 20px; 
-  
-    .button { width:210px; padding-top:7px; padding-bottom:7px; }
-    .button img { height:30px; }
+
     .divider {
       background-image: url($divider);
       background-repeat: no-repeat;
@@ -1029,9 +1040,7 @@ th {
   .signup{
     text-align: center;
     margin-top: 20px; 
-  
-    .button { width:210px; padding-top:7px; padding-bottom:7px; }
-    .button img { height:30px; }
+
     .divider {
       background-image: url($divider);
       background-repeat: no-repeat;

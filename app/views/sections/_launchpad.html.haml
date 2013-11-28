@@ -33,11 +33,11 @@
             %p You have <strong>#{tasks_remaining_count} unanswered questions</strong>.
             - tasks_remaining = @core_tasks.select{ |t| t.status_id.nil? }.size > 0           
             - if tasks_remaining
-              %p= link_to "Continue", start_section_path(@current_section), class: "submit_button_alt_big", style: "text-shadow: none; float: none;"
+              %p= link_to "Continue", start_section_path(@current_section), class: "submit_button_green_big", style: "text-shadow: none; float: none;"
             - else
               %p Arena questions are added frequently. When more are available, you can return here to take them. Complete <strong>Tasks</strong> or answer some <strong>Creative Responses</strong> to earn more points and continue to level up. 
           - else
-            %p= link_to "Start", start_section_path(@current_section), class: "submit_button_alt_big", style: "text-shadow: none; float: none;"
+            %p= link_to "Start", start_section_path(@current_section), class: "submit_button_green_big", style: "text-shadow: none; float: none;"
       
       %div#questions_tab.tab_content
         - if @enrollment.contribution_unlocked?

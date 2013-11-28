@@ -29,11 +29,11 @@
         Keep racking up the points!
       %h4 Choose how you want to register to save your score, reserve your username, and get back to earning points.
       .signup
-        = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
+        = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "submit_button" do
           = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
           %span.landingbuttontext Sign up with Google »
   
-        = link_to "/auth/facebook", style: "display: inline-block;", class: "button button-info" do
+        = link_to "/auth/facebook", style: "display: inline-block;", class: "submit_button" do
           = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
           %span.landingbuttontext Sign up with Facebook »
         .divider OR
@@ -47,9 +47,9 @@
           = f.text_field :name, value: nil, placeholder: "Name"
           = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
           = f.password_field :password, value: nil, placeholder: "Password"
-          = f.submit "Submit", class: "button button-small button-actionable", style: "float: right; width: auto; padding: 3px 10px;"
-          %div{ style: "margin: 10px auto 0;" }            
-            = link_to "Skip for now and continue with Challenge", continue_path_path(@section.path.permalink), class: "button button-standard", style: "width: auto; font-size: 14px; "
+          = f.submit "Submit", class: "button button-small submit_button_green", style: "width: auto; padding: 3px 10px; text-shadow: none;"
+          %div{ style: "margin: 20px auto 0;" }            
+            = link_to "Skip for now and continue with Challenge", continue_path_path(@section.path.permalink), class: "submit_button_standard", style: "width: auto; font-size: 14px; float: none; "
             
 
 

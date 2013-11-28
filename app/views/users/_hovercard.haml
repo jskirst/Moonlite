@@ -17,7 +17,7 @@
             .lo Following  
           - unless current_user.nil? or @user == current_user 
             #modal_following_box
-              = link_to "Following", follow_user_path(@user.username), id: "modal_unfollow_button", class: "submit_button_alt", remote: true, style: ("display:none" unless current_user.following?(@user))
+              = link_to "Following", follow_user_path(@user.username), id: "modal_unfollow_button", class: "submit_button_green", remote: true, style: ("display:none" unless current_user.following?(@user))
               = link_to "Follow", follow_user_path(@user.username), id: "modal_follow_button", class: "submit_button", remote: true, style: ("display:none" if current_user.following?(@user))   
           .stat
             #modal_follower_count.hi= @user.follower_count

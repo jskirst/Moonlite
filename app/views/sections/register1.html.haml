@@ -59,7 +59,7 @@
               = f.text_field :city, style: "width: 187px;", placeholder:"Please enter your city"
             %div{ style: "margin: 15px 0 0 0; width: 100%;"}
               - if current_user.guest_user?
-                = f.submit "Continue to Register", class: "button button-actionable", style: "float: right;"                
+                = f.submit "Continue to Register", class: "submit_button"
               - else
-                = f.submit "Submit", class: "button button-actionable", style: "float: right;"
-              = link_to "Back", finish_section_path(@section, @session_id, s:0), class: "button button-standard", style: "float: left; margin-left: -20px; "
+                = f.submit "Submit", class: "submit_button"
+              = link_to "Back", finish_section_path(@section, @session_id, s:0), class: "submit_button_standard", style: "float: left; margin-left: -20px; "

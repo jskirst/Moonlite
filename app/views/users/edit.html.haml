@@ -61,7 +61,7 @@
           %label.control-label Confirm new password
           .controls
             = f.password_field :password_confirmation, style: "width: 150px;"
-        = f.submit "Save new password", class: "button button-actionable", style: "padding: 4px 10px 3px 10px; font-size:13px; position: relative; float: right; bottom: 3px;"
+        = f.submit "Save new password", class: "submit_button_green", style: "padding: 4px 10px 3px 10px; font-size:13px; position: relative; float: right; bottom: 3px;"
         
       %h4 Your email address
       %span{style:"position:relative; bottom:5px;"}
@@ -94,5 +94,5 @@
     .control-group
       .controls
       = link_to "Remove Account", current_user, method: :delete, data: { confirm: "Are you absolutely certain you would like to delete your account? This action is irreversible." },  style: "margin-left: 20px; margin-top:7px; float: left;"
-      = f.submit "Save", class: "button button-actionable", style: "float: right; margin-left: 10px; margin-right: 20px;"
-      = link_to "Back", profile_path(current_user.username), class: "button button-standard", style: "float: right;"
+      = f.submit "Save", class: "submit_button", style: "margin-left: 10px; margin-right: 20px;"
+      = link_to "Back", profile_path(current_user.username), class: "submit_button_standard"

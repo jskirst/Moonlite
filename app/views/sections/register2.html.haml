@@ -29,11 +29,11 @@
         You're almost done!
       %h4 Choose how you want to register to save your preferences and get back to earning points.
       .signup_pro
-        = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "button button-info" do
+        = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 40px; margin-bottom: 0;", class: "submit_button_blue" do
           = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
           %span.landingbuttontext Sign up with Google »
 
-        = link_to "/auth/facebook", style: "display: inline-block;", class: "button button-info" do
+        = link_to "/auth/facebook", style: "display: inline-block;", class: "submit_button_blue" do
           = image_tag ICON_LOGIN_FACEBOOK, alt: "Facebook sign up"
           %span.landingbuttontext Sign up with Facebook »
         .divider OR
@@ -48,5 +48,5 @@
           = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
           = f.password_field :password, value: nil, placeholder: "Password"
           %div{ style: "margin: 10px 0 0 0;" }
-            = f.submit "Submit", class: "button button-actionable", style: "float: right; width: auto; "
-            = link_to "Back", finish_section_path(@section, @session_id, s: 1), class: "button button-standard", style: "float: left; width: auto; "
+            = f.submit "Submit", class: "submit_button", style: "width: auto; float: right;"
+            = link_to "Back", finish_section_path(@section, @session_id, s: 1), class: "submit_button_standard", style: "float: left; width: auto; "

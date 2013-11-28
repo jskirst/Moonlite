@@ -26,5 +26,5 @@
             On Twitter
             %img{ style: "height: 48px; ", src:"https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/twitter_logo_blue_on_white.png"}
       %div{ style: "margin: 15px 0 0 0; text-align: center;" }
-        = link_to "Continue with Challenge", continue_path_path(@section.path.permalink), class: "button button-actionable", style: "float: right; width: 182px; font-size: 14px;"
-        = link_to "Return to Challenge home", challenge_path(@path.permalink, c: true, sh: true), class: "button button-info", style: "float: left; width: 182px; font-size: 14px;"
+        = link_to "Continue with Challenge", continue_path_path(@section.path.permalink), class: "submit_button", style: "float: right; width: 182px; font-size: 14px;"
+        = link_to "Return to Challenge home", challenge_path(@path.permalink, c: true, sh: true), class: "submit_button_blue", style: "float: left; width: 182px; font-size: 14px;"
