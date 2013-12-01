@@ -78,7 +78,7 @@
             %li.navuser
               .dropdown.pull-right
                 - if current_user.guest_user?
-                  = link_to profile_path(current_user.username), class: "register_link_holder", style: "padding: 4px 0; background-color: whiteSmoke; margin: 2px 9px 0 0;" do
+                  = link_to profile_path(current_user.username), class: "register_link_holder", style: "padding: 6px 0 3px; background: #DFDFDF; margin: 5px 9px 0 0;" do
                     %span Join
                 - else
                   - groups = @groups if not @admin_group and (@groups and @groups.size > 0)
