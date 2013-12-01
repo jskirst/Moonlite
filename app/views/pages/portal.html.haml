@@ -59,23 +59,23 @@
           = link_to group_evaluations_url(@group), descriptor: "evaluations-index-link" do
             .option{ style: " border-right: 1px solid #DDD;" }
               %div
-                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_evaluator.png"
+                = image_tag NAVBAR_EVALUATIONS
                 %h3 Evaluations
           = link_to account_group_url(@group) do
             .option{ style: "border-right: 1px solid transparent;" }
               %div
-                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_group.png"
+                = image_tag NAVBAR_ACCOUNT
                 %h3 Account
         .portal-row
           = link_to group_paths_url(@group), descriptor: "challenges-index-link" do
             .option{ style: "border-right: 1px solid #DDD;" }
               %div
-                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_challenges.png"
+                = image_tag NAVBAR_CHALLENGES
                 %h3 Challenges
           = link_to "#" do
             .option{ stye: "border-right: 1px solid #DDD;" }
               %div{ style: "cursor: default; opacity: 0.7;" }
-                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/icon_search.png"
+                = image_tag NAVBAR_SEARCH
                 %h3 Search
                 %h5 Coming Soon...
     

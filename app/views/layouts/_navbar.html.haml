@@ -1,16 +1,16 @@
 %nav.navbar.navbar-fixed-top
   .fill.navbar-inner{ style: "height: 100%;" }
-    %div{ style: "height: 100%; width: 87%; margin: 0 auto;" }
+    %div{ style: "height: 100%; width: 87%; margin: 0 auto; padding: 6px 0 0 0;" }
       .new-brand.brand{ style: "display: none;" }
         = link_to root_url do
           = image_tag(STONEY_SMALL_URL)
           %h1 MetaBright
-      .brand.old-brand{ style: "padding-top: 3px; width: 150px; padding-right: 10px; " }
+      .brand.old-brand{ style: "width: 160px; padding-right: 10px; margin-top: 2px;" }
         - if params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue")
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
+          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
         - else
           = link_to root_url do
-            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png", alt: "MetaBright")
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
       - if not current_user and not params[:controller] == "evaluations" and not (params[:action] == "take" or params[:action] == "continue")
         %ul.nav.navicons.landing-nav{ style: "height: 100%;", "data-no-turbolink" => true }
           %li
@@ -26,8 +26,8 @@
 
       - elsif current_user and show_nav_bar and not @show_user_name
         - if @admin_group
-          %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
-            %li{ style: "height: 100%; border-right: 1px solid #020D25; "}
+          %ul.nav.navicons{ style: "height: 100%;" }
+            %li{ style: "height: 100%;"}
             %li.navitem{ title: "Evaluations", style: "height: 100%;" }
               = link_to group_evaluations_path(@admin_group) do
                 = image_tag NAVBAR_EVALUATIONS,  alt: "Evaluations"
@@ -52,8 +52,7 @@
                   = image_tag NAVBAR_SEARCH, alt: "Search"  
                   %span Search
         - else
-          %ul.nav.navicons{ style: "height: 100%; border-right: 1px solid #56698B;" }
-            %li{ style: "height: 100%; border-right: 1px solid #020D25; "}
+          %ul.nav.navicons{ style: "height: 100%; " }
             %li.navitem{ title: "Home", style: "height: 100%; " }
               = link_to root_url do
                 = image_tag NAVBAR_HOME,  alt: "Home"
@@ -72,7 +71,7 @@
                 = image_tag NAVBAR_PROFILE, alt: "Profile"  
                 %span Profile
       %div{ style: "margin-left: 10px; padding-top: 10px; display: inline-block;" }
-        = image_tag ICON_LOADING, alt: "Loading...", style: "display: none; width: 20px;", class: "page_loading"
+        = image_tag ICON_LOADING_URL, alt: "Loading...", style: "display: none; width: 26px; margin-top: -3px;", class: "page_loading"
       - if current_user and show_nav_bar
         %ul.nav.pull-right{ style: "float:right; margin-right: -.6%;" }
           - if current_user
@@ -86,19 +85,19 @@
                   - enrollments = current_user.enrollments.includes(:path).where("total_points > 0").order("total_points DESC").to_a
                   - enrollments = nil if enrollments.empty?
                   - if @admin_group
-                    %span.users_name{ style: "top: 6px; position: relative; right: 10px; color: rgba(255, 255, 255, 0.8);" }= current_user.name
+                    %span.users_name{ style: "top: 10px; position: relative; right: 10px; color: #666; opacity: 0.9;" }= current_user.name
                   - elsif groups or enrollments
                     %a.dropdown-toggle{ "data-toggle" => "dropdown"}
-                      = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
+                      = image_tag current_user.picture, style: "width: 20px; height: 20px; vertical-align: middle; opacity: 1;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
                       %span.users_name{ style: "vertical-align: middle;" }= current_user.name
                       %span.caret
                   - elsif @show_user_name
-                    %div{ style: "margin: 4px 10px 0 0; color: rgb(238,238,238);" }
-                      = image_tag current_user.picture, style: "width: 17px; height: 17px; vertical-align: middle;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
-                      %span.users_name{ style: "vertical-align: middle;" }= current_user.name
+                    %div{ style: "margin: 7px 10px 0 0; " }
+                      = image_tag current_user.picture, style: "width: 20px; height: 20px; vertical-align: middle; opacity: 1;", alt: "#{@current_user.name}", onerror: "user_img_error(this);" 
+                      %span.users_name{ style: "vertical-align: middle; opacity: 1;" }= current_user.name
                 - if groups or enrollments
                   %ul.dropdown-menu{ role: "button", style: "padding: 0; top:38px; right:-136px; min-width: 312px; min-height: 135px;" }
-                    .outter-nub{ style: "left: 148px; "}
+                    .outter-nub{ style: "left: 151px; "}
                       .inner-nub{ style: "border-bottom-color: #FCFCFC;"}
                     - if groups
                       .leftboxheader Your Groups
@@ -188,7 +187,7 @@
           %li
             %div{ style: "width: 300px; margin-top: 2px;"}
               = image_tag @path.image, style: "width: 32px; height: 32px; margin-top: 2px;", alt: "#{@path.name}"            
-              %div{ style: "vertical-align: top; width: 255px; margin-left: 5px; display: inline-block; color: white;" }
+              %div{ style: "vertical-align: top; width: 255px; margin-left: 5px; display: inline-block; color: #666;" }
                 %span Level #{@enrollment.level} - #{@enrollment.points_to_next_level} more points to next level
                 .progress.progress-info{ style: "height: 10px; margin:0;" }
                   .bar{ style: "width: #{@enrollment.level_percent}%;"}
