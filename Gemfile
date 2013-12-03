@@ -35,6 +35,8 @@ gem 'rails_12factor'
 gem 'exception_notification'
 gem 'exception_notification-rake', '~> 0.1.0'
 gem 'sextant'
+gem 'unf'
+gem 'prawn'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'

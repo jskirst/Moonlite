@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Group Functions" do
+describe "Group Functions", js: true do
   before :each do
     init_metabright
   end
@@ -73,10 +73,12 @@ describe "Group Functions" do
     fill_in "group_creator_email", with: "bloggerman@t.com"
     fill_in "group_creator_password", with: "a1b2c3d4"
 
+    ActionMailer.delivers = []
     click_on "Create My Account"
     sleep(10)
     
     expect_content("Welcome to MetaBright!")
+    ActionMailer.deliveries.size.should == 1
     group = Group.last
     expect_content(group.users.first.name)
   end
@@ -179,9 +181,11 @@ describe "Group Functions" do
         sleep 0.25
       end
       
+      ActionMailer.delivers = []
       click_on "Submit"
       
       expect_content "Your application has been successfully submitted."
+      ActionMailer.deliveries.size.should == 1
     end
     
     it "should give all admins edit access to custom Challenges" do

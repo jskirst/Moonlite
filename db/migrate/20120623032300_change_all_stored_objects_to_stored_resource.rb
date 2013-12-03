@@ -4,6 +4,6 @@ class ChangeAllStoredObjectsToStoredResource < ActiveRecord::Migration
     add_column :stored_resources, :owner_id, :integer
     add_column :stored_resources, :owner_name, :string
     
-    add_index :stored_resources, [:owner_id, :owner_name], :uniquness => false
+    add_index :stored_resources, [:owner_id, :owner_name], :unique => false
   end
 end

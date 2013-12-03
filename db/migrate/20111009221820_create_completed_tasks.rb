@@ -6,7 +6,7 @@ class CreateCompletedTasks < ActiveRecord::Migration
 
       t.timestamps
     end
-	add_index :completed_tasks, [:user_id, :task_id], :uniqueness => true
+	add_index :completed_tasks, [:user_id, :task_id], :unique => true
   end
 
   def self.down

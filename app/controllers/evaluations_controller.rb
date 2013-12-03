@@ -83,6 +83,15 @@ class EvaluationsController < ApplicationController
       @results << extract_enrollment_details(enrollment)
     end
   end
+
+  def export
+    @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(params[:u])
+    pdf = EvaluationExport.new(@evaluation_enrollment, view_context)
+    send_data pdf.render, 
+      filename: "evaluation_#{@evaluation_enrollment.id}.pdf",
+      type: "application/pdf",
+      disposition: "inline"
+  end
   
   def save
     mode = params[:mode]
@@ -127,6 +136,7 @@ class EvaluationsController < ApplicationController
     @show_footer = false
     @show_feedback = false
     @path = @evaluation.paths.find(params[:path_id])
+    difficulty = session[:difficulty] || 0.75
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
     end
@@ -134,7 +144,7 @@ class EvaluationsController < ApplicationController
       current_user.enroll!(@evaluation)
     end
     
-    next_task = @evaluation.next_task(current_user, @path)
+    next_task = @evaluation.next_task(current_user, @path, difficulty)
     if next_task
       @task = next_task[:next_task] 
     end
@@ -178,6 +188,7 @@ class EvaluationsController < ApplicationController
     unless @evaluation_enrollment.submitted?
       @group.admins.each do |admin|
         UserEvent.log_event(admin, "#{current_user.name} has just submitted their Evaluation for the #{@evaluation.title} position.", current_user, grade_group_evaluation_url(@group, @evaluation, u: current_user.id), current_user.picture)  
+        GroupMailer.submission(@evaluation_enrollment).deliver
       end
       @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
     end
