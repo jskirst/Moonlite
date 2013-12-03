@@ -1293,6 +1293,14 @@ th {
       }
     }
   }
+  .promo_discount_callout {
+    text-align: center;
+    border: 4px solid #638c61;
+    border-radius: 4px;
+    background: $employer_orange_light;
+    padding: 16px 20px;
+    margin-bottom: 50px;
+  }
   .free_trial {
     text-align: center;
     border: 4px solid #638c61;
@@ -1486,12 +1494,20 @@ th {
     width: 100%;
     height: 70px;
   }
+  .promo{
+    height: 85px;
+  }
   .price_figure {
     font-size: 24px;
     text-transform: uppercase;
     vertical-align: middle;
     display: table-cell;
     margin-top: 12px; 
+  }
+  .price_description {
+    margin-bottom: 6px;
+    font-size: 15px;
+    text-transform: none;
   }
   .price_number {
     font-weight: bold;
