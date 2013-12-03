@@ -5,7 +5,7 @@
       %span Sign in to MetaBright
     %hr{ style: "margin:0"}
     .aboutbody
-      %h4{ style: "margin-bottom: 5px;" } Please enter and confirm a new password.
+      %h4{ style: "margin-bottom: 5px;" } Please enter and confirm your new password.
       = form_for(:session, url: finish_reset_path) do |f|
         = f.hidden_field :t, value: @token
         %table{ style: "width: 700px;" }
