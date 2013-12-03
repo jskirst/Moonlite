@@ -97,12 +97,19 @@ class TasksController < ApplicationController
     
     # TODO: Completed task does not specify that it must be from this enrollment
     completed_task.complete_core_task!(params[:answer], params[:points_remaining])
-    session[:ssf] = completed_task.correct? ? (session[:ssf].to_i + 1) : 0
+    if completed_task.correct?
+      session[:ssf] = session[:ssf].to_i + 1
+      session[:difficulty] = (session[:difficulty] || 0.75).to_f + 0.08
+    else
+      session[:ssf] = 0
+      session[:difficulty] = (session[:difficulty] || 0.75).to_f - 0.08
+    end
     
     render json: { 
       correct_answer: completed_task.correct_answer, 
       answer: completed_task.answer, 
-      correct: completed_task.correct? 
+      correct: completed_task.correct?,
+      difficulty: session[:difficulty]
     }
   end
   

@@ -38,6 +38,7 @@
           - if @user.country
             - country = Carmen::Country.coded(@user.country)
             %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
+          %h4= link_to "Export (PDF)", export_group_evaluation_path(@group, @evaluation, u: @user)
       - if @evaluation_enrollment
         .actions
           - if @evaluation_enrollment.submitted_at
@@ -71,31 +72,18 @@
         - if @results.empty?
           %p This user has submitted this evaluation but has no results listed. It is possible that the evaluation has been changed since this user completed the evaluation, and their results are no longer valid.
         - @results.each do |r|
-          - path = Path.where(name: r[:name]).first
+          - path = r[:path]
           .evaluation.hide{ id: r[:permalink] }
-            - is_difficult = path.difficult?
-            - unless is_difficult
+            - unless r[:is_difficult]
               = render "paths/difficulty_warning"
             .header{ style: "padding-left: 0;"}
               %h3 Candidate Summary
-              - if r[:metascore] < 260
-                - skill_level = Enrollment.describe_skill_level(r[:metascore])
-                - ms_for_graph = 260
-              - elsif !is_difficult and r[:metascore] > 385
-                - skill_level = "Competent"
-                - ms_for_graph = 385
-              - else
-                - skill_level = Enrollment.describe_skill_level(r[:metascore])
-                - ms_for_graph = r[:metascore]
-              .metascore_graph{ :data => { "metascore" => ms_for_graph, "skill" => skill_level } }
+              .metascore_graph{ :data => { "metascore" => r[:ms_for_graph], "skill" => r[:skill_level] } }
               .clear_floats
             .challenge_stats
-              -# .myrank
-              -#   %span #
-              -#   %p Percentile Rank
               .big_skill_space
-                .big_skill.label{ class: skill_level.downcase}
-                  = skill_level
+                .big_skill.label{ class: r[:skill_level].downcase}
+                  = r[:skill_level]
                 .text
                   MetaScore Ranking
                   .ms{ style: "display: inline-block;" }                    

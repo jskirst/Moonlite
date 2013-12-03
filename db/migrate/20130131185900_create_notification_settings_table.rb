@@ -12,6 +12,6 @@ class CreateNotificationSettingsTable < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :notification_settings, [:user_id], uniqueness: true
+    add_index :notification_settings, [:user_id], unique: true
   end
 end

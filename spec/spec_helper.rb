@@ -29,10 +29,10 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include RequestsHelper
   
-  Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, { timeout: 30, phantomjs_options: ["--load-images=no"] })
-  end
-  Capybara.default_driver = :poltergeist
+  # Capybara.register_driver :poltergeist do |app|
+  #   Capybara::Poltergeist::Driver.new(app, { timeout: 30, phantomjs_options: ["--load-images=no"] })
+  # end
+  # Capybara.default_driver = :poltergeist
   config.include(MailerMacros)
   config.before(:each) { reset_email }
 end
@@ -59,6 +59,7 @@ Capybara::Node::Element.class_eval do
 end
 
 def start_cli
+  return true
   puts "Waiting for command"
   command = ""
   while true

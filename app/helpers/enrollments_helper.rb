@@ -15,7 +15,8 @@ module EnrollmentsHelper
       .where("tasks.path_id = ?", path.id)
       .where("tasks.answer_type in (?)", [Task::CHECKIN]).to_a
     
-    return { 
+    details = { 
+      path: path,
       metascore_available: path.metascore_available?,
       name: path.name, 
       permalink: path.permalink, 
@@ -26,5 +27,19 @@ module EnrollmentsHelper
       metascore: enrollment.metascore,
       metapercentile: enrollment.metapercentile
     }
+
+    details[:is_difficult] = path.difficult?
+
+    if details[:metascore] < 260
+      details[:skill_level] = Enrollment.describe_skill_level(details[:metascore])
+      details[:ms_for_graph] = 260
+    elsif !details[:is_difficult] and details[:metascore] > 385
+      details[:skill_level] = "Competent"
+      details[:ms_for_graph] = 385
+    else
+      details[:skill_level] = Enrollment.describe_skill_level(details[:metascore])
+      details[:ms_for_graph] = details[:metascore]
+    end
+    return details
   end
 end

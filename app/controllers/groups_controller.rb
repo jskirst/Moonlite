@@ -122,6 +122,7 @@ class GroupsController < ApplicationController
     @group.stripe_token = "free_as_in_beer"
     if @group.save
       sign_in(@group.creator)
+      GroupMailer.welcome(@group).deliver
       redirect_to confirmation_group_url(@group)
     else
       @errors = @group.errors.full_messages.join(". ") + @group.creator.errors.full_messages.join(". ")

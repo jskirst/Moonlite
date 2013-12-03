@@ -7,6 +7,6 @@ class CreateVotesTable < ActiveRecord::Migration
       t.timestamps
     end
     
-    add_index :votes, [:user_id, :submitted_answer_id], :uniqueness => true
+    add_index :votes, [:user_id, :submitted_answer_id], :unique => true
   end
 end

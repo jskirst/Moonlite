@@ -5,6 +5,6 @@ class CreatePathUserRolesTable < ActiveRecord::Migration
 			p.integer :path_id
 			p.timestamps
 		end
-		add_index :path_user_roles, [:user_role_id, :path_id], :uniqueness => true
+		add_index :path_user_roles, [:user_role_id, :path_id], :unique => true
 	end
 end

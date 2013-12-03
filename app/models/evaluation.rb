@@ -55,12 +55,12 @@ class Evaluation < ActiveRecord::Base
     raise "No evaluations selected" unless evaluation_paths.count > 0
   end
   
-  def next_task(user, path)
+  def next_task(user, path, difficulty = nil)
     type = [Task::MULTIPLE, Task::EXACT]
     cc = completed_count(user, path, type)
     max = 30
     if path.group_id or cc < max
-      task = next_task_of_type(user, path, type)
+      task = next_task_of_type(user, path, type, { difficulty: difficulty })
       total = tasks_of_type(path, type).count
       total = (total <= max or path.group_id) ? total : max
       return { next_task: task, completed_count: cc, total: total } if task
@@ -71,24 +71,34 @@ class Evaluation < ActiveRecord::Base
     max = 5
     cc = completed_count(user, path, type)
     if path.group_id or completed_count(user, path, type) < max
-      task = next_task_of_type(user, path, type, sub_types)
-      total = tasks_of_type(path, type, sub_types).count
+      task = next_task_of_type(user, path, type, { answer_sub_types: sub_types })
+      total = tasks_of_type(path, type, { answer_sub_types: sub_types }).count
       total = (total <= max or path.group_id) ? total : max
       return { next_task: task, completed_count: cc, total: total } if task
     end
   end
   
-  def tasks_of_type(path, answer_types, answer_sub_types = nil)
+  def tasks_of_type(path, answer_types, options = {})
+    difficulty = options[:difficulty]
+    answer_sub_types = options[:answer_sub_types]
+    
     tasks = Task.where("tasks.path_id = ?", path.id)
-      .where("tasks.locked_at is NULL and tasks.reviewed_at is not NULL and answer_type in (?)", answer_types)
+      .where("tasks.locked_at is NULL and tasks.reviewed_at is not NULL")
+      .where("answer_type in (?)", answer_types)
+    
     if answer_sub_types
       tasks = tasks.where("tasks.answer_sub_type in (?)", answer_sub_types)
     end
+
+    if difficulty
+      tasks = tasks.where("tasks.difficulty < ?", difficulty).order("tasks.difficulty DESC")
+    end
+
     return tasks
   end
   
-  def next_task_of_type(user, path, answer_types, answer_sub_types = nil)
-    return tasks_of_type(path, answer_types, answer_sub_types).where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id).first
+  def next_task_of_type(user, path, answer_types, options = {})
+    return tasks_of_type(path, answer_types, options).where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id).first
   end
   
   def completed_count(user, path, types)

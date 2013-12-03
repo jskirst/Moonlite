@@ -94,6 +94,7 @@ Metabright::Application.routes.draw do
         get :review
         get :submit
         get :grade
+        get :export
         put :save
       end
     end
