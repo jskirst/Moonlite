@@ -172,6 +172,7 @@ Metabright::Application.routes.draw do
   get '/internship' => 'pages#internship'
   get '/evaluator' => 'pages#evaluator'
   get '/pricing' => 'pages#pricing', as: 'pricing'
+  get '/promotional' => 'pages#promo_pricing', as: 'promo_pricing'
   get '/organization_portal' => 'pages#organization_portal'
   get '/product_form' => 'pages#product_form'
   get '/tos' => 'pages#tos'

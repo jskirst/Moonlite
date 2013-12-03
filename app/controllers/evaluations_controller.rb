@@ -111,6 +111,7 @@ class EvaluationsController < ApplicationController
     end
     
     if current_user
+      current_user.update_attribute(:private_at, Time.now)
       @evaluation_enrollment = @evaluation.evaluation_enrollments.find_by_user_id(current_user.id)
       if @evaluation_enrollment.nil?
         @evaluation_enrollment = @evaluation.evaluation_enrollments.create!(user_id: current_user.id, evaluation_id: @evaluation.id)

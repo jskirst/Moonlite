@@ -41,11 +41,14 @@ class PagesController < ApplicationController
     feed.page = params[:page].to_i
     offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
+    eval_paths = current_user.evaluation_enrollments.to_a.collect{|er| er.evaluation.paths.pluck(:id)}.flatten
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
     feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
       .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       .where("paths.id in (?)", relevant_paths)
+      .where("paths.id not in (?)", eval_paths)
+      .where("paths.group_id is ?", nil)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
@@ -236,6 +239,19 @@ class PagesController < ApplicationController
   end
   
   def pricing
+    if @admin_group and @admin_group.stripe_token.present?
+      redirect_to root_url and return
+    end
+    @title = "Pre-Employment Skill Tests - MetaBright Evaluator"
+    @show_footer = true
+    @show_chat = true
+    @hide_background = true
+    @show_sign_in = true
+    @show_nav_bar = false
+    @show_employer_link = false
+  end
+  
+  def promo_pricing
     if @admin_group and @admin_group.stripe_token.present?
       redirect_to root_url and return
     end

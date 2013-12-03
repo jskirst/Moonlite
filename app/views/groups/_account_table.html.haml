@@ -40,8 +40,8 @@
   %tbody
     - @users.to_a.each do |u|
       %tr
-        %td= truncate(u.name, length: 30)
-        %td= truncate(u.email, length:25)
+        %td= truncate(u.name, length: 40)
+        %td= truncate(u.email, length: 40)
         %td{ style: "text-align: right;" } Joined #{u.created_at.strftime("%m/%d/%Y")}
         %td.edit_user_details_link{ onclick: "$('.group_admin_modal[data-user=#{u.id}]').modal({keyboard: true, show: true})"}
           %div{"data-tip" => "User Settings"}
