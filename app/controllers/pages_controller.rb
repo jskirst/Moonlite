@@ -233,7 +233,7 @@ class PagesController < ApplicationController
     @show_footer = true
     @hide_background = true
     @show_sign_in = true
-    @show_nav_bar = false
+    @show_nav_bar = true
     @show_chat = true
     @show_employer_link = false
     @paths = Path.where("professional_at is not NULL").to_a
@@ -248,7 +248,7 @@ class PagesController < ApplicationController
     @show_chat = true
     @hide_background = true
     @show_sign_in = true
-    @show_nav_bar = false
+    @show_nav_bar = true
     @show_employer_link = false
   end
   

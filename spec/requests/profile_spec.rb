@@ -55,7 +55,7 @@ describe "Profile" do
       click_on "Edit professional settings"
       check "user_wants_full_time"
       select "Albania", from: "user_country"
-      sleep 0.5
+      sleep 1.5
       select "Fier", from: "user_state"
       fill_in "user_city", with: "Booga Booga"
       find("input[descriptor='save-button']").trigger("click")
@@ -83,7 +83,7 @@ describe "Profile" do
       visit profile_path(@user.username)
     end
     
-    it "should all display with correct question statistics" do
+    it "should all display with correct question statistics", js: true do
       sleep(3)
       @completed_paths.each do |p|
         find("#challenge_selector_#{p.permalink}").click
