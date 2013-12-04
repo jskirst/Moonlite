@@ -6,7 +6,7 @@ describe "Group Functions", js: true do
   end
   
   it "should be able to create a Group without a Metabright account" do
-    ActionMailer::Base.deliveries = nil
+    ActionMailer::Base.deliveries = []
     visit root_path
     
     expect_content("Prove your skills.")
@@ -37,7 +37,7 @@ describe "Group Functions", js: true do
   end
   
   it "should be able to create a Group with a MetaBright account" do
-    ActionMailer::Base.deliveries = nil
+    ActionMailer::Base.deliveries = []
     @user = FactoryGirl.create(:user)
     sign_in(@user)
     
@@ -73,12 +73,12 @@ describe "Group Functions", js: true do
     fill_in "group_creator_email", with: "bloggerman@t.com"
     fill_in "group_creator_password", with: "a1b2c3d4"
 
-    ActionMailer.delivers = []
+    ActionMailer::Base.deliveries = []
     click_on "Create My Account"
     sleep(10)
     
     expect_content("Welcome to MetaBright!")
-    ActionMailer.deliveries.size.should == 1
+    ActionMailer::Base.deliveries.size.should == 1
     group = Group.last
     expect_content(group.users.first.name)
   end
@@ -181,11 +181,11 @@ describe "Group Functions", js: true do
         sleep 0.25
       end
       
-      ActionMailer.delivers = []
+      ActionMailer::Base.deliveries = []
       click_on "Submit"
       
       expect_content "Your application has been successfully submitted."
-      ActionMailer.deliveries.size.should == 1
+      ActionMailer::Base.deliveries.size.should == 1
     end
     
     it "should give all admins edit access to custom Challenges" do
