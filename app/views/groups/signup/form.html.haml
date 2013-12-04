@@ -88,7 +88,7 @@
               - if @percent_off
                 After 14 Days: <del>$#{@new_group.price}</del> $#{@new_group.price(@percent_off)} per month
               - else
-                $#{@new_group.price}
+                After 14 Days: $#{@new_group.price} per month
         .coupon_desc.valid-coupon{ style: "display: none; margin-top: 8px;" }
           %div{ style: "font-size: 16px;"} COUPON APPLIED!
           First month free!
@@ -144,8 +144,8 @@
             %p.in-progress.hide Upgrading your account now. This may take a minute or two...
           - else 
             %p.in-progress.hide Creating your account now. This may take a minute or two...
-          = link_to pricing_url do
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear", title: "back"
+          = link_to "#", onclick: "history.back(); return false" do
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear", title: "Back"
           - if @is_trial
             = f.submit "Upgrade My Account", class: "submit_button", style: "width: inherit;"
           - else

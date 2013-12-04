@@ -54,7 +54,7 @@ class Group < ActiveRecord::Base
   def price(percent_off = nil)
     price = PLAN_TYPES[self.plan_type][:price]
     if percent_off
-      price = (price / (1 + (percent_off.to_f / 100))).round(2)
+      price = (price * (1 - (percent_off.to_f / 100))).round(2)
     end
     return price
   end

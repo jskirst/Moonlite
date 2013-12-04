@@ -21,9 +21,9 @@
   .body
     %p.headline_text #{subtext} Share this achievement and brag to your friends.
     %div
-      %button.button.button-actionable.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
-      %button.button.button-standard.button-large{ style: "margin-right: 10px;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
-      %button.button.button-info.button-large{ onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter
+      %button.submit_button_big.button.button-large{ style: "width: 190px; margin-right: 10px; float: none;", onclick: sharing_popup_javascript(:google_plus, challenge_url(@path.permalink), sharing_text) } Share on Google+
+      %button.submit_button_standard_big.button.button-large{ style: "width: 190px; margin-right: 10px; float: none;", onclick: sharing_popup_javascript(:facebook, challenge_url(@path.permalink), sharing_text) } Share on Facebook
+      %button.submit_button_blue_big.button.button-large{ style: "width: 190px; float: none;", onclick: sharing_popup_javascript(:twitter, challenge_url(@path.permalink), sharing_text) } Share on Twitter
   
   .exit{ style: "float: right; margin-top: 24px;" }
     %a{ onclick: "$.MB.next_headline($(this).parents('.headlines'));" } Continue to Launchpad »

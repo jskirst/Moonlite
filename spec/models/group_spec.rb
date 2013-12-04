@@ -22,7 +22,7 @@ describe Group do
     it "should return standard price without percent_off" do
       @group = Group.new
       @group.plan_type = Group::SINGLE_PLAN
-      @group.price(50).should == 13.33
+      @group.price(50).should == 9.99
     end
   end
   
