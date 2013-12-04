@@ -5,22 +5,27 @@
   
 :javascript
   $(function(){ 
-    $.MB.Checkout.init(); 
-    $("#coupon_check").on("click", function(){
-      $.get("#{coupon_url}",
-        { c: $("#group_coupon").val() }, 
-        function(data, response){
-          if(data.coupon == true){
-            $(".invalid-coupon").hide();
-            $(".valid-coupon").show()
-          } else {
-            $(".valid-coupon").hide();
-            $(".invalid-coupon").show();
-          }
-        }
-      );
-    })
+    $.MB.Checkout.init();
   });
+
+- if @coupon.nil?
+  :javascript
+    $(function(){ 
+      $("#coupon_check").on("click", function(){
+        $.get("#{coupon_url}",
+          { c: $("#group_coupon").val() }, 
+          function(data, response){
+            if(data.coupon == true){
+              $(".invalid-coupon").hide();
+              $(".valid-coupon").show()
+            } else {
+              $(".valid-coupon").hide();
+              $(".invalid-coupon").show();
+            }
+          }
+        );
+      });
+    });
   
 - if Rails.env == "development"
   :javascript
@@ -72,12 +77,18 @@
         = f.hidden_field :token
         = f.hidden_field :stripe_token
         = f.hidden_field :plan_type
+        - if @coupon
+          = f.hidden_field :coupon, value: @coupon.id
         .product_name
           - if @is_trial
-            Evaluator #{plan[:description]}: #{plan[:price]}/mo.
+            Evaluator #{plan[:description]}: $#{@new_group.price(@percent_off)}/mo.
           - else
             Evaluator #{plan[:description]}: $0 for 14 Days
-            %div{ style: "font-size: 12px; "} After 14 Days: #{plan[:price]} per month
+            %div{ style: "font-size: 12px; "} 
+              - if @percent_off
+                After 14 Days: <del>$#{@new_group.price}</del> $#{@new_group.price(@percent_off)} per month
+              - else
+                $#{@new_group.price}
         .coupon_desc.valid-coupon{ style: "display: none; margin-top: 8px;" }
           %div{ style: "font-size: 16px;"} COUPON APPLIED!
           First month free!
@@ -123,9 +134,10 @@
         %input{ id: "group_card_month_expr", type: "text", size: 2, maxlength: 2, data: { stripe: "exp-month", label: "card expiration month" }, placeholder: "MM", class: "input-small", style: "width: 1.8em; text-align: center;" }
         %span /
         %input{ id: "group_card_year_expr",type: "text", size: 4, maxlength: 4, data: { stripe: "exp-year", label: "card expiration year" }, placeholder: "YYYY", class: "input-small", style: "width: 2.6em; text-align: center;" }
-        %label Coupon
-        = f.text_field :coupon, placeholder: "Optional...", style: "width: 180px;"
-        = link_to "Apply", "", id: "coupon_check", style: "float: inherit; position: relative; bottom: 6px; left: 10px; font-size: 14px;"
+        - unless @coupon
+          %label Coupon
+          = f.text_field :coupon, placeholder: "Optional...", style: "width: 180px;"
+          = link_to "Apply", "", id: "coupon_check", style: "float: inherit; position: relative; bottom: 6px; left: 10px; font-size: 14px;"
         %p.errors= @errors
         .control-group
           - if @is_trial

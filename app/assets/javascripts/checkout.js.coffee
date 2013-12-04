@@ -34,7 +34,7 @@ $.MB.Checkout.sendToStripe = ->
 $.MB.Checkout.stripeResponseHandler = (status, response) ->
   $form = $("#new_group")
   if response.error
-    $form.find(".errors").text(response.error.message)
+    $form.find(".errors").text(response.error.message).show()
     $form.find("input[type=submit]").prop('disabled', false).removeClass("disabled")
     $(".in-progress").hide();
     stopSpinner()
@@ -44,8 +44,15 @@ $.MB.Checkout.stripeResponseHandler = (status, response) ->
     if $("#group_token").val().length > 0
       $form.find("input[type=submit]").prop('disabled', true).addClass("disabled")
       $form.find("#group_stripe_token").val(stripe_token)
-      $form.removeAttr("data-remote").unbind("ajax:success").submit().on "ajax:success", ->
-        window.location = "/g/purchased"
+      $form.removeAttr("data-remote").unbind("ajax:success").submit().on "ajax:success", (status, response) ->
+        if response.error
+          $form.find(".errors").text(response.error).show()
+          $form.find("input[type=submit]").prop('disabled', false).removeClass("disabled")
+          $(".in-progress").hide();
+          stopSpinner()
+          $form.find("input").removeAttr("readonly")
+        else
+          window.location = "/g/purchased"
     else
       alert "An error occurred processing your transaction. No amount was charged to your account."
     

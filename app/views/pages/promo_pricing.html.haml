@@ -34,7 +34,7 @@
                       %li Unlimited Candidates 
                       %li{ style: "padding: 25px 15px;" } Prioritized Email Support
                     .price_footer 
-                      = link_to "Start Free Trial", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
+                      = link_to "Start Free Trial", new_group_path(p: Group::SINGLE_PLAN, c: "AIRSDISCOUNT"), class: "action_button" 
                   %li.price_block.popular
                     %h3
                       %div Most Popular
@@ -52,7 +52,7 @@
                       %li Unlimited Candidates 
                       %li Premium Phone and Email Support
                     .price_footer
-                      = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
+                      = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN, c: "AIRSDISCOUNT"), class: "action_button" 
                   %li.price_block 
                     %h3 6-15 Admins 
                     .old_price
@@ -68,7 +68,7 @@
                       %li Unlimited Candidates  
                       %li Premium Phone and Email Support
                     .price_footer
-                      = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button", descriptor: "six_to_fifteen" 
+                      = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN, c: "AIRSDISCOUNT"), class: "action_button", descriptor: "six_to_fifteen" 
                   %li.price_block 
                     %h3 16-50 Admins
                     .old_price
@@ -84,7 +84,7 @@
                       %li Unlimited Candidates  
                       %li Premium Phone and Email Support
                     .price_footer
-                      = link_to "Start Free Trial", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN), class: "action_button", descriptor: "sixteen_to_fifty"
+                      = link_to "Start Free Trial", new_group_path(p: Group::SIXTEEN_TO_FIFTY_PLAN, c: "AIRSDISCOUNT"), class: "action_button", descriptor: "sixteen_to_fifty"
                 %div.sales_help_inline
                   %p{ style: "margin: 0px 0 12px; float: right;"} 
                     Need more than 50 admins?  

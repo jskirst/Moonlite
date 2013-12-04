@@ -11,6 +11,20 @@ describe Group do
       @group.creator_password = "a1b2c3d4"
     end
   end
+
+  describe ".price(percent_off = nil)" do
+    it "should return standard price without percent_off" do
+      @group = Group.new
+      @group.plan_type = Group::SINGLE_PLAN
+      @group.price.should == 19.99
+    end
+
+    it "should return standard price without percent_off" do
+      @group = Group.new
+      @group.plan_type = Group::SINGLE_PLAN
+      @group.price(50).should == 13.33
+    end
+  end
   
   describe "emails" do
     before :each do    

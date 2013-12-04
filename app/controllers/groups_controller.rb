@@ -9,7 +9,7 @@ class GroupsController < ApplicationController
     @title = "Evaluator Sign Up"
     @show_chat = true
     if @admin_group
-      if @admin_group.stripe_token.nil?
+      if @admin_group.stripe_token.blank?
         @new_group = @admin_group
       elsif @admin_group.plan_type == "free_to_demo"
         @is_trial = true
@@ -17,6 +17,7 @@ class GroupsController < ApplicationController
         @new_group.stripe_token = nil
         @new_group.plan_type = params[:group][:plan_type]
       else
+        raise @admin_group.to_yaml
         sign_out
         flash[:error] = "Something has gone wrong with your signup. You were not charged. Please contact support@metabright.com. We apologize for the inconvenience."
         redirect_to root_url and return
@@ -27,6 +28,10 @@ class GroupsController < ApplicationController
       if current_user
         @new_group.creator_email = current_user.email
       end
+    end
+
+    if coupon = params[:c]
+      retrieve_coupon(coupon)
     end
     
     @hide_background = true
@@ -72,14 +77,15 @@ class GroupsController < ApplicationController
       @new_group = Group.find_by_token(token)
       session[:previous_plan_type] = @new_group.plan_type
       @new_group.plan_type = params[:group][:plan_type]
+      @new_group.coupon = params[:group][:coupon]
       if @new_group.admin?(current_user)
         if params[:group][:stripe_token].present?
-          @new_group.coupon = params[:group][:coupon]
-          if @new_group.save_with_stripe(params[:group][:stripe_token])
+          @new_group.save_with_stripe(params[:group][:stripe_token])
+          if @new_group.errors.size == 0
             redirect_to confirmation_group_url(@new_group)
           else
             @errors = @new_group.errors.full_messages.join(". ")
-            render "groups/signup/form"
+            render json: { error: @errors }
           end
         else
           render json: { token: @new_group.token }
@@ -280,6 +286,16 @@ class GroupsController < ApplicationController
   end
   
   private
+  def retrieve_coupon(coupon = nil)
+    return false if coupon.nil?
+    Stripe::Coupon.all.each do |c|
+      if coupon == c.id
+        @coupon = c
+        @percent_off = c.percent_off
+      end
+    end
+  end
+
   def load_resource
     @group = Group.find_by_permalink(params[:permalink]) if params[:permalink]
     @group = Group.find_by_permalink(params[:id]) if params[:id] and @group.nil?
