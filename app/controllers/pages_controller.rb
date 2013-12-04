@@ -15,6 +15,7 @@ class PagesController < ApplicationController
         @show_nav_bar = false
         set_return_back_to = confirmation_group_url(@group)
       end
+      @hide_background = true
       render "portal"
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"

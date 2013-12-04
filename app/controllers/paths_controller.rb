@@ -10,6 +10,7 @@ class PathsController < ApplicationController
   before_filter :authorize_view, only: [:continue, :show, :newsfeed]
   
   def index
+    @hide_background = true
     if @group
       @paths = @group.paths
       if params[:q]
