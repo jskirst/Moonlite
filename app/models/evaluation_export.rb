@@ -190,7 +190,7 @@ class EvaluationExport < Prawn::Document
         move_down 8
         indent(10) do
           answer = completed_task.submitted_answer
-          if completed_task.submitted_answer.content.blank?
+          if answer.nil? or answer.content.blank?
             text "Candidate skipped this question", size: 10
           else
             text completed_task.submitted_answer.content, size: 10
