@@ -38,7 +38,6 @@
           - if @user.country
             - country = Carmen::Country.coded(@user.country)
             %h3{ style: "font-size:17px; line-height: 25px"} #{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}
-          %h4= link_to "Export (PDF)", export_group_evaluation_path(@group, @evaluation, u: @user)
       - if @evaluation_enrollment
         .actions
           - if @evaluation_enrollment.submitted_at
@@ -63,6 +62,9 @@
             = link_to save_group_evaluation_url(@group, @evaluation, user_id: @user.id, mode: "favorite"), method: :put do
               %div{ "data-tip" => "Favorite" }
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
+          = link_to export_group_evaluation_path(@group, @evaluation, u: @user) do
+            %div{ "data-tip" => "Export" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/export.png"
     .body
       %ul#results_list.nav.nav-tabs
         - @results.each do |r|
