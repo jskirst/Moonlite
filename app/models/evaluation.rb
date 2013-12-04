@@ -91,7 +91,7 @@ class Evaluation < ActiveRecord::Base
     end
 
     if difficulty
-      tasks = tasks.where("tasks.difficulty < ?", difficulty).order("tasks.difficulty DESC")
+      tasks = tasks.order("@(#{difficulty.to_f} - tasks.difficulty) DESC")
     end
 
     return tasks

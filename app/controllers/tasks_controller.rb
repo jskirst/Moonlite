@@ -99,10 +99,10 @@ class TasksController < ApplicationController
     completed_task.complete_core_task!(params[:answer], params[:points_remaining])
     if completed_task.correct?
       session[:ssf] = session[:ssf].to_i + 1
-      session[:difficulty] = (session[:difficulty] || 0.75).to_f + 0.08
+      session[:difficulty] = (session[:difficulty] || 1).to_f + 0.07
     else
       session[:ssf] = 0
-      session[:difficulty] = (session[:difficulty] || 0.75).to_f - 0.08
+      session[:difficulty] = (session[:difficulty] || 1).to_f - 0.07
     end
     
     render json: { 
