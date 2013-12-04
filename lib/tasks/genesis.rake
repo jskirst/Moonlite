@@ -129,7 +129,8 @@ namespace :db do
             answer_type: 2,
             creator_id: moonlite_admin.id,
             reviewed_at: now,
-            path_id: path.id
+            path_id: path.id,
+            difficulty: 1 + (rand(100).to_f/100)
           )
         end
         3.times do

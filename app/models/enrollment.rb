@@ -137,6 +137,7 @@ class Enrollment < ActiveRecord::Base
     end
     
     if summ_correct == 0
+      raise "WTF"
       self.metascore = 0
     else
       ms_correct = summ_correct/ cts.count

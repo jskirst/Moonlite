@@ -228,6 +228,8 @@ class SectionsController < ApplicationController
         .select("topics.name, completed_tasks.*")
       @performance = PerformanceStatistics.new(completed_tasks, @enrollment)
       @total_session_points = completed_tasks.sum(:points_awarded)
+      @enrollment.calculate_metascore
+      @enrollment.calculate_metapercentile
       render "finish"
     elsif params[:s].blank?
       @sample = @enrollment.total_points < 600

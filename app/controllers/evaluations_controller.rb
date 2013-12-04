@@ -194,6 +194,11 @@ class EvaluationsController < ApplicationController
       @evaluation_enrollment.update_attribute(:submitted_at, Time.now)
     end
     
+    @evaluation_enrollment.evaluation.paths.each do |path|
+      enrollment = current_user.enrolled?(path)
+      enrollment.calculate_metascore
+      enrollment.calculate_metapercentile
+    end
     @paths = Path.by_popularity(8).where("promoted_at is not ?", nil).to_a
   end
   
