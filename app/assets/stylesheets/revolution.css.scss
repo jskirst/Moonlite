@@ -67,6 +67,11 @@ pre { word-break: normal; }
   color: #333 !important;
   &:hover{ color: #333; }
 }
+.submit_button_standard_big {
+  @extend .submit_button_standard;
+  font-size: 18px;
+  line-height: 30px;
+}
 .clear_floats { clear: both;}
 /* Offerchat box sizing */
 #offerchatbox{ width: 260px !important; }

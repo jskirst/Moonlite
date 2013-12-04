@@ -201,4 +201,17 @@
   #screen_carousel {
     margin: 0 auto;
   }
+  #prices {
+    margin-top: -10px; width: inherit;
+    h2{
+      text-transform: none; 
+      font-size: 31px;
+      margin: 10px 0 35px;
+      
+      span {font-family: 'MuliRegular';}
+    }
+    .free_trial {
+      h1{ font-size: 26px; margin-bottom: 8px; text-transform: uppercase; }
+    }
+  }
 }
