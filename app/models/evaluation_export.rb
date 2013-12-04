@@ -184,17 +184,16 @@ class EvaluationExport < Prawn::Document
       minutes = (total_time.to_f / 60).round(0)
       seconds = (total_time.to_f % 60).round(0)
       task = completed_task.task
-      answer = completed_task.submitted_answer
-      content = answer.content
       text "#{i+1}. #{task.question}", size: 11
       move_down 8
       bounding_box([0, cursor], width: 500) do
         move_down 8
         indent(10) do
-          if content.blank?
+          answer = completed_task.submitted_answer
+          if completed_task.submitted_answer.content.blank?
             text "Candidate skipped this question", size: 10
           else
-            text content, size: 10
+            text completed_task.submitted_answer.content, size: 10
           end
         end
         move_down 6
@@ -249,7 +248,7 @@ class EvaluationExport < Prawn::Document
         move_down 7
       end
       
-      status_color = completed_task.correct? ? "d9534f" : "5cb85c"
+      status_color = completed_task.correct? ? "5cb85c" : "d9534f"
       table [[completed_task.answer]] do
         column(0).padding = 6
         column(0).size = 10
@@ -259,7 +258,7 @@ class EvaluationExport < Prawn::Document
         cells.border_color = "FFFFFF"
         cells.padding_left = 10
       end
-      move_down 10
+      move_down 5
 
       if completed_task.correct?
         text "Correct, #{completed_task.points_awarded} points", size: 11

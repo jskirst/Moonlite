@@ -137,7 +137,7 @@ class EvaluationsController < ApplicationController
     @show_footer = false
     @show_feedback = false
     @path = @evaluation.paths.find(params[:path_id])
-    difficulty = session[:difficulty] || 0.75
+    difficulty = session[:difficulty] || 1
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
     end
