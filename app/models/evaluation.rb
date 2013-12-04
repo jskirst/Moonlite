@@ -58,7 +58,7 @@ class Evaluation < ActiveRecord::Base
   def next_task(user, path, difficulty = nil)
     type = [Task::MULTIPLE, Task::EXACT]
     cc = completed_count(user, path, type)
-    max = 30
+    max = 25
     if path.group_id or cc < max
       task = next_task_of_type(user, path, type, { difficulty: difficulty })
       total = tasks_of_type(path, type).count
@@ -68,7 +68,7 @@ class Evaluation < ActiveRecord::Base
     
     type = [Task::CREATIVE]
     sub_types = path.group_id.nil? ? [Task::TEXT] : nil
-    max = 5
+    max = 4
     cc = completed_count(user, path, type)
     if path.group_id or completed_count(user, path, type) < max
       task = next_task_of_type(user, path, type, { answer_sub_types: sub_types })

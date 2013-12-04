@@ -16,6 +16,9 @@ class GroupsController < ApplicationController
         @new_group = @admin_group
         @new_group.stripe_token = nil
         @new_group.plan_type = params[:group][:plan_type]
+      elsif @admin_group.plan_type == params[:p]
+        flash[:success] = "You have already set your plan type."
+        redirect_to root_url and return
       else
         raise @admin_group.to_yaml
         sign_out
