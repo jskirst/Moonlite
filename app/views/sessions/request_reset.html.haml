@@ -7,11 +7,11 @@
     .aboutbody
       = form_for(User.new, url: send_reset_path) do |f|
         %h4{ style: "margin-bottom: 10px; line-height: 18px;" }
-          Enter in the email for the account you need reset and we'll send you a reset link right away!
+          Enter your email address and we'll send you a password reset link right away!
         %div.control-group
           %label.control-label Email
           %div.controls
             = f.text_field :email, autofocus: true
         %div.control-group
           %div.controls
-            = f.submit "Reset", class: "button button-actionable"
+            = f.submit "Reset", class: "submit_button", style: "float: none; margin-left:3px;"

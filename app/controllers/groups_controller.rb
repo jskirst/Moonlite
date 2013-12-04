@@ -29,7 +29,7 @@ class GroupsController < ApplicationController
       end
     end
     
-    @hide_background = false
+    @hide_background = true
     @show_nav_bar = false
     @show_sign_in = false
     @show_employer_link = false

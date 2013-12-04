@@ -10,7 +10,7 @@ describe 'Password Reset' do
   	visit signin_path
   	click_on "Reset it here."
 
-  	expect_content("Enter in the email for the account you need reset")
+  	expect_content("Enter your email address and we'll send you a password reset link right away!")
   	fill_in "user_email", with: @user.email
   	click_on "Reset"
 
@@ -23,7 +23,7 @@ describe 'Password Reset' do
 
   it "should send email to user with link to reset passoword" do
   	visit finish_reset_path(t: @user.signup_token)
-  	expect_content("Enter your new password and submit to continue.")
+  	expect_content("Please enter and confirm your new password.")
   	fill_in "session_password", with: "newpassword"
   	fill_in "session_password_confirmation", with: "newpassword"
   	find("input[descriptor='save-and-sign-in']").click
