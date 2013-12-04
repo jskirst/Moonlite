@@ -19,9 +19,10 @@
       %label.control-label{ style: "font-size: 14px;" } Select .CSV file to upload questions to Challenge
       .controls= f.file_field :batch_file
     %hr{ style: "margin: 10px 0; "}
-    %div{ style: "float:right;" }
-      %span.button.button-standard{ onclick: "$('#upload_modal').modal('hide');" } Close
-      %a.button.button-actionable{ onclick: "$('#upload_to_path').submit()", type: "submit" } Upload
+    %div
+      %a.submit_button{ onclick: "$('#upload_to_path').submit()", type: "submit" } Upload
+      %span.submit_button_standard{ style: "margin-right: 10px;", onclick: "$('#upload_modal').modal('hide');" } Close
+      
   
 
 #settings_modal.modal.hide.fade{ style: "top: 10%; margin-top: 0px; width: 600px;" }
@@ -59,9 +60,10 @@
           %label.control-label Collaborators
           .controls= link_to "View and add collaborators", collaborator_path_path(@path.permalink), style: "line-height:18px;"
       %hr{ style: "margin: 10px 0; "}
-      %div{ style: "float:right;" }
-        %span.button.button-standard{ onclick: "$('#settings_modal').modal('hide');" } Close
-        = f.submit "Save", class: "button button-actionable", style: "margin-right: 10px;"
+      %div
+        = f.submit "Save", class: "submit_button"
+        %span.submit_button_standard{style: "margin-right: 10px;", onclick: "$('#settings_modal').modal('hide');" } Close
+        
 
 - @sections.each do |s|
   %div{ id: "section_settings_modal_#{s.id}", class: "modal hide fade", style: "top: 50%;" }

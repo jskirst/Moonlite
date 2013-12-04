@@ -2,7 +2,7 @@
   = form_for(custom_style, url: link) do |f|
     %p
       Edit the styles below. Note that you must save before these styles will take effect. 
-      Set the status to "Preview" if you want to see how the styles will look. In "Preview" mode, only you will be able to see the style changes.
+      Set the status to "Preview" if you want to see how the styles will look. In "Preview" mode, you will be the only person who's able to view the style changes.
     .control-group
       %label.control-label Status
       .controls
@@ -14,8 +14,9 @@
       = f.text_area :styles, rows: "15", placeholder: "Add CSS styles here...", style: "margin:10px 0; width: 860px; min-height: 200px;"
     %div#editor.ace_editor{ style: "margin:10px 0; width: 860px; min-height: 350px;" }
     %div.actions
-      = link_to "Back", back, class: "button button-standard"
-      = f.submit "Save", class: "button button-actionable", style: "margin-left: 10px;"
+      = link_to "Back", back, class: "submit_button_standard", style: "float: none; display: inline-block;"
+      = f.submit "Save", class: "submit_button", style: "margin-left: 10px;"
+      .clear_floats
 
 - unless Rails.env == "test"
   :css

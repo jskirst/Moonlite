@@ -1,5 +1,5 @@
 %div.single_pane
-  = link_to "Back", admin_paths_path, class: "button button-standard", style: "float: right;"
+  = link_to "Back", admin_paths_path, class: "submit_button_standard"
   %h1{ style: "border-bottom: 1px solid #DDD; margin-bottom: 20px; padding: 10px 0;" }= @path.name
   = form_for(@path, html: { class: "form-horizontal" }) do |f|
     %div.control-group
@@ -37,4 +37,4 @@
         = f.check_box :approved, checked: @path.approved?
     %div.control-group
       %div.controls
-        = f.submit "Save", class: "button button-actionable"
+        = f.submit "Save", class: "submit_button", style: "float: none;"
