@@ -486,11 +486,17 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .counter span.separator hr {display:none;}
 
 
-.quizheader { margin-bottom: 10px; }
-.quizheader img { width: 40px; height: 40px; display:inline-block; margin-right:4px; border-radius:3px;}
-.quizheader span{ font:normal 24px 'MuliLight', 'Helvetica', 'Arial', sans-serif; position:relative; left:5px;}
-.quizheader div{position:relative; display:inline-block;}
-.quizheader .quiz_progress { float: right;font-size: 18px; margin-top: 5px; margin-right: 5px; color: rgb(139, 139, 139); top: 0; }
+.quizheader {
+  margin-bottom: 10px; 
+  
+  div{position:relative; display:inline-block;}
+  img { width: 40px; height: 40px; display:inline-block; margin-right:4px; border-radius:3px;}
+  .textfill {
+    span{ font:normal 24px 'MuliLight', 'Helvetica', 'Arial', sans-serif; position:relative; left:5px; top: 4px;}
+  }
+  .quiz_progress { float: right;font-size: 18px; margin-top: 5px; margin-right: 5px; color: rgb(139, 139, 139); top: 0; }
+  
+}
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
 .questionandresponsespace{display:inline-block; }
 .questionspace span{font:normal 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}

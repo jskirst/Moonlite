@@ -17,7 +17,7 @@
         %span.name <strong>#{@path.name}</strong>
       - if current_user and @show_feedback and @question_count and @session_total
         %div.quiz_progress
-          Question #{@question_count} / #{@session_total}
+          Question #{@question_count} of #{@session_total}
     %div{ style: "text-align:center;" }
       = render "tasks/stored_resource", { :stored_resource => @stored_resource }
     %div.questionandresponsespace{ style: "width: 425px;" }
@@ -65,7 +65,7 @@
                 - split_digits = digits.to_s.split("").reverse.push("0").push("0").push("0").reverse.slice(-4, 4)
               - else
                 - digits = @question_count ? @question_count.to_s : "0"
-                - label = "Completed"
+                - label = "Question"
                 - split_digits = digits.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
               
               - split_digits.each do |d|
@@ -80,8 +80,8 @@
                 - label = "Streak"
                 - split_digits = digits.to_i.to_s.split("").reverse.push("0").reverse.slice(-2, 2)
               - else
-                - digits = (@session_total - @question_count)
-                - label = "Remaining"
+                - digits = (@session_total)
+                - label = "Total"
                 - split_digits = digits.to_s.split("").reverse.push("0").push("0").reverse.slice(-3, 3)
               - split_digits.each do |s|
                 %span.digit

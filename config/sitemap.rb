@@ -40,6 +40,7 @@ if ENV['FOG_DIRECTORY']
     #     add article_path(article), :lastmod => article.updated_at
     #   end
     add '/evaluator', :priority => 1, :changefreq => 'daily'
+    add '/pricing', :priority => 0.9, :changefreq => 'daily'
     add '/about'
     add '/challenges'
     add '/labs'

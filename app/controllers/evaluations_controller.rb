@@ -174,6 +174,8 @@ class EvaluationsController < ApplicationController
           render "tasks/continue"
         end
       else
+        @question_count = next_task[:completed_count]+1
+        @session_total = next_task[:total]
         @submitted_answer = @completed_task.submitted_answer_id ? @completed_task.submitted_answer : SubmittedAnswer.new
         render "challenge"
       end
