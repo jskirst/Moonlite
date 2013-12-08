@@ -13,6 +13,8 @@ class PathsController < ApplicationController
     @hide_background = true
     if @group
       @paths = @group.paths
+      @personas = Persona.all
+      @public_paths = Path.where.not(professional_at: nil)
       if params[:q]
         @paths = @paths.where("name ILIKE ?", "%#{params[:q]}%") unless params[:q].blank?
         if request.xhr?

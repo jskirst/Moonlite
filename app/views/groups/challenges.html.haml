@@ -20,10 +20,10 @@
     setInterval("compare_and_search();", 300);
   });
 
-.employer-container{ style: "width: 1040px;" }
+.employer-container
   .employer-box
-    .header{ style: "margin-bottom: 15px;"}
-      = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
+    .header
+      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
       %h2 #{@group.name}'s Challenges
       - unless @paths.empty?
         %input{ type: "text", placeholder: "Search Challenges...", id: "challenge_search" }
@@ -37,3 +37,18 @@
             = link_to "Create a custom Challenge", new_group_path_url, class: "submit_button"
         - else
           = render "table"
+    .header{ style: "border-top: 1px solid rgba(0,0,0,0.1); margin-top: 30px; padding-top: 10px"}
+      %h3 MetaBright Challenges
+    .body
+      .mb_challenges
+        - @personas.each do |persona|
+        - prof_paths = persona.paths.where.not(professional_at: nil).sort_by{|path| [path.name.upcase]}
+          - unless prof_paths.count == 0
+            %h4= persona.name
+            %ul
+              - prof_paths.each do |path|
+                %li
+                  = image_tag path.picture
+                  %span= path.name
+        
+      
