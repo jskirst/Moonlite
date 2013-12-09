@@ -41,14 +41,17 @@
       %h3 MetaBright Challenges
     .body
       .mb_challenges
-        - @personas.each do |persona|
-        - prof_paths = persona.paths.where.not(professional_at: nil).sort_by{|path| [path.name.upcase]}
-          - unless prof_paths.count == 0
-            %h4= persona.name
-            %ul
-              - prof_paths.each do |path|
-                %li
-                  = image_tag path.picture
-                  %span= path.name
+        .welcome
+          .holder
+            .text_box{ style: "font-size: 16px; width: 100%; margin: 0px; line-height: 20px;" }
+              = image_tag LIGHT_BULB_URL
+              %p{ style: "width: 90%; display: inline-block;"}
+                Use MetaBright Challenges to test your candidates on popular topics. All MetaBright Challenges are professionally developed and designed to parse out your candidates' true ability. Select a Challenge to create an Evaluation that includes that Challenge. 
+        %ul
+          - @public_paths.each do |path|
+            %li
+              = link_to new_group_evaluation_path(@group, c: path.id) do
+                = image_tag path.picture
+                %span= path.name
         
       

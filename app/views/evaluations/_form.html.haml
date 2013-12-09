@@ -50,7 +50,7 @@
               %h5 MetaBright Challenges
               .challenges
                 %ul.checklist.metabright-challenges
-                  - @public_paths.sort_by{|path| [path.name.upcase]}.each do |p|
+                  - @public_paths.each do |p|
                     %li
                       %label
                         = check_box_tag "evaluation[selected_paths][#{p.id}]", 1, @evaluation_path_ids.include?(p.id)

@@ -238,7 +238,18 @@ class EvaluationsController < ApplicationController
   
   def prepare_form
     @group_paths = @group.paths
-    @public_paths = Path.where.not(professional_at: nil)
     @evaluation_path_ids = @evaluation ? @evaluation.paths.pluck(:id) : []
+    if params[:c].present?
+      @evaluation_path_ids << params[:c].to_i
+    end
+    @public_paths = Path.where.not(professional_at: nil)
+    @public_paths = @public_paths.sort_by{|path| [path.name.upcase]}
+    @public_paths = @public_paths.sort do |a,b| 
+      if @evaluation_path_ids.include?(b.id) == @evaluation_path_ids.include?(a.id)
+        a.name.upcase <=> b.name.upcase
+      else
+        (@evaluation_path_ids.include?(b.id) ? 1 : -1) <=> (@evaluation_path_ids.include?(a.id) ? 1 : -1)
+      end
+    end
   end
 end
