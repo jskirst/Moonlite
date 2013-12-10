@@ -121,6 +121,9 @@ class EvaluationExport < Prawn::Document
     path = r[:path]
     text path.name, size: 16
     move_down 10
+    if r[:performance].avg_time_to_answer.nil?
+      raise "Nil?"
+    end
     contents = [
       [{ content: r[:skill_level], rowspan: 2 }, "Correct MC", "Avg. Time per MC", "Creative Response"],
       [
@@ -229,6 +232,7 @@ class EvaluationExport < Prawn::Document
   #                   User response:
   #                   %pre= completed_task.answer # User supplied answer
   def multiple(r)
+    return true if r[:core].empty?
     move_down 20
     text "Multiple Choice", size: 14
     r[:core].each_with_index do |completed_task, i|

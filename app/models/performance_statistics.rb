@@ -44,7 +44,10 @@ class PerformanceStatistics
   end
   
   def calculate_avg_time_to_answer
-    return 0 if self.total == 0
+    if self.total == 0
+      self.avg_time_to_answer = 0
+      return
+    end
     time = self.avg_time_to_answer = self.completed_tasks.inject(0) do |sum, ct|
       sum += ct.updated_at - ct.created_at
     end
@@ -52,6 +55,7 @@ class PerformanceStatistics
     if self.avg_time_to_answer > 60
       self.avg_time_to_answer = rand(20) + rand(4)
     end
+    self.avg_time_to_answer.round(1)
   end
   
   def persisted?
