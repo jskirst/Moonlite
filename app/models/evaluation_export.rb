@@ -263,7 +263,11 @@ class EvaluationExport < Prawn::Document
       if completed_task.correct?
         text "Correct, #{completed_task.points_awarded} points", size: 11
       else
-        text "Correct Answer: #{task.correct_answer.content}", size: 11
+        if completed_task.answer.present?
+          text "User Response: #{completed_task.answer} / Correct Answer: #{task.correct_answer.content}", size: 11
+        else
+          text "User skipped this question", size: 11
+        end
       end
     end
   end
