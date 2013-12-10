@@ -186,9 +186,12 @@
                             Correct answer:
                             %pre= task.correct_answer.content # Correct answer
                           - if not completed_task.correct?
-                            %div 
-                              User response:
-                              %pre= completed_task.answer # User supplied answer
+                            %div
+                              - if completed_task.answer.blank?
+                                User skipped this question
+                              - else
+                                User response:
+                                %pre= completed_task.answer # User supplied answer
                           
         
                 

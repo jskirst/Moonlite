@@ -121,6 +121,9 @@ class EvaluationExport < Prawn::Document
     path = r[:path]
     text path.name, size: 16
     move_down 10
+    if r[:performance].avg_time_to_answer.nil?
+      raise "Nil?"
+    end
     contents = [
       [{ content: r[:skill_level], rowspan: 2 }, "Correct MC", "Avg. Time per MC", "Creative Response"],
       [
@@ -138,10 +141,10 @@ class EvaluationExport < Prawn::Document
       skill_level.background_color = skill_color
       skill_level.text_color = "FFFFFF"
       skill_level.font_style = :bold
-      skill_level.size = 15
+      skill_level.size = 17
       skill_level.width = 120
       skill_level.align = :center
-      skill_level.valign = :center
+      skill_level.padding_top = 12
       columns(1..3).width = 125
     end
   end
@@ -180,7 +183,7 @@ class EvaluationExport < Prawn::Document
     r[:creative].each_with_index do |completed_task, i|
       move_down 10
       total_time = (completed_task.updated_at - completed_task.created_at).round(0)
-      total_time = creative_time_to_answer if total_time > 600
+      total_time = @view.creative_time_to_answer if total_time > 600
       minutes = (total_time.to_f / 60).round(0)
       seconds = (total_time.to_f % 60).round(0)
       task = completed_task.task
@@ -229,6 +232,7 @@ class EvaluationExport < Prawn::Document
   #                   User response:
   #                   %pre= completed_task.answer # User supplied answer
   def multiple(r)
+    return true if r[:core].empty?
     move_down 20
     text "Multiple Choice", size: 14
     r[:core].each_with_index do |completed_task, i|
@@ -263,7 +267,11 @@ class EvaluationExport < Prawn::Document
       if completed_task.correct?
         text "Correct, #{completed_task.points_awarded} points", size: 11
       else
-        text "Correct Answer: #{task.correct_answer.content}", size: 11
+        if completed_task.answer.present?
+          text "User Response: #{completed_task.answer} / Correct Answer: #{task.correct_answer.content}", size: 11
+        else
+          text "User skipped this question", size: 11
+        end
       end
     end
   end
