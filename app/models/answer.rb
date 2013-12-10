@@ -9,7 +9,7 @@ class Answer < ActiveRecord::Base
   belongs_to :task
   has_many :completed_tasks
   
-  validates :content, length: { :within => 1..255 }
+  validates :content, length: { :within => 1..1000 }
   
   after_save :flush_cache
   before_destroy :flush_cache
