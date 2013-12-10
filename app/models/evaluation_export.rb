@@ -138,10 +138,10 @@ class EvaluationExport < Prawn::Document
       skill_level.background_color = skill_color
       skill_level.text_color = "FFFFFF"
       skill_level.font_style = :bold
-      skill_level.size = 15
+      skill_level.size = 17
       skill_level.width = 120
       skill_level.align = :center
-      skill_level.valign = :center
+      skill_level.padding_top = 12
       columns(1..3).width = 125
     end
   end
@@ -180,7 +180,7 @@ class EvaluationExport < Prawn::Document
     r[:creative].each_with_index do |completed_task, i|
       move_down 10
       total_time = (completed_task.updated_at - completed_task.created_at).round(0)
-      total_time = creative_time_to_answer if total_time > 600
+      total_time = @view.creative_time_to_answer if total_time > 600
       minutes = (total_time.to_f / 60).round(0)
       seconds = (total_time.to_f % 60).round(0)
       task = completed_task.task
