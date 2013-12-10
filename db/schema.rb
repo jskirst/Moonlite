@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131104195805) do
+ActiveRecord::Schema.define(version: 20131210193841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "answers", force: true do |t|
     t.integer  "task_id"
-    t.string   "content"
+    t.text     "content"
     t.boolean  "is_correct",   default: false
     t.integer  "answer_count", default: 0
     t.datetime "created_at"
