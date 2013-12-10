@@ -8,7 +8,7 @@
           type: "GET", 
           data: { q: new_value }, 
           success: function(data, responseText){ 
-            $(".custom_challenges").html(data);
+            $(".mb_challenge_collection").html(data);
           } 
         }
       );
@@ -24,9 +24,7 @@
   .employer-box
     .header
       = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
-      %h2 #{@group.name}'s Challenges
-      - unless @paths.empty?
-        %input{ type: "text", placeholder: "Search Challenges...", id: "challenge_search" }
+      %h2{ style: "top: 0;"} #{@group.name}'s Challenges
     .body
       .custom_challenges
         - if @paths.empty?
@@ -37,8 +35,10 @@
             = link_to "Create a custom Challenge", new_group_path_url, class: "submit_button"
         - else
           = render "table"
-    .header{ style: "border-top: 1px solid rgba(0,0,0,0.1); margin-top: 30px; padding-top: 10px"}
-      %h3 MetaBright Challenges
+    .header{ style: "border-top: 1px solid rgba(0,0,0,0.1); margin: 30px 0 15px; padding-top: 10px;"}
+      %h3{ style: "display: inline-block; "} MetaBright Challenges
+      %input{ type: "text", placeholder: "Search Challenges...", id: "challenge_search", style: "display: inline-block; margin: 6px 10px 0 0; padding: 3px 7px; font-size: 15px;" }
+      .clear_floats
     .body
       .mb_challenges
         .welcome
@@ -47,11 +47,7 @@
               = image_tag LIGHT_BULB_URL
               %p{ style: "width: 90%; display: inline-block;"}
                 Use MetaBright Challenges to test your candidates on popular topics. All MetaBright Challenges are professionally developed and designed to parse out your candidates' true ability. Select a Challenge to create an Evaluation that includes that Challenge. 
-        %ul
-          - @public_paths.each do |path|
-            %li
-              = link_to new_group_evaluation_path(@group, c: path.id) do
-                = image_tag path.picture
-                %span= path.name
+        .mb_challenge_collection
+          = render "mb_challenges"
         
       

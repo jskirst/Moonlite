@@ -1,0 +1,6 @@
+%ul
+  - @public_paths.each do |path|
+    %li
+      = link_to new_group_evaluation_path(@group, c: path.id) do
+        = image_tag path.picture
+        %span= path.name

@@ -13,14 +13,15 @@ class PathsController < ApplicationController
     @hide_background = true
     if @group
       @paths = @group.paths
-      @public_paths = Path.where.not(professional_at: nil).sort_by{|path| [path.name.upcase]}
+      @public_paths = Path.where.not(professional_at: nil)
       if params[:q]
-        @paths = @paths.where("name ILIKE ?", "%#{params[:q]}%") unless params[:q].blank?
+        @public_paths = @public_paths.where("name ILIKE ?", "%#{params[:q]}%") unless params[:q].blank?
         if request.xhr?
-          render partial: "paths/table"
+          render partial: "paths/mb_challenges"
           return
         end
       end
+      @public_paths = @public_paths.sort_by{|path| [path.name.upcase]}
       render "groups/challenges"
     else
       @paths = current_user.paths.to_a + current_user.collaborating_paths.order("updated_at DESC").to_a
