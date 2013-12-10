@@ -40,7 +40,7 @@
       %div.quizheader
         = image_tag @path.path_pic, alt: "#{@path.name}"
         .textfill{ style: "display:inline-block; width: 71%;" }
-          %span
+          %span.name
             %strong #{@path.name}
         - if current_user and @question_count and @session_total
           .quiz_progress{ style: "margin-top: 12px;"}

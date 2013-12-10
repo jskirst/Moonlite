@@ -495,10 +495,11 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
     span{ font:normal 24px 'MuliLight', 'Helvetica', 'Arial', sans-serif; position:relative; left:5px; top: 4px;}
   }
   .quiz_progress { float: right;font-size: 18px; margin-top: 5px; margin-right: 5px; color: rgb(139, 139, 139); top: 0; }
-  
+  .name{ font-size: 22px; }
 }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}
-.questionandresponsespace{display:inline-block; }
+.questionandresponsespace{display:inline-block; width: 65%; }
+.continue_stats { display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 30.8%; margin-left: 28px; }
 .questionspace span{font:normal 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}
 .questionspace pre{padding: 0; margin:0; word-break: normal; background-color: inherit; border: none;}
 .pointbar { background-color: rgba(255, 163, 102, 0.5); height:20px; margin:3px 0px; border-radius: 3px; text-align: center; }
@@ -521,7 +522,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 .CRquestionspace { display:inline-block; padding-top:9px; text-align: center; width: 100%; }
 .snippet { margin: 10px 0 0 0; border: none; border-radius: none; background-color: rgb(249, 249, 249); font-family: 'Menlo', 'Courier New', 'Terminal', monospace; }
 .cr_question_header { font:bold 15px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}
-.CRquestion { font-size:15px; padding: 0; margin: 15px 5px 0 10px; word-break: normal; background-color: white; border: none; font: normal 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;} 
+.CRquestion { padding: 0; margin: 15px 5px 0 10px; word-break: normal; background-color: white; border: none; font: normal 16px 'MuliLight', 'Helvetica', 'Arial', sans-serif; line-height: 18px;} 
 .CRresponsespace { width: 97%; width: calc(100% - 10px); margin-top: 20px; display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:5px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
 .input input{ background-color: #F9F9F9;}
@@ -555,7 +556,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easterislandsketch70pct.jpg');background-repeat:no-repeat;background-attachment:fixed;background-size:100% 100%;font-family: 'MuliLight', 'Helvetica', 'Arial', sans-serif; line-height:18px; font-size:13px;}
 .quizcontainer{
   overflow:hidden; 
-  width:768px;
+  width: 900px;
   margin-left:auto;
   margin-right:auto;
   margin-top: 130px; 
