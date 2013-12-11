@@ -107,19 +107,20 @@
             .edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})", "data-tip" => "Settings" }
               %img.gear.medium{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Challenge Settings"}
       - else
-        %div{ style: "float: right;" }
+        %div{ style: "float: right; margin-top: 10px;" }
           - if @path.published? && @path.approved?
-            = link_to "View", challenge_path(@path.permalink), class: "button button-actionable"
+            = link_to "View", challenge_path(@path.permalink), class: "submit_button", style: "float: none;"
           - elsif @path.published?
-            = link_to "Waiting for Approval", "#", class: "button button-actionable disabled"
+            = link_to "Waiting for Approval", "#", class: "submit_button disabled", style: "float: none;"
           - else
-            = link_to "Publish", publish_path_path(@path.permalink), class: "button button-actionable", data: { confirm: (@group ? "Once published, your challenge will be available to be added to your evaluations, though you can return here and edit it at any time." : "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved.") }
-          %span.button.button-standard.edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
+            = link_to "Publish", publish_path_path(@path.permalink), class: "submit_button", style: "float: none;", data: { confirm: (@group ? "Once published, your challenge will be available to be added to your evaluations, though you can return here and edit it at any time." : "Your Challenge must be approved by an admin before it's published. It can take up to 24 hours for a Challenge to be approved.") }
+          %span.submit_button_standard.edit_path_settings_button{ style: "float: none;", onclick: "$('#settings_modal').modal({keyboard: true, show: true})"} Settings
+        .clear_floats
     %div
       - if @group and (@path.tasks.size > 5 and not @path.difficult?)
         = render "difficulty_warning"
       - unless @group
-        = link_to "New Section", new_section_path(:path_id => @path.id), class: "button button-standard", style: "float:right; display:inline;"
+        = link_to "New Section", new_section_path(:path_id => @path.id), class: "submit_button_green button button-small", style: "display:inline;"
         %h2{ style: "font-size: 20px; color: darkgray;" } QUESTIONS
       :javascript
         $(function(){ $(".section_questions_container").show() });

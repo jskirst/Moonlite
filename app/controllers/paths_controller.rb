@@ -31,6 +31,7 @@ class PathsController < ApplicationController
 # Begin Path Creation
   
   def new
+    @hide_background = true
     @path = Path.new
     @exact_path = nil
     @similar_paths = []
@@ -40,6 +41,7 @@ class PathsController < ApplicationController
   end
   
   def start
+    @hide_background = true
     @path = Path.new
     name = params[:path][:name]
     @exact_path = Path.find_by_name(name)    

@@ -24,6 +24,11 @@ pre { word-break: normal; }
   &:hover{ box-shadow: 0px 0px 2px black; text-decoration: none; color: white; }
   &:active{ position: relative; top: 1px; }
 }
+.sexy_buttons.disabled {
+  opacity: 0.70;
+  box-shadow: 0px 0px 1px black;
+  cursor: not-allowed;
+}
 .submit_button {
   @extend .sexy_buttons;
   background-color: #e9685b;
@@ -843,7 +848,7 @@ th {
 }
 
 /* New Image/Revolution */
-.image_preview { height: 70px; max-width: 150px; } 
+.image_preview { max-width: 90px; } 
 
 /* Landing/Revolution */
 #landingbox { 

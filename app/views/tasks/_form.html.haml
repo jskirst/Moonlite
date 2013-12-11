@@ -1,3 +1,6 @@
+:css
+  #task_answer_type { vertical-align: top; }
+
 - rand_id = rand(1000)
 - template_id = "template_#{rand_id}"
 - new_task = task.new_record?
@@ -35,7 +38,7 @@
             %label.control-label Answer type
             /* The class tt_signal allows us to insert a tt into the image upload resource */
             .controls.image_upload.tt_signal
-              = f.select :answer_type, hash_to_array(Task::TYPES), style: "display: inline-block; "
+              = f.select :answer_type, hash_to_array(Task::TYPES)
               = render "stored_resources/new_image"
         
           .control-group.hide.sub_type
@@ -95,7 +98,7 @@
               %div.control-group
                 %label.control-label= a.is_correct ? "Correct answer" : "Wrong answer"
                 .controls
-                  = f.text_field "answer_#{a.id || "new_" + (i + 1).to_s}", value: a.content, maxlength: 255, size: 75, class: (a.is_correct ? "correct_answer" : "wrong_answer")   
+                  = f.text_field "answer_#{a.id || "new_" + (i + 1).to_s}", value: a.content, maxlength: 255, size: 75, class: (a.is_correct ? "correct_answer" : "wrong_answer")
                        
         .control-group
           %label.control-label Difficulty
@@ -107,12 +110,14 @@
                 
         - unless new_task
           .control-group
+            %label.control-label Image
             .controls
               - if sr = task.stored_resources.first
                 = image_tag sr.obj.url, style: "height: 100px;"
                 = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, data: { confirm: "Are you sure you want to remove this attachment?" }
               - else
-                = link_to "Add Image", add_stored_resource_task_path(task)
+                .image_upload.tt_signal{ style: "position: relative; right: 40px;"}
+                  = render "stored_resources/new_image"
           - unless @group  
             .control-group
               %label.control-label Section
