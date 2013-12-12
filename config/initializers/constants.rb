@@ -96,6 +96,9 @@ SHARE_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Facebook+s
 SHARE_TWITTER = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+twitter+small.png"
 SHARE_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+Google%2B+small.png"
 SHARE_REDDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/icon%2Breddit%2Bsmall.png"
+SHARE_FACEBOOK_BIG = "https://s3.amazonaws.com/moonlite-nsdub/static/new+social+icons/icon_facebook_circle.png"
+SHARE_GOOGLE_BIG = "https://s3.amazonaws.com/moonlite-nsdub/static/new+social+icons/icon_plus_circle.png"
+SHARE_TWITTER_BIG = "https://s3.amazonaws.com/moonlite-nsdub/static/new+social+icons/icon_twitter_circle.png"
 
 ICON_CAROUSEL_LEFT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png"
 ICON_CAROUSEL_RIGHT = "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_right_light.png"
