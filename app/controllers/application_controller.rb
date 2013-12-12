@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
+  force_ssl unless Rails.env.development?
+  
   protect_from_forgery
   include ApplicationHelper
   include SessionsHelper
   include NavigationHelper
   include EditorHelper
-  
-  force_ssl
   
   before_action :determine_enabled_features
   before_action :log_visit
