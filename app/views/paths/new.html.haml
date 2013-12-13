@@ -24,7 +24,7 @@
               %h4 Uh oh! Someone has already made that Challenge.
               %h5 Don't worry, you can still contribute to the #{@exact_path.name} Challenge.
               %div
-              = link_to "Become a contributor", join_path_path(@exact_path), class: "button button-xlarge button-info"
+              = link_to "Become a contributor", join_path_path(@exact_path), class: "submit_button_blue_big", style: "float: none;"
               .or_divider OR
               
             - elsif @similar_paths.any?

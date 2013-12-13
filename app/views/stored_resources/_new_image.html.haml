@@ -29,16 +29,16 @@
       });
       $("##{unique_id}").bind('fileuploadfail', function (e) {alert("File upload failed.")});
     });
-  %div.image_input
+  %div.image_input{ style: "vertical-align: top;"}
     = image_tag ICON_CAMERA_URL, size: "16x16", style: "vertical-align: middle;"
     %span{ style: "vertical-align: middle; font-size: 13px;" } Add image:
     /* The tt is only revealed when it appears as a child of the class tt_signal*/
     .image_upload_tt{ style: "display: none;"}
       %div{ "data-tip" => "This is optional. The image will appear as part of your question. Use this feature when your question is about a particular image."}
         %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
-    = file_field_tag("obj", id: unique_id, style: "margin-left: 2px; line-height: inherit; font-size: 13px; padding-top:0px; height: inherit; vertical-align: middle; width: 200px;")
+    = file_field_tag("obj", id: unique_id, style: "margin-left: 2px; line-height: 18px; font-size: 13px; padding-top:0px; height: inherit; vertical-align: middle; width: 200px;")
     = image_tag ICON_LOADING_URL, size: "20x20", style: "vertical-align: middle; display: none;", id: "loading_image_#{unique_id}", alt: "Loading"
     = hidden_field_tag("stored_resource_id", nil, class: "image_input_field")
   - unless params[:controller] == "sections"
-    %div{ style: "margin-top: 10px;" }
+    %div{ style: "margin-left: 0; margin-top: 15px;" }
       %img.image_preview{ style: "display: none;", alt: "Image preview" }

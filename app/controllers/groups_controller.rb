@@ -105,9 +105,13 @@ class GroupsController < ApplicationController
   end
   
   def confirmation
+    if @group.plan_type == "free_to_demo"
+      @is_trial = true
+    end
     if session[:previous_plan_type] == Group::FREE_PLAN.to_s
       @was_trial = true
     end
+    @sharing_text = "I just started testing my candidates on MetaBright, and you can too. Try it out for free here:"
     @title = "Order Confirmation"
     @show_footer = true
     @show_nav_bar = true

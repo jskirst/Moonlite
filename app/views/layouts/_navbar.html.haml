@@ -1,10 +1,10 @@
 %nav.navbar.navbar-fixed-top
   .fill.navbar-inner{ style: "height: 100%;" }
     %div{ style: "height: 100%; width: 87%; margin: 0 auto; padding: 6px 0 0 0;" }
-      .new-brand.brand{ style: "display: none;" }
-        = link_to root_url do
-          = image_tag(STONEY_SMALL_URL)
-          %h1 MetaBright
+      / .new-brand.brand{ style: "display: none;" }
+      /   = link_to root_url do
+      /     = image_tag(STONEY_SMALL_URL)
+      /     %h1 MetaBright
       .brand.old-brand{ style: "width: 160px; padding-right: 10px; margin-top: 2px;" }
         - if params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue")
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")

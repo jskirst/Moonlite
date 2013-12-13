@@ -179,7 +179,7 @@ class TasksController < ApplicationController
     else
       @stored_resource = @task.stored_resources.new(params)
       if @stored_resource.save
-        redirect_to edit_path_path(@task.path), notice: "Image added."
+        redirect_to edit_path_path(@task.path), success: "Image added."
       else
         flash[:error] = "Error occurred, could not add your image."
       end

@@ -167,15 +167,15 @@ module SessionsHelper
   end
   
   def social_image
-    @social_image || "https://s3.amazonaws.com/moonlite-nsdub/static/Stoney+128x128.png"
+    @social_image || "https://s3.amazonaws.com/moonlite-nsdub/static/GiantStoney.png"
   end
   
   def social_title
-    @social_title || "MetaBright - Prove and Promote your Skills"
+    @social_title || "Skill Tests for Candidates and Employers | MetaBright"
   end
   
   def social_description
-    @social_description || "MetaBright is the game that can land you your next job or internship!"
+    @social_description || "MetaBright is a skills assessment platform that makes it easier to hire and be hired."
   end
   
   def store_location(location = nil)

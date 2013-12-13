@@ -20,7 +20,7 @@
           Question #{@question_count} of #{@session_total}
     %div{ style: "text-align:center;" }
       = render "tasks/stored_resource", { :stored_resource => @stored_resource }
-    %div.questionandresponsespace{ style: "width: 425px;" }
+    %div.questionandresponsespace
       %div.questionspace
         %pre.CRquestion= @task.question
       - if @task.quoted_text
@@ -51,7 +51,7 @@
         = link_to (@next_text || "Next"), @next_link, id: "nextbutton", class: "hide submit_button", style: "float: right; width: inherit;", rel: "nofollow", onclick: '$(this).addClass("disabled").attr("disabled", "disabled"); return true;'
     
     - if @show_stats
-      %div{ style: "display:inline-block; vertical-align:top; margin: 0px 0 0 6px; width: 260px; margin-left: 28px;" }
+      .continue_stats
         %div.questionfooter
           %div.pointbar{ style: "position: relative;" }
             %div.pointbarfiller{ style: "display: inline-block;"}
