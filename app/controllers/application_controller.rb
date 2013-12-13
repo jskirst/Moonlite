@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :redirect_to_www
   force_ssl unless: :ssl_exempt?
   
   protect_from_forgery
@@ -25,6 +26,12 @@ class ApplicationController < ActionController::Base
     end
     
     return sr
+  end
+
+  def redirect_to_www
+    if request.subdomain == "employers" and request.referer.include?("metabright.com")
+      redirect_to request.url.gsub("http://employers.metabright.com", "http://www.metabright.com")
+    end
   end
 
   def ssl_exempt?
