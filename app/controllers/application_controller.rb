@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   end
 
   def redirect_to_www
-    if request.subdomain == "employers" and request.referer.include?("metabright.com")
+    if request.subdomain == "employers" and request.referer.try{ |r| r.include?("metabright.com") }
       redirect_to request.url.gsub("http://employers.metabright.com", "http://www.metabright.com")
     end
   end
