@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  force_ssl unless Rails.env.development?
+  force_ssl unless: :ssl_exempt?
   
   protect_from_forgery
   include ApplicationHelper
@@ -25,5 +25,11 @@ class ApplicationController < ActionController::Base
     end
     
     return sr
+  end
+
+  def ssl_exempt?
+    return true if request.subdomain == "employers"
+    return true if Rails.env.development?
+    return false
   end
 end
