@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  force_ssl unless Rails.env.development?
+  before_action :redirect_to_www
+  force_ssl unless: :ssl_exempt?
   
   protect_from_forgery
   include ApplicationHelper
@@ -25,5 +26,17 @@ class ApplicationController < ActionController::Base
     end
     
     return sr
+  end
+
+  def redirect_to_www
+    if request.subdomain == "employers"
+      redirect_to request.url.gsub("http://employers.metabright.com", "http://www.metabright.com")
+    end
+  end
+
+  def ssl_exempt?
+    return true if request.subdomain == "employers"
+    return true if Rails.env.development?
+    return false
   end
 end

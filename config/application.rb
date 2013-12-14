@@ -38,5 +38,17 @@ module Metabright
     config.action_dispatch.default_headers['X-Frame-Options'] = "ALLOWALL"
 
     config.i18n.load_path += Dir[Rails.root.join("config/carmen.yml")]
+
+    config.action_mailer.default_url_options = { host: "www.metabright.com" }
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.raise_delivery_errors = true
+    config.action_mailer.smtp_settings = {
+      :address              => "smtp.mandrillapp.com",
+      :port                 => 587,
+      :domain               => 'www.metabright.com',
+      :user_name            => 'jskirst@metabright.com',
+      :password             => 'OYPyfowFxEVpbtux4ze9pg',
+      :authentication       => 'plain',
+      :enable_starttls_auto => true  }
   end
 end
