@@ -90,7 +90,7 @@ class EvaluationExport < Prawn::Document
           column(0).padding = 6
           column(0).size = 10
           #column(0).background_color = status_color
-          column(0).width = 300
+          column(0).width = 500
           #cells.text_color = "FFFFFF"
           cells.border_color = "BBBBBB"
           cells.padding_left = 10
