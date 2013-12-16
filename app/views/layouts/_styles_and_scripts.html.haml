@@ -31,7 +31,7 @@
   });
 
   $('.bar2').mosaic({ animation: 'slide' });
-
+  
   $('.notifications_link').on("ajax:success", function(xhr, data){
     $("#notifications_modal").html(data).modal({ keyboard: true, show: true, backdrop: true});
     $(".navitem").removeClass("highlighted");
