@@ -102,7 +102,7 @@
         .floatr
           .controls{ style: "position: relative; top: 87px;"}
             %div{ "data-tip" => "Back" }
-              = link_to new_group_evaluation_path(@group) do
+              = link_to "#", onclick: "history.back(); return false" do
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear medium"
             .edit_path_settings_button{ onclick: "$('#settings_modal').modal({keyboard: true, show: true})", "data-tip" => "Settings" }
               %img.gear.medium{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Challenge Settings"}

@@ -8,7 +8,7 @@
       "*://employers.metabright.com/"
     ],
     "launch": {
-      "web_url": "http://employers.metabright.com/?ref=cw"
+      "web_url": "https://employers.metabright.com/?ref=cw"
     }
   },
   "icons": {

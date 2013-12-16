@@ -8,7 +8,7 @@
       "*://www.metabright.com/"
     ],
     "launch": {
-      "web_url": "http://www.metabright.com/?ref=cw"
+      "web_url": "https://www.metabright.com/?ref=cw"
     }
   },
   "icons": {

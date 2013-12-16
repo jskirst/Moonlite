@@ -146,7 +146,7 @@
                     - r[:creative].each do |completed_task|
                       %li
                         - total_time = (completed_task.updated_at - completed_task.created_at).round(0)
-                        - total_time = creative_time_to_answer if total_time > 600
+                        - total_time = creative_time_to_answer if total_time > 7200
                         - minutes = (total_time.to_f / 60).round(0)
                         - seconds = (total_time.to_f % 60).round(0)
                         .answer

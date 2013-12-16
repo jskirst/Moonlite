@@ -183,7 +183,7 @@ class EvaluationExport < Prawn::Document
     r[:creative].each_with_index do |completed_task, i|
       move_down 10
       total_time = (completed_task.updated_at - completed_task.created_at).round(0)
-      total_time = @view.creative_time_to_answer if total_time > 600
+      total_time = @view.creative_time_to_answer if total_time > 7200
       minutes = (total_time.to_f / 60).round(0)
       seconds = (total_time.to_f % 60).round(0)
       task = completed_task.task
