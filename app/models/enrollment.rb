@@ -15,6 +15,8 @@ class Enrollment < ActiveRecord::Base
   validates :user_id, presence: true, uniqueness: { scope: :path_id }
   validates :path_id, presence: true
   
+  after_initialize { self.metascore ||= 0 }
+  
   after_create do 
     path.personas.each do |p| 
       begin

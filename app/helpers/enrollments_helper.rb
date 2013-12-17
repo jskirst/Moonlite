@@ -1,5 +1,9 @@
 module EnrollmentsHelper
   def extract_enrollment_details(enrollment)
+    if enrollment.metascore.nil? 
+      enrollment.calculate_metascore; 
+      enrollment.calculate_metapercentile;
+    end
     path = enrollment.path
     core = enrollment.completed_tasks.joins(:task)
       .joins("LEFT JOIN topics on topics.id=tasks.topic_id")
