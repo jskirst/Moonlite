@@ -113,9 +113,10 @@
             %label.control-label Image
             .controls
               - if sr = task.stored_resources.first
-                = image_tag sr.obj.url, style: "height: 100px;"
-                = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, data: { confirm: "Are you sure you want to remove this attachment?" }
-              - else
+                .existing-image
+                  = image_tag sr.obj.url, style: "height: 100px;"
+                  = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, class: "delete-image", remote: true, data: { confirm: "Are you sure you want to remove this attachment?" }
+              .new-image{ style: ((sr = task.stored_resources.first).nil? ? "" : "display: none")}
                 .image_upload.tt_signal{ style: "position: relative; right: 40px;"}
                   = render "stored_resources/new_image"
           - unless @group  
@@ -213,4 +214,12 @@
       $(this).find(".status").removeClass("alert-success");
       $(this).find(".status").addClass("alert-error").text(data.error).show().fadeOut(10000);
     })
+
+    $(".delete-image").unbind("ajax:success");
+    $(".delete-image").on("ajax:success", function(){
+      var parent = $(this).parent().parent();
+      parent.find(".existing-image").hide()
+      parent.find(".new-image").show();
+      return false;
+    });
   })
