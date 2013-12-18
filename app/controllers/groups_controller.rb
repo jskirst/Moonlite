@@ -111,7 +111,7 @@ class GroupsController < ApplicationController
     if session[:previous_plan_type] == Group::FREE_PLAN.to_s
       @was_trial = true
     end
-    @sharing_text = "I just started testing my candidates on MetaBright, and you can too. Try it out for free here:"
+    @sharing_text = "I just started testing my candidates on MetaBright, and you can too. Try it out for free here: https://www.metabright.com/evaluator"
     @title = "Order Confirmation"
     @show_footer = true
     @show_nav_bar = true

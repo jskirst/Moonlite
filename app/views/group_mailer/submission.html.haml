@@ -1,6 +1,6 @@
-%p{ style: "font-size:12px;"} Hi #{@evaluation.user.name},
+%p{ style: "font-size:12px;"} Hi #{@user.name.split.first},
 %p{ style: "font-size:12px;"} 
-  #{@user.name} just completed the #{@evaluation.company} #{@evaluation.title} Evaluation! You can view all your candidates #{link_to "here", group_evaluations_url(@evaluation_enrollment.group)} or view a detailed report of just #{@user.name}'s score. 
+  #{@candidate.name} just completed the #{@evaluation.company} #{@evaluation.title} Evaluation! #{link_to "View a detailed report", group_evaluations_url(@evaluation_enrollment.group)} of #{@candidate.name}'s results and a summary of all your candidates.
 %p{ style: "font-size:12px;"} 
   Thanks,
   %br

@@ -32,8 +32,9 @@ class GroupMailer < ActionMailer::Base
   def submission(evaluation_enrollment)
     @evaluation_enrollment = evaluation_enrollment
     @evaluation = @evaluation_enrollment.evaluation
-    @user = @evaluation_enrollment.evaluation.user
-    m = mail(to: @user.email, subject: "#{@user.name} has just completed your evaluation")
+    @candidate = @evaluation_enrollment.user
+    @user = @evaluation.user
+    m = mail(to: @user.email, subject: "#{@candidate.name} has just completed your evaluation")
   end
   
   def invite(email, group, url)
