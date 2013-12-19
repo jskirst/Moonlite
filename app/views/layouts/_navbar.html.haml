@@ -6,7 +6,7 @@
       /     = image_tag(STONEY_SMALL_URL)
       /     %h1 MetaBright
       .brand.old-brand{ style: "width: 160px; padding-right: 10px; margin-top: 2px;" }
-        - if params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue")
+        - if params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue" or params[:action] == "submit")
           = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
         - else
           = link_to root_url do
