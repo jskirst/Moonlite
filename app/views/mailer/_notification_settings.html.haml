@@ -1,11 +1,17 @@
-- if @user
+- if @group and not @invited
+  %span{style:"font-size:10px; color:gray;"}
+    You are receiving this message because #{@user.email} is a member of MetaBright.
+  %br
+  %span{style:"font-size:10px; color:gray;"} 
+    MetaBright, Inc. 500 Oak Street, Suite 5, San Francisco, CA, 94102
+- elsif @user
   %span{style:"font-size:10px; color:gray;"}
     You are receiving this message because #{@user.email} is a member of MetaBright. To adjust your email settings or to unsubscribe, 
   %span{style:"font-size:10px;"}
     = link_to "click here.", notifications_user_url(@user.signup_token)
   %span{style:"font-size:10px; color:gray;"} 
     MetaBright, Inc. 500 Oak Street, Suite 5, San Francisco, CA, 94102
-- else
+- elsif @invited
   %span{style:"font-size:10px; color:gray;"}
     - if @footer_message
       = @footer_message
@@ -14,3 +20,4 @@
   %br
   %span{style:"font-size:10px; color:gray;"} 
     MetaBright, Inc. 500 Oak Street, Suite 5, San Francisco, CA, 94102
+    

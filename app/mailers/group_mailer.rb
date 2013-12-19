@@ -30,6 +30,8 @@ class GroupMailer < ActionMailer::Base
   # end
   
   def submission(evaluation_enrollment)
+    @group = true
+    # We specify @group to ensure the right email footer is displayed
     @evaluation_enrollment = evaluation_enrollment
     @evaluation = @evaluation_enrollment.evaluation
     @candidate = @evaluation_enrollment.user
@@ -39,6 +41,7 @@ class GroupMailer < ActionMailer::Base
   
   def invite(email, group, url)
     @group = group
+    @invited = true
     @url = url
     m = mail(to: email, subject: "You've been invited to join the #{group.name} account on MetaBright", bcc: "jonathan@metabright.com")
   end
