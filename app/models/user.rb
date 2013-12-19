@@ -103,7 +103,7 @@ class User < ActiveRecord::Base
   def locked?() locked_at.presence end
   def private?() private_at.presence end
   def content_creation_enabled?() not self.content_creation_enabled_at.nil? end
-  def guest_user?() email.include?("@metabright") and not GUEST_WHITELIST.include?(email) end
+  def guest_user?() email.include?("metabright.com") and not GUEST_WHITELIST.include?(email) end
     
   def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
   
@@ -133,11 +133,11 @@ class User < ActiveRecord::Base
     user_from_auth = User.find_with_omniauth(auth)
     return user_from_auth if user_from_auth
     user_details = { 
-        name: auth["info"]["name"], 
+        name: (auth["info"]["name"] || auth["info"]["nickname"]), 
         email: auth["info"]["email"],
     } 
 
-    begin
+    #begin
       info = auth[:extra][:raw_info]
       if auth[:provider] == "facebook"
         
@@ -175,6 +175,7 @@ class User < ActiveRecord::Base
       
         user_details[:description] = info[:bio]
         user_details[:link] = auth[:info][:urls].first if auth[:info][:urls]
+        user_details[:link] = user_details[:link][1] if user_details[:link].is_a? Array
         user_details[:location] = info[:location]
         user_details[:image_url] = auth[:info][:image]
         user_details[:company_name] = info[:company]
@@ -182,14 +183,6 @@ class User < ActiveRecord::Base
       else
         raise "Cannot recognize provider."
       end
-      
-    rescue
-      if Rails.env == "development"
-        raise $!.to_s
-      else
-        logger.debug $!.to_s
-      end
-    end
     
     existing_user = User.find_by_email(auth["info"]["email"])
     user = existing_user if existing_user

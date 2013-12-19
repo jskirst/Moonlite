@@ -51,7 +51,17 @@ class TasksController < ApplicationController
   def update
     sid = params[:task].delete(:section_id).to_i
     
+    sr_id = params.delete(:stored_resource_id)
+    unless sr_id.blank?
+      sr = StoredResource.find(sr_id)
+      raise "FATAL: STEALING RESOURCE" if sr.owner_id
+      sr.owner_id = @task.id
+      sr.owner_type = @task.class.to_s
+      sr.save
+    end
+
     @task.update_attributes(params[:task])
+
     errors = @task.errors.full_messages
     errors += @task.update_answers(params[:task])
     

@@ -35,6 +35,7 @@ class ApplicationController < ActionController::Base
   end
 
   def ssl_exempt?
+    return true if Rails.env == "test"
     return true if request.subdomain == "employers"
     return true if Rails.env.development?
     return false
