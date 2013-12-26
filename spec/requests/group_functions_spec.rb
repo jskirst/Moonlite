@@ -13,13 +13,10 @@ describe "Group Functions", js: true do
     click_button "Learn More"
     
     expect_content("What skills does your company need?")
-    first("a[descriptor='signup-link']").trigger("click")
-    
-    expect_content("Begin Testing Your Candidates in Less Than 60 Seconds")
-    click_on "premium subscriptions."
+    first("a[descriptor='signup-link']").click
     
     expect_content("EVALUATOR PRICING")
-    first("a[descriptor='six_to_fifteen']").trigger("click")
+    first("a[descriptor='six_to_fifteen']").click
     
     expect_content("100% no-risk, free trial")
     find("#group_creator_name").set("Michael Jordan")
@@ -44,13 +41,10 @@ describe "Group Functions", js: true do
     visit evaluator_path
     
     expect_content("What skills does your company need?")
-    first("a[descriptor='signup-link']").trigger("click")
-    
-    expect_content("Begin Testing Your Candidates in Less Than 60 Seconds")
-    click_on "premium subscriptions."
+    first("a[descriptor='signup-link']").click
     
     expect_content("EVALUATOR PRICING")
-    first("a[descriptor='six_to_fifteen']").trigger("click")
+    first("a[descriptor='six_to_fifteen']").click
     
     expect_content("100% no-risk, free trial")
     find("#group_name").set("Chicago Bulls")
@@ -73,12 +67,10 @@ describe "Group Functions", js: true do
     fill_in "group_creator_email", with: "bloggerman@t.com"
     fill_in "group_creator_password", with: "a1b2c3d4"
 
-    ActionMailer::Base.deliveries = []
     click_on "Create My Account"
     sleep(10)
     
     expect_content("Welcome to MetaBright!")
-    ActionMailer::Base.deliveries.size.should == 1
     group = Group.last
     expect_content(group.users.first.name)
   end
@@ -154,7 +146,6 @@ describe "Group Functions", js: true do
       find(".challenge_holder").first('a').click
       
       12.times do |i|
-        expect_content "#{i + 1} / 12"
         first('.answer_content').click
         click_on "Next"
         sleep 0.25
@@ -169,7 +160,6 @@ describe "Group Functions", js: true do
       find(".challenge_holder").first('a').click
       
       12.times do |i|
-        expect_content "#{i + 1} / 12"
         first('.answer_content').click
         click_on "Next"
         sleep 0.25

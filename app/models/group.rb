@@ -15,10 +15,10 @@ class Group < ActiveRecord::Base
     SIX_TO_FIFTEEN_PLAN => { price: 49.99, description: "6-15 Admins", max_seats: 15, active: true },
     SIXTEEN_TO_FIFTY_PLAN => { price: 89.99, description: "16-50 Admins", max_seats: 50, active: true }
   }
-  PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
+  PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} ($#{details[:price]})", name] }
   ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
 
-  #COUPONS = ["GETSKILLS"]
+  TRIAL_CANDIDATE_LIMIT = 1
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
   attr_protected :token

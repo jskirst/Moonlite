@@ -60,11 +60,6 @@
             = submit_tag "Invite", class: "button submit_button_standard button-small", style: "float: none;"
         - else
           %a{ style: "color: #0088cc;", onclick: "$(this).hide();$('#upgrade_group').show();" } Upgrade your account to invite more users.
-          = form_for(@group, url: new_group_url, html: { class: "hide", id: "upgrade_group", method: "put" }) do |f|
-            .control-group
-              %label.control-label Choose a plan you'd like to upgrade to:
-              .controls
-                = f.select(:plan_type, Group::ACTIVE_PLAN_TYPE_LIST)
-            = submit_tag "Upgrade", class: "button submit_button_standard button-small", style: "float: none;"
+          = render "groups/signup/upgrade_form"
       %td{ colspan: "1", style: "border-bottom: 0;text-align: right;" }
         Seats Available: #{@group.seats_available}

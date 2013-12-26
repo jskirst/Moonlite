@@ -1,10 +1,13 @@
 class EvaluationsController < ApplicationController
   include EnrollmentsHelper
+  include GroupsHelper
+
   before_filter :authenticate, except: [:take]
   before_filter :load_group_and_evaluation
   before_filter :authorize_group, except: [:take, :continue, :challenge, :answer, :take_confirmation, :submit]
   before_filter { @show_footer = true and @hide_background = true }
   before_filter :prepare_form, only: [:new, :create, :edit, :update]
+  before_filter :candidates_check
 
   def index
     @evaluations = @group.evaluations

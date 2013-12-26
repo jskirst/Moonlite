@@ -1,9 +1,12 @@
 class GroupsController < ApplicationController
   include NewsfeedHelper
+  include GroupsHelper
+
   before_filter :authenticate, except: [:new, :create, :coupon, :show, :newsfeed, :join, :trial, :start]
   before_filter :load_resource, except: [:new, :create, :coupon, :purchased, :trial, :start]
   before_filter :authorize_resource, only: [:edit, :update, :dashboard, :account, :invite]
   before_filter { @hide_background = true }
+  before_filter :candidates_check
   
   def new
     @title = "Evaluator Sign Up"
@@ -11,19 +14,20 @@ class GroupsController < ApplicationController
     if @admin_group
       if @admin_group.stripe_token.blank?
         @new_group = @admin_group
-      elsif @admin_group.plan_type == "free_to_demo"
-        @is_trial = true
-        @new_group = @admin_group
-        @new_group.stripe_token = nil
-        @new_group.plan_type = params[:group][:plan_type]
-      elsif @admin_group.plan_type == params[:p]
-        flash[:success] = "You have already set your plan type."
-        redirect_to root_url and return
+      elsif Group::PLAN_TYPES.keys.include?(params[:group][:plan_type])
+        if @admin_group.plan_type == "free_to_demo" or @admin_group.stripe_token == "free_as_in_beer"
+          @is_trial = true
+          @new_group = @admin_group
+          @new_group.stripe_token = nil
+          @new_group.plan_type = params[:group][:plan_type]
+        else 
+          flash[:success] = "You're account has been upgraded."
+          @admin_group.plan_type = params[:group][:plan_type]
+          @admin_group.save!
+          redirect_to account_group_path and return
+        end
       else
         raise @admin_group.to_yaml
-        sign_out
-        flash[:error] = "Something has gone wrong with your signup. You were not charged. Please contact support@metabright.com. We apologize for the inconvenience."
-        redirect_to root_url and return
       end
     else
       @new_group = Group.new
@@ -185,17 +189,29 @@ class GroupsController < ApplicationController
   end
   
   def update
-    @group.update_attributes(params[:group])
-    if params[:group][:plan_type]
-      flash[:success] = "Plan type has been updated."
+    if params[:group][:plan_type] and (@group.stripe_token.nil? or @group.stripe_token == "free_as_in_beer")
+      @is_trial = true
+      @new_group = @admin_group
+      @new_group.stripe_token = nil
+      @new_group.plan_type = params[:group][:plan_type]
+      @hide_background = true
+      @show_nav_bar = false
+      @show_sign_in = false
+      @show_employer_link = false
+      render "groups/signup/form"
     else
-      flash[:success] = "Account settings have been updated."
-    end
-    
-    if params[:redirect_url]
-      redirect_to params[:redirect_url]
-    else
-      redirect_to account_group_url(@group)
+      @group.update_attributes(params[:group])
+      if params[:group][:plan_type]
+        flash[:success] = "Plan type has been updated."
+      else
+        flash[:success] = "Account settings have been updated."
+      end
+      
+      if params[:redirect_url]
+        redirect_to params[:redirect_url]
+      else
+        redirect_to account_group_url(@group)
+      end
     end
   end
   

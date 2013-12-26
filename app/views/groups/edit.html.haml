@@ -43,7 +43,10 @@
           .control-group
             %label.control-label Upgrade Plan Type
             .controls
-              = f.select(:plan_type, Group::ACTIVE_PLAN_TYPE_LIST)
+              - if @admin_group.plan_type == Group::FREE_PLAN
+                = f.select(:plan_type, Group::PLAN_TYPE_LIST)
+              - else
+                = f.select(:plan_type, Group::ACTIVE_PLAN_TYPE_LIST)
             %label.control-label
             .controls{ style: "margin-top: 10px;"}
               = link_to "Close your MetaBright account", close_group_url(@group)
