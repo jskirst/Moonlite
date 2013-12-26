@@ -8,10 +8,8 @@ module GroupsHelper
         .to_a.uniq.size
       if @candidate_count > Group::TRIAL_CANDIDATE_LIMIT
         @candidate_limit_reached = true
-        flash[:error] = "You are at your limit."
       else
         @candidate_limit_reached = false
-        flash[:success] = "You are not at your limit."
       end
     end
   end

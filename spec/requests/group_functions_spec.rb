@@ -28,7 +28,7 @@ describe "Group Functions", js: true do
     find("#group_card_month_expr").set("01")
     find("#group_card_year_expr").set("2018")
     click_on "Start My Free Trial"
-    sleep(10)
+    sleep(3)
     
     expect_content("Welcome to MetaBright!")
   end
@@ -53,7 +53,7 @@ describe "Group Functions", js: true do
     find("#group_card_month_expr").set("01")
     find("#group_card_year_expr").set("2018")
     click_on "Start My Free Trial"
-    sleep(10)
+    sleep(3)
     
     expect_content("Welcome to MetaBright!")
     expect_content(@user.name)
@@ -68,7 +68,7 @@ describe "Group Functions", js: true do
     fill_in "group_creator_password", with: "a1b2c3d4"
 
     click_on "Create My Account"
-    sleep(10)
+    sleep(3)
     
     expect_content("Welcome to MetaBright!")
     group = Group.last

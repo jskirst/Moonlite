@@ -29,6 +29,13 @@ RSpec.configure do |config|
   config.include Capybara::DSL
   config.include RequestsHelper
   
+  Capybara.register_driver :firefox do |app|
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile['webdriver.load.strategy'] = 'unstable'
+    Capybara::Selenium::Driver.new(app, :browser => :firefox, profile: profile)
+  end
+  Capybara.default_driver = :firefox
+  
   # Capybara.register_driver :poltergeist do |app|
   #   Capybara::Poltergeist::Driver.new(app, { timeout: 30, phantomjs_options: ["--load-images=no"] })
   # end
