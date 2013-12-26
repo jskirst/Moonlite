@@ -1,3 +1,7 @@
+task :group_checkin => :environment do
+  Group.send_all_checkin_emails(true)
+end
+
 task :send_alerts => :environment do
   time = 10.minutes.ago
   puts "VOTE ALERTS"

@@ -158,7 +158,25 @@ class Group < ActiveRecord::Base
     end
   end
   
-  # Mail Alert
+  # Checkin Mail Alert
+  
+  def self.day_old_groups()
+    start_time = 2.days.ago
+    end_time = 1.days.ago
+    where("created_at > ? and created_at < ?" , start_time, end_time)
+  end
+  
+  def send_checkin_email(deliver = false)
+    m = GroupMailer.checkin(self)
+    m.deliver if deliver
+  end
+  
+  def self.send_all_checkin_emails(deliver = false)
+    day_old_groups.each { |g| g.send_checkin_email(deliver) }
+  end
+  
+  
+  # Welcome Mail Alert
   
   def self.new_groups(time)
     where("created_at > ?",time)
