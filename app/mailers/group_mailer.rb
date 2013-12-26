@@ -16,7 +16,7 @@ class GroupMailer < ActionMailer::Base
   def checkin(group)
     @group = group
     @user = group.users.first
-    m = mail(to: @user.email, subject: "How is everything going with MetaBright?")
+    m = mail(to: @user.email, subject: "How is everything going with MetaBright?", from: "jonathan@metabright.com")
   end
   
   def upgraded(group)
@@ -29,11 +29,6 @@ class GroupMailer < ActionMailer::Base
     end
     m = mail(to: @user.email, subject: "Your MetaBright account has been upgraded!")
   end
-  
-  # def intro_new_trial_user(group)
-  #   @user = group.users.first
-  #   m = mail(to: @user.email, from: jonathan@metabright.com, subject: "Checking in to see how MetaBright is going for you")
-  # end
   
   def submission(evaluation_enrollment)
     @group = true

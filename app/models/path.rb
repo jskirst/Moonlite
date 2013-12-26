@@ -56,7 +56,7 @@ class Path < ActiveRecord::Base
   def professional?() professional_at.nil? ? false : true end
   
   def path_pic
-    return self.image_url if self.image_url
+    return self.image_url.gsub("http://", "https://") if self.image_url
     return ICON_DEFAULT_PATH
   end
   def image() path_pic end
