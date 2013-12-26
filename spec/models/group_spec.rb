@@ -33,25 +33,42 @@ describe Group do
       @old_group.save!
     end
     
-    # describe "send checkin_email" do
-    #   describe "1 new group that is between one and two days old" do
-    #     before :each do
-    #       @group = FactoryGirl.create(:group)
-    #       @group.created_at = 18.hours.ago
-    #       @group.save!
-    #     end
-    #     
-    #     it "should result in 1 group" do
-    #       Group.day_old_groups.size.should == 1
-    #     end
-    #   
-    #     it "should result in 1 checkin email" do
-    #       Group.send_all_checkin_emails(true)
-    #       emails.size.should == 1
-    #       last_email_to.should == @group.users.first.email
-    #     end
-    #   end
-    # end
+    describe "send checkin_email" do
+      describe "1 new group that is between one and two days old" do
+        before :each do
+          @group = FactoryGirl.create(:group)
+          @group.created_at = 30.hours.ago
+          @group.save!
+        end
+        
+        it "should result in 1 day_old_groups" do
+          Group.day_old_groups.size.should == 1
+        end
+      
+        it "should result in 1 checkin email" do
+          Group.send_all_checkin_emails(true)
+          emails.size.should == 1
+          last_email_to.should == @group.users.first.email
+        end
+      end
+      
+      describe "1 new group that is more than 2 days old" do
+        before :each do
+          @group = FactoryGirl.create(:group)
+          @group.created_at = 48.hours.ago
+          @group.save!
+        end
+        
+        it "should result in 0 day_old_groups" do
+          Group.day_old_groups.size.should == 0
+        end
+      
+        it "should result in 1 checkin email" do
+          Group.send_all_checkin_emails(true)
+          emails.size.should == 0
+        end
+      end
+    end
     
     describe "send welcome_email" do
       describe "old group" do    
