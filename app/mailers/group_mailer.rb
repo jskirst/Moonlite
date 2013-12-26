@@ -13,6 +13,12 @@ class GroupMailer < ActionMailer::Base
     m = mail(to: @user.email, subject: "Welcome to MetaBright!")
   end
   
+  def checkin(group)
+    @group = group
+    @user = group.users.first
+    m = mail(to: @user.email, subject: "How is everything going with MetaBright?")
+  end
+  
   def upgraded(group)
     @group = group
     @user = group.users.first

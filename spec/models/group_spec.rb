@@ -32,44 +32,46 @@ describe Group do
       @old_group.created_at = 1.hour.ago
       @old_group.save!
     end
-
-    describe "old group" do    
-      it "should result in 0 emails" do
-        Group.send_all_welcome_emails(10.minute.ago, true)
-        last_email.should be_nil
-      end
-    end
     
-    describe "1 new group" do
-      before :each do
-        @group = FactoryGirl.create(:group)
+    describe "send welcome_email" do
+      describe "old group" do    
+        it "should result in 0 emails" do
+          Group.send_all_welcome_emails(10.minute.ago, true)
+          last_email.should be_nil
+        end
       end
-      
-      it "should result in 1 group" do
-        Group.new_groups(10.minutes.ago).size.should == 1
-      end
-      
-      it "should result in 1 email" do
-        Group.send_all_welcome_emails(10.minutes.ago, true)
-        emails.size.should == 1
-        last_email_to.should == @group.users.first.email
-      end
-    end
     
-    describe "2 new groups" do
-      before :each do
-        @group = FactoryGirl.create(:group)
-        @group2 = FactoryGirl.create(:group)
-      end
+      describe "1 new group" do
+        before :each do
+          @group = FactoryGirl.create(:group)
+        end
       
-      it "should result in 2 new groups" do
-        Group.new_groups(10.minutes.ago).size.should == 2
-      end
+        it "should result in 1 group" do
+          Group.new_groups(10.minutes.ago).size.should == 1
+        end
       
-      it "should result in 2 emails" do
-        Group.send_all_welcome_emails(10.minutes.ago, true)
-        emails.size.should == 2
-        last_email_to.should == @group2.users.first.email
+        it "should result in 1 email" do
+          Group.send_all_welcome_emails(10.minutes.ago, true)
+          emails.size.should == 1
+          last_email_to.should == @group.users.first.email
+        end
+      end
+    
+      describe "2 new groups" do
+        before :each do
+          @group = FactoryGirl.create(:group)
+          @group2 = FactoryGirl.create(:group)
+        end
+      
+        it "should result in 2 new groups" do
+          Group.new_groups(10.minutes.ago).size.should == 2
+        end
+      
+        it "should result in 2 emails" do
+          Group.send_all_welcome_emails(10.minutes.ago, true)
+          emails.size.should == 2
+          last_email_to.should == @group2.users.first.email
+        end
       end
     end
   end
