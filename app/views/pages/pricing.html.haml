@@ -23,8 +23,8 @@
                     %span.price_tenure  
                 %ul.features 
                   %li 3 Evaluations
+                  %li #{Group::TRIAL_CANDIDATE_LIMIT} Candidates
                   %li Unlimited Challenges 
-                  %li Unlimited Candidates 
                   %li{ style: "padding: 25px 15px;" } Limited Email Support
                 .price_footer 
                   = link_to "Start Free Trial", trial_groups_path, class: "action_button" 
@@ -36,8 +36,8 @@
                     %span.price_tenure per month 
                 %ul.features 
                   %li Unlimited Evaluations
-                  %li Unlimited Challenges 
                   %li Unlimited Candidates 
+                  %li Unlimited Challenges 
                   %li{ style: "padding: 25px 15px;" } Prioritized Email Support
                 .price_footer 
                   = link_to "Start Free Trial", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
@@ -51,8 +51,8 @@
                     %span.price_tenure per month 
                 %ul.features 
                   %li Unlimited Evaluations
-                  %li Unlimited Challenges 
                   %li Unlimited Candidates 
+                  %li Unlimited Challenges 
                   %li Premium Phone and Email Support
                 .price_footer
                   = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
@@ -64,8 +64,8 @@
                     %span.price_tenure per month 
                 %ul.features 
                   %li Unlimited Evaluations
-                  %li Unlimited Challenges 
-                  %li Unlimited Candidates  
+                  %li Unlimited Candidates 
+                  %li Unlimited Challenges  
                   %li Premium Phone and Email Support
                 .price_footer
                   = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button", descriptor: "six_to_fifteen" 

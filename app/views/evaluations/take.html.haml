@@ -9,9 +9,10 @@
   });
 
 - if current_user and @admin_group
-  .alert-preview
+  .alert-preview.green{ style: "margin: 75px auto -70px auto;"}
     %p You are viewing this in preview mode.
     = link_to "Back to Evaluations", group_evaluations_url(@admin_group), class: "submit_button"
+    .clear_floats
 
 #employer.aboutcontainer
   #take_evaluation.aboutbox

@@ -801,25 +801,34 @@ body.employer .container.body { width: inherit; background-color: transparent; p
 
 .alert-preview {
   display: block; 
-  margin: 65px auto -70px auto; 
+  margin: 0 auto;
   width: 400px; 
   border-radius: 4px; 
-  height: 60px; 
   color: white; 
   font-size: 18px; 
   padding: 15px; 
   text-align: center; 
-  background-color: rgba(70, 136, 90, 0.85);
   
-  p { margin-bottom: 15px; }
+  p { margin-bottom: 15px; margin-top: 0; }
   .submit_button {
-    float: inherit; 
+    float: inherit;
+    display: inline-block;
     background-color: white; 
     color: black; 
-    margin-top: 20px; 
     font-weight: bold;
     &:hover { box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.4); }
   }
+}
+.alert-preview.green {
+  background-color: rgba(70, 136, 90, .85);
+  border: none;
+}
+.alert-preview.orange {
+  background-color: #DFB075;
+  border: none;
+}
+.alert-preview.small-text {
+  font-size: 15px;
 }
 
 #organization_portal {

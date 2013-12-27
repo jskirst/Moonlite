@@ -38,6 +38,8 @@
             %h3 Evaluations
             %p An Evaluation is like a job application that measures a candidate's skills. A single Evaluation can contain multiple Challenges.
             = link_to "Create an Evaluation", new_group_evaluation_path(@group), class: "submit_button"
+            - if @candidate_count
+              = link_to "#{@candidate_count} of #{Group::TRIAL_CANDIDATE_LIMIT} Candidates Tested -- Upgrade for unlimited candates", "#", style: "margin: 15px auto -10px; display: block;"
         - else
           = render "table"
               

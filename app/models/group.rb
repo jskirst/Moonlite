@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} ($#{details[:price]})", name] }
   ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
 
-  TRIAL_CANDIDATE_LIMIT = 25
+  TRIAL_CANDIDATE_LIMIT = 0
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
   attr_protected :token

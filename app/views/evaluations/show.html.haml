@@ -72,4 +72,8 @@
           - if @evaluations.empty? and not @archive_exists
             %tr
               %td{ colspan: 5, style: "border-top: none;" } No one has taken this evaluation yet.
+      - if @is_trial
+        .alert-preview.small-text.orange{ style: "margin: 20px auto;"}
+          %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.
+        
 

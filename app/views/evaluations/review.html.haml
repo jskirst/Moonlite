@@ -13,3 +13,6 @@
           %p Copy and paste this link into your job description, your career page, or anywhere else your candidates frequent.
       %p{ style: "margin-top: 18px; font-size: 16px;"}
         = link_to "Continue to Evaluation Overview", group_evaluations_path(@group)
+      - if @is_trial
+        .alert-preview.small-text.orange{ style: "margin: 20px auto;"}
+          %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.

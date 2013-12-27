@@ -73,6 +73,8 @@
                     = link_to "Create one now.", new_group_path_path
             
               
-            
+        - if @is_trial
+          .alert-preview.small-text.orange{ style: "margin: 20px auto -20px auto;"}
+            %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.
         %div.row{ style: "margin: 40px auto 30px;" }
           = f.submit @evaluation.new_record? ? "Create Evaluation" : "Save Evaluation", class: "submit_button", style: "float: none;"

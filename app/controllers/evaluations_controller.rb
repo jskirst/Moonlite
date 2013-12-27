@@ -34,6 +34,9 @@ class EvaluationsController < ApplicationController
     if params[:archived]
       @showing_archived = true
     end
+    if @group.plan_type == "free_to_demo"
+      @is_trial = true
+    end
     @paths.each do |p|
       e = "e#{p.id}"
       @evaluations = @evaluations.joins("LEFT JOIN enrollments #{e} on #{e}.user_id=evaluation_enrollments.user_id and #{e}.path_id=#{p.id}")
@@ -44,6 +47,9 @@ class EvaluationsController < ApplicationController
   def new
     @evaluation = @group.evaluations.new(company: @group.name)
     @title = "Create a new Evaluation"
+    if @group.plan_type == "free_to_demo"
+      @is_trial = true
+    end
   end
   
   def create
@@ -74,6 +80,9 @@ class EvaluationsController < ApplicationController
   end
   
   def review
+    if @group.plan_type == "free_to_demo"
+      @is_trial = true
+    end
   end
   
   def grade

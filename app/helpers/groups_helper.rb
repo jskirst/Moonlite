@@ -13,4 +13,8 @@ module GroupsHelper
       end
     end
   end
+  
+  def trial_candidate_limit
+    @trial_candidate_limit = Group::TRIAL_CANDIDATE_LIMIT
+  end
 end

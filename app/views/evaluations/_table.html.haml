@@ -36,4 +36,4 @@
         = link_to "+ Create a new Evaluation", new_group_evaluation_path(@group)
       - if @candidate_count
         %td{ colspan: "4", style: "border-bottom: 0;text-align: right;" }
-          =link_to "#{@candidate_count} of 25 Candidates Used - Upgrade for unlimited candates", "#"
+          = link_to "#{@candidate_count} of #{Group::TRIAL_CANDIDATE_LIMIT} Candidates Tested -- Upgrade for unlimited candates", "#"
