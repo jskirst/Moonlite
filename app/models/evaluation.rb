@@ -40,7 +40,13 @@ class Evaluation < ActiveRecord::Base
   def update_evaluation_paths
     return true if selected_paths.nil? or selected_paths.empty?
     available_paths = (Path.where("professional_at is not NULL").to_a + group.paths.to_a).collect(&:id)
-    selected_ids = selected_paths.keys.map{ |id| id.to_i }
+    if selected_paths.is_a? Hash
+      selected_ids = selected_paths.keys.map{ |id| id.to_i }
+    elsif selected_paths.is_a? Array
+      selected_ids = selected_paths.map{ |id| id.to_i }
+    else
+      raise "Unknown selected paths type"
+    end
     existing_ids = []
     evaluation_paths.each do |ep|
       existing_ids << ep.path_id

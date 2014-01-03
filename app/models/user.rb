@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
     if self.password.present?
       self.salt = make_salt
       self.encrypted_password = encrypt(password)
+      review_submitted_answers
     end
     
     if self.name_changed? or self.username.blank?
@@ -197,6 +198,7 @@ class User < ActiveRecord::Base
     end
     user.save!
     user.user_auths.create!(provider: auth["provider"], uid: auth["uid"])
+    review_submitted_answers
     return user
   end
   
@@ -212,7 +214,14 @@ class User < ActiveRecord::Base
     self.email = auth["info"]["email"]
     self.image_url = auth["info"]["image"]
     raise "User Auth save failed. " + self.errors.full_messages.join(". ") unless self.save
+    review_submitted_answers
     return true
+  end
+
+  def review_submitted_answers
+    completed_tasks.where.not(submitted_answer_id: nil).each do |ct|
+      ct.submitted_answer.update_attribute(:reviewed_at, Time.now())
+    end
   end
   
   def self.auth(redirect_url)
