@@ -59,7 +59,10 @@
       })
 
   - feed.posts.each do |post|
-    = render "newsfeed/post", { post: post, feed: feed, viewable: (feed.user_posts.include?(post.task_id.to_i)) }
+    - if post.is_a? OpenStruct
+      = render "newsfeed/event", { event: post, feed: feed }
+    - else
+      = render "newsfeed/post", { post: post, feed: feed, viewable: (feed.user_posts.include?(post.task_id.to_i)) }
   
   - if feed.url
     :javascript

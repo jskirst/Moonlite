@@ -1,0 +1,17 @@
+%div.post
+  - unless feed.context == :profile or feed.context == :submission
+    %div.postphotospace
+      = link_to hovercard_user_path(event.username), class: "hovercard_link", remote: true do
+        = image_tag User.picture(event.user_image_url), class: "photo", onerror: "user_img_error(this);"
+  %div.postspace
+    %div.postheader
+      - if feed.context == :submission
+        %div.postphotospace
+          = link_to hovercard_user_path(event.username), class: "hovercard_link", remote: true do
+            = image_tag User.picture(event.user_image_url), class: "photo", onerror: "user_img_error(this);"
+      %h3
+        = link_to truncate(event.name, length: 50), hovercard_user_path(event.username), class:"username hovercard_link", remote: true
+        - if badge = User.reputation_badge(event.earned_points)
+          = image_tag (badge[0]), class: "rep_badge_post", title: badge[1], alt: badge[1]
+       
+    %div.posttext.leveltext.dropdown{ style: "background-color: rgb(195, 225, 247)" }= event.content
