@@ -15,7 +15,7 @@ module NewsfeedHelper
   class Feed
     MAX_POSTS = 15
     
-    attr_accessor :posts, :votes, :url, :page, :context
+    attr_accessor :posts, :votes, :url, :page, :context, :viewing_user, :user_posts
     
     def initialize(params = nil, user = nil, url = nil, posts = [])      
       if params
@@ -32,6 +32,12 @@ module NewsfeedHelper
       end
       
       @posts = posts
+      
+      if user
+        @user_posts = user.creative_task_ids
+      else
+        @user_posts = []
+      end
     end
     
     def url=(url)
