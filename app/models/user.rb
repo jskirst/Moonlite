@@ -468,6 +468,10 @@ class User < ActiveRecord::Base
     Mailer.test_alert(self, email_type).deliver
   end
 
+  def creative_task_ids
+    completed_tasks.where.not(submitted_answer_id: nil).pluck(:task_id).to_a
+  end
+
   def self.send_all_newsletters(newsletter_name, subject = "Updates from MetaBright!", test_user = nil)
     test_user_email = test_user.email if test_user
     User.where(locked_at: nil).where("users.email NOT LIKE ?", '%@metabright.com').each do |user|
