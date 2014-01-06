@@ -31,11 +31,17 @@ $landing_green: #73bb6e;
               
               h1 {
                 text-align: center; 
-                font-size: 4.5em; 
+                font-size: 4.3em; 
                 line-height: 1.25em; 
-                padding-bottom: 34px; 
+                padding-bottom: 33px; 
               }
               h3 { color: #8a8d99; }
+              span {
+                font-size: 1.05em;
+                letter-spacing: 1.5px;
+                color: $metabright_blue;
+                font-family: 'MuliRegular';
+              }
             }
             .triangle{
               position: relative;
@@ -55,8 +61,8 @@ $landing_green: #73bb6e;
             height: 286px; margin-left: 0;
             
             .consumer, .employer { height: 50%; padding: 0 10px;}
-            .consumer { background-color: $landing_red;  }
-            .employer { background-color: $landing_yellow; } 
+            .consumer { background-color: $landing_yellow;  }
+            .employer { background-color: $landing_red; } 
             .option { 
               padding: 24px 20px; 
               color: white; 
@@ -76,7 +82,7 @@ $landing_green: #73bb6e;
               padding: 5px 20px;
               height: 30px; 
               float: right; 
-              background-color: #254972;
+              background-color: $metabright_blue;
               border-width: 0;
               text-shadow: none; 
               color: white;
