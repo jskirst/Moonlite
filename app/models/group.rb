@@ -18,7 +18,7 @@ class Group < ActiveRecord::Base
   PLAN_TYPE_LIST = PLAN_TYPES.collect{ |name, details| ["#{details[:description]} ($#{details[:price]})", name] }
   ACTIVE_PLAN_TYPE_LIST = PLAN_TYPES.select{ |name, details| details[:active] == true }.collect{ |name, details| ["#{details[:description]} (#{details[:price]})", name] }
 
-  TRIAL_CANDIDATE_LIMIT = 0
+  TRIAL_CANDIDATE_LIMIT = 25
   
   attr_accessor :creator_name, :creator_email, :creator_password, :creator, :coupon
   attr_protected :token
@@ -50,6 +50,7 @@ class Group < ActiveRecord::Base
    
   before_create :init_group
   after_create :add_group_creator
+  after_create :add_sample_evaluation
 
   def price(percent_off = nil)
     price = PLAN_TYPES[self.plan_type][:price]
@@ -84,6 +85,23 @@ class Group < ActiveRecord::Base
       gu = group_users.new(user_id: creator.id)
       gu.is_admin = true
       gu.save!
+    end
+  end
+
+  def add_sample_evaluation
+    sample = Evaluation.where(id: 61).first
+    if sample
+      new_sample = sample.dup
+      new_sample.group_id = self.id
+      new_sample.user_id = self.creator.id
+      new_sample.selected_paths = sample.evaluation_paths.pluck(:path_id)
+      
+      if new_sample.save!
+        sample_enrollment = sample.evaluation_enrollments.first
+        new_sample_enrollment = sample_enrollment.dup
+        new_sample_enrollment.evaluation_id = new_sample.id
+        new_sample_enrollment.save!
+      end
     end
   end
   
