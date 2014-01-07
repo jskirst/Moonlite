@@ -141,11 +141,57 @@ a.menu:after, .dropdown-toggle:after {content: none;}
 .vote_points { font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; }
 .post_caption { margin-top:12px; font-family: 'MuliItalic'; border-bottom: 1px solid #ccc; padding-bottom:5px; margin-bottom:-4px; }
 .retract_link { padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px; }
-.task_post { position: relative; font-size: 12px; min-height: 150px; max-height: 300px; overflow-x: hidden; overflow-y: hidden; }
-.task_post .content { position: absolute; top: 0; left: 0; min-width: 100%; min-height: 100%; z-index: 1; }
-.task_post .details { padding: 5px 2px; height: 50px; width: 100%; position: absolute; bottom: 0px; left: 0px; z-index: 1000; background-color: rgb(29, 29, 29); }
-.task_post h5 a:hover {  color: rgb(0, 204, 255); }
 code.content { border: none; color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre-wrap; background-color: inherit; }
+
+.task_post {
+  position: relative;
+  font-size: 12px;
+  min-height: 150px;
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: hidden; 
+  
+  .content {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    min-width: 100%; 
+    min-height: 100%; 
+    z-index: 1;
+  }
+  .details {
+    padding: 5px 2px;
+    height: 50px;
+    width: 100%; 
+    position: absolute;
+    bottom: 0px; 
+    left: 0px; 
+    z-index: 1000; 
+    background-color: rgb(29, 29, 29);
+  }
+  h5{
+    a:hover {
+      color: rgb(0, 204, 255); 
+    }
+  }
+}
+.obfuscated_cr {
+  min-height: inherit;
+  
+  .icon {
+    text-align: center;
+    font-size: 20px;
+    padding: 15px 0;
+    img { opacity: 0.75; display: inline;}
+  }
+  .text {
+    font-size: 15px;
+    padding: 5px 20px 20px;
+    
+    a { margin: 20px 0 15px 0;}
+    div { display: inline-block;}
+  }
+}
 
 /* Challenge jumper */
 .singleprogressentry { 

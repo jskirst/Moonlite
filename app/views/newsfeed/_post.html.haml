@@ -1,12 +1,12 @@
-%div.post
+.post
   - unless feed.context == :profile or feed.context == :submission
-    %div.postphotospace
+    .postphotospace{style: "#{if not viewable then 'opacity: 0.75' end}"}
       = link_to hovercard_user_path(post.username), class: "hovercard_link", remote: true do
         = image_tag User.picture(post.user_image_url), class: "photo", onerror: "user_img_error(this);"
-  %div.postspace
-    %div.postheader
+  .postspace
+    .postheader{style: "#{if not viewable then 'opacity: 0.75' end}"}
       - if feed.context == :submission
-        %div.postphotospace
+        .postphotospace
           = link_to hovercard_user_path(post.username), class: "hovercard_link", remote: true do
             = image_tag User.picture(post.user_image_url), class: "photo", onerror: "user_img_error(this);"
       %h3
@@ -15,7 +15,7 @@
           = image_tag (badge[0]), class: "rep_badge_post", title: badge[1], alt: badge[1]
       %span
         = link_to truncate(post.path_name, length: 40), challenge_path(post.path_permalink), class:"challengename"
-      %div.votingandpointsarea
+      .votingandpointsarea
         %div
           - if false
             %img.circle_check{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/circle-check.png", title: "Verified correct answer", alt: "Verified correct output"}
@@ -23,12 +23,12 @@
             %span.vote_points= post.points_awarded
             %span.vote_points{ style:"margin-right:3px;"} pts
             - if current_user.id == post.user_id
-              %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
+              .dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
                 %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px 4px;" }
                   %span.caret{ style: "margin: 6px 0 0 0;" }
                 %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
                   %li
-                    %div.graynub{ style: "top:-14px; left: 60px; "}
+                    .graynub{ style: "top:-14px; left: 60px; "}
                     %div{ style: "margin: -15px -1px 5px;"}
                       %ul.profile_dropdown{ style: "list-style: none; margin: 0px; padding: 0; min-width: 120px;"}
                         %li= link_to "Edit Submission", take_section_path(post.section_id, task_id: post.task_id), style: "padding: 3px 20px 3px 12px;"
@@ -48,14 +48,14 @@
           = render "shared/sharing", { custom_style: "", title: "Great response in the #{@path.name} Challenge on @MetaBright" }
                 
        
-    %div.posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post.answer_type == Task::CHECKIN}" }
+    .posttext.leveltext.dropdown{ style: "#{'background-color: rgb(195, 225, 247)' if post.answer_type == Task::CHECKIN}; #{if not viewable then 'opacity: 0.75' end}"}
       %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post.question}
     
-    %div#cr_pop.CRarea
+    #cr_pop.CRarea
       - if viewable
         - if post.answer_type == Task::CREATIVE
           .preview
-            %div.sliderbar1
+            .sliderbar1
               - if current_user and post.user_id == current_user.id
                 = link_to "Edit", take_section_path(post.section_id, task_id: post.task_id), style: "color: #404040;"
                 |
@@ -84,7 +84,7 @@
               %code.content{ style: "word-break:normal;" }= post.submitted_answer_content
           - if post.answer_sub_type == Task::TEXT
             .raw.hide
-              %div.sliderbar2
+              .sliderbar2
                 %span.view_preview{ style: "color: #404040; padding-right: 5px; cursor: pointer;", onclick: "$(this).parents('.CRarea').find('.raw').hide(); $(this).parents('.CRarea').find('.preview').show();"} View Preview
               %code.content{ style: "word-break:normal;" }= post.submitted_answer_content
           - elsif post.answer_sub_type == Task::IMAGE
@@ -92,21 +92,21 @@
         
           - elsif post.answer_sub_type == Task::YOUTUBE
             %center
-              %div.youtube_answer{ id: "youtube_answer_#{post.id}", alt: post.url }
+              .youtube_answer{ id: "youtube_answer_#{post.id}", alt: post.url }
           
           - else
             %div{style: "display: none;"}
               = post.to_yaml
         
         - elsif post.answer_type == Task::CHECKIN
-          %div.task_post
-            %div.content
+          .task_post
+            .content
               %code.content= post.submitted_answer_content
             - if post.image_url.blank?
               = image_tag ICON_CHECK_URL, alt: "Image placeholder", class: "preview_image", style:"height:auto; width:70px; margin-top:10px; z-index: 500;"
             - else
               = image_tag post.image_url, alt: "Image content", class: "preview_image", style:"height:auto; z-index: 500; #{'opacity:0.5' unless post.submitted_answer_content.blank?}"
-            %div.details
+            .details
               %h4.title
                 - if post.title.blank?
                   #{post.name} marked this task complete on #{post.created_at.strftime('%B %d, %Y')}.
@@ -117,10 +117,19 @@
               - unless post.url.blank?
                 %h5{ style: "margin-top:0" }= link_to truncate(post.url, length:85), post.url
                 
-        - else raise "Unknown answer type: #{post.answer_type}"    
+        - else raise "Unknown answer type: #{post.answer_type}"
+      - else
+        .task_post.obfuscated_cr
+          .icon
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/warning.png"
+            User Response Hidden
+          .text 
+            Before you can view this and other responses to this question, you must first answer it yourself.
+            = link_to "Post your answer", take_section_path(post.task.section_id, task_id: post.task.id), class: "submit_button_blue button button-small"
+          .clear_floats
     
     - unless post.submitted_answer_caption.blank?
-      %div.post_caption= post.submitted_answer_caption
+      .post_caption= post.submitted_answer_caption
     = render "comments/comments", social_details(post).merge(context: feed.context)
     
 :javascript
