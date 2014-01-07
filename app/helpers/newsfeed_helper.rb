@@ -41,11 +41,38 @@ module NewsfeedHelper
     end
 
     def posts
-      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
+      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This user just joined this Challenge", user_image_url: "/dogshit", earned_points: "500", type: :event)
       @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
       @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
       @posts.shuffle!
       return @posts
+      
+      # New User joined MB (only visible on homepage stream)
+      # content: "#{event.name} just joined MetaBright! Give them a warm welcome."
+
+      # Following
+      # content: "#{event.name} is now following *Person2*."  
+
+      # CR Vote
+      # content: "#{event.name} voted for *Person2's* response in the *Challenge name* Challenge."
+
+      # CR Comment
+      # content: "#{event.name} commented on *Person2's* creative response."
+      
+      # Level up
+      # content: "#{event.name} just leveled up in the *Challenge name* Challenge."
+      
+      # New Leaderboard ranking
+      # content: "#{event.name} just broke into the top 10/50/100/500 in the *Challenge name* Challenge."
+      
+      # New HoF
+      # content: "#{event.name}'s creative response was just added to the *Challenge name* Hall of Fame."
+      
+      # New Task created
+      # content: "#{event.name} added a new question to the *Challenge name* Challenge."
+      
+      # New Challenge published
+      # content: "#{event.name} published the *Challenge name* Challenge."
     end
     
     def url=(url)
