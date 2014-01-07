@@ -39,6 +39,14 @@ module NewsfeedHelper
         @user_posts = []
       end
     end
+
+    def posts
+      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
+      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
+      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
+      @posts.shuffle!
+      return @posts
+    end
     
     def url=(url)
       @url = url

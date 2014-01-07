@@ -77,7 +77,7 @@
                     = link_to "In the Hall of Fame", "#"
                 |
                 %span
-                  = link_to "Deny", admin_update_submission_path(post.submitted_answer_id, mark: "locked"), method: "put", remote: true, class: "mark_reviewed", style: "color: #404040;"
+                  = link_to "Deny", admin_update_submission_path(post.submitted_answer_id, mark: "locked"), method: "put", remote: true, class: "mark_reviewed", style: "color: #404040;", onclick: "$(this).parents('.post').hide('fast');"
             - if post.submitted_answer_content && post.submitted_answer_content.downcase.include?("<html>")
               %iframe{ data: { content: post.submitted_answer_content, src: raw_path(post.submitted_answer_id) }, id: "iframe_#{post.submitted_answer_id}", style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
             - else
@@ -131,11 +131,4 @@
     - unless post.submitted_answer_caption.blank?
       .post_caption= post.submitted_answer_caption
     = render "comments/comments", social_details(post).merge(context: feed.context)
-    
-:javascript
-  $(function(){
-    $(".mark_reviewed").on("ajax:success", function(xhr, data){
-      $(this).parents(".post").hide("fast");
-    });
-  });
     
