@@ -8,7 +8,7 @@
   .tt [data-tip]:after { left: -62px; width: 120px; white-space: normal; height: 70px; top:-87px;}
   .tt [data-tip]:before { left: 3px; } 
   .submit_button_green { height: 90px; white-space: normal; width:138px; display: inline-block; margin: 10px 22px 0; float: none; vertical-align: top;}
-  .submit_button_standard { float: none; margin-top: 30px; display: inline-block;}
+  .submit_button_standard { margin-top: 30px; display: inline-block;}
   
 %div.quizcontainer
   %div.quizspace{ style: "padding: 20px;"}
@@ -30,6 +30,6 @@
           - @tasks.each do |task|
             =link_to truncate(task.question, length: 100, separator:' '), take_bonus_section_path(@section, task.id, params[:session_id]), class: "submit_button_green small_button"
       %div{ style: "text-align: center;"}
-        = link_to "Skip and continue Core Knowledge Questions", continue_path_path(@section.path.permalink), class: "submit_button_standard"
+        = link_to "Skip and continue Core Questions", continue_path_path(@section.path.permalink), class: "submit_button_standard", style: "float: left;"
         = link_to "Skip and return to Challenge home", challenge_path(@section.path.permalink, c: true), class: "submit_button_standard"
             

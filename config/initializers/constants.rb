@@ -86,6 +86,12 @@ ICON_BADGE_7      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_
 ICON_BADGE_8      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_red.png"
 ICON_BADGE_9      = "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_black.png"
 
+EVENT_ICON_WELCOME = "https://s3.amazonaws.com/moonlite-nsdub/static/Event+Icons/event_icon_new_user.png"
+EVENT_ICON_VOTE = "https://s3.amazonaws.com/moonlite-nsdub/static/Event+Icons/event_icon_thumbs_up.png"
+EVENT_ICON_COMMENT = "https://s3.amazonaws.com/moonlite-nsdub/static/Event+Icons/event_icon_comment.png"
+EVENT_ICON_EDIT = "https://s3.amazonaws.com/moonlite-nsdub/static/Event+Icons/event_icon_edit.png"
+EVENT_ICON_ACHIEVEMENT = "https://s3.amazonaws.com/moonlite-nsdub/static/Event+Icons/event_icon_achievement.png"
+EVENT_ICON_ANNOUNCEMENT = "https://s3.amazonaws.com/moonlite-nsdub/static/Event+Icons/event_icon_new_path.png"
 
 ICON_LOGIN_GOOGLE = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+google.png"
 ICON_LOGIN_FACEBOOK = "https://s3.amazonaws.com/moonlite-nsdub/static/icon+facebook.png"

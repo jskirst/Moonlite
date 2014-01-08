@@ -146,6 +146,16 @@ a.menu:after, .dropdown-toggle:after {content: none;}
 .retract_link { padding: 0; color: inherit; text-shadow: none; padding-left: 8px; margin-left: -8px; margin-bottom: 2px; }
 code.content { border: none; color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre-wrap; background-color: inherit; }
 
+.event-space {
+  .image {
+    float: left;
+    
+  }
+  .text {
+    
+  }
+}
+
 .task_post {
   position: relative;
   font-size: 12px;

@@ -37,6 +37,16 @@ class UserEvent < ActiveRecord::Base
     end
   end
   
+  def self.user_event_icon(event_type)
+    if event_type == :hall_of_fame
+      return [EVENT_ICON_ACHIEVEMENT]
+    elsif event_type == :new_question
+      return [EVENT_ICON_EDIT]
+    elsif event_type == :new_path
+      return [EVENT_ICON_ANNOUNCEMENT]
+    end
+  end
+  
   # Cached methods
   
   def self.cached_find_by_user_id(user_id)

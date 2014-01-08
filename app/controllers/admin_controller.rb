@@ -76,6 +76,7 @@ class AdminController < ApplicationController
           ue.user = user
           ue.path = path
           ue.link = submission_drilldown_path(submission.id)
+          ue.image_link = user_event_icon(:hall_of_fame)
           ue.content = "#{user.name}'s response was just added to the #{path.name} Hall of Fame."
         end
       else

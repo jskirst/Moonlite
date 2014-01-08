@@ -29,6 +29,7 @@ module PathsHelper
           ue.user = current_user
           ue.path = path
           ue.content = content
+          ue.image_link = user_event_icon(:new_path)
           ue.link = challenge_path(path.permalink)
         end
       end
