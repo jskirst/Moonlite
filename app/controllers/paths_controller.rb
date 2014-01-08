@@ -291,15 +291,19 @@ class PathsController < ApplicationController
     if params[:submission]        
       @feed = Feed.new(params, current_user)
       @feed.context = :submission
-      @feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => { :section => :path })
+      @feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
+        .select(newsfeed_fields)
         .where("users.locked_at is ? and users.private_at is ?", nil, nil)
         .where("submitted_answers.id = ?", params[:submission])
-        .select(newsfeed_fields)
         .where("completed_tasks.status_id = ?", Answer::CORRECT)
         .where("submitted_answers.locked_at is ?", nil)
-        .where("submitted_answers.reviewed_at is not ?", nil)
-        .where("sections.path_id = ?", @path.id)
-      @title = @feed.posts.first.try{ |p| p.question }
+      
+      if @feed.submissions.empty?
+        flash[:error] = "This user's account has been marked as private. Their posts cannot be publicly viewed."
+        redirect_to root_url and return
+      end
+
+      @title = @feed.submissions.first.try{ |p| p.question }
       render "submission" and return
     end
     
@@ -324,12 +328,15 @@ class PathsController < ApplicationController
       @achievement_tasks = @tasks.select { |t| t.task? }
       
       @completed = params[:c]
-      @points_gained = params[:p]
-      if @completed && @points_gained
-        @achievements = check_achievements(@points_gained.to_i, @enrollment)
-      else
-        @achievements = {}
+      if @completed
+        last_session = current_user.completed_tasks.last.try(:session_id)
+        if last_session
+          last_session_points = current_user.completed_tasks.where(session_id: last_session).to_a.inject(0){ |sum, ct| sum += ct.points_awarded.to_i }
+          @points_gained = last_session_points
+          @achievements = check_achievements(@points_gained.to_i, @enrollment)
+        end
       end
+      @achievements ||= {}
     else
       @display_sign_in = true
       set_return_back_to = challenge_url(@path.permalink)
@@ -368,12 +375,14 @@ class PathsController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new(params, current_user)
-    feed.url = newsfeed_path_path(@path.permalink, order: params[:order])
-    feed.votes = current_user.vote_list if current_user
-    feed.page = params[:page].to_i
+    feed = Feed.new(page: params[:page], 
+      action: params[:action], 
+      user: current_user,
+      url: newsfeed_path_path(@path.permalink, order: params[:order]),
+      path: @path)
+
     offset = feed.page * 15
-    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
+    feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
       .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
@@ -381,25 +390,25 @@ class PathsController < ApplicationController
       .where("submitted_answers.reviewed_at is not ?", nil)
       .where("paths.id = ?", @path.id)
     if params[:submission]
-      feed.posts = feed.posts.where("submitted_answers.id = ?", params[:submission])
+      feed.submissions = feed.submissions.where("submitted_answers.id = ?", params[:submission])
     else
       if params[:task]
-        feed.posts = feed.posts.where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
+        feed.submissions = feed.submissions.where("completed_tasks.task_id = ?", params[:task]).order("total_votes DESC")
       elsif params[:order] == "newest"
-        feed.posts = feed.posts.order("submitted_answers.id DESC")
+        feed.submissions = feed.submissions.order("submitted_answers.id DESC")
       elsif params[:order] == "halloffame"
-        feed.posts = feed.posts.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
+        feed.submissions = feed.submissions.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
       elsif params[:order] == "following"
         user_ids = current_user.subscriptions.collect(&:followed_id)
-        feed.posts = feed.posts.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
+        feed.submissions = feed.submissions.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
       # This elsif displays the newsfeed HoF view if the user isnt signed in and there are at least 3 HoF answers
-      elsif not current_user and feed.posts.where("submitted_answers.promoted_at is not ?", nil).count >= 3
-        feed.posts = feed.posts.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
+      elsif not current_user and feed.submissions.where("submitted_answers.promoted_at is not ?", nil).count >= 3
+        feed.submissions = feed.submissions.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
       else
-        feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
+        feed.submissions = feed.submissions.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
       end
     end
-    feed.posts = feed.posts.offset(offset).limit(15)
+    feed.submissions = feed.submissions.offset(offset).limit(15)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end

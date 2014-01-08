@@ -38,13 +38,17 @@ class PagesController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new(params, current_user, newsfeed_url(order: params[:order]))
-    feed.page = params[:page].to_i
+    feed = Feed.new(path: @path, 
+      page: params[:page], 
+      context: params[:context], 
+      user: current_user, 
+      url: newsfeed_url(order: params[:order]))
+
     offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     eval_paths = current_user.evaluation_enrollments.to_a.collect{|er| er.evaluation.paths.pluck(:id)}.flatten
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
-    feed.posts = CompletedTask.joins(:submitted_answer, :user, :task => :path)
+    feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
       .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       .where("paths.id in (?)", relevant_paths)
@@ -55,16 +59,16 @@ class PagesController < ApplicationController
       .where("submitted_answers.reviewed_at is not ?", nil)
     
     if params[:order] == "hot"
-      feed.posts = feed.posts.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
+      feed.submissions = feed.submissions.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
     elsif params[:order] == "halloffame"
-      feed.posts = feed.posts.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
+      feed.submissions = feed.submissions.where("submitted_answers.promoted_at is not ?", nil).order("submitted_answers.id DESC")
     elsif params[:order] == "following"
       user_ids = current_user.subscriptions.collect(&:followed_id)
-      feed.posts = feed.posts.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
+      feed.submissions = feed.submissions.where("users.id in (?)", user_ids).order("completed_tasks.id DESC")
     else
-      feed.posts = feed.posts.order("completed_tasks.created_at DESC")
+      feed.submissions = feed.submissions.order("completed_tasks.created_at DESC")
     end
-    feed.posts = feed.posts.limit(15).offset(offset)
+    feed.submissions = feed.submissions.limit(15).offset(offset)
     
     render partial: "newsfeed/feed", locals: { feed: feed }
   end
@@ -120,8 +124,8 @@ class PagesController < ApplicationController
           topics: core.collect{|ct| ct.topic_name if ct.status_id == Answer::CORRECT }.compact.uniq,
           votes: votes,
           comments: comments,
-          creative: Feed.new(params, current_user, nil, creative),
-          tasks: Feed.new(params, current_user, nil, tasks)
+          creative: Feed.new(page: params[:page], action: params[:action], user: current_user, submissions: creative),
+          tasks: Feed.new(page: params[:page], action: params[:action], user: current_user, submissions: tasks)
         }
       end
       

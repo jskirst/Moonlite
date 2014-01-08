@@ -24,6 +24,16 @@ class TasksController < ApplicationController
         sr.owner_type = @task.class.to_s
         sr.save
       end
+
+      if @task.creative? and path.published? and path.approved? and path.group_id.nil?
+        UserEvent.create! do |ue|
+          ue.user = current_user
+          ue.path = path
+          ue.link = take_section_path(@task.section_id, task_id: @task.id)
+          ue.content = "#{current_user.name} added a new question to the #{path.name} Challenge."
+        end
+      end
+
       if @task.source == "launchpad"
         render json: { status: "success", question_link: take_section_url(@section, task_id: @task.id) }
       else

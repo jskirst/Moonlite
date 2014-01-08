@@ -52,7 +52,7 @@
       %code.dropdown-toggle{ "data-toggle" => "dropdown", role: "button"} #{post.question}
     
     #cr_pop.CRarea
-      - if viewable
+      - if viewable or feed.context == :submission or @enable_administration
         - if post.answer_type == Task::CREATIVE
           .preview
             .sliderbar1

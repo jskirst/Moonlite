@@ -70,6 +70,14 @@ class AdminController < ApplicationController
         toggle(:locked_at, submission)
       elsif params[:mark] == "promoted"
         toggle(:promoted_at, submission)
+        user = submission.user
+        path = submission.path
+        UserEvent.create! do |ue|
+          ue.user = user
+          ue.path = path
+          ue.link = submission_drilldown_path(submission.id)
+          ue.content = "#{user.name}'s response was just added to the #{path.name} Hall of Fame."
+        end
       else
         toggle(:reviewed_at, submission)
       end

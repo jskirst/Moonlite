@@ -15,36 +15,45 @@ module NewsfeedHelper
   class Feed
     MAX_POSTS = 15
     
-    attr_accessor :posts, :votes, :url, :page, :context, :viewing_user, :user_posts
+    attr_accessor :posts, :submissions, :events, :votes, :url, :page, :context, :user_posts, :path, :user
     
-    def initialize(params = nil, user = nil, url = nil, posts = [])      
-      if params
-        @page = params[:page].to_i
-        @context = params[:action].to_sym
-      end 
-      
-      if user
-        @votes = user.votes.to_a.collect {|v| v.owner_id }
-      end
-      
-      if url
-        @url = url
-      end
-      
-      @posts = posts
-      
-      if user
-        @user_posts = user.creative_task_ids
-      else
-        @user_posts = []
-      end
+    def initialize(attrs)
+      @submissions = attrs[:submissions]
+      @events = attrs[:events]
+      @url = attrs[:url]
+      @user = attrs[:user]
+      @path = attrs[:path]
+      @context = attrs[:action].try(:to_sym)
+      @page = attrs[:page].to_i
+    end
+
+    def user_posts
+      @user_posts ||= (@user ? user.creative_task_ids : [])
+    end
+
+    def votes
+      @votes ||= (@user ? @user.votes.to_a.collect {|v| v.owner_id } : [])
     end
 
     def posts
-      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This user just joined this Challenge", user_image_url: "/dogshit", earned_points: "500", type: :event)
-      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
-      @posts << OpenStruct.new(name: "Name", username: "Username", content: "This is text", user_image_url: "/dogshit", earned_points: "500", type: :event)
-      @posts.shuffle!
+      return @posts if @posts
+      @posts = []
+
+      if @path
+        events = @path.user_events.includes(:user).order("id DESC")
+        events.each do |e|
+          u = e.user
+          @posts << OpenStruct.new(name: u.name, 
+            username: u.username, 
+            content: e.content, 
+            user_image_url: u.image_url, 
+            earned_points: u.earned_points,
+            created_at: e.created_at, 
+            type: :event)
+        end
+      end
+      @submissions.each { |s| @posts << s }
+      @posts.sort_by{ |a| a.created_at }
       return @posts
       
       # New User joined MB (only visible on homepage stream)
@@ -65,10 +74,10 @@ module NewsfeedHelper
       # New Leaderboard ranking
       # content: "#{event.name} just broke into the top 10/50/100/500 in the *Challenge name* Challenge."
       
-      # New HoF
+      # * New HoF
       # content: "#{event.name}'s creative response was just added to the *Challenge name* Hall of Fame."
       
-      # New Task created
+      # * New Task created
       # content: "#{event.name} added a new question to the *Challenge name* Challenge."
       
       # New Challenge published

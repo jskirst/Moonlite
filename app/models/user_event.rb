@@ -6,6 +6,7 @@ class UserEvent < ActiveRecord::Base
   scope :unread, -> { where read_at: nil }
   belongs_to :user
   belongs_to :actioner, class_name: "User"
+  belongs_to :path
 
   validates_presence_of :link
   validates :content, length: { within: 1..140 }
@@ -41,6 +42,7 @@ class UserEvent < ActiveRecord::Base
   def self.cached_find_by_user_id(user_id)
     Rails.cache.fetch([self.to_s, "user", user_id]) do
       UserEvent.where("user_events.user_id = ?", user_id)
+        .where(path_id: nil)
         .joins("LEFT JOIN users on user_events.user_id=users.id")
         .select("user_events.*, users.username, users.image_url, users.name")
         .order("user_events.id DESC")
