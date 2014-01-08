@@ -10,7 +10,7 @@
         %h4 
           MetaBright is the place to prove and showcase your skills. Poke around for a bit and try a practice problem.
         - @section ||= @path.next_section
-        - @task ||= @section.next_task(nil, true)
+        - @task ||= @section.next_task(nil)
         - if @task
           - @start_countdown = false
           - @show_stats = true

@@ -19,7 +19,7 @@ class Section < ActiveRecord::Base
   after_save :flush_cache
   before_destroy :flush_cache
       
-  def next_task(user = nil, exclude_first = false, type = [Task::MULTIPLE, Task::EXACT], sub_types = [])
+  def next_task(user = nil, type = [Task::MULTIPLE, Task::EXACT], sub_types = [], count = 1)
     type = [type] unless type.is_a? Array
     sub_types = [sub_types] unless sub_types.is_a? Array
     
@@ -33,10 +33,10 @@ class Section < ActiveRecord::Base
       end
     end
     
-    unless exclude_first
+    if count == 1
       next_tasks.order("position DESC").first
     else
-      next_tasks.order("position DESC").first(2).first
+      next_tasks.order("position DESC").first(count)
     end
   end
   

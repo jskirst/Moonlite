@@ -184,7 +184,7 @@ class SectionsController < ApplicationController
       @stored_resource = @task.stored_resources.first
       page = "continue"
     else
-      if @task = @section.next_task(current_user, false, Task::CREATIVE, Task::TEXT)
+      if @task = @section.next_task(current_user, Task::CREATIVE, Task::TEXT)
         redirect_to boss_section_path(@section, @task.id, @session_id)
         return
       else
@@ -212,6 +212,7 @@ class SectionsController < ApplicationController
     if current_user.completed_tasks.where(session_id: params[:session_id]).count == 0
       redirect_to challenge_path(@path.permalink, c: true)
     else
+      @tasks = @section.next_task(current_user, Task::CREATIVE, Task::TEXT, 3)
       @hide_background = true
       render "pre_boss"
     end

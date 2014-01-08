@@ -27,9 +27,9 @@
           %div{ "data-tip" => "Creative Responses are free response questions that let you show off your cleverness."}
             %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
         %div{ style: "margin: 0 auto; width: 100%; text-align: center;"}
-          =link_to truncate("BBlah blah blah this is a Creative Response question and here is some more text ot try and push this guy to its limit", length: 100, separator:' '), "#", class: "submit_button_green small_button"
-          =link_to "Blah blah blah this is a Creative Response question", "#", class: "submit_button_green small_button"
-          =link_to "Blah blah blah this is a Creative Response question", "#", class: "submit_button_green small_button"
+          - @tasks.each do |task|
+            =link_to truncate(task.question, length: 100, separator:' '), take_bonus_section_path(@section, task.id, params[:session_id]), class: "submit_button_green small_button"
       %div{ style: "text-align: center;"}
-        = link_to "Skip and return to Challenge home", "#", class: "submit_button_standard"
+        = link_to "Skip and continue Core Knowledge Questions", continue_path_path(@section.path.permalink), class: "submit_button_standard"
+        = link_to "Skip and return to Challenge home", challenge_path(@section.path.permalink, c: true), class: "submit_button_standard"
             
