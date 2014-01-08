@@ -59,7 +59,7 @@ describe "Registration" do
       expect_content("Nice work!")
       click_on "Continue"
   
-      expect_content("MetaBright is the game that can land you your next job or internship.")
+      expect_content("Your MetaBright results can land you your next job or internship.")
     end
   
     it "should be able to professionally register for MB" do
@@ -82,7 +82,7 @@ describe "Registration" do
     end
   
     it "should be able to unprofessionally register for MB" do
-      click_on "No thanks, I'll just play MetaBright as a game."
+      click_on "No thanks, I just want to test myself."
       
       expect_content("Keep racking up the points!")
       fill_in "user_name", with: "My Name"

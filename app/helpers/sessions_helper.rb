@@ -171,7 +171,7 @@ module SessionsHelper
   end
   
   def social_title
-    @social_title || "Skill Tests for Candidates and Employers | MetaBright"
+    @social_title || "Credit Report for Your Skills | MetaBright"
   end
   
   def social_description

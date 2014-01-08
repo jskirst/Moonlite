@@ -20,11 +20,11 @@
             .control-group
               %label.control-label About
               %div.controls
-                = f.text_area :description, rows: "2", style: "width: 390px;", placeholder: "Write a brief description for your Group..."
+                = f.text_area :description, rows: "2", style: "word-break:normal; word-wrap: normal; width: 390px; ", placeholder: "Write a brief description for your oraganization..."
             .control-group
               %label.control-label Customize CSS
               %div.controls{ style: "margin-top: 6px;" }
-                = link_to "Customize your Group with your own CSS Styles", style_group_path(@group)
+                = link_to "Customize your organization with your own CSS Styles", style_group_path(@group)
           %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
             %div.control-group
               %div.controls{style:"margin-left:112px;"}
