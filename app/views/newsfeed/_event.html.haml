@@ -16,6 +16,8 @@
        
     .event-space
       .image
-        %p #{@posts.image_link}
-        
+        = image_tag "#{event.image_link}"
       .content
+        %p= event.content
+        = link_to "Event Specific Text", event.link, class: "submit_button_green small_button"
+      .clear_floats

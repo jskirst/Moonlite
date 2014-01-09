@@ -49,8 +49,8 @@ module NewsfeedHelper
             user_image_url: u.image_url, 
             earned_points: u.earned_points,
             created_at: e.created_at, 
-            type: :event,
-            image_link: e.image_link)
+            image_link: e.image_link,
+            type: :event)
         end
       end
       @submissions.each { |s| @posts << s }

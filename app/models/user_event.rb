@@ -39,11 +39,11 @@ class UserEvent < ActiveRecord::Base
   
   def self.user_event_icon(event_type)
     if event_type == :hall_of_fame
-      return [EVENT_ICON_ACHIEVEMENT]
+      return EVENT_ICON_ACHIEVEMENT
     elsif event_type == :new_question
-      return [EVENT_ICON_EDIT]
+      return EVENT_ICON_EDIT
     elsif event_type == :new_path
-      return [EVENT_ICON_ANNOUNCEMENT]
+      return EVENT_ICON_ANNOUNCEMENT
     end
   end
   

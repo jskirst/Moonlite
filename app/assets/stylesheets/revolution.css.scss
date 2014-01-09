@@ -147,12 +147,42 @@ a.menu:after, .dropdown-toggle:after {content: none;}
 code.content { border: none; color: #404040; display: block; padding: 10px; font-size: 13px; line-height: 17px; word-wrap: break-word; white-space: pre-wrap; background-color: inherit; }
 
 .event-space {
+  margin: -2px -12px 0 -12px;
+  border-top: 1px solid rgba(0,0,0,.1);
+  
+  
   .image {
     float: left;
+    width: 13%;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(250, 255, 124);
+    margin: 12px;
+    height: 80px;
+    width: 80px;
+    border-radius: 90px;
     
+    img{
+      max-height: 48px;
+      max-width: 48px;
+      margin-top: 17px;
+    }
   }
-  .text {
+  .content {
+    display: inline-block;
+    width: 80%;
+    padding: 25px 0 0;
     
+    p {
+      color: #333;
+      font-size: 13px;
+      display: inline-block;
+    }
+    .small_button {
+      position: absolute;
+      bottom: 12px;
+      right: 12px;
+    }
   }
 }
 
