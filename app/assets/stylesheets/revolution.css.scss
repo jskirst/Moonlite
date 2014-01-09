@@ -615,7 +615,7 @@ code.content { border: none; color: #404040; display: block; padding: 10px; font
 #CRprogressbar { width:632px; height: 40px; margin: 0 auto;}
 .CRquestionspace { display:inline-block; padding-top:9px; text-align: center; width: 100%; }
 .snippet { margin: 10px 0 0 0; border: none; border-radius: none; background-color: rgb(249, 249, 249); font-family: 'Menlo', 'Courier New', 'Terminal', monospace; }
-.cr_question_header { font:bold 15px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}
+.cr_question_header { font: bold 16px 'MuliRegular', 'Helvetica', 'Arial', sans-serif; text-transform: uppercase;}
 .CRquestion { padding: 0; margin: 15px 5px 0 10px; word-break: normal; background-color: white; border: none; font: normal 16px 'MuliLight', 'Helvetica', 'Arial', sans-serif; line-height: 18px;} 
 .CRresponsespace { width: 97%; width: calc(100% - 10px); margin-top: 20px; display:inline-block; background-color:#F9F9F9;border-radius: 6px; vertical-align: top; padding:5px; border:1px solid rgba(0, 0, 0, .1);font:bold 18px 'MuliLight', 'Helvetica', 'Arial', sans-serif;}
 .CRresponsespace textarea {display:block; margin:6px 12px 12px 12px; width:94%;}
@@ -871,27 +871,60 @@ th {
 .editprofilemanagementarea control-label{font-weight:bold; padding:0; margin:0; position:relative; top:3px; }
 
 /* Idea page/Revolution */
-.ideas_header { vertical-align: middle; border-radius:6px; background-color:white; padding:10px 12px; margin-bottom:12px; border: 1px solid rgba(0, 0, 0, .1);}
-.ideas_header img { height:115px; }
-.ideas_header h1 {font-size:50px; display:inline-block; position: relative; top: 11px; }
-.ideas_header h4 { font-weight:bold; line-height:32px; font-size:16px }
-.ideas_body { border-radius: 4px; background-color: white; padding-bottom: 10px; border: 1px solid rgba(0, 0, 0, .1);}
-.ideas_list { background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; }
-.idea_box { background-color: #F9F9F9; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); border-bottom: 1px solid #DDD; margin: 20px; padding:12px 12px 6px 12px; }
-#ideapage .postfooter .leftstuff { padding-top: 0px; height: 20px; }
-#ideapage .postfooter { margin: 0; }
-#ideapage .leftboxheader {margin-bottom:-7px;}
-#ideapage .leftboxheader span{text-transform:none;}
-#ideapage .leftboxheader a{text-decoration:none; text-transform:none; cursor:pointer;}
-.submit_idea .help-block, .editor_view .help-block {font-size:16px;}
-.submit_idea>h2 {margin-bottom:20px;}
-.submit_idea_tips {display:inline-block; margin: 52px 0 0 50px; vertical-align:top; width:400px; border-left: 1px solid #E7E7E7; padding-left:10px;}
-.submit_idea_tips ul {font-size:16px; margin-top:10px;}
-.submit_idea_tips li {margin-bottom:10px;}
-.submit_idea_tips h3 {font-size:23px; }
-.ideacontent {width:85%;}
-.ideacontent h4 a {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
-.ideacontent pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
+#ideapage {
+  .ideas_header {
+    vertical-align: middle;
+    background-color:white;
+    padding:10px 12px;
+    margin-bottom:12px;
+    border: 1px solid rgba(0, 0, 0, .1);
+    
+    img{ height:115px; }
+    h1 {font-size:50px; display:inline-block; position: relative; top: 11px; }
+    h4 { font-weight:bold; line-height:32px; font-size:16px }
+  }
+  .postfooter {
+    margin: 0;
+    
+    .leftstuff { padding-top: 0px; height: 20px; }
+  }
+  .leftboxheader {
+    margin-bottom:-7px;
+    
+    span{text-transform:none;}
+    a{text-decoration:none; text-transform:none; cursor:pointer;}
+  }
+  .submit_idea, .editor_view {
+    .help-block {font-size:16px;}
+  }
+  .submit_idea {
+    h2 {margin-bottom:20px;}
+  }
+  .submit_idea_tips {
+    display:inline-block; 
+    margin: 52px 0 0 50px; 
+    vertical-align:top; 
+    width:400px; 
+    border-left: 1px solid #E7E7E7; 
+    padding-left:10px;
+    
+    ul {font-size:16px; margin-top:10px;}
+    li {margin-bottom:10px;}
+    h3 {font-size:23px; }
+  }
+  .ideacontent {
+    width:85%;
+    
+    pre {margin: 0;padding: 0;border: none;background-color: inherit; font-size:14px; word-break:normal;}
+    h4{
+      a {margin-bottom: 10px;font-weight: bold;font-size: 16px;}
+    } 
+  }
+  .ideas_body { background-color: white; padding-bottom: 10px; border: 1px solid rgba(0, 0, 0, .1); }
+  .ideas_list { background-color:white; min-height:200px; border-bottom-right-radius:6px; border-bottom-left-radius:6px; }
+  .idea_box { background-color: #F9F9F9; border: 1px solid #ccc; border-radius: 3px; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); border-bottom: 1px solid #DDD; margin: 20px; padding:12px 12px 6px 12px; }
+  
+}
 
 /* Challenge creator/Revolution */
 

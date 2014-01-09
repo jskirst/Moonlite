@@ -1,26 +1,26 @@
 :css
   body.employer{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
 
-%div.CRquestionandresponsespace
+.CRquestionandresponsespace
   -if @completed_task.session_id 
-    %div.CRquestionspace
-      %span{ style: "font-size: 33px;"}
-        Creative Response
+    .CRquestionspace
+      %span.cr_question_header
+        Creative Response:
     %pre.CRquestion= @task.question
   -else 
-    %div.CRquestionspace
+    .CRquestionspace
       %span.cr_question_header
         Creative Response:    
     %pre.CRquestion= @task.question
-  %div.CRresponsespace{ style: "min-height: 175px;" }
-    - if @path.template and @evaluation.nil?
+  .CRresponsespace{ style: "min-height: 175px;" }
+    - if @path.input_type == Path::CODE and @evaluation.nil?
       = f.submit "View Preview", class: "button button-small submit_button_blue", id: "preview_button", style: "text-shadow: none; margin: 0px 10px 3px 0; padding: 3px 10px;"
     = link_to "View hotkeys", "https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts", target: '_blank', style: "float: left; position: relative; font-size: 13px; top: 3px; margin-left: 10px;"
     %h4{ style: "text-align: center; margin-bottom: 5px; font-size: 15px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
     
     %textarea{ name: "content", id: "answer_input", style: "min-height: 275px;", data: { template: @task.template.to_s } }= @submitted_answer.content || @task.template
-    - if @path.template
+    - if @path.input_type == Path::CODE
       %div{ id: "editor", style:"width: 97%; margin: 0 auto 5px auto; min-height: 275px; position: relative; padding-top:0;"}
         
     - if params[:m] == "preview" and (@task.template or @submitted_answer.preview or @submitted_answer.preview_errors)

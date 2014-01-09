@@ -55,6 +55,9 @@
         .control-group{ style: "margin-bottom: 10px;" }
           %label.control-label Permanently delete Challenge
           .controls{ style: "margin-top: 6px;" }= link_to "Delete", path_url(@path), method: :delete, data: { confirm: "Are you sure you want to delete this Challenge? The Challenge will be removed from all your Evaluations and all candidate information collected with this Challenge will be deleted. This action is irreversible." }, style: "line-height:18px; padding-top: 5px;"
+        .control-group
+          %label.control-label Challenge Response Type
+          .controls= f.select :input_type, hash_to_array(Path::INPUT_TYPES)
       - if false
         .control-group{ style: "margin-bottom: 5px;" }
           %label.control-label Collaborators

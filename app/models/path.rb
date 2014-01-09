@@ -1,4 +1,8 @@
 class Path < ActiveRecord::Base
+  TEXT = 1
+  CODE = 2
+  INPUT_TYPES = { TEXT => "Text", CODE => "Code" }
+  
   attr_accessor :persona, :approved, :promoted, :professional, :template_type, :batch_file
   attr_protected :approved_at, :published_at, :public_at, :promoted_at, :professional, :group_id
   attr_accessible :user_id,
@@ -9,7 +13,8 @@ class Path < ActiveRecord::Base
     :tags,
     :permalink,
     :template,
-    :template_type
+    :template_type,
+    :input_type
   
   has_one :stored_resource, as: :owner
   has_one :custom_style, as: :owner

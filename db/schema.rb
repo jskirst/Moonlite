@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140109173030) do
+ActiveRecord::Schema.define(version: 20140109230705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -225,6 +225,7 @@ ActiveRecord::Schema.define(version: 20140109173030) do
     t.float    "correct_points"
     t.integer  "group_id"
     t.datetime "professional_at"
+    t.integer  "input_type",                 default: 1
   end
 
   add_index "paths", ["permalink"], name: "index_paths_on_permalink", using: :btree
