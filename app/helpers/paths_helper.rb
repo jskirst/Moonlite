@@ -23,14 +23,15 @@ module PathsHelper
     achievements[:rank] = 10  if current_rank <= 10 and previous_rank > 10
 
     if achievements[:rank]
-      content = "#{current_user.name} just broke into the Top #{achievements[:rank]} in the #{path.name} Challenge Leaderboard."
+      content = "#{current_user.name} just broke into the Top #{achievements[:rank]} on the #{path.name} Challenge Leaderboard."
       unless UserEvent.where(content: content).count > 0
         UserEvent.create! do |ue|
           ue.user = current_user
           ue.path = path
           ue.content = content
-          ue.image_link = user_event_icon(:new_path)
-          ue.link = challenge_path(path.permalink)
+          ue.image_link = UserEvent.user_event_icon(:new_path)
+          ue.action_text = "Check out #{current_user.name.split.first}'s profile."
+          ue.link = profile_path(current_user.username)
         end
       end
     end

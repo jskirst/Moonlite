@@ -18,6 +18,7 @@
       .image
         = image_tag "#{event.image_link}"
       .content
-        %p= event.content
-        = link_to "Event Specific Text", event.link, class: "submit_button_green small_button"
+        %p{ style: "margin-bottom: 10px;"}= event.content
+        %p
+          = link_to event.action_text, event.link
       .clear_floats

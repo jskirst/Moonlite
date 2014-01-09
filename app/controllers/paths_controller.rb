@@ -289,7 +289,7 @@ class PathsController < ApplicationController
     end
     
     if params[:submission]        
-      @feed = Feed.new(params, current_user)
+      @feed = Feed.new(page: params[:page], action: params[:action], user: current_user,)
       @feed.context = :submission
       @feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
         .select(newsfeed_fields)

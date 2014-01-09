@@ -29,8 +29,9 @@ class TasksController < ApplicationController
         UserEvent.create! do |ue|
           ue.user = current_user
           ue.path = path
-          ue.image_link = user_event_icon(:new_question)
+          ue.image_link = UserEvent.user_event_icon(:new_question)
           ue.link = take_section_path(@task.section_id, task_id: @task.id)
+          ue.action_text = "Take #{current_user.name.split.first}'s new question."
           ue.content = "#{current_user.name} added a new question to the #{path.name} Challenge."
         end
       end

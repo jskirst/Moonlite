@@ -49,7 +49,9 @@ module NewsfeedHelper
             user_image_url: u.image_url, 
             earned_points: u.earned_points,
             created_at: e.created_at, 
+            link: e.link,
             image_link: e.image_link,
+            action_text: e.action_text,
             type: :event)
         end
       end
