@@ -46,18 +46,22 @@ class PagesController < ApplicationController
 
     offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
+    #raise relevant_paths.to_yaml
     eval_paths = current_user.evaluation_enrollments.to_a.collect{|er| er.evaluation.paths.pluck(:id)}.flatten
+    #raise eval_paths.to_yaml
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
     feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
-      .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       .where("paths.id in (?)", relevant_paths)
-      .where("paths.id not in (?)", eval_paths)
       .where("paths.group_id is ?", nil)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
-    
+
+    if eval_paths.any?
+      feed.submissions = feed.submissions.where("paths.id not in (?)", eval_paths)
+    end
+
     if params[:order] == "hot"
       feed.submissions = feed.submissions.select("((submitted_answers.total_votes + 1) - ((current_date - DATE(completed_tasks.created_at))^2) * .1) as hotness").order("hotness DESC")
     elsif params[:order] == "halloffame"
