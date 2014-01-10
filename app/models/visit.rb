@@ -27,7 +27,7 @@ class Visit < ActiveRecord::Base
     if Rails.env == "development"
       base_url = "http://localhost:3000/"
     else
-      base_url = "http://www.metabright.com/"
+      base_url = "https://www.metabright.com/"
     end
     url = base_url+"#{user.username}"
     user_visits = Visit.select("user_id, visitor_id")

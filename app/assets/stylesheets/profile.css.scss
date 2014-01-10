@@ -87,6 +87,7 @@
   display:inline-block; 
   text-align: center;position: 
   relative; top: 23px;
+  min-width: 138px;
   
   span { font-size:79px; }
   p { margin-bottom:5px; margin-top:6px; font-weight:bold; font-size:15px; }
@@ -119,7 +120,7 @@
   .table {
     margin-bottom: 0; border: 1px solid rgba(0,0,0,.1); width:auto; box-shadow: 0 2px 4px rgba(0, 0, 0, .05); background-color:white;display: inline-block;float: right; 
     
-    td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width: 79px; border-top:none; }
+    td { text-align:center; border-left: 1px solid rgba(0,0,0,.1); font-size:14px; width: 80px; border-top:none; }
     h3 { font-size: 45px; }
     p { color: gray; margin:5px 0 0 0;}
   }

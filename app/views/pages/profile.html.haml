@@ -1,3 +1,12 @@
+:javascript
+  $(function(){
+    $.MB.initEvaluationGradeCharts();
+  });
+  
+:css
+  .tip-below[data-tip]:after { width: 250px; height: 143px; top: 41px; left:-65px; white-space: normal;}
+  .tip-below[data-tip]:before { left: 63px; top: 31px; }
+
 #profile{itemscope: "", itemtype: "http://data-vocabulary.org/Person"}
   - if @user == current_user && current_user.guest_user?
     .help_box
@@ -182,7 +191,11 @@
                       %p Not enough data
                     - else
                       %span= enrollment.metascore
-                      %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_skill_level
+                      - if @user == current_user
+                        .tip-below{ data: {tip: "This is your estimated skill level as calculated by MetaBright. Our algorithm analyzes many variables to reach this conclusion such as question difficulty, content topic, and your response speed. Question difficulty is dynamically calculated, so it's possible that MetaScores may slightly shift as question difficulties evolve. If you wish to hide this score, click the gear icon in the top right of this box."}}
+                          %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_skill_level
+                      - else
+                        %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_skill_level
                       / .progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
                       /   .bar{ style: "width: #{enrollment.level_percent}%;" }
                   %table.table.overview
@@ -207,7 +220,7 @@
                       /   %h3.comments-received-count= enrollment_details[:comments]
                       /   %p Comments Received
                 .my_ms_graph
-                  / MS graph goes here
+                  .metascore_graph{ :data => { "metascore" => enrollment.metascore, "skill" => enrollment.describe_skill_level } }
                 .my_strengths
                   %h3 Strengths
                   - unless enrollment_details[:topics].empty?
