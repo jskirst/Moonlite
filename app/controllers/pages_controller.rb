@@ -220,6 +220,7 @@ class PagesController < ApplicationController
   
   def airs_landing
     @title = "MetaBright Welcomes AIRS Training Students"
+    @show_chat = true
     @show_user_name = false
     @show_nav_bar = false
     @show_header = false
