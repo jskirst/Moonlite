@@ -6,7 +6,6 @@ class Path < ActiveRecord::Base
   attr_accessor :persona, :approved, :promoted, :professional, :template_type, :batch_file
   attr_protected :approved_at, :published_at, :public_at, :promoted_at, :professional, :group_id
   attr_accessible :user_id,
-    :category_id,
     :name, 
     :description, 
     :image_url,  
@@ -19,7 +18,6 @@ class Path < ActiveRecord::Base
   has_one :stored_resource, as: :owner
   has_one :custom_style, as: :owner
   belongs_to :user
-  belongs_to :category
   belongs_to :group
   has_many :sections
   has_many :tasks, -> { where "tasks.archived_at is NULL" }, through: :sections
