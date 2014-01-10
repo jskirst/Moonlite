@@ -17,7 +17,7 @@
         #left_scroll
           %a{href: "javascript:home_slide(\"left\");"}
             %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/arrow_angle_left_light.png", alt: "Left"}/
-      #carousel_inner
+      #carousel_inner{ style: "height: 110px;" }
         %ul#carousel_ul
           = render "shared/mosaic", { custom_class: "invite_facebook_friends", link: "#", title: "Sharing is caring", subtitle: "Spread the MetaBright Gospel!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/fb_green_carousel.png" }
           - @enrollments.each do |e|
@@ -26,6 +26,7 @@
           = render "shared/mosaic", { custom_class: "explore_link", link: nil, title: "The world awaits...", subtitle: "Explore new challenges!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/Stoney_image_carousel_altered.png" }
           - unless current_user.profile_complete?
             = render "shared/mosaic", { link: edit_user_path(current_user), title: "Whoooo are you?", subtitle: "Tell your story to the world!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/complete_profile_pic_carousel_altered.png" }
+      }
       - if @enrollments.size > 1
         #right_scroll
           %a{href: "javascript:home_slide(\"right\");"}
