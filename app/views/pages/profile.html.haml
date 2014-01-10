@@ -175,14 +175,22 @@
                 What I know...
               .profilecontent
                 %div{ style: "height: 105px; "}
+                  
                   .myrank
-                    %span= enrollment.level
-                    %p Level
-                    .progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
-                      .bar{ style: "width: #{enrollment.level_percent}%;" }
+                    - if enrollment.metascore == 0
+                      %span N/A
+                      %p Not enough data
+                    - else
+                      %span= enrollment.metascore
+                      %p MetaScore
+                      / .progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
+                      /   .bar{ style: "width: #{enrollment.level_percent}%;" }
                   %table.table.overview
                     %tbody
                     %tr
+                      %td
+                        %h3= enrollment.level
+                        %p Challenge Level
                       %td
                         %h3.questions-correct-count= enrollment_details[:core].size
                         %p Questions Correct
@@ -192,12 +200,12 @@
                       %td
                         %h3.highest-rank-count= enrollment.highest_rank
                         %p Highest Rank
-                      %td
-                        %h3.votes-received-count= enrollment_details[:votes]
-                        %p Votes Received
-                      %td
-                        %h3.comments-received-count= enrollment_details[:comments]
-                        %p Comments Received
+                      / %td
+                      /   %h3.votes-received-count= enrollment_details[:votes]
+                      /   %p Votes Received
+                      / %td
+                      /   %h3.comments-received-count= enrollment_details[:comments]
+                      /   %p Comments Received
                 .my_strengths
                   %h3 Strengths
                   - unless enrollment_details[:topics].empty?

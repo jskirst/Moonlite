@@ -32,8 +32,9 @@
         %td{ colspan: "5", style: "border-bottom: 0; font-size; 13px;" }
           No evaluations with that Position or Company found.
     %tr
-      %td{ colspan: "2", style: "border-bottom: 0;" }
+      %td{ colspan: "2", style: "border-bottom: 0; vertical-align: top;" }
         = link_to "+ Create a new Evaluation", new_group_evaluation_path(@group)
       - if @candidate_count
         %td{ colspan: "4", style: "border-bottom: 0;text-align: right;" }
-          = link_to "#{@candidate_count} of #{Group::TRIAL_CANDIDATE_LIMIT} Candidates Tested -- Upgrade for unlimited candates", "#"
+          %a{ onclick: "$(this).hide();$('#upgrade_group').show();" } #{@candidate_count} of #{Group::TRIAL_CANDIDATE_LIMIT} Candidates Tested -- Upgrade for unlimited candates
+          = render "groups/signup/upgrade_form"

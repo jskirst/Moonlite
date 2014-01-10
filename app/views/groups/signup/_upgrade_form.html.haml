@@ -1,6 +1,9 @@
+:css
+  select { margin-bottom: 0;}
+
 = form_for(@group, url: new_group_url, html: { class: "hide", id: "upgrade_group", method: "put" }) do |f|
   .control-group
     %label.control-label Choose a plan you'd like to upgrade to:
     .controls
       = f.select(:plan_type, Group::ACTIVE_PLAN_TYPE_LIST)
-  = submit_tag "Upgrade", class: "button submit_button_standard button-small", style: "float: none;"
+  = submit_tag "Upgrade", class: "button submit_button_standard button-small", style: "float: none; margin-bottom: -10px;"
