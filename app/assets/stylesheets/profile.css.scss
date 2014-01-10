@@ -83,9 +83,15 @@
 .profileprog {background-color: rgb(228, 228, 228); background-image: -moz-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgb(228, 228, 228)), to(rgb(240, 240, 240)));background-image: -webkit-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: -o-linear-gradient(top, rgb(228, 228, 228), rgb(240, 240, 240));background-image: linear-gradient(to bottom, rgb(228, 228, 228), rgb(240, 240, 240));}
 .profileheader h5 { display: inline-table; float: right; margin-top:14px; font-size:18px; }
 .arenabucket { padding: 13px 12px 27px 28px;}
-.myrank { display:inline-block; text-align: center;position: relative; top: 23px;}
-.myrank span { font-size:79px; }
-.myrank p { margin-bottom:5px; margin-top:6px; font-weight:bold; font-size:15px; }
+.myrank { 
+  display:inline-block; 
+  text-align: center;position: 
+  relative; top: 23px;
+  
+  span { font-size:79px; }
+  p { margin-bottom:5px; margin-top:6px; font-weight:bold; font-size:15px; }
+  .skill-tag { padding: 10px 5px; display: block; margin: 6px 0; letter-spacing: 2px; font-size: 19px;}
+}
 .usercard { padding-top: 6px;border: 1px solid rgba(0,0,0,.1);border-radius: 6px;background-color: whitesmoke;display: inline-block;color: gray;font-size: 12px;min-width: 597px;padding: 2px 10px 10px;}
 .usercard ul { }
 .shareprofile { float:right;border: 1px solid rgba(0,0,0,.1);padding: 5px 8px;background-color: #f9f9f9;border-radius: 5px; }

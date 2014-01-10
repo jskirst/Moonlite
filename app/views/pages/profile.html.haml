@@ -49,7 +49,7 @@
       = image_tag @user.picture, class: "bigheaderimage", itemprop: "photo", alt: "#{@user.name}", onerror: "user_img_error(this);"
       .rightofbigheaderimage
         #topprofilecontent{}
-          %div{ style: "float:right; text-align:center; " }
+          %div{ style: "float:right; text-align:center; min-width: 120px;" }
             - if @user == current_user
               = link_to "Edit Profile", edit_user_path(@user.username), class: "submit_button"
             - elsif current_user
@@ -182,7 +182,7 @@
                       %p Not enough data
                     - else
                       %span= enrollment.metascore
-                      %p MetaScore
+                      %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_skill_level
                       / .progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
                       /   .bar{ style: "width: #{enrollment.level_percent}%;" }
                   %table.table.overview
@@ -206,6 +206,8 @@
                       / %td
                       /   %h3.comments-received-count= enrollment_details[:comments]
                       /   %p Comments Received
+                .my_ms_graph
+                  / MS graph goes here
                 .my_strengths
                   %h3 Strengths
                   - unless enrollment_details[:topics].empty?
