@@ -72,10 +72,31 @@
 #profile .span5 { width: 31.225%; }
 #profile .span5 .leftbox { width:288px; margin-top:12px; }
 .span11.challenge_details { width: 62.294%; background-color: white; padding: 15px 20px; border: 1px solid rgba(0,0,0,.1);border-bottom-right-radius: 6px;border-bottom-left-radius: 6px; }
-.challengecontent h2 img { position:relative; bottom:3px; border-radius:3px;  }
-.challengecontent h2 a { text-decoration: none; }
+
+.challengecontent{
+  h2 {
+    color: rgb(111, 111, 111); 
+    font-size:33px; 
+    letter-spacing:1px; 
+    margin-bottom:10px; 
+    
+    .gear { 
+      float: right; 
+      opacity: 0.8; 
+      bottom: 0;
+      width: 25px;
+      
+      &:hover {opacity: 1;}
+    }
+    img { position:relative; bottom:3px; border-radius:3px;  }
+    a { text-decoration: none; }
+  }
+  #privatizer {
+    font-size: 14px; float: right; margin-top: -6px;
+  }
+}
+
 .progresssection { float: right; margin-top: 12px;}
-.challengecontent h2 { color: rgb(111, 111, 111); font-size:33px; letter-spacing:1px; margin-bottom:10px; }
 .arenabucket, .taskbucket, .crbucket { display: block;padding: 13px 26px;margin: 0 0 10px; background-color: #f5f5f5;border: 1px solid rgba(0, 0, 0, 0.15);-webkit-border-radius: 4px;-moz-border-radius: 4px; border-radius: 4px;}
 .arenabucket h2, .taskbucket h2, .crbucket h2 { margin-left: -12px; display: inline-block; }
 #profile hr { margin:25px 0; }
