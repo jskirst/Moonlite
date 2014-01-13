@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140109230705) do
+ActiveRecord::Schema.define(version: 20140111001549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(version: 20140109230705) do
     t.integer  "metascore",                default: 0
     t.integer  "metapercentile",           default: 0
     t.integer  "evaluation_id"
+    t.datetime "private_at"
   end
 
   add_index "enrollments", ["path_id"], name: "index_enrollments_on_path_id", using: :btree

@@ -380,7 +380,7 @@ class PathsController < ApplicationController
       action: params[:action], 
       user: current_user,
       url: newsfeed_path_path(@path.permalink, order: params[:order]),
-      path: @path)
+      path_ids: [@path.id])
 
     offset = feed.page * 15
     feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)

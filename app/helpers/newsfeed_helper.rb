@@ -15,14 +15,14 @@ module NewsfeedHelper
   class Feed
     MAX_POSTS = 15
     
-    attr_accessor :posts, :submissions, :events, :votes, :url, :page, :context, :user_posts, :path, :user
+    attr_accessor :posts, :submissions, :events, :votes, :url, :page, :context, :user_posts, :path_ids, :user
     
     def initialize(attrs)
       @submissions = attrs[:submissions]
       @events = attrs[:events]
       @url = attrs[:url]
       @user = attrs[:user]
-      @path = attrs[:path]
+      @path_ids = attrs[:path_ids]
       @context = attrs[:action].try(:to_sym)
       @page = attrs[:page].to_i
     end
@@ -40,7 +40,7 @@ module NewsfeedHelper
       @posts = []
 
       if @path
-        events = @path.user_events.includes(:user).order("id DESC")
+        events = UserEvent.where("user_events.path_id in (?)", self.path_ids).includes(:user).order("id DESC")
         events.each do |e|
           u = e.user
           @posts << OpenStruct.new(name: u.name, 

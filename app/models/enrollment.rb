@@ -3,7 +3,7 @@ class Enrollment < ActiveRecord::Base
   
   attr_readonly :path_id
   attr_protected :total_points, :contribution_unlocked_at, :highest_rank, :longest_streak, :metascore, :metapercentile
-  attr_accessible :path_id, :total_points, :contribution_unlocked
+  attr_accessible :path_id, :total_points, :contribution_unlocked, :private_at
   
   belongs_to  :user
   belongs_to  :path
@@ -34,6 +34,7 @@ class Enrollment < ActiveRecord::Base
     calculate_highest_rank
     save!
   end
+  
   def remove_earned_points(points)
     points = points.to_i
     self.total_points = self.total_points - points
@@ -175,6 +176,19 @@ class Enrollment < ActiveRecord::Base
     else
       return false
     end
+  end
+  
+  def public?
+    self.private_at.nil?
+  end
+  
+  def to_json
+    {
+      total_points: self.total_points,
+      metascore: self.metascore,
+      id: self.id,
+      private_at: self.private_at
+    }
   end
   
   def test_fire

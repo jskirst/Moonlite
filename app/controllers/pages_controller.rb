@@ -38,7 +38,7 @@ class PagesController < ApplicationController
   end
   
   def newsfeed
-    feed = Feed.new(path: @path, 
+    feed = Feed.new( 
       page: params[:page], 
       context: params[:context], 
       user: current_user, 
@@ -48,6 +48,7 @@ class PagesController < ApplicationController
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
     eval_paths = current_user.evaluation_enrollments.to_a.collect{|er| er.evaluation.paths.pluck(:id)}.flatten
     relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
+    feed.path_ids = relevant_paths
     feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)
       .where("users.locked_at is ? and users.private_at is ?", nil, nil)
@@ -94,7 +95,11 @@ class PagesController < ApplicationController
     end
     
     if @current_user_persona
-      @enrollments = @current_user_persona.enrollments.includes(:path).sort{ |a, b| b.total_points <=> a.total_points }
+      @enrollments = @current_user_persona.enrollments.includes(:path)
+      @enrollments = @enrollments.where(private_at: nil) if current_user != @user
+      @enrollments = @enrollments.sort{ |a, b| b.total_points <=> a.total_points }
+        
+        
       completed_tasks = CompletedTask.joins(:user, :task => :path)
         .joins("LEFT JOIN topics on tasks.topic_id = topics.id")
         .joins("LEFT JOIN submitted_answers on submitted_answers.id=completed_tasks.submitted_answer_id")

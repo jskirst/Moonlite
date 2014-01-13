@@ -57,6 +57,18 @@ class UsersController < ApplicationController
     end
   end
   
+  def privatize
+    enrollment = current_user.enrollments.where(id: params[:enrollment_id]).first
+    if enrollment.private_at
+      enrollment.private_at = nil
+    else
+      enrollment.private_at = Time.now
+    end
+    enrollment.save!
+    redirect_to profile_path(current_user.username)
+    # render json: @enrollment.to_json 
+  end
+  
   def professional
     @user = User.where(signup_token: params[:id]).first
     raise "Access Denied: Attempt to change settings" if current_user && current_user != @user

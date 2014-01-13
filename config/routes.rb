@@ -222,7 +222,8 @@ Metabright::Application.routes.draw do
   get '/sitemap.xml.gz' => 'pages#sitemap'
 	
 	get '/users/:username/follow' => 'users#follow', as: "follow_user"
-
+  get '/users/:username/privatize/:enrollment_id' => 'users#privatize', as: "privatize_enrollment"
+  
   get '/emailtest' => 'pages#email_test', as: 'email'
 	get '/send_reset' => 'users#send_reset'
 	get '/challenges/:permalink' => 'paths#show', as: 'challenge'
