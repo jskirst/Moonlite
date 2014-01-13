@@ -46,15 +46,15 @@ end
 
 # Forces all threads to share the same connection
 # http://railscasts.com/episodes/257-request-specs-and-capybara?view=comments#comment_161230
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
+# class ActiveRecord::Base
+#   mattr_accessor :shared_connection
+#   @@shared_connection = nil
 
-  def self.connection
-    @@shared_connection || retrieve_connection
-  end
-end
-ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+#   def self.connection
+#     @@shared_connection || retrieve_connection
+#   end
+# end
+# ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
 
 # https://groups.google.com/forum/#!topic/ruby-capybara/VJFbj6_oKgo 
 Capybara::Node::Element.class_eval do

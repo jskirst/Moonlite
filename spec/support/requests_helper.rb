@@ -51,11 +51,27 @@ module RequestsHelper
   
   def expect_content(str)
     begin
-      page.should have_content(str)
+      wait_until("Page has '#{str}'", 10){ page.has_content?(str) }
     rescue
       save_and_open_page
       raise "Expected '#{str}': #{$!}"
     end
+  end
+
+  def wait_until(event = "event", max_wait = 30, &block)
+    puts "Waiting #{max_wait} seconds for #{event}..."
+    start = Time.now
+    until yield(block) do
+      sleep(0.1)
+      if waited(start) > max_wait
+        raise "#{event} timed out."
+      end
+    end
+    puts "#{event} succeeded in #{waited(start)} seconds."
+  end
+  
+  def waited(start)
+    Time.now - start
   end
   
   def not_expect_content(str)
