@@ -220,6 +220,7 @@ Metabright::Application.routes.draw do
 	post '/finish_reset' => 'sessions#finish_reset'
 	get '/robots.txt' => 'pages#robots'
   get '/sitemap.xml.gz' => 'pages#sitemap'
+  get '/userevents' => 'pages#userevents'
 	
 	get '/users/:username/follow' => 'users#follow', as: "follow_user"
 

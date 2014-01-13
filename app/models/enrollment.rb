@@ -26,6 +26,20 @@ class Enrollment < ActiveRecord::Base
       end
     end
   end
+
+  def next_task(user:, path:, section: nil, answer_types:, answer_sub_types: nil, difficulty: 0, count: 1)
+    tasks = Task.where(path_id: path)
+      .where(locked_at: nil)
+      .where.not(reviewed_at: nil)
+      .where("tasks.answer_type in (?)", answer_types)
+      .where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id)
+      .order("@(#{difficulty.to_f} - tasks.difficulty) DESC")
+    
+    tasks = tasks.where(section_id: section) if section
+    tasks = tasks.where("tasks.answer_sub_type in (?)", answer_sub_types) if answer_sub_types
+    
+    return count == 1 ? tasks.first : tasks.first(count)
+  end
   
   def add_earned_points(points)
     points = points.to_i
