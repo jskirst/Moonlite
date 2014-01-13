@@ -333,6 +333,10 @@ class PagesController < ApplicationController
     10.times { tests << ProcessingTest.new(0.3) }
     render as_processing_screen(tests, :run_test, root_path)
   end
+
+  def userevents
+    @user_events = UserEvent.order("id DESC").first(100)
+  end
   
   private
   

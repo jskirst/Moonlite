@@ -170,7 +170,7 @@ class SectionsController < ApplicationController
     @session_total = 7 if @session_total > 7
      
     if @question_count <= 6
-      @task = @section.next_task(current_user)
+      @task = @enrollment.next_task(user: current_user, path: @path, section: @section, answer_types: [Task::MULTIPLE, Task::EXACT])
     end
     
     if @task
@@ -184,7 +184,7 @@ class SectionsController < ApplicationController
       @stored_resource = @task.stored_resources.first
       page = "continue"
     else
-      if @task = @section.next_task(current_user, Task::CREATIVE, Task::TEXT)
+      if @task = @enrollment.next_task(user: current_user, path: @path, section: @section, answer_types: [Task::CREATIVE], answer_sub_types: [Task::TEXT])
         redirect_to boss_section_path(@section, @task.id, @session_id)
         return
       else

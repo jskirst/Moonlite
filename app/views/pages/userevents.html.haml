@@ -1,0 +1,12 @@
+%div.single_pane
+  %ol
+    - @user_events.each do |ue|
+      %li
+        %p Id: #{ue.id}
+        %p Content: #{ue.content}
+        %p User: #{ue.user.name}
+        %p ActionerId: #{ue.actioner.try(:name)}
+        %p Link: #{ue.link}
+        %p ImageLink: #{ue.image_link}
+        %p ActionText: #{ue.action_text}
+        %p Path: #{ue.path.try(:name)}
