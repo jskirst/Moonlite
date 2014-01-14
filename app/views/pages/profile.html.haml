@@ -6,6 +6,9 @@
 :css
   .tip-below[data-tip]:after { width: 250px; height: 143px; top: 41px; left:-65px; white-space: normal;}
   .tip-below[data-tip]:before { left: 63px; top: 31px; }
+  .tip-above {display: inline;top: 2px;position: relative; font-size: 12px; text-align: center;}
+  .tip-above[data-tip]:after { width: 160px; height: 107px; top: -125px; left:-76px; white-space: normal;}
+  .tip-above[data-tip]:before { left: 3px; top: -8px; }
 
 #profile{itemscope: "", itemtype: "http://data-vocabulary.org/Person"}
   - if @user == current_user && current_user.guest_user?
@@ -129,6 +132,8 @@
               %li{ id: "challenge_selector_#{enrollment.path.permalink}", class: ("selected" if enrollment == @enrollments.first), "data-enrollment" => enrollment.id } 
                 = image_tag enrollment.path.picture
                 %span{style: "position:relative; top:2px; "}= truncate(enrollment.path.name, length: 19)
+                - if enrollment.private_at != nil
+                  %span.private-marker (Private)
                 %span.pts #{enrollment.total_points} points
                 
         - authorships = @contributions.select{ |c| c[:primary] }
@@ -183,12 +188,16 @@
                   = image_tag enrollment.path.picture, style: "width: 40px; height: 40px;"
                 What I know...
                 - if @user == current_user
-                  %a{ style: "color: #0088cc;", onclick: "$(this).hide();$('#privatizer').show();" }
+                  
+                  %a{ onclick: "$(this).hide();$('#desc-text').hide();$('#privatizer').show();" }
                     = image_tag ICON_GEAR, class: "gear"
+                  - unless enrollment.private_at == nil
+                    %span#desc-text{ style: "float: right; font-size: 19px; margin: 0 8px 0 0;" } (Private)
                   %span#privatizer{ style: "display: none;"}
                     - if enrollment.private_at == nil
                       = link_to "Mark as Private", privatize_enrollment_path(@user.username, enrollment.id)
-                      .tip-above{ data: {tip: "This is y"}}
+                      .tip-above{ data: {tip: "Hide the results of this Challenge from your profile. Your responses will still appear in the newsfeed and you will still appear on the leaderboard."}}
+                        %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png", style: "width: 16px; height: 16px; display: inline-block; margin-bottom: 3px;"}
                     - else
                       = link_to "Mark as Public", privatize_enrollment_path(@user.username, enrollment.id)
                     
