@@ -140,6 +140,7 @@ class Enrollment < ActiveRecord::Base
     incorrect_constant = 375
     summ_correct = 0
     summ_incorrect = 0
+    credit_score_sync = 1.7
     
     cts.each do |ct|
       if ct.correct?
@@ -154,11 +155,18 @@ class Enrollment < ActiveRecord::Base
     end
     
     if summ_correct == 0
-      self.metascore = 0
+      self.metascore = 300
     else
       ms_correct = summ_correct/ cts.count
       ms_incorrect = summ_incorrect / cts.count
       self.metascore = (ms_correct - ms_incorrect) + incorrect_constant
+      self.metascore = self.metascore * credit_score_sync
+    end
+    
+    if self.metascore > 850
+      self.metascore = 850
+    elsif self.metascore < 300
+      self.metascore = 300
     end
     
     save!

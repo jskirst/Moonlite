@@ -255,7 +255,10 @@
                 What I can do...
               - if @user == current_user
                 = link_to "Continue Challenge", challenge_path(enrollment.path.permalink, c: true, type: Task::CREATIVE), class: "button-small button submit_button_green", style: "float: right; top: 2px; right: -3px; position: relative; text-shadow: none;"
-              %h4 #{enrollment_details[:creative].posts.size} Creative Responses
+              - if enrollment_details[:creative].posts.size == 1
+                %h4 #{enrollment_details[:creative].posts.size} Creative Response
+              - else
+                %h4 #{enrollment_details[:creative].posts.size} Creative Responses
               %div.profilecontent
                 = render "newsfeed/feed", feed: enrollment_details[:creative]
   
