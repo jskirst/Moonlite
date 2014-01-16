@@ -343,7 +343,7 @@ class PathsController < ApplicationController
       set_return_back_to = challenge_url(@path.permalink)
     end
     
-    @similar_paths = @path.similar_paths
+    @similar_paths = @path.similar_paths.where("name != ?", @path.name)
     social_tags(@path.name, @path.picture, @path.description)
     @display_launchpad = @completed
     @display_type = params[:type] || 2
