@@ -174,7 +174,7 @@ class UsersController < ApplicationController
   
   def hovercard
     if request.xhr?
-      @enrollments = @user.enrollments.order("total_points DESC").includes(:path)
+      @enrollments = @user.enrollments.where(private_at: nil).where("total_points > ?", 100).order("total_points DESC").includes(:path)
       @user_personas = @user.user_personas.includes(:persona)
       render partial: "users/hovercard"
     else
