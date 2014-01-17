@@ -73,8 +73,8 @@
             .control-group      
               %label.control-label Template (optional)
               .controls{ style: "margin-top: 3px;" }
-                %a.show_template{ onclick: "$(this).hide(); $(this).siblings('div').show(); $(.remove_template).show", style: (task.template.blank? ? "" :  "display: none;") } Add template for question
-                / %a.remove_template{ onclick: "$(this).hide(); $(this).siblings('div').hide(); $(.show_template).show", style: (task.template.blank? ? "display: none;" :  "") } Close template
+                %a.show_template{ onclick: "$(this).hide(); $(this).siblings('.remove_template').show(); $(this).siblings('.ace_editor').show();", style: (task.template.blank? ? "" :  "display: none;") }= (task.template.nil? ? "Add template to question" : "Edit question template")
+                %a.remove_template{ onclick: "$(this).hide(); $(this).siblings('.show_template').show(); $(this).siblings('.ace_editor').hide();", style: (task.template.blank? ? "display: none;" :  "") } Close template
                 .cr_template_tt
                   %div{ "data-tip" => "Text you include in the template will be supplied to the user in their editable answer field. Templates are useful to guide what format you'd like a response in. They can also be used to give the user something to edit, improve, or build upon."}
                     %img{src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/tooltip_light.png"}
@@ -223,4 +223,4 @@
       parent.find(".new-image").show();
       return false;
     });
-  })
+  });
