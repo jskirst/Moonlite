@@ -8,7 +8,7 @@
   .tt [data-tip]:after { left: -62px; width: 120px; white-space: normal; height: 70px; top:-87px;}
   .tt [data-tip]:before { left: 3px; } 
   .submit_button_green { height: 90px; white-space: normal; width:138px; display: inline-block; margin: 10px 22px 0; float: none; vertical-align: top;}
-  .submit_button_standard { margin-top: 30px; display: inline-block;}
+  .submit_button_standard { display: inline-block;}
   
 %div.quizcontainer
   %div.quizspace{ style: "padding: 20px;"}
@@ -18,8 +18,6 @@
         Nice work!
         %div{ style: "font-size: 27px; margin-left: 0; line-height: 21px; " }
           Get ready for the last question in the section.
-        / %div      
-        /   = link_to "I'm ready!",take_bonus_section_path(@section, params[:task_id], params[:session_id]), class: "submit_button", style: "line-height: 20px; margin-top: 18px;"
       %div{ style: "margin-top: 20px; "}
         %h4 
           Choose which Creative Response you'd like to answer...
@@ -29,7 +27,10 @@
         %div{ style: "margin: 0 auto; width: 100%; text-align: center;"}
           - @tasks.each do |task|
             =link_to truncate(task.question, length: 96, separator:' '), take_bonus_section_path(@section, task.id, params[:session_id]), class: "submit_button_green small_button"
-      %div{ style: "text-align: center;"}
-        = link_to "Skip and continue Core Questions", continue_path_path(@section.path.permalink), class: "submit_button_standard", style: "float: left;"
-        = link_to "Skip and return to Challenge home", challenge_path(@section.path.permalink, c: true), class: "submit_button_standard"
+      %div{ style: "text-align: center; margin-top: 20px"}
+        = link_to "Skip Creative Response", continue_path_path(@section.path.permalink), class: "submit_button_standard", style: "float: left;"
+        - if current_user.guest_user?
+          = link_to "Save your score", finish_section_path(@section.id, params[:session_id], s: 0), class: "submit_button_standard"
+        - else
+          = link_to "Continue later", challenge_path(@path.permalink, c: true), class: "submit_button_standard"
             

@@ -181,6 +181,17 @@ module SessionsHelper
   def store_location(location = nil)
     session[:return_to] = location || request.fullpath
   end
+
+  def current_path_difficulty(path, new_difficulty = nil)
+    if new_difficulty
+      difficulty = new_difficulty
+    else
+      difficulty = session["difficulty.#{path.id}"].to_f
+      difficulty = 0.85 if difficulty < 0.85
+    end
+    session["difficulty.#{path.id}"] = difficulty
+    return difficulty
+  end
   
   private
     def log_visit

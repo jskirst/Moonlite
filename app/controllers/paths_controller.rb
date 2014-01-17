@@ -278,7 +278,7 @@ class PathsController < ApplicationController
     section = @path.next_section_for_user(current_user)
     
     if section.nil? || section.published_at.nil?
-      redirect_to root_path
+      redirect_to challenge_path(@path.permalink, c:true)
     else
       redirect_to start_section_path(section)
     end
