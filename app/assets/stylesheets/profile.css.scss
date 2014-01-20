@@ -195,6 +195,113 @@
     }
   }
   
+  .my_ms_graph { 
+    margin-top: 20px; 
+    
+    .graph { 
+    	height: 45px;  /* Can be anything */
+    	position: relative;
+    	background: #555;
+    	-moz-border-radius: 5px;
+    	-webkit-border-radius: 5px;
+    	border-radius: 5px;
+    	padding: 14px 30px 17px;
+    	-webkit-box-shadow: inset 0 -1px 1px rgba(255,255,255,0.3);
+    	-moz-box-shadow   : inset 0 -1px 1px rgba(255,255,255,0.3);
+    	box-shadow        : inset 0 -1px 1px rgba(255,255,255,0.3);
+      
+      .bar {
+      	display: block;
+      	height: 50%;
+      	   -webkit-border-top-right-radius: 3px;
+      	-webkit-border-bottom-right-radius: 3px;
+      	       -moz-border-radius-topright: 3px;
+      	    -moz-border-radius-bottomright: 3px;
+      	           border-top-right-radius: 3px;
+      	        border-bottom-right-radius: 3px;
+      	    -webkit-border-top-left-radius: 10px;
+      	 -webkit-border-bottom-left-radius: 10px;
+      	        -moz-border-radius-topleft: 10px;
+      	     -moz-border-radius-bottomleft: 10px;
+      	            border-top-left-radius: 10px;
+      	         border-bottom-left-radius: 10px;
+      	background-color: rgb(43,194,83);
+      	background-image: -webkit-gradient(
+      	  linear,
+      	  left bottom,
+      	  left top,
+      	  color-stop(0, rgb(43,194,83)),
+      	  color-stop(1, rgb(84,240,84))
+      	 );
+      	background-image: -webkit-linear-gradient(
+      	  center bottom,
+      	  rgb(43,194,83) 37%,
+      	  rgb(84,240,84) 69%
+      	 );
+      	background-image: -moz-linear-gradient(
+      	  center bottom,
+      	  rgb(43,194,83) 37%,
+      	  rgb(84,240,84) 69%
+      	 );
+      	background-image: -ms-linear-gradient(
+      	  center bottom,
+      	  rgb(43,194,83) 37%,
+      	  rgb(84,240,84) 69%
+      	 );
+      	background-image: -o-linear-gradient(
+      	  center bottom,
+      	  rgb(43,194,83) 37%,
+      	  rgb(84,240,84) 69%
+      	 );
+      	-webkit-box-shadow: 
+      	  inset 0 2px 9px  rgba(255,255,255,0.3),
+      	  inset 0 -2px 6px rgba(0,0,0,0.4);
+      	-moz-box-shadow: 
+      	  inset 0 2px 9px  rgba(255,255,255,0.3),
+      	  inset 0 -2px 6px rgba(0,0,0,0.4);
+      	position: relative;
+      	overflow: hidden;
+          background-color: #f1a165;
+      	background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #f1a165),color-stop(1, #f36d0a));
+      	background-image: -webkit-linear-gradient(top, #f1a165, #f36d0a); 
+              background-image: -moz-linear-gradient(top, #f1a165, #f36d0a);
+              background-image: -ms-linear-gradient(top, #f1a165, #f36d0a);
+              background-image: -o-linear-gradient(top, #f1a165, #f36d0a);
+      }
+      .ticks {
+        width: 100%;
+        margin-left: 3.6%;
+        vertical-align: top;
+        margin-top: -8px;
+        
+        .small-hash, .big-hash {
+          margin-right: 3.98%;
+          &:last-child {margin-right: 0;}
+        }
+        .small-hash {
+          color: white;
+          display: inline;
+          font-size: 6px;
+        }
+        .big-hash {
+          color: white;
+          display: inline;
+          font-size: 9px;
+        }
+      }
+      .descriptors {
+        text-align: left;
+        margin-left: -3%;
+        margin-right: -4%;
+        
+        span {
+          color: white;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+  
   .my_strengths {
     margin: 25px 0 -10px 0;
     padding-right: 15px;
