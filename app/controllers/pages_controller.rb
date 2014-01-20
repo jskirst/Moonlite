@@ -119,8 +119,8 @@ class PagesController < ApplicationController
       @enrollment_details = {}
       @enrollments.each do |e|
         core = completed_tasks.select{ |ct| ct.path_id == e.path_id and (ct.answer_type == Task::MULTIPLE or ct.answer_type == Task::EXACT) }
-        creative = completed_tasks.select{ |ct| ct.path_id == e.path_id and ct.answer_type == Task::CREATIVE }
-        tasks = completed_tasks.select{ |ct| ct.path_id == e.path_id and ct.answer_type == Task::CHECKIN }
+        creative = completed_tasks.select{ |ct| ct.path_id == e.path_id and ct.answer_type == Task::CREATIVE and ct.submitted_answer_id.present? }
+        tasks = completed_tasks.select{ |ct| ct.path_id == e.path_id and ct.answer_type == Task::CHECKIN and ct.submitted_answer_id.present? }
         votes = 0
         comments = 0
         (creative+tasks).each do |ct|
