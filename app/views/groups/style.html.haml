@@ -1,7 +1,8 @@
-%div{ style: "background-color: white; border-radius: 4px; padding:8px; width: 923px;" }
-  :css
-    form .control-group label.control-label { width: 160px; }
-  %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
-  %span{ style: "font-size: 50px;position: relative;top:13px;" } Customize your Group Page
-  %hr{style:"margin:0;"}
-  = render "custom_styles/form", { custom_style: @group_custom_style, link: style_group_path(@group.permalink), back: edit_group_path(@group.permalink) }
+
+.employer-container{ style: "width: 1040px;"}
+  .employer-box
+    .header
+      = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
+      %h2 Customize your CSS
+    %hr{style:"margin:0;"}
+    = render "custom_styles/form", { custom_style: @group_custom_style, link: style_group_path(@group.permalink), back: edit_group_path(@group.permalink) }
