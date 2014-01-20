@@ -69,7 +69,7 @@ Metabright::Application.routes.draw do
       put :checkout
       get :confirmation
       get :style
-      put :style
+      patch :style
       get :join
       delete :leave      
       get :newsfeed

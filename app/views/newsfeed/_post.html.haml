@@ -59,7 +59,7 @@
               - if current_user and post.user_id == current_user.id
                 = link_to "Edit", take_section_path(post.section_id, task_id: post.task_id), style: "color: #404040;"
                 |
-              - unless feed.context == :submission 
+              - unless feed.context == :submission
                 %span
                   = link_to "View Full", submission_drilldown_path(post.submitted_answer_id), style: "color: #404040;"
               - if post.submitted_answer_content && post.submitted_answer_content.downcase.include?("<html>")

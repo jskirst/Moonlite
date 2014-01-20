@@ -61,7 +61,7 @@
                     - if t.status_id
                       - if t.status_id.to_i == Answer::INCOMPLETE or t.status_id.to_i == Answer::INCORRECT
                         = link_to "Draft", take_section_path(@current_section, task_id: t.id), class: "label label-info"
-                      - elsif t.status_id.to_i == Answer::CORRECT
+                      - elsif t.status_id.to_i == Answer::CORRECT and t.submitted_answer_id
                         = link_to "Completed", submission_drilldown_path(t.submitted_answer_id), class: "label label-success", style:"position:relative; top:3px;"
                         %span.points= t.points_awarded.to_i.to_s + " points"
                     - else
@@ -81,12 +81,12 @@
               - @achievement_tasks.each do |t|
                 %tr.task-row
                   %td
-                    - if t.status_id.to_i == Answer::CORRECT
+                    - if t.status_id.to_i == Answer::CORRECT and t.submitted_answer_id
                       %div= link_to t.question, submission_drilldown_path(t.submitted_answer_id)
                     - else
                       %div= link_to t.question, take_section_path(@current_section, task_id: t.id)
                   %td.question_status
-                    - if t.status_id.to_i == Answer::CORRECT
+                    - if t.status_id.to_i == Answer::CORRECT and t.submitted_answer_id
                       = link_to "Completed", submission_drilldown_path(t.submitted_answer_id), class: "label label-success", style:"position:relative; top:3px;"
                       %br
                       %div.points{style:"margin-right:4px;"}= t.points_awarded.to_i.to_s + " points"
