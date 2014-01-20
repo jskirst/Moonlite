@@ -1,28 +1,29 @@
 :css
-  .container.body { background-color: rgba(36, 72, 109, 0.8) }
+  .container.body { background-color: #4b6886; padding: 69px 15px 15px 15px; border-radius: 0;}
   
-%div.single_pane
-  %div.submit_idea{style:"display:inline-block;"}
-    %h2= @idea.new_record? ? "Submit a new #{Idea::TYPES[@idea.idea_type]}" : "Edit #{Idea::TYPES[@idea.idea_type]}"
-    = form_for(@idea, class:"form-horizontal") do |f|
-      = f.hidden_field(:idea_type)
-      %div.control-group
-        %span.help-block Title
-        %div.controls
-          = f.text_field(:title, style: "width:400px;")
-      %div.control-group
-        %span.help-block Description
-        %div.controls
-          = f.text_area(:description, style: "width: 400px; height: 100px;")
-      %div.control-group
-        %div.controls
-          = f.submit("Submit #{Idea::TYPES[@idea.idea_type]}", class: "submit_button")
-  %div.submit_idea_tips
-    %h3 
-      %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Lightbulb", style:"height:30px; width:30px;"}
-      Tips:
-    %ul
-      %li Keep the title of your idea short and sweet.
-      %li Use the decription to elaborate on your idea and also to say why you think it'd be useful.
-      %li Try not to squeeze multiple ideas into the same submission. If you have more than one idea, just submit them each individually.
-      %li Make sure you check for spelling and grammar.
+#ideapage
+  .ideas_header{ style: "margin-bottom: 0;"}
+    .submit_idea{style:"display:inline-block;"}
+      %h2= @idea.new_record? ? "Submit a new #{Idea::TYPES[@idea.idea_type]}" : "Edit #{Idea::TYPES[@idea.idea_type]}"
+      = form_for(@idea, class:"form-horizontal") do |f|
+        = f.hidden_field(:idea_type)
+        .control-group
+          %span.help-block Title
+          .controls
+            = f.text_field(:title, style: "width:400px;")
+        .control-group
+          %span.help-block Description
+          .controls
+            = f.text_area(:description, style: "width: 400px; height: 100px;")
+        .control-group
+          .controls
+            = f.submit("Submit #{Idea::TYPES[@idea.idea_type]}", class: "submit_button")
+    .submit_idea_tips
+      %h3 
+        %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Lightbulb", style:"height:30px; width:30px;"}
+        Tips:
+      %ul
+        %li Keep the title of your idea short and sweet.
+        %li Use the decription to elaborate on your idea and also to say why you think it'd be useful.
+        %li Try not to squeeze multiple ideas into the same submission. If you have more than one idea, just submit them each individually.
+        %li Make sure you check for spelling and grammar.

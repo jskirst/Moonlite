@@ -66,17 +66,17 @@ class Enrollment < ActiveRecord::Base
   def describe_skill_level() Enrollment.describe_skill_level(self.metascore) end
   def self.describe_skill_level(metascore)
     metascore = metascore.to_i
-    if metascore < 305
+    if metascore < 392
       return "Unqualified"
-    elsif metascore > 305 and metascore <= 345
+    elsif metascore > 392 and metascore <= 484
       return "Novice"
-    elsif metascore > 345 and metascore <= 385
+    elsif metascore > 484 and metascore <= 576
       return "Familiar"
-    elsif metascore > 385 and metascore <= 425
+    elsif metascore > 576 and metascore <= 668
       return "Competent"
-    elsif metascore > 425 and metascore <= 465
+    elsif metascore > 668 and metascore <= 760
       return "Advanced"
-    elsif metascore > 465
+    elsif metascore > 760
       return "Expert"
     end
   end
@@ -140,7 +140,6 @@ class Enrollment < ActiveRecord::Base
     incorrect_constant = 375
     summ_correct = 0
     summ_incorrect = 0
-    credit_score_sync = 1.7
     
     cts.each do |ct|
       if ct.correct?
@@ -160,7 +159,14 @@ class Enrollment < ActiveRecord::Base
       ms_correct = summ_correct/ cts.count
       ms_incorrect = summ_incorrect / cts.count
       self.metascore = (ms_correct - ms_incorrect) + incorrect_constant
-      self.metascore = self.metascore * credit_score_sync
+      # Tier MS to zero
+      x = self.metascore - 305
+      # Get percentage of old range
+      y = (x / 160)
+      # Multiply by new range
+      z = (y * 368).abs
+      # Add min of new range
+      self.metascore = z + 392
     end
     
     if self.metascore > 850

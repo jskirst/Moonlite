@@ -15,7 +15,7 @@
     - if comments.empty?
       %p.no_comments There are no comments yet. 
     %ul{ style: "list-style: none; margin: 10px 0 20px 0;" }
-      - comments.each do |comment|
+      - comments.sort_by{|comments| comments.created_at}.each do |comment|
         = render "comments/comment", comment: comment
     - if current_user
       = form_for(current_user.comments.new, remote: true) do |f|

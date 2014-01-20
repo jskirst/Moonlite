@@ -10,6 +10,7 @@
   .tip-above[data-tip]:after { width: 160px; height: 107px; top: -125px; left:-76px; white-space: normal;}
   .tip-above[data-tip]:before { left: 3px; top: -8px; }
 
+
 #profile{itemscope: "", itemtype: "http://data-vocabulary.org/Person"}
   - if @user == current_user && current_user.guest_user?
     .help_box
@@ -238,7 +239,28 @@
                       /   %h3.comments-received-count= enrollment_details[:comments]
                       /   %p Comments Received
                 .my_ms_graph
-                  .metascore_graph{ :data => { "metascore" => enrollment.metascore, "skill" => enrollment.describe_skill_level } }
+                  / The graph must have a range of 280 to 850, even though 300 is the lowest metascore possible
+                  .graph
+                    %span.bar{ style: "width: 12%;"}
+                    .ticks
+                      .big-hash
+                        |
+                      - 5.times do
+                        .small-hash 
+                          |
+                        .small-hash 
+                          |
+                        .small-hash 
+                          |
+                        .big-hash 
+                          |
+                    .descriptors
+                      %span{ style: "margin-right: 7.9%;"} Unqualified
+                      %span{ style: "margin-right: 9.1%;"} Novice
+                      %span{ style: "margin-right: 7.4%;"} Familiar
+                      %span{ style: "margin-right: 6.2%;"} Competent
+                      %span{ style: "margin-right: 8%;"}Advanced
+                      %span Expert
                 .my_strengths
                   %h3 Strengths
                   - unless enrollment_details[:topics].empty?

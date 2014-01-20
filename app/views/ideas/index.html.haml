@@ -1,8 +1,8 @@
 :css
-  .container.body { background-color: #4b6886; padding: 65px 15px 15px 15px;}
+  .container.body { background-color: #4b6886; padding: 65px 15px 15px 15px; border-radius: 0;}
   
-%div#ideapage{ style: "margin-top: 4px;" }    
-  %div.ideas_header
+#ideapage{ style: "margin-top: 4px;" }    
+  .ideas_header
     - if current_user
       - if @idea_mode == true
         = link_to "Post New Idea", new_idea_path, class: "submit_button"
@@ -14,7 +14,7 @@
     %div
       %h4 Help shape the MetaBright roadmap
       %p This is where we share some of our planned features and upgrades. Vote for what you think we should prioritize and post ideas for things we should work on next.
-  %div.ideas_body
+  .ideas_body
     %div{ style: "padding: 5px 0px 0px 5px;" }
       %div{ style: "float: right; padding: 10px 20px 0 0;" }
         - if params[:action] == "show"
@@ -28,15 +28,15 @@
           = link_to "Ideas", ideas_path
         %li{ class: @idea_mode == false ? "active" : "" }
           = link_to "Bugs", bugs_path
-    %div.ideas_list
+    .ideas_list
       - @ideas.each do |idea|
-        %div.idea_box
-          %div.votingandpointsarea{style:"margin-top:0;"}
+        .idea_box
+          .votingandpointsarea{style:"margin-top:0;"}
             %span.vote_points{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px;"}= idea.points_awarded
             %span{style:"font-weight: bold;color: #404040;font-size: 16px;position: relative; top:3px; margin-right:5px;"} pts
             - if current_user
               - if current_user == idea.creator
-                %div.dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
+                .dropdown.submission-icon{ style: "padding-top:0px; margin: 0px;" }
                   %a.dropdown-toggle{ "data-toggle" => "dropdown", style: "padding:0px;" }
                     %span.caret{ style: "margin: 6px 0 0 0;" }
                   %ul.dropdown-menu{ role: "button", style: "margin: 0; padding: 0; top:26px; left: -71px; min-width: 140px;" }
@@ -49,7 +49,7 @@
               - else
                 = link_to vote_idea_path(idea.id), remote: true, class: ("btn vote_button " + ((@idea_votes && @idea_votes.include?(idea.id)) ? "btn-info" : "")) do
                   %img{ src: ICON_UPVOTE_URL, alt: "Up-vote", class: "up_vote" }   
-          %div.ideacontent
+          .ideacontent
             %h4
               = link_to idea.title, idea
               - unless idea.status.blank?
