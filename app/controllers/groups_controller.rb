@@ -254,8 +254,14 @@ class GroupsController < ApplicationController
     end
     
     unless request.get?
-      @group_custom_style.update_attributes(params[:custom_style])
-      flash[:success] = "Your styles have been saved."
+      @group_custom_style.styles = params[:custom_style][:styles]
+      @group_custom_style.mode = params[:custom_style][:mode]
+      @group_custom_style.save
+      if @group_custom_style.css_validation_errors.size > 0
+        flash[:error] = @group_custom_style.css_validation_errors.to_s
+      else
+        flash[:success] = "Your styles have been saved."
+      end
     end
   end
   
