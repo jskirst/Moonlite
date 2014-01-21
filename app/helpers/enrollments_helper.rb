@@ -34,12 +34,9 @@ module EnrollmentsHelper
 
     details[:is_difficult] = path.difficult?
 
-    if details[:metascore] < 260
-      details[:skill_level] = Enrollment.describe_skill_level(details[:metascore])
-      details[:ms_for_graph] = 260
-    elsif !details[:is_difficult] and details[:metascore] > 385
+    if !details[:is_difficult] and details[:metascore] > 576
       details[:skill_level] = "Competent"
-      details[:ms_for_graph] = 385
+      details[:ms_for_graph] = 576
     else
       details[:skill_level] = Enrollment.describe_skill_level(details[:metascore])
       details[:ms_for_graph] = details[:metascore]

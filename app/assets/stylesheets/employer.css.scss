@@ -256,26 +256,6 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       .challenge_stats {
         margin: 20px 0 20px 0px;
         
-        .big_skill_space{
-          display: inline-block; 
-          color: rgb(116, 116, 116); 
-          margin-right: 12px; 
-          text-align: center;
-          
-          .big_skill {
-            padding: 35px 10px;
-            margin: 6px 0;
-            letter-spacing: 2px;
-            font-size: 30px;
-          }
-          .text {
-            font-size: 14px;
-          }
-        }
-        .myrank{
-          margin-right: 20px;
-          top: 36px;
-        }
         table {
           display: inline-block;
           width: auto;
@@ -286,7 +266,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
           }
         }
         .strengths_weaknesses {
-          display: inline-block; margin-left: 20px; vertical-align: top; width: 38%;
+          display: inline-block; margin-left: 20px; vertical-align: top; width: 44%;
           .header {
             padding: 0;
             margin: 0;
