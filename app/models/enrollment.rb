@@ -142,11 +142,12 @@ class Enrollment < ActiveRecord::Base
     summ_incorrect = 0
     
     cts.each do |ct|
+      difficulty = ct.difficulty < 1 ? 1 : ct.difficulty
       if ct.correct?
-        pos_delta = ct.difficulty.to_f * ct.points_awarded * ct_multiplier
+        pos_delta = difficulty.to_f * ct.points_awarded * ct_multiplier
         summ_correct += pos_delta
       elsif ct.incorrect? or ct.incomplete?
-        neg_delta = incorrect_constant.to_f / ct.difficulty
+        neg_delta = incorrect_constant.to_f / difficulty
         summ_incorrect += neg_delta
       else
         raise ct.to_yaml

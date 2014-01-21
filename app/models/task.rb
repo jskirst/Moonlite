@@ -88,6 +88,12 @@ class Task < ActiveRecord::Base
   validates :answer_sub_type, inclusion: { in: [100, 101, 102] }, allow_nil: true
   validate :has_answers
   
+  # after_initialize do
+  #   if self.difficulty < 1
+  #     self.difficulty = 1
+  #   end
+  # end
+  
   before_save do
     self.template = nil if template.blank?
     self.quoted_text = nil if quoted_text.blank?

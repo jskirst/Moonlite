@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.text     "content"
     t.boolean  "is_correct",   default: false
     t.integer  "answer_count", default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "answers", ["task_id"], name: "index_answers_on_task_id", using: :btree
@@ -31,16 +31,16 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "path_id"
     t.integer  "user_id"
     t.integer  "granting_user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
     t.integer  "owner_id"
     t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.string   "owner_type"
     t.boolean  "is_reviewed", default: false
     t.boolean  "is_locked",   default: false
@@ -51,8 +51,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "completed_tasks", force: true do |t|
     t.integer  "user_id"
     t.integer  "task_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.integer  "status_id",           default: 0
     t.integer  "points_awarded"
     t.string   "answer"
@@ -84,8 +84,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "custom_styles", force: true do |t|
     t.integer  "owner_id"
     t.text     "styles"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.integer  "mode",       default: 0
     t.string   "owner_type"
   end
@@ -93,8 +93,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "enrollments", force: true do |t|
     t.integer  "user_id"
     t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.integer  "total_points",             default: 0
     t.boolean  "contribution_unlocked",    default: false
     t.datetime "contribution_unlocked_at"
@@ -107,15 +107,15 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   end
 
   add_index "enrollments", ["path_id"], name: "index_enrollments_on_path_id", using: :btree
-  add_index "enrollments", ["user_id", "path_id"], name: "index_enrollments_on_user_id_and_path_id", unique: true, using: :btree
+  add_index "enrollments", ["user_id", "path_id"], name: "index_enrollments_on_user_id_and_path_id", using: :btree
   add_index "enrollments", ["user_id"], name: "index_enrollments_on_user_id", using: :btree
 
   create_table "evaluation_enrollments", force: true do |t|
     t.integer  "evaluation_id"
     t.integer  "user_id"
     t.datetime "submitted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.datetime "archived_at"
     t.datetime "favorited_at"
   end
@@ -123,8 +123,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "evaluation_paths", force: true do |t|
     t.integer  "evaluation_id"
     t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "evaluations", force: true do |t|
@@ -135,8 +135,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "user_id"
     t.integer  "group_id"
     t.datetime "closed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.datetime "published_at"
   end
 
@@ -146,8 +146,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "group_id"
     t.integer  "user_id"
     t.boolean  "is_admin",   default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.boolean  "hidden",     default: false
   end
 
@@ -160,8 +160,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.string   "city"
     t.string   "state"
     t.string   "country"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.string   "token"
     t.string   "plan_type",      default: "0"
     t.boolean  "is_private",     default: true
@@ -177,8 +177,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.text     "description"
     t.string   "status"
     t.integer  "vote_count",  default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "idea_type",   default: 0
   end
 
@@ -188,25 +188,25 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.boolean  "weekly",      default: true
     t.boolean  "interaction", default: true
     t.boolean  "inactive",    default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
-  add_index "notification_settings", ["user_id"], name: "index_notification_settings_on_user_id", unique: true, using: :btree
+  add_index "notification_settings", ["user_id"], name: "index_notification_settings_on_user_id", using: :btree
 
   create_table "path_personas", force: true do |t|
     t.integer "path_id"
     t.integer "persona_id"
   end
 
-  add_index "path_personas", ["path_id", "persona_id"], name: "index_path_personas_on_path_id_and_persona_id", unique: true, using: :btree
+  add_index "path_personas", ["path_id", "persona_id"], name: "index_path_personas_on_path_id_and_persona_id", using: :btree
 
   create_table "paths", force: true do |t|
     t.string   "name"
     t.text     "description",                default: ""
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.string   "image_url"
     t.boolean  "is_public",                  default: false
     t.boolean  "is_published",               default: false
@@ -229,15 +229,15 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "input_type",                 default: 1
   end
 
-  add_index "paths", ["permalink"], name: "index_paths_on_permalink", unique: true, using: :btree
-  add_index "paths", ["user_id"], name: "index_paths_on_user_id", using: :btree
+  add_index "paths", ["permalink"], name: "index_paths_on_permalink", using: :btree
+  add_index "paths", ["user_id"], name: "index_modules_on_user_id", using: :btree
 
   create_table "personas", force: true do |t|
     t.string   "name"
     t.string   "description"
     t.integer  "points"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
     t.string   "image_url"
     t.integer  "parent_id"
     t.integer  "unlock_threshold"
@@ -249,16 +249,16 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "phrase_id"
     t.integer  "paired_phrase_id"
     t.integer  "strength",         default: 0
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "phrase_pairings", ["phrase_id"], name: "index_phrase_pairings_on_phrase_id", using: :btree
 
   create_table "phrases", force: true do |t|
     t.string   "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "original_content"
   end
 
@@ -269,8 +269,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.string   "name"
     t.text     "instructions"
     t.integer  "position"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
     t.boolean  "is_published",     default: false
     t.integer  "points_to_unlock", default: 0
     t.datetime "published_at"
@@ -281,16 +281,16 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "sent_emails", force: true do |t|
     t.text     "content"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "stored_resources", force: true do |t|
     t.string   "description"
     t.text     "link"
     t.integer  "path_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "section_id"
     t.integer  "task_id"
     t.string   "info_type"
@@ -302,13 +302,13 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.string   "owner_type"
   end
 
-  add_index "stored_resources", ["owner_id", "owner_type"], name: "index_stored_resources_on_owner_id_and_owner_type", using: :btree
-  add_index "stored_resources", ["path_id"], name: "index_stored_resources_on_path_id", using: :btree
+  add_index "stored_resources", ["owner_id", "owner_type"], name: "index_stored_resources_on_owner_id_and_owner_name", using: :btree
+  add_index "stored_resources", ["path_id"], name: "index_info_resources_on_path_id", using: :btree
 
   create_table "submitted_answers", force: true do |t|
     t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "total_votes",    default: 0
     t.integer  "task_id"
     t.boolean  "is_reviewed",    default: false
@@ -333,8 +333,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "subscriptions", force: true do |t|
     t.integer  "followed_id"
     t.integer  "follower_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   add_index "subscriptions", ["followed_id", "follower_id"], name: "index_subscriptions_on_followed_id_and_follower_id", unique: true, using: :btree
@@ -344,8 +344,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "user_id"
     t.integer  "issue_type"
     t.boolean  "resolved",    default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.datetime "resolved_at"
   end
 
@@ -354,8 +354,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.text     "resource"
     t.integer  "points"
     t.integer  "section_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
     t.integer  "correct_answer",     default: 1
     t.integer  "position",           default: 0
     t.integer  "answer_type",        default: 2
@@ -376,21 +376,21 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.decimal  "difficulty",         default: 0.0
   end
 
-  add_index "tasks", ["section_id"], name: "index_tasks_on_section_id", using: :btree
+  add_index "tasks", ["section_id"], name: "index_tasks_on_path_id", using: :btree
 
   create_table "topics", force: true do |t|
     t.integer  "path_id"
     t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "user_auths", force: true do |t|
     t.integer  "user_id"
     t.string   "provider"
     t.string   "uid"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "user_auths", ["user_id"], name: "index_user_auths_on_user_id", using: :btree
@@ -398,8 +398,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "user_events", force: true do |t|
     t.integer  "user_id"
     t.text     "content"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.boolean  "is_read",     default: false
     t.string   "link"
     t.integer  "actioner_id"
@@ -414,20 +414,20 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "user_personas", force: true do |t|
     t.integer  "persona_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "level"
   end
 
-  add_index "user_personas", ["user_id", "persona_id"], name: "index_user_personas_on_user_id_and_persona_id", unique: true, using: :btree
+  add_index "user_personas", ["user_id", "persona_id"], name: "index_user_personas_on_user_id_and_persona_id", using: :btree
 
   create_table "user_roles", force: true do |t|
     t.string   "name"
     t.boolean  "enable_administration",   default: false
     t.boolean  "enable_content_creation", default: false
     t.string   "signup_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   create_table "user_transactions", force: true do |t|
@@ -436,8 +436,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
     t.integer  "task_id"
     t.float    "amount"
     t.integer  "status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "path_id"
     t.integer  "owner_id"
     t.string   "owner_type"
@@ -448,8 +448,8 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                                           null: false
+    t.datetime "updated_at",                                                           null: false
     t.string   "encrypted_password"
     t.string   "salt"
     t.boolean  "admin",                                                default: false
@@ -491,14 +491,61 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", using: :btree
+
+  create_table "vanity_conversions", force: true do |t|
+    t.integer "vanity_experiment_id"
+    t.integer "alternative"
+    t.integer "conversions"
+  end
+
+  add_index "vanity_conversions", ["vanity_experiment_id", "alternative"], name: "by_experiment_id_and_alternative", using: :btree
+
+  create_table "vanity_experiments", force: true do |t|
+    t.string   "experiment_id"
+    t.integer  "outcome"
+    t.datetime "created_at"
+    t.datetime "completed_at"
+  end
+
+  add_index "vanity_experiments", ["experiment_id"], name: "index_vanity_experiments_on_experiment_id", using: :btree
+
+  create_table "vanity_metric_values", force: true do |t|
+    t.integer "vanity_metric_id"
+    t.integer "index"
+    t.integer "value"
+    t.string  "date"
+  end
+
+  add_index "vanity_metric_values", ["vanity_metric_id"], name: "index_vanity_metric_values_on_vanity_metric_id", using: :btree
+
+  create_table "vanity_metrics", force: true do |t|
+    t.string   "metric_id"
+    t.datetime "updated_at"
+  end
+
+  add_index "vanity_metrics", ["metric_id"], name: "index_vanity_metrics_on_metric_id", using: :btree
+
+  create_table "vanity_participants", force: true do |t|
+    t.string  "experiment_id"
+    t.string  "identity"
+    t.integer "shown"
+    t.integer "seen"
+    t.integer "converted"
+  end
+
+  add_index "vanity_participants", ["experiment_id", "converted"], name: "by_experiment_id_and_converted", using: :btree
+  add_index "vanity_participants", ["experiment_id", "identity"], name: "by_experiment_id_and_identity", using: :btree
+  add_index "vanity_participants", ["experiment_id", "seen"], name: "by_experiment_id_and_seen", using: :btree
+  add_index "vanity_participants", ["experiment_id", "shown"], name: "by_experiment_id_and_shown", using: :btree
+  add_index "vanity_participants", ["experiment_id"], name: "index_vanity_participants_on_experiment_id", using: :btree
 
   create_table "visits", force: true do |t|
     t.integer  "user_id"
     t.integer  "visitor_id"
     t.text     "request_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.string   "external_id"
     t.text     "referral_url"
     t.string   "user_agent"
@@ -510,13 +557,13 @@ ActiveRecord::Schema.define(version: 20140111001549) do
   create_table "votes", force: true do |t|
     t.integer  "owner_id"
     t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
     t.string   "owner_type", default: "SubmittedAnswer"
   end
 
   add_index "votes", ["owner_id", "owner_type", "user_id"], name: "index_votes_on_owner_id_and_owner_type_and_user_id", unique: true, using: :btree
-  add_index "votes", ["user_id", "owner_id"], name: "index_votes_on_user_id_and_owner_id", unique: true, using: :btree
+  add_index "votes", ["user_id", "owner_id"], name: "index_votes_on_user_id_and_submitted_answer_id", using: :btree
   add_index "votes", ["user_id"], name: "index_votes_on_user_id", using: :btree
 
 end
