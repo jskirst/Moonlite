@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  include EventsHelper
   before_filter :authenticate, except: [:raw, :complete]
   before_filter :load_resource, except: [:create, :raw]
   before_filter :authorize_resource, except: [:vote, :report, :create, :raw, :complete, :took]
@@ -117,13 +118,16 @@ class TasksController < ApplicationController
     
     completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
     
-    # TODO: Completed task does not specify that it must be from this enrollment
-    completed_task.complete_core_task!(params[:answer], params[:points_remaining])
+    points = params[:points_remaining].to_i
+    completed_task.complete_core_task!(params[:answer], points)
     completed_task.reload
     if completed_task.correct?
       session[:ssf] = session[:ssf].to_i + 1
       new_difficulty = current_path_difficulty(@path) + 0.07
       current_path_difficulty(@path, new_difficulty)
+      if points > 0
+        #check_for_and_create_events(points, completed_task.enrollment)
+      end
     else
       session[:ssf] = 0
       new_difficulty = current_path_difficulty(@path) - 0.07

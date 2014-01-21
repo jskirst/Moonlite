@@ -1,6 +1,5 @@
 class UserEvent < ActiveRecord::Base
   DEFAULT_IMAGE_LINK = "https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png"
-  BASE_URL = "https://www.metabright.com/"
   attr_accessible :actioner_id, :content, :link, :image_link, :action_text
   
   scope :unread, -> { where read_at: nil }
@@ -25,16 +24,6 @@ class UserEvent < ActiveRecord::Base
     e.image_link = image_link
     e.content = content
     e.save!
-  end
-  
-  def self.log_point_event(user, enrollment, event_type)
-    path = enrollment.path
-    return false if path.group_id.present?
-    path_url = BASE_URL + "challenges/#{path.permalink}"
-    if event_type == :contribution_unlocked
-      content = "You have unlocked the ability to contribute your own questions to the #{path.name} Challenge!"
-      log_event(user, content, nil, path_url, path.picture)
-    end
   end
   
   def self.user_event_icon(event_type)
