@@ -17,13 +17,19 @@ class CustomStyle < ActiveRecord::Base
   validates :owner_type, presence: true
   validates :mode, numericality: { less_than_or_equal_to: 2, greater_than_or_equal_to: 0  }
   validate :validate_css
+
+  after_initialize do
+    self.css_validation_errors = []
+  end
   
   def prepop_style
     # Lack of indentation here is deliberate. Do not change.
-    self.styles ||= "# Use your browser's 'Inspect Element' tool to identify the classes to modify.
-#
-# body.employer {background: wheat;}
-# .employer-container (background: gold;)"
+    self.styles ||= "
+/* 
+Use your browser's 'Inspect Element' tool to identify the classes to modify.
+body.employer {background: wheat;}
+.employer-container (background: gold;)
+*/"
   end
 
   def off?() return mode == OFF end
@@ -34,7 +40,6 @@ class CustomStyle < ActiveRecord::Base
     return true if self.styles.blank?
     validator = CSSValidator.new
     results = validator.validate_text(self.styles)
-    self.css_validation_errors = []
 
     if results.errors.length > 0
       self.css_validation_errors << results.errors.join(". ")

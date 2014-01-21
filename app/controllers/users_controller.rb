@@ -91,10 +91,11 @@ class UsersController < ApplicationController
     unless request.get?
       @user_custom_style.styles = params[:custom_style][:styles]
       @user_custom_style.mode = params[:custom_style][:mode]
-      if @user_custom_style.save
-        flash[:success] = "Your styles have been saved."
+      @user_custom_style.save
+      if @user_custom_style.css_validation_errors.size > 0
+        flash.now[:error] = @user_custom_style.css_validation_errors.to_s
       else
-        flash[:error] = "There was a parsing error with your css. Please check and try again."
+        flash.now[:success] = "Your styles have been saved."
       end
     end
   end

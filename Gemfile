@@ -31,7 +31,6 @@ gem 'google-tag-manager-rails'
 gem 'sitemap_generator'
 gem 'fog'
 gem 'hamster_powered', git: 'https://github.com/jskirst/hamster_powered'
-gem 'rails_12factor'
 gem 'exception_notification'
 gem 'exception_notification-rake', '~> 0.1.0'
 gem 'sextant'
@@ -51,6 +50,7 @@ gem 'memcachier'
 
 group :production do
 #  gem 'heroku-deflater'
+  gem 'rails_12factor'
 end
 
 group :development do

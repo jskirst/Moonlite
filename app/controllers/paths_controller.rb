@@ -1,5 +1,5 @@
 class PathsController < ApplicationController
-  include PathsHelper
+  include EventsHelper
   include NewsfeedHelper
   include HamsterPowered::HamsterHelper
   

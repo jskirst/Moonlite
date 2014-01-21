@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
     if self.password.present?
       self.salt = make_salt
       self.encrypted_password = encrypt(password)
-      review_submitted_answers
+      self.review_submitted_answers
     end
     
     if self.name_changed? or self.username.blank?
