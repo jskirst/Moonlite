@@ -39,8 +39,13 @@ module NewsfeedHelper
       return @posts if @posts
       @posts = []
 
-      if @path
-        events = UserEvent.where("user_events.path_id in (?)", self.path_ids).includes(:user).order("id DESC")
+      if @path_ids
+        events = UserEvent.joins(:user)
+          .where("users.email NOT LIKE ?", '%@metabright.com%')
+          .where("user_events.path_id in (?)", self.path_ids)
+          .includes(:user)
+          .order("user_events.id DESC")
+
         events.each do |e|
           u = e.user
           @posts << OpenStruct.new(name: u.name, 

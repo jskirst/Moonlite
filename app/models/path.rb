@@ -33,7 +33,7 @@ class Path < ActiveRecord::Base
   has_many :personas, through: :path_personas
   has_many :topics
   
-  validates :name, length: { within: 2..140 }
+  validates :name, length: { within: 2..140 }, uniqueness: { scope: [:group_id] }
   validates :description, length: { maximum: 2500 }
   validates :tags, length: { maximum: 250 }
   validates :user_id, presence: true
@@ -183,7 +183,7 @@ class Path < ActiveRecord::Base
   
   def average_difficulty() tasks.average(:difficulty) end
   def describe_average_difficulty() Task.describe_difficulty(average_difficulty) end
-  def difficult?() average_difficulty >= 1.1 end
+  def difficult?() average_difficulty >= 1.1 or group_id.nil? end
   
   # Cached methods
   

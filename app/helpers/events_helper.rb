@@ -26,6 +26,11 @@ module EventsHelper
     achievements[:rank] = 10  if current_rank <= 10 and previous_rank > 10
     achievements[:rank] = 5  if current_rank <= 5 and previous_rank > 5
 
+    # NEW HIGHEST RANK
+    if current_rank > enrollment.highest_rank.to_i
+      enrollment.update_attribute(:highest_rank, current_rank)
+    end
+
     return achievements
   end
 
