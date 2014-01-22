@@ -136,15 +136,16 @@ class Enrollment < ActiveRecord::Base
     end
     
     ct_constant = 0.00835
-    ct_multiplier = [1 + ct_constant * cts.count, 1.3].min 
-    incorrect_constant = 375
-    summ_correct = 0
-    summ_incorrect = 0
+    ct_multiplier = [1.0 + ct_constant * cts.count, 1.3].min 
+    incorrect_constant = 310.0
+    bump_constant = 365.0
+    summ_correct = 0.0
+    summ_incorrect = 0.0
     
     cts.each do |ct|
-      difficulty = ct.difficulty < 1 ? 1 : ct.difficulty
+      difficulty = ct.difficulty < 1.0 ? 1.0 : ct.difficulty.to_f
       if ct.correct?
-        pos_delta = difficulty.to_f * ct.points_awarded * ct_multiplier
+        pos_delta = difficulty * ct.points_awarded * ct_multiplier
         summ_correct += pos_delta
       elsif ct.incorrect? or ct.incomplete?
         neg_delta = incorrect_constant.to_f / difficulty
@@ -159,15 +160,15 @@ class Enrollment < ActiveRecord::Base
     else
       ms_correct = summ_correct/ cts.count
       ms_incorrect = summ_incorrect / cts.count
-      self.metascore = (ms_correct - ms_incorrect) + incorrect_constant
+      self.metascore = (ms_correct - ms_incorrect) + bump_constant
       # Tier MS to zero
-      x = self.metascore - 305
+      x = self.metascore - 305.0
       # Get percentage of old range
-      y = (x / 160)
+      y = (x / 160.0)
       # Multiply by new range
-      z = (y * 368).abs
+      z = (y * 368.0).abs
       # Add min of new range
-      self.metascore = z + 392
+      self.metascore = z + 392.0
     end
     
     if self.metascore > 850
