@@ -9,26 +9,17 @@ describe CustomStyle do
     it "should not allow valid css" do
       style = CustomStyle.new(styles: "ASDF", mode: CustomStyle::ON)
       style.owner = @user
-      style.should_not be_valid
+      style.save
+
+      style.reload
+      style.mode.should == CustomStyle::OFF
+      style.css_validation_errors.should_not be_empty
+      style.styles.should == "ASDF"
     end
     
     it "should allow valid css" do
       style = CustomStyle.new(styles: "body { padding: 10px; }", mode: CustomStyle::ON)
       style.owner = @user
-      style.should be_valid
-    end
-    
-    it "should only test if css is in preview or on mode" do
-      style = CustomStyle.new(styles: "ASDF")
-      style.owner = @user
-      
-      style.mode = CustomStyle::ON
-      style.should_not be_valid
-      
-      style.mode = CustomStyle::PREVIEW
-      style.should_not be_valid
-      
-      style.mode = CustomStyle::OFF
       style.should be_valid
     end
   end
@@ -55,7 +46,7 @@ describe CustomStyle do
       cs2.mode.should eq(CustomStyle::OFF)
     end
     
-    it "should leave not touch valid styles" do
+    it "should not touch valid styles" do
       cs1 = CustomStyle.new(styles: "body { padding: 10px; }", mode: CustomStyle::ON)
       cs1.owner = @user
       cs1.save!
