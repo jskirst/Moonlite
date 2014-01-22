@@ -9,7 +9,7 @@ describe "Group Functions" do
     ActionMailer::Base.deliveries = []
     visit root_path
     
-    expect_content("Prove your skills.")
+    expect_content("I want to test my candidates.")
     click_button "Learn More"
     
     expect_content("What skills does your company need?")
@@ -144,7 +144,7 @@ describe "Group Functions" do
       find("input[descriptor=save-evaluation-button]").click
       
       find(".challenge_holder").first('a').click
-      
+      start_cli
       12.times do |i|
         first('.answer_content').click
         click_on "Next"

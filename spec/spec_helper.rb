@@ -5,7 +5,7 @@ require 'rspec/autorun'
 require 'capybara/rspec'
 require 'capybara/poltergeist'
 require 'database_cleaner'
-
+UPLOAD_FILE_PATH = File.expand_path("../fixtures/files/test.pdf", __FILE__)
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
@@ -41,8 +41,8 @@ RSpec.configure do |config|
     Capybara::Poltergeist::Driver.new(app, { timeout: 30, phantomjs_options: ["--load-images=no"] })
   end
 
-  # Capybara.default_driver = :firefox
-  Capybara.default_driver = :poltergeist
+  Capybara.default_driver = :firefox
+  #Capybara.default_driver = :poltergeist
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :truncation
@@ -67,24 +67,3 @@ Capybara::Node::Element.class_eval do
     driver.browser.action.move_to(native).move_by(right.to_i, top.to_i).click.perform
   end
 end
-
-def start_cli
-  return true
-  puts "Waiting for command"
-  command = ""
-  while true
-    command = $stdin.gets.chomp
-    if command == "q"
-      break
-    else
-      begin
-        puts "Running #{command}"
-        eval(command)
-      rescue
-        puts "bad command: #{command} - #{$!}"
-      end
-    end
-  end
-end
-
-UPLOAD_FILE_PATH = File.expand_path("../fixtures/files/test.pdf", __FILE__)

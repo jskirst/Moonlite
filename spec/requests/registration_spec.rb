@@ -35,7 +35,7 @@ describe "Registration" do
       
       visit root_path
       
-      expect_content("Prove your skills.")
+      expect_content("I want to be discovered.")
       click_button "Get Started"
       find("#challenge_start_#{path.permalink}").click
       
@@ -49,10 +49,9 @@ describe "Registration" do
         click_on "Next"
       end
       
-      expect_content("Not bad...")
-      click_on "I'm ready!"
-      
-      expect_content("Boss Question!")
+      expect_content("Get ready for the last question in the section.")
+      first(".submit_button_green").click
+
       find("#answer_input").set("Blah")
       click_on "Submit"
       

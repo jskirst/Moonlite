@@ -1,4 +1,22 @@
 module RequestsHelper
+  def start_cli
+    puts "Waiting for command"
+    command = ""
+    while true
+      command = $stdin.gets.chomp
+      if command == "q"
+        break
+      else
+        begin
+          puts "Running #{command}"
+          eval(command)
+        rescue
+          puts "bad command: #{command} - #{$!}"
+        end
+      end
+    end
+  end
+  
   def init_metabright
     raise "EXISTING PERSONAS" unless Persona.count == 0
     persona = FactoryGirl.create(:persona_with_paths, name: "First Persona")
@@ -16,6 +34,7 @@ module RequestsHelper
     fill_in "session_email", with: user.email
     fill_in "session_password", with: "a1b2c3d4"
     click_button "Sign In"
+    expect_content user.name
   end
   
   def complete_path(path, user)
@@ -53,7 +72,7 @@ module RequestsHelper
     begin
       wait_until("Page has '#{str}'", 10){ page.has_content?(str) }
     rescue
-      save_and_open_page
+      start_cli
       raise "Expected '#{str}': #{$!}"
     end
   end

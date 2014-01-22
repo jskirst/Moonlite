@@ -66,7 +66,7 @@ class Enrollment < ActiveRecord::Base
   def describe_skill_level() Enrollment.describe_skill_level(self.metascore) end
   def self.describe_skill_level(metascore)
     metascore = metascore.to_i
-    if metascore < 392
+    if metascore <= 392
       return "Unqualified"
     elsif metascore > 392 and metascore <= 484
       return "Novice"
@@ -245,7 +245,6 @@ class Enrollment < ActiveRecord::Base
   def check_for_events(points)
     if crossed_threshold?(CONTRIBUTION_THRESHOLD, points) && !contribution_unlocked?
       self.contribution_unlocked_at = Time.now
-      UserEvent.log_point_event(user, self, :contribution_unlocked)
     end
   end
   
