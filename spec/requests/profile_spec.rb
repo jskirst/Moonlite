@@ -83,7 +83,7 @@ describe "Profile" do
       visit profile_path(@user.username)
     end
     
-    it "should all display with correct question statistics", js: true do
+    it "should all display with correct question statistics" do
       sleep(3)
       @completed_paths.each do |p|
         find("#challenge_selector_#{p.permalink}").click

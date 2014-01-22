@@ -14,7 +14,6 @@ gem 'omniauth-linkedin-oauth2'
 gem 'omniauth-github'
 gem 'taps'
 gem 'haml'
-gem 'faker'
 gem 'quiet_assets'
 gem 'nokogiri'
 gem 'carmen'
@@ -33,7 +32,6 @@ gem 'fog'
 gem 'hamster_powered', git: 'https://github.com/jskirst/hamster_powered'
 gem 'exception_notification'
 gem 'exception_notification-rake', '~> 0.1.0'
-gem 'sextant'
 gem 'unf'
 gem 'prawn', git: 'https://github.com/prawnpdf/prawn.git'
 
@@ -45,22 +43,25 @@ gem 'sass-rails'
 gem 'coffee-rails'
 gem 'uglifier'
 
-gem 'unicorn'
 gem 'memcachier'
 
 group :production do
-#  gem 'heroku-deflater'
   gem 'rails_12factor'
+  gem 'unicorn'
+end
+
+group :development, :test do
+  gem 'faker'
 end
 
 group :development do
   gem 'thin'
 	gem 'rspec-rails'
 	gem 'annotate'
-	gem 'faker'
   gem 'better_errors'   
   gem 'binding_of_caller'
   gem 'meta_request'
+  gem 'sextant'
   #gem 'sql-logging'
   #gem 'rack-mini-profiler'
   #gem 'debugger'
@@ -74,4 +75,5 @@ group :test do
 	gem 'launchy'
 	gem 'selenium-webdriver'
 	gem 'simplecov', :require => false
+  gem 'database_cleaner'
 end

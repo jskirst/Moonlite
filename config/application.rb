@@ -39,6 +39,8 @@ module Metabright
 
     config.i18n.load_path += Dir[Rails.root.join("config/carmen.yml")]
 
+    config.i18n.enforce_available_locales = true
+
     config.action_mailer.default_url_options = { host: "www.metabright.com" }
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.raise_delivery_errors = true

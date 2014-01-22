@@ -63,7 +63,6 @@ module RequestsHelper
     until yield(block) do
       sleep(0.1)
       if waited(start) > max_wait
-        puts "Waiting #{max_wait} seconds for #{event}..."
         raise "#{event} timed out."
       end
     end

@@ -16,7 +16,7 @@ describe "Challenge" do
       find("#launch_button").click
     end
       
-    it "should display creative response and tasks", js: true do
+    it "should display creative response and tasks" do
       expect_content "Arena"
       expect_content "Creative Response"
       expect_content "Tasks"

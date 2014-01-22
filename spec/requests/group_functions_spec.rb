@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Group Functions", js: true do
+describe "Group Functions" do
   before :each do
     init_metabright
   end
@@ -59,7 +59,7 @@ describe "Group Functions", js: true do
     expect_content(@user.name)
   end
 
-  it "should be able to create a trial group", js: true do
+  it "should be able to create a trial group" do
     visit trial_groups_path
 
     fill_in "group_name", with: "My Blog"
@@ -126,7 +126,7 @@ describe "Group Functions", js: true do
       expect_content("New Job")
     end
     
-    it "should be able to submit an Evaluation", js: true do
+    it "should be able to submit an Evaluation" do
       group_path = FactoryGirl.create(:path_with_tasks, group_id: @group.id)
       path = FactoryGirl.create(:path_with_tasks)
       selected_paths = {path.id => true, group_path.id => true}
