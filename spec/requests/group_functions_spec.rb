@@ -144,7 +144,6 @@ describe "Group Functions" do
       find("input[descriptor=save-evaluation-button]").click
       
       find(".challenge_holder").first('a').click
-      start_cli
       12.times do |i|
         first('.answer_content').click
         click_on "Next"
