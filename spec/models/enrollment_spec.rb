@@ -31,7 +31,7 @@ describe Enrollment do
       
       enrollment.calculate_metascore
       enrollment.reload
-      enrollment.metascore.should == 0
+      enrollment.metascore.should == 300
     end
     
     it "all wrong, expert difficulty" do
@@ -47,7 +47,7 @@ describe Enrollment do
       
       enrollment.calculate_metascore
       enrollment.reload
-      enrollment.metascore.should == 0
+      enrollment.metascore.should == 300
     end
     
     it "easy difficulty" do
@@ -65,7 +65,7 @@ describe Enrollment do
       
       enrollment.calculate_metascore
       enrollment.reload
-      enrollment.metascore.should == 477
+      enrollment.metascore.should == 764
     end
     
     it "expert difficulty" do
@@ -74,7 +74,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 554
+      enrollment.metascore.should == 850
     end
     
     it "mixed difficulty" do
@@ -84,7 +84,7 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 517
+      enrollment.metascore.should == 850
     end
     
     it "mixed difficulty and score" do
@@ -97,7 +97,39 @@ describe Enrollment do
       enrollment = @user.enrollments.where(path_id: @path.id).first
       
       enrollment.calculate_metascore
-      enrollment.metascore.should == 496
+      enrollment.metascore.should == 808
+    end
+    it "half right half wrong, mixed difficulty" do
+      t1 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      t2 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EXPERT)
+      t3 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      t4 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EXPERT)
+      
+      complete_task(t1, @user, 0)
+      complete_task(t2, @user, 0)
+      complete_task(t3, @user, 100)
+      complete_task(t4, @user, 100)
+      
+      enrollment = @user.enrollments.where(path_id: @path.id).first
+      
+      enrollment.calculate_metascore
+      enrollment.metascore.should == 412
+    end
+    it "three right one wrong, mixed difficulty" do
+      t1 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EASY)
+      t2 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::EXPERT)
+      t3 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::HARD)
+      t4 = FactoryGirl.create(:multiple_choice_task, path: @path, section: @section, creator: @path.user, difficulty: Task::MEDIUM)
+      
+      complete_task(t1, @user, 0)
+      complete_task(t2, @user, 100)
+      complete_task(t3, @user, 100)
+      complete_task(t4, @user, 100)
+      
+      enrollment = @user.enrollments.where(path_id: @path.id).first
+      
+      enrollment.calculate_metascore
+      enrollment.metascore.should == 617
     end
   end
 end
