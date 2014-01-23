@@ -666,33 +666,26 @@ body.employer .container.body { width: inherit; background-color: transparent; p
     .image_box, .text_box { display: inline-block; vertical-align: top; }
   }
   .body{
-    h4 {font-size: 20px; text-align: center; margin: 20px 10px;}
-    p {font-size: 15px;}
+    text-align: center;
     
-    table {
-      margin: 25px auto -35px;
-      text-align: left;
-
-      tr.tiles {
-        td {
-          width:125px;
-          height: 105px;
-          padding: 5px 5px 25px 0;
-          display: inline-block; 
-          margin-right: 60px;
-          margin-bottom: 40px;
-
-          &:nth-child(4){ margin-right: 0; }
-          .details { 
-            h4 { font: 500 12px 'Helvetica Neue', Helvetica, Arial, sans-serif; line-height: 10%; margin: 9px 10px 10px 10px; }
-            text-align: center; 
-          }
-          img { 
-            height: 130px; 
-            width: 130px;
-          }
-        }
-      }
+    h3 {font-size: 24px;}
+    h4 {font-size: 20px; margin: 20px 10px;}
+    p {font-size: 18px; margin: 6px 0;}
+    
+    .success-box {
+      border: 4px solid $employer_green; 
+      border-radius: 4px; 
+      background-color: $employer_green_light;
+      padding: 0 10px;
+      margin: 20px 30px;
+      
+      p { font-size: 18px; margin: 20px 10px; line-height: 22px;}
+    }
+    .submit_button_big {
+      margin: 20px auto 0;
+      width: 31%;
+      display: block;
+      float: none;
     }
   }
 
