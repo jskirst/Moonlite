@@ -20,5 +20,5 @@
       .content
         %p{ style: "margin-bottom: 10px;"}= event.content
         %p
-          = link_to event.action_text, event.link
+          = link_to event.action_text, profile_path(event.username)
       .clear_floats

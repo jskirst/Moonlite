@@ -44,9 +44,9 @@ class PathsController < ApplicationController
     @hide_background = true
     @path = Path.new
     name = params[:path][:name]
-    @exact_path = Path.find_by_name(name)    
+    @exact_path = Path.where(group_id: nil).where(name: name).first
     unless params[:skip]
-      @similar_paths = Path.where("name ILIKE ?", "%#{name}%")
+      @similar_paths = Path.where("name ILIKE ?", "%#{name}%").where(group_id: nil)
     end
     if @exact_path or not @similar_paths.empty?
       render "new"
@@ -390,6 +390,7 @@ class PathsController < ApplicationController
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
       .where("paths.id = ?", @path.id)
+      
     if params[:submission]
       feed.submissions = feed.submissions.where("submitted_answers.id = ?", params[:submission])
     else

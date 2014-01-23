@@ -140,11 +140,9 @@ describe "Group Functions" do
       select "Afghanistan", from: "user_country"
       select "Balkh", from: "user_state"
       find("#user_city").set("San Francisco")
-      #find("input[descriptor=save-evaluation-button]").trigger("click")
       find("input[descriptor=save-evaluation-button]").click
       
       find(".challenge_holder").first('a').click
-      start_cli
       12.times do |i|
         first('.answer_content').click
         click_on "Next"

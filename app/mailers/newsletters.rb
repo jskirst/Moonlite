@@ -14,7 +14,7 @@ class Newsletters < ActionMailer::Base
       template_path: "newsletters",
       template_name: newsletter)
     @user.log_email(m)
-    puts "Really sent mail to: #{@user.email}"
+    #puts "Really sent mail to: #{@user.email}"
     return m
   end
 end

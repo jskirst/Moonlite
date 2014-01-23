@@ -27,14 +27,14 @@ class TasksController < ApplicationController
       end
 
       if @task.creative? and path.published? and path.approved? and path.group_id.nil?
-        UserEvent.create! do |ue|
-          ue.user = current_user
-          ue.path = path
-          ue.image_link = UserEvent.user_event_icon(:new_question)
-          ue.link = take_section_path(@task.section_id, task_id: @task.id)
-          ue.action_text = "Take #{current_user.name.split.first}'s new question."
-          ue.content = "#{current_user.name} added a new question to the #{path.name} Challenge."
-        end
+        # UserEvent.create! do |ue|
+        #   ue.user = current_user
+        #   ue.path = path
+        #   ue.image_link = UserEvent.user_event_icon(:new_question)
+        #   ue.link = take_section_path(@task.section_id, task_id: @task.id)
+        #   ue.action_text = "Take #{current_user.name.split.first}'s new question."
+        #   ue.content = "#{current_user.name} added a new question to the #{path.name} Challenge."
+        # end
       end
 
       if @task.source == "launchpad"
@@ -126,7 +126,7 @@ class TasksController < ApplicationController
       new_difficulty = current_path_difficulty(@path) + 0.07
       current_path_difficulty(@path, new_difficulty)
       if points > 0
-        #check_for_and_create_events(points, completed_task.enrollment)
+        check_for_and_create_events(points, completed_task.enrollment)
       end
     else
       session[:ssf] = 0
@@ -157,6 +157,7 @@ class TasksController < ApplicationController
     submitted_answer.submit!(completed_task, current_user, publish, params)
     
     if publish
+      check_for_and_create_events(100, completed_task.enrollment)
       redirect_to params[:submit_redirect_url]
     else
       redirect_to params[:draft_redirect_url]
