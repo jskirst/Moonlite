@@ -679,7 +679,8 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       padding: 0 10px;
       margin: 20px 30px;
       
-      p { font-size: 18px; margin: 20px 10px; line-height: 22px;}
+      img {width: 36px; display: inline; opacity: 0.85; position: relative; bottom: 2px;}
+      p { font-size: 18px; margin: 20px 10px; line-height: 22px; display: inline-block;}
     }
     .submit_button_big {
       margin: 20px auto 0;

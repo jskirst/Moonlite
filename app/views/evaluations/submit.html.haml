@@ -18,8 +18,9 @@
         %h3= @evaluation.company
     .body
       .success-box
-        %p Your application has been successfully submitted. If you're a good fit for the position, #{@evaluation.company} will reach out to you.
+        = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/big_check.png"
+        %p Your application has been successfully submitted to #{@evaluation.company}.
       %hr{ style: "margin-bottom: 10px;"}
-      %h3 Did you know MetaBright can help you find your next job or internship?
+      %h3 Did you know MetaBright lets you prove your professional credentials?
       %p Join thousands of people who use MetaBright to measure and showcase their skills.
-      = link_to "Unlock and View Your Profile", "#", class: "submit_button_big"
+      = link_to "View Your Private Profile", profile_path(current_user.username), class: "submit_button_big"
