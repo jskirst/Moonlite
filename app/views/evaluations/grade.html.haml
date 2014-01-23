@@ -87,23 +87,21 @@
                   - width = ((r[:ms_for_graph] - 300)/492.8 + (20/492.8)) * 100
                   %span.bar{ style: "width: #{width}%;"}
                 .ticks
-                  .big-hash
-                    |
-                  - 5.times do
-                    .small-hash 
-                      |
-                    .small-hash 
-                      |
-                    .small-hash 
-                      |
+                  - 6.times do
                     .big-hash 
                       |
-                .descriptors
-                  %span{ style: "margin-right: 7.7%;"} Unqualified
-                  %span{ style: "margin-right: 9.1%;"} Novice
-                  %span{ style: "margin-right: 7.3%;"} Familiar
-                  %span{ style: "margin-right: 6.1%;"} Competent
-                  %span{ style: "margin-right: 8.4%;"} Advanced
+                    .small-hash 
+                      |
+                    .small-hash 
+                      |
+                    .small-hash 
+                      |
+                .descriptors{ style: "margin-right: -3%;"}
+                  %span{ style: "margin-right: 5.3%;"} Unqualified
+                  %span{ style: "margin-right: 7%;"} Novice
+                  %span{ style: "margin-right: 4.9%;"} Familiar
+                  %span{ style: "margin-right: 3.8%;"} Competent
+                  %span{ style: "margin-right: 6.4%;"} Advanced
                   %span Expert
             .clear_floats
             .challenge_stats

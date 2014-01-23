@@ -256,12 +256,12 @@
     }
     .ticks {
       width: 100%;
-      margin-left: 3.2%;
+      margin-left: 3.1%;
       vertical-align: top;
       margin-top: -8px;
       
       .small-hash, .big-hash {
-        margin-right: 3.98%;
+        margin-right: 3.33%;
         &:last-child {margin-right: 0;}
       }
       .small-hash {
@@ -277,8 +277,7 @@
     }
     .descriptors {
       text-align: left;
-      margin-left: -3%;
-      margin-right: -4%;
+      margin-left: -1.8%;
       
       span {
         color: white;

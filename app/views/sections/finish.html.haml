@@ -32,7 +32,7 @@
           .metric
             .score= @enrollment.metascore
             .tip-below{ data: {tip: "This is your MetaScore. Your MetaScore ranges from 300 to 850 -- just like a credit score. To learn more about how MetaScores are calculated, click 'Learn more about these metrics.'"}}
-              %div{ class: "label #{@enrollment.describe_skill_level.downcase} finish-ms-tag"}= @enrollment.describe_skill_level
+              %div{ class: "label #{@enrollment.describe_skill_level.downcase} finish-ms-tag"}= @enrollment.describe_consumer_skill_level
           .metric{ style: "margin: 0 8px;"}
             .score= "#{@enrollment.metapercentile}%"
             %div

@@ -209,11 +209,9 @@
                       %span= enrollment.metascore
                       - if @user == current_user
                         .tip-below{ data: {tip: "This is your estimated skill level as calculated by MetaBright. Our algorithm analyzes many variables to reach this conclusion such as question difficulty, content topic, and your response speed. Question difficulty is dynamically calculated, so it's possible that MetaScores may slightly shift as question difficulties evolve. If you wish to hide this score, click the gear icon in the top right of this box."}}
-                          %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_skill_level
+                          %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_consumer_skill_level
                       - else
-                        %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_skill_level
-                      / .progress.progress-striped.progress-info.profileprog{ style: "height:10px; width:92px; margin:0;" }
-                      /   .bar{ style: "width: #{enrollment.level_percent}%;" }
+                        %div{ class: "label #{enrollment.describe_skill_level.downcase} skill-tag"}= enrollment.describe_consumer_skill_level
                   %table.table.overview
                     %tbody
                     %tr
@@ -238,26 +236,25 @@
                 .graph_space
                   .ms_graph
                     .progress.profileprog
-                      - width = ((enrollment.metascore - 300)/492.8 + (20/492.8)) * 100
+                      - width = ((enrollment.metascore - 300.0)/570.0 + (20.0/570.0)) * 100.0
                       %span.bar{ style: "width: #{width}%;"}
                     .ticks
-                      .big-hash
-                        |
-                      - 5.times do
-                        .small-hash 
-                          |
-                        .small-hash 
-                          |
-                        .small-hash 
-                          |
+                      - 6.times do
                         .big-hash 
                           |
+                        .small-hash 
+                          |
+                        .small-hash 
+                          |
+                        .small-hash 
+                          |
+                        
                     .descriptors
-                      %span{ style: "margin-right: 7.7%;"} Unqualified
-                      %span{ style: "margin-right: 9.1%;"} Novice
-                      %span{ style: "margin-right: 7.3%;"} Familiar
-                      %span{ style: "margin-right: 6.1%;"} Competent
-                      %span{ style: "margin-right: 8%;"} Advanced
+                      %span{ style: "margin-right: 7.2%;"} Beginner
+                      %span{ style: "margin-right: 7%;"} Novice
+                      %span{ style: "margin-right: 6.6%;"} Familiar
+                      %span{ style: "margin-right: 5.4%;"} Learned
+                      %span{ style: "margin-right: 6.2%;"} Advanced
                       %span Expert
                 .my_strengths
                   %h3 Strengths

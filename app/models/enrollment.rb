@@ -80,6 +80,24 @@ class Enrollment < ActiveRecord::Base
       return "Expert"
     end
   end
+  
+  def describe_consumer_skill_level() Enrollment.describe_consumer_skill_level(self.metascore) end
+  def self.describe_consumer_skill_level(metascore)
+    metascore = metascore.to_i
+    if metascore <= 392
+      return "Beginner"
+    elsif metascore > 392 and metascore <= 484
+      return "Novice"
+    elsif metascore > 484 and metascore <= 576
+      return "Familiar"
+    elsif metascore > 576 and metascore <= 668
+      return "Learned"
+    elsif metascore > 668 and metascore <= 760
+      return "Advanced"
+    elsif metascore > 760
+      return "Expert"
+    end
+  end
 
   def points_to_next_level() Enrollment.points_to_next_level(self.total_points) end
   def self.points_to_next_level(points)
@@ -166,7 +184,7 @@ class Enrollment < ActiveRecord::Base
       # Get percentage of old range
       y = (x / 160.0)
       # Multiply by new range
-      z = (y * 368.0).abs
+      z = (y * 368.0)
       # Add min of new range
       self.metascore = z + 392.0
     end
