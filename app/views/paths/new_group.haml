@@ -50,4 +50,16 @@
 
     
       %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
-        %button.submit_button{ form: "new_path", style: "float: none; margin-top: 15px;" } Create My Challenge
+        %button.submit_button{ onclick: "$('#new_path').submit();", form: "new_path", style: "float: none; margin-top: 15px;" } Create My Challenge
+        
+:javascript
+  $(function(){
+    $("#new_path").submit(function(){
+      if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
+        alert("You must enter a name for your Challenge and select an image.");
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });

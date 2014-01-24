@@ -10,7 +10,7 @@
         = f.text_area(:question, rows: 4, placeholder:"Question...")
         %span.help-block Add a snippet to your question. (Optional) 
         = f.text_area(:quoted_text, rows: 4, placeholder:"Snippet...")
-        %a.next.button.button-actionable{ style:"float:right; margin: 15px 0 -15px 0;" } Next
+        %a.next.submit_button{ style:"margin: 15px 0 -15px 0;" } Next
       .tips
         %h4 
           %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", style: "height:25px; width:25px;", alt: "Tip"}
@@ -56,8 +56,8 @@
         = f.text_field :resource_title
              
         %div{ style: "margin-top: 10px; margin-bottom: -10px;"}
-          %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;" } Back
-          %a.next.button.button-actionable{ style:"float:right;" } Next
+          %a.back.submit_button_standard{ style:"float:left; margin-bottom:10px;" } Back
+          %a.next.submit_button{ style: "margin-right: 2px;"} Next
           
     %div.step3.hide
       %fieldset{ style: "width: 98%; "}
@@ -76,13 +76,13 @@
           %span{style:" font-size:14px;"} Section: 
           %span{style:"font-weight:bold;font-size:14px;"} #{section.name}
         %h4{ style: "margin-bottom:5px;" } Ready to post?
-        %a.back.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;" } Back
-        = f.submit("Yes!", class: "button button-actionable", style: "float:right;")
+        %a.back.submit_button_standard{ style:"float:left; margin-bottom:10px;" } Back
+        = f.submit("Yes!", class: "submit_button")
     
     %div.step4.hide{ style: "width: 98%; "}
       %img{src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney_50x66.png", style:"height:45px; width: 40px;", alt: "Stoney"}
       %span{style:"position:relative; top:7px; font-size:35px;"} Nice work!
       %h4 Your question is now visible to the MetaBright community!
       %h4{ style: "margin-bottom:12px;" } You earn #{(Task::CREATOR_AWARD_POINTS+100).to_s} points every time you publish a question!
-      %a.restart.button.button-actionable{ style:"float:right; margin-bottom:10px; text-shadow:none;"} Create another question
-      %a.finish.button.button-standard{ style:"float:left; margin-bottom:10px; text-shadow:none; color:#333;"} Finish
+      %a.restart.submit_button{ style:"margin-bottom:10px;"} Create another question
+      %a.finish.submit_button_standard{ style:"float:left; margin-bottom:10px; "} Finish

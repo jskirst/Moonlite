@@ -84,7 +84,7 @@
             .graph_space{ style: "width: 558px; display: inline-block; float: right;"}
               .ms_graph
                 .progress.profileprog
-                  - width = ((r[:ms_for_graph] - 300)/492.8 + (20/492.8)) * 100
+                  - width = ((r[:ms_for_graph] - 300.0)/570.0 + (20.0/570.0)) * 100.0
                   %span.bar{ style: "width: #{width}%;"}
                 .ticks
                   - 6.times do
@@ -96,7 +96,7 @@
                       |
                     .small-hash 
                       |
-                .descriptors{ style: "margin-right: -3%;"}
+                .descriptors{ style: "margin-left: -3%;"}
                   %span{ style: "margin-right: 5.3%;"} Unqualified
                   %span{ style: "margin-right: 7%;"} Novice
                   %span{ style: "margin-right: 4.9%;"} Familiar
