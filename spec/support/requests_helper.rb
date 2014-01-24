@@ -1,5 +1,5 @@
 module RequestsHelper
-  def start_cli(attempt = nil)
+  def pause(attempt = nil)
     puts attempt if attempt
     puts "Waiting for command"
     command = ""
@@ -73,7 +73,7 @@ module RequestsHelper
     begin
       wait_until("Page has '#{str}'", 10){ page.has_content?(str) }
     rescue
-      start_cli("Expected '#{str}': #{$!}")
+      pause("Expected '#{str}': #{$!}")
       raise "Expected '#{str}': #{$!}"
     end
   end

@@ -143,12 +143,12 @@ describe "Group Functions" do
       find("input[descriptor=save-evaluation-button]").click
       
       find(".challenge_holder").first('a').click
+      sleep 4.0
       12.times do |i|
         first('.answer_content').click
         click_on "Next"
         sleep 0.25
       end
-
       3.times do
         find("#answer_input").set("Blah")
         click_on "Submit"
@@ -156,13 +156,12 @@ describe "Group Functions" do
       end
       
       find(".challenge_holder").first('a').click
-      
+      sleep 4.0
       12.times do |i|
         first('.answer_content').click
         click_on "Next"
         sleep 0.25
       end
-      
       3.times do
         find("#answer_input").set("Blah")
         click_on "Submit"
@@ -172,7 +171,7 @@ describe "Group Functions" do
       ActionMailer::Base.deliveries = []
       click_on "Submit"
       
-      expect_content "Your application has been successfully submitted."
+      expect_content "Your application has been successfully submitted"
       ActionMailer::Base.deliveries.size.should == 1
     end
     
