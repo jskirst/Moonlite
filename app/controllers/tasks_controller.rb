@@ -17,6 +17,12 @@ class TasksController < ApplicationController
     @task.reviewed_at = Time.now() if path.group_id
     @task.path_id = path.id
     
+    if @enable_administration
+      if params[:task][:professional].present?
+        @task.professional_at = params[:task][:professional].to_i == 1 ? Time.now : nil
+      end
+    end
+    
     if @task.save
       unless params[:stored_resource_id].blank?
         sr = StoredResource.find(params[:stored_resource_id])
