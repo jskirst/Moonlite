@@ -72,6 +72,12 @@ class TasksController < ApplicationController
       sr.owner_type = @task.class.to_s
       sr.save
     end
+    
+    if @enable_administration
+      if params[:task][:professional].present?
+        @task.professional_at = params[:task][:professional].to_i == 1 ? Time.now : nil
+      end
+    end
 
     @task.update_attributes(params[:task])
 

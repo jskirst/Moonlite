@@ -15,8 +15,11 @@
     - if params[:archived] and task.archived_at
       %span.label.label-inverse Archived Question
     %h5{ style: "margin: 5px 0 5px 15px;"} Question
-    %blockquote{ style: "margin-top:0px; width:77%;" }
+    %blockquote{ style: "margin-top:0px; width:77%; display: inline-block;" }
       %pre{ style:"word-break:normal;" }= task.question
+    - if @enable_administration and task.professional?
+      %div{ style: "width: 4%; vertical-align: top; display: inline-block;"}
+        = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/star.png"
     - if task.quoted_text
       %h5{ style: "margin: 5px 0 5px 15px;"} Quoted Text
       %blockquote{ style: "margin-top:0px; width:77%;" }
