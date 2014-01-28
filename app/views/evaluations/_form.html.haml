@@ -1,7 +1,3 @@
-:css
-  .aboutbox { border-radius: 0; }
-  .aboutcontainer { margin-top: 40px; width: 900px; }
-  
 :javascript
   $(function(){
     $(".checklist li").click(function(event) {
@@ -13,8 +9,8 @@
     })
   })
 
-#employer.aboutcontainer
-  #create_evaluation.aboutbox{ style: "padding: 8px; "}
+#employer.employer-container{ style: "margin-top: 40px; width: 900px;" }
+  #create_evaluation.employer-box{ style: "padding: 8px;" }
     %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
       %h1.title= form_title      

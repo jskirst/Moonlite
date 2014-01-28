@@ -1,15 +1,13 @@
 :css
   .container.body { width: inherit; }
-  .aboutcontainer{ width: 900px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
-  .aboutbox{ border-radius: 0; }
-  .aboutbox .header { margin-bottom: 10px;}
-  .aboutbox .header img { height: 100px; margin-top: -15px; }
-  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
-  .aboutbox .header hr { margin: 8px; }
-  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
-  .aboutbox table { width: 100%; }
-  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
-  .aboutbox table td a { font-size: 17px; color: #333; }
+  .employer-box .header { margin-bottom: 10px;}
+  .employer-box .header img { height: 100px; margin-top: -15px; }
+  .employer-box .header h2 { display: inline-block; font-size: 30px; }
+  .employer-box .header hr { margin: 8px; }
+  .employer-box .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
+  .employer-box table { width: 100%; }
+  .employer-box table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
+  .employer-box table td a { font-size: 17px; color: #333; }
   .dont_go {background-color: rgb(170,0,0); color: white; padding: 12px 20px; margin-bottom: 15px; }
   .dont_go ul { margin-top: 10px; }
 
@@ -18,8 +16,8 @@
     $('.textfill').textfill({ maxFontPixels: 30 });
   });
 
-#evaluations_index.aboutcontainer
-  .aboutbox
+#evaluations_index.employer-container{ style: "width: 900px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8);" }
+  .employer-box
     .header
       = image_tag STONEY_SMALL_URL, style:"", alt: "Stoney"
       %h2.textfill 

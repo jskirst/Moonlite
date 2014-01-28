@@ -1,14 +1,13 @@
 :css
   body.employer{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px; margin-bottom: 70px;}
   
 :javascript
   $(function(){
     $('.textfill').textfill({ maxFontPixels: 50 });
   });
 
-#employer.aboutcontainer
-  #take_evaluation.aboutbox
+#employer.employer-container{ style: "width: 900px; margin-bottom: 70px;" }
+  #take_evaluatione.employer-box
     .header
       .image_box
         = image_tag GIANT_STONEY, style: "height: 100px;"
@@ -23,4 +22,4 @@
       %hr{ style: "margin-bottom: 10px;"}
       %h3 Did you know MetaBright lets you prove your professional credentials?
       %p Join thousands of people who use MetaBright to measure and showcase their skills.
-      = link_to "View Your Private Profile", profile_path(current_user.username), class: "submit_button_big"
+      = link_to "View Your Private Profile", profile_path(current_user.username), class: "submit_button_big"}

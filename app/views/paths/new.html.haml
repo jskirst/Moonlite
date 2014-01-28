@@ -1,9 +1,5 @@
-:css
-  .aboutcontainer{ width: 900px; margin-top: 35px;}
-
-
-#employer.aboutcontainer
-  .aboutbox{ style: "padding: 8px;"}
+#employer.employer-container{ style: "width: 900px; margin-top: 35px;" }
+  .employer-box{ style: "padding: 8px;"}
     %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
       %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create a Challenge
@@ -16,11 +12,8 @@
             %div.control-group
               %div.controls
                 = f.text_field :name, autofocus: "autofocus", style: "padding: 20px; width: 500px; font-size: 28px; line-height: 36px; text-align: center;", placeholder: "Something awesome..."
-            
-            - if @group
-              %p Create a challenge.
-            
-            - elsif @exact_path
+
+            - if @exact_path
               %h4 Uh oh! Someone has already made that Challenge.
               %h5 Don't worry, you can still contribute to the #{@exact_path.name} Challenge.
               %div

@@ -1,8 +1,5 @@
 :css
-  .container.body {width: 1040px;   }
-  .aboutbox{ border-radius: 0; }
-  .aboutbox .header { margin-bottom: 10px; }
-  .aboutcontainer{ width: 1040px; background-color:rgba(36, 72, 109, 0.8); margin-top: 40px; border-radius: 0;  }
+  .container.body {width: 1040px;}
   [data-tip]:before { left: 4px; }
   [data-tip]:after { left: -50px; }
   .no_data {display: inline-block;}
@@ -12,9 +9,9 @@
   .challenge_image_tt [data-tip]:after { left: -2px; }
   .body tbody tr:hover { background-color: #EEE; }
 
-#evaluation_manager.aboutcontainer
-  %div.aboutbox{ style: "background-color: white; padding:8px;" }
-    .header
+#evaluation_manager.employer-container{ style: "background-color:rgba(36, 72, 109, 0.8); margin-top: 40px;" }
+  .employer-box{ style: "background-color: white; padding:8px;" }
+    .header{ style: "margin-bottom: 10px;" }
       .controls
         = link_to group_evaluations_path(@group) do
           %div{ "data-tip" => "Back" }

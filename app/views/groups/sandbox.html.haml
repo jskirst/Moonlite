@@ -1,18 +1,16 @@
 :css
-  .aboutcontainer{ width: 900px; margin-top: 35px;}
-  .aboutbox .header { margin-bottom: 10px;}
-  .aboutbox .header img { height: 72px; margin-top: -15px; }
-  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
-  .aboutbox .header hr { margin: 8px; }
+  .employer-box .header { margin-bottom: 10px;}
+  .employer-box .header img { height: 72px; margin-top: -15px; }
+  .employer-box .header h2 { display: inline-block; font-size: 30px; }
+  .employer-box .header hr { margin: 8px; }
   .documentation { padding: 10px 20px; }
   .documentation pre { font-family: Menlo, monospace; font-size: 14px; padding: 10px; margin: 20px 10px; }
   #api_result h1 { font-size: 22px; }
   #api_result img { width: 40px; height: 40px; margin: 10px; }
   h3 { font-size: 22px; margin-bottom: 10px; }
-  .aboutcontainer{ width: 900px; margin-top: -30px; border-radius: 0; }
   
-#employer.aboutcontainer
-  .aboutbox
+#employer.employer-container{ style: "width: 900px; margin-top: -30px; border-radius: 0;" }
+  .employer-box
     .header
       %img{ src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
       %h2 Developer API
