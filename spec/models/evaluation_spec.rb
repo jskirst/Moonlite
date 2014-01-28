@@ -40,9 +40,9 @@ describe Evaluation do
       @eval = @group.evaluations.first
       @ep = @eval.evaluation_paths.first 
       @path = @eval.paths.first
-      @core_tasks = @ep.path.tasks.where(answer_type: Task::MULTIPLE).first(EvaluationPath::CORE_LIMIT)
+      @core_tasks = @ep.path.tasks.where(answer_type: Task::MULTIPLE).order("id ASC").to_a
       @core_tasks.size.should > 0
-      @creative_tasks = @ep.path.tasks.where(answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT).first(EvaluationPath::CORE_LIMIT)
+      @creative_tasks = @ep.path.tasks.where(answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT).order("id ASC").to_a
       @creative_tasks.size.should > 0
     end
 

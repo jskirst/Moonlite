@@ -1,7 +1,4 @@
 class EvaluationPath < ActiveRecord::Base
-  CORE_LIMIT = 25
-  CREATIVE_LIMIT = 4
-
   attr_accessible :evaluation_id,
     :path_id
   
@@ -12,20 +9,32 @@ class EvaluationPath < ActiveRecord::Base
 
   def select_tasks
     if path.group_id
-      core_limit = 1000
-      creative_limit = 1000
+      core_ids = core_tasks.pluck(:id)
+      creative_ids = creative_tasks.pluck(:id)
     else
-      core_limit = CORE_LIMIT
-      creative_limit = CREATIVE_LIMIT
+      core_ids = core_tasks_with_difficulty(Task::EXPERT, 2.0).limit(4).pluck(:id)
+      core_ids += core_tasks_with_difficulty(Task::HARD, Task::EXPERT).limit(8 - core_ids.size).pluck(:id)
+      core_ids += core_tasks_with_difficulty(Task::MEDIUM, Task::HARD).limit(14 - core_ids.size).pluck(:id)
+      core_ids += core_tasks_with_difficulty(0, Task::MEDIUM).limit(20 - core_ids.size).pluck(:id)
+      creative_ids = creative_tasks.limit(4).pluck(:id)
     end
+    task_id_ary = (core_ids.to_a + creative_ids.to_a).sort
+    self.task_ids = task_id_ary.join(",")
+  end
 
-    ids = path.tasks.where(answer_type: Task::MULTIPLE)
-      .first(core_limit)
-      .collect(&:id)
-    ids += path.tasks.where(answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT)
-      .first(creative_limit)
-      .collect(&:id)
+  def tasks_with_difficulty(tasks, lower_bound, upper_bound)
+    tasks.where("difficulty >= ? and difficulty < ?", lower_bound, upper_bound)
+  end
 
-    self.task_ids = ids.join(",")
+  def core_tasks_with_difficulty(lower_bound, upper_bound)
+    tasks_with_difficulty(core_tasks, lower_bound, upper_bound)
+  end
+
+  def core_tasks
+    path.tasks.where(answer_type: Task::MULTIPLE).where.not(professional_at: nil)
+  end
+
+  def creative_tasks
+    path.tasks.where(answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT).where.not(professional_at: nil)
   end
 end
