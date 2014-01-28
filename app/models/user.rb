@@ -198,7 +198,7 @@ class User < ActiveRecord::Base
     end
     user.save!
     user.user_auths.create!(provider: auth["provider"], uid: auth["uid"])
-    review_submitted_answers
+    user.review_submitted_answers
     return user
   end
   
