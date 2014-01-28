@@ -44,6 +44,8 @@ describe Evaluation do
       @core_tasks.size.should > 0
       @creative_tasks = @ep.path.tasks.where(answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT).order("id ASC").to_a
       @creative_tasks.size.should > 0
+      @user = FactoryGirl.create(:user)
+      @e = @user.enroll!(@path)
     end
 
     describe ".task_of_type" do
@@ -58,28 +60,21 @@ describe Evaluation do
 
     describe ".next_task_of_type" do
       it "should return all tasks" do
-        user = FactoryGirl.create(:user)
-        @eval.next_task_of_type(user, @path, [Task::MULTIPLE, Task::EXACT]).should == @core_tasks.first
+        @eval.next_task_of_type(@user, @path, [Task::MULTIPLE, Task::EXACT]).should == @core_tasks.first
       end
 
       it "should return all except for completed task" do
-        user = FactoryGirl.create(:user)
-        user.completed_tasks.create! do |ct|
+        @user.completed_tasks.create! do |ct|
           ct.task_id = @core_tasks.first.id
           ct.status_id = Answer::CORRECT
           ct.answer = "Blah"
-          ct.enrollment_id = user.enroll!(@path).id
+          ct.enrollment_id = @e.id
         end
-        @eval.next_task_of_type(user, @path, [Task::MULTIPLE, Task::EXACT]).should == @core_tasks[1]
+        @eval.next_task_of_type(@user, @path, [Task::MULTIPLE, Task::EXACT]).should == @core_tasks[1]
       end
     end
 
     describe ".next_task" do
-      before :each do
-        @user = FactoryGirl.create(:user)
-        @e = @user.enroll!(@path)
-      end
-
       it "should return first core task" do
         resp = @eval.next_task(@user, @path)
         resp[:next_task].should == @core_tasks.first
@@ -98,7 +93,6 @@ describe Evaluation do
 
       describe "for creative tasks" do
         before :each do 
-          @user = FactoryGirl.create(:user)
           @core_tasks.each do |t|
             @user.completed_tasks.create! do |ct|
               ct.task_id = t.id

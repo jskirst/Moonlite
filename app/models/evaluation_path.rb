@@ -37,4 +37,12 @@ class EvaluationPath < ActiveRecord::Base
   def creative_tasks
     path.tasks.where(answer_type: Task::CREATIVE, answer_sub_type: Task::TEXT).where.not(professional_at: nil)
   end
+
+  def collect_existing_task_ids
+    evaluation.evaluation_enrollments.collect{ |ee|
+      ee.user.completed_tasks.joins(:task)
+        .where("tasks.path_id = ?", path_id)
+        .pluck("tasks.id")
+    }.flatten.map(&:to_s).uniq
+  end
 end
