@@ -1,6 +1,7 @@
 class EvaluationExport < Prawn::Document
   def initialize(evaluation_enrollment, view)
     super()
+    @group = evaluation_enrollment.group
     @evaluation_enrollment = evaluation_enrollment
     @view = view    
     @user = @evaluation_enrollment.user
@@ -13,6 +14,7 @@ class EvaluationExport < Prawn::Document
       @results << @view.extract_enrollment_details(enrollment)
     end
     brand
+    powered_by
     title
     @results.each do |r|
       path(r)
@@ -24,18 +26,18 @@ class EvaluationExport < Prawn::Document
     repeat :all do
       canvas do
         bounding_box [bounds.left, bounds.bottom + 50], :width  => bounds.width, :height => 50, :padding => 12 do
-          text_box "MetaBright candidate skill assessment of #{@user.name}.",
+          text_box "Candidate skill assessment of #{@user.name}.",
             :size => 8,
             :width => 600,
             :align => :left,
             :text_color => "333333",
             :at => [20, 25]
-          text_box "www.MetaBright.com",
+          text_box " Powered by: http://www.MetaBright.com",
             :size => 8,
-            :width => 100,
+            :width => 200,
             :align => :right,
             :text_color => "333333",
-            :at => [495, 25]
+            :at => [395, 25]
             
         end
       end
@@ -43,19 +45,42 @@ class EvaluationExport < Prawn::Document
   end
 
   def brand
-    image "#{Rails.root}/app/assets/images/MB+logo+less+white+space.png",
-    :width => 200,
+    unless @group.image_url.nil?
+      image @group.image_url,
+      :fit => [250,100],
+      :position => :center
+    end
+  end
+  
+  def powered_by
+    move_down 15
+    image "#{Rails.root}/app/assets/images/powered_by_metabright_300_wide.png",
+    :width => 100,
     :position => :center
   end
 
   def title
     move_down 10
-    text_box @user.name, size: 16, at: [ 0, 658]
-    text @user.email, align: :right, size: 11
     if @user.country
       country = Carmen::Country.coded(@user.country)
       location = "#{@user.city}, #{country.subregions.coded(@user.state).name}, #{country.name}"
-      text location, align: :right, size: 11
+    end
+    contents = [
+      [{ content: @user.name, rowspan: 2 }, @user.email],
+      [
+        location,
+      ]
+    ]
+    table contents do
+      columns(0).align = :left
+      columns(0).valign = :bottom
+      columns(1).align = :right
+      columns(0).size = 16
+      columns(1).size = 11
+      columns(0).width = 255
+      columns(1).width = 285
+      columns(0..1).padding = 1
+      columns(0..1).border_colors = ("ffffff")
     end
     stroke_horizontal_rule
   end
