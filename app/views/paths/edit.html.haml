@@ -103,7 +103,7 @@
         %h1.editable{ style: "margin:0px;", title: "Click to edit" }= @path.name
       - if @path.group_id
         .floatr
-          .controls{ style: "position: relative; top: 87px;"}
+          .controls{ style: "margin-top: 25px;"}
             %div{ "data-tip" => "Back" }
               = link_to "#", onclick: "history.back(); return false" do
                 = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png", class: "gear medium"

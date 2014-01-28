@@ -40,8 +40,8 @@ class Task < ActiveRecord::Base
   EXPERT = 1.75
   DIFFICULTY_TYPES = { EASY => "Easy", MEDIUM => "Medium", HARD => "Hard", EXPERT => "Expert" }
   
-  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :exact1, :topic_name
-  attr_protected :archived_at
+  attr_accessor :source, :answer_content, :stored_resource_id, :answer_new_1, :answer_new_2, :answer_new_3, :answer_new_4, :exact1, :topic_name, :professional
+  attr_protected :archived_at, :professional
   attr_accessible :question,
     :answer_type, 
     :answer_sub_type,
@@ -142,6 +142,8 @@ class Task < ActiveRecord::Base
     end
     return errors
   end
+  
+  def professional?() professional_at.nil? ? false : true end
   
   def correct_answer() answers.where(is_correct: true).first end
   def total_answers() total_answers = answers.sum(:answer_count) end

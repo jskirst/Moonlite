@@ -129,7 +129,7 @@
           .control-group
             %label.control-label Source URL
             .controls
-              = f.text_field :resource, placeholder: "Optional, but suggested..."           
+              = f.text_field :resource, placeholder: "Optional, but suggested..." 
           .control-group 
             %label.control-label Source Description
             .controls
@@ -145,7 +145,7 @@
           .control-group
             %label.control-label Position
             .controls
-              = f.text_field :position                
+              = f.text_field :position
           - unless @topics.empty?
             .control-group
               %label.control-label Topic
@@ -156,7 +156,12 @@
           .control-group
             %label.control-label Other Topic
             .controls
-              = f.text_field :topic_name        
+              = f.text_field :topic_name
+          .control-group
+            %label.control-label Professional?
+            .controls
+              = f.check_box :professional, checked: task.professional?
+          
 - if new_task or task.creative?
   :javascript
     var editor = ace.edit("#{template_id}");

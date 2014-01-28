@@ -375,6 +375,7 @@ ActiveRecord::Schema.define(version: 20140128122445) do
     t.integer  "topic_id"
     t.integer  "path_id"
     t.decimal  "difficulty",         default: 0.0
+    t.datetime "professional_at"
   end
 
   add_index "tasks", ["section_id"], name: "index_tasks_on_section_id", using: :btree
