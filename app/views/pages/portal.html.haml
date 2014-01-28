@@ -1,6 +1,6 @@
-#employer.employer-container{ style: "margin: 140px auto 15px; width: 550px;" }
+.employer-container{ style: "margin: 140px auto 15px; width: 550px;" }
   = render "modals/search_edu"
-  #organization_portal.aboutbox
+  #organization_portal.employer-box{ style: "min-height: 200px;" }
     .header{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 72px; display: inline; vertical-align: middle", alt: "Stoney"
       %h1{ style: "display: inline; vertical-align: middle; font-size:25px;" }= @group.name

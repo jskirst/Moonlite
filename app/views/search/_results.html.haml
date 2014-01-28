@@ -1,12 +1,9 @@
 :css
   .form-horizontal li.controls { margin-left: 155px; }
-  .aboutbox{ border-radius: 0; }
-  .aboutbox .header { margin-bottom: 10px; }
-  .aboutcontainer{ width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: -35px; border-radius: 0;  }
 
-#search.aboutcontainer
-  .aboutbox
-    .header
+#search.employer-container{ style: "width: 950px; background-color:rgba(36, 72, 109, 0.8); margin-top: -35px; border-radius: 0;" }
+  .employer-box
+    .header{ style: "margin-bottom: 10px;" }
       .button.button_standard{ onclick: "$('#results').hide();$('#search').show();" } Back
       .pull-right #{@results[:users].size} Results
     .body

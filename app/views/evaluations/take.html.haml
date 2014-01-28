@@ -1,6 +1,5 @@
 :css
   body.employer{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-  .aboutcontainer{ width: 900px;}
   p { margin-top: 5px; }
 
 :javascript
@@ -14,8 +13,8 @@
     = link_to "Back to Evaluations Overview", group_evaluations_url(@admin_group), class: "submit_button"
     .clear_floats
 
-#employer.aboutcontainer
-  #take_evaluation.aboutbox
+#employer.employer-container{ style: "width: 900px;" }
+  #take_evaluation.employer-box
     .header
       %h1.textfill.take_eval
         %span= @evaluation.title

@@ -1,12 +1,10 @@
 :css
   .container.body { padding: 0; background-color: transparent;   }
-  .aboutcontainer{ width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:42px;}
-  .aboutbox { border-radius: 0; padding: 20px; }
   .errors { color: red; font-size: 17px; }
 
-#order_confirmation.aboutcontainer
-  .aboutbox
-    .aboutheader
+#order_confirmation.employer-container{ style: "width: 760px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:42px;" }
+  .employer-box{ style: "border-radius: 0; padding: 20px;" }
+    .header
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       .text{ style: ""}
         - if @was_trial

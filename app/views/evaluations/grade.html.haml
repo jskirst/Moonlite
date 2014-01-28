@@ -12,7 +12,6 @@
 
 :css
   .container.body {width: 980px; }
-  .aboutcontainer{ width: 980px; margin-top: 40px; border-radius: 0; }
   .header { margin: 0 0 20px 0; }
   [data-tip]:before { left: 7px; }
   [data-tip]:after { left: -17px; }
@@ -23,8 +22,8 @@
   .ms [data-tip]:after { width: 276px; height: 143px; top: 23px; left:-20px; white-space: normal;}
   .ms [data-tip]:before { left: 3px; }
   
-#evaluations_overview.aboutcontainer
-  #grade.aboutbox
+#evaluations_overview.employer-container{ style: "width: 980px; margin-top: 40px;" }
+  #grade.employer-box
     .header
       %div
         = image_tag @user.picture, style:"display:inline; height:61px;", alt: "Stoney"

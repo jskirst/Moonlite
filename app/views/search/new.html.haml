@@ -27,24 +27,24 @@
   
 :css
   .container.body { width: inherit; background-color: transparent;  padding: 0px; }
-  .aboutcontainer{ width: 980px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8); }
-  .aboutbox{ min-height: 600px; border-radius: 0; }
-  .aboutbox .header { margin-bottom: 10px;}
-  .aboutbox .header img { height: 72px; margin-top: -15px; }
-  .aboutbox .header h2 { display: inline-block; font-size: 30px; }
-  .aboutbox .header hr { margin: 8px; }
-  .aboutbox .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
-  .aboutbox table { width: 100%; }
-  .aboutbox table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
-  .aboutbox table td a { font-size: 17px; color: #333; }
+  
+  .employer-box { min-height: 600px; border-radius: 0; }
+  .employer-box .header { margin-bottom: 10px;}
+  .employer-box .header img { height: 72px; margin-top: -15px; }
+  .employer-box .header h2 { display: inline-block; font-size: 30px; }
+  .employer-box .header hr { margin: 8px; }
+  .employer-box .header input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
+  .employer-box table { width: 100%; }
+  .employer-box table td { padding: 15px 10px; border-bottom: 1px solid #DDD; line-height: 25px;}
+  .employer-box table td a { font-size: 17px; color: #333; }
   .evaluations tr:hover { background-color: #EEE; }
   .aboutbox .invite { border-radius: 0; padding: 6px 6px; font-size: 15px; margin: 4px 0 4px -8px; }
   .documentation { padding: 10px 20px; }
   .container .body { padding: 0; }
   .form-horizontal li.controls { margin-left: 155px; }
   
-#search.aboutcontainer
-  .aboutbox
+#search.employer-container{ style: "width: 980px; border-radius: 0px; margin: 25px auto 0 auto; background-color: rgba(36, 72, 109, 0.8);" }
+  .employer-box
     .header
       %div{ style: "padding: 15px 15px 0 15px;"}
         = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
