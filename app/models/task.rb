@@ -97,6 +97,10 @@ class Task < ActiveRecord::Base
       t = Topic.create!(name: topic_name, path_id: path.id) unless t
       self.topic_id = t.id
     end
+
+    if path.group_id
+      self.professional_at = Time.now
+    end
   end
   
   after_create do

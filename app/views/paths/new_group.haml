@@ -55,7 +55,7 @@
 :javascript
   $(function(){
     $("#new_path").submit(function(){
-      if($("#stored_resource_id").val() == "" || $("path_name").val() == ""){
+      if(($("#stored_resource_id").val() == "" && $("#path_image_url").val() == "") || $("path_name").val() == ""){
         alert("You must enter a name for your Challenge and select an image.");
         return false;
       } else {
