@@ -131,7 +131,14 @@ FactoryGirl.define do
     
     factory :group_with_evaluation do
       after(:create) do |g|
-        path = create(:path_with_tasks, group_id: g.id)
+        path = FactoryGirl.create(:path_with_tasks)
+        eval = Evaluation.create! do |e|
+          e.user = g.creator
+          e.group = g
+          e.company = "My Company"
+          e.title = "My Open Position"
+          e.selected_paths = { path.id => true }
+        end
       end
     end
   end

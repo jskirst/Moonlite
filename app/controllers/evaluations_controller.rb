@@ -149,7 +149,6 @@ class EvaluationsController < ApplicationController
     @show_footer = false
     @show_feedback = false
     @path = @evaluation.paths.find(params[:path_id])
-    difficulty = current_path_difficulty(@path)
     unless @enrollment = current_user.enrolled?(@path)
       @enrollment = current_user.enroll!(@path)
     end
@@ -157,7 +156,7 @@ class EvaluationsController < ApplicationController
       current_user.enroll!(@evaluation)
     end
     
-    next_task = @evaluation.next_task(current_user, @path, difficulty)
+    next_task = @evaluation.next_task(current_user, @path)
     if next_task
       @task = next_task[:next_task] 
     end
