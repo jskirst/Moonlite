@@ -18,7 +18,7 @@
         %p When your profile is private, no one but you can view your profile. Your high scores and Creative Response answers are also hidden. People who want to follow you are unable to do so. 
         %p To get the most out of MetaBright, we recommend setting your profile to be public.
         %div{ style: "margin-top: 20px;" }
-          = link_to "Make My Profile Public", "#", class: "submit_button_green_big", style: "float: none;"
+          = link_to "Make My Profile Public", publicize_user_path(current_user.username), class: "submit_button_green_big", style: "float: none;"
   - if @user == current_user && current_user.guest_user?
     .help_box
       :javascript

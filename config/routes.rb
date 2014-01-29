@@ -16,6 +16,7 @@ Metabright::Application.routes.draw do
 	    patch :notifications
 	    get :professional
 	    patch :professional
+      get :publicize
 	  end
 	end
 	get '/users/subregion' => 'users#subregion', as: "subregion_users"

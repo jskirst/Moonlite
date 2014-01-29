@@ -608,24 +608,27 @@ body{background-image: url('https://s3.amazonaws.com/moonlite-nsdub/static/easte
   margin-left:auto;
   margin-right:auto;
   margin-top: 130px; 
-  background: $employer_blue; 
+  background: $employer_blue;
+  border-radius: 8px; 
   
   .quizspace {
     background-color:white; 
-    margin:12px; 
+    margin:5px; 
     border:1px solid rgba(0, 0, 0, .1);
     overflow:hidden; 
     padding:12px;
+    border-radius: 4px;
     
     button{float:right;}
   }
   .CRquizspace { 
     background-color:white; 
-    margin:12px; 
+    margin:5px; 
     border:1px solid rgba(0, 0, 0, .1);
     overflow:hidden; 
     padding:12px; 
     min-height:300px;
+    border-radius: 4px;
   }
 }
 #progressbar{width:632px; height: 40px; margin: 0 auto;}

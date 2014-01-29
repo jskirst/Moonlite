@@ -8,12 +8,12 @@
   });
 
 - if current_user and @admin_group
-  .alert-preview.green{ style: "margin: 75px auto -70px auto; width: 450px;"}
+  .alert-preview.green{ style: "margin: 60px auto -70px auto; width: 450px;"}
     %p You are viewing this Evaluation in preview mode.
     = link_to "Back to Evaluations Overview", group_evaluations_url(@admin_group), class: "submit_button"
     .clear_floats
 
-#employer.employer-container{ style: "width: 900px;" }
+.employer-container{ style: "width: 900px; margin-top: 75px;" }
   #take_evaluation.employer-box
     .header
       %h1.textfill.take_eval

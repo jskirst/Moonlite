@@ -56,6 +56,16 @@ class UsersController < ApplicationController
       flash[:success] = "Your notification settings have been saved. Rock on."
     end
   end
+
+  def publicize
+    current_user.update_attribute(:private_at, nil)
+    current_user.enrollments.each do |e|
+      if e.path.group_id.nil?
+        e.update_attribute(:private_at, nil)
+      end
+    end
+    redirect_to profile_path(current_user.username)
+  end
   
   def privatize
     enrollment = current_user.enrollments.where(id: params[:enrollment_id]).first
