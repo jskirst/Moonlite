@@ -440,13 +440,14 @@ body.employer .container.body { width: inherit; background-color: transparent; p
 
 
 #order_confirmation { 
-  .aboutheader {
-    padding: 6px 0 0 15px;
+  .header {
+    margin-bottom: 5px;
     
     .text {
       display: inline-block; 
       vertical-align: top; 
-      margin-top: 48px;
+      margin-top: 28px;
+      margin-left: 8px;
       
       h1 {
         font-size: 50px;
@@ -455,7 +456,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       }
     }
     img { 
-      height: 140px;
+      height: 95px;
       vertical-align: baseline;
     }
   }
