@@ -245,6 +245,11 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       margin-top: 35px;
       float: right;
       
+      a {
+        &:hover {text-decoration: none;}
+        img { height: 25px;}
+      }
+      
       .submitted_at {
         font-size: 13px; 
         margin-right: 10px; 
