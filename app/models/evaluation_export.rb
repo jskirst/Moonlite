@@ -14,7 +14,6 @@ class EvaluationExport < Prawn::Document
       @results << @view.extract_enrollment_details(enrollment)
     end
     brand
-    powered_by
     title
     @results.each do |r|
       path(r)
@@ -45,18 +44,19 @@ class EvaluationExport < Prawn::Document
   end
 
   def brand
-    unless @group.image_url.nil?
-      image @group.image_url,
+    if @group.image_url.nil? or @group.image_url == ""
+      image "#{Rails.root}/app/assets/images/MB+logo+less+white+space.png",
       :fit => [250,100],
       :position => :center
+    else
+      image open("#{@group.image_url}"),
+      :fit => [250,100],
+      :position => :center
+      move_down 15
+      image "#{Rails.root}/app/assets/images/powered_by_metabright_300_wide.png",
+      :width => 100,
+      :position => :center
     end
-  end
-  
-  def powered_by
-    move_down 15
-    image "#{Rails.root}/app/assets/images/powered_by_metabright_300_wide.png",
-    :width => 100,
-    :position => :center
   end
 
   def title
