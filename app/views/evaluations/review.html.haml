@@ -1,8 +1,8 @@
-#employer.employer-container
-  #create_evaluation.employer-box{ style: "padding: 8px; "}
-    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
-      = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
-      %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create an Evaluation
+#employer.employer-container{ style: "width: 800px; "}
+  #create_evaluation.employer-box{ style: "padding: 8px; min-height: 350px; "}
+    .header{ style: "padding: 12px 15px; border-bottom: 1px solid #DDD;" }
+      = image_tag GIANT_STONEY, alt: "Stoney", class: "stoney"
+      %h2{ style: "display: inline;" } Create an Evaluation
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       %h3 Your Evaluation has been created!
       .evaluation_info

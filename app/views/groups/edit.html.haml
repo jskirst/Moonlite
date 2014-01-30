@@ -1,7 +1,8 @@
 .employer-container
   .employer-box{ style: "padding: 8px; "}
-    %img{ style:"display:inline; height:115px;", src:"https://s3.amazonaws.com/moonlite-nsdub/static/stoney+100x150.png", alt: "Stoney"}
-    %span{ style: "font-size: 50px;position: relative;top:13px;" } Edit Group
+    .header{ style: "padding: 12px 15px 0;"}
+      = image_tag GIANT_STONEY , alt: "Stoney", class: "stoney"
+      %h2 Edit Group
     %hr{style:"margin:0;"}
     = form_for(@group, html: { class: "form-horizontal", style: "margin-top: 20px;" }) do |f|
       %div.notificationpanelbody

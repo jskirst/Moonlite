@@ -11,9 +11,9 @@
 
 #employer.employer-container{ style: "margin-top: 40px; width: 900px;" }
   #create_evaluation.employer-box{ style: "padding: 8px;" }
-    %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
-      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
-      %h1.title= form_title      
+    .header{ style: "padding: 12px 15px; border-bottom: 1px solid #DDD;"}
+      = image_tag GIANT_STONEY, class: "stoney", alt: "Stoney"
+      %h2= form_title      
     - if form_title == "Edit Evaluation"
       .edit_eval_notice{ style: ""}
         Please note that you are editing a live Evaluation! If you add additional Challenges to your Evaluation and you have candidates who have already submitted their Evaluation, they will have to return to the Evaluation URL to take the new Challenges. 

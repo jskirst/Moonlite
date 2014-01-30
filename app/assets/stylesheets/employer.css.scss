@@ -27,8 +27,8 @@ body.employer .container.body { width: inherit; background-color: transparent; p
   .header {
     margin-bottom: 10px;
     
-    .stoney { height: 72px; margin-top: -15px; }
-    h2 { display: inline-block; font-size: 32px; position: relative; top: 8px; left: 5px; }
+    .stoney { height: 61px; }
+    h2 { display: inline-block; font-size: 32px; position: relative; top: 5px; left: 5px;}
     hr { margin: 8px; }
     input { float: right; border-radius: 0; margin: 10px 10px 0 0; padding: 7px 7px; font-size: 17px; }
   }
@@ -397,7 +397,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       .controls {
         float: right; 
         position: relative;
-        top: 97px;
+        top: 96px;
         
         a {
           &:hover { text-decoration: none;}

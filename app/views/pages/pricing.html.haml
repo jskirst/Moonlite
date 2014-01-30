@@ -1,137 +1,137 @@
 :css 
-  .container.body { width: 980px; }
-  .aboutcontainer{ width: 980px; background: rgba(36, 72, 109, 0.8); border-radius: 0; margin-top:42px;} 
-  .aboutbox { border-radius: 0; padding: 20px 20px 0; } 
+  .employer-container { width: 980px; margin: 42px auto 0; background: rgba(36, 72, 109, 0.8);}
+  .employer-box { overflow: visible;}
   
-#employer_product.aboutcontainer{ "data-no-turbolink" => true }
-  .aboutbox
-    .body
-      %div
-        #prices.area{ style: "margin-top: -10px;"}
-          %h2{ style: "margin-bottom: 17px;" }  
-            Evaluator Pricing 
-          .free_trial 
-            %h1 All paid plans come with a FREE 14-day trial.
-            %p No risk. No obligation. If at any point during your first 14 days you don't think the Evaluator is right for your company, just cancel your subscription. Your credit card won't ever be charged. 
-          %div   
-            %ul.pricing_table 
-              %li.price_block 
-                %h3 1 Trial Admin 
-                .price 
-                  .price_figure 
-                    %span.price_number FREE
-                    %span.price_tenure  
-                %ul.features 
-                  %li 3 Evaluations
-                  %li #{Group::TRIAL_CANDIDATE_LIMIT} Candidates
-                  %li Unlimited Challenges 
-                  %li{ style: "padding: 25px 15px;" } Limited Email Support
-                .price_footer 
-                  = link_to "Start Free Trial", trial_groups_path, class: "action_button" 
-              %li.price_block
-                %h3 1 Admin
-                .price 
-                  .price_figure 
-                    %span.price_number $19.99 
-                    %span.price_tenure per month 
-                %ul.features 
-                  %li Unlimited Evaluations
-                  %li Unlimited Candidates 
-                  %li Unlimited Challenges 
-                  %li{ style: "padding: 25px 15px;" } Prioritized Email Support
-                .price_footer 
-                  = link_to "Start Free Trial", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
-              %li.price_block.popular
-                %h3
-                  %div Most Popular
-                  2-5 Admins 
-                .price 
-                  .price_figure 
-                    %span.price_number $29.99 
-                    %span.price_tenure per month 
-                %ul.features 
-                  %li Unlimited Evaluations
-                  %li Unlimited Candidates 
-                  %li Unlimited Challenges 
-                  %li Premium Phone and Email Support
-                .price_footer
-                  = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
-              %li.price_block 
-                %h3 6-15 Admins 
-                .price 
-                  .price_figure 
-                    %span.price_number $49.99 
-                    %span.price_tenure per month 
-                %ul.features 
-                  %li Unlimited Evaluations
-                  %li Unlimited Candidates 
-                  %li Unlimited Challenges  
-                  %li Premium Phone and Email Support
-                .price_footer
-                  = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button", descriptor: "six_to_fifteen" 
-            %div.sales_help_inline{ style: "margin-top: -30px; "} 
-              %p{ style: "margin: -30px 0 12px; float: right;"} 
-                Have more than 15 admins?  
-                %a{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})" }Contact us for pricing. 
-        .clear_floats
-        .area.pitch_tiles{ style: "margin-top: 5px;"}
-          %h2 Why you'll love MetaBright 
-          .tile 
-            .circle 
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/medal_green.png" 
-            %p Choose from our MetaBright skills, or create your own for your company. 
-          .tile 
-            .circle 
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/group_green.png" 
-            %p Expand your candidate pool, and quickly identify top performers. 
-          .tile 
-            .circle 
-              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/clock_green.png" 
-            %p Never waste your time interviewing another underqualified candidate.
-          #faq_accordion.accordion{ style: "margin-top: 10px; text-align: left;"}
-            .accordion-group 
-              .accordion-heading 
-                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"} 
-                  How many administrator seats do I need?
-              #collapseSix.accordion-body.collapse.in
-                .accordion-inner 
-                  Having multiple admins for your account allows you to easily share information and manage candidates across your organization. You'll want to have an administrator seat for every person in your organization who is involved in the talent acquisition process.
-            .accordion-group 
-              .accordion-heading 
-                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseThree"} 
-                  Do I have to sign up for a contract or pre-pay for my Evaluator subscription? 
-              #collapseThree.accordion-body.collapse
-                .accordion-inner 
-                  Nope! Evaluator subscriptions are month-to-month. There are no contracts or obligations to continue your membership any longer than you want. You'll be billed monthly and can cancel anytime.
-            .accordion-group 
-              .accordion-heading 
-                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseOne"} 
-                  How are my candidates evaluated? 
-              #collapseOne.accordion-body.collapse
-                .accordion-inner 
-                  We evaluate your candidates with things called <strong>Challenges</strong> -- fancy quizzes that analyze people's raw knowledge, their creative ability, and what they’ve accomplished. 
-                  We distill all this information down into one easy to understand score that indicates how capable your candidates actually are. 
-            .accordion-group 
-              .accordion-heading 
-                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"} 
-                  How long will it take for my candidates to complete a Challenge? 
-              #collapseTwo.accordion-body.collapse 
-                .accordion-inner 
-                  It depends on the Challenge, and the skill of the candidate, but most Challenges can be completed in under 20 minutes.
-            .accordion-group 
-              .accordion-heading 
-                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"} 
-                  How does MetaBright work to prevent cheating? 
-              #collapseFour.accordion-body.collapse 
-                .accordion-inner 
-                  MetaBright questions are timed so we have a good understanding of who actually knows the material and who is trying to cheat (or who is getting lucky with a guess!).  
-                  Our algorithms look for irregularities when a candidate is taking a Challenge and adjust their percentile accordingly. 
-                  We also work to ensure that your candidate is actually the one taking the Challenge. 
-            .accordion-group 
-              .accordion-heading 
-                %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFive"} 
-                  Why does MetaBright look so playful? 
-              #collapseFive.accordion-body.collapse 
-                .accordion-inner 
-                  We’ve found that people are more likely to stay engaged with a Challenge when incentives are in place to make the testing process feel like a game.  
-                  This means we can evaluate your candidates with a higher degree of confidence and we can deliver more examples of their abilities!
+#employer_product{ "data-no-turbolink" => true }
+  .employer-container
+    .employer-box
+      .body
+        %div
+          #prices.area{ style: "margin-top: -10px;"}
+            %h2{ style: "margin-bottom: 17px;" }  
+              Evaluator Pricing 
+            .free_trial 
+              %h1 All paid plans come with a FREE 14-day trial.
+              %p No risk. No obligation. If at any point during your first 14 days you don't think the Evaluator is right for your company, just cancel your subscription. Your credit card won't ever be charged. 
+            %div   
+              %ul.pricing_table 
+                %li.price_block 
+                  %h3 1 Trial Admin 
+                  .price 
+                    .price_figure 
+                      %span.price_number FREE
+                      %span.price_tenure  
+                  %ul.features 
+                    %li 3 Evaluations
+                    %li #{Group::TRIAL_CANDIDATE_LIMIT} Candidates
+                    %li Unlimited Challenges 
+                    %li{ style: "padding: 25px 15px;" } Limited Email Support
+                  .price_footer 
+                    = link_to "Start Free Trial", trial_groups_path, class: "action_button" 
+                %li.price_block
+                  %h3 1 Admin
+                  .price 
+                    .price_figure 
+                      %span.price_number $19.99 
+                      %span.price_tenure per month 
+                  %ul.features 
+                    %li Unlimited Evaluations
+                    %li Unlimited Candidates 
+                    %li Unlimited Challenges 
+                    %li{ style: "padding: 25px 15px;" } Prioritized Email Support
+                  .price_footer 
+                    = link_to "Start Free Trial", new_group_path(p: Group::SINGLE_PLAN), class: "action_button" 
+                %li.price_block.popular
+                  %h3
+                    %div Most Popular
+                    2-5 Admins 
+                  .price 
+                    .price_figure 
+                      %span.price_number $29.99 
+                      %span.price_tenure per month 
+                  %ul.features 
+                    %li Unlimited Evaluations
+                    %li Unlimited Candidates 
+                    %li Unlimited Challenges 
+                    %li Premium Phone and Email Support
+                  .price_footer
+                    = link_to "Start Free Trial", new_group_path(p: Group::TWO_TO_FIVE_PLAN), class: "action_button" 
+                %li.price_block 
+                  %h3 6-15 Admins 
+                  .price 
+                    .price_figure 
+                      %span.price_number $49.99 
+                      %span.price_tenure per month 
+                  %ul.features 
+                    %li Unlimited Evaluations
+                    %li Unlimited Candidates 
+                    %li Unlimited Challenges  
+                    %li Premium Phone and Email Support
+                  .price_footer
+                    = link_to "Start Free Trial", new_group_path(p: Group::SIX_TO_FIFTEEN_PLAN), class: "action_button", descriptor: "six_to_fifteen" 
+              %div.sales_help_inline{ style: "margin-top: -30px; "} 
+                %p{ style: "margin: -30px 0 12px; float: right;"} 
+                  Have more than 15 admins?  
+                  %a{ onclick: "$('.sales_help_modal').modal({keyboard: true, show: true})" }Contact us for pricing. 
+          .clear_floats
+          .area.pitch_tiles{ style: "margin-top: 5px;"}
+            %h2 Why you'll love MetaBright 
+            .tile 
+              .circle 
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/medal_green.png" 
+              %p Choose from our MetaBright skills, or create your own for your company. 
+            .tile 
+              .circle 
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/group_green.png" 
+              %p Expand your candidate pool, and quickly identify top performers. 
+            .tile 
+              .circle 
+                = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/clock_green.png" 
+              %p Never waste your time interviewing another underqualified candidate.
+            #faq_accordion.accordion{ style: "margin-top: 10px; text-align: left;"}
+              .accordion-group 
+                .accordion-heading 
+                  %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseSix"} 
+                    How many administrator seats do I need?
+                #collapseSix.accordion-body.collapse.in
+                  .accordion-inner 
+                    Having multiple admins for your account allows you to easily share information and manage candidates across your organization. You'll want to have an administrator seat for every person in your organization who is involved in the talent acquisition process.
+              .accordion-group 
+                .accordion-heading 
+                  %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseThree"} 
+                    Do I have to sign up for a contract or pre-pay for my Evaluator subscription? 
+                #collapseThree.accordion-body.collapse
+                  .accordion-inner 
+                    Nope! Evaluator subscriptions are month-to-month. There are no contracts or obligations to continue your membership any longer than you want. You'll be billed monthly and can cancel anytime.
+              .accordion-group 
+                .accordion-heading 
+                  %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseOne"} 
+                    How are my candidates evaluated? 
+                #collapseOne.accordion-body.collapse
+                  .accordion-inner 
+                    We evaluate your candidates with things called <strong>Challenges</strong> -- fancy quizzes that analyze people's raw knowledge, their creative ability, and what they’ve accomplished. 
+                    We distill all this information down into one easy to understand score that indicates how capable your candidates actually are. 
+              .accordion-group 
+                .accordion-heading 
+                  %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseTwo"} 
+                    How long will it take for my candidates to complete a Challenge? 
+                #collapseTwo.accordion-body.collapse 
+                  .accordion-inner 
+                    It depends on the Challenge, and the skill of the candidate, but most Challenges can be completed in under 20 minutes.
+              .accordion-group 
+                .accordion-heading 
+                  %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFour"} 
+                    How does MetaBright work to prevent cheating? 
+                #collapseFour.accordion-body.collapse 
+                  .accordion-inner 
+                    MetaBright questions are timed so we have a good understanding of who actually knows the material and who is trying to cheat (or who is getting lucky with a guess!).  
+                    Our algorithms look for irregularities when a candidate is taking a Challenge and adjust their percentile accordingly. 
+                    We also work to ensure that your candidate is actually the one taking the Challenge. 
+              .accordion-group 
+                .accordion-heading 
+                  %a.accordion-toggle{"data-parent" => "#faq_accordion", "data-toggle" => "collapse", "data-parent" => "true", :href => "#collapseFive"} 
+                    Why does MetaBright look so playful? 
+                #collapseFive.accordion-body.collapse 
+                  .accordion-inner 
+                    We’ve found that people are more likely to stay engaged with a Challenge when incentives are in place to make the testing process feel like a game.  
+                    This means we can evaluate your candidates with a higher degree of confidence and we can deliver more examples of their abilities!
