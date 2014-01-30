@@ -23,8 +23,8 @@
 .employer-container
   .employer-box
     .header
-      = image_tag STONEY_SMALL_URL, class: "stoney", alt: "Stoney"
-      %h2{ style: "top: 0;"} #{@group.name}'s Challenges
+      = image_tag GIANT_STONEY, alt: "Stoney", class: "stoney"
+      %h2 #{@group.name}'s Challenges
     .body
       .custom_challenges
         - if @paths.empty?

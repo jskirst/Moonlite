@@ -31,9 +31,10 @@
       %p{ style: "font-size: 14px; line-height: 28px; display:inline;" } Challenges represent skillsets where you can prove what you know, and be inspired by others. 
   %hr{ style: "margin:0px;" }
   %div.challengetiles
-    - if @paths.empty?
-      %p You must achieve a higher MetaBright level before you can unlock this Persona.
-    - @paths.to_a.each_with_index do |path, i|
+    - explore_paths = @persona.paths.order("public_at DESC")
+    - if explore_paths.empty?
+      %p You must achieve a higher MetaBright level before you can view these Challenges.
+    - explore_paths.to_a.each_with_index do |path, i|
       %div.mosaic-block.bar2{ style: (((i+1) % 4 == 0) ? "margin-right: 0px;" : "") }
         %div.details
           = link_to challenge_path(path.permalink), class: "mosaic-overlay", title: "#{path.name}" do

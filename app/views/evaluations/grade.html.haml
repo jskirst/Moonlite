@@ -28,9 +28,9 @@
       %div
         = image_tag @user.picture, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
-          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -3px; " }= @user.name
+          %h2{ style: "font-size: 30px; margin-bottom: -10px; margin-top: -7px; " }= @user.name
           - if @evaluation
-            %h3{ style: "font-size:20px; "}
+            %h3{ style: "font-size:20px; margin-left: 5px;"}
               = link_to @evaluation.title, group_evaluation_path(@group, @evaluation)
         %div{ style: "display: inline-block; vertical-align: top; float: right; text-align: right; margin-top: 10px; "}
           %h3{ style: "font-size:17px; line-height: 25px"}
