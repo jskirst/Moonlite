@@ -248,7 +248,12 @@ class EvaluationsController < ApplicationController
   end
   
   def prepare_form
-    @group_paths = @group.paths
+    @group_path_collection = []
+    @group.paths.each do |path|
+      if path.tasks.count > 0
+        @group_path_collection << path
+      end
+    end
     @evaluation_path_ids = @evaluation ? @evaluation.paths.pluck(:id) : []
     if params[:c].present?
       @evaluation_path_ids << params[:c].to_i

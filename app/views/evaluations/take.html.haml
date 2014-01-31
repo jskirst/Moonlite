@@ -35,7 +35,7 @@
           %h4 Create an Account
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
           %p To help #{@evaluation.company} verify your identity, we save your name, email address, and profile picture. 
-          - if current_user
+          - if current_user and not current_user.guest_user?
             %h5 Thank you for signing in, #{current_user.name.split.first}!
           - else
             .signup
