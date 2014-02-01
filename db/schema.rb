@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140128155610) do
+ActiveRecord::Schema.define(version: 20140201162052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -376,6 +376,7 @@ ActiveRecord::Schema.define(version: 20140128155610) do
     t.integer  "path_id"
     t.decimal  "difficulty",         default: 0.0
     t.datetime "professional_at"
+    t.integer  "parent_id"
   end
 
   add_index "tasks", ["section_id"], name: "index_tasks_on_section_id", using: :btree

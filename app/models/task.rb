@@ -65,8 +65,10 @@ class Task < ActiveRecord::Base
     :answer_new_2, 
     :answer_new_3, 
     :answer_new_4,
-    :exact1
+    :exact1,
+    :parent_id
   
+  belongs_to :parent, class_name: "Task"
   belongs_to :section
   belongs_to :creator, class_name: "User"
   belongs_to :topic
