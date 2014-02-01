@@ -26,7 +26,6 @@
           = render "shared/mosaic", { custom_class: "explore_link", link: nil, title: "The world awaits...", subtitle: "Explore new challenges!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/Stoney_image_carousel_altered.png" }
           - unless current_user.profile_complete?
             = render "shared/mosaic", { link: edit_user_path(current_user), title: "Whoooo are you?", subtitle: "Tell your story to the world!", pic: "https://s3.amazonaws.com/moonlite-nsdub/static/carousel_images/complete_profile_pic_carousel_altered.png" }
-      }
       - if @enrollments.size > 1
         #right_scroll
           %a{href: "javascript:home_slide(\"right\");"}
