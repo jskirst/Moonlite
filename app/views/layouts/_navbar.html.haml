@@ -6,12 +6,18 @@
       /     = image_tag(STONEY_SMALL_URL)
       /     %h1 MetaBright
       .brand.old-brand{ style: "width: 160px; padding-right: 10px; margin-top: 2px;" }
-        - if params[:controller] == "evaluations" and (params[:action] == "take" or params[:action] == "continue" or params[:action] == "submit")
-          = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
+        - if (params[:action] == "take" or params[:action] == "continue" or params[:action] == "submit" or params[:action] == "boss" or params[:action] == "finish")
+          - if params[:controller] == "evaluations"
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
+          - elsif params[:action] == "boss" or params[:action] == "finish"
+            = link_to challenge_path(@path.permalink, c: true, sh: true) do
+              = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
+          - else
+            = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
         - else
           = link_to root_url do
             = image_tag("https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png", alt: "MetaBright")
-      - if not current_user and @show_nav_bar and not params[:controller] == "evaluations" and not (params[:action] == "take" or params[:action] == "continue")
+      - if not current_user and @show_nav_bar and not params[:controller] == "evaluations" and not (params[:action] == "take" or params[:action] == "continue" )
         %ul.nav.navicons.landing-nav{ style: "height: 100%; margin-top: 3px;", "data-no-turbolink" => true }
           %li
           %li.navitem
