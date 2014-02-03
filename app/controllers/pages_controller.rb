@@ -298,6 +298,17 @@ class PagesController < ApplicationController
     render "ideas"
   end
   
+  def upgrade_browser
+    @title = "Please upgrade your browser before continuing"
+    @show_footer = false
+    @hide_background = true
+    @show_nav_bar = false
+    @show_user_name = false
+    @show_header = false
+    @show_sign_in = false
+    render "upgrade_browser"
+  end
+  
   def email_test
     raise "Access Denied" unless Rails.env == "development" or ENV['ENABLE_EMAIL_TEST']
     if params[:email] && params[:test_method] && params[:mailer]

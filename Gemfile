@@ -34,6 +34,7 @@ gem 'exception_notification'
 gem 'exception_notification-rake', '~> 0.1.0'
 gem 'unf'
 gem 'prawn', git: 'https://github.com/prawnpdf/prawn.git'
+gem 'browser'
 
 # add these gems to help with the transition:
 gem 'protected_attributes'
