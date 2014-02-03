@@ -54,6 +54,7 @@ class PagesController < ApplicationController
       .where("paths.id in (?)", relevant_paths)
       .where("paths.group_id is ?", nil)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
+      .where("tasks.archived_at is ?", nil)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
 

@@ -123,9 +123,13 @@
           .icon
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/warning.png"
             User Response Hidden
-          .text 
-            Before you can view this and other responses to this question, you must first answer it yourself.
-            = link_to "Post your answer", take_section_path(post.task.section_id, task_id: post.task.id), class: "submit_button_blue button button-small"
+          - if post.task.archived_at == nil
+            .text 
+              Before you can view this and other responses to this question, you must first answer it yourself.
+              = link_to "Post your answer", take_section_path(post.task.section_id, task_id: post.task.id), class: "submit_button_blue button button-small"
+          - else
+            .text
+              This response is private to the user who completed the question. The question is no longer available for other people to respond to.
           .clear_floats
     
     - unless post.submitted_answer_caption.blank?

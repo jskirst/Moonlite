@@ -387,6 +387,7 @@ class PathsController < ApplicationController
       .select(newsfeed_fields)
       .where("users.locked_at is ? and users.private_at is ?", nil, nil)
       .where("completed_tasks.status_id = ?", Answer::CORRECT)
+      .where("tasks.archived_at is ?", nil)
       .where("submitted_answers.locked_at is ?", nil)
       .where("submitted_answers.reviewed_at is not ?", nil)
       .where("paths.id = ?", @path.id)
