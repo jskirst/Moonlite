@@ -61,7 +61,7 @@ module NewsfeedHelper
         end
       end
       @submissions.each { |s| @posts << s }
-      @posts.sort_by{ |a| a.created_at }
+      @posts = @posts.sort { |a,b| b.created_at <=> a.created_at }
       return @posts
       
       # New User joined MB (only visible on homepage stream)
