@@ -334,7 +334,7 @@ class PathsController < ApplicationController
         if last_session
           last_session_points = current_user.completed_tasks.where(session_id: last_session).to_a.inject(0){ |sum, ct| sum += ct.points_awarded.to_i }
           @points_gained = last_session_points
-          @achievements = check_achievements(@points_gained.to_i, @enrollment)
+          @achievements = check_achievements(@points_gained.to_i, @enrollment, current_user)
         end
       end
       @achievements ||= {}

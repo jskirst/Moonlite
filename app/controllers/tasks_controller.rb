@@ -151,7 +151,7 @@ class TasksController < ApplicationController
       new_difficulty = current_path_difficulty(@path) + 0.07
       current_path_difficulty(@path, new_difficulty)
       if points > 0
-        check_for_and_create_events(points, completed_task.enrollment)
+        check_for_and_create_events(points, completed_task.enrollment, current_user)
       end
     else
       session[:ssf] = 0
@@ -182,7 +182,7 @@ class TasksController < ApplicationController
     submitted_answer.submit!(completed_task, current_user, publish, params)
     
     if publish
-      check_for_and_create_events(100, completed_task.enrollment)
+      check_for_and_create_events(100, completed_task.enrollment, current_user)
       redirect_to params[:submit_redirect_url]
     else
       redirect_to params[:draft_redirect_url]

@@ -46,10 +46,8 @@ class PagesController < ApplicationController
 
     offset = feed.page * 15
     relevant_paths = current_user.enrollments.to_a.collect(&:path_id)
-    #raise relevant_paths.to_yaml
     eval_paths = current_user.evaluation_enrollments.to_a.collect{|er| er.evaluation.paths.pluck(:id)}.flatten
-    #raise eval_paths.to_yaml
-    relevant_paths = Path.where(is_approved: true).first(10).to_a.collect(&:path_id) if relevant_paths.nil?
+    relevant_paths = relevant_paths.select{|p| !eval_paths.include?(p)}
     feed.path_ids = relevant_paths
     feed.submissions = CompletedTask.joins(:submitted_answer, :user, :task => :path)
       .select(newsfeed_fields)

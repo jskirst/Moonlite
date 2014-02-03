@@ -39,10 +39,11 @@ module NewsfeedHelper
       return @posts if @posts
       @posts = []
 
-      if @path_ids
+      if path_ids
         events = UserEvent.joins(:user)
           .where("users.email NOT LIKE ?", '%@metabright.com%')
           .where("user_events.path_id in (?)", self.path_ids)
+          .where("users.private_at is ?", nil)
           .includes(:user)
           .order("user_events.id DESC")
 
@@ -60,7 +61,7 @@ module NewsfeedHelper
             type: :event)
         end
       end
-      @submissions.each { |s| @posts << s }
+      submissions.each { |s| @posts << s }
       @posts = @posts.sort { |a,b| b.created_at <=> a.created_at }
       return @posts
       

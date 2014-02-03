@@ -1,6 +1,7 @@
 module EventsHelper
-  def check_achievements(new_points, enrollment)
+  def check_achievements(new_points, enrollment, user = nil)
     achievements = { level: false, rank: false, contribution: false }
+    return achievements if user and user.guest_user? 
     path = enrollment.path
     current_score = enrollment.total_points
     previous_score = current_score - new_points
@@ -34,8 +35,8 @@ module EventsHelper
     return achievements
   end
 
-  def check_for_and_create_events(new_points, enrollment)
-    achievements = check_achievements(new_points, enrollment)
+  def check_for_and_create_events(new_points, enrollment, user = nil)
+    achievements = check_achievements(new_points, enrollment, user)
     events = []
     # NEW RANK
     if achievements[:rank]
