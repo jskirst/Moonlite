@@ -42,6 +42,13 @@
         %ol{ style: "list-style-type: decimal; margin-top: 5px;" }
           - task.task_issues.each do |ti|
             %li #{TaskIssue::ISSUE_TYPE_CONTENT[ti.issue_type]} #{time_ago_in_words(ti.created_at)} ago.
+    - if task.parent
+      - t = task
+      %div
+        %h5 Version History
+        %ol{ style: "list-style-type: decimal; margin-top: 5px;" }
+          - while t = t.parent
+            %li= t.question
   %div{ style: "position: relative; bottom: 0px; margin-left: 45px; font-size: 11px;"}
     = completion_statistics_label(task)
     = difficulty_label(task)

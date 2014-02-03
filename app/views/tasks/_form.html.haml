@@ -3,11 +3,11 @@
 
 - rand_id = rand(1000)
 - template_id = "template_#{rand_id}"
-- new_task = task.new_record?
+- new_task = task.parent_id.nil?
 - submit_label = new_task ? "Add New Question" : "Save"
-
 = form_for(task, remote: true, html: { "data-type" => "html", class: "form-horizontal question_creator #{'new-task-form' if new_task}"}) do |f|
   = f.hidden_field :section_id
+  = f.hidden_field :parent_id
   %div.floatr
     %button#save_question_button.submit_button.button.button-small= submit_label
     - unless new_task
@@ -45,6 +45,9 @@
             %label.control-label Response type
             .controls
               = f.select :answer_sub_type, hash_to_array(Task::SUBTYPES)
+        - else
+          = f.hidden_field :answer_type
+          = f.hidden_field :answer_sub_type
         
               
         - if task.task? or new_task
@@ -113,7 +116,8 @@
           .control-group
             %label.control-label Image
             .controls
-              - if sr = task.stored_resources.first
+              - sr = task.id.present? ? task.stored_resources.first : (task.parent ? task.parent.stored_resources.first : nil)
+              - if sr
                 .existing-image
                   = image_tag sr.obj.url, style: "height: 100px;"
                   = link_to "Remove", delete_stored_resource_path(sr.id), method: :delete, class: "delete-image", remote: true, data: { confirm: "Are you sure you want to remove this attachment?" }

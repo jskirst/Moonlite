@@ -14,7 +14,7 @@ class TasksController < ApplicationController
     @task = @section.tasks.new(params[:task])
     @task.creator_id = current_user.id
     @task.answer_content = gather_answers(params[:task])
-    @task.reviewed_at = Time.now() if path.group_id
+    @task.reviewed_at = Time.now() if path.group_id or current_user.enable_administration?
     @task.path_id = path.id
     
     if @enable_administration
@@ -24,6 +24,18 @@ class TasksController < ApplicationController
     end
     
     if @task.save
+      if parent = @task.parent
+        parent.update_attribute(:archived_at, Time.now)
+        if parent.stored_resources.any?
+          parent.stored_resources.each do |sr|
+            new_sr = sr.dup
+            new_sr.obj = sr.obj
+            new_sr.owner_id = @task.id
+            new_sr.save
+          end
+        end
+      end
+
       unless params[:stored_resource_id].blank?
         sr = StoredResource.find(params[:stored_resource_id])
         raise "FATAL: STEALING RESOURCE" if sr.owner_id
@@ -54,11 +66,12 @@ class TasksController < ApplicationController
   end
   
   def edit
-    task = @task
+    task = @task.dup
+    task.parent_id = @task.id
     @path = @task.path
     @sections = @path.sections.order("position ASC")
     @topics = @path.topics
-    answers = task.answers.order("is_correct DESC").to_a
+    answers = @task.answers.order("is_correct DESC").to_a.collect(&:dup)
     if task.multiple_choice?
       (4 - answers.size).times { answers << task.answers.new(is_correct: false) }
     elsif (task.exact? or task.creative?) and answers.empty?
