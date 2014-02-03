@@ -182,6 +182,7 @@ Metabright::Application.routes.draw do
   get '/preview' => 'pages#preview'
   get '/airs' => 'pages#airs_landing'
   get '/upgrade_browser' => 'pages#upgrade_browser'
+  get '/javascript_off' => 'pages#javascript_off'
 	
 	patch '/stored_resources' => 'stored_resources#create'
 	delete '/stored_resources/:id' => 'stored_resources#destroy', as: 'delete_stored_resource'

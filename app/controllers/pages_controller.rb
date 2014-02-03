@@ -309,6 +309,17 @@ class PagesController < ApplicationController
     render "upgrade_browser"
   end
   
+  def javascript_off
+    @title = "Please turn on Javascript in your browser"
+    @show_footer = false
+    @hide_background = true
+    @show_nav_bar = false
+    @show_user_name = false
+    @show_header = false
+    @show_sign_in = false
+    render "javascript_off"
+  end
+  
   def email_test
     raise "Access Denied" unless Rails.env == "development" or ENV['ENABLE_EMAIL_TEST']
     if params[:email] && params[:test_method] && params[:mailer]

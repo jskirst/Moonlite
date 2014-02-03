@@ -32,6 +32,9 @@
 %meta{ property: "og:title", content: "#{social_title}" } 
 %meta{ property: "og:description", content: "#{social_description}" } 
 %meta{ property: "og:image", content: "#{social_image}" }
+
 -#%script{ src: "/assets/ace/src-min-noconflict/ace.js", type: "text/javascript", charset: "utf-8" }
 - if not current_user and @show_chat
   <script type='text/javascript'>(function () { var done = false; var script = document.createElement('script'); script.async = true; script.type = 'text/javascript'; script.src = 'https://www.purechat.com/VisitorWidget/WidgetScript'; document.getElementsByTagName('HEAD').item(0).appendChild(script); script.onreadystatechange = script.onload = function (e) { if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) { var w = new PCWidget({ c: '4906296a-7661-4a83-93cc-00d392df2594', f: true }); done = true; } }; })();</script>
+%noscript
+  %meta{content: "3;url=https://www.metabright.com/javascript_off", "http-equiv" => "refresh"}
