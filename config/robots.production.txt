@@ -2,3 +2,4 @@ User-agent: *
 Sitemap: http://www.metabright.com/sitemap.xml.gz
 Disallow: /airs
 Disallow: /promotional
+Disallow: /upgrade_browser
