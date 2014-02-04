@@ -1,4 +1,5 @@
 class SectionsController < ApplicationController
+  include EventsHelper
   before_filter :authenticate, except: [:continue, :complete]
   before_filter :load_resource, except: [:subregion_options]
   before_filter :authorize_edit, only: [:new, :create, :edit, :update, :publish, :unpublish, :destroy, :confirm_delete]
@@ -146,9 +147,11 @@ class SectionsController < ApplicationController
     
     publish = !(["draft", "preview"].include?(params[:mode]))
     submitted_answer = completed_task.submitted_answer ||  task.submitted_answers.new
+    first_submit = submitted_answer.new_record?
     
     submitted_answer.submit!(completed_task, current_user, publish, params)
     if publish
+      check_for_and_create_events(100, completed_task.enrollment, current_user) if first_submit
       if completed_task.session_id
         redirect_to finish_section_path(@section, completed_task.session_id) and return
       else
