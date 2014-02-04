@@ -104,6 +104,16 @@ describe "Group Functions" do
       
       expect_content("Hella Fly Challenge")
     end
+    
+    it "should be able to clone a Challenge" do
+      @user = @group.users.first
+      sign_in(@user)
+      find("a[descriptor='challenges-index-link']").click
+      
+      find(".mb_challenges").first('a').click
+      
+      expect_content("Clone a MetaBright Challenge")
+    end
       
     it "should be able to create an Evaluation" do
       @user = @group.users.first
