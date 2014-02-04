@@ -20,11 +20,11 @@
           = f.hidden_field :parent_id
           %p{ style: "font-size: 15px; display: inline; position: relative; bottom: 2px; "} Your new Challenge name:
           = f.text_field :name
-          = f.submit "Clone Challenge", class: "submit_button", onclick: "$('#clone_path').submit();"
+          = f.submit "Clone Challenge", class: "submit_button"
           
 :javascript
   $(function(){
-    $("#clone_path").submit(function(){
+    $("form").submit(function(){
       if($("#path_name").val() == ""){
         alert("You must provide a Challenge name before you can clone this Challenge.");
         return false;
