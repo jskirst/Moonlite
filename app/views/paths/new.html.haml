@@ -15,19 +15,20 @@
 
             - if @exact_path
               %h4 Uh oh! Someone has already made that Challenge.
-              %h5 Don't worry, you can still contribute to the #{@exact_path.name} Challenge.
-              %div
-              = link_to "Become a contributor", join_path_path(@exact_path), class: "submit_button_blue_big", style: "float: none;"
-              .or_divider OR
+              %h5 Why not create a different Challenge?
+              / %h5 Don't worry, you can still contribute to the #{@exact_path.name} Challenge.
+              / %div
+              / = link_to "Become a contributor", join_path_path(@exact_path), class: "submit_button_blue_big", style: "float: none;"
+              / .or_divider OR
               
             - elsif @similar_paths.any?
               %h4 Hmmm. Looks like there are Challenges with similar names.
               %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
-              %h5 Consider becoming a contributor to an existing Challenge instead of creating a new one.
-              - @similar_paths.each do |path|
-                %ul
-                  %li
-                    = link_to path.name, join_path_path(path), title: "Become a contributor to the #{path.name} Challenge"
+              %h5 Why not create a different Challenge?
+              / - @similar_paths.each do |path|
+              /   %ul
+              /     %li
+              /       = link_to path.name, join_path_path(path), title: "Become a contributor to the #{path.name} Challenge"
             - else
               %div.tips
                 %h5

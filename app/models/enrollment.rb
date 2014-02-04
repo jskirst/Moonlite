@@ -1,5 +1,5 @@
 class Enrollment < ActiveRecord::Base
-  CONTRIBUTION_THRESHOLD = 1500
+  CONTRIBUTION_THRESHOLD = 100
   
   attr_readonly :path_id
   attr_protected :total_points, :contribution_unlocked_at, :highest_rank, :longest_streak, :metascore, :metapercentile
