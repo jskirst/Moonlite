@@ -1,7 +1,7 @@
 module EventsHelper
   def check_achievements(new_points, enrollment, user = nil)
     achievements = { level: false, rank: false, contribution: false }
-    return achievements if user and user.guest_user? 
+    return achievements if user and user.guest_user?
     path = enrollment.path
     current_score = enrollment.total_points
     previous_score = current_score - new_points

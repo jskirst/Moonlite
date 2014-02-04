@@ -46,6 +46,7 @@ module NewsfeedHelper
           .where("users.private_at is ?", nil)
           .includes(:user)
           .order("user_events.id DESC")
+          .limit(15)
 
         events.each do |e|
           u = e.user
