@@ -52,7 +52,7 @@
                         = check_box_tag "evaluation[selected_paths][#{p.id}]", 1, @evaluation_path_ids.include?(p.id)
                         = p.name
             .challenge_chooser
-              %h5 Your Custom Challenges
+              %h5 #{@group.name}'s Challenges
               .challenges
                 - if @group_path_collection.any?
                   %ul.checklist.custom-challenges

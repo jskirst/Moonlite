@@ -12,7 +12,7 @@ class PathsController < ApplicationController
   def index
     @hide_background = true
     if @group
-      @paths = @group.paths
+      @paths = @group.paths.to_a
       @public_paths = Path.where.not(professional_at: nil)
       if params[:q]
         @public_paths = @public_paths.where("name ILIKE ?", "%#{params[:q]}%") unless params[:q].blank?
@@ -22,6 +22,7 @@ class PathsController < ApplicationController
         end
       end
       @public_paths = @public_paths.sort_by{|path| [path.name.upcase]}
+      @new_custom_path = @group.paths.new
       render "groups/challenges"
     else
       @paths = current_user.paths.to_a + current_user.collaborating_paths.order("updated_at DESC").to_a

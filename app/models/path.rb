@@ -13,7 +13,8 @@ class Path < ActiveRecord::Base
     :permalink,
     :template,
     :template_type,
-    :input_type
+    :input_type,
+    :parent_id
   
   has_one :stored_resource, as: :owner
   has_one :custom_style, as: :owner

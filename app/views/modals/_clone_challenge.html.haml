@@ -1,0 +1,37 @@
+:css
+  .submit_button { float: none; display: block; margin: 10px auto;}
+
+#clone_challenge_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1"}
+  .explorecontainer{ style: "width: 565px; "}
+    .explorenewusercontent
+      .exploreheader
+        .modal_close
+          = image_tag ICON_CLOSE_URL, alt: "Close", style: "width: auto; height: auto;"
+        %h1
+          = image_tag STONEY_SMALL_URL, alt:"Stoney", style: "width: inherit;"
+          %span Clone a MetaBright Challenge
+      %hr
+      .explorebody{ style: "padding: 12px 15px; min-height: inherit;"}
+        %h5{style: "font-size: 15px; margin-bottom: 20px;"} 
+          You are making a copy of MetaBright's
+          %span#challenge_name 
+          Challenge. If you'd like, you can customize this Challenge to better fit the needs of your organization.
+        = form_for(@new_custom_path) do |f|
+          = f.hidden_field :parent_id
+          %p{ style: "font-size: 15px; display: inline; position: relative; bottom: 2px; "} Your new Challenge name:
+          = f.text_field :name
+          = f.submit "Clone Challenge", class: "submit_button", onclick: "$('#clone_path').submit();"
+          
+:javascript
+  $(function(){
+    $("#clone_path").submit(function(){
+      if($("#path_name").val() == ""){
+        alert("You must provide a Challenge name before you can clone this Challenge.");
+        return false;
+      } else {
+        return true;
+      }
+    });
+  });
+          
+        

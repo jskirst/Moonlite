@@ -1,6 +1,20 @@
+:javascript
+  $(function(){
+    $(".clone_challenge_link").click(function(){
+      var parent_id = $(this).attr("data-parent")
+      $("#path_parent_id").val(parent_id)
+      var challenge_name = $(this).attr("data-name")
+      $("#challenge_name").text(challenge_name)
+      var cloned_path_name = challenge_name + " for #{@group.name}"
+      $("#path_name").val(cloned_path_name)
+    })
+    
+  })
+
+= render "modals/clone_challenge"
 %ul
   - @public_paths.each do |path|
     %li
-      = link_to new_group_evaluation_path(@group, c: path.id) do
+      = link_to "#", class: "clone_challenge_link", data: {parent: path.id, name: path.name} do
         = image_tag path.picture
         %span= path.name
