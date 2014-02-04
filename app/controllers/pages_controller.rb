@@ -19,7 +19,7 @@ class PagesController < ApplicationController
       render "portal"
     elsif current_user and not current_user.earned_points == 0
       redirect_to start and return if params[:go] == "start"
-      @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).references(:path).sort { |a,b| b.total_points <=> a.total_points }
+      @enrollments = current_user.enrollments.includes(:path).where("paths.approved_at is not ?", nil).where("paths.group_id is ?", nil).references(:path).sort { |a,b| b.total_points <=> a.total_points }
       @enrolled_personas = current_user.personas
       @suggested_paths = Path.suggested_paths(current_user)
     elsif request.original_url.include?("employers.metabright.com") and session[:viewed_evaluator].nil?
