@@ -25,7 +25,10 @@
             .control-group
               %label.control-label Customize CSS
               %div.controls{ style: "margin-top: 6px;" }
-                = link_to "Customize your organization with your own CSS Styles", style_group_path(@group)
+                - if @group.is_trial?
+                  %p{ style: "word-break: normal;"} Upgrade your plan type to customize the CSS for your organization's account.
+                - else
+                  = link_to "Customize your organization with your own CSS Styles", style_group_path(@group)
           %div{ style:"vertical-align: top; display: inline-block; margin: 0 20px 5px 0;" }
             %div.control-group
               %div.controls{style:"margin-left:112px;"}
