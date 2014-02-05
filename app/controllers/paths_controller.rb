@@ -67,13 +67,23 @@ class PathsController < ApplicationController
       @path.published_at = now
       @path.public_at = now
       @path.approved_at = now
+      if params[:path][:parent_id]
+        parent = Path.find(params[:path][:parent_id])
+        if parent.group_id and parent.group_id != @group.id
+          raise "AccessDenied: Cannot clone another groups path. #{parent.to_yaml}"
+        else
+          @path.parent_id = parent.id
+          @path.template = parent.template
+          @path.input_type = parent.input_type
+          @path.template = parent.template
+        end
+      end
     end
     
     if @path.save
       unless params[:stored_resource_id].blank?
         assign_resource(@path, params[:stored_resource_id])
       end
-      
       if @path.template_type == "subtopic"
         @path.sections.create!(name: "Topic 1")
         @path.sections.create!(name: "Topic 2")
@@ -86,6 +96,23 @@ class PathsController < ApplicationController
         @path.sections.create!(name: "Expert")
       else
         @path.sections.create!(name: @path.name)
+      end
+      s = @path.sections.first
+
+      if @path.parent_id
+        parent.tasks.each do |t|
+          new_t = t.dup
+          new_t.path_id = @path.id
+          new_t.section_id = s.id
+          new_t.creator_id = current_user.id
+          new_t.save!
+          t.answers.each do |a|
+            new_a = a.dup
+            new_a.task_id = new_t.id
+            new_a.answer_count = 0
+            new_a.save!
+          end
+        end
       end
       
       if @path.group_id

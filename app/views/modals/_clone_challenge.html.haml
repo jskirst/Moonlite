@@ -17,9 +17,10 @@
           %span#challenge_name 
           Challenge. If you'd like, you can customize this Challenge to better fit the needs of your organization.
         = form_for(@new_custom_path) do |f|
+          = hidden_field_tag :group_id, @group.id
           = f.hidden_field :parent_id
           %p{ style: "font-size: 15px; display: inline; position: relative; bottom: 2px; "} Your new Challenge name:
-          = f.text_field :name
+          %p= f.text_field :name
           = f.submit "Clone Challenge", class: "submit_button"
           
 :javascript
