@@ -113,6 +113,7 @@ describe "Group Functions" do
       find(".mb_challenges").first('a').click
       
       expect_content("Clone a MetaBright Challenge")
+      pause
     end
       
     it "should be able to create an Evaluation" do
