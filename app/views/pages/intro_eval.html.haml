@@ -1,0 +1,25 @@
+:css
+  .employer-container { width: 670px; margin: 110px auto 200px auto; }
+  .employer-box { min-height: inherit; padding: 0;}
+
+#evaluations_overview.employer-container.intro_wrapper
+  .employer-box.intro
+    .header
+      = image_tag STONEY_MEDIUM_URL, style: "height:47px; margin:4px 4px 0 0;", alt: "Stoney"
+      %h1 You're about to start your first Challenge!
+    %hr{ style:"margin:0"}
+    .body
+      %ul
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
+          %h3 Timed assessment
+          %p Questions are timed, so answer as quickly and accurately as you can. 
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
+          %h3 Multiple-choice questions
+          %p Make your choice carefully. After clicking on an answer, you can't change your response.
+        %li
+          %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Lightbulb+icon", alt: "Tip" }
+          %h3 Creative Response questions
+          %p These questions are more in depth and contain a free-response text field.
+    = link_to "Let's Go!", @forward_to, style: "margin: 0 10px 10px 0;", class: "submit_button"
