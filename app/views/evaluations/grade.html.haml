@@ -105,6 +105,8 @@
             .clear_floats
             .challenge_stats
               .myrank
+                - if r[:ms_for_graph] == 0
+                  - r[:ms_for_graph] = "N/A"
                 %span= r[:ms_for_graph]
                 .skill-tag.label{ class: r[:skill_level].downcase}
                   = r[:skill_level]

@@ -387,6 +387,11 @@ body.employer .container.body { width: inherit; background-color: transparent; p
 .label.novice { 
   background-color: #d9534f;
 }
+// This is for when the skill is "Not Enough Data"
+.label.not {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
 .big_skill.label.unqualified {
   font-size: 24px !important;
 }

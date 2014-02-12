@@ -66,7 +66,9 @@ class Enrollment < ActiveRecord::Base
   def describe_skill_level() Enrollment.describe_skill_level(self.metascore) end
   def self.describe_skill_level(metascore)
     metascore = metascore.to_i
-    if metascore <= 392
+    if metascore == 0
+      return "Not Enough Data"
+    elsif metascore <= 392
       return "Unqualified"
     elsif metascore > 392 and metascore <= 484
       return "Novice"
