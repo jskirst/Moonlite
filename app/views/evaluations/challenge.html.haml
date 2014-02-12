@@ -31,6 +31,8 @@
   
 :css
   body{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
+  .CRbuttonspace {text-align: center;}
+  .submit_button { float: none; padding: 6px 30px; }
 
 %div.quizcontainer{ style: "margin-top: 85px;"}
   = form_for(@task, url: took_task_url(@task), html: { id: "challenge_form", style: "margin: 0;" }) do |f|
@@ -62,7 +64,6 @@
           = render "tasks/take_task", f: f
       
       %div.CRbuttonspace
-        = link_to "Skip Question", continue_evaluation_url(@evaluation, @path), class: "submit_button_standard", style: "float: left;", data: { confirm: "Note: You will not be able to come back to this question once you skip it.", "no-turbolinks" => true }
         = f.submit "Submit", class: "submit_button", id: "submit_button"
         - if @task.time_limit and @task.time_limit >= 120
           .countdown{ data: { time: @task.time_limit } }

@@ -15,7 +15,7 @@
   .CRresponsespace{ style: "min-height: 175px;" }
     - if @path.input_type == Path::CODE and @evaluation.nil?
       = f.submit "View Preview", class: "button button-small submit_button_blue", id: "preview_button", style: "text-shadow: none; margin: 0px 10px 3px 0; padding: 3px 10px;"
-    = link_to "View hotkeys", "https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts", target: '_blank', style: "float: left; position: relative; font-size: 13px; top: 3px; margin-left: 10px;"
+    = link_to "View hotkeys", "https://github.com/ajaxorg/ace/wiki/Default-Keyboard-Shortcuts", target: '_blank', style: "float: left; position: relative; font-size: 13px; top: 3px; margin-left: 14px;"
     %h4{ style: "text-align: center; margin-bottom: 5px; font-size: 15px; border-bottom: 1px solid rgba(0, 0, 0, .1); width: 150px; margin-right: auto; margin-left: auto;" } Your answer:
     %input{ type: "hidden", name: "mode", value: "submit" }
     
@@ -41,11 +41,11 @@
           
         - else
           %iframe{ src: raw_path(@submitted_answer.id), style: "margin:0 auto; min-height: 275px; width: 544px; overflow: auto; border: 1px solid #CCC; background-color: white; border-radius: 4px; padding: 4px 6px;" }
-
-    %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
-      %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
-        %span.text Add caption
-      = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; display: none; margin: 2px 12px;", placeholder: "Caption will appear immediately below your response..."
+    - if @evaluation.nil?
+      %div{ style: "margin: 10px 0 5px 0; text-align: center;" }
+        %a.add_caption{ onclick: "$('#caption').toggle(); $('.add_caption span.caret').toggle();"} 
+          %span.text Add caption
+        = text_area_tag "caption", @submitted_answer.caption, style: "height: 40px; display: none; margin: 2px 12px;", placeholder: "Caption will appear immediately below your response..."
 
 :javascript
   $("#challenge_form").submit(function(){
