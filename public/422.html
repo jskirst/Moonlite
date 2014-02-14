@@ -5,46 +5,51 @@
     <link href='http://fonts.googleapis.com/css?family=Muli:300' rel='stylesheet' type='text/css'>
     <style>
       html, body, p, h1, h2, h3 { font-size: 22px; font-family: 'Muli', sans-serif; line-height: 30px;}
+      span, a { font-size: 16px; font-family: 'Muli', sans-serif;}
+      .topbar {
+        z-index:1010; 
+        border-bottom: 1px solid rgb(201, 201, 201);
+        height: 54px;
+      }
+  
       .fill {
         border: 0;
-				background-image: -moz-linear-gradient(top, #406B9B, #263042) !important;
-				background-image: -ms-linear-gradient(top, #406B9B, #263042) !important;
-				background-image: -o-linear-gradient(top, #406B9B, #263042) !important;
-				background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#406B9B), to(#263042)) !important;
-				background-image: -webkit-linear-gradient(top, #406B9B, #263042) !important;
-				background-image: linear-gradient(top, #406B9B, #263042) !important;
-      }  
+        background: #f1f1f1 !important;
+        box-shadow: none;
+        height: 100%;
+      }
       .container {
       	width: 660px !important;
         overflow: hidden;
         margin-left: auto;
         margin-right: auto;
-        margin-top: 80px;
+        margin-top: 100px;
         -webkit-border-radius: 6px;
         -moz-border-radius: 6px;
         border-radius: 6px;
         border: 1px solid rgba(0, 0, 0, 0.1);
         background: rgba(255, 255, 255, 0.8);
       }
+      .container.body {
+        padding: 0;
+        border: 5px solid rgba(36, 72, 109, 0.8);
+      }
       .holder {
         background-color: white;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
         overflow: hidden;
       }
       .copy {
         margin: 0 auto 30px auto; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;
       }
+      
     </style>
   </head>
   <body>
     <nav class="topbar" data-dropdown="dropdown" data-scollspy="scrollspy">
       <div class="fill">
         <div style="margin-left: 8%;">
-          <a href="https://www.metabright.com" style="position: relative; top: 3px;">
-            <img alt="Mb+logo+nav+bar" src="https://s3.amazonaws.com/moonlite-nsdub/static/MB+logo+nav+bar.png" style="position:absolute;">
+          <a href="https://www.metabright.com" style="position: relative; top: 8px;">
+            <img alt="Mb+logo+nav+bar" src="https://s3.amazonaws.com/moonlite-nsdub/static/MetaBrightLogo.png" style="position:absolute; width: 160px;">
           </a>
         </div>
       </div>
@@ -56,6 +61,9 @@
           <div class="copy">
             <p>Sorry, Stoney fell.</p>
             <p>Bear with us while we put him back together again.</p>
+            <span>To report your issue, please email 
+              <a href="mailto:support@metabright.com" target="_blank">support@metabright.com</a>.
+            </span>
           </div>
         </center>
       </div>

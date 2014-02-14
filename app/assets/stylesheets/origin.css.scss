@@ -79,17 +79,13 @@
 .intro_wrapper .quizheader img { width: 35px; height: 35px; }
 
 .intro_wrapper { 
-  text-align:left; 
-  overflow:hidden; 
-  width:695px; 
+  text-align: left; 
+  overflow: hidden; 
+  width: 695px; 
   margin: 100px auto 200px auto; 
-  border-radius:6px;
-  border: 1px solid rgba(0, 0, 0, .1);
-  background: rgba(255, 255, 255, .8); 
   
   .intro { 
-    background-color:white; 
-    margin:12px; 
+    background-color:white;
     border:1px solid rgba(0, 0, 0, .1);
     overflow:hidden;
     
@@ -107,7 +103,7 @@
       }
       
       h1 { 
-        font-size: 28px; 
+        font-size: 26px; 
         color:#404040; 
         display: inline-block; 
         vertical-align: middle;

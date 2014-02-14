@@ -166,6 +166,7 @@ Metabright::Application.routes.draw do
 	
 	get '/newsfeed' => 'pages#newsfeed'
   get '/intro' => 'pages#intro'
+  get '/intro_eval' => 'pages#intro_eval'
   get '/start' => 'pages#start'
   get '/mark_read' => 'pages#mark_read'
   get '/mark_help_read' => 'pages#mark_help_read'

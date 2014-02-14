@@ -51,6 +51,8 @@
                 %td= truncate(e.email, length: 25, separator: ' ')
                 - @paths.each do |p|
                   - skill_level = Enrollment.describe_skill_level(e["e#{p.id}_metascore"])
+                  - if skill_level == "Not Enough Data"
+                    - skill_level = "N/A"
                   %td{ style: "text-align: center;"}
                     %span{class: "label #{skill_level.downcase}" }= skill_level
                 %td

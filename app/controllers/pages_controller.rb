@@ -185,6 +185,14 @@ class PagesController < ApplicationController
     render "intro"
   end
   
+  def intro_eval
+    @hide_background = true
+    @show_nav_bar = false
+    @show_footer = false
+    @forward_to = continue_evaluation_path(params[:e], params[:p])
+    render "intro_eval"
+  end
+  
   def start
     @show_nav_bar = false
     @show_footer = false

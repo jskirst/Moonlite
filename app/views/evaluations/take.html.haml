@@ -94,14 +94,18 @@
                 - if current_user and not current_user.country.nil?
                   - status = @evaluation.user_status(current_user, p)
                   - if status == :start or status == :continue
+                    - if current_user.earned_points > 0
+                      - take_link = continue_evaluation_path(@evaluation.id, p.id)
+                    - else
+                      - take_link = intro_eval_path(e: @evaluation.id, p: p.id)
                     - evaluation_completed = false
-                    = link_to status.to_s.humanize, continue_evaluation_path(@evaluation.id, p.id), class: "button button-small submit_button", style: "float: none; text-shadow: none;"
+                    = link_to status.to_s.humanize, take_link, class: "button button-small submit_button", style: "float: none; text-shadow: none;"
                   - else
                     %div Completed
                 - elsif current_user
-                  = link_to "Enter Location", "", class: "button disabled button-small submit_button", style: "float: none; text-shadow: none;"
+                  = link_to "Enter Location", "", class: "button-small submit_button button", style: "float: none; text-shadow: none; opacity: 0.70; cursor: not-allowed;"
                 - else
-                  = link_to "Sign up to begin", "", class: "button disabled button-small submit_button", style: "float: none; text-shadow: none;"
+                  = link_to "Sign up to begin", "", class: "button button-small submit_button", style: "float: none; text-shadow: none; opacity: 0.70; cursor: not-allowed;"
       .step
         .img-circle
           %span 4
