@@ -140,9 +140,9 @@ class TasksController < ApplicationController
   
   def complete
     create_or_sign_in unless current_user
-    
-    completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
-    
+    enrollment = current_user.enrollments.where(path_id: @path.id).first
+
+    completed_task = CompletedTask.find_or_create(current_user, @task, enrollment, params[:session_id])
     points = params[:points_remaining].to_i
     completed_task.complete_core_task!(params[:answer], points)
     completed_task.reload
@@ -169,8 +169,9 @@ class TasksController < ApplicationController
   
   def took
     task = Task.cached_find(params[:id])
+    enrollment = current_user.enrollments.where(path_id: @path.id)
     raise "Access Denied: Task is currently locked." if task.locked_at
-    completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])
+    completed_task = CompletedTask.find_or_create(current_user, task, enrollment, params[:session_id])
     if task.time_limit and task.time_limit >= 120
       if (completed_task.created_at + (task.time_limit + 10).seconds) < Time.now()
         raise "Time expired"

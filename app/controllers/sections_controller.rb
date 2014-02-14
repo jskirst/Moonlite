@@ -125,6 +125,9 @@ class SectionsController < ApplicationController
   
   def take
     @task = Task.cached_find(params[:task_id])
+    @path = @task.path
+    @enrollment = current_user.enroll!(@path) unless @enrollment
+
     if @task.nil?
       flash[:error] = "Could not find the question you were looking for."
       redirect_to root_path
@@ -133,7 +136,7 @@ class SectionsController < ApplicationController
     end
     @session_id = params[:session_id]
     
-    @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, params[:session_id])
+    @completed_task = CompletedTask.find_or_create(current_user, @task, @enrollment, params[:session_id])
     @submitted_answer = @completed_task.submitted_answer_id ? @completed_task.submitted_answer : SubmittedAnswer.new
     
     @stored_resource = @task.stored_resources.first
@@ -142,8 +145,10 @@ class SectionsController < ApplicationController
   
   def took
     task = Task.cached_find(params[:task_id])
+    path = task.path
+    enrollment = current_user.enroll!(path) unless @enrollment
     raise "Access Denied: Task is currently locked." if task.locked_at
-    completed_task = CompletedTask.find_or_create(current_user.id, task.id, params[:session_id])
+    completed_task = CompletedTask.find_or_create(current_user, task, enrollment, params[:session_id])
     
     publish = !(["draft", "preview"].include?(params[:mode]))
     submitted_answer = completed_task.submitted_answer ||  task.submitted_answers.new
@@ -183,7 +188,7 @@ class SectionsController < ApplicationController
       if @streak > @enrollment.longest_streak
         @enrollment.update_attribute(:longest_streak, @streak)
       end
-      @completed_task = current_user.completed_tasks.create!(enrollment_id: @enrollment.id, task_id: @task.id, status_id: Answer::INCOMPLETE, session_id: @session_id)
+      @completed_task = CompletedTask.find_or_create(current_user, @task, @enrollment, @session_id)
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       page = "continue"

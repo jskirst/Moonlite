@@ -17,6 +17,7 @@
           - @answers = @task.answers
           - @next_text = "Let's Go!"
           - @next_link = start_section_path(@section.id)
+          - @completed_task = CompletedTask.new { |ct| ct.task = @task; ct.points_remaining = 100 }
           = render file: "tasks/continue"
   
   .top

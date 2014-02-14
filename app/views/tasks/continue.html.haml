@@ -29,7 +29,7 @@
         %hr{ style: "margin: 12px auto; width: 35%; border: 0; border-top: 1px solid #eeeeee; border-bottom: 1px solid #ffffff;" }
       %div.responsespace{ data: { type: @task.answer_type } }
         = form_tag(complete_task_path(@task.id), :remote => true, :method => "put", :id => "challenge_form") do
-          = hidden_field_tag :points_remaining, 100
+          = hidden_field_tag :points_remaining, @completed_task.points_remaining
           = hidden_field_tag :streak, @streak.to_i
           
           - if @task.multiple_choice?
@@ -54,10 +54,10 @@
       .continue_stats
         %div.questionfooter
           %div.pointbar{ style: "position: relative;" }
-            %div.pointbarfiller{ style: "display: inline-block;"}
-            %div.pointbartext{ style: "position: absolute; left: 44%;" } 100 points
+            %div.pointbarfiller{ style: "display: inline-block; width: #{@completed_task.points_remaining}%;" }
+            %div.pointbartext{ style: "position: absolute; left: 44%;" } #{@completed_task.points_remaining} points
         %div.pointsandstreakspace
-          %div.pointspace.counterbox
+          %div.pointspace.counterbox{ style: "width: #{@show_feedback ? '120' : '90'}px;" }
             %span.counter{style: "display:block"}
               - if @show_feedback
                 - digits = @enrollment ? @enrollment.total_points.to_s : "0"
@@ -73,7 +73,7 @@
                   %span= d
             %br
             %span= label
-          %div.streakspace.counterbox
+          %div.streakspace.counterbox{ style: "width: #{@show_feedback ? '60' : '90'};" }
             %span.counter
               - if @show_feedback
                 - digits = @streak

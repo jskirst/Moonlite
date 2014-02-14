@@ -49,8 +49,8 @@ $.MB.Arena.keyboard_shortcuts = ->
 
 $.MB.Arena.init = (options = {}) ->
   $.continue_countdown = true
-  $.percent_remaining = 100
-  $.points_remaining = 100
+  $.percent_remaining = parseInt($("#points_remaining").val())
+  $.points_remaining = parseInt($("#points_remaining").val())
   $.delay = options["delay"] || 3000
   $.MB.Arena.keyboard_shortcuts()
   
@@ -61,6 +61,7 @@ $.MB.Arena.init = (options = {}) ->
     return true
   
   $(".answer_content").on "click", ->
+    $(".answer_content").css("cursor", "wait")
     $(this).css('background-color', '#C6C6DA')
     $.continue_countdown = false
     $(this).find("input").attr("checked", "checked")
@@ -89,7 +90,7 @@ $.MB.Arena.init = (options = {}) ->
             $(this).css("background-color", "rgba(104, 231, 104, 0.79)").css("color", "white")
           else if String($(this).data("answer")) == String(data.answer)
             $(this).css("background-color", "#FF9999").css("color", "white")
-        
+    $(".answer_content").css("cursor", "pointer") 
     $("#nextbutton").show()
   
   if options["start_countdown"]

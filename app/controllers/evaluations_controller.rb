@@ -167,7 +167,9 @@ class EvaluationsController < ApplicationController
       if @streak > @enrollment.longest_streak
         @enrollment.update_attribute(:longest_streak, @streak)
       end
-      @completed_task = CompletedTask.find_or_create(current_user.id, @task.id, session_id: @session_id)
+      
+      @completed_task = CompletedTask.find_or_create(current_user, @task, @enrollment, @session_id)
+
       @answers = Answer.cached_find_by_task_id(@task.id).shuffle
       @stored_resource = @task.stored_resources.first
       if @task.core?

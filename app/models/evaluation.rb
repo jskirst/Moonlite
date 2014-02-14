@@ -91,7 +91,9 @@ class Evaluation < ActiveRecord::Base
   end
   
   def next_task_of_type(user, path, answer_types, answer_sub_types = nil)
-    return tasks_of_type(path, answer_types, answer_sub_types).where("NOT EXISTS (SELECT * FROM completed_tasks WHERE completed_tasks.user_id = ? and completed_tasks.task_id = tasks.id and completed_tasks.deleted_at is NULL)", user.id).first
+    ct_query = "SELECT * FROM completed_tasks ct WHERE ct.user_id = ? and ct.task_id = tasks.id"
+    ct_query += " and ct.status_id is not NULL and ct.status_id >= 0"
+    return tasks_of_type(path, answer_types, answer_sub_types).where("NOT EXISTS (#{ct_query})", user.id).first
   end
   
   def completed_count(user, path, types)

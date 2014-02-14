@@ -4,7 +4,7 @@ class CompletedTask < ActiveRecord::Base
   attr_readonly :task_id
   attr_protected :updated_at, :answer_id, :points_awarded, :award_points
   attr_accessible :status_id, :task_id, :session_id, :submitted_answer_id, :enrollment_id
-  attr_accessor :award_points, :correct_answer
+  attr_accessor :award_points, :correct_answer, :points_remaining
   
   belongs_to :user
   belongs_to :task
@@ -40,36 +40,29 @@ class CompletedTask < ActiveRecord::Base
   def correct?() status_id == Answer::CORRECT end
   def incorrect?() status_id == Answer::INCORRECT end
     
-  def self.find_or_create(user_id, task_id, session_id = nil)
-    enrollment_record = Path.joins("INNER JOIN sections on sections.path_id=paths.id")
-      .joins("INNER JOIN tasks on tasks.section_id=sections.id and tasks.id=#{task_id.to_s}")
-      .joins("LEFT JOIN enrollments on enrollments.path_id=paths.id and enrollments.user_id=#{user_id.to_i}")
-      .select("paths.id as path_id, enrollments.id as enrollment_id")
-      .first
-    unless enrollment_id = enrollment_record.enrollment_id
-      enrollment = Enrollment.new
-      enrollment.user_id = user_id
-      enrollment.path_id = enrollment_record.path_id
-      enrollment.save!
-      enrollment_id = enrollment.id
-    end
-    
-    ct = find_by_user_id_and_task_id(user_id, task_id)
-    unless ct
-      ct = new(task_id: task_id, enrollment_id: enrollment_id, session_id: session_id)
-      ct.user_id = user_id
+  def self.find_or_create(user, task, enrollment, session_id)
+    enrollment = user.enroll!(task.path) unless enrollment
+
+    unless ct = where(user_id: user.id, task_id: task.id).first
+      ct = new(task_id: task.id, enrollment_id: enrollment.id, session_id: session_id)
+      ct.user_id = user.id
       ct.save!
+      ct.reload
     end
+
     return ct
   end
     
   def complete_core_task!(supplied_answer, points)
     if status_id != Answer::INCOMPLETE
-      raise "Already answered"
-    elsif created_at <= 60.seconds.ago and points.to_i > 0
-      raise "Out of time"
+      raise "Already answered: #{self.to_yaml}" 
     end
     
+    time_limit = created_at + task.time_allowed
+    if points > 0 and time_limit < Time.now
+      points = 0 
+    end
+
     self.answer = supplied_answer
     matched_answer = nil
     answers = Answer.cached_find_by_task_id(task_id)
@@ -92,5 +85,14 @@ class CompletedTask < ActiveRecord::Base
       self.points_awarded = 0
     end
     save!
+  end
+
+  def points_remaining
+    self.created_at ||= Time.now
+    time_remaining = (self.created_at + self.task.time_allowed) - Time.now
+    points = ((time_remaining / 45) * 100).to_i
+    points = 100 if points > 100
+    points = 0 unless points > 0
+    return points
   end
 end

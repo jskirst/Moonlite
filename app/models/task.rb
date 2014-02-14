@@ -218,6 +218,9 @@ class Task < ActiveRecord::Base
       return delay_time.round(3)
     end
   end
+  def time_allowed
+    ((delay.to_f / 1000.0) + 45).seconds
+  end
   
   # Cached methods
   

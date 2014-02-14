@@ -34,7 +34,6 @@
 
 %div.quizcontainer{ style: "margin-top: 85px;"}
   = form_for(@task, url: took_task_url(@task), html: { id: "challenge_form", style: "margin: 0;" }) do |f|
-    = hidden_field_tag "draft_redirect_url", continue_task_evaluation_url(@evaluation, @path, @task)
     = hidden_field_tag "submit_redirect_url", continue_evaluation_url(@evaluation, @path)
     %div.CRquizspace
       %div.quizheader
