@@ -59,8 +59,12 @@ class CompletedTask < ActiveRecord::Base
     end
     
     time_limit = created_at + task.time_allowed
-    if points > 0 and time_limit < Time.now
-      points = 0 
+    if points > 0
+      if time_limit < Time.now
+        points = 0 
+      elsif (points - points_remaining).abs > 6
+        points = points_remaining
+      end
     end
 
     self.answer = supplied_answer
