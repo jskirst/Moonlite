@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
   before_action :log_visit
   
   private
+
+  def group_access_denied
+    flash[:error] = "Access denied to private content."
+    redirect_to root_path
+  end
   
   def assign_resource(obj, resource_id)
     sr = StoredResource.find(resource_id)

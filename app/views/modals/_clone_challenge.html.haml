@@ -16,7 +16,7 @@
           You are making a copy of MetaBright's
           %span#challenge_name 
           Challenge. If you'd like, you can customize this Challenge to better fit the needs of your organization.
-        = form_for(@new_custom_path) do |f|
+        = form_for(@group.paths.new) do |f|
           = hidden_field_tag :group_id, @group.id
           = f.hidden_field :parent_id
           %p{ style: "font-size: 15px; display: inline; position: relative; bottom: 2px; "} Your new Challenge name:
@@ -25,6 +25,10 @@
           
 :javascript
   $(function(){
+    $(".clone_challenge_link").click(function(){
+      $("#clone_challenge_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+    });
+
     $("form").submit(function(){
       if($("#path_name").val() == ""){
         alert("You must provide a Challenge name before you can clone this Challenge.");
