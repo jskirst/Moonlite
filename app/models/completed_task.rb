@@ -21,6 +21,10 @@ class CompletedTask < ActiveRecord::Base
   validates_uniqueness_of :task_id, scope: :user_id
   validates :status_id, presence: true
   
+  after_initialize do
+    self.created_at ||= Time.now()
+  end
+
   before_create do
     self.status_id = Answer::INCOMPLETE
   end

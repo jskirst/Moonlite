@@ -7,7 +7,12 @@
     - @show_feedback = true if @show_feedback.nil?
     :javascript
       $(function(){
-        $.MB.arena = new Arena(#{@task.delay}, #{@show_feedback}, #{@start_countdown})
+        var start_time = #{@completed_task.created_at.utc.to_i*1000}
+        var time_limit = 45000
+        var delay = #{@task.delay}
+        var feedback = #{@show_feedback}
+        var countdown = #{@start_countdown}
+        $.MB.arena = new Arena(start_time, time_limit, delay, feedback, countdown)
         $(".quizcontainer").fadeIn();
       });
      

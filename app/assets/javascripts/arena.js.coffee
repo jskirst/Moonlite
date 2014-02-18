@@ -1,21 +1,33 @@
 class @Arena
-  constructor: (@delay = 3000, @feedback = true, @countdown = true) ->
-    @delay = 4000
-    @feedback = true
-    @countdown = true
-    
-    @percent_remaining = parseInt($("#points_remaining").val())
-    @points_remaining = parseInt($("#points_remaining").val())
-    @initialized = true
+  constructor: (@init_time, @time_limit, @delay, @feedback, @countdown) ->
+    @start_time = @init_time + delay
+    @end_time = @start_time + @time_limit
 
+    @bar_element = $(".pointbarfiller")
+    @points_element = $(".pointbarfiller").parent().find("div.pointbartext")
+    @points_input = $("#points_remaining")
+    
     @unbind_all()
     @bind_keyboard_shortcuts()
     @bind_answer_clicks()
     @bind_submit()
     @bind_submit_failure()
     @bind_submit_success()
-
     @start_countdown() if @countdown
+
+  percentage_remaining: =>
+    now = new Date().getTime();
+    total_time = @end_time - @start_time
+    seconds_elapsed = now - @start_time
+    pr = ((@end_time - now) / total_time) * 100
+    if pr < 0
+      @continue_countdown = false
+      return 0
+    else
+      return pr
+
+  points_remaining: =>
+    return Math.round(@percentage_remaining())
 
   unbind_all: =>
     $(".answer_content").unbind();
@@ -62,20 +74,16 @@ class @Arena
       $("#nextbutton").show()
 
   count_down_points: =>
-    console.log("Running count down points")
-    if @points_remaining > 0 and @continue_countdown
-      @points_remaining = @points_remaining - 1
-      $(".pointbarfiller").parent().find("div.pointbartext").text(@points_remaining + " points")
-      $("#points_remaining").val(@points_remaining);
+    if @continue_countdown
+      points = @points_remaining()  
+      @points_element.text(points + " points")
+      @points_input.val(points);
     else
-      clearInterval(@count_down_points_interval)
+      clearInterval(@count_down_points_interval) 
 
   count_down_bar: =>
-    console.log("Running countdown bar")
-    if @percent_remaining > 0 and @continue_countdown
-      $bar = $(".pointbarfiller")
-      @percent_remaining = @percent_remaining - .1
-      $bar.css("width", @percent_remaining+"%")
+    if @continue_countdown
+      @bar_element.css("width", @percentage_remaining()+"%")
     else
       clearInterval(@count_down_bar_interval)
     
@@ -83,8 +91,8 @@ class @Arena
     console.log("Starting countdown")
     @continue_countdown = true
     @start_countdown_timeout = setTimeout(=>
-      @count_down_bar_interval = setInterval(@count_down_bar, 45)
-      @count_down_points_interval = setInterval(@count_down_points, 450)
+      @count_down_bar_interval = setInterval(@count_down_bar, 100)
+      @count_down_points_interval = setInterval(@count_down_points, 300)
     , @delay)
   
   bind_keyboard_shortcuts: ->
