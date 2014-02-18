@@ -202,8 +202,12 @@ class PagesController < ApplicationController
   end
   
   def mark_read
-    current_user.user_events.unread.each{ |ue| ue.update_attribute(:read_at, Time.now) }
-    render json: { status: "success" }
+    if current_user
+      current_user.user_events.unread.each{ |ue| ue.update_attribute(:read_at, Time.now) }
+      render json: { status: "success" }
+    else
+      render nothing: true, status: 401
+    end
   end
   
   def about

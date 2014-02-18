@@ -22,7 +22,6 @@ class PathsController < ApplicationController
         end
       end
       @public_paths = @public_paths.sort_by{|path| [path.name.upcase]}
-      @new_custom_path = @group.paths.new
       render "groups/challenges"
     else
       @paths = current_user.paths.to_a + current_user.collaborating_paths.order("updated_at DESC").to_a
@@ -489,22 +488,24 @@ class PathsController < ApplicationController
     end
     
     def load_group
+      return unless current_user
+      
       if params[:group_id]
         @group = current_user.groups.where(permalink: params[:group_id]).first
         @group = current_user.groups.where(id: params[:group_id]).first unless @group
-        raise "Access Denied: Not a group member." unless @group
+        return group_access_denied unless @group
       elsif @path and @path.group_id
         @group = current_user.groups.where(id: @path.group_id).first
-        raise "Access Denied: Not a group member." unless @group
+        return group_access_denied unless @group
       end
       
       if @group
-        @hide_background = true
-        @group_custom_style = @group.custom_style 
-      end
-      
-      if @group and not @group.admin?(current_user)
-        raise "Access Denied"
+        if @group.admin?(current_user)
+          @hide_background = true
+          @group_custom_style = @group.custom_style 
+        else
+          return group_access_denied
+        end
       end
     end
     

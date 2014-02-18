@@ -1,13 +1,18 @@
 :css
   body.employer{ background-image: url("https://s3.amazonaws.com/moonlite-nsdub/static/Backgrounds/gplaypattern.png"); background-repeat: repeat; background-size: auto; }
-    
+= render "modals/evaluation"
 %div.quizcontainer.hide{ style: "#{@stored_resource.nil? ? '': 'margin-top: 110px;'} #{'width: inherit;' unless @show_stats}" }
   = render "modals/report_issue"
   %div.quizspace
     - @show_feedback = true if @show_feedback.nil?
     :javascript
       $(function(){
-        $.MB.Arena.init({start_countdown: #{@start_countdown}, show_feedback: #{@show_feedback}, delay: #{@task.delay}});
+        var start_time = #{@completed_task.created_at.utc.to_i*1000}
+        var time_limit = 45000
+        var delay = #{@task.delay}
+        var feedback = #{@show_feedback}
+        var countdown = #{@start_countdown}
+        $.MB.arena = new Arena(start_time, time_limit, delay, feedback, countdown)
         $(".quizcontainer").fadeIn();
       });
      
@@ -91,3 +96,8 @@
         %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
       - if current_user and params[:controller] != "evaluations"
         %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question
+- if @evaluation and false
+  :javascript
+    $(window).unbind("blur").blur(function(){
+      $("#evaluation_modal").modal({show: true, animate: false})
+    });

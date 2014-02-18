@@ -1,5 +1,6 @@
 :javascript
   $(function(){
+    console.log("FIRING")
     $(".clone_challenge_link").click(function(){
       var parent_id = $(this).attr("data-parent")
       $("#path_parent_id").val(parent_id)
@@ -14,6 +15,6 @@
 %ul
   - @public_paths.each do |path|
     %li
-      = link_to "#", class: "clone_challenge_link", data: {parent: path.id, name: path.name} do
+      %a{ class: "clone_challenge_link", data: {parent: path.id, name: path.name} }
         = image_tag path.picture
         %span= path.name
