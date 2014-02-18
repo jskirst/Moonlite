@@ -97,6 +97,7 @@ Metabright::Application.routes.draw do
         get :grade
         get :export
         put :save
+        post :bulk_save
       end
     end
     

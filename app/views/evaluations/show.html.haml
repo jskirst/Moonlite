@@ -2,16 +2,78 @@
   .container.body {width: 1040px;}
   [data-tip]:before { left: 4px; }
   [data-tip]:after { left: -50px; }
+  .form_submit [data-tip]:after { left: -64px !important; }
   .no_data {display: inline-block;}
   .no_data [data-tip]:after { width: 180px; height: 56px; top: -73px; white-space: normal;}
   .challenge_image_tt { display: inline-block; }
   .challenge_image_tt [data-tip]:before { left: 11px;  }
   .challenge_image_tt [data-tip]:after { left: -2px; }
   .body tbody tr:hover { background-color: #EEE; }
+  input[type="checkbox"] {margin-top: -2px;}
+  
+:javascript
+  $(document).ready(function() {
+    $('.form_submit').on('click', function() {
+      mode = $(this).attr("data-mode");
+      $('#action_mode').val(mode);
+      $('#eval_enrollments_form').submit(); 
+    });
+  });
+  
+  /* Click anywhere in tr, checkbox is selected */
+  function selectRow(row)
+  {
+    var firstInput = row.getElementsByTagName('input')[0];
+    firstInput.checked = !firstInput.checked;
+  }
+  
+  /* Initialize the select-all-checkbox */
+  $(document).ready(function() {
+    selectAllCheckbox.init();
+  });
+  
+  selectAllCheckbox = function () {
+    /* When select-all is clicked, ensure checked state of all items equals the select all state */
+    selectAllClicked = function() {
+      $(".select-checkbox input").attr("checked", $(".select-all-checkbox input").is(":checked"));
+    },
+    /* When an item checkbox is clicked, ensure the select all checkbox is ticked only if all items are ticked */
+    individualClicked = function() {
+      var all;
+      $(".select-checkbox input").each(function() {
+        all = $(this).is(":checked");
+        if (!all) return false;
+      });
+      $(".select-all-checkbox input").attr("checked", all);
+    };
+    tableActions = function() {
+      $('#table_actions').show();
+    };
+    return {
+      init: function() {
+        $(".select-all-checkbox input").click(selectAllClicked);
+        $(".select-all-checkbox input").click(tableActions);
+        $(".select-checkbox input").click(individualClicked);
+        $(".select-checkbox input").click(tableActions);
+      }
+    }
+  }();
 
 #evaluation_manager.employer-container{ style: "background-color:rgba(36, 72, 109, 0.8); margin-top: 40px;" }
   .employer-box{ style: "background-color: white; padding:8px;" }
     .header{ style: "margin-bottom: 10px;" }
+      #table_actions.controls{ style: "display: none; margin-left: 6px;"}
+        - if @showing_archived
+          %a{class: "form_submit", data:{mode:"unarchive"} }
+            %div{ "data-tip" => "Unarchive Selected" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
+        - else
+          %a{class: "form_submit", data:{mode:"archive"} }
+            %div{ "data-tip" => "Archive Selected" }
+              = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
+        %a{class: "form_submit", data:{mode:"favorite"} }
+          %div{ "data-tip" => "Favorite Selected" }
+            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
       .controls
         = link_to group_evaluations_path(@group) do
           %div{ "data-tip" => "Back" }
@@ -25,54 +87,63 @@
           %h2{ style: "font-size: 30px; margin-bottom: -2px; margin-top: -9px; " }= @evaluation.title
           %h3{ style: "font-size:20px; margin-left: 5px; "} Evaluation Results
     .body{ style: "padding: 0 12px;"}
-      %table.table
-        %thead
-          %tr{ style: "border-bottom: 1px solid rgba(0, 0, 0, .1);"}
-            %th Name
-            %th Email
-            - @paths.each do |p|
-              %th{ title: p.name, style: "width: 70px; text-align: center; " }
-                .challenge_image_tt
-                  %div{ "data-tip" => p.name }
-                    = image_tag p.picture, class: "challenge_pic"
-            %th Submitted
-            %th{ style: "text-align: right;" }
-        %tbody
-          - @evaluations.each_with_index do |e, i|
-            %tr
-              - if @candidate_limit_reached and i >= Group::TRIAL_CANDIDATE_LIMIT
-                %td
-                  = truncate(e.name, length: 30, separator: ' ')
-                %td{ colspan: 5 }
-                  = link_to "Upgrade to view results", edit_group_path(@admin_group)
-              - else
-                %td
-                  = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id), "data-no-turbolinks" => true
-                %td= truncate(e.email, length: 25, separator: ' ')
-                - @paths.each do |p|
-                  - skill_level = Enrollment.describe_skill_level(e["e#{p.id}_metascore"])
-                  - if skill_level == "Not Enough Data"
-                    - skill_level = "N/A"
-                  %td{ style: "text-align: center;"}
-                    %span{class: "label #{skill_level.downcase}" }= skill_level
-                %td
-                  - if e.submitted_at
-                    #{time_ago_in_words(e.submitted_at)} ago
-                %td
-                  - if e.favorited_at
-                    %img{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_yellow.png", style: "width: 15px; height: 15px; margin-top: -3px;", title: "Favorited" }
-          - if @archive_exists
-            %tr
-              %td{ style: "border: none; "}
-                - if @showing_archived
-                  = link_to "- Hide archived candidates", group_evaluation_url(@group, @evaluation), style: "color: #404040"
+      = form_tag({controller: "evaluations", action: "bulk_save"}, id: "eval_enrollments_form") do
+        = hidden_field_tag :action_mode
+        %table.table
+          %thead
+            %tr{ style: "border-bottom: 1px solid rgba(0, 0, 0, .1);"}
+              %th.select-all-checkbox
+                %input{type: "checkbox"}
+              %th Name
+              %th Email
+              - @paths.each do |p|
+                %th{ title: p.name, style: "width: 70px; text-align: center; " }
+                  .challenge_image_tt
+                    %div{ "data-tip" => p.name }
+                      = image_tag p.picture, class: "challenge_pic"
+              %th Submitted
+              %th{ style: "text-align: right;" }
+          %tbody
+            - @evaluations.each_with_index do |e, i|
+              %tr{onclick: "selectRow(this);"}
+                - if @candidate_limit_reached and i >= Group::TRIAL_CANDIDATE_LIMIT
+                  %td
+                    = truncate(e.name, length: 30, separator: ' ')
+                  %td{ colspan: 6 }
+                    = link_to "Upgrade to view results", edit_group_path(@admin_group)
                 - else
-                  = link_to "+ Show archived candidates", group_evaluation_url(@group, @evaluation, archived: true), style: "color: #404040"
-          - if @evaluations.empty? and not @archive_exists
-            %tr
-              %td{ colspan: 5, style: "border-top: none;" } No one has taken this evaluation yet.
-      - if @candidate_limit_reached
-        .alert-preview.small-text.orange{ style: "margin: 20px auto;"}
-          %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.
+                  %td.select-checkbox
+                    = check_box_tag "eval_enrollment_ids[]", e.id
+                  %td
+                    = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id), "data-no-turbolinks" => true
+                  %td= truncate(e.email, length: 25, separator: ' ')
+                  - @paths.each do |p|
+                    - skill_level = Enrollment.describe_skill_level(e["e#{p.id}_metascore"])
+                    - if skill_level == "Not Enough Data"
+                      - skill_level = "N/A"
+                    %td{ style: "text-align: center;"}
+                      %span{class: "label #{skill_level.downcase}" }= skill_level
+                  %td
+                    - if e.submitted_at
+                      #{time_ago_in_words(e.submitted_at)} ago
+                  %td{ style: "text-align: right; width: 40px;"}
+                    - if e.favorited_at
+                      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_yellow.png", style: "width: 15px; height: 15px; margin-top: -3px;", title: "Favorited" 
+                    - if e.archived_at
+                      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "width: 15px; height: 15px; margin-top: -3px; margin-left: 5px;", title: "Archived"
+                      
+            - if @archive_exists
+              %tr
+                %td{ style: "border: none; ", colspan: 6}
+                  - if @showing_archived
+                    = link_to "Show active candidates", group_evaluation_url(@group, @evaluation), style: "color: #404040"
+                  - else
+                    = link_to "Show archived candidates", group_evaluation_url(@group, @evaluation, archived: true), style: "color: #404040"
+            - if @evaluations.empty? and not @archive_exists
+              %tr
+                %td{ colspan: 6, style: "border-top: none;" } No one has taken this evaluation yet.
+        - if @candidate_limit_reached
+          .alert-preview.small-text.orange{ style: "margin: 20px auto;"}
+            %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.
         
 
