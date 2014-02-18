@@ -52,9 +52,9 @@
               .clear_floats
               %a{style: "text-align: center; display: block; margin: 20px 0 0;", "data-target" => "#signup_form", "data-toggle" => "collapse", type: "button"} --Or create an account using your name, email address, and password--
               / When there are errors here, it should redirect back to eval url
-              #signup_form.collapse{ style: "padding-right: 0 1% 1% 0; width: 100%; margin-top: 17px;"}
+              #signup_form.collapse{ style: "padding: 0 1% 1% 0; width: 100%;"}
                 - @user = current_user || User.new
-                = form_for(@user) do |f|
+                = form_for(@user, :html => { :style => 'margin-top: 17px;' }) do |f|
                   = hidden_field_tag "redirect_url", take_group_evaluation_url(@evaluation.permalink)
                   = f.text_field :name, placeholder: "Name", style: "float: left; margin: 0;", tabindex: "4"
                   = f.password_field :password, value: nil, placeholder: "Password", style: "float: right; margin: 0;", tabindex: "6"
