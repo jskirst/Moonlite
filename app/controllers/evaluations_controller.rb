@@ -24,11 +24,13 @@ class EvaluationsController < ApplicationController
     @paths = @evaluation.paths
     @evaluations = @evaluation.evaluation_enrollments.where("submitted_at is not ?", nil)
       .joins(:user)
-      .select("evaluation_enrollments.*, users.*")
+      .select("users.*, evaluation_enrollments.*")
     @archive_exists = @evaluation.evaluation_enrollments.where("submitted_at is not ?", nil)
       .where("evaluation_enrollments.archived_at is not ?", nil)
       .any?
-    unless params[:archived]
+    if params[:archived]
+      @evaluations = @evaluations.where.not("evaluation_enrollments.archived_at is ?", nil)
+    else
       @evaluations = @evaluations.where("evaluation_enrollments.archived_at is ?", nil)
     end
     if params[:archived]
@@ -42,6 +44,24 @@ class EvaluationsController < ApplicationController
       @evaluations = @evaluations.joins("LEFT JOIN enrollments #{e} on #{e}.user_id=evaluation_enrollments.user_id and #{e}.path_id=#{p.id}")
       @evaluations = @evaluations.select("#{e}.metapercentile as #{e}_total_points, #{e}.metapercentile as #{e}_metapercentile, #{e}.metascore as #{e}_metascore")
     end
+  end
+  
+  def bulk_save
+    action_mode = params[:action_mode]
+    time = Time.now()
+    params[:eval_enrollment_ids].each do |id|
+      ee = @evaluation.evaluation_enrollments.where("evaluation_enrollments.id = ?", id).first
+      if action_mode == "favorite"
+        ee.update_attribute(:favorited_at, time)
+      elsif action_mode == "archive"
+        ee.update_attribute(:archived_at, time)
+      elsif action_mode == "unarchive"
+        ee.update_attribute(:archived_at, nil)
+      else
+        raise "Access Denied: Unknown mode[#{params[:action_mode]}]"
+      end
+    end
+    redirect_to group_evaluation_path(@group, @evaluation)
   end
   
   def new
