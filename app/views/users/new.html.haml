@@ -1,5 +1,5 @@
 #employer.aboutcontainer.registration
-  .aboutbox{ style: "margin: 5px; "}
+  .aboutbox{ style: "margin: 5px; border-radius: 4px;"}
     .aboutheader
       %img{ src: STONEY_SMALL_URL, alt: "Stoney"}
       %span Sign up for MetaBright
@@ -41,7 +41,7 @@
           %div{style: "background-image: url(#{ICON_DIVIDER_URL}); background-repeat:no-repeat; text-align: center; background-position: center 10px; width:550px; margin:10px auto 20px; "} OR
           = form_for(@user) do |f|
             = hidden_field_tag "redirect_url", root_path
-            = f.text_field :name, value: nil, placeholder: "Name"
-            = f.text_field :email, style: "margin-left: 10px; margin-right: 10px;", value: nil, placeholder: "E-Mail"
-            = f.password_field :password, value: nil, placeholder: "Password"
-            = f.submit "Submit", class: "button"
+            = f.text_field :name, value: nil, placeholder: "Name", style: "float: left; margin: 0;", tabindex: "6"
+            = f.password_field :password, value: nil, placeholder: "Password", style: "float: right; margin: 0;", tabindex: "8"
+            = f.text_field :email, value: nil, placeholder: "E-Mail", style: "margin: 0 auto; display: block;", tabindex: "7"
+            = f.submit "Submit", class: "button", style: "margin-top: 10px;", tabindex: "9"
