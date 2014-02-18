@@ -51,9 +51,7 @@ class EvaluationsController < ApplicationController
     time = Time.now()
     params[:eval_enrollment_ids].each do |id|
       ee = @evaluation.evaluation_enrollments.where("evaluation_enrollments.id = ?", id).first
-      if action_mode == "favorite"
-        ee.update_attribute(:favorited_at, time)
-      elsif action_mode == "archive"
+      if action_mode == "archive"
         ee.update_attribute(:archived_at, time)
       elsif action_mode == "unarchive"
         ee.update_attribute(:archived_at, nil)
