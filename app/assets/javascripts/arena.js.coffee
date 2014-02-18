@@ -1,6 +1,5 @@
 class @Arena
-  constructor: (@init_time, @time_limit, @delay, @feedback, @countdown) ->
-    @start_time = @init_time + delay
+  constructor: (@start_time, @time_limit, @feedback, @countdown) ->
     @end_time = @start_time + @time_limit
 
     @bar_element = $(".pointbarfiller")
@@ -90,10 +89,12 @@ class @Arena
   start_countdown: =>
     console.log("Starting countdown")
     @continue_countdown = true
+    wait = Math.max((@start_time - (new Date().getTime())), 0)
+    console.log("Waiting: "+wait)
     @start_countdown_timeout = setTimeout(=>
       @count_down_bar_interval = setInterval(@count_down_bar, 100)
       @count_down_points_interval = setInterval(@count_down_points, 300)
-    , @delay)
+    , wait)
   
   bind_keyboard_shortcuts: ->
     $(document).unbind("keyup").keyup (event) ->

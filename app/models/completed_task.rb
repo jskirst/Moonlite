@@ -103,4 +103,7 @@ class CompletedTask < ActiveRecord::Base
     points = 0 unless points > 0
     return points
   end
+  def start_time
+    self.created_at + (task.delay / 1000.0).seconds
+  end
 end

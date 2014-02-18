@@ -212,14 +212,15 @@ class Task < ActiveRecord::Base
     # The character_mult is calculated according the speed at which the average American adult reads
     character_mult = 36 
     delay_time = q_length * character_mult
+    delay_time += 2000
     if delay_time > 20000
       return 20000
     else
-      return delay_time.round(3)
+      return delay_time.to_i
     end
   end
   def time_allowed
-    ((delay.to_f / 1000.0) + 45).seconds
+    ((delay + 45000) / 1000.0).seconds
   end
   
   # Cached methods
