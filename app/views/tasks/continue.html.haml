@@ -95,8 +95,8 @@
         %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
       - if current_user and params[:controller] != "evaluations"
         %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question
-- if @evaluation and false
+- if @evaluation
   :javascript
     $(window).unbind("blur").blur(function(){
-      $("#evaluation_modal").modal({show: true, animate: false})
+      alert("No no no! No no no! No no no!")
     });

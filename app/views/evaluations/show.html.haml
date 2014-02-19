@@ -12,52 +12,62 @@
   input[type="checkbox"] {margin-top: -2px;}
   
 :javascript
-  $(document).ready(function() {
+  function anySelected(){
+    var any = false;
+    $(".select-checkbox input").each(function() {
+      any = $(this).is(":checked");
+      if (any == true) return false;
+    });
+    return any;
+  }
+
+  function allSelected(){
+    var all;
+    $(".select-checkbox input").each(function() {
+      all = $(this).is(":checked");
+      if (!all) return false;
+    });
+    return all;
+  }
+
+  function selectAllClicked() {
+    var checked = $(".select-all-checkbox input").is(":checked");
+    $(".select-checkbox input").prop("checked", checked);
+    console.log("selectAllClicked")
+    console.log(checked);
+  }
+
+  function individualClicked() {
+    $(".select-all-checkbox input").prop("checked", allSelected());
+  }
+  
+  function tableActions() {
+    if(anySelected()){
+      $('#table_actions').show();
+    } else {
+      $('#table_actions').hide();
+    }
+  }
+
+  $(function() {
     $('.form_submit').on('click', function() {
       mode = $(this).attr("data-mode");
       $('#action_mode').val(mode);
       $('#eval_enrollments_form').submit(); 
     });
-  });
-  
-  /* Click anywhere in tr, checkbox is selected */
-  function selectRow(row)
-  {
-    var firstInput = row.getElementsByTagName('input')[0];
-    firstInput.checked = !firstInput.checked;
-  }
-  
-  /* Initialize the select-all-checkbox */
-  $(document).ready(function() {
-    selectAllCheckbox.init();
-  });
-  
-  selectAllCheckbox = function () {
-    /* When select-all is clicked, ensure checked state of all items equals the select all state */
-    selectAllClicked = function() {
-      $(".select-checkbox input").attr("checked", $(".select-all-checkbox input").is(":checked"));
-    },
-    /* When an item checkbox is clicked, ensure the select all checkbox is ticked only if all items are ticked */
-    individualClicked = function() {
-      var all;
-      $(".select-checkbox input").each(function() {
-        all = $(this).is(":checked");
-        if (!all) return false;
-      });
-      $(".select-all-checkbox input").attr("checked", all);
-    };
-    tableActions = function() {
-      $('#table_actions').show();
-    };
-    return {
-      init: function() {
-        $(".select-all-checkbox input").click(selectAllClicked);
-        $(".select-all-checkbox input").click(tableActions);
-        $(".select-checkbox input").click(individualClicked);
-        $(".select-checkbox input").click(tableActions);
+
+    $(".eval-row").click(function(e){
+      if(!$(e.target).is("input")){
+        var firstInput = this.getElementsByTagName('input')[0];
+        firstInput.checked = !firstInput.checked;
       }
-    }
-  }();
+    })
+
+    $(".select-all-checkbox input").click(selectAllClicked);
+    $(".select-all-checkbox input").click(tableActions);
+    $(".select-checkbox input").click(individualClicked);
+    $(".select-checkbox input").click(tableActions);
+  });
 
 #evaluation_manager.employer-container{ style: "background-color:rgba(36, 72, 109, 0.8); margin-top: 40px;" }
   .employer-box{ style: "background-color: white; padding:8px;" }
@@ -105,7 +115,7 @@
               %th{ style: "text-align: right;" }
           %tbody
             - @evaluations.each_with_index do |e, i|
-              %tr{onclick: "selectRow(this);"}
+              %tr.eval-row
                 - if @candidate_limit_reached and i >= Group::TRIAL_CANDIDATE_LIMIT
                   %td
                     = truncate(e.name, length: 30, separator: ' ')
