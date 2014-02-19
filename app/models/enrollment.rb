@@ -27,7 +27,7 @@ class Enrollment < ActiveRecord::Base
     end
   end
 
-  def next_task(user:, path:, section: nil, answer_types:, answer_sub_types: nil, difficulty: 0, count: 1)
+  def next_task(user: nil, path: nil, section: nil, answer_types: nil, answer_sub_types: nil, difficulty: 0, count: 1)
     ct_query = "SELECT * FROM completed_tasks ct WHERE ct.user_id = ? and ct.task_id = tasks.id"
     ct_query += " and ct.status_id is not NULL and ct.status_id >= 0"
     

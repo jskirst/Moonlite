@@ -15,10 +15,12 @@ class @Arena
     @start_countdown() if @countdown
 
   percentage_remaining: =>
-    now = new Date().getTime();
+    now = Date.now();
     total_time = @end_time - @start_time
     seconds_elapsed = now - @start_time
     pr = ((@end_time - now) / total_time) * 100
+    console.log("PERCENTAGE REMAINING")
+    console.log(pr)
     if pr < 0
       @continue_countdown = false
       return 0
@@ -88,11 +90,14 @@ class @Arena
     
   start_countdown: =>
     @continue_countdown = true
-    wait = Math.max((@start_time - (new Date().getTime())), 0)
+    delay = @start_time - Date.now()
+    console.log("DELAY")
+    console.log(delay)
+    delay = Math.max(delay, 0)
     @start_countdown_timeout = setTimeout(=>
       @count_down_bar_interval = setInterval(@count_down_bar, 100)
       @count_down_points_interval = setInterval(@count_down_points, 300)
-    , wait)
+    , delay)
   
   bind_keyboard_shortcuts: ->
     $(document).unbind("keyup").keyup (event) ->
