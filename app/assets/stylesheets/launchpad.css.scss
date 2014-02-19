@@ -197,6 +197,7 @@ $success_color: #62c462;
     margin: 15px auto;
   }
   form { margin-bottom: 0; }
-  input { padding: 10px 15px; font-size: 16px; width: 157px; text-align: left; }
+  input { padding: 10px 15px; font-size: 16px; text-align: left; }
+  input[type="text"], input[type="password"] {width: 206px; font-size: 13px; padding: 5px 10px;}
   input:nth-child(3) { margin-right:5px; }
 }

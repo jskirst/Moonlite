@@ -81,9 +81,6 @@
           %a{class: "form_submit", data:{mode:"archive"} }
             %div{ "data-tip" => "Archive Selected" }
               = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive.png"
-        %a{class: "form_submit", data:{mode:"favorite"} }
-          %div{ "data-tip" => "Favorite Selected" }
-            = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/favorite.png", style: "margin-right: 0;"
       .controls
         = link_to group_evaluations_path(@group) do
           %div{ "data-tip" => "Back" }
@@ -104,6 +101,7 @@
             %tr{ style: "border-bottom: 1px solid rgba(0, 0, 0, .1);"}
               %th.select-all-checkbox
                 %input{type: "checkbox"}
+              %th
               %th Name
               %th Email
               - @paths.each do |p|
@@ -112,7 +110,6 @@
                     %div{ "data-tip" => p.name }
                       = image_tag p.picture, class: "challenge_pic"
               %th Submitted
-              %th{ style: "text-align: right;" }
           %tbody
             - @evaluations.each_with_index do |e, i|
               %tr.eval-row
@@ -122,8 +119,13 @@
                   %td{ colspan: 6 }
                     = link_to "Upgrade to view results", edit_group_path(@admin_group)
                 - else
-                  %td.select-checkbox
+                  %td.select-checkbox{ style: "width: 12px;"}
                     = check_box_tag "eval_enrollment_ids[]", e.id
+                  %td{ style: "padding: 10px 2px; text-align: center; "}
+                    - if e.favorited_at
+                      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_yellow.png", style: "width: 15px; height: 15px; margin-top: -3px;", title: "Favorited" 
+                    - if e.archived_at
+                      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "width: 15px; height: 15px; margin-top: -3px; margin-left: 5px;", title: "Archived"
                   %td
                     = link_to truncate(e.name, length: 30, separator: ' '), grade_group_evaluation_url(@group, @evaluation, u: e.user_id), "data-no-turbolinks" => true
                   %td= truncate(e.email, length: 25, separator: ' ')
@@ -136,11 +138,7 @@
                   %td
                     - if e.submitted_at
                       #{time_ago_in_words(e.submitted_at)} ago
-                  %td{ style: "text-align: right; width: 40px;"}
-                    - if e.favorited_at
-                      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/Badges/star_yellow.png", style: "width: 15px; height: 15px; margin-top: -3px;", title: "Favorited" 
-                    - if e.archived_at
-                      = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/archive_selected.png", style: "width: 15px; height: 15px; margin-top: -3px; margin-left: 5px;", title: "Archived"
+                  
                       
             - if @archive_exists
               %tr

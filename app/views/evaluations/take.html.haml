@@ -34,20 +34,33 @@
         .instructions
           %h4 Create an Account
           = image_tag LIGHT_BULB_URL, style: "height: 15px; display: inline;"
-          %p To help #{@evaluation.company} verify your identity, we save your name, email address, and profile picture. 
+          %p Creating an account helps #{@evaluation.company} verify your identity. 
           - if current_user and not current_user.guest_user?
             %h5 Thank you for signing in, #{current_user.name.split.first}!
           - else
+            / There are funny tabindexes here because we use floats to make the alignment nice
             .signup
-              = link_to "/auth/google_oauth2", style: "display: inline-block; margin-right: 10px; margin-bottom: 0;", class: "button btn" do
+              = link_to "/auth/google_oauth2", style: "float: left;", class: "button btn", tabindex: "1" do
                 = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
                 %span.landingbuttontext Google sign up »
-              = link_to "/auth/linkedin", style: "display: inline-block; margin: 0 18px;", class: "button btn" do
-                = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
-                %span.landingbuttontext LinkedIn sign up »
-              = link_to "/auth/github", style: "display: inline-block; margin-left: 10px;", class: "button btn" do
+              = link_to "/auth/github", style: "float: right;", class: "button btn", tabindex: "3" do
                 = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
                 %span.landingbuttontext GitHub sign up »
+              = link_to "/auth/linkedin", style: "display: block; margin: 0 auto;", class: "button btn", tabindex: "2" do
+                = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
+                %span.landingbuttontext LinkedIn sign up »
+              .clear_floats
+              %a{style: "text-align: center; display: block; margin: 20px 0 0;", "data-target" => "#signup_form", "data-toggle" => "collapse", type: "button"} --Or create an account using your name, email address, and password--
+              / When there are errors here, it should redirect back to eval url
+              #signup_form.collapse{ style: "padding: 0 1% 1% 0; width: 100%;"}
+                - @user = current_user || User.new
+                = form_for(@user, :html => { :style => 'margin-top: 17px;' }) do |f|
+                  = hidden_field_tag "redirect_url", take_group_evaluation_url(@evaluation.permalink)
+                  = f.text_field :name, placeholder: "Name", style: "float: left; margin: 0;", tabindex: "4"
+                  = f.password_field :password, value: nil, placeholder: "Password", style: "float: right; margin: 0;", tabindex: "6"
+                  = f.text_field :email, style: "margin: 0 auto; display: block;", value: nil, placeholder: "E-Mail", tabindex: "5"
+                  .clear_floats
+                  = f.submit "Save", class: "button", descriptor: "save-evaluation-button", style: "width: inherit; text-align: center; font-size: 15px; padding: 7px 20px 5px 20px; margin-top: 10px;"
       .step
         .img-circle
           %span 2
