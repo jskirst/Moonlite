@@ -264,13 +264,14 @@ class User < ActiveRecord::Base
   end
   def enroll!(obj)
     if obj.is_a? Path
-      enrollments.create!(path_id: obj.id) unless enrollments.find_by_path_id(obj.id)
+      e = enrollments.where(path_id: obj.id).first
+      return e || enrollments.create!(path_id: obj.id)
     elsif obj.is_a? Persona
-      unless user_personas.find_by_persona_id(obj.id)
-        user_personas.create!(persona_id: obj.id) 
-      end
+      up = user_personas.where(persona_id: obj.id).first
+      return up || user_personas.create!(persona_id: obj.id) 
     elsif obj.is_a? Evaluation
-      evaluation_enrollments.create!(evaluation_id: obj.id) unless evaluation_enrollments.find_by_evaluation_id(obj.id)
+      ee = evaluation_enrollments.where(evaluation_id: obj.id).first
+      return ee || evaluation_enrollments.create!(evaluation_id: obj.id)
     else
       raise "Invalid object to enroll."
     end

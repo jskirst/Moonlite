@@ -64,12 +64,12 @@ describe Evaluation do
       end
 
       it "should return all except for completed task" do
-        @user.completed_tasks.create! do |ct|
+        ct = @user.completed_tasks.create! do |ct|
           ct.task_id = @core_tasks.first.id
-          ct.status_id = Answer::CORRECT
           ct.answer = "Blah"
           ct.enrollment_id = @e.id
         end
+        ct.update_attributes(status_id: Answer::CORRECT, points_awarded: 100)
         @eval.next_task_of_type(@user, @path, [Task::MULTIPLE, Task::EXACT]).should == @core_tasks[1]
       end
     end
@@ -81,12 +81,12 @@ describe Evaluation do
       end
 
       it "should return second core task if first is completed" do
-        @user.completed_tasks.create! do |ct|
+        ct = @user.completed_tasks.create! do |ct|
           ct.task_id = @core_tasks.first.id
-          ct.status_id = Answer::CORRECT
           ct.answer = "Blah"
           ct.enrollment_id = @e.id
-        end
+        end 
+        ct.update_attributes(status_id: Answer::CORRECT, points_awarded: 100)
         resp = @eval.next_task(@user, @path)
         resp[:next_task].should == @core_tasks[1]
       end
@@ -94,12 +94,13 @@ describe Evaluation do
       describe "for creative tasks" do
         before :each do 
           @core_tasks.each do |t|
-            @user.completed_tasks.create! do |ct|
+            ct = @user.completed_tasks.create! do |ct|
               ct.task_id = t.id
               ct.status_id = Answer::CORRECT
               ct.answer = "Blah"
               ct.enrollment_id = @e.id
             end
+            ct.update_attributes(status_id: Answer::CORRECT, points_awarded: 100)
           end
         end
         
@@ -110,12 +111,13 @@ describe Evaluation do
 
         it "should return nil for next task if all tasks finished" do
           @creative_tasks.each do |t|
-            @user.completed_tasks.create! do |ct|
+            ct = @user.completed_tasks.create! do |ct|
               ct.task_id = t.id
               ct.status_id = Answer::CORRECT
               ct.answer = "Blah"
               ct.enrollment_id = @e.id
             end
+            ct.update_attributes(status_id: Answer::CORRECT, points_awarded: 100)
           end
           resp = @eval.next_task(@user, @path).should be_nil
         end

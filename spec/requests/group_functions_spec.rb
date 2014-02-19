@@ -113,7 +113,6 @@ describe "Group Functions" do
       find(".mb_challenges").first('a').click
       
       expect_content("Clone a MetaBright Challenge")
-      pause
     end
       
     it "should be able to create an Evaluation" do
@@ -154,6 +153,8 @@ describe "Group Functions" do
       find("input[descriptor=save-evaluation-button]").click
       
       find(".challenge_holder").first('a').click
+      expect_content("You're about to start your first Challenge!")
+      click_on("Let's Go!")
       sleep 4.0
       12.times do |i|
         first('.answer_content').click

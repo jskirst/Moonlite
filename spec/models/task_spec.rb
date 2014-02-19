@@ -6,7 +6,7 @@ describe Task do
       path = FactoryGirl.create(:path)
       section = FactoryGirl.create(:section, path: path)
       task1 = FactoryGirl.create(:task, section: section, path: path, question: "Take a look at this Task. You like it? You like this filthy little Task? 75")
-      task1.delay.should == 2700
+      task1.delay.should == (2700 + 2000)
     end
   end
   

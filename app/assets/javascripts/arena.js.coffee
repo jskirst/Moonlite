@@ -87,10 +87,8 @@ class @Arena
       clearInterval(@count_down_bar_interval)
     
   start_countdown: =>
-    console.log("Starting countdown")
     @continue_countdown = true
     wait = Math.max((@start_time - (new Date().getTime())), 0)
-    console.log("Waiting: "+wait)
     @start_countdown_timeout = setTimeout(=>
       @count_down_bar_interval = setInterval(@count_down_bar, 100)
       @count_down_points_interval = setInterval(@count_down_points, 300)

@@ -1,10 +1,9 @@
 class CompletedTask < ActiveRecord::Base
   CORRECT_POINTS = 100
   
-  attr_readonly :task_id
-  attr_protected :updated_at, :answer_id, :points_awarded, :award_points
-  attr_accessible :status_id, :task_id, :session_id, :submitted_answer_id, :enrollment_id
   attr_accessor :award_points, :correct_answer, :points_remaining
+  attr_readonly :task_id
+  attr_accessible :status_id, :task_id, :session_id, :submitted_answer_id, :enrollment_id,:updated_at, :answer_id, :points_awarded, :award_points
   
   belongs_to :user
   belongs_to :task
@@ -44,7 +43,7 @@ class CompletedTask < ActiveRecord::Base
   def correct?() status_id == Answer::CORRECT end
   def incorrect?() status_id == Answer::INCORRECT end
     
-  def self.find_or_create(user, task, enrollment, session_id)
+  def self.find_or_create(user, task, enrollment = nil, session_id = nil)
     enrollment = user.enroll!(task.path) unless enrollment
 
     unless ct = where(user_id: user.id, task_id: task.id).first

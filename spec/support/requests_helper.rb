@@ -49,7 +49,7 @@ module RequestsHelper
   end
   
   def complete_task(t, user, score = 100)
-    ct = CompletedTask.find_or_create(user.id, t.id)
+    ct = CompletedTask.find_or_create(user, t)
     raise "Invalid completed task" unless ct.id
     if t.multiple_choice?
       if score == 0
