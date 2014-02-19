@@ -42,7 +42,7 @@ describe "Registration" do
       click_on "Let's Go!"
   
       7.times do
-        expect_content(path.name)
+        sleep 0.5
         first('.answer_content').click
         click_on "Next"
       end
