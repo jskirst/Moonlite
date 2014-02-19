@@ -1,5 +1,8 @@
 class @Arena
-  constructor: (@start_time, @time_limit, @feedback, @countdown) ->
+  constructor: (@delay, @start_time, @time_limit, @feedback, @countdown) ->
+    if (@start_time + 1) > Date.now() + @delay
+      @start_time = Date.now() + @delay
+
     @end_time = @start_time + @time_limit
 
     @bar_element = $(".pointbarfiller")
