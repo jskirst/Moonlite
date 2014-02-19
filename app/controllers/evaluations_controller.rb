@@ -157,7 +157,9 @@ class EvaluationsController < ApplicationController
       end
     end
     @group = @evaluation.group
-    unless current_user
+    if current_user
+      cookies.delete :evaluation
+    else
       cookies[:evaluation] = @evaluation.permalink
     end
   end

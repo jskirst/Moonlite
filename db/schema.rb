@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204155730) do
+ActiveRecord::Schema.define(version: 20140219133513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,6 +139,7 @@ ActiveRecord::Schema.define(version: 20140204155730) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "published_at"
+    t.boolean  "enable_anti_cheating", default: false
   end
 
   add_index "evaluations", ["permalink"], name: "index_evaluations_on_permalink", unique: true, using: :btree

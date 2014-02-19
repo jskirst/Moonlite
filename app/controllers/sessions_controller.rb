@@ -83,7 +83,18 @@ class SessionsController < ApplicationController
   end
   
   def auth_failure
-    flash[:error] = params[:message]
-    redirect_to new_session_path
+    if current_user
+      flash[:error] = "There was an error trying to sign up using your social login."
+      redirect_to profile_path(current_user.username)
+    else
+      if cookies[:evaluation]
+        flash[:error] = "There was an error trying to sign up using your social login. Please create an account using your email and a password."
+        redirect_to take_group_evaluation_path(cookies[:evaluation], error: "sociallogin")
+        cookies.delete :evaluation
+      else
+        flash[:error] = "There was an error trying to sign up using your social login. Please create an account using your email and a password."
+        redirect_to new_user_path
+      end
+    end
   end
 end

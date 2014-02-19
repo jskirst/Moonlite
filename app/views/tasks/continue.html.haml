@@ -95,8 +95,8 @@
         %div.messagespace{ style: "text-align: right; margin: 12px 0px 0px 25px; width: 258px;" }
       - if current_user and params[:controller] != "evaluations"
         %a.arena_report_link{ style: "float:right; text-decoration:none;"} Report this question
-- if @evaluation
+- if @evaluation and @evaluation.enable_anti_cheating
   :javascript
     $(window).unbind("blur").blur(function(){
-      alert("No no no! No no no! No no no!")
+      alert("In order to prevent cheating, MetaBright strongly discourages you from leaving a test until you are finished.")
     });

@@ -7,7 +7,8 @@ class Evaluation < ActiveRecord::Base
     :link,
     :permalink,
     :selected_paths,
-    :closed_at
+    :closed_at,
+    :enable_anti_cheating
   
   belongs_to :user
   belongs_to :group

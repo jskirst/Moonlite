@@ -40,19 +40,20 @@
           - else
             / There are funny tabindexes here because we use floats to make the alignment nice
             .signup
-              = link_to "/auth/google_oauth2", style: "float: left;", class: "button btn", tabindex: "1" do
-                = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
-                %span.landingbuttontext Google sign up »
-              = link_to "/auth/github", style: "float: right;", class: "button btn", tabindex: "3" do
-                = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
-                %span.landingbuttontext GitHub sign up »
-              = link_to "/auth/linkedin", style: "display: block; margin: 0 auto;", class: "button btn", tabindex: "2" do
-                = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
-                %span.landingbuttontext LinkedIn sign up »
-              .clear_floats
-              %a{style: "text-align: center; display: block; margin: 20px 0 0;", "data-target" => "#signup_form", "data-toggle" => "collapse", type: "button"} --Or create an account using your name, email address, and password--
-              / When there are errors here, it should redirect back to eval url
-              #signup_form.collapse{ style: "padding: 0 1% 1% 0; width: 100%;"}
+              - unless params[:error] == "sociallogin"
+                = link_to "/auth/google_oauth2", style: "float: left;", class: "button btn", tabindex: "1" do
+                  = image_tag ICON_LOGIN_GOOGLE, alt: "Google sign up"
+                  %span.landingbuttontext Google sign up »
+                = link_to "/auth/github", style: "float: right;", class: "button btn", tabindex: "3" do
+                  = image_tag ICON_LOGIN_GITHUB, alt: "GitHub sign up"
+                  %span.landingbuttontext GitHub sign up »
+                = link_to "/auth/linkedin", style: "display: block; margin: 0 auto;", class: "button btn", tabindex: "2" do
+                  = image_tag ICON_LOGIN_LINKEDIN, alt: "LinkedIn sign up"
+                  %span.landingbuttontext LinkedIn sign up »
+                .clear_floats
+                %a{ style: "text-align: center; display: block; margin: 20px 0 0;", type: "button", data: { target: "#signup_form", toggle: "collapse" } } 
+                  Or create an account using your name, email address, and password
+              #signup_form{ style: "padding: 0 1% 1% 0; width: 100%;", class: (params[:error] != "sociallogin" ? "collapse" : "")}
                 - @user = current_user || User.new
                 = form_for(@user, :html => { :style => 'margin-top: 17px;' }) do |f|
                   = hidden_field_tag "redirect_url", take_group_evaluation_url(@evaluation.permalink)
