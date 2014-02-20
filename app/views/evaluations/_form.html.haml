@@ -8,21 +8,37 @@
       }
     })
   })
-
+  
+  function anySelected() {
+    var any = false;
+    $(".custom_challenge_select").each(function() {
+      any = $(this).is(":checked");
+      if (any == true) return false;
+    });
+    return any;
+  }
+  
+  function formRoute() {
+    if(anySelected()){
+      $("#eval_warning_modal").modal({ keyboard: true, backdrop: 'static', show: true });
+    } else {
+      $('form').submit();
+    }
+  }
+  
+  
 #employer.employer-container{ style: "margin-top: 40px; width: 900px;" }
   #create_evaluation.employer-box{ style: "padding: 8px;" }
     .header{ style: "padding: 12px 15px; border-bottom: 1px solid #DDD;"}
       = image_tag GIANT_STONEY, class: "stoney", alt: "Stoney"
-      %h2= form_title      
-    - if form_title == "Edit Evaluation"
-      .edit_eval_notice{ style: ""}
-        Please note that you are editing a live Evaluation! If you add additional Challenges to your Evaluation and you have candidates who have already submitted their Evaluation, they will have to return to the Evaluation URL to take the new Challenges. 
+      %h2= form_title
     
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       - unless @evaluation.errors.empty?
         .alert.alert-error
           %p= @evaluation.errors.full_messages.join(". ")
-      = form_for(@evaluation, url: form_url) do |f|
+      = form_for(@evaluation, url: form_url, :html => { :id => "new_eval_form" }) do |f|
+        = render "modals/eval_warning"
         %div{ style: "text-align: center; margin: 10px auto;" }
           .action_group
             %h3 What are the job details?
@@ -59,7 +75,7 @@
                     - @group_path_collection.sort_by{|path| [path.name.upcase]}.each do |gp|
                       %li
                         %label
-                          = check_box_tag "evaluation[selected_paths][#{gp.id}]", 1, @evaluation_path_ids.include?(gp.id)
+                          = check_box_tag "evaluation[selected_paths][#{gp.id}]", 1, @evaluation_path_ids.include?(gp.id), class: "custom_challenge_select"
                           = gp.name
                     %p{ style: "margin-left: 10px;"}
                       = link_to "Create new custom Challenge.", new_group_path_path
@@ -73,4 +89,4 @@
           .alert-preview.small-text.orange{ style: "margin: 20px auto -20px auto;"}
             %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.
         .row{ style: "margin: 40px auto 30px;" }
-          = f.submit @evaluation.new_record? ? "Create Evaluation" : "Save Evaluation", class: "submit_button", style: "float: none;"
+          %a.submit_button{ style: "float: none;", onclick: "formRoute()"} Create Evaluation

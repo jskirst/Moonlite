@@ -83,9 +83,6 @@
         = link_to group_evaluations_path(@group) do
           %div{ "data-tip" => "Back" }
             = image_tag "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/back.png"
-        = link_to edit_group_evaluation_path(@group, @evaluation) do
-          %div{ "data-tip" => "Edit" }
-            %img.gear{ src: "https://s3.amazonaws.com/moonlite-nsdub/static/random+icons/gear_dark_small.png", alt: "Edit Evaluation"}
       %div{ style: "padding: 15px 15px 0 15px;"}
         = image_tag GIANT_STONEY, style:"display:inline; height:61px;", alt: "Stoney"
         %div{ style: "display: inline-block; vertical-align: top; margin-left: 5px; "}
@@ -147,7 +144,7 @@
                     = link_to "Show archived candidates", group_evaluation_url(@group, @evaluation, archived: true), style: "color: #404040"
             - if @evaluations.empty? and not @archive_exists
               %tr
-                %td{ colspan: 6, style: "border-top: none;" } No one has taken this evaluation yet.
+                %td{ colspan: 90, style: "border-top: none;" } No one has taken this evaluation yet.
         - if @candidate_limit_reached
           .alert-preview.small-text.orange{ style: "margin: 20px auto;"}
             %p{ style: "margin: 0;"} Your trial account limits you to testing #{Group::TRIAL_CANDIDATE_LIMIT} candidates. You've already tested #{@candidate_count}.
