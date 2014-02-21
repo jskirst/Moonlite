@@ -494,6 +494,7 @@ body.employer .container.body { width: inherit; background-color: transparent; p
       img {
         height: 75px; 
         width: 75px;
+        cursor: pointer;
         &:nth-child(2) {margin: 15px 80px 5px;}
         &:hover { position: relative; bottom: 1px;}
         &:active { bottom: 0px;}
