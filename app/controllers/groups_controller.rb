@@ -89,6 +89,8 @@ class GroupsController < ApplicationController
         if params[:group][:stripe_token].present?
           @new_group.save_with_stripe(params[:group][:stripe_token])
           if @new_group.errors.size == 0
+            current_user.reload
+            sign_in(current_user)
             redirect_to confirmation_group_url(@new_group)
           else
             @errors = @new_group.errors.full_messages.join(". ")

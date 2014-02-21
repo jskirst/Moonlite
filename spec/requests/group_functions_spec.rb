@@ -128,7 +128,9 @@ describe "Group Functions" do
       find("#evaluation_title").set("New Job")
       first(".metabright-challenges > li > label").click
       first(".custom-challenges > li > label").click
-      click_on "Create Evaluation"
+      find("a.submit_button[descriptor='eval-submit']").click
+      expect_content "Looks like you're using a custom Challenge"
+      click_on "Finish"
     
       expect_content("Your Evaluation has been created!")
       click_on "Continue to Evaluation Overview"
