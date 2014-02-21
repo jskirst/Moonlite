@@ -81,22 +81,6 @@ class EvaluationsController < ApplicationController
     end
   end
   
-  def edit
-  end
-  
-  def update
-    @evaluation.company = params[:evaluation][:company]
-    @evaluation.title = params[:evaluation][:title]
-    @evaluation.link = params[:evaluation][:link]
-    @evaluation.selected_paths = params[:evaluation][:selected_paths]
-    if @evaluation.save
-      flash[:success] = "Evaluation successfully updated."
-      redirect_to group_evaluations_path(@group)
-    else
-      render "edit"
-    end
-  end
-  
   def review
     if @group.plan_type == "free_to_demo"
       @is_trial = true

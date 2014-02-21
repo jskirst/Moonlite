@@ -1054,41 +1054,6 @@ th {
   .modal_close img { width:20px; height:20px; }
 }
 
-/* Sign in and Register and Search Edu Modals */
-#login_modal, #register_modal, #search_learn_more_modal, #clone_challenge_modal {
-  background-color: transparent; 
-  border: none; 
-  box-shadow: none;
-  
-  .explorecontainer { width: 495px; background-color: transparent; border:none; }
-  .explorenewusercontent { margin:45px; box-shadow: 0 0 30px 12px #888; }
-  .exploreheader { 
-    width: inherit;
-    h1 { 
-      margin-bottom: 0; 
-      line-height: 23px; 
-      
-      img { height:65px; margin:-16px -4px -10px -5px; }
-      span { font-size:26px; }
-    } 
-  }
-  .explorebody { 
-    min-height: 204px; 
-    text-align: center;
-    
-    h4 {margin-top: 15px;}
-    p { padding: 10px; font-size: 15px; }
-    .social-sign-in-options {
-      div { margin: 0 auto 12px; width: 244px;}
-      a { float: none; padding: 4px 0; display: block; }
-      img { height:30px; }
-    }
-  }
-  hr {margin: 0;}
-  .landing_yellow {background-color: $landing_yellow;}
-  
-}
-
 /* New user sign up page */
 .registration {
   .signup-options {

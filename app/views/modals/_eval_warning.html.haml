@@ -1,0 +1,27 @@
+:css 
+  h5 {margin-bottom: 15px; font-size: 15px;}
+  
+:javascript
+  function submitForm() {
+    $form = $('#new_eval_form');
+    $form.submit();
+  }
+
+#eval_warning_modal.dropdown_modal.modal.hide.fade{ tabindex: "-1", style: "width: 770px;" }
+  .explorecontainer{ style: "width: 770px; "}
+    .explorenewusercontent
+      .exploreheader
+        .modal_close
+          = image_tag ICON_CLOSE_URL, alt: "Close", style: "width: auto; height: auto;"
+        %h1
+          = image_tag STONEY_SMALL_URL, alt:"Stoney", style: "width: inherit;"
+          %span Looks like you're using a custom Challenge...
+      %hr
+      .explorebody{ style: "padding: 12px 15px; min-height: inherit;"}
+        %h5
+          MetaBright Evaluations can't be edited after they're created. And the future edits you make to custom Challenges won't be reflected in already-created Evaluations. 
+        %h5
+          If there are any changes you want to make in your custom Challenges, please make them before creating this Evaluation.
+        %button.submit_button_blue.modal_close{ style: "float: left; width: inherit;"} Back  
+        %button#submit_eval_conf.submit_button{ onclick: ""} Create Evaluation
+        .clear_floats
