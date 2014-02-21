@@ -1,7 +1,10 @@
 class @Arena
-  constructor: (@delay, @start_time, @time_limit, @feedback, @countdown) ->
+  constructor: (@points, @delay, @start_time, @time_limit, @feedback, @countdown) ->
     if (@start_time + 1) > Date.now() + @delay
       @start_time = Date.now() + @delay
+    else if @points == 100 and @start_time < Date.now()
+      @start_time = Date.now()
+      @delay = 0
 
     @end_time = @start_time + @time_limit
 
