@@ -140,7 +140,9 @@ class GroupsController < ApplicationController
     @group.creator_password = params[:group][:creator_password]
     @group.stripe_token = "free_as_in_beer"
     if @group.save
-      sign_in(@group.creator)
+      @group.reload
+      creator = @group.users.first
+      sign_in(creator)
       redirect_to confirmation_group_url(@group)
     else
       @errors = @group.errors.full_messages.join(". ") + @group.creator.errors.full_messages.join(". ")
