@@ -208,7 +208,7 @@
                             .time_taken.incorrect{ style: "float: right;"}  Incorrect
                           %div{ style: "margin-top: 10px;"} 
                             Correct answer:
-                            %pre= task.correct_answer.content # Correct answer
+                            %pre= task.correct_answer.try(:content).to_s # Correct answer
                           - if not completed_task.correct?
                             %div
                               - if completed_task.answer.blank?
