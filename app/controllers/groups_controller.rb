@@ -89,6 +89,8 @@ class GroupsController < ApplicationController
         if params[:group][:stripe_token].present?
           @new_group.save_with_stripe(params[:group][:stripe_token])
           if @new_group.errors.size == 0
+            current_user.reload
+            sign_in(current_user)
             redirect_to confirmation_group_url(@new_group)
           else
             @errors = @new_group.errors.full_messages.join(". ")
@@ -138,7 +140,9 @@ class GroupsController < ApplicationController
     @group.creator_password = params[:group][:creator_password]
     @group.stripe_token = "free_as_in_beer"
     if @group.save
-      sign_in(@group.creator)
+      @group.reload
+      creator = @group.users.first
+      sign_in(creator)
       redirect_to confirmation_group_url(@group)
     else
       @errors = @group.errors.full_messages.join(". ") + @group.creator.errors.full_messages.join(". ")
