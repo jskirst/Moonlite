@@ -4,19 +4,19 @@
     = render "layouts/head"
   %body{ class: "#{'employer' if hide_background}"}
     - unless request.url.include?("hmrm=pre")
-      = google_tag_manager 
+      = google_tag_manager
     - if current_user
       - if @path and @current_section
         = render "modals/launchpad"
       - if show_nav_bar
         = render "modals/explore"
-      
+
       - if current_user.guest_user?
         = render "modals/login"
     - else
       = render "modals/register"
       = render "modals/login"
-      
+
     = render "layouts/navbar"
     %div.container.body
       - flash.each do |key, value|
@@ -25,3 +25,5 @@
     - if show_footer
       = render "layouts/footer"
     = render "layouts/styles_and_scripts"
+    :javascript
+      $(function() { $('body').hide().show(); });
