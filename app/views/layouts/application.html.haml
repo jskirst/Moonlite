@@ -26,4 +26,12 @@
       = render "layouts/footer"
     = render "layouts/styles_and_scripts"
     :javascript
-      $(function() { $('body').hide().show(); });
+      $( document ).ready(function() {
+      	jQuery('body')
+      	  .delay(500)
+      	  .queue(
+      	  	function(next){
+      	    	jQuery(this).css('padding-right', '0px');
+      	  	}
+      	  );
+      });
