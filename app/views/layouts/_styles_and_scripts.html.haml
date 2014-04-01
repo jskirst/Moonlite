@@ -4,22 +4,22 @@
     $(function(){
       $(".invite_facebook_friends").click(function(){
         FB.init({appId  : "#{ENV['FACEBOOK_KEY']}", frictionlessRequests: true});
-        FB.ui({method: 'apprequests', message: 'Invite others to MetaBright'}); 
+        FB.ui({method: 'apprequests', message: 'Invite others to MetaBright'});
       });
     })
   #fb-root
-  
+
 :javascript
   var mark_read_url = '#{mark_read_url}';
   var disabled_button = false;
-  
+
   $("a[href='#'], a[href='']").removeAttr("href");
-  
+
   $(function(){
     $(".alert").fadeOut(10000);
     $('.page_loading').hide();
   })
-  
+
   $("body").on("ajax:complete", ".hovercard_link", function(jqXHR, data){
     $("#hover_card").remove();
     $("body").append(data.responseText);
@@ -31,7 +31,7 @@
   });
 
   $('.bar2').mosaic({ animation: 'slide' });
-  
+
   $('.notifications_link').on("ajax:success", function(xhr, data){
     $("#notifications_modal").html(data).modal({ keyboard: true, show: true, backdrop: true});
     $(".navitem").removeClass("highlighted");
@@ -44,7 +44,7 @@
     $(".image_url_preview").attr("src", link);
     $("#image_url_preview").attr("src", link);
   });
-  
+
   $(".register_link").click(function(){
     $("#register_modal").modal({ keyboard: true, backdrop: 'static', show: true });
   });
@@ -52,11 +52,11 @@
   $(".login_link").click(function(){
     $("#login_modal").modal({ keyboard: true, backdrop: 'static', show: true });
   });
-  
+
   $(".search_learn_more").click(function(){
     $("#search_learn_more_modal").modal({ keyboard: true, backdrop: 'static', show: true });
   });
-  
+
   $(".arena_report_link").click(function(){
     $("#report_issue_modal").modal({ keyboard: true, backdrop: 'static', show: true });
   });
@@ -71,7 +71,7 @@
     var url = "/sections/subregion_options?parent_region="+country_code;
     $('select#user_state').load(url).removeAttr("disabled");
   });
-  
+
   $("a[href*='/'], .loadable").click(function(){
     disabled_button = this;
     if($(this).hasClass("button")){
@@ -79,22 +79,22 @@
     }
     return true;
   });
-  
+
   function startSpinner(){
     $('.page_loading').show();
   }
-  
+
   function stopSpinner(){
     $('.disabled').removeClass("disabled").removeAttr("disabled");
     $('.page_loading').hide();
   }
-  
+
   $(function(){
     document.addEventListener("page:fetch", startSpinner);
     document.addEventListener("page:change", stopSpinner);
     document.addEventListener("page:restore", stopSpinner);
   });
-  
+
   $("form:not(.unspinnable)").submit(function(){
     $(this).find("input[type=submit]").addClass("disabled").attr("disabled", "disabled");
     $('.page_loading').fadeIn(1000);
@@ -105,5 +105,8 @@
     });
     return true;
   });
-    
+
 = render "layouts/custom_styles"
+  
+  $(function() { $('body').hide().show(); });
+  -# Google Chrome hack
