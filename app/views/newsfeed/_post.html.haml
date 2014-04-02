@@ -78,10 +78,7 @@
                 |
                 %span
                   = link_to "Deny", admin_update_submission_path(post.submitted_answer_id, mark: "locked"), method: "put", remote: true, class: "mark_reviewed", style: "color: #404040;", onclick: "$(this).parents('.post').hide('fast');"
-            - if post.submitted_answer_content && post.submitted_answer_content.downcase.include?("<html>")
-              %iframe{ data: { content: post.submitted_answer_content, src: raw_path(post.submitted_answer_id) }, id: "iframe_#{post.submitted_answer_id}", style: "min-height: 150px; width: 100%; border: 0; z-index: 1;" }
-            - else
-              %code.content{ style: "word-break:normal;" }= post.submitted_answer_content
+            %code.content{ style: "word-break:normal;" }= post.submitted_answer_content
           - if post.answer_sub_type == Task::TEXT
             .raw.hide
               .sliderbar2
