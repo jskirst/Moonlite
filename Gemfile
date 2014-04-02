@@ -77,4 +77,5 @@ group :test do
 	gem 'selenium-webdriver'
 	gem 'simplecov', :require => false
   gem 'database_cleaner'
+  gem 'rspec-retry'
 end
