@@ -182,9 +182,6 @@
       - if current_user.nil?
         %ul.nav.landing-nav.pull-right
           - if show_sign_in
-            %li.navitem.register_link_holder
-              = link_to "#", class: "register_link", style: "width: inherit; padding: 1px 0 6px;" do
-                %span Join
             %li.navitem{ style: "border: none;"}
               = link_to "#", class: "login_link" do
                 %span Sign in
