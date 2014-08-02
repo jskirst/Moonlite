@@ -6,7 +6,7 @@ describe "Registration" do
   end
   
   describe "through new user page" do
-    it "should allow email/password registration" do
+    it "should allow email/password registration", broken: true do
       visit root_path
       find("a.register_link").click
       expect_content("I want to prove my skills and make myself more marketable.")
