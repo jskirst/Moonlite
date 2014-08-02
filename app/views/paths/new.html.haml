@@ -3,7 +3,7 @@
     %div{ style: "width: 100%; border-bottom: 1px solid #DDD;" }
       = image_tag STONEY_SMALL_URL, style: "height: 115px; display: inline; vertical-align: middle", alt: "Stoney"
       %h1{ style: "display: inline; vertical-align: middle; font-size:50px;" } Create a Challenge
-    
+
     %div{ style: "width: 86%; text-align: center; margin: 20px auto 0 auto; padding: 0 7% 0 7%;" }
       = form_for(@path, url: start_paths_path) do |f|
         %div{ style: "text-align: center; margin: 10px auto;" }
@@ -20,8 +20,8 @@
               / %div
               / = link_to "Become a contributor", join_path_path(@exact_path), class: "submit_button_blue_big", style: "float: none;"
               / .or_divider OR
-              
-            - elsif @similar_paths.any?
+
+            - elsif @similar_paths.present?
               %h4 Hmmm. Looks like there are Challenges with similar names.
               %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
               %h5 Why not create a different Challenge?
@@ -34,13 +34,13 @@
                 %h5
                   %img{ alt: "Lightbulb", src: LIGHT_BULB_URL }
                   Stick to the Goldilocks rule for names: "Mathematics" is too broad, "Order of Operations" too narrow, but "Algebra" would be just right.
-        
-    
+
+
       %div.row{ style: "margin-bottom: 30px; margin-right:auto; margin-left:auto; " }
         %button.submit_button_big{ onclick: "$('#new_path').submit();", style: "float: none;" } Check name availability
-      
-      
-  
+
+
+
 :javascript
   $(function(){
     $("#new_path").submit(function(){
@@ -52,5 +52,3 @@
       }
     });
   });
-        
-        

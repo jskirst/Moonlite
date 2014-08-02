@@ -3,7 +3,7 @@ class EvaluationExport < Prawn::Document
     super()
     @group = evaluation_enrollment.group
     @evaluation_enrollment = evaluation_enrollment
-    @view = view    
+    @view = view
     @user = @evaluation_enrollment.user
     @evaluation = @evaluation_enrollment.evaluation
 
@@ -20,7 +20,7 @@ class EvaluationExport < Prawn::Document
     end
     footer
   end
-  
+
   def footer
     repeat :all do
       canvas do
@@ -37,7 +37,7 @@ class EvaluationExport < Prawn::Document
             :align => :right,
             :text_color => "333333",
             :at => [395, 25]
-            
+
         end
       end
     end
@@ -102,8 +102,8 @@ class EvaluationExport < Prawn::Document
     contents = [
       [{ content: r[:skill_level], rowspan: 2 }, "Correct MC", "Avg. Time per MC", "Creative Response"],
       [
-        "#{r[:performance].percent_correct}%", 
-        "#{r[:performance].avg_time_to_answer.round(1)} secs", 
+        "#{r[:performance].percent_correct}%",
+        "#{r[:performance].avg_time_to_answer.round(1)} secs",
         r[:creative].count {|x| not x.content.blank? }.to_s + "/" +r[:creative].count.to_s
       ]
     ]
@@ -177,7 +177,7 @@ class EvaluationExport < Prawn::Document
         end
         move_down 7
       end
-      
+
       status_color = completed_task.correct? ? "5cb85c" : "d9534f"
       table [[completed_task.answer]] do
         column(0).padding = 6
@@ -194,7 +194,7 @@ class EvaluationExport < Prawn::Document
         text "Correct, #{completed_task.points_awarded} points", size: 11
       else
         if completed_task.answer.present?
-          text "User Response: #{completed_task.answer} / Correct Answer: #{task.correct_answer.content}", size: 11
+          text "User Response: #{completed_task.answer} / Correct Answer: #{task.correct_answer.present? ? task.correct_answer.content : "--"}", size: 11
         else
           text "User skipped this question", size: 11
         end

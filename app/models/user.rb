@@ -1,23 +1,23 @@
 require 'open-uri'
 class User < ActiveRecord::Base
   MAX_DAILY_EMAILS = 5
-  
-  GUEST_WHITELIST = ["jskirst@metabright.com", "nsdub@metabright.com", "team@metabright.com", 
+
+  GUEST_WHITELIST = ["jskirst@metabright.com", "nsdub@metabright.com", "team@metabright.com",
     "founders@metabright.com", "support@metabright.com", "admin@metabright.com"]
-  
+
   attr_readonly :signup_token
-  attr_protected :admin, 
+  attr_protected :admin,
     :login_at, :logout_at, :locked_at,
     :is_fake_user, :is_test_user, :user_role_id,
     :earned_points, :spent_points,
     :last_email_sent_at,:emails_today
   attr_accessor :password, :password_confirmation, :guest_user, :group_id, :mark_private
   attr_accessible :name, :email, :image_url, :username,
-    :password,:password_confirmation, 
+    :password,:password_confirmation,
     :description, :title, :company_name, :education, :link, :location, :guest_user,
-    :city, :state, :country, 
+    :city, :state, :country,
     :seen_opportunities, :wants_full_time, :wants_part_time, :wants_internship, :mark_private
-    
+
   belongs_to  :user_role
   has_one     :notification_settings
   has_one     :custom_style, as: :owner
@@ -52,27 +52,27 @@ class User < ActiveRecord::Base
   has_many    :authored_evaluations, class_name: "Evaluation"
   has_many    :evaluation_enrollments, dependent: :destroy
   has_many    :evaluations, through: :evaluation_enrollments
-  
+
   validates :name, length: { within: 3..100 }
-  validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9]+\z/, message: "Only letters are allowed in your name" }
+  validates :username, length: { maximum: 255 }, uniqueness: { case_sensitive: false }, format: { with: /\A[a-zA-Z0-9'-]+\z/, message: "Only letters are allowed in your name" }
   validates :email, presence: true, format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i }, uniqueness: { case_sensitive: false }
   validates :password, confirmation: true, length: { within: 6..40 }, on: :create
   validates :password, confirmation: true, length: { within: 6..40 }, on: :update, if: Proc.new { self.password.present? }
-  
+
   before_validation do
     if self.password.present?
       self.salt = make_salt
       self.encrypted_password = encrypt(password)
       self.review_submitted_answers
     end
-    
+
     if self.name_changed? or self.username.blank?
       grant_username(force_rename: true)
     end
-    
+
     if self.signup_token.blank?
       self.signup_token = SecureRandom::hex(16)
-    end 
+    end
     self.login_at = Time.now
 
     if self.mark_private == "1"
@@ -81,14 +81,14 @@ class User < ActiveRecord::Base
       self.private_at = nil
     end
   end
-  
+
   after_create do
     NotificationSettings.create!(user_id: self.id)
     if group_id
       GroupUser.create!(user_id: self.id, group_id: self.group_id)
     end
   end
-  
+
   after_save :flush_cache
   before_destroy do
     if Rails.env != "development" and self.enable_administration
@@ -98,16 +98,16 @@ class User < ActiveRecord::Base
     end
   end
   before_destroy :flush_cache
-  
+
   def to_s() self.name end
-    
+
   def locked?() locked_at.presence end
   def private?() private_at.presence end
   def content_creation_enabled?() not self.content_creation_enabled_at.nil? end
   def guest_user?() email.include?("metabright.com") and not GUEST_WHITELIST.include?(email) end
-    
+
   def professional_enabled?() wants_internship or wants_full_time or wants_part_time end
-  
+
   def self.create_with_nothing(details = nil)
     details = {} unless details
     group = Group.find(details["group_id"]) unless details["group_id"].blank?
@@ -121,36 +121,36 @@ class User < ActiveRecord::Base
     user.save
     return user
   end
-  
+
   def self.find_with_omniauth(auth)
     return User.joins(:user_auths).where("user_auths.provider = ? and user_auths.uid = ?", auth["provider"], auth["uid"]).first
   end
-  
+
   def merge_existing_with_omniauth(auth)
     User.create_with_omniauth(auth, self)
   end
-  
+
   def self.create_with_omniauth(auth, user = nil)
     user_from_auth = User.find_with_omniauth(auth)
     return user_from_auth if user_from_auth
-    user_details = { 
-        name: (auth["info"]["name"] || auth["info"]["nickname"]), 
+    user_details = {
+        name: (auth["info"]["name"] || auth["info"]["nickname"]),
         email: auth["info"]["email"],
-    } 
+    }
 
     #begin
       info = auth[:extra][:raw_info]
       if auth[:provider] == "facebook"
-        
+
         user_details[:image_url] = auth["info"]["image"].gsub("type=small", "type=large").gsub("type=square", "type=large")
         user_details[:description] = info[:bio]
         user_details[:link] = info[:link]
         user_details[:location] = info[:location][:name] if info[:location]
         user_details[:company_name] = info[:work][-1][:employer][:name] if info[:work][-1]
         user_details[:education] = info[:education][-1][:school][:name] if info[:education][-1]
-      
+
       elsif auth[:provider] == "google_oauth2"
-        
+
         user_details[:image_url] = auth["info"]["image"]
         url = URI.parse("https://www.googleapis.com/plus/v1/people/me?access_token=#{auth[:credentials][:token]}")
         info = JSON.parse(open(url).read)
@@ -164,27 +164,27 @@ class User < ActiveRecord::Base
         if info["placesLived"]
           info["placesLived"].each { |place| user_details[:location] = place["value"] if place["primary"] == true }
         end
-      
+
       elsif auth[:provider] == "linkedin"
-      
+
         user_details[:description] = auth[:info][:description]
         user_details[:link] = info[:publicProfileUrl]
         user_details[:location] = auth[:info][:location][:name] if info[:location]
-        user_details[:image_url] = info[:pictureUrl] 
-      
+        user_details[:image_url] = info[:pictureUrl]
+
       elsif auth[:provider] == "github"
-      
+
         user_details[:description] = info[:bio]
         user_details[:link] = auth[:info][:urls].first if auth[:info][:urls]
         user_details[:link] = user_details[:link][1] if user_details[:link].is_a? Array
         user_details[:location] = info[:location]
         user_details[:image_url] = auth[:info][:image]
         user_details[:company_name] = info[:company]
-      
+
       else
         raise "Cannot recognize provider."
       end
-    
+
     existing_user = User.find_by_email(auth["info"]["email"])
     user = existing_user if existing_user
     if user
@@ -201,15 +201,15 @@ class User < ActiveRecord::Base
     user.review_submitted_answers
     return user
   end
-  
+
   def merge_with_omniauth(auth)
     unless guest_user?
       user = User.find_by_email(auth["info"]["email"])
       return false if user && user.id != self.id
     end
-    
+
     user_auth = user_auths.find_or_create_by_provider_and_uid(auth["provider"], auth["uid"])
-    
+
     self.name = auth["info"]["name"]
     self.email = auth["info"]["email"]
     self.image_url = auth["info"]["image"]
@@ -223,36 +223,36 @@ class User < ActiveRecord::Base
       ct.submitted_answer.update_attribute(:reviewed_at, Time.now())
     end
   end
-  
+
   def self.auth(redirect_url)
     FbGraph::Auth.new(ENV["FACEBOOK_KEY"], ENV["FACEBOOK_SECRET"], :redirect_url =>  redirect_url)
   end
-  
+
   def send_password_reset
     email_details = { :email => self.email, :token1 => self.signup_token }
     Mailer.reset(email_details).deliver
   end
-  
+
   def self.picture(image_url)
     return image_url unless image_url.blank?
     return ICON_DEFAULT_PROFILE
   end
   def picture() User.picture(self.image_url) end
-  
+
   def profile_complete?() !self.description.nil? end
   def has_password?(submitted_password) encrypted_password == encrypt(submitted_password) end
-  
+
   def self.authenticate(email, submitted_password)
     user = User.where(email: email).first
     return nil if user.nil?
     return user if user.has_password?(submitted_password)
   end
-  
+
   def self.authenticate_with_salt(id, cookie_salt)
     user = User.cached_find_by_id(id)
     (user && user.salt == cookie_salt) ? user : nil
   end
-  
+
   def enrolled?(obj)
     if obj.is_a? Path
       enrollments.find_by_path_id(obj.id)
@@ -268,7 +268,7 @@ class User < ActiveRecord::Base
       return e || enrollments.create!(path_id: obj.id)
     elsif obj.is_a? Persona
       up = user_personas.where(persona_id: obj.id).first
-      return up || user_personas.create!(persona_id: obj.id) 
+      return up || user_personas.create!(persona_id: obj.id)
     elsif obj.is_a? Evaluation
       ee = evaluation_enrollments.where(evaluation_id: obj.id).first
       return ee || evaluation_enrollments.create!(evaluation_id: obj.id)
@@ -277,7 +277,7 @@ class User < ActiveRecord::Base
     end
   end
   def unenroll!(path) enrollments.find_by_path_id(path.id).destroy end
-  
+
   def award_points(obj, points)
     if points.to_i > 0
       if obj.is_a? CompletedTask
@@ -293,7 +293,7 @@ class User < ActiveRecord::Base
       enrollment = enrollments.find_by_path_id(task.path_id)
       unless enrollment
         raise "Enrollment nil: "+task.to_yaml
-      end 
+      end
       log_transaction(obj, points)
       self.earned_points = self.earned_points + points
       self.content_creation_enabled_at = Time.now
@@ -317,28 +317,28 @@ class User < ActiveRecord::Base
     self.update_attribute(:earned_points, self.earned_points - points)
     enrollment.remove_earned_points(points)
   end
-  
+
   def debit_points(points) self.update_attribute('spent_points', self.spent_points + points) end
   def available_points() self.earned_points.to_i - self.spent_points end
-  
+
   def most_recent_section_for_path(path)
     last_task = completed_tasks.includes(:path).where(["paths.id = ?", path.id]).references(:path).order("completed_tasks.updated_at DESC").first
     return path.sections.order("position ASC").first if last_task.nil?
     return last_task.section
   end
-  
+
   def path_started?(path) !my_completed_tasks.includes(:path).where(["paths.id = ?", path.id]).empty? end
   def section_started?(section) !my_completed_tasks.where(["section_id = ?", section.id]).empty? end
   def completed?(task) completed_tasks.find_by_task_id(task.id) end
   def level(path) enrollments.find_by_path_id(path).level end
   def points(path) enrollments.find_by_path_id(path).total_points end
-  
+
   def can_email?(type = nil)
     if locked?
       puts "User is locked"
       return false
     end
-    
+
     if (last_email_sent_at && last_email_sent_at.to_date.today?)
       if emails_today && emails_today >= MAX_DAILY_EMAILS
         #puts "Emailed too much today"
@@ -351,7 +351,7 @@ class User < ActiveRecord::Base
       self.emails_today = 0
       save!
     end
-    
+
     settings = notification_settings
     return false if settings.inactive
     return false if type == :interaction && !settings.interaction
@@ -359,26 +359,26 @@ class User < ActiveRecord::Base
     return false if type == :weekly && !settings.weekly
     return true
   end
-  
+
   def log_email(m)
     if last_email_sent_at && last_email_sent_at.to_date.today?
       self.emails_today += 1
     else
       self.emails_today = 1
     end
-    
+
     self.last_email_sent_at = DateTime.now
     self.save!
-    
+
     SentEmail.create!(user_id: self.id, content: m.subject)
-    
+
     return self
   end
-  
+
   def vote_list
     votes.to_a.collect {|v| v.owner_id }
   end
-  
+
   def self.reputation_badge(earned_points)
     earned_points = earned_points.to_i
     if earned_points < 2000
@@ -403,7 +403,7 @@ class User < ActiveRecord::Base
       return [ICON_BADGE_9, "Earned more than 40,000 MetaBright points"]
     end
   end
-  
+
   def grant_username(options = {})
     if username.blank? or options[:force_rename]
       self.username = generate_username
@@ -412,7 +412,7 @@ class User < ActiveRecord::Base
 
   def generate_username
     return SecureRandom::hex(6) if name.nil?
-    
+
     new_username = name.downcase.gsub(/[^a-z0-9]/i,'')
     new_combined_username = new_username
     username_count = User.where(username: new_combined_username).size
@@ -420,38 +420,38 @@ class User < ActiveRecord::Base
       username_count += 1
       new_combined_username = "#{new_username}#{username_count}"
     end
-    
+
     new_combined_username = SecureRandom::hex(6) if new_combined_username.length >= 255
     return new_combined_username
   end
-  
+
   def following?(user)
     user = user.id unless user.is_a? Integer
     subscriptions.find_by_followed_id(user)
   end
-  def follow!(user) 
+  def follow!(user)
     user = user.id unless user.is_a? Integer
     subscriptions.create!(followed_id: user)
   end
-  def unfollow!(user) 
+  def unfollow!(user)
     user = user.id unless user.is_a? Integer
     following?(user).destroy
   end
   def follower_count() subscribers.count end
   def following_count() subscriptions.count end
-  
+
   def self.grant_anon_username() USERNAME_ADJS.shuffle.first.capitalize + USERNAME_NOUNS.shuffle.first.capitalize + rand(500).to_s end
-  
+
   def to_json
     all_enrollments = enrollments.where("total_points > ?", 500)
       .joins(:path)
       .select("enrollments.id, enrollments.metascore, enrollments.metapercentile, enrollments.total_points, paths.image_url as challenge_picture, paths.name as challenge_name")
       .where("paths.approved_at is not ? and published_at is not ? and paths.professional_at is not ?", nil, nil, nil)
-    
+
     results = { id: self.id, username: self.username, picture: self.image_url }
     results[:challenges] = all_enrollments.collect do |e|
        { name: e.challenge_name,
-         picture: e.challenge_picture, 
+         picture: e.challenge_picture,
          points: e.total_points,
          metascore: e.metascore,
          percentile: e.metapercentile,
@@ -460,11 +460,11 @@ class User < ActiveRecord::Base
     end
     return results
   end
-  
+
   def employer?
     group_users.where(is_admin: true).count > 0
   end
-  
+
   def send_test_alert(email_type = :interaction)
     Mailer.test_alert(self, email_type).deliver
   end
@@ -487,31 +487,31 @@ class User < ActiveRecord::Base
       end
     end
   end
-  
+
   # Cached methods
-  
+
   def self.cached_find_by_id(id)
     return nil unless id
     Rails.cache.fetch([self.to_s, id]) { where(id: id).first }
   end
-  
+
   def self.cached_find_by_username(username)
     Rails.cache.fetch([self.to_s, username]) { where(username: username).first }
   end
-  
+
   def flush_cache
     Rails.cache.delete([self.class.name, username])
     Rails.cache.delete([self.class.name, id])
     return true
   end
-  
-  private  
+
+  private
   def check_image_url() self.image_url = nil if self.image_url && self.image_url.length < 9 end
-  
+
   def encrypt(string) secure_hash("#{salt}--#{string}") end
   def make_salt() secure_hash("#{Time.now.utc}--#{password}") end
   def secure_hash(string) Digest::SHA2.hexdigest(string) end
-  
+
   def log_transaction(obj, points)
     user_transactions.create!(owner_id: obj.id, owner_type: obj.class.to_s, amount: points, status: 1)
   end
