@@ -57,15 +57,11 @@ end
 
 group :development do
   gem 'thin'
-	gem 'rspec-rails'
 	gem 'annotate'
   gem 'better_errors'   
   gem 'binding_of_caller'
   gem 'meta_request'
   gem 'sextant'
-  #gem 'sql-logging'
-  #gem 'rack-mini-profiler'
-  #gem 'debugger'
 end
 
 group :test do
