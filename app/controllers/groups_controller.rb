@@ -9,45 +9,45 @@ class GroupsController < ApplicationController
   before_filter :candidates_check
   
   def new
-    flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
-    redirect_to root_url
-    # @title = "Evaluator Sign Up"
-    # @show_chat = true
-    # if @admin_group
-    #   if @admin_group.stripe_token.blank?
-    #     @new_group = @admin_group
-    #   elsif Group::PLAN_TYPES.keys.include?(params[:group][:plan_type])
-    #     if @admin_group.plan_type == "free_to_demo" or @admin_group.stripe_token == "free_as_in_beer"
-    #       @is_trial = true
-    #       @new_group = @admin_group
-    #       @new_group.stripe_token = nil
-    #       @new_group.plan_type = params[:group][:plan_type]
-    #     else 
-    #       flash[:success] = "You're account has been upgraded."
-    #       @admin_group.plan_type = params[:group][:plan_type]
-    #       @admin_group.save!
-    #       redirect_to account_group_path and return
-    #     end
-    #   else
-    #     raise @admin_group.to_yaml
-    #   end
-    # else
-    #   @new_group = Group.new
-    #   @new_group.plan_type = params[:p]
-    #   if current_user
-    #     @new_group.creator_email = current_user.email
-    #   end
-    # end
+    #flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
+    #redirect_to root_url
+    @title = "Evaluator Sign Up"
+    @show_chat = true
+    if @admin_group
+      if @admin_group.stripe_token.blank?
+        @new_group = @admin_group
+      elsif Group::PLAN_TYPES.keys.include?(params[:group][:plan_type])
+        if @admin_group.plan_type == "free_to_demo" or @admin_group.stripe_token == "free_as_in_beer"
+          @is_trial = true
+          @new_group = @admin_group
+          @new_group.stripe_token = nil
+          @new_group.plan_type = params[:group][:plan_type]
+        else 
+          flash[:success] = "You're account has been upgraded."
+          @admin_group.plan_type = params[:group][:plan_type]
+          @admin_group.save!
+          redirect_to account_group_path and return
+        end
+      else
+        raise @admin_group.to_yaml
+      end
+    else
+      @new_group = Group.new
+      @new_group.plan_type = params[:p]
+      if current_user
+        @new_group.creator_email = current_user.email
+      end
+    end
 
-    # if coupon = params[:c]
-    #   retrieve_coupon(coupon)
-    # end
+    if coupon = params[:c]
+      retrieve_coupon(coupon)
+    end
     
-    # @hide_background = true
-    # @show_nav_bar = false
-    # @show_sign_in = false
-    # @show_employer_link = false
-    # render "groups/signup/form"
+    @hide_background = true
+    @show_nav_bar = false
+    @show_sign_in = false
+    @show_employer_link = false
+    render "groups/signup/form"
   end
   
   def coupon
@@ -63,50 +63,50 @@ class GroupsController < ApplicationController
   end
   
   def create
-    flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
-    redirect_to root_url
-    # session[:previous_plan_type] = nil
-    # @show_chat = true
-    # @show_nav_bar = false
-    # @show_footer = false
-    # @hide_background = false
-    # token = params[:group].delete(:token)
-    # if token.blank?
-    #   plan_type = params[:group].delete(:plan_type)
-    #   @new_group = Group.new(params[:group])
-    #   @new_group.plan_type = plan_type
-    #   if @new_group.save
-    #     @creator = @new_group.creator
-    #     @creator.reload
-    #     sign_in(@creator)
-    #     render json: { token: @new_group.token }
-    #   else
-    #     @errors = @new_group.errors.full_messages.join(". ") + @new_group.creator.errors.full_messages.join(". ")
-    #     render json: { error: @errors }
-    #   end
-    # else
-    #   @new_group = Group.find_by_token(token)
-    #   session[:previous_plan_type] = @new_group.plan_type
-    #   @new_group.plan_type = params[:group][:plan_type]
-    #   @new_group.coupon = params[:group][:coupon]
-    #   if @new_group.admin?(current_user)
-    #     if params[:group][:stripe_token].present?
-    #       @new_group.save_with_stripe(params[:group][:stripe_token])
-    #       if @new_group.errors.size == 0
-    #         current_user.reload
-    #         sign_in(current_user)
-    #         redirect_to confirmation_group_url(@new_group)
-    #       else
-    #         @errors = @new_group.errors.full_messages.join(". ")
-    #         render json: { error: @errors }
-    #       end
-    #     else
-    #       render json: { token: @new_group.token }
-    #     end
-    #   else
-    #     raise "Access Denied: Not your group"
-    #   end
-    # end
+    # flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
+    # redirect_to root_url
+    session[:previous_plan_type] = nil
+    @show_chat = true
+    @show_nav_bar = false
+    @show_footer = false
+    @hide_background = false
+    token = params[:group].delete(:token)
+    if token.blank?
+      plan_type = params[:group].delete(:plan_type)
+      @new_group = Group.new(params[:group])
+      @new_group.plan_type = plan_type
+      if @new_group.save
+        @creator = @new_group.creator
+        @creator.reload
+        sign_in(@creator)
+        render json: { token: @new_group.token }
+      else
+        @errors = @new_group.errors.full_messages.join(". ") + @new_group.creator.errors.full_messages.join(". ")
+        render json: { error: @errors }
+      end
+    else
+      @new_group = Group.find_by_token(token)
+      session[:previous_plan_type] = @new_group.plan_type
+      @new_group.plan_type = params[:group][:plan_type]
+      @new_group.coupon = params[:group][:coupon]
+      if @new_group.admin?(current_user)
+        if params[:group][:stripe_token].present?
+          @new_group.save_with_stripe(params[:group][:stripe_token])
+          if @new_group.errors.size == 0
+            current_user.reload
+            sign_in(current_user)
+            redirect_to confirmation_group_url(@new_group)
+          else
+            @errors = @new_group.errors.full_messages.join(". ")
+            render json: { error: @errors }
+          end
+        else
+          render json: { token: @new_group.token }
+        end
+      else
+        raise "Access Denied: Not your group"
+      end
+    end
   end
   
   def purchased
@@ -129,33 +129,33 @@ class GroupsController < ApplicationController
   end
 
   def trial
-    flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
-    redirect_to root_url
-    # @title = "Evaluator Sign Up"
-    # @group = Group.new
-    # @group.plan_type = Group::FREE_PLAN
-    # render "groups/signup/trial"
+    # flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
+    # redirect_to root_url
+    @title = "Evaluator Sign Up"
+    @group = Group.new
+    @group.plan_type = Group::FREE_PLAN
+    render "groups/signup/trial"
   end
 
   def start
-    flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
-    redirect_to root_url
-    # @group = Group.new
-    # @group.name = params[:group][:name]
-    # @group.plan_type = Group::FREE_PLAN
-    # @group.creator_name = params[:group][:creator_name]
-    # @group.creator_email = params[:group][:creator_email]
-    # @group.creator_password = params[:group][:creator_password]
-    # @group.stripe_token = "free_as_in_beer"
-    # if @group.save
-    #   @group.reload
-    #   creator = @group.users.first
-    #   sign_in(creator)
-    #   redirect_to confirmation_group_url(@group)
-    # else
-    #   @errors = @group.errors.full_messages.join(". ") + @group.creator.errors.full_messages.join(". ")
-    #   render "groups/signup/trial"
-    # end
+    # flash[:success] = "We apologize, but MetaBright is not taking any new customers at this time."
+    # redirect_to root_url
+    @group = Group.new
+    @group.name = params[:group][:name]
+    @group.plan_type = Group::FREE_PLAN
+    @group.creator_name = params[:group][:creator_name]
+    @group.creator_email = params[:group][:creator_email]
+    @group.creator_password = params[:group][:creator_password]
+    @group.stripe_token = "free_as_in_beer"
+    if @group.save
+      @group.reload
+      creator = @group.users.first
+      sign_in(creator)
+      redirect_to confirmation_group_url(@group)
+    else
+      @errors = @group.errors.full_messages.join(". ") + @group.creator.errors.full_messages.join(". ")
+      render "groups/signup/trial"
+    end
   end
   
   def show

@@ -73,7 +73,7 @@ module RequestsHelper
     begin
       wait_until("Page has '#{str}'", 10){ page.has_content?(str) }
     rescue
-      pause("Expected '#{str}': #{$!}")
+      #pause("Expected '#{str}': #{$!}")
       raise "Expected '#{str}': #{$!}"
     end
   end
