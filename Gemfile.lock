@@ -63,6 +63,10 @@ GEM
     annotate (2.6.1)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
+    appsignal (0.8.13)
+      activesupport (>= 3.0)
+      rack
+      thread_safe
     arel (4.0.1)
     atomic (1.1.14)
     attr_required (0.0.5)
@@ -361,6 +365,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-deprecated_finders
   annotate
+  appsignal
   awesome_print
   aws-sdk
   better_errors

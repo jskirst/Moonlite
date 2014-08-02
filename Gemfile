@@ -46,6 +46,8 @@ gem 'uglifier'
 
 gem 'memcachier'
 
+gem 'appsignal'
+
 group :production do
   gem 'rails_12factor'
   gem 'unicorn'
